@@ -1,0 +1,91 @@
+PROJECT: THE ITALUS HISTORICAL SAGA
+
+TASK
+
+Update the Character Bible so it fully aligns with the corrected World Bible canon.
+
+The goal is to ensure all characters remain consistent with:
+
+guardian lifespan rules
+guardian succession structure
+Italus emotional development
+historical realism
+
+
+LOCKED CANON
+
+Guardians live longer than normal humans due to exposure to Italus resin.
+
+Expected lifespan range:
+
+100–200 years.
+
+However:
+
+Guardians are not immortal.
+They may still die from disease, violence, or extreme hardship.
+
+
+CHARACTER CONTINUITY RULES
+
+Each guardian must have:
+
+birth year
+death year
+era served
+approximate lifespan
+relationship with Italus
+
+
+FIRST GUARDIAN CORRECTION
+
+The first guardians must now be defined as:
+
+Luca – first guardian (shepherd boy who discovers Italus in 789 AD)
+
+Elia – Luca’s daughter and second guardian who inherits responsibility.
+
+
+GUARDIAN CHARACTER TRAITS
+
+Guardians should generally share these psychological traits:
+
+patience
+loyalty
+comfort with solitude
+skepticism of power
+respect for nature
+
+
+ITALUS CHARACTER CONSISTENCY
+
+Maintain Italus emotional stages:
+
+Stage 1 – Curiosity (0–200 years)
+
+Stage 2 – Observation (200–600 years)
+
+Stage 3 – Detachment (600–1000 years)
+
+Stage 4 – Weariness (1000+ years)
+
+
+OUTPUT STRUCTURE
+
+Return an updated Character Bible including:
+
+1. Guardian lineage table
+2. Character profiles for each guardian
+3. Emotional development of Italus
+4. Relationship dynamics between Italus and each guardian
+
+
+IMPORTANT RULES
+
+Do not introduce fantasy tropes.
+
+Guardians are caretakers, not chosen heroes.
+
+Italus never acts as a mythic savior.
+
+He remains an observer of history.

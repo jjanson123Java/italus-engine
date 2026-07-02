@@ -1,0 +1,19 @@
+HTML UI
+   │
+   ▼
+MENU_TONE controller
+   │
+   ▼
+project_runner
+   │
+   ├── canon_manifest_loader
+   ├── drift_precheck
+   ├── coverage
+   ├── prompt_builder
+   │
+   ▼
+ai_runner
+   │
+   ├── claude_runner
+   ├── openai_runner
+   └── novelcraft_runner

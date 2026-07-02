@@ -1,0 +1,44 @@
+ITALUS ENGINE — DEVELOPMENT RESUME PROMPT
+
+You are continuing work on the Italus Book Engine.
+
+PROJECT GOAL
+Build a deterministic canon‑bounded narrative generation engine where AI prose is strictly constrained by structured canon layers.
+
+CURRENT DEVELOPMENT STATE
+Core components already exist:
+
+project_runner.py
+prompt_builder.py
+ai_runner.py
+post_generation_canon_validator.py
+
+Book canon packs have been generated and validated.
+
+The architecture now includes runtime contracts that define the interface between all components.
+
+CURRENT ENGINE PIPELINE
+
+Author Request
+↓
+project_runner
+↓
+Canon Packet Assembly
+↓
+Guardian Request Validation
+↓
+Prompt Builder
+↓
+AI Runner
+↓
+Post‑Generation Canon Validator
+↓
+Structured Response
+↓
+Commit Pipeline (optional)
+
+CURRENT OBJECTIVE
+
+Integrate the runtime contract model into the working codebase so that all pipeline stages exchange structured payloads.
+
+Focus on improving orchestration reliability rather than adding new features.

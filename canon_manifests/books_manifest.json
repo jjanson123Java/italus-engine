@@ -1,0 +1,1221 @@
+{
+  "books": [
+    {
+      "book_id": "BOOK_01",
+      "book_number": 1,
+      "title": "The Lightning Tree",
+      "years": "789–900",
+      "primary_guardians": [
+        "Luca"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_01_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_01_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "book_id": "BOOK_02",
+      "book_number": 2,
+      "title": "Daughter of the Mountain",
+      "years": "900–989",
+      "primary_guardians": [
+        "Elia"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_02_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_02_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "book_id": "BOOK_03",
+      "book_number": 3,
+      "title": "The Observers",
+      "years": "970–1110",
+      "primary_guardians": [
+        "Marco",
+        "Simonetta",
+        "Anselm"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_03_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_13",
+          "chapter_number": 13,
+          "title": "Chapter 13",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_14",
+          "chapter_number": 14,
+          "title": "Chapter 14",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_15",
+          "chapter_number": 15,
+          "title": "Chapter 15",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_03_CH_16",
+          "chapter_number": 16,
+          "title": "Chapter 16",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "book_id": "BOOK_04",
+      "book_number": 4,
+      "title": "The Emperor’s Naturalists",
+      "years": "1110–1310",
+      "primary_guardians": [
+        "Caterina",
+        "Amara"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_04_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_13",
+          "chapter_number": 13,
+          "title": "Chapter 13",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_14",
+          "chapter_number": 14,
+          "title": "Chapter 14",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_15",
+          "chapter_number": 15,
+          "title": "Chapter 15",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_16",
+          "chapter_number": 16,
+          "title": "Chapter 16",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_17",
+          "chapter_number": 17,
+          "title": "Chapter 17",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_18",
+          "chapter_number": 18,
+          "title": "Chapter 18",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_19",
+          "chapter_number": 19,
+          "title": "Chapter 19",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_20",
+          "chapter_number": 20,
+          "title": "Chapter 20",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_21",
+          "chapter_number": 21,
+          "title": "Chapter 21",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_22",
+          "chapter_number": 22,
+          "title": "Chapter 22",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_23",
+          "chapter_number": 23,
+          "title": "Chapter 23",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_24",
+          "chapter_number": 24,
+          "title": "Chapter 24",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_25",
+          "chapter_number": 25,
+          "title": "Chapter 25",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_04_CH_26",
+          "chapter_number": 26,
+          "title": "Chapter 26",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "book_id": "BOOK_05",
+      "book_number": 5,
+      "title": "The Black Years",
+      "years": "1310–1410",
+      "primary_guardians": [
+        "Giacomo"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_05_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_13",
+          "chapter_number": 13,
+          "title": "Chapter 13",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_05_CH_14",
+          "chapter_number": 14,
+          "title": "Chapter 14",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "book_id": "BOOK_06",
+      "book_number": 6,
+      "title": "Maps of the World",
+      "years": "1410–1620",
+      "primary_guardians": [
+        "Orsolina",
+        "Pietro"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_06_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_13",
+          "chapter_number": 13,
+          "title": "Chapter 13",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_14",
+          "chapter_number": 14,
+          "title": "Chapter 14",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_15",
+          "chapter_number": 15,
+          "title": "Chapter 15",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_16",
+          "chapter_number": 16,
+          "title": "Chapter 16",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_17",
+          "chapter_number": 17,
+          "title": "Chapter 17",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_18",
+          "chapter_number": 18,
+          "title": "Chapter 18",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_19",
+          "chapter_number": 19,
+          "title": "Chapter 19",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_20",
+          "chapter_number": 20,
+          "title": "Chapter 20",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_21",
+          "chapter_number": 21,
+          "title": "Chapter 21",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_22",
+          "chapter_number": 22,
+          "title": "Chapter 22",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_23",
+          "chapter_number": 23,
+          "title": "Chapter 23",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_24",
+          "chapter_number": 24,
+          "title": "Chapter 24",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_25",
+          "chapter_number": 25,
+          "title": "Chapter 25",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_06_CH_26",
+          "chapter_number": 26,
+          "title": "Chapter 26",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "book_id": "BOOK_07",
+      "book_number": 7,
+      "title": "The Age of Reason",
+      "years": "1620–1800",
+      "primary_guardians": [
+        "Domenico",
+        "Agata"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_07_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_13",
+          "chapter_number": 13,
+          "title": "Chapter 13",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_07_CH_14",
+          "chapter_number": 14,
+          "title": "Chapter 14",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "book_id": "BOOK_08",
+      "book_number": 8,
+      "title": "The Nation",
+      "years": "1800–1900",
+      "primary_guardians": [
+        "Emilio"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_08_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_13",
+          "chapter_number": 13,
+          "title": "Chapter 13",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_14",
+          "chapter_number": 14,
+          "title": "Chapter 14",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_15",
+          "chapter_number": 15,
+          "title": "Chapter 15",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_08_CH_16",
+          "chapter_number": 16,
+          "title": "Chapter 16",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "book_id": "BOOK_09",
+      "book_number": 9,
+      "title": "The War That Took the Guardian",
+      "years": "1900–1940",
+      "primary_guardians": [
+        "Rosa"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_09_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_13",
+          "chapter_number": 13,
+          "title": "Chapter 13",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_09_CH_14",
+          "chapter_number": 14,
+          "title": "Chapter 14",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "book_id": "BOOK_10",
+      "book_number": 10,
+      "title": "The Olive Grove",
+      "years": "1940–1985",
+      "primary_guardians": [
+        "Theodora Bassi"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_10_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_13",
+          "chapter_number": 13,
+          "title": "Chapter 13",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_14",
+          "chapter_number": 14,
+          "title": "Chapter 14",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_10_CH_15",
+          "chapter_number": 15,
+          "title": "Chapter 15",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "book_id": "BOOK_11",
+      "book_number": 11,
+      "title": "The Last Guardian",
+      "years": "1985–2025",
+      "primary_guardians": [
+        "Final Guardian"
+      ],
+      "status": "active",
+      "chapters": [
+        {
+          "chapter_id": "BOOK_11_CH_01",
+          "chapter_number": 1,
+          "title": "Chapter 1",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_02",
+          "chapter_number": 2,
+          "title": "Chapter 2",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_03",
+          "chapter_number": 3,
+          "title": "Chapter 3",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_04",
+          "chapter_number": 4,
+          "title": "Chapter 4",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_05",
+          "chapter_number": 5,
+          "title": "Chapter 5",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_06",
+          "chapter_number": 6,
+          "title": "Chapter 6",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_07",
+          "chapter_number": 7,
+          "title": "Chapter 7",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_08",
+          "chapter_number": 8,
+          "title": "Chapter 8",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_09",
+          "chapter_number": 9,
+          "title": "Chapter 9",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_10",
+          "chapter_number": 10,
+          "title": "Chapter 10",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_11",
+          "chapter_number": 11,
+          "title": "Chapter 11",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_12",
+          "chapter_number": 12,
+          "title": "Chapter 12",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_13",
+          "chapter_number": 13,
+          "title": "Chapter 13",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_14",
+          "chapter_number": 14,
+          "title": "Chapter 14",
+          "status": "active"
+        },
+        {
+          "chapter_id": "BOOK_11_CH_15",
+          "chapter_number": 15,
+          "title": "Chapter 15",
+          "status": "active"
+        }
+      ]
+    }
+  ]
+}

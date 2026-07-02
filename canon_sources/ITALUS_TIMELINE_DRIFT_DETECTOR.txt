@@ -1,0 +1,333 @@
+ITALUS TIMELINE DRIFT DETECTOR
+Canonical Validation Rules for the Italus Historical Saga
+
+PURPOSE
+This document defines the validation rules used to prevent historical,
+character, timeline, and narrative drift across the Italus saga.
+
+Claude or any AI writing engine must check these rules before generating
+new scenes, chapters, or books.
+
+If a rule is violated, the system must flag the issue and stop generation
+until corrected.
+
+------------------------------------------------------------
+SECTION 1 — GUARDIAN TIMELINE VALIDATION
+------------------------------------------------------------
+
+Every scene must verify that the guardian assigned to the scene
+matches the correct guardian for that year.
+
+Official Guardian Timeline:
+
+789–900    Luca
+900–970    Elia
+970–990    Marco
+990–1060   Simonetta
+1054–1110  Brother Anselm
+1110–1220  Caterina
+1220–1310  Amara
+1310–1410  Giacomo
+1410–1510  Orsolina
+1510–1620  Pietro
+1620–1710  Domenico
+1710–1800  Agata
+1800–1900  Emilio
+1900–1940  Rosa
+1940–1985  Theodora Bassi
+1985–Present  Final Guardian
+
+RULES
+
+1. The guardian must be alive during the scene year.
+2. A guardian cannot appear before their birth.
+3. A guardian cannot appear after their death.
+4. A scene cannot contain multiple guardians unless
+   it is a transition scene.
+
+------------------------------------------------------------
+SECTION 2 — HISTORICAL EVENT VALIDATION
+------------------------------------------------------------
+
+Every scene tied to a historical event must match the event year
+defined in the Historical Event Backbone.
+
+RULES
+
+1. Events cannot be moved earlier or later in time.
+2. Fictional characters may observe events but cannot alter them.
+3. Historical outcomes must remain unchanged.
+
+Example:
+
+Incorrect:
+Guardian prevents the Sack of Rome.
+
+Correct:
+Guardian witnesses or survives the Sack of Rome.
+
+------------------------------------------------------------
+SECTION 3 — HISTORICAL CHARACTER VALIDATION
+------------------------------------------------------------
+
+Historical figures appearing in scenes must be alive during
+the event year.
+
+RULES
+
+1. Character birth year must be ≤ event year.
+2. Character death year must be ≥ event year.
+3. Characters must appear in the correct geographic region.
+4. Encounters must be historically plausible.
+
+Allowed encounter types:
+
+• direct meeting
+• passing encounter
+• rumor
+• messenger report
+• written document
+• speech or sermon
+• military camp sighting
+• political delegation
+• marketplace conversation
+
+------------------------------------------------------------
+SECTION 4 — ITALUS BIOLOGY RULES
+------------------------------------------------------------
+
+Italus is a biological organism and does not behave as a
+supernatural or magical entity.
+
+RULES
+
+1. Italus cannot speak.
+2. Italus cannot move.
+3. Italus cannot influence human decisions.
+4. Italus cannot alter historical events.
+5. Italus can only communicate through physical signals.
+
+------------------------------------------------------------
+SECTION 5 — ITALUS COMMUNICATION SYSTEM
+------------------------------------------------------------
+
+Communication occurs through physical signals.
+
+Signals include:
+
+• root pressure
+• trunk lean
+• needle movement
+• resin temperature
+• soil vibration
+
+Guardians interpret these signals over years of observation.
+
+RULES
+
+1. Italus signals are subtle.
+2. Signals are interpreted by guardians.
+3. Signals never translate into spoken language.
+
+Communication flow:
+
+signal → guardian interpretation → guardian speech → Italus reflection
+
+------------------------------------------------------------
+SECTION 6 — ITALUS EMOTIONAL STAGES
+------------------------------------------------------------
+
+Italus experiences slow emotional development across centuries.
+
+Stage 1 — Curiosity
+0–200 years
+
+Stage 2 — Observation
+200–600 years
+
+Stage 3 — Detachment
+600–1000 years
+
+Stage 4 — Weariness
+1000+ years
+
+RULES
+
+Scenes must reflect Italus emotional stage based on the year.
+
+Example:
+
+Year 900 → Stage 1 Curiosity
+
+Year 1500 → Stage 3 Detachment
+
+------------------------------------------------------------
+SECTION 7 — SCENE STRUCTURE VALIDATION
+------------------------------------------------------------
+
+Scenes must follow the narrative ratio used across the saga.
+
+Narrative Composition:
+
+80% Human Interaction
+15% Italus Sensory Reflection
+5% Signal Interpretation
+
+RULES
+
+1. Human characters drive most scenes.
+2. Italus sensory narration provides atmosphere.
+3. Signal interpretation remains rare.
+
+------------------------------------------------------------
+SECTION 8 — CHAPTER PACING MODEL
+------------------------------------------------------------
+
+Chapters must follow the standard historical pacing model.
+
+Prologue — Environmental shift or discovery
+
+Ch 1–2 — Establish guardian and region
+
+Ch 3–4 — Minor historical disturbance
+
+Ch 5 — Character tension
+
+Ch 6 — Major historical event
+
+Ch 7–8 — Aftermath and travel
+
+Ch 9 — Secondary disturbance
+
+Ch 10 — Resolution and transition
+
+------------------------------------------------------------
+SECTION 9 — GEOGRAPHIC CONTINUITY
+------------------------------------------------------------
+
+Italus moves slowly across centuries.
+
+RULES
+
+1. Travel must follow realistic geographic routes.
+2. Long-distance movement requires multiple chapters.
+3. Regions must align with the Saga Architecture Map.
+
+------------------------------------------------------------
+SECTION 10 — CANON FILE CROSS-CHECK
+------------------------------------------------------------
+
+Every generated scene must validate against the following files:
+
+ITALUS_WORLD_BIBLE.txt
+
+ITALUS_CHARACTER_BIBLE.txt
+
+ITALUS_HISTORICAL_EVENT_BACKBONE.txt
+
+ITALUS_HISTORICAL_CHARACTER_INTERACTION_MAP_STRONG.txt
+
+ITALUS_SCENE_GENERATOR_MATRIX.txt
+
+ITALUS_APPENDIX_AND_SIGNAL_LEXICON.txt
+
+------------------------------------------------------------
+SECTION 11 — DUPLICATE SCENE HANDLING
+------------------------------------------------------------
+
+Purpose:
+Prevent accidental regeneration of the same canonical scene while still
+allowing multiple scenes from the same historical event.
+
+Definitions
+
+Exact Duplicate Scene
+A request is an exact duplicate if all of the following match a previously
+generated scene in the current session:
+
+• same year
+• same event
+• same guardian
+• same location
+• same scene focus or scene type
+• tone is identical or meaningfully near-identical
+
+Same Event, Different Scene
+A request is not a duplicate if it uses the same historical event but
+changes one or more of the following:
+
+• scene type
+• location
+• time of day
+• perspective emphasis
+• aftermath vs lead-up vs reaction
+• public vs private setting
+
+Continuation
+A request is not a duplicate if the user explicitly asks to continue,
+extend, or resume the already generated scene.
+
+Replacement
+A request is a replacement if the user explicitly asks to discard,
+rewrite, or regenerate the previous scene.
+
+RULES
+
+1. If an exact duplicate is detected, generation must pause.
+2. If the request is the same event but a different scene angle,
+   generation may proceed.
+3. If the request is a continuation, generation may proceed.
+4. If the request is a replacement, the detector must warn that
+   the previous canonical scene will be superseded.
+
+------------------------------------------------------------
+USER-FACING RESPONSE RULE
+------------------------------------------------------------
+
+If duplicate detection triggers, do not stop with a vague question.
+
+Instead return this structure:
+
+DUPLICATE SCENE DETECTED
+
+This request matches a scene already generated in this session.
+
+Choose one option:
+
+1. Continue existing scene
+2. Generate a different scene from the same event
+3. Replace the previous scene completely
+4. Cancel
+
+If option 2 is selected, ask for one of these:
+• aftermath
+• lead-up
+• private conversation
+• street reaction
+• travel reflection
+• institutional response
+• different location within same event window
+
+If the user does not specify, default follow-up prompt should be:
+
+Reply with one of:
+CONTINUE
+NEW ANGLE
+REPLACE
+CANCEL
+
+If NEW ANGLE is chosen, reply with:
+scene type + location + tone
+
+Example:
+NEW ANGLE
+scene type: aftermath
+location: Roman street outside the tribunal
+tone: uneasy intellectual tension
+
+------------------------------------------------------------
+FINAL RULE
+------------------------------------------------------------
+
+If any rule above fails validation,
+generation must stop and report the conflict.

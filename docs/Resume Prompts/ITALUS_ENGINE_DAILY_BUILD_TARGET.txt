@@ -1,0 +1,167 @@
+
+ITALUS_ENGINE_DAILY_BUILD_TARGET.txt
+Date: 2026-03-11
+
+PURPOSE
+-------
+This file defines the **next engineering tasks** for the Italus Engine. It is used at the start of a development session to direct the AI toward specific code patches and avoid architectural drift. Unlike the architecture documents, this file focuses only on the *immediate implementation work* required to advance the engine.
+
+CURRENT PROJECT PHASE
+---------------------
+Runtime Pipeline Integration
+
+The architecture has been stabilized and the runtime contracts have been defined. The current phase focuses on integrating these contracts into the working codebase so that the orchestration pipeline consistently exchanges structured payloads between components.
+
+PRIMARY OBJECTIVE
+-----------------
+Implement structured runtime contracts throughout the generation pipeline so that all components exchange normalized payloads instead of ad‑hoc values.
+
+TARGET PIPELINE
+---------------
+Author Request
+    ↓
+project_runner.py
+    ↓
+Canon Packet Assembly
+    ↓
+Guardian Validation
+    ↓
+prompt_builder.py
+    ↓
+ai_runner.py
+    ↓
+post_generation_canon_validator.py
+    ↓
+Structured Response Envelope
+    ↓
+Commit Pipeline
+
+DAILY BUILD TARGETS
+===================
+
+TARGET 1 — project_runner runtime envelope
+------------------------------------------
+Goal:
+Ensure project_runner produces a normalized response object.
+
+Expected Output Fields:
+
+{
+    "ok": true,
+    "data": {
+        "generated_text": "...",
+        "resolved_request": {},
+        "candidate_scene_count": 0
+    },
+    "meta": {
+        "ai_provider": "claude",
+        "ai_status": "ok"
+    },
+    "warnings": [],
+    "errors": []
+}
+
+Required Actions:
+• normalize AI responses
+• attach resolved request metadata
+• ensure controller compatibility
+
+
+TARGET 2 — prompt_builder sidecar metadata
+------------------------------------------
+Goal:
+Emit structured validation context alongside prompt text.
+
+Expected Output:
+
+{
+    "prompt_text": "...",
+    "validation_sidecar": {
+        "resolved_request_context": {},
+        "packet_manifest": {},
+        "packet_metadata": {}
+    }
+}
+
+Required Actions:
+• avoid embedding validation context only inside prompt text
+• return structured metadata for downstream validation
+
+
+TARGET 3 — ai_runner response normalization
+-------------------------------------------
+Goal:
+Convert raw provider responses into a normalized runtime response.
+
+Expected Fields:
+
+{
+    "ai_provider": "claude",
+    "ai_status": "ok",
+    "generated_text": "...",
+    "generation_state": "ai_generation_completed"
+}
+
+Required Actions:
+• catch provider exceptions
+• normalize output across providers
+• preserve compatibility with project_runner
+
+
+TARGET 4 — post_generation_canon_validator expansion
+----------------------------------------------------
+Current State:
+Validator primarily checks resonance limits.
+
+Next Validation Rules:
+• Italus law violations
+• guardian drift
+• event drift
+• signal tier misuse
+• emotional stage violations
+• continuity contradictions
+
+Expected Output:
+
+{
+    "canon_drift_valid": true,
+    "canon_drift_errors": [],
+    "canon_drift_warnings": [],
+    "canon_drift_report": "..."
+}
+
+
+TARGET 5 — commit pipeline verification
+---------------------------------------
+Goal:
+Ensure accepted scenes update continuity state correctly.
+
+Required Behavior:
+
+save_accepted_scene()
+    → backup state
+    → create scene record
+    → update coverage
+    → update chapter digest
+    → update book state
+
+
+ENGINEERING RULES
+-----------------
+1. Preserve working code.
+2. Extend systems rather than rewriting them.
+3. Maintain canon-bounded design.
+4. Follow runtime contract schemas.
+5. Ensure backwards compatibility with existing controller outputs.
+
+END CONDITION FOR TODAY'S BUILD
+-------------------------------
+The runtime pipeline should successfully perform:
+
+request
+→ prompt generation
+→ AI generation
+→ prose validation
+→ normalized response
+
+without breaking controller compatibility.

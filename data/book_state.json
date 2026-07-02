@@ -1,0 +1,14 @@
+{
+  "BOOK_01": {
+    "last_scene_id": "BOOK_01_CH_01_SC_15",
+    "last_chapter_id": "BOOK_01_CH_01",
+    "last_event_id": "EV001",
+    "last_event": "Test Event",
+    "last_guardian": "Test Guardian",
+    "last_location": "Test Location",
+    "last_scene_type": "dialogue",
+    "last_tone": "test tone",
+    "last_pov": "third_person",
+    "last_update": "2026-03-08T20:41:33.674231+00:00"
+  }
+}

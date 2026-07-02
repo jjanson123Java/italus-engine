@@ -1,0 +1,20 @@
+{
+  "BOOK_01_CH_01": {
+    "last_scene_id": "BOOK_01_CH_01_SC_15",
+    "last_scene_title": "Backup System Test Scene",
+    "last_scene_summary": "Dialogue scene in Test Location focused on Test Guardian during Test Event with tone test tone.",
+    "event_id": "EV001",
+    "event_name": "Test Event",
+    "guardian": "Test Guardian",
+    "location": "Test Location",
+    "scene_type": "dialogue",
+    "tone": "test tone",
+    "pov": "third_person",
+    "time_window": "test",
+    "characters_present": [
+      "Test Character"
+    ],
+    "chapter_progress_note": "dialogue scene at Test Location involving Test Guardian.",
+    "updated_at": "2026-03-08T20:41:33.673212+00:00"
+  }
+}

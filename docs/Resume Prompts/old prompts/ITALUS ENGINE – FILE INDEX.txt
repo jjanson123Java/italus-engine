@@ -1,0 +1,255 @@
+ITALUS ENGINE – FILE INDEX
+
+PURPOSE
+This document maps the engine source files and their responsibilities so that
+AI agents can quickly understand the codebase and resume development.
+
+This file should be read before modifying any Python modules.
+
+
+--------------------------------------------------
+CORE ENGINE MODULES
+--------------------------------------------------
+
+app/canon_bootstrap_book_builder.py
+
+Purpose:
+Builds compressed book canon packs from the master canon documents.
+
+Reads:
+- italus_saga_architecture_map.txt
+- ITALUS_HISTORICAL_EVENT_BACKBONE.txt
+- ITALUS_SCENE_GENERATOR_MATRIX.txt
+- ITALUS_KNOWLEDGE_PACK_CORE.txt
+- ITALUS_KNOWLEDGE_PACK_GENERATION.txt
+
+Produces:
+- ITALUS_KNOWLEDGE_PACK_BOOK_01.txt
+- ...
+- ITALUS_KNOWLEDGE_PACK_BOOK_11.txt
+
+Key Responsibilities:
+
+• Parse architecture map
+• Parse backbone event rows
+• Parse scene generator matrix
+• Determine active guardians
+• Detect guardian transitions
+• Build compressed prompting context
+• Separate dominant / transition / carryover rows
+• Generate final book canon packs
+
+
+--------------------------------------------------
+
+app/project_runner.py
+
+Purpose:
+Main execution pipeline for the Italus engine.
+
+Responsibilities:
+
+• Load book canon packs
+• Load core and generation canon
+• Accept generation requests
+• Call prompt_builder
+• Send prompt to LLM
+• Capture generated text
+• Return results to interface layer
+
+Future responsibilities:
+
+• canon validation
+• generation auditing
+• output persistence
+
+
+--------------------------------------------------
+
+app/prompt_builder.py
+
+Purpose:
+Construct the full prompt stack used for generation.
+
+Prompt Layers:
+
+1 CORE CANON PACK
+2 GENERATION CANON PACK
+3 BOOK CANON PACK
+4 REQUEST PACK
+
+Responsibilities:
+
+• assemble canonical context
+• combine book canon with request parameters
+• enforce narrative laws
+• output final prompt text
+
+
+--------------------------------------------------
+
+app/request_builder.py
+
+Purpose:
+Convert user input into structured request packets.
+
+Example Request Fields:
+
+Book
+Year
+Guardian
+Location
+Scene Type
+Historical Character
+Narrative Mode
+
+Responsibilities:
+
+• validate request fields
+• format request packet
+• pass structured request to project_runner
+
+
+--------------------------------------------------
+
+app/ITALUS_PROJECT_RUNNER_MENU_TONE.py
+
+Purpose:
+Command-line interface for the engine.
+
+Primary Functions:
+
+• Generate scene
+• Generate chapter
+• Generate outline
+• Generate historical interaction
+
+This module collects user input and forwards generation requests
+to project_runner.
+
+
+--------------------------------------------------
+CANON DOCUMENTS
+--------------------------------------------------
+
+docs/italus_saga_architecture_map.txt
+
+Defines:
+
+• Book titles
+• Year ranges
+• Primary guardians
+• Guardian continuity
+• Emotional stage
+• Travel route
+• Narrative role of each book
+
+
+--------------------------------------------------
+
+docs/ITALUS_HISTORICAL_EVENT_BACKBONE.txt
+
+Defines:
+
+• Global historical event timeline
+• Book assignments for events
+• Guardian associations
+
+
+--------------------------------------------------
+
+docs/ITALUS_SCENE_GENERATOR_MATRIX.txt
+
+Defines:
+
+• Scene generation seeds
+• Event-to-scene relationships
+• Historical character appearances
+
+
+--------------------------------------------------
+
+docs/ITALUS_KNOWLEDGE_PACK_CORE.txt
+
+Defines global narrative laws:
+
+• Italus never speaks
+• Guardians interpret Italus
+• Emotional stage framework
+• Narrative interpretation rules
+
+
+--------------------------------------------------
+
+docs/ITALUS_KNOWLEDGE_PACK_GENERATION.txt
+
+Defines generation guidance:
+
+• scene archetypes
+• tone guidance
+• historical interaction rules
+• narrative progression patterns
+
+
+--------------------------------------------------
+GENERATED CANON
+--------------------------------------------------
+
+canon_packs/
+
+ITALUS_KNOWLEDGE_PACK_BOOK_01.txt
+...
+ITALUS_KNOWLEDGE_PACK_BOOK_11.txt
+
+Each pack contains compressed canon for a single book.
+
+Used during prompt generation.
+
+
+--------------------------------------------------
+OUTPUT DIRECTORY
+--------------------------------------------------
+
+output/
+
+scenes/
+chapters/
+outlines/
+
+Generated content is saved here.
+
+
+--------------------------------------------------
+PHASE 2 FILES MOST LIKELY TO CHANGE
+--------------------------------------------------
+
+project_runner.py
+prompt_builder.py
+request_builder.py
+ITALUS_PROJECT_RUNNER_MENU_TONE.py
+
+
+--------------------------------------------------
+FILES THAT SHOULD RARELY CHANGE
+--------------------------------------------------
+
+canon_bootstrap_book_builder.py
+italus_saga_architecture_map.txt
+ITALUS_HISTORICAL_EVENT_BACKBONE.txt
+ITALUS_SCENE_GENERATOR_MATRIX.txt
+
+
+--------------------------------------------------
+CURRENT DEVELOPMENT TASK
+--------------------------------------------------
+
+Implement Canon Loader in project_runner.py.
+
+The runner must load:
+
+canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_XX.txt
+
+and inject the selected book pack into the prompt builder during generation.
+
+
+END FILE INDEX

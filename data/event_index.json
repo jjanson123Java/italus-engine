@@ -1,0 +1,2889 @@
+[
+  {
+    "event_id": "EV001",
+    "event_number": 1,
+    "year_label": "789",
+    "year_start": 789,
+    "year_end": 789,
+    "event_name": "Italus germinates in the Pollino Mountains after the lightning-strike anomaly",
+    "region": "Pollino / Southern Italy",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV002",
+    "event_number": 2,
+    "year_label": "789",
+    "year_start": 789,
+    "year_end": 789,
+    "event_name": "Charlemagne consolidates Frankish power in western Europe",
+    "region": "Western Europe",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV003",
+    "event_number": 3,
+    "year_label": "793",
+    "year_start": 793,
+    "year_end": 793,
+    "event_name": "Viking raid on Lindisfarne marks the start of the Viking Age",
+    "region": "England / Europe-wide awareness later",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV004",
+    "event_number": 4,
+    "year_label": "800",
+    "year_start": 800,
+    "year_end": 800,
+    "event_name": "Charlemagne crowned Holy Roman Emperor",
+    "region": "Rome",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV005",
+    "event_number": 5,
+    "year_label": "802",
+    "year_start": 802,
+    "year_end": 802,
+    "event_name": "Byzantine Empire reorganizes southern Italian holdings under imperial administration",
+    "region": "Southern Italy",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV006",
+    "event_number": 6,
+    "year_label": "806",
+    "year_start": 806,
+    "year_end": 806,
+    "event_name": "Ongoing Frankish-Byzantine rivalry shapes Italian political boundaries",
+    "region": "Italy",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV007",
+    "event_number": 7,
+    "year_label": "810",
+    "year_start": 810,
+    "year_end": 810,
+    "event_name": "Coastal insecurity and raiding intensify in southern Italy",
+    "region": "Calabria / Adriatic awareness",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV008",
+    "event_number": 8,
+    "year_label": "812",
+    "year_start": 812,
+    "year_end": 812,
+    "event_name": "Pax Nicephori helps define spheres between Byzantines and Franks in Italy",
+    "region": "Italy",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV009",
+    "event_number": 9,
+    "year_label": "820",
+    "year_start": 820,
+    "year_end": 820,
+    "event_name": "Regional monastic communities expand in southern Italy",
+    "region": "Calabria / Basilicata",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV010",
+    "event_number": 10,
+    "year_label": "827",
+    "year_start": 827,
+    "year_end": 827,
+    "event_name": "Muslim conquest of Sicily begins",
+    "region": "Sicily",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV011",
+    "event_number": 11,
+    "year_label": "840",
+    "year_start": 840,
+    "year_end": 840,
+    "event_name": "Civil conflict in the Carolingian world destabilizes Europe",
+    "region": "Europe",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV012",
+    "event_number": 12,
+    "year_label": "846",
+    "year_start": 846,
+    "year_end": 846,
+    "event_name": "Arab raid on Rome shocks Latin Christendom",
+    "region": "Rome",
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "book_title": "The Lightning Tree",
+    "active_guardians": [
+      "Luca"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV013",
+    "event_number": 13,
+    "year_label": "902",
+    "year_start": 902,
+    "year_end": 902,
+    "event_name": "Muslim conquest of Sicily effectively completed",
+    "region": "Sicily",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Elia"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV014",
+    "event_number": 14,
+    "year_label": "910",
+    "year_start": 910,
+    "year_end": 910,
+    "event_name": "Monastery at Cluny founded, signaling wider reform currents in Latin Europe",
+    "region": "France / European church culture",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Elia"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV015",
+    "event_number": 15,
+    "year_label": "915",
+    "year_start": 915,
+    "year_end": 915,
+    "event_name": "Battle of Garigliano weakens Muslim raiding power on mainland Italy",
+    "region": "Southern Italy",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Elia"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV016",
+    "event_number": 16,
+    "year_label": "927",
+    "year_start": 927,
+    "year_end": 927,
+    "event_name": "Fatimid expansion affects Mediterranean trade and political tension",
+    "region": "Mediterranean",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Elia"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV017",
+    "event_number": 17,
+    "year_label": "940",
+    "year_start": 940,
+    "year_end": 940,
+    "event_name": "Trade routes and pilgrimage routes through southern Italy continue to grow",
+    "region": "Southern Italy",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Elia"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV018",
+    "event_number": 18,
+    "year_label": "951",
+    "year_start": 951,
+    "year_end": 951,
+    "event_name": "Otto I’s growing influence begins reshaping the Italian political landscape",
+    "region": "Northern / Central Italy",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Elia"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV019",
+    "event_number": 19,
+    "year_label": "962",
+    "year_start": 962,
+    "year_end": 962,
+    "event_name": "Otto I crowned Holy Roman Emperor",
+    "region": "Rome",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Elia"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV020",
+    "event_number": 20,
+    "year_label": "968",
+    "year_start": 968,
+    "year_end": 968,
+    "event_name": "Byzantine and western church competition intensifies in southern Italy",
+    "region": "Southern Italy",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Elia"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV021",
+    "event_number": 21,
+    "year_label": "976",
+    "year_start": 976,
+    "year_end": 976,
+    "event_name": "Periodic instability in the Byzantine Empire affects Italian administration",
+    "region": "Byzantium / Southern Italy",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Marco"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV022",
+    "event_number": 22,
+    "year_label": "982",
+    "year_start": 982,
+    "year_end": 982,
+    "event_name": "Battle of Stilo: Otto II defeated in Calabria",
+    "region": "Calabria",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Marco"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV023",
+    "event_number": 23,
+    "year_label": "987",
+    "year_start": 987,
+    "year_end": 987,
+    "event_name": "Capetian monarchy begins in France, part of wider European dynastic reordering",
+    "region": "Europe",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Marco"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV024",
+    "event_number": 24,
+    "year_label": "989",
+    "year_start": 989,
+    "year_end": 989,
+    "event_name": "Peace and Truce of God movements begin shaping church responses to violence",
+    "region": "France / Europe-wide church culture",
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "book_title": "Daughter Of The Mountain",
+    "active_guardians": [
+      "Marco"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV025",
+    "event_number": 25,
+    "year_label": "1000",
+    "year_start": 1000,
+    "year_end": 1000,
+    "event_name": "Pilgrimage culture intensifies across Europe, increasing long-distance movement",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Simonetta"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV026",
+    "event_number": 26,
+    "year_label": "1009",
+    "year_start": 1009,
+    "year_end": 1009,
+    "event_name": "Destruction of the Church of the Holy Sepulchre heightens Christian tensions",
+    "region": "Jerusalem / Europe",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Simonetta"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV027",
+    "event_number": 27,
+    "year_label": "1016",
+    "year_start": 1016,
+    "year_end": 1016,
+    "event_name": "Norman influence expands in southern Italy through mercenary activity",
+    "region": "Southern Italy",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Simonetta"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV028",
+    "event_number": 28,
+    "year_label": "1030",
+    "year_start": 1030,
+    "year_end": 1030,
+    "event_name": "County of Aversa established under Norman leadership",
+    "region": "Campania / Southern Italy",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Simonetta"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV029",
+    "event_number": 29,
+    "year_label": "1039",
+    "year_start": 1039,
+    "year_end": 1039,
+    "event_name": "Byzantines lose additional control in southern Italy",
+    "region": "Southern Italy",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Simonetta"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV030",
+    "event_number": 30,
+    "year_label": "1048",
+    "year_start": 1048,
+    "year_end": 1048,
+    "event_name": "Reform papacy strengthens church centralization",
+    "region": "Rome",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Simonetta"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV031",
+    "event_number": 31,
+    "year_label": "1054",
+    "year_start": 1054,
+    "year_end": 1054,
+    "event_name": "Great Schism between eastern and western churches",
+    "region": "Rome / Constantinople",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Simonetta",
+      "Brother Anselm"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV032",
+    "event_number": 32,
+    "year_label": "1059",
+    "year_start": 1059,
+    "year_end": 1059,
+    "event_name": "Treaty of Melfi legitimizes Norman power in southern Italy",
+    "region": "Southern Italy",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Simonetta",
+      "Brother Anselm"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV033",
+    "event_number": 33,
+    "year_label": "1061",
+    "year_start": 1061,
+    "year_end": 1061,
+    "event_name": "Norman conquest of Sicily begins",
+    "region": "Sicily",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Brother Anselm"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV034",
+    "event_number": 34,
+    "year_label": "1071",
+    "year_start": 1071,
+    "year_end": 1071,
+    "event_name": "Fall of Bari ends major Byzantine presence in southern Italy",
+    "region": "Bari / Southern Italy",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Brother Anselm"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV035",
+    "event_number": 35,
+    "year_label": "1073–1085",
+    "year_start": 1073,
+    "year_end": 1085,
+    "event_name": "Gregorian Reform reshapes the papacy and church authority",
+    "region": "Rome / Europe",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Brother Anselm"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV036",
+    "event_number": 36,
+    "year_label": "1095",
+    "year_start": 1095,
+    "year_end": 1095,
+    "event_name": "First Crusade proclaimed at Clermont",
+    "region": "Europe / Mediterranean",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Brother Anselm"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV037",
+    "event_number": 37,
+    "year_label": "1097",
+    "year_start": 1097,
+    "year_end": 1097,
+    "event_name": "Crusader armies moving east transform roads, ports, and supply corridors",
+    "region": "Italy / Mediterranean",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Brother Anselm"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV038",
+    "event_number": 38,
+    "year_label": "1099",
+    "year_start": 1099,
+    "year_end": 1099,
+    "event_name": "Crusaders capture Jerusalem",
+    "region": "Jerusalem",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Brother Anselm"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV039",
+    "event_number": 39,
+    "year_label": "1101",
+    "year_start": 1101,
+    "year_end": 1101,
+    "event_name": "Additional crusading waves and return travel reshape Mediterranean movement",
+    "region": "Mediterranean",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Brother Anselm"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV040",
+    "event_number": 40,
+    "year_label": "1110",
+    "year_start": 1110,
+    "year_end": 1110,
+    "event_name": "Late Norman consolidation in southern Italy",
+    "region": "Southern Italy",
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "book_title": "The Observers",
+    "active_guardians": [
+      "Brother Anselm",
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV041",
+    "event_number": 41,
+    "year_label": "1111",
+    "year_start": 1111,
+    "year_end": 1111,
+    "event_name": "Imperial-papal tensions continue under Henry V",
+    "region": "Italy / Holy Roman Empire",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV042",
+    "event_number": 42,
+    "year_label": "1122",
+    "year_start": 1122,
+    "year_end": 1122,
+    "event_name": "Concordat of Worms partially resolves the Investiture Controversy",
+    "region": "Europe",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV043",
+    "event_number": 43,
+    "year_label": "1130",
+    "year_start": 1130,
+    "year_end": 1130,
+    "event_name": "Kingdom of Sicily established under Roger II",
+    "region": "Sicily / Southern Italy",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV044",
+    "event_number": 44,
+    "year_label": "1140",
+    "year_start": 1140,
+    "year_end": 1140,
+    "event_name": "Assizes of Ariano strengthen Sicilian royal administration",
+    "region": "Southern Italy",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV045",
+    "event_number": 45,
+    "year_label": "1147–1149",
+    "year_start": 1147,
+    "year_end": 1149,
+    "event_name": "Second Crusade affects Mediterranean traffic and political culture",
+    "region": "Europe / Mediterranean",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV046",
+    "event_number": 46,
+    "year_label": "1154",
+    "year_start": 1154,
+    "year_end": 1154,
+    "event_name": "Byzantine and Norman rivalry still shapes southern waters and trade",
+    "region": "Southern Italy / Mediterranean",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV047",
+    "event_number": 47,
+    "year_label": "1169",
+    "year_start": 1169,
+    "year_end": 1169,
+    "event_name": "Major earthquake strikes eastern Sicily",
+    "region": "Sicily",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV048",
+    "event_number": 48,
+    "year_label": "1183",
+    "year_start": 1183,
+    "year_end": 1183,
+    "event_name": "Peace of Constance stabilizes parts of northern Italian politics",
+    "region": "Italy",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV049",
+    "event_number": 49,
+    "year_label": "1187",
+    "year_start": 1187,
+    "year_end": 1187,
+    "event_name": "Saladin recaptures Jerusalem",
+    "region": "Levant / Europe",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV050",
+    "event_number": 50,
+    "year_label": "1194",
+    "year_start": 1194,
+    "year_end": 1194,
+    "event_name": "Frederick II born",
+    "region": "Italy / Sicily",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV051",
+    "event_number": 51,
+    "year_label": "1204",
+    "year_start": 1204,
+    "year_end": 1204,
+    "event_name": "Fourth Crusade sacks Constantinople",
+    "region": "Constantinople",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV052",
+    "event_number": 52,
+    "year_label": "1212",
+    "year_start": 1212,
+    "year_end": 1212,
+    "event_name": "Children’s Crusade tradition emerges in memory and rumor",
+    "region": "Europe",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV053",
+    "event_number": 53,
+    "year_label": "1220",
+    "year_start": 1220,
+    "year_end": 1220,
+    "event_name": "Frederick II crowned Holy Roman Emperor",
+    "region": "Rome",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Caterina",
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV054",
+    "event_number": 54,
+    "year_label": "1224",
+    "year_start": 1224,
+    "year_end": 1224,
+    "event_name": "University of Naples founded",
+    "region": "Southern Italy",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV055",
+    "event_number": 55,
+    "year_label": "1231",
+    "year_start": 1231,
+    "year_end": 1231,
+    "event_name": "Constitutions of Melfi issued",
+    "region": "Southern Italy / Sicily",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV056",
+    "event_number": 56,
+    "year_label": "1239",
+    "year_start": 1239,
+    "year_end": 1239,
+    "event_name": "Frederick II’s conflicts with the papacy intensify",
+    "region": "Italy",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV057",
+    "event_number": 57,
+    "year_label": "1241",
+    "year_start": 1241,
+    "year_end": 1241,
+    "event_name": "Mongol pressure in eastern Europe changes western political awareness",
+    "region": "Europe",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV058",
+    "event_number": 58,
+    "year_label": "1248",
+    "year_start": 1248,
+    "year_end": 1248,
+    "event_name": "Crusading failures deepen cynicism and apocalyptic rhetoric",
+    "region": "Mediterranean / Europe",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV059",
+    "event_number": 59,
+    "year_label": "1250",
+    "year_start": 1250,
+    "year_end": 1250,
+    "event_name": "Death of Frederick II",
+    "region": "Southern Italy / Sicily",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV060",
+    "event_number": 60,
+    "year_label": "1266",
+    "year_start": 1266,
+    "year_end": 1266,
+    "event_name": "Battle of Benevento shifts southern Italian rule to the Angevins",
+    "region": "Southern Italy",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV061",
+    "event_number": 61,
+    "year_label": "1282",
+    "year_start": 1282,
+    "year_end": 1282,
+    "event_name": "Sicilian Vespers revolt",
+    "region": "Sicily",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV062",
+    "event_number": 62,
+    "year_label": "1291",
+    "year_start": 1291,
+    "year_end": 1291,
+    "event_name": "Fall of Acre ends the last major Crusader stronghold in the Levant",
+    "region": "Eastern Mediterranean",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV063",
+    "event_number": 63,
+    "year_label": "1300",
+    "year_start": 1300,
+    "year_end": 1300,
+    "event_name": "Jubilee proclaimed by Boniface VIII draws pilgrims to Rome",
+    "region": "Rome",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV064",
+    "event_number": 64,
+    "year_label": "1302",
+    "year_start": 1302,
+    "year_end": 1302,
+    "event_name": "Conflict between papacy and monarchy deepens under Boniface VIII and Philip IV",
+    "region": "Europe",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV065",
+    "event_number": 65,
+    "year_label": "1309",
+    "year_start": 1309,
+    "year_end": 1309,
+    "event_name": "Papacy moves to Avignon",
+    "region": "Western Christendom",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV066",
+    "event_number": 66,
+    "year_label": "1310",
+    "year_start": 1310,
+    "year_end": 1310,
+    "event_name": "Henry VII’s Italian campaign renews imperial tensions",
+    "region": "Italy",
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "book_title": "The Emperor'S Naturalists",
+    "active_guardians": [
+      "Amara",
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV067",
+    "event_number": 67,
+    "year_label": "1315–1317",
+    "year_start": 1315,
+    "year_end": 1317,
+    "event_name": "Great European Famine",
+    "region": "Europe",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV068",
+    "event_number": 68,
+    "year_label": "1320",
+    "year_start": 1320,
+    "year_end": 1320,
+    "event_name": "Rural stress and grain shortages reshape village life",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV069",
+    "event_number": 69,
+    "year_label": "1337",
+    "year_start": 1337,
+    "year_end": 1337,
+    "event_name": "Hundred Years’ War begins",
+    "region": "Western Europe / trade implications",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV070",
+    "event_number": 70,
+    "year_label": "1347",
+    "year_start": 1347,
+    "year_end": 1347,
+    "event_name": "Black Death reaches Mediterranean ports, including Messina",
+    "region": "Sicily / Italy",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV071",
+    "event_number": 71,
+    "year_label": "1348",
+    "year_start": 1348,
+    "year_end": 1348,
+    "event_name": "Black Death devastates Italy",
+    "region": "Italy",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV072",
+    "event_number": 72,
+    "year_label": "1349",
+    "year_start": 1349,
+    "year_end": 1349,
+    "event_name": "Continued plague mortality and social collapse",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV073",
+    "event_number": 73,
+    "year_label": "1351",
+    "year_start": 1351,
+    "year_end": 1351,
+    "event_name": "Additional plague wave spreads across Europe",
+    "region": "Europe",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV074",
+    "event_number": 74,
+    "year_label": "1361",
+    "year_start": 1361,
+    "year_end": 1361,
+    "event_name": "Another major plague recurrence",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV075",
+    "event_number": 75,
+    "year_label": "1377",
+    "year_start": 1377,
+    "year_end": 1377,
+    "event_name": "Papacy returns from Avignon to Rome",
+    "region": "Rome",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV076",
+    "event_number": 76,
+    "year_label": "1378",
+    "year_start": 1378,
+    "year_end": 1378,
+    "event_name": "Western Schism begins",
+    "region": "Rome / Europe",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV077",
+    "event_number": 77,
+    "year_label": "1381",
+    "year_start": 1381,
+    "year_end": 1381,
+    "event_name": "Revolt and labor unrest appear across Europe after plague disruption",
+    "region": "Europe",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV078",
+    "event_number": 78,
+    "year_label": "1389",
+    "year_start": 1389,
+    "year_end": 1389,
+    "event_name": "Battle of Kosovo becomes a major eastern European turning point",
+    "region": "Balkans / Europe",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV079",
+    "event_number": 79,
+    "year_label": "1397",
+    "year_start": 1397,
+    "year_end": 1397,
+    "event_name": "Commercial recovery expands in Italian city-states despite demographic scars",
+    "region": "Italy",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV080",
+    "event_number": 80,
+    "year_label": "1400",
+    "year_start": 1400,
+    "year_end": 1400,
+    "event_name": "Early Renaissance conditions strengthen in Florence and beyond",
+    "region": "Italy",
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "book_title": "The Black Years",
+    "active_guardians": [
+      "Giacomo"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV081",
+    "event_number": 81,
+    "year_label": "1415",
+    "year_start": 1415,
+    "year_end": 1415,
+    "event_name": "Battle of Agincourt",
+    "region": "France / Europe",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV082",
+    "event_number": 82,
+    "year_label": "1417",
+    "year_start": 1417,
+    "year_end": 1417,
+    "event_name": "End of the Western Schism at Council of Constance",
+    "region": "Europe",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV083",
+    "event_number": 83,
+    "year_label": "1434",
+    "year_start": 1434,
+    "year_end": 1434,
+    "event_name": "Medici power consolidated in Florence",
+    "region": "Florence / Italy",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV084",
+    "event_number": 84,
+    "year_label": "1450",
+    "year_start": 1450,
+    "year_end": 1450,
+    "event_name": "Gutenberg-era print culture begins reshaping Europe",
+    "region": "Europe",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV085",
+    "event_number": 85,
+    "year_label": "1453",
+    "year_start": 1453,
+    "year_end": 1453,
+    "event_name": "Fall of Constantinople",
+    "region": "Constantinople / Italy",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV086",
+    "event_number": 86,
+    "year_label": "1469",
+    "year_start": 1469,
+    "year_end": 1469,
+    "event_name": "Rise of Lorenzo de’ Medici symbolizes high Renaissance patronage",
+    "region": "Florence",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV087",
+    "event_number": 87,
+    "year_label": "1478",
+    "year_start": 1478,
+    "year_end": 1478,
+    "event_name": "Pazzi conspiracy reveals volatility of Italian politics",
+    "region": "Florence",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV088",
+    "event_number": 88,
+    "year_label": "1485",
+    "year_start": 1485,
+    "year_end": 1485,
+    "event_name": "Renaissance artistic and humanist culture expands across Italy",
+    "region": "Italy",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV089",
+    "event_number": 89,
+    "year_label": "1492",
+    "year_start": 1492,
+    "year_end": 1492,
+    "event_name": "Columbus sails west from Spain",
+    "region": "Spain / Europe",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV090",
+    "event_number": 90,
+    "year_label": "1494",
+    "year_start": 1494,
+    "year_end": 1494,
+    "event_name": "French invasion launches the Italian Wars",
+    "region": "Italy",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV091",
+    "event_number": 91,
+    "year_label": "1498",
+    "year_start": 1498,
+    "year_end": 1498,
+    "event_name": "Savonarola executed in Florence",
+    "region": "Florence",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV092",
+    "event_number": 92,
+    "year_label": "1503",
+    "year_start": 1503,
+    "year_end": 1503,
+    "event_name": "Pope Julius II era begins; intense artistic and political ambition in Rome",
+    "region": "Rome",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Orsolina"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV093",
+    "event_number": 93,
+    "year_label": "1517",
+    "year_start": 1517,
+    "year_end": 1517,
+    "event_name": "Martin Luther’s theses ignite the Reformation",
+    "region": "Europe",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV094",
+    "event_number": 94,
+    "year_label": "1519–1522",
+    "year_start": 1519,
+    "year_end": 1522,
+    "event_name": "Magellan-Elcano circumnavigation proves global sea linkage",
+    "region": "Global / Europe",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV095",
+    "event_number": 95,
+    "year_label": "1525",
+    "year_start": 1525,
+    "year_end": 1525,
+    "event_name": "Battle of Pavia reshapes Italian power politics",
+    "region": "Northern Italy",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV096",
+    "event_number": 96,
+    "year_label": "1527",
+    "year_start": 1527,
+    "year_end": 1527,
+    "event_name": "Sack of Rome",
+    "region": "Rome",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV097",
+    "event_number": 97,
+    "year_label": "1543",
+    "year_start": 1543,
+    "year_end": 1543,
+    "event_name": "Copernicus publishes heliocentric theory",
+    "region": "Europe",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV098",
+    "event_number": 98,
+    "year_label": "1555",
+    "year_start": 1555,
+    "year_end": 1555,
+    "event_name": "Peace of Augsburg recognizes religious division in the Empire",
+    "region": "Central Europe",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV099",
+    "event_number": 99,
+    "year_label": "1563",
+    "year_start": 1563,
+    "year_end": 1563,
+    "event_name": "Council of Trent closes, shaping Counter-Reformation Catholicism",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV100",
+    "event_number": 100,
+    "year_label": "1564",
+    "year_start": 1564,
+    "year_end": 1564,
+    "event_name": "Galileo born",
+    "region": "Italy",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV101",
+    "event_number": 101,
+    "year_label": "1571",
+    "year_start": 1571,
+    "year_end": 1571,
+    "event_name": "Battle of Lepanto",
+    "region": "Mediterranean",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV102",
+    "event_number": 102,
+    "year_label": "1582",
+    "year_start": 1582,
+    "year_end": 1582,
+    "event_name": "Gregorian calendar reform",
+    "region": "Catholic Europe / Italy",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV103",
+    "event_number": 103,
+    "year_label": "1588",
+    "year_start": 1588,
+    "year_end": 1588,
+    "event_name": "Spanish Armada defeated",
+    "region": "Europe",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV104",
+    "event_number": 104,
+    "year_label": "1600",
+    "year_start": 1600,
+    "year_end": 1600,
+    "event_name": "Giordano Bruno executed in Rome",
+    "region": "Rome",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV105",
+    "event_number": 105,
+    "year_label": "1609",
+    "year_start": 1609,
+    "year_end": 1609,
+    "event_name": "Galileo begins telescopic observations",
+    "region": "Padua / Italy",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV106",
+    "event_number": 106,
+    "year_label": "1618",
+    "year_start": 1618,
+    "year_end": 1618,
+    "event_name": "Thirty Years’ War begins",
+    "region": "Central Europe / wider implications",
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "book_title": "Maps Of The World",
+    "active_guardians": [
+      "Pietro"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV107",
+    "event_number": 107,
+    "year_label": "1623",
+    "year_start": 1623,
+    "year_end": 1623,
+    "event_name": "Urban VIII becomes pope, shaping Galileo’s Roman world",
+    "region": "Rome",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Domenico"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV108",
+    "event_number": 108,
+    "year_label": "1633",
+    "year_start": 1633,
+    "year_end": 1633,
+    "event_name": "Galileo tried by the Inquisition",
+    "region": "Rome",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Domenico"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV109",
+    "event_number": 109,
+    "year_label": "1648",
+    "year_start": 1648,
+    "year_end": 1648,
+    "event_name": "Peace of Westphalia ends the Thirty Years’ War",
+    "region": "Europe",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Domenico"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV110",
+    "event_number": 110,
+    "year_label": "1656",
+    "year_start": 1656,
+    "year_end": 1656,
+    "event_name": "Major plague outbreak in Naples",
+    "region": "Southern Italy",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Domenico"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV111",
+    "event_number": 111,
+    "year_label": "1666",
+    "year_start": 1666,
+    "year_end": 1666,
+    "event_name": "Great Fire of London symbolizes vulnerability of dense early modern cities",
+    "region": "Europe",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Domenico"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV112",
+    "event_number": 112,
+    "year_label": "1687",
+    "year_start": 1687,
+    "year_end": 1687,
+    "event_name": "Newton publishes Principia",
+    "region": "Europe",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Domenico"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV113",
+    "event_number": 113,
+    "year_label": "1693",
+    "year_start": 1693,
+    "year_end": 1693,
+    "event_name": "Great Sicilian earthquake",
+    "region": "Sicily",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Domenico"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV114",
+    "event_number": 114,
+    "year_label": "1701",
+    "year_start": 1701,
+    "year_end": 1701,
+    "event_name": "War of the Spanish Succession begins",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Domenico"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV115",
+    "event_number": 115,
+    "year_label": "1713",
+    "year_start": 1713,
+    "year_end": 1713,
+    "event_name": "Treaty of Utrecht reshapes dynastic control, including in Italy",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Agata"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV116",
+    "event_number": 116,
+    "year_label": "1734",
+    "year_start": 1734,
+    "year_end": 1734,
+    "event_name": "Bourbon rule begins in Naples and Sicily",
+    "region": "Southern Italy",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Agata"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV117",
+    "event_number": 117,
+    "year_label": "1755",
+    "year_start": 1755,
+    "year_end": 1755,
+    "event_name": "Lisbon earthquake shocks Enlightenment thought",
+    "region": "Europe",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Agata"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV118",
+    "event_number": 118,
+    "year_label": "1764",
+    "year_start": 1764,
+    "year_end": 1764,
+    "event_name": "Beccaria’s Enlightenment thought spreads from Italy",
+    "region": "Italy / Europe",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Agata"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV119",
+    "event_number": 119,
+    "year_label": "1776",
+    "year_start": 1776,
+    "year_end": 1776,
+    "event_name": "American Revolution begins",
+    "region": "Atlantic world / Europe",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Agata"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV120",
+    "event_number": 120,
+    "year_label": "1789",
+    "year_start": 1789,
+    "year_end": 1789,
+    "event_name": "French Revolution begins",
+    "region": "France / Europe",
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "book_title": "The Age Of Reason",
+    "active_guardians": [
+      "Agata"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV121",
+    "event_number": 121,
+    "year_label": "1798–1799",
+    "year_start": 1798,
+    "year_end": 1799,
+    "event_name": "Napoleon’s campaigns and republican experiments reshape Italy",
+    "region": "Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Agata"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV122",
+    "event_number": 122,
+    "year_label": "1804",
+    "year_start": 1804,
+    "year_end": 1804,
+    "event_name": "Napoleon crowned emperor",
+    "region": "Europe",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV123",
+    "event_number": 123,
+    "year_label": "1815",
+    "year_start": 1815,
+    "year_end": 1815,
+    "event_name": "Congress of Vienna redraws Europe after Napoleon",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV124",
+    "event_number": 124,
+    "year_label": "1820–1821",
+    "year_start": 1820,
+    "year_end": 1821,
+    "event_name": "Carbonari and constitutional revolts in Italy",
+    "region": "Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV125",
+    "event_number": 125,
+    "year_label": "1831",
+    "year_start": 1831,
+    "year_end": 1831,
+    "event_name": "Mazzinian nationalism strengthens Italian unification ideas",
+    "region": "Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV126",
+    "event_number": 126,
+    "year_label": "1848",
+    "year_start": 1848,
+    "year_end": 1848,
+    "event_name": "Revolutions across Europe, including Italy",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV127",
+    "event_number": 127,
+    "year_label": "1859",
+    "year_start": 1859,
+    "year_end": 1859,
+    "event_name": "Second Italian War of Independence",
+    "region": "Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV128",
+    "event_number": 128,
+    "year_label": "1860",
+    "year_start": 1860,
+    "year_end": 1860,
+    "event_name": "Garibaldi’s Expedition of the Thousand",
+    "region": "Southern Italy / Sicily",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV129",
+    "event_number": 129,
+    "year_label": "1861",
+    "year_start": 1861,
+    "year_end": 1861,
+    "event_name": "Kingdom of Italy proclaimed",
+    "region": "Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV130",
+    "event_number": 130,
+    "year_label": "1866",
+    "year_start": 1866,
+    "year_end": 1866,
+    "event_name": "Third Italian War of Independence",
+    "region": "Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV131",
+    "event_number": 131,
+    "year_label": "1870",
+    "year_start": 1870,
+    "year_end": 1870,
+    "event_name": "Capture of Rome completes major phase of Italian unification",
+    "region": "Rome",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV132",
+    "event_number": 132,
+    "year_label": "1871",
+    "year_start": 1871,
+    "year_end": 1871,
+    "event_name": "Rome becomes capital of Italy",
+    "region": "Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV133",
+    "event_number": 133,
+    "year_label": "1882",
+    "year_start": 1882,
+    "year_end": 1882,
+    "event_name": "Death of Giuseppe Garibaldi",
+    "region": "Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV134",
+    "event_number": 134,
+    "year_label": "1883",
+    "year_start": 1883,
+    "year_end": 1883,
+    "event_name": "Krakatoa eruption becomes a global atmospheric event",
+    "region": "Global / climate effects",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV135",
+    "event_number": 135,
+    "year_label": "1890s",
+    "year_start": 1890,
+    "year_end": 1899,
+    "event_name": "Industrialization and migration reshape Italian society",
+    "region": "Italy",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV136",
+    "event_number": 136,
+    "year_label": "1896",
+    "year_start": 1896,
+    "year_end": 1896,
+    "event_name": "Battle of Adwa affects Italian imperial politics and identity",
+    "region": "Italy / Eritrea / national mood",
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "book_title": "The Nation",
+    "active_guardians": [
+      "Emilio"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV137",
+    "event_number": 137,
+    "year_label": "1908",
+    "year_start": 1908,
+    "year_end": 1908,
+    "event_name": "Messina earthquake and tsunami devastate southern Italy",
+    "region": "Sicily / Calabria",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV138",
+    "event_number": 138,
+    "year_label": "1911–1912",
+    "year_start": 1911,
+    "year_end": 1912,
+    "event_name": "Italo-Turkish War",
+    "region": "Italy / Mediterranean",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV139",
+    "event_number": 139,
+    "year_label": "1914",
+    "year_start": 1914,
+    "year_end": 1914,
+    "event_name": "World War I begins",
+    "region": "Europe",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV140",
+    "event_number": 140,
+    "year_label": "1915",
+    "year_start": 1915,
+    "year_end": 1915,
+    "event_name": "Italy enters World War I",
+    "region": "Italy",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV141",
+    "event_number": 141,
+    "year_label": "1916",
+    "year_start": 1916,
+    "year_end": 1916,
+    "event_name": "Brutal attrition on the Isonzo Front",
+    "region": "Northeastern Italy",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV142",
+    "event_number": 142,
+    "year_label": "1917",
+    "year_start": 1917,
+    "year_end": 1917,
+    "event_name": "Caporetto disaster",
+    "region": "Italy",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV143",
+    "event_number": 143,
+    "year_label": "1918",
+    "year_start": 1918,
+    "year_end": 1918,
+    "event_name": "World War I ends",
+    "region": "Europe",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV144",
+    "event_number": 144,
+    "year_label": "1918–1919",
+    "year_start": 1918,
+    "year_end": 1919,
+    "event_name": "Spanish flu pandemic",
+    "region": "Global / Italy",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV145",
+    "event_number": 145,
+    "year_label": "1919",
+    "year_start": 1919,
+    "year_end": 1919,
+    "event_name": "Postwar unrest and social fractures intensify in Italy",
+    "region": "Italy",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV146",
+    "event_number": 146,
+    "year_label": "1922",
+    "year_start": 1922,
+    "year_end": 1922,
+    "event_name": "Mussolini’s March on Rome",
+    "region": "Italy",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV147",
+    "event_number": 147,
+    "year_label": "1929",
+    "year_start": 1929,
+    "year_end": 1929,
+    "event_name": "Lateran Treaty resolves the Roman Question",
+    "region": "Rome / Italy",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV148",
+    "event_number": 148,
+    "year_label": "1935–1936",
+    "year_start": 1935,
+    "year_end": 1936,
+    "event_name": "Italian invasion of Ethiopia",
+    "region": "Italy / empire politics",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV149",
+    "event_number": 149,
+    "year_label": "1938",
+    "year_start": 1938,
+    "year_end": 1938,
+    "event_name": "Anti-Jewish racial laws in Fascist Italy",
+    "region": "Italy",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV150",
+    "event_number": 150,
+    "year_label": "1939",
+    "year_start": 1939,
+    "year_end": 1939,
+    "event_name": "World War II begins in Europe",
+    "region": "Europe",
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "book_title": "The War That Took The Guardian",
+    "active_guardians": [
+      "Rosa"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV151",
+    "event_number": 151,
+    "year_label": "1940",
+    "year_start": 1940,
+    "year_end": 1940,
+    "event_name": "Italy enters World War II",
+    "region": "Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Rosa",
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV152",
+    "event_number": 152,
+    "year_label": "1943",
+    "year_start": 1943,
+    "year_end": 1943,
+    "event_name": "Allied invasion of Sicily",
+    "region": "Sicily",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV153",
+    "event_number": 153,
+    "year_label": "1943",
+    "year_start": 1943,
+    "year_end": 1943,
+    "event_name": "Allied invasion of mainland Italy and collapse of Mussolini’s regime",
+    "region": "Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV154",
+    "event_number": 154,
+    "year_label": "1944",
+    "year_start": 1944,
+    "year_end": 1944,
+    "event_name": "Continued warfare and destruction across Italy",
+    "region": "Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV155",
+    "event_number": 155,
+    "year_label": "1945",
+    "year_start": 1945,
+    "year_end": 1945,
+    "event_name": "World War II ends in Europe",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV156",
+    "event_number": 156,
+    "year_label": "1946",
+    "year_start": 1946,
+    "year_end": 1946,
+    "event_name": "Italy becomes a republic",
+    "region": "Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV157",
+    "event_number": 157,
+    "year_label": "1948",
+    "year_start": 1948,
+    "year_end": 1948,
+    "event_name": "New Italian constitution takes effect",
+    "region": "Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV158",
+    "event_number": 158,
+    "year_label": "1957",
+    "year_start": 1957,
+    "year_end": 1957,
+    "event_name": "Treaty of Rome creates the EEC",
+    "region": "Rome",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV159",
+    "event_number": 159,
+    "year_label": "1963",
+    "year_start": 1963,
+    "year_end": 1963,
+    "event_name": "Vajont disaster reflects dangers of modern development",
+    "region": "Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV160",
+    "event_number": 160,
+    "year_label": "1968",
+    "year_start": 1968,
+    "year_end": 1968,
+    "event_name": "Global protest era influences Italian social life",
+    "region": "Italy / Europe",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV161",
+    "event_number": 161,
+    "year_label": "1969",
+    "year_start": 1969,
+    "year_end": 1969,
+    "event_name": "Piazza Fontana bombing begins Years of Lead atmosphere",
+    "region": "Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV162",
+    "event_number": 162,
+    "year_label": "1970s",
+    "year_start": 1970,
+    "year_end": 1979,
+    "event_name": "Environmental awareness and anti-industrial critique grow",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV163",
+    "event_number": 163,
+    "year_label": "1978",
+    "year_start": 1978,
+    "year_end": 1978,
+    "event_name": "Kidnapping and murder of Aldo Moro",
+    "region": "Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV164",
+    "event_number": 164,
+    "year_label": "1980",
+    "year_start": 1980,
+    "year_end": 1980,
+    "event_name": "Irpinia earthquake",
+    "region": "Southern Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV165",
+    "event_number": 165,
+    "year_label": "1985",
+    "year_start": 1985,
+    "year_end": 1985,
+    "event_name": "End of Theodora’s formal service period",
+    "region": "Southern Italy",
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "book_title": "The Olive Grove",
+    "active_guardians": [
+      "Theodora Bassi",
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV166",
+    "event_number": 166,
+    "year_label": "1986",
+    "year_start": 1986,
+    "year_end": 1986,
+    "event_name": "Chernobyl disaster sharpens environmental consciousness across Europe",
+    "region": "Europe",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV167",
+    "event_number": 167,
+    "year_label": "1989",
+    "year_start": 1989,
+    "year_end": 1989,
+    "event_name": "Fall of the Berlin Wall",
+    "region": "Europe",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV168",
+    "event_number": 168,
+    "year_label": "1991",
+    "year_start": 1991,
+    "year_end": 1991,
+    "event_name": "End of the Cold War",
+    "region": "Europe / global",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV169",
+    "event_number": 169,
+    "year_label": "1992",
+    "year_start": 1992,
+    "year_end": 1992,
+    "event_name": "Maastricht Treaty deepens European integration",
+    "region": "Europe",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV170",
+    "event_number": 170,
+    "year_label": "1990s",
+    "year_start": 1990,
+    "year_end": 1999,
+    "event_name": "Satellite mapping and digital cartography become common",
+    "region": "Global / Europe",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV171",
+    "event_number": 171,
+    "year_label": "1992",
+    "year_start": 1992,
+    "year_end": 1992,
+    "event_name": "Mani Pulite investigations transform Italian politics",
+    "region": "Italy",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV172",
+    "event_number": 172,
+    "year_label": "1997",
+    "year_start": 1997,
+    "year_end": 1997,
+    "event_name": "Kyoto Protocol era begins international climate focus",
+    "region": "Global",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV173",
+    "event_number": 173,
+    "year_label": "1999",
+    "year_start": 1999,
+    "year_end": 1999,
+    "event_name": "Euro monetary integration advances",
+    "region": "Europe / Italy",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV174",
+    "event_number": 174,
+    "year_label": "2001",
+    "year_start": 2001,
+    "year_end": 2001,
+    "event_name": "September 11 attacks reshape global security culture",
+    "region": "Global",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV175",
+    "event_number": 175,
+    "year_label": "2002",
+    "year_start": 2002,
+    "year_end": 2002,
+    "event_name": "Euro banknotes and coins enter circulation",
+    "region": "Italy / Europe",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV176",
+    "event_number": 176,
+    "year_label": "2008",
+    "year_start": 2008,
+    "year_end": 2008,
+    "event_name": "Global financial crisis",
+    "region": "Global / Europe",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV177",
+    "event_number": 177,
+    "year_label": "2009",
+    "year_start": 2009,
+    "year_end": 2009,
+    "event_name": "L’Aquila earthquake",
+    "region": "Italy",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV178",
+    "event_number": 178,
+    "year_label": "2015",
+    "year_start": 2015,
+    "year_end": 2015,
+    "event_name": "Paris Climate Agreement",
+    "region": "Global",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV179",
+    "event_number": 179,
+    "year_label": "2016",
+    "year_start": 2016,
+    "year_end": 2016,
+    "event_name": "Central Italy earthquake sequence renews awareness of fragile landscapes",
+    "region": "Italy",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  },
+  {
+    "event_id": "EV180",
+    "event_number": 180,
+    "year_label": "2020",
+    "year_start": 2020,
+    "year_end": 2020,
+    "event_name": "Global pandemic",
+    "region": "Global / Italy",
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "book_title": "The Last Guardian",
+    "active_guardians": [
+      "Final Guardian"
+    ],
+    "source_file": "ITALUS_HISTORICAL_EVENT_BACKBONE.txt"
+  }
+]

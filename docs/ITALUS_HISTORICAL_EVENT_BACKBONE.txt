@@ -1,0 +1,270 @@
+ITALUS_HISTORICAL_EVENT_BACKBONE
+Master Historical Timeline
+Canonical Research Ledger for the Italus Saga
+PURPOSE
+
+This document is the historical backbone of the Italus saga.
+
+It contains 180 historically verified events spanning 789 AD to 2020 AD.
+
+These events serve as chronological anchors for the narrative and ensure
+that all fictional scenes involving Italus and the guardians remain
+aligned with real historical developments.
+
+Events listed in this document must never be altered.
+
+Italus and the guardians may observe, pass through, or be affected by
+these events, but they do not influence or change historical outcomes.
+
+This timeline must always be cross-checked with:
+
+• the Italus Character Bible  
+• the Italus World Bible  
+• the Italus Saga Architecture Map
+
+USAGE RULES
+1. History remains unchanged.
+2. Italus and the guardian may witness, pass through, or be affected by these events.
+3. They do not alter outcomes.
+4. Events should be used to shape environment, danger, travel, politics, religion, science, and culture.
+5. Check guardian service dates and travel plausibility against the Character Bible, World Bible, and Saga Architecture Map.
+
+FORMAT
+EVENT NUMBER | YEAR / RANGE | EVENT | REGION / PRIMARY RELEVANCE | SUGGESTED BOOK | ACTIVE GUARDIAN(S)
+
+==================================================
+BOOK 1 ERA — THE LIGHTNING TREE (789–900)
+==================================================
+
+001 | 789 | Italus germinates in the Pollino Mountains after the lightning-strike anomaly | Pollino / Southern Italy | Book 1 | Luca
+002 | 789 | Charlemagne consolidates Frankish power in western Europe | Western Europe | Book 1 | Luca
+003 | 793 | Viking raid on Lindisfarne marks the start of the Viking Age | England / Europe-wide awareness later | Book 1 | Luca
+004 | 800 | Charlemagne crowned Holy Roman Emperor | Rome | Book 1 | Luca
+005 | 802 | Byzantine Empire reorganizes southern Italian holdings under imperial administration | Southern Italy | Book 1 | Luca
+006 | 806 | Ongoing Frankish-Byzantine rivalry shapes Italian political boundaries | Italy | Book 1 | Luca
+007 | 810 | Coastal insecurity and raiding intensify in southern Italy | Calabria / Adriatic awareness | Book 1 | Luca
+008 | 812 | Pax Nicephori helps define spheres between Byzantines and Franks in Italy | Italy | Book 1 | Luca
+009 | 820 | Regional monastic communities expand in southern Italy | Calabria / Basilicata | Book 1 | Luca
+010 | 827 | Muslim conquest of Sicily begins | Sicily | Book 1 | Luca
+011 | 840 | Civil conflict in the Carolingian world destabilizes Europe | Europe | Book 1 | Luca
+012 | 846 | Arab raid on Rome shocks Latin Christendom | Rome | Book 1 | Luca
+
+==================================================
+BOOK 2 ERA — DAUGHTER OF THE MOUNTAIN (900–989)
+==================================================
+
+013 | 902 | Muslim conquest of Sicily effectively completed | Sicily | Book 2 | Elia
+014 | 910 | Monastery at Cluny founded, signaling wider reform currents in Latin Europe | France / European church culture | Book 2 | Elia
+015 | 915 | Battle of Garigliano weakens Muslim raiding power on mainland Italy | Southern Italy | Book 2 | Elia
+016 | 927 | Fatimid expansion affects Mediterranean trade and political tension | Mediterranean | Book 2 | Elia
+017 | 940 | Trade routes and pilgrimage routes through southern Italy continue to grow | Southern Italy | Book 2 | Elia
+018 | 951 | Otto I’s growing influence begins reshaping the Italian political landscape | Northern / Central Italy | Book 2 | Elia
+019 | 962 | Otto I crowned Holy Roman Emperor | Rome | Book 2 | Elia
+020 | 968 | Byzantine and western church competition intensifies in southern Italy | Southern Italy | Book 2 | Elia
+021 | 976 | Periodic instability in the Byzantine Empire affects Italian administration | Byzantium / Southern Italy | Book 2 | Marco
+022 | 982 | Battle of Stilo: Otto II defeated in Calabria | Calabria | Book 2 | Marco
+023 | 987 | Capetian monarchy begins in France, part of wider European dynastic reordering | Europe | Book 2 | Marco
+024 | 989 | Peace and Truce of God movements begin shaping church responses to violence | France / Europe-wide church culture | Book 2 | Marco
+
+==================================================
+BOOK 3 ERA — THE OBSERVERS (970–1110)
+==================================================
+
+025 | 1000 | Pilgrimage culture intensifies across Europe, increasing long-distance movement | Europe / Italy | Book 3 | Simonetta
+026 | 1009 | Destruction of the Church of the Holy Sepulchre heightens Christian tensions | Jerusalem / Europe | Book 3 | Simonetta
+027 | 1016 | Norman influence expands in southern Italy through mercenary activity | Southern Italy | Book 3 | Simonetta
+028 | 1030 | County of Aversa established under Norman leadership | Campania / Southern Italy | Book 3 | Simonetta
+029 | 1039 | Byzantines lose additional control in southern Italy | Southern Italy | Book 3 | Simonetta
+030 | 1048 | Reform papacy strengthens church centralization | Rome | Book 3 | Simonetta
+031 | 1054 | Great Schism between eastern and western churches | Rome / Constantinople | Book 3 | Simonetta / Brother Anselm
+032 | 1059 | Treaty of Melfi legitimizes Norman power in southern Italy | Southern Italy | Book 3 | Simonetta / Brother Anselm
+033 | 1061 | Norman conquest of Sicily begins | Sicily | Book 3 | Brother Anselm
+034 | 1071 | Fall of Bari ends major Byzantine presence in southern Italy | Bari / Southern Italy | Book 3 | Brother Anselm
+035 | 1073–1085 | Gregorian Reform reshapes the papacy and church authority | Rome / Europe | Book 3 | Brother Anselm
+036 | 1095 | First Crusade proclaimed at Clermont | Europe / Mediterranean | Book 3 | Brother Anselm
+037 | 1097 | Crusader armies moving east transform roads, ports, and supply corridors | Italy / Mediterranean | Book 3 | Brother Anselm
+038 | 1099 | Crusaders capture Jerusalem | Jerusalem | Book 3 | Brother Anselm
+039 | 1101 | Additional crusading waves and return travel reshape Mediterranean movement | Mediterranean | Book 3 | Brother Anselm
+040 | 1110 | Late Norman consolidation in southern Italy | Southern Italy | Book 3 | Brother Anselm / Caterina
+
+==================================================
+BOOK 4 ERA — THE EMPEROR'S NATURALISTS (1110–1310)
+==================================================
+
+041 | 1111 | Imperial-papal tensions continue under Henry V | Italy / Holy Roman Empire | Book 4 | Caterina
+042 | 1122 | Concordat of Worms partially resolves the Investiture Controversy | Europe | Book 4 | Caterina
+043 | 1130 | Kingdom of Sicily established under Roger II | Sicily / Southern Italy | Book 4 | Caterina
+044 | 1140 | Assizes of Ariano strengthen Sicilian royal administration | Southern Italy | Book 4 | Caterina
+045 | 1147–1149 | Second Crusade affects Mediterranean traffic and political culture | Europe / Mediterranean | Book 4 | Caterina
+046 | 1154 | Byzantine and Norman rivalry still shapes southern waters and trade | Southern Italy / Mediterranean | Book 4 | Caterina
+047 | 1169 | Major earthquake strikes eastern Sicily | Sicily | Book 4 | Caterina
+048 | 1183 | Peace of Constance stabilizes parts of northern Italian politics | Italy | Book 4 | Caterina
+049 | 1187 | Saladin recaptures Jerusalem | Levant / Europe | Book 4 | Caterina
+050 | 1194 | Frederick II born | Italy / Sicily | Book 4 | Caterina
+051 | 1204 | Fourth Crusade sacks Constantinople | Constantinople | Book 4 | Caterina
+052 | 1212 | Children’s Crusade tradition emerges in memory and rumor | Europe | Book 4 | Caterina
+053 | 1220 | Frederick II crowned Holy Roman Emperor | Rome | Book 4 | Caterina / Amara
+054 | 1224 | University of Naples founded | Southern Italy | Book 4 | Amara
+055 | 1231 | Constitutions of Melfi issued | Southern Italy / Sicily | Book 4 | Amara
+056 | 1239 | Frederick II’s conflicts with the papacy intensify | Italy | Book 4 | Amara
+057 | 1241 | Mongol pressure in eastern Europe changes western political awareness | Europe | Book 4 | Amara
+058 | 1248 | Crusading failures deepen cynicism and apocalyptic rhetoric | Mediterranean / Europe | Book 4 | Amara
+059 | 1250 | Death of Frederick II | Southern Italy / Sicily | Book 4 | Amara
+060 | 1266 | Battle of Benevento shifts southern Italian rule to the Angevins | Southern Italy | Book 4 | Amara
+061 | 1282 | Sicilian Vespers revolt | Sicily | Book 4 | Amara
+062 | 1291 | Fall of Acre ends the last major Crusader stronghold in the Levant | Eastern Mediterranean | Book 4 | Amara
+063 | 1300 | Jubilee proclaimed by Boniface VIII draws pilgrims to Rome | Rome | Book 4 | Amara
+064 | 1302 | Conflict between papacy and monarchy deepens under Boniface VIII and Philip IV | Europe | Book 4 | Amara
+065 | 1309 | Papacy moves to Avignon | Western Christendom | Book 4 | Amara
+066 | 1310 | Henry VII’s Italian campaign renews imperial tensions | Italy | Book 4 | Amara / Giacomo
+
+==================================================
+BOOK 5 ERA — THE BLACK YEARS (1310–1410)
+==================================================
+
+067 | 1315–1317 | Great European Famine | Europe | Book 5 | Giacomo
+068 | 1320 | Rural stress and grain shortages reshape village life | Europe / Italy | Book 5 | Giacomo
+069 | 1337 | Hundred Years’ War begins | Western Europe / trade implications | Book 5 | Giacomo
+070 | 1347 | Black Death reaches Mediterranean ports, including Messina | Sicily / Italy | Book 5 | Giacomo
+071 | 1348 | Black Death devastates Italy | Italy | Book 5 | Giacomo
+072 | 1349 | Continued plague mortality and social collapse | Europe / Italy | Book 5 | Giacomo
+073 | 1351 | Additional plague wave spreads across Europe | Europe | Book 5 | Giacomo
+074 | 1361 | Another major plague recurrence | Europe / Italy | Book 5 | Giacomo
+075 | 1377 | Papacy returns from Avignon to Rome | Rome | Book 5 | Giacomo
+076 | 1378 | Western Schism begins | Rome / Europe | Book 5 | Giacomo
+077 | 1381 | Revolt and labor unrest appear across Europe after plague disruption | Europe | Book 5 | Giacomo
+078 | 1389 | Battle of Kosovo becomes a major eastern European turning point | Balkans / Europe | Book 5 | Giacomo
+079 | 1397 | Commercial recovery expands in Italian city-states despite demographic scars | Italy | Book 5 | Giacomo
+080 | 1400 | Early Renaissance conditions strengthen in Florence and beyond | Italy | Book 5 | Giacomo
+
+==================================================
+BOOK 6 ERA — MAPS OF THE WORLD (1410–1620)
+==================================================
+
+081 | 1415 | Battle of Agincourt | France / Europe | Book 6 | Orsolina
+082 | 1417 | End of the Western Schism at Council of Constance | Europe | Book 6 | Orsolina
+083 | 1434 | Medici power consolidated in Florence | Florence / Italy | Book 6 | Orsolina
+084 | 1450 | Gutenberg-era print culture begins reshaping Europe | Europe | Book 6 | Orsolina
+085 | 1453 | Fall of Constantinople | Constantinople / Italy | Book 6 | Orsolina
+086 | 1469 | Rise of Lorenzo de’ Medici symbolizes high Renaissance patronage | Florence | Book 6 | Orsolina
+087 | 1478 | Pazzi conspiracy reveals volatility of Italian politics | Florence | Book 6 | Orsolina
+088 | 1485 | Renaissance artistic and humanist culture expands across Italy | Italy | Book 6 | Orsolina
+089 | 1492 | Columbus sails west from Spain | Spain / Europe | Book 6 | Orsolina
+090 | 1494 | French invasion launches the Italian Wars | Italy | Book 6 | Orsolina
+091 | 1498 | Savonarola executed in Florence | Florence | Book 6 | Orsolina
+092 | 1503 | Pope Julius II era begins; intense artistic and political ambition in Rome | Rome | Book 6 | Orsolina
+093 | 1517 | Martin Luther’s theses ignite the Reformation | Europe | Book 6 | Pietro
+094 | 1519–1522 | Magellan-Elcano circumnavigation proves global sea linkage | Global / Europe | Book 6 | Pietro
+095 | 1525 | Battle of Pavia reshapes Italian power politics | Northern Italy | Book 6 | Pietro
+096 | 1527 | Sack of Rome | Rome | Book 6 | Pietro
+097 | 1543 | Copernicus publishes heliocentric theory | Europe | Book 6 | Pietro
+098 | 1555 | Peace of Augsburg recognizes religious division in the Empire | Central Europe | Book 6 | Pietro
+099 | 1563 | Council of Trent closes, shaping Counter-Reformation Catholicism | Europe / Italy | Book 6 | Pietro
+100 | 1564 | Galileo born | Italy | Book 6 | Pietro
+101 | 1571 | Battle of Lepanto | Mediterranean | Book 6 | Pietro
+102 | 1582 | Gregorian calendar reform | Catholic Europe / Italy | Book 6 | Pietro
+103 | 1588 | Spanish Armada defeated | Europe | Book 6 | Pietro
+104 | 1600 | Giordano Bruno executed in Rome | Rome | Book 6 | Pietro
+105 | 1609 | Galileo begins telescopic observations | Padua / Italy | Book 6 | Pietro
+106 | 1618 | Thirty Years’ War begins | Central Europe / wider implications | Book 6 | Pietro
+
+==================================================
+BOOK 7 ERA — THE AGE OF REASON (1620–1800)
+==================================================
+
+107 | 1623 | Urban VIII becomes pope, shaping Galileo’s Roman world | Rome | Book 7 | Domenico
+108 | 1633 | Galileo tried by the Inquisition | Rome | Book 7 | Domenico
+109 | 1648 | Peace of Westphalia ends the Thirty Years’ War | Europe | Book 7 | Domenico
+110 | 1656 | Major plague outbreak in Naples | Southern Italy | Book 7 | Domenico
+111 | 1666 | Great Fire of London symbolizes vulnerability of dense early modern cities | Europe | Book 7 | Domenico
+112 | 1687 | Newton publishes Principia | Europe | Book 7 | Domenico
+113 | 1693 | Great Sicilian earthquake | Sicily | Book 7 | Domenico
+114 | 1701 | War of the Spanish Succession begins | Europe / Italy | Book 7 | Domenico
+115 | 1713 | Treaty of Utrecht reshapes dynastic control, including in Italy | Europe / Italy | Book 7 | Agata
+116 | 1734 | Bourbon rule begins in Naples and Sicily | Southern Italy | Book 7 | Agata
+117 | 1755 | Lisbon earthquake shocks Enlightenment thought | Europe | Book 7 | Agata
+118 | 1764 | Beccaria’s Enlightenment thought spreads from Italy | Italy / Europe | Book 7 | Agata
+119 | 1776 | American Revolution begins | Atlantic world / Europe | Book 7 | Agata
+120 | 1789 | French Revolution begins | France / Europe | Book 7 | Agata
+
+==================================================
+BOOK 8 ERA — THE NATION (1800–1900)
+==================================================
+
+121 | 1798–1799 | Napoleon’s campaigns and republican experiments reshape Italy | Italy | Book 8 | Agata
+122 | 1804 | Napoleon crowned emperor | Europe | Book 8 | Emilio
+123 | 1815 | Congress of Vienna redraws Europe after Napoleon | Europe / Italy | Book 8 | Emilio
+124 | 1820–1821 | Carbonari and constitutional revolts in Italy | Italy | Book 8 | Emilio
+125 | 1831 | Mazzinian nationalism strengthens Italian unification ideas | Italy | Book 8 | Emilio
+126 | 1848 | Revolutions across Europe, including Italy | Europe / Italy | Book 8 | Emilio
+127 | 1859 | Second Italian War of Independence | Italy | Book 8 | Emilio
+128 | 1860 | Garibaldi’s Expedition of the Thousand | Southern Italy / Sicily | Book 8 | Emilio
+129 | 1861 | Kingdom of Italy proclaimed | Italy | Book 8 | Emilio
+130 | 1866 | Third Italian War of Independence | Italy | Book 8 | Emilio
+131 | 1870 | Capture of Rome completes major phase of Italian unification | Rome | Book 8 | Emilio
+132 | 1871 | Rome becomes capital of Italy | Italy | Book 8 | Emilio
+133 | 1882 | Death of Giuseppe Garibaldi | Italy | Book 8 | Emilio
+134 | 1883 | Krakatoa eruption becomes a global atmospheric event | Global / climate effects | Book 8 | Emilio
+135 | 1890s | Industrialization and migration reshape Italian society | Italy | Book 8 | Emilio
+136 | 1896 | Battle of Adwa affects Italian imperial politics and identity | Italy / Eritrea / national mood | Book 8 | Emilio
+
+==================================================
+BOOK 9 ERA — THE WAR THAT TOOK THE GUARDIAN (1900–1940)
+==================================================
+
+137 | 1908 | Messina earthquake and tsunami devastate southern Italy | Sicily / Calabria | Book 9 | Rosa
+138 | 1911–1912 | Italo-Turkish War | Italy / Mediterranean | Book 9 | Rosa
+139 | 1914 | World War I begins | Europe | Book 9 | Rosa
+140 | 1915 | Italy enters World War I | Italy | Book 9 | Rosa
+141 | 1916 | Brutal attrition on the Isonzo Front | Northeastern Italy | Book 9 | Rosa
+142 | 1917 | Caporetto disaster | Italy | Book 9 | Rosa
+143 | 1918 | World War I ends | Europe | Book 9 | Rosa
+144 | 1918–1919 | Spanish flu pandemic | Global / Italy | Book 9 | Rosa
+145 | 1919 | Postwar unrest and social fractures intensify in Italy | Italy | Book 9 | Rosa
+146 | 1922 | Mussolini’s March on Rome | Italy | Book 9 | Rosa
+147 | 1929 | Lateran Treaty resolves the Roman Question | Rome / Italy | Book 9 | Rosa
+148 | 1935–1936 | Italian invasion of Ethiopia | Italy / empire politics | Book 9 | Rosa
+149 | 1938 | Anti-Jewish racial laws in Fascist Italy | Italy | Book 9 | Rosa
+150 | 1939 | World War II begins in Europe | Europe | Book 9 | Rosa
+
+==================================================
+BOOK 10 ERA — THE OLIVE GROVE (1940–1985)
+==================================================
+
+151 | 1940 | Italy enters World War II | Italy | Book 10 | Rosa / Theodora Bassi
+152 | 1943 | Allied invasion of Sicily | Sicily | Book 10 | Theodora Bassi
+153 | 1943 | Allied invasion of mainland Italy and collapse of Mussolini’s regime | Italy | Book 10 | Theodora Bassi
+154 | 1944 | Continued warfare and destruction across Italy | Italy | Book 10 | Theodora Bassi
+155 | 1945 | World War II ends in Europe | Europe / Italy | Book 10 | Theodora Bassi
+156 | 1946 | Italy becomes a republic | Italy | Book 10 | Theodora Bassi
+157 | 1948 | New Italian constitution takes effect | Italy | Book 10 | Theodora Bassi
+158 | 1957 | Treaty of Rome creates the EEC | Rome | Book 10 | Theodora Bassi
+159 | 1963 | Vajont disaster reflects dangers of modern development | Italy | Book 10 | Theodora Bassi
+160 | 1968 | Global protest era influences Italian social life | Italy / Europe | Book 10 | Theodora Bassi
+161 | 1969 | Piazza Fontana bombing begins Years of Lead atmosphere | Italy | Book 10 | Theodora Bassi
+162 | 1970s | Environmental awareness and anti-industrial critique grow | Europe / Italy | Book 10 | Theodora Bassi
+163 | 1978 | Kidnapping and murder of Aldo Moro | Italy | Book 10 | Theodora Bassi
+164 | 1980 | Irpinia earthquake | Southern Italy | Book 10 | Theodora Bassi
+165 | 1985 | End of Theodora’s formal service period | Southern Italy | Book 10 | Theodora Bassi / Final Guardian
+
+==================================================
+BOOK 11 ERA — THE LAST GUARDIAN (1985–2025)
+==================================================
+
+166 | 1986 | Chernobyl disaster sharpens environmental consciousness across Europe | Europe | Book 11 | Final Guardian
+167 | 1989 | Fall of the Berlin Wall | Europe | Book 11 | Final Guardian
+168 | 1991 | End of the Cold War | Europe / global | Book 11 | Final Guardian
+169 | 1992 | Maastricht Treaty deepens European integration | Europe | Book 11 | Final Guardian
+170 | 1990s | Satellite mapping and digital cartography become common | Global / Europe | Book 11 | Final Guardian
+171 | 1992 | Mani Pulite investigations transform Italian politics | Italy | Book 11 | Final Guardian
+172 | 1997 | Kyoto Protocol era begins international climate focus | Global | Book 11 | Final Guardian
+173 | 1999 | Euro monetary integration advances | Europe / Italy | Book 11 | Final Guardian
+174 | 2001 | September 11 attacks reshape global security culture | Global | Book 11 | Final Guardian
+175 | 2002 | Euro banknotes and coins enter circulation | Italy / Europe | Book 11 | Final Guardian
+176 | 2008 | Global financial crisis | Global / Europe | Book 11 | Final Guardian
+177 | 2009 | L’Aquila earthquake | Italy | Book 11 | Final Guardian
+178 | 2015 | Paris Climate Agreement | Global | Book 11 | Final Guardian
+179 | 2016 | Central Italy earthquake sequence renews awareness of fragile landscapes | Italy | Book 11 | Final Guardian
+180 | 2020 | Global pandemic | Global / Italy | Book 11 | Final Guardian
+
+END OF FILE

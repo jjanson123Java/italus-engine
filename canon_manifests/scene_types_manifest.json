@@ -1,0 +1,14 @@
+{
+  "scene_types": [
+    "prologue",
+    "intro",
+    "lead-up",
+    "private conversation",
+    "street reaction",
+    "travel reflection",
+    "institutional response",
+    "trial observer",
+    "continuation",
+    "aftermath"
+  ]
+}

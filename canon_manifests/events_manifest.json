@@ -1,0 +1,2704 @@
+{
+  "events": [
+    {
+      "event_id": "001",
+      "event_name": "Italus germinates in the Pollino Mountains after the lightning-strike anomaly",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_01",
+      "year": "789",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Pollino / Southern Italy"
+      ],
+      "historical_context": "Italus germinates in the Pollino Mountains after the lightning-strike anomaly",
+      "status": "active"
+    },
+    {
+      "event_id": "002",
+      "event_name": "Charlemagne consolidates Frankish power in western Europe",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_02",
+      "year": "789",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Western Europe"
+      ],
+      "historical_context": "Charlemagne consolidates Frankish power in western Europe",
+      "status": "active"
+    },
+    {
+      "event_id": "003",
+      "event_name": "Viking raid on Lindisfarne marks the start of the Viking Age",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_03",
+      "year": "793",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "England / Europe-wide awareness later"
+      ],
+      "historical_context": "Viking raid on Lindisfarne marks the start of the Viking Age",
+      "status": "active"
+    },
+    {
+      "event_id": "004",
+      "event_name": "Charlemagne crowned Holy Roman Emperor",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_04",
+      "year": "800",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Charlemagne crowned Holy Roman Emperor",
+      "status": "active"
+    },
+    {
+      "event_id": "005",
+      "event_name": "Byzantine Empire reorganizes southern Italian holdings under imperial administration",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_05",
+      "year": "802",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Byzantine Empire reorganizes southern Italian holdings under imperial administration",
+      "status": "active"
+    },
+    {
+      "event_id": "006",
+      "event_name": "Ongoing Frankish-Byzantine rivalry shapes Italian political boundaries",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_06",
+      "year": "806",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Ongoing Frankish-Byzantine rivalry shapes Italian political boundaries",
+      "status": "active"
+    },
+    {
+      "event_id": "007",
+      "event_name": "Coastal insecurity and raiding intensify in southern Italy",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_07",
+      "year": "810",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Calabria / Adriatic awareness"
+      ],
+      "historical_context": "Coastal insecurity and raiding intensify in southern Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "008",
+      "event_name": "Pax Nicephori helps define spheres between Byzantines and Franks in Italy",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_08",
+      "year": "812",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Pax Nicephori helps define spheres between Byzantines and Franks in Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "009",
+      "event_name": "Regional monastic communities expand in southern Italy",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_09",
+      "year": "820",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Calabria / Basilicata"
+      ],
+      "historical_context": "Regional monastic communities expand in southern Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "010",
+      "event_name": "Muslim conquest of Sicily begins",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_10",
+      "year": "827",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Sicily"
+      ],
+      "historical_context": "Muslim conquest of Sicily begins",
+      "status": "active"
+    },
+    {
+      "event_id": "011",
+      "event_name": "Civil conflict in the Carolingian world destabilizes Europe",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_11",
+      "year": "840",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Civil conflict in the Carolingian world destabilizes Europe",
+      "status": "active"
+    },
+    {
+      "event_id": "012",
+      "event_name": "Arab raid on Rome shocks Latin Christendom",
+      "book_id": "BOOK_01",
+      "chapter_id": "BOOK_01_CH_12",
+      "year": "846",
+      "guardian_defaults": [
+        "Luca"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Arab raid on Rome shocks Latin Christendom",
+      "status": "active"
+    },
+    {
+      "event_id": "013",
+      "event_name": "Muslim conquest of Sicily effectively completed",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_01",
+      "year": "902",
+      "guardian_defaults": [
+        "Elia"
+      ],
+      "location_defaults": [
+        "Sicily"
+      ],
+      "historical_context": "Muslim conquest of Sicily effectively completed",
+      "status": "active"
+    },
+    {
+      "event_id": "014",
+      "event_name": "Monastery at Cluny founded, signaling wider reform currents in Latin Europe",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_02",
+      "year": "910",
+      "guardian_defaults": [
+        "Elia"
+      ],
+      "location_defaults": [
+        "France / European church culture"
+      ],
+      "historical_context": "Monastery at Cluny founded, signaling wider reform currents in Latin Europe",
+      "status": "active"
+    },
+    {
+      "event_id": "015",
+      "event_name": "Battle of Garigliano weakens Muslim raiding power on mainland Italy",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_03",
+      "year": "915",
+      "guardian_defaults": [
+        "Elia"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Battle of Garigliano weakens Muslim raiding power on mainland Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "016",
+      "event_name": "Fatimid expansion affects Mediterranean trade and political tension",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_04",
+      "year": "927",
+      "guardian_defaults": [
+        "Elia"
+      ],
+      "location_defaults": [
+        "Mediterranean"
+      ],
+      "historical_context": "Fatimid expansion affects Mediterranean trade and political tension",
+      "status": "active"
+    },
+    {
+      "event_id": "017",
+      "event_name": "Trade routes and pilgrimage routes through southern Italy continue to grow",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_05",
+      "year": "940",
+      "guardian_defaults": [
+        "Elia"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Trade routes and pilgrimage routes through southern Italy continue to grow",
+      "status": "active"
+    },
+    {
+      "event_id": "018",
+      "event_name": "Otto I’s growing influence begins reshaping the Italian political landscape",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_06",
+      "year": "951",
+      "guardian_defaults": [
+        "Elia"
+      ],
+      "location_defaults": [
+        "Northern / Central Italy"
+      ],
+      "historical_context": "Otto I’s growing influence begins reshaping the Italian political landscape",
+      "status": "active"
+    },
+    {
+      "event_id": "019",
+      "event_name": "Otto I crowned Holy Roman Emperor",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_07",
+      "year": "962",
+      "guardian_defaults": [
+        "Elia"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Otto I crowned Holy Roman Emperor",
+      "status": "active"
+    },
+    {
+      "event_id": "020",
+      "event_name": "Byzantine and western church competition intensifies in southern Italy",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_08",
+      "year": "968",
+      "guardian_defaults": [
+        "Elia"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Byzantine and western church competition intensifies in southern Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "021",
+      "event_name": "Periodic instability in the Byzantine Empire affects Italian administration",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_09",
+      "year": "976",
+      "guardian_defaults": [
+        "Marco"
+      ],
+      "location_defaults": [
+        "Byzantium / Southern Italy"
+      ],
+      "historical_context": "Periodic instability in the Byzantine Empire affects Italian administration",
+      "status": "active"
+    },
+    {
+      "event_id": "022",
+      "event_name": "Battle of Stilo: Otto II defeated in Calabria",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_10",
+      "year": "982",
+      "guardian_defaults": [
+        "Marco"
+      ],
+      "location_defaults": [
+        "Calabria"
+      ],
+      "historical_context": "Battle of Stilo: Otto II defeated in Calabria",
+      "status": "active"
+    },
+    {
+      "event_id": "023",
+      "event_name": "Capetian monarchy begins in France, part of wider European dynastic reordering",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_11",
+      "year": "987",
+      "guardian_defaults": [
+        "Marco"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Capetian monarchy begins in France, part of wider European dynastic reordering",
+      "status": "active"
+    },
+    {
+      "event_id": "024",
+      "event_name": "Peace and Truce of God movements begin shaping church responses to violence",
+      "book_id": "BOOK_02",
+      "chapter_id": "BOOK_02_CH_12",
+      "year": "989",
+      "guardian_defaults": [
+        "Marco"
+      ],
+      "location_defaults": [
+        "France / Europe-wide church culture"
+      ],
+      "historical_context": "Peace and Truce of God movements begin shaping church responses to violence",
+      "status": "active"
+    },
+    {
+      "event_id": "025",
+      "event_name": "Pilgrimage culture intensifies across Europe, increasing long-distance movement",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_01",
+      "year": "1000",
+      "guardian_defaults": [
+        "Simonetta"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "Pilgrimage culture intensifies across Europe, increasing long-distance movement",
+      "status": "active"
+    },
+    {
+      "event_id": "026",
+      "event_name": "Destruction of the Church of the Holy Sepulchre heightens Christian tensions",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_02",
+      "year": "1009",
+      "guardian_defaults": [
+        "Simonetta"
+      ],
+      "location_defaults": [
+        "Jerusalem / Europe"
+      ],
+      "historical_context": "Destruction of the Church of the Holy Sepulchre heightens Christian tensions",
+      "status": "active"
+    },
+    {
+      "event_id": "027",
+      "event_name": "Norman influence expands in southern Italy through mercenary activity",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_03",
+      "year": "1016",
+      "guardian_defaults": [
+        "Simonetta"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Norman influence expands in southern Italy through mercenary activity",
+      "status": "active"
+    },
+    {
+      "event_id": "028",
+      "event_name": "County of Aversa established under Norman leadership",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_04",
+      "year": "1030",
+      "guardian_defaults": [
+        "Simonetta"
+      ],
+      "location_defaults": [
+        "Campania / Southern Italy"
+      ],
+      "historical_context": "County of Aversa established under Norman leadership",
+      "status": "active"
+    },
+    {
+      "event_id": "029",
+      "event_name": "Byzantines lose additional control in southern Italy",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_05",
+      "year": "1039",
+      "guardian_defaults": [
+        "Simonetta"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Byzantines lose additional control in southern Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "030",
+      "event_name": "Reform papacy strengthens church centralization",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_06",
+      "year": "1048",
+      "guardian_defaults": [
+        "Simonetta"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Reform papacy strengthens church centralization",
+      "status": "active"
+    },
+    {
+      "event_id": "031",
+      "event_name": "Great Schism between eastern and western churches",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_07",
+      "year": "1054",
+      "guardian_defaults": [
+        "Simonetta / Brother Anselm"
+      ],
+      "location_defaults": [
+        "Rome / Constantinople"
+      ],
+      "historical_context": "Great Schism between eastern and western churches",
+      "status": "active"
+    },
+    {
+      "event_id": "032",
+      "event_name": "Treaty of Melfi legitimizes Norman power in southern Italy",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_08",
+      "year": "1059",
+      "guardian_defaults": [
+        "Simonetta / Brother Anselm"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Treaty of Melfi legitimizes Norman power in southern Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "033",
+      "event_name": "Norman conquest of Sicily begins",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_09",
+      "year": "1061",
+      "guardian_defaults": [
+        "Brother Anselm"
+      ],
+      "location_defaults": [
+        "Sicily"
+      ],
+      "historical_context": "Norman conquest of Sicily begins",
+      "status": "active"
+    },
+    {
+      "event_id": "034",
+      "event_name": "Fall of Bari ends major Byzantine presence in southern Italy",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_10",
+      "year": "1071",
+      "guardian_defaults": [
+        "Brother Anselm"
+      ],
+      "location_defaults": [
+        "Bari / Southern Italy"
+      ],
+      "historical_context": "Fall of Bari ends major Byzantine presence in southern Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "035",
+      "event_name": "Gregorian Reform reshapes the papacy and church authority",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_11",
+      "year": "1073–1085",
+      "guardian_defaults": [
+        "Brother Anselm"
+      ],
+      "location_defaults": [
+        "Rome / Europe"
+      ],
+      "historical_context": "Gregorian Reform reshapes the papacy and church authority",
+      "status": "active"
+    },
+    {
+      "event_id": "036",
+      "event_name": "First Crusade proclaimed at Clermont",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_12",
+      "year": "1095",
+      "guardian_defaults": [
+        "Brother Anselm"
+      ],
+      "location_defaults": [
+        "Europe / Mediterranean"
+      ],
+      "historical_context": "First Crusade proclaimed at Clermont",
+      "status": "active"
+    },
+    {
+      "event_id": "037",
+      "event_name": "Crusader armies moving east transform roads, ports, and supply corridors",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_13",
+      "year": "1097",
+      "guardian_defaults": [
+        "Brother Anselm"
+      ],
+      "location_defaults": [
+        "Italy / Mediterranean"
+      ],
+      "historical_context": "Crusader armies moving east transform roads, ports, and supply corridors",
+      "status": "active"
+    },
+    {
+      "event_id": "038",
+      "event_name": "Crusaders capture Jerusalem",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_14",
+      "year": "1099",
+      "guardian_defaults": [
+        "Brother Anselm"
+      ],
+      "location_defaults": [
+        "Jerusalem"
+      ],
+      "historical_context": "Crusaders capture Jerusalem",
+      "status": "active"
+    },
+    {
+      "event_id": "039",
+      "event_name": "Additional crusading waves and return travel reshape Mediterranean movement",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_15",
+      "year": "1101",
+      "guardian_defaults": [
+        "Brother Anselm"
+      ],
+      "location_defaults": [
+        "Mediterranean"
+      ],
+      "historical_context": "Additional crusading waves and return travel reshape Mediterranean movement",
+      "status": "active"
+    },
+    {
+      "event_id": "040",
+      "event_name": "Late Norman consolidation in southern Italy",
+      "book_id": "BOOK_03",
+      "chapter_id": "BOOK_03_CH_16",
+      "year": "1110",
+      "guardian_defaults": [
+        "Brother Anselm / Caterina"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Late Norman consolidation in southern Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "041",
+      "event_name": "Imperial-papal tensions continue under Henry V",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_01",
+      "year": "1111",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Italy / Holy Roman Empire"
+      ],
+      "historical_context": "Imperial-papal tensions continue under Henry V",
+      "status": "active"
+    },
+    {
+      "event_id": "042",
+      "event_name": "Concordat of Worms partially resolves the Investiture Controversy",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_02",
+      "year": "1122",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Concordat of Worms partially resolves the Investiture Controversy",
+      "status": "active"
+    },
+    {
+      "event_id": "043",
+      "event_name": "Kingdom of Sicily established under Roger II",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_03",
+      "year": "1130",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Sicily / Southern Italy"
+      ],
+      "historical_context": "Kingdom of Sicily established under Roger II",
+      "status": "active"
+    },
+    {
+      "event_id": "044",
+      "event_name": "Assizes of Ariano strengthen Sicilian royal administration",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_04",
+      "year": "1140",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Assizes of Ariano strengthen Sicilian royal administration",
+      "status": "active"
+    },
+    {
+      "event_id": "045",
+      "event_name": "Second Crusade affects Mediterranean traffic and political culture",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_05",
+      "year": "1147–1149",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Europe / Mediterranean"
+      ],
+      "historical_context": "Second Crusade affects Mediterranean traffic and political culture",
+      "status": "active"
+    },
+    {
+      "event_id": "046",
+      "event_name": "Byzantine and Norman rivalry still shapes southern waters and trade",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_06",
+      "year": "1154",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Southern Italy / Mediterranean"
+      ],
+      "historical_context": "Byzantine and Norman rivalry still shapes southern waters and trade",
+      "status": "active"
+    },
+    {
+      "event_id": "047",
+      "event_name": "Major earthquake strikes eastern Sicily",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_07",
+      "year": "1169",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Sicily"
+      ],
+      "historical_context": "Major earthquake strikes eastern Sicily",
+      "status": "active"
+    },
+    {
+      "event_id": "048",
+      "event_name": "Peace of Constance stabilizes parts of northern Italian politics",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_08",
+      "year": "1183",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Peace of Constance stabilizes parts of northern Italian politics",
+      "status": "active"
+    },
+    {
+      "event_id": "049",
+      "event_name": "Saladin recaptures Jerusalem",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_09",
+      "year": "1187",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Levant / Europe"
+      ],
+      "historical_context": "Saladin recaptures Jerusalem",
+      "status": "active"
+    },
+    {
+      "event_id": "050",
+      "event_name": "Frederick II born",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_10",
+      "year": "1194",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Italy / Sicily"
+      ],
+      "historical_context": "Frederick II born",
+      "status": "active"
+    },
+    {
+      "event_id": "051",
+      "event_name": "Fourth Crusade sacks Constantinople",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_11",
+      "year": "1204",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Constantinople"
+      ],
+      "historical_context": "Fourth Crusade sacks Constantinople",
+      "status": "active"
+    },
+    {
+      "event_id": "052",
+      "event_name": "Children’s Crusade tradition emerges in memory and rumor",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_12",
+      "year": "1212",
+      "guardian_defaults": [
+        "Caterina"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Children’s Crusade tradition emerges in memory and rumor",
+      "status": "active"
+    },
+    {
+      "event_id": "053",
+      "event_name": "Frederick II crowned Holy Roman Emperor",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_13",
+      "year": "1220",
+      "guardian_defaults": [
+        "Caterina / Amara"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Frederick II crowned Holy Roman Emperor",
+      "status": "active"
+    },
+    {
+      "event_id": "054",
+      "event_name": "University of Naples founded",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_14",
+      "year": "1224",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "University of Naples founded",
+      "status": "active"
+    },
+    {
+      "event_id": "055",
+      "event_name": "Constitutions of Melfi issued",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_15",
+      "year": "1231",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Southern Italy / Sicily"
+      ],
+      "historical_context": "Constitutions of Melfi issued",
+      "status": "active"
+    },
+    {
+      "event_id": "056",
+      "event_name": "Frederick II’s conflicts with the papacy intensify",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_16",
+      "year": "1239",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Frederick II’s conflicts with the papacy intensify",
+      "status": "active"
+    },
+    {
+      "event_id": "057",
+      "event_name": "Mongol pressure in eastern Europe changes western political awareness",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_17",
+      "year": "1241",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Mongol pressure in eastern Europe changes western political awareness",
+      "status": "active"
+    },
+    {
+      "event_id": "058",
+      "event_name": "Crusading failures deepen cynicism and apocalyptic rhetoric",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_18",
+      "year": "1248",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Mediterranean / Europe"
+      ],
+      "historical_context": "Crusading failures deepen cynicism and apocalyptic rhetoric",
+      "status": "active"
+    },
+    {
+      "event_id": "059",
+      "event_name": "Death of Frederick II",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_19",
+      "year": "1250",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Southern Italy / Sicily"
+      ],
+      "historical_context": "Death of Frederick II",
+      "status": "active"
+    },
+    {
+      "event_id": "060",
+      "event_name": "Battle of Benevento shifts southern Italian rule to the Angevins",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_20",
+      "year": "1266",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Battle of Benevento shifts southern Italian rule to the Angevins",
+      "status": "active"
+    },
+    {
+      "event_id": "061",
+      "event_name": "Sicilian Vespers revolt",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_21",
+      "year": "1282",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Sicily"
+      ],
+      "historical_context": "Sicilian Vespers revolt",
+      "status": "active"
+    },
+    {
+      "event_id": "062",
+      "event_name": "Fall of Acre ends the last major Crusader stronghold in the Levant",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_22",
+      "year": "1291",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Eastern Mediterranean"
+      ],
+      "historical_context": "Fall of Acre ends the last major Crusader stronghold in the Levant",
+      "status": "active"
+    },
+    {
+      "event_id": "063",
+      "event_name": "Jubilee proclaimed by Boniface VIII draws pilgrims to Rome",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_23",
+      "year": "1300",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Jubilee proclaimed by Boniface VIII draws pilgrims to Rome",
+      "status": "active"
+    },
+    {
+      "event_id": "064",
+      "event_name": "Conflict between papacy and monarchy deepens under Boniface VIII and Philip IV",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_24",
+      "year": "1302",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Conflict between papacy and monarchy deepens under Boniface VIII and Philip IV",
+      "status": "active"
+    },
+    {
+      "event_id": "065",
+      "event_name": "Papacy moves to Avignon",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_25",
+      "year": "1309",
+      "guardian_defaults": [
+        "Amara"
+      ],
+      "location_defaults": [
+        "Western Christendom"
+      ],
+      "historical_context": "Papacy moves to Avignon",
+      "status": "active"
+    },
+    {
+      "event_id": "066",
+      "event_name": "Henry VII’s Italian campaign renews imperial tensions",
+      "book_id": "BOOK_04",
+      "chapter_id": "BOOK_04_CH_26",
+      "year": "1310",
+      "guardian_defaults": [
+        "Amara / Giacomo"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Henry VII’s Italian campaign renews imperial tensions",
+      "status": "active"
+    },
+    {
+      "event_id": "067",
+      "event_name": "Great European Famine",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_01",
+      "year": "1315–1317",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Great European Famine",
+      "status": "active"
+    },
+    {
+      "event_id": "068",
+      "event_name": "Rural stress and grain shortages reshape village life",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_02",
+      "year": "1320",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "Rural stress and grain shortages reshape village life",
+      "status": "active"
+    },
+    {
+      "event_id": "069",
+      "event_name": "Hundred Years’ War begins",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_03",
+      "year": "1337",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Western Europe / trade implications"
+      ],
+      "historical_context": "Hundred Years’ War begins",
+      "status": "active"
+    },
+    {
+      "event_id": "070",
+      "event_name": "Black Death reaches Mediterranean ports, including Messina",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_04",
+      "year": "1347",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Sicily / Italy"
+      ],
+      "historical_context": "Black Death reaches Mediterranean ports, including Messina",
+      "status": "active"
+    },
+    {
+      "event_id": "071",
+      "event_name": "Black Death devastates Italy",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_05",
+      "year": "1348",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Black Death devastates Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "072",
+      "event_name": "Continued plague mortality and social collapse",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_06",
+      "year": "1349",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "Continued plague mortality and social collapse",
+      "status": "active"
+    },
+    {
+      "event_id": "073",
+      "event_name": "Additional plague wave spreads across Europe",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_07",
+      "year": "1351",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Additional plague wave spreads across Europe",
+      "status": "active"
+    },
+    {
+      "event_id": "074",
+      "event_name": "Another major plague recurrence",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_08",
+      "year": "1361",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "Another major plague recurrence",
+      "status": "active"
+    },
+    {
+      "event_id": "075",
+      "event_name": "Papacy returns from Avignon to Rome",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_09",
+      "year": "1377",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Papacy returns from Avignon to Rome",
+      "status": "active"
+    },
+    {
+      "event_id": "076",
+      "event_name": "Western Schism begins",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_10",
+      "year": "1378",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Rome / Europe"
+      ],
+      "historical_context": "Western Schism begins",
+      "status": "active"
+    },
+    {
+      "event_id": "077",
+      "event_name": "Revolt and labor unrest appear across Europe after plague disruption",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_11",
+      "year": "1381",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Revolt and labor unrest appear across Europe after plague disruption",
+      "status": "active"
+    },
+    {
+      "event_id": "078",
+      "event_name": "Battle of Kosovo becomes a major eastern European turning point",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_12",
+      "year": "1389",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Balkans / Europe"
+      ],
+      "historical_context": "Battle of Kosovo becomes a major eastern European turning point",
+      "status": "active"
+    },
+    {
+      "event_id": "079",
+      "event_name": "Commercial recovery expands in Italian city-states despite demographic scars",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_13",
+      "year": "1397",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Commercial recovery expands in Italian city-states despite demographic scars",
+      "status": "active"
+    },
+    {
+      "event_id": "080",
+      "event_name": "Early Renaissance conditions strengthen in Florence and beyond",
+      "book_id": "BOOK_05",
+      "chapter_id": "BOOK_05_CH_14",
+      "year": "1400",
+      "guardian_defaults": [
+        "Giacomo"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Early Renaissance conditions strengthen in Florence and beyond",
+      "status": "active"
+    },
+    {
+      "event_id": "081",
+      "event_name": "Battle of Agincourt",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_01",
+      "year": "1415",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "France / Europe"
+      ],
+      "historical_context": "Battle of Agincourt",
+      "status": "active"
+    },
+    {
+      "event_id": "082",
+      "event_name": "End of the Western Schism at Council of Constance",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_02",
+      "year": "1417",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "End of the Western Schism at Council of Constance",
+      "status": "active"
+    },
+    {
+      "event_id": "083",
+      "event_name": "Medici power consolidated in Florence",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_03",
+      "year": "1434",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Florence / Italy"
+      ],
+      "historical_context": "Medici power consolidated in Florence",
+      "status": "active"
+    },
+    {
+      "event_id": "084",
+      "event_name": "Gutenberg-era print culture begins reshaping Europe",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_04",
+      "year": "1450",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Gutenberg-era print culture begins reshaping Europe",
+      "status": "active"
+    },
+    {
+      "event_id": "085",
+      "event_name": "Fall of Constantinople",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_05",
+      "year": "1453",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Constantinople / Italy"
+      ],
+      "historical_context": "Fall of Constantinople",
+      "status": "active"
+    },
+    {
+      "event_id": "086",
+      "event_name": "Rise of Lorenzo de’ Medici symbolizes high Renaissance patronage",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_06",
+      "year": "1469",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Florence"
+      ],
+      "historical_context": "Rise of Lorenzo de’ Medici symbolizes high Renaissance patronage",
+      "status": "active"
+    },
+    {
+      "event_id": "087",
+      "event_name": "Pazzi conspiracy reveals volatility of Italian politics",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_07",
+      "year": "1478",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Florence"
+      ],
+      "historical_context": "Pazzi conspiracy reveals volatility of Italian politics",
+      "status": "active"
+    },
+    {
+      "event_id": "088",
+      "event_name": "Renaissance artistic and humanist culture expands across Italy",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_08",
+      "year": "1485",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Renaissance artistic and humanist culture expands across Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "089",
+      "event_name": "Columbus sails west from Spain",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_09",
+      "year": "1492",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Spain / Europe"
+      ],
+      "historical_context": "Columbus sails west from Spain",
+      "status": "active"
+    },
+    {
+      "event_id": "090",
+      "event_name": "French invasion launches the Italian Wars",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_10",
+      "year": "1494",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "French invasion launches the Italian Wars",
+      "status": "active"
+    },
+    {
+      "event_id": "091",
+      "event_name": "Savonarola executed in Florence",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_11",
+      "year": "1498",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Florence"
+      ],
+      "historical_context": "Savonarola executed in Florence",
+      "status": "active"
+    },
+    {
+      "event_id": "092",
+      "event_name": "Pope Julius II era begins; intense artistic and political ambition in Rome",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_12",
+      "year": "1503",
+      "guardian_defaults": [
+        "Orsolina"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Pope Julius II era begins; intense artistic and political ambition in Rome",
+      "status": "active"
+    },
+    {
+      "event_id": "093",
+      "event_name": "Martin Luther’s theses ignite the Reformation",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_13",
+      "year": "1517",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Martin Luther’s theses ignite the Reformation",
+      "status": "active"
+    },
+    {
+      "event_id": "094",
+      "event_name": "Magellan-Elcano circumnavigation proves global sea linkage",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_14",
+      "year": "1519–1522",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Global / Europe"
+      ],
+      "historical_context": "Magellan-Elcano circumnavigation proves global sea linkage",
+      "status": "active"
+    },
+    {
+      "event_id": "095",
+      "event_name": "Battle of Pavia reshapes Italian power politics",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_15",
+      "year": "1525",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Northern Italy"
+      ],
+      "historical_context": "Battle of Pavia reshapes Italian power politics",
+      "status": "active"
+    },
+    {
+      "event_id": "096",
+      "event_name": "Sack of Rome",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_16",
+      "year": "1527",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Sack of Rome",
+      "status": "active"
+    },
+    {
+      "event_id": "097",
+      "event_name": "Copernicus publishes heliocentric theory",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_17",
+      "year": "1543",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Copernicus publishes heliocentric theory",
+      "status": "active"
+    },
+    {
+      "event_id": "098",
+      "event_name": "Peace of Augsburg recognizes religious division in the Empire",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_18",
+      "year": "1555",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Central Europe"
+      ],
+      "historical_context": "Peace of Augsburg recognizes religious division in the Empire",
+      "status": "active"
+    },
+    {
+      "event_id": "099",
+      "event_name": "Council of Trent closes, shaping Counter-Reformation Catholicism",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_19",
+      "year": "1563",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "Council of Trent closes, shaping Counter-Reformation Catholicism",
+      "status": "active"
+    },
+    {
+      "event_id": "100",
+      "event_name": "Galileo born",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_20",
+      "year": "1564",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Galileo born",
+      "status": "active"
+    },
+    {
+      "event_id": "101",
+      "event_name": "Battle of Lepanto",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_21",
+      "year": "1571",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Mediterranean"
+      ],
+      "historical_context": "Battle of Lepanto",
+      "status": "active"
+    },
+    {
+      "event_id": "102",
+      "event_name": "Gregorian calendar reform",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_22",
+      "year": "1582",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Catholic Europe / Italy"
+      ],
+      "historical_context": "Gregorian calendar reform",
+      "status": "active"
+    },
+    {
+      "event_id": "103",
+      "event_name": "Spanish Armada defeated",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_23",
+      "year": "1588",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Spanish Armada defeated",
+      "status": "active"
+    },
+    {
+      "event_id": "104",
+      "event_name": "Giordano Bruno executed in Rome",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_24",
+      "year": "1600",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Giordano Bruno executed in Rome",
+      "status": "active"
+    },
+    {
+      "event_id": "105",
+      "event_name": "Galileo begins telescopic observations",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_25",
+      "year": "1609",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Padua / Italy"
+      ],
+      "historical_context": "Galileo begins telescopic observations",
+      "status": "active"
+    },
+    {
+      "event_id": "106",
+      "event_name": "Thirty Years’ War begins",
+      "book_id": "BOOK_06",
+      "chapter_id": "BOOK_06_CH_26",
+      "year": "1618",
+      "guardian_defaults": [
+        "Pietro"
+      ],
+      "location_defaults": [
+        "Central Europe / wider implications"
+      ],
+      "historical_context": "Thirty Years’ War begins",
+      "status": "active"
+    },
+    {
+      "event_id": "107",
+      "event_name": "Urban VIII becomes pope, shaping Galileo’s Roman world",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_01",
+      "year": "1623",
+      "guardian_defaults": [
+        "Domenico"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Urban VIII becomes pope, shaping Galileo’s Roman world",
+      "status": "active"
+    },
+    {
+      "event_id": "108",
+      "event_name": "Galileo tried by the Inquisition",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_02",
+      "year": "1633",
+      "guardian_defaults": [
+        "Domenico"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Galileo tried by the Inquisition",
+      "status": "active"
+    },
+    {
+      "event_id": "109",
+      "event_name": "Peace of Westphalia ends the Thirty Years’ War",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_03",
+      "year": "1648",
+      "guardian_defaults": [
+        "Domenico"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Peace of Westphalia ends the Thirty Years’ War",
+      "status": "active"
+    },
+    {
+      "event_id": "110",
+      "event_name": "Major plague outbreak in Naples",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_04",
+      "year": "1656",
+      "guardian_defaults": [
+        "Domenico"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Major plague outbreak in Naples",
+      "status": "active"
+    },
+    {
+      "event_id": "111",
+      "event_name": "Great Fire of London symbolizes vulnerability of dense early modern cities",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_05",
+      "year": "1666",
+      "guardian_defaults": [
+        "Domenico"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Great Fire of London symbolizes vulnerability of dense early modern cities",
+      "status": "active"
+    },
+    {
+      "event_id": "112",
+      "event_name": "Newton publishes Principia",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_06",
+      "year": "1687",
+      "guardian_defaults": [
+        "Domenico"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Newton publishes Principia",
+      "status": "active"
+    },
+    {
+      "event_id": "113",
+      "event_name": "Great Sicilian earthquake",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_07",
+      "year": "1693",
+      "guardian_defaults": [
+        "Domenico"
+      ],
+      "location_defaults": [
+        "Sicily"
+      ],
+      "historical_context": "Great Sicilian earthquake",
+      "status": "active"
+    },
+    {
+      "event_id": "114",
+      "event_name": "War of the Spanish Succession begins",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_08",
+      "year": "1701",
+      "guardian_defaults": [
+        "Domenico"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "War of the Spanish Succession begins",
+      "status": "active"
+    },
+    {
+      "event_id": "115",
+      "event_name": "Treaty of Utrecht reshapes dynastic control, including in Italy",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_09",
+      "year": "1713",
+      "guardian_defaults": [
+        "Agata"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "Treaty of Utrecht reshapes dynastic control, including in Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "116",
+      "event_name": "Bourbon rule begins in Naples and Sicily",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_10",
+      "year": "1734",
+      "guardian_defaults": [
+        "Agata"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Bourbon rule begins in Naples and Sicily",
+      "status": "active"
+    },
+    {
+      "event_id": "117",
+      "event_name": "Lisbon earthquake shocks Enlightenment thought",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_11",
+      "year": "1755",
+      "guardian_defaults": [
+        "Agata"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Lisbon earthquake shocks Enlightenment thought",
+      "status": "active"
+    },
+    {
+      "event_id": "118",
+      "event_name": "Beccaria’s Enlightenment thought spreads from Italy",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_12",
+      "year": "1764",
+      "guardian_defaults": [
+        "Agata"
+      ],
+      "location_defaults": [
+        "Italy / Europe"
+      ],
+      "historical_context": "Beccaria’s Enlightenment thought spreads from Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "119",
+      "event_name": "American Revolution begins",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_13",
+      "year": "1776",
+      "guardian_defaults": [
+        "Agata"
+      ],
+      "location_defaults": [
+        "Atlantic world / Europe"
+      ],
+      "historical_context": "American Revolution begins",
+      "status": "active"
+    },
+    {
+      "event_id": "120",
+      "event_name": "French Revolution begins",
+      "book_id": "BOOK_07",
+      "chapter_id": "BOOK_07_CH_14",
+      "year": "1789",
+      "guardian_defaults": [
+        "Agata"
+      ],
+      "location_defaults": [
+        "France / Europe"
+      ],
+      "historical_context": "French Revolution begins",
+      "status": "active"
+    },
+    {
+      "event_id": "121",
+      "event_name": "Napoleon’s campaigns and republican experiments reshape Italy",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_01",
+      "year": "1798–1799",
+      "guardian_defaults": [
+        "Agata"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Napoleon’s campaigns and republican experiments reshape Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "122",
+      "event_name": "Napoleon crowned emperor",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_02",
+      "year": "1804",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Napoleon crowned emperor",
+      "status": "active"
+    },
+    {
+      "event_id": "123",
+      "event_name": "Congress of Vienna redraws Europe after Napoleon",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_03",
+      "year": "1815",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "Congress of Vienna redraws Europe after Napoleon",
+      "status": "active"
+    },
+    {
+      "event_id": "124",
+      "event_name": "Carbonari and constitutional revolts in Italy",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_04",
+      "year": "1820–1821",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Carbonari and constitutional revolts in Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "125",
+      "event_name": "Mazzinian nationalism strengthens Italian unification ideas",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_05",
+      "year": "1831",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Mazzinian nationalism strengthens Italian unification ideas",
+      "status": "active"
+    },
+    {
+      "event_id": "126",
+      "event_name": "Revolutions across Europe, including Italy",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_06",
+      "year": "1848",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "Revolutions across Europe, including Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "127",
+      "event_name": "Second Italian War of Independence",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_07",
+      "year": "1859",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Second Italian War of Independence",
+      "status": "active"
+    },
+    {
+      "event_id": "128",
+      "event_name": "Garibaldi’s Expedition of the Thousand",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_08",
+      "year": "1860",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Southern Italy / Sicily"
+      ],
+      "historical_context": "Garibaldi’s Expedition of the Thousand",
+      "status": "active"
+    },
+    {
+      "event_id": "129",
+      "event_name": "Kingdom of Italy proclaimed",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_09",
+      "year": "1861",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Kingdom of Italy proclaimed",
+      "status": "active"
+    },
+    {
+      "event_id": "130",
+      "event_name": "Third Italian War of Independence",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_10",
+      "year": "1866",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Third Italian War of Independence",
+      "status": "active"
+    },
+    {
+      "event_id": "131",
+      "event_name": "Capture of Rome completes major phase of Italian unification",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_11",
+      "year": "1870",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Capture of Rome completes major phase of Italian unification",
+      "status": "active"
+    },
+    {
+      "event_id": "132",
+      "event_name": "Rome becomes capital of Italy",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_12",
+      "year": "1871",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Rome becomes capital of Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "133",
+      "event_name": "Death of Giuseppe Garibaldi",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_13",
+      "year": "1882",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Death of Giuseppe Garibaldi",
+      "status": "active"
+    },
+    {
+      "event_id": "134",
+      "event_name": "Krakatoa eruption becomes a global atmospheric event",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_14",
+      "year": "1883",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Global / climate effects"
+      ],
+      "historical_context": "Krakatoa eruption becomes a global atmospheric event",
+      "status": "active"
+    },
+    {
+      "event_id": "135",
+      "event_name": "Industrialization and migration reshape Italian society",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_15",
+      "year": "1890s",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Industrialization and migration reshape Italian society",
+      "status": "active"
+    },
+    {
+      "event_id": "136",
+      "event_name": "Battle of Adwa affects Italian imperial politics and identity",
+      "book_id": "BOOK_08",
+      "chapter_id": "BOOK_08_CH_16",
+      "year": "1896",
+      "guardian_defaults": [
+        "Emilio"
+      ],
+      "location_defaults": [
+        "Italy / Eritrea / national mood"
+      ],
+      "historical_context": "Battle of Adwa affects Italian imperial politics and identity",
+      "status": "active"
+    },
+    {
+      "event_id": "137",
+      "event_name": "Messina earthquake and tsunami devastate southern Italy",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_01",
+      "year": "1908",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Sicily / Calabria"
+      ],
+      "historical_context": "Messina earthquake and tsunami devastate southern Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "138",
+      "event_name": "Italo-Turkish War",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_02",
+      "year": "1911–1912",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Italy / Mediterranean"
+      ],
+      "historical_context": "Italo-Turkish War",
+      "status": "active"
+    },
+    {
+      "event_id": "139",
+      "event_name": "World War I begins",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_03",
+      "year": "1914",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "World War I begins",
+      "status": "active"
+    },
+    {
+      "event_id": "140",
+      "event_name": "Italy enters World War I",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_04",
+      "year": "1915",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Italy enters World War I",
+      "status": "active"
+    },
+    {
+      "event_id": "141",
+      "event_name": "Brutal attrition on the Isonzo Front",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_05",
+      "year": "1916",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Northeastern Italy"
+      ],
+      "historical_context": "Brutal attrition on the Isonzo Front",
+      "status": "active"
+    },
+    {
+      "event_id": "142",
+      "event_name": "Caporetto disaster",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_06",
+      "year": "1917",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Caporetto disaster",
+      "status": "active"
+    },
+    {
+      "event_id": "143",
+      "event_name": "World War I ends",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_07",
+      "year": "1918",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "World War I ends",
+      "status": "active"
+    },
+    {
+      "event_id": "144",
+      "event_name": "Spanish flu pandemic",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_08",
+      "year": "1918–1919",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Global / Italy"
+      ],
+      "historical_context": "Spanish flu pandemic",
+      "status": "active"
+    },
+    {
+      "event_id": "145",
+      "event_name": "Postwar unrest and social fractures intensify in Italy",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_09",
+      "year": "1919",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Postwar unrest and social fractures intensify in Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "146",
+      "event_name": "Mussolini’s March on Rome",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_10",
+      "year": "1922",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Mussolini’s March on Rome",
+      "status": "active"
+    },
+    {
+      "event_id": "147",
+      "event_name": "Lateran Treaty resolves the Roman Question",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_11",
+      "year": "1929",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Rome / Italy"
+      ],
+      "historical_context": "Lateran Treaty resolves the Roman Question",
+      "status": "active"
+    },
+    {
+      "event_id": "148",
+      "event_name": "Italian invasion of Ethiopia",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_12",
+      "year": "1935–1936",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Italy / empire politics"
+      ],
+      "historical_context": "Italian invasion of Ethiopia",
+      "status": "active"
+    },
+    {
+      "event_id": "149",
+      "event_name": "Anti-Jewish racial laws in Fascist Italy",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_13",
+      "year": "1938",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Anti-Jewish racial laws in Fascist Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "150",
+      "event_name": "World War II begins in Europe",
+      "book_id": "BOOK_09",
+      "chapter_id": "BOOK_09_CH_14",
+      "year": "1939",
+      "guardian_defaults": [
+        "Rosa"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "World War II begins in Europe",
+      "status": "active"
+    },
+    {
+      "event_id": "151",
+      "event_name": "Italy enters World War II",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_01",
+      "year": "1940",
+      "guardian_defaults": [
+        "Rosa / Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Italy enters World War II",
+      "status": "active"
+    },
+    {
+      "event_id": "152",
+      "event_name": "Allied invasion of Sicily",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_02",
+      "year": "1943",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Sicily"
+      ],
+      "historical_context": "Allied invasion of Sicily",
+      "status": "active"
+    },
+    {
+      "event_id": "153",
+      "event_name": "Allied invasion of mainland Italy and collapse of Mussolini’s regime",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_03",
+      "year": "1943",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Allied invasion of mainland Italy and collapse of Mussolini’s regime",
+      "status": "active"
+    },
+    {
+      "event_id": "154",
+      "event_name": "Continued warfare and destruction across Italy",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_04",
+      "year": "1944",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Continued warfare and destruction across Italy",
+      "status": "active"
+    },
+    {
+      "event_id": "155",
+      "event_name": "World War II ends in Europe",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_05",
+      "year": "1945",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "World War II ends in Europe",
+      "status": "active"
+    },
+    {
+      "event_id": "156",
+      "event_name": "Italy becomes a republic",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_06",
+      "year": "1946",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Italy becomes a republic",
+      "status": "active"
+    },
+    {
+      "event_id": "157",
+      "event_name": "New Italian constitution takes effect",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_07",
+      "year": "1948",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "New Italian constitution takes effect",
+      "status": "active"
+    },
+    {
+      "event_id": "158",
+      "event_name": "Treaty of Rome creates the EEC",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_08",
+      "year": "1957",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Rome"
+      ],
+      "historical_context": "Treaty of Rome creates the EEC",
+      "status": "active"
+    },
+    {
+      "event_id": "159",
+      "event_name": "Vajont disaster reflects dangers of modern development",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_09",
+      "year": "1963",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Vajont disaster reflects dangers of modern development",
+      "status": "active"
+    },
+    {
+      "event_id": "160",
+      "event_name": "Global protest era influences Italian social life",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_10",
+      "year": "1968",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Italy / Europe"
+      ],
+      "historical_context": "Global protest era influences Italian social life",
+      "status": "active"
+    },
+    {
+      "event_id": "161",
+      "event_name": "Piazza Fontana bombing begins Years of Lead atmosphere",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_11",
+      "year": "1969",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Piazza Fontana bombing begins Years of Lead atmosphere",
+      "status": "active"
+    },
+    {
+      "event_id": "162",
+      "event_name": "Environmental awareness and anti-industrial critique grow",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_12",
+      "year": "1970s",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "Environmental awareness and anti-industrial critique grow",
+      "status": "active"
+    },
+    {
+      "event_id": "163",
+      "event_name": "Kidnapping and murder of Aldo Moro",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_13",
+      "year": "1978",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Kidnapping and murder of Aldo Moro",
+      "status": "active"
+    },
+    {
+      "event_id": "164",
+      "event_name": "Irpinia earthquake",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_14",
+      "year": "1980",
+      "guardian_defaults": [
+        "Theodora Bassi"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "Irpinia earthquake",
+      "status": "active"
+    },
+    {
+      "event_id": "165",
+      "event_name": "End of Theodora’s formal service period",
+      "book_id": "BOOK_10",
+      "chapter_id": "BOOK_10_CH_15",
+      "year": "1985",
+      "guardian_defaults": [
+        "Theodora Bassi / Final Guardian"
+      ],
+      "location_defaults": [
+        "Southern Italy"
+      ],
+      "historical_context": "End of Theodora’s formal service period",
+      "status": "active"
+    },
+    {
+      "event_id": "166",
+      "event_name": "Chernobyl disaster sharpens environmental consciousness across Europe",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_01",
+      "year": "1986",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Chernobyl disaster sharpens environmental consciousness across Europe",
+      "status": "active"
+    },
+    {
+      "event_id": "167",
+      "event_name": "Fall of the Berlin Wall",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_02",
+      "year": "1989",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Fall of the Berlin Wall",
+      "status": "active"
+    },
+    {
+      "event_id": "168",
+      "event_name": "End of the Cold War",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_03",
+      "year": "1991",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Europe / global"
+      ],
+      "historical_context": "End of the Cold War",
+      "status": "active"
+    },
+    {
+      "event_id": "169",
+      "event_name": "Maastricht Treaty deepens European integration",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_04",
+      "year": "1992",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Europe"
+      ],
+      "historical_context": "Maastricht Treaty deepens European integration",
+      "status": "active"
+    },
+    {
+      "event_id": "170",
+      "event_name": "Satellite mapping and digital cartography become common",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_05",
+      "year": "1990s",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Global / Europe"
+      ],
+      "historical_context": "Satellite mapping and digital cartography become common",
+      "status": "active"
+    },
+    {
+      "event_id": "171",
+      "event_name": "Mani Pulite investigations transform Italian politics",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_06",
+      "year": "1992",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Mani Pulite investigations transform Italian politics",
+      "status": "active"
+    },
+    {
+      "event_id": "172",
+      "event_name": "Kyoto Protocol era begins international climate focus",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_07",
+      "year": "1997",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Global"
+      ],
+      "historical_context": "Kyoto Protocol era begins international climate focus",
+      "status": "active"
+    },
+    {
+      "event_id": "173",
+      "event_name": "Euro monetary integration advances",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_08",
+      "year": "1999",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Europe / Italy"
+      ],
+      "historical_context": "Euro monetary integration advances",
+      "status": "active"
+    },
+    {
+      "event_id": "174",
+      "event_name": "September 11 attacks reshape global security culture",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_09",
+      "year": "2001",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Global"
+      ],
+      "historical_context": "September 11 attacks reshape global security culture",
+      "status": "active"
+    },
+    {
+      "event_id": "175",
+      "event_name": "Euro banknotes and coins enter circulation",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_10",
+      "year": "2002",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Italy / Europe"
+      ],
+      "historical_context": "Euro banknotes and coins enter circulation",
+      "status": "active"
+    },
+    {
+      "event_id": "176",
+      "event_name": "Global financial crisis",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_11",
+      "year": "2008",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Global / Europe"
+      ],
+      "historical_context": "Global financial crisis",
+      "status": "active"
+    },
+    {
+      "event_id": "177",
+      "event_name": "L’Aquila earthquake",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_12",
+      "year": "2009",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "L’Aquila earthquake",
+      "status": "active"
+    },
+    {
+      "event_id": "178",
+      "event_name": "Paris Climate Agreement",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_13",
+      "year": "2015",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Global"
+      ],
+      "historical_context": "Paris Climate Agreement",
+      "status": "active"
+    },
+    {
+      "event_id": "179",
+      "event_name": "Central Italy earthquake sequence renews awareness of fragile landscapes",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_14",
+      "year": "2016",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Italy"
+      ],
+      "historical_context": "Central Italy earthquake sequence renews awareness of fragile landscapes",
+      "status": "active"
+    },
+    {
+      "event_id": "180",
+      "event_name": "Global pandemic",
+      "book_id": "BOOK_11",
+      "chapter_id": "BOOK_11_CH_15",
+      "year": "2020",
+      "guardian_defaults": [
+        "Final Guardian"
+      ],
+      "location_defaults": [
+        "Global / Italy"
+      ],
+      "historical_context": "Global pandemic",
+      "status": "active"
+    }
+  ]
+}

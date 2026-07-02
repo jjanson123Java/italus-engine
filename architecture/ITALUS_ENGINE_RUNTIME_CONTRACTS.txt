@@ -1,0 +1,872 @@
+ITALUS_ENGINE_RUNTIME_CONTRACTS.txt
+Generated: 2026-03-11
+
+PURPOSE
+-------
+This document defines the runtime contracts for the Italus Book Engine. It is not a project management file. It is an interface and data-contract 
+specification that locks how requests, manifests, prompts, validation context, AI responses, controller payloads, and commit payloads move through 
+the engine at runtime. Its purpose is to prevent implementation drift between project_runner.py, prompt_builder.py, ai_runner.py, frontend/controller 
+layers, canon packet assembly, Guardian Engine, and post_generation_canon_validator.py.
+
+WHAT "RUNTIME CONTRACTS" MEANS
+------------------------------
+A runtime contract is the expected shape, meaning, and validation rule for data exchanged between components while the engine is running.
+
+Examples:
+- what fields a generation request must contain
+- what packet metadata must be emitted
+- what a validator response must look like
+- what severity levels mean
+- what lifecycle state a request is in
+- what a controller-facing UI payload should expose
+
+This is different from project planning.
+A project management file tracks milestones, phases, owners, and schedules.
+A runtime contracts file defines executable interface boundaries.
+
+SOURCE ALIGNMENT
+----------------
+This contract is aligned to the current architecture and current implementation direction:
+
+Architecture sources
+- Architectural_goals_UPDATED.txt
+- ITALUS_ENGINE_ARCHITECTURE_ROADMAP_v3.txt
+- ITALUS_ENGINE_COMPONENT_SPEC.txt
+
+Current code direction
+- project_runner.py currently resolves event context, scopes duplicate candidates, builds coverage, builds the prompt, calls ai_runner, updates session state, and returns a structured response envelope.
+- prompt_builder.py currently builds prompt text from core pack, generation pack, book pack, book state, chapter digest, event scenes, and request metadata.
+- ai_runner.py currently exposes a provider registry and a neutral dispatch layer.
+- frontend/controller code currently wraps generation/save into normalized UI-friendly envelopes.
+- post_generation_canon_validator.py currently performs post-generation resonance validation and is intended to expand into the full prose validator.
+
+NON-NEGOTIABLE ARCHITECTURAL RULES
+----------------------------------
+1. Book pack canon and compressed book pack canon are the same artifact.
+2. Canon Packet Engine validates packet assembly/integrity.
+3. Guardian Engine validates request legality before generation.
+4. post_generation_canon_validator validates generated prose after generation.
+5. Prompt Builder serves the model; validators must not depend on prompt parsing for truth.
+6. project_runner.py is the orchestrator and payload hub.
+7. Accepted local continuity outranks weaker runtime inference.
+
+AUTHORITY ORDER
+---------------
+Validation and continuity resolution should prefer:
+1. accepted local continuity
+2. explicit request metadata
+3. book pack canon
+4. global canon
+5. heuristics only if stronger layers are unavailable
+
+RUNTIME LIFECYCLE STATES
+------------------------
+Every generation request should move through explicit lifecycle states.
+
+Generation path
+- request_received
+- request_resolved
+- continuity_loaded
+- packet_built
+- packet_validated
+- guardian_validated
+- prompt_built
+- ai_generation_started
+- ai_generation_completed
+- prose_validated
+- generation_returned
+
+Commit path
+- save_requested
+- save_validated
+- backup_created
+- scene_record_written
+- coverage_updated
+- chapter_digest_updated
+- book_state_updated
+- session_state_updated
+- commit_completed
+
+Terminal/error states
+- blocked_by_packet_validation
+- blocked_by_guardian_validation
+- ai_provider_invalid
+- ai_provider_not_implemented
+- ai_generation_error
+- blocked_by_post_generation_validation
+- save_failed
+- commit_failed
+
+SEVERITY FRAMEWORK
+------------------
+All validators should use a shared severity model.
+
+ERROR
+- hard failure
+- generation or commit must stop
+
+WARNING
+- generation may continue
+- commit may continue unless a later rule blocks it
+- UI should display warning
+
+INFO
+- diagnostic only
+- no blocking behavior
+
+Severity examples
+- ERROR: tree speaks directly
+- ERROR: unsupported AI provider
+- ERROR: malformed packet manifest
+- WARNING: scene type underused or continuity risk
+- INFO: fallback provider default selected
+
+VERSIONING FIELDS
+-----------------
+Every major runtime contract object should carry version identifiers where practical.
+
+Recommended version keys
+- runtime_contract_version
+- packet_schema_version
+- request_schema_version
+- validation_schema_version
+- commit_schema_version
+- controller_schema_version
+
+Current recommended values
+- runtime_contract_version: "1.0"
+- packet_schema_version: "1.0"
+- request_schema_version: "1.0"
+- validation_schema_version: "1.0"
+- commit_schema_version: "1.0"
+- controller_schema_version: "1.0"
+
+CORE CONTRACTS
+==============
+1. Generation Request Contract
+------------------------------
+Primary producer
+- frontend_controller.py
+- ITALUS_PROJECT_RUNNER_MENU_TONE.py
+- UI/controller layer
+
+Primary consumer
+- project_runner.py
+
+Purpose
+- define the minimum request needed to generate a scene
+
+Required fields
+- book_id
+- chapter_id
+- event_id
+- scene_type
+
+Strongly recommended fields
+- event_name
+- year
+- guardian
+- location
+- time_window
+- tone
+- pov
+- ai_provider
+
+Optional continuity fields
+- continued_from_scene_id
+- callback_scene_ids
+
+Request schema
+--------------
+{
+  "runtime_contract_version": "1.0",
+  "request_schema_version": "1.0",
+
+  "book_id": "BOOK_07",
+  "chapter_id": "BOOK_07_CH_06",
+  "event_id": "118",
+  "event_name": "Local uprising after failed harvest",
+
+  "year": 1718,
+  "guardian": "Agata",
+  "location": "Calabria foothills",
+  "scene_type": "transition",
+  "time_window": "late autumn",
+  "tone": "somber",
+  "pov": "close_third",
+
+  "continued_from_scene_id": "SCN_007_041",
+  "callback_scene_ids": ["SCN_007_012", "SCN_007_027"],
+
+  "ai_provider": "claude"
+}
+
+Field rules
+-----------
+book_id
+- string
+- must reference an active manifest book
+
+chapter_id
+- string
+- must belong to the selected book
+
+event_id
+- string
+- primary event selector if present
+
+event_name
+- optional if event_id is present
+- project_runner may resolve it from event_id
+
+year
+- integer preferred
+- may be autofilled from event defaults or event index
+
+guardian
+- string
+- may be autofilled from canonical event/manifest context
+
+scene_type
+- string
+- must come from allowed scene types manifest or later guardian validation
+
+callback_scene_ids
+- array of scene_id strings
+- defaults to empty list if absent
+
+ai_provider
+- defaults from app settings if absent
+
+2. Resolved Request Contract
+----------------------------
+Primary producer
+- project_runner.py
+
+Consumers
+- Canon Packet Engine
+- Guardian Engine
+- Prompt Builder
+- post_generation_canon_validator
+- controller/UI
+
+Purpose
+- hold normalized request data after event resolution and autofill
+
+Schema
+------
+{
+  "runtime_contract_version": "1.0",
+  "request_schema_version": "1.0",
+
+  "book_id": "BOOK_07",
+  "chapter_id": "BOOK_07_CH_06",
+  "event_id": "118",
+  "event_name": "Local uprising after failed harvest",
+  "year": 1718,
+  "guardian": "Agata",
+  "location": "Calabria foothills",
+  "scene_type": "transition",
+  "time_window": "late autumn",
+  "tone": "somber",
+  "pov": "close_third",
+  "continued_from_scene_id": "SCN_007_041",
+  "callback_scene_ids": ["SCN_007_012", "SCN_007_027"],
+  "ai_provider": "claude",
+
+  "resolution_notes": [],
+  "request_state": "request_resolved"
+}
+
+Resolution rules
+----------------
+- event_id should be authoritative when present
+- if event_name resolves exactly, event_id should be backfilled
+- book_id should be synchronized from canonical event data
+- year should be backfilled from event defaults when absent
+- guardian should be backfilled from event defaults or event index when absent
+
+3. Continuity Context Contract
+------------------------------
+Primary producer
+- Canon Memory Engine / project_runner.py
+
+Consumers
+- Canon Packet Engine
+- Guardian Engine
+- Prompt Builder
+- post_generation_canon_validator
+
+Purpose
+- provide accepted local continuity to runtime systems
+
+Schema
+------
+{
+  "runtime_contract_version": "1.0",
+
+  "session_state": {
+    "last_request_timestamp": "2026-03-11T20:45:00+00:00",
+    "last_book_id": "BOOK_07",
+    "last_chapter_id": "BOOK_07_CH_05",
+    "last_scene_id": "SCN_007_041",
+    "last_action": "generate_scene",
+    "current_mode": "chapter"
+  },
+
+  "book_state": {
+    "book_id": "BOOK_07",
+    "last_scene_id": "SCN_007_041",
+    "last_event_id": "117",
+    "last_guardian": "Domenico",
+    "last_location": "village ridge"
+  },
+
+  "chapter_digest": {
+    "chapter_id": "BOOK_07_CH_05",
+    "last_scene_id": "SCN_007_041",
+    "summary": "Domenico witnesses burial after famine.",
+    "guardian": "Domenico",
+    "location": "village ridge"
+  },
+
+  "event_scenes": [
+    {
+      "scene_id": "SCN_007_038",
+      "title": "Burial on the Ridge",
+      "year": 1717,
+      "event_id": "117",
+      "event_name": "Burial after winter famine",
+      "guardian": "Domenico",
+      "location": "village ridge",
+      "scene_type": "reflection",
+      "tone": "somber",
+      "summary": "..."
+    }
+  ],
+
+  "candidate_scenes": [
+    {
+      "scene_id": "SCN_007_038",
+      "event_id": "117",
+      "chapter_id": "BOOK_07_CH_05"
+    }
+  ]
+}
+
+Rules
+-----
+- accepted local continuity is authoritative over weaker inference
+- candidate_scenes are scoped for duplicate checking only
+- event_scenes are same-event continuity references
+- chapter digest is a compact chapter continuity artifact, not a full scene record
+
+4. Canon Packet Manifest Contract
+---------------------------------
+Primary producer
+- Canon Packet Engine
+
+Consumers
+- project_runner.py
+- Prompt Builder
+- Guardian Engine
+- post_generation_canon_validator
+- UI diagnostics if needed
+
+Purpose
+- declare what canon/context layers were assembled and whether the packet is valid
+
+Schema
+------
+{
+  "runtime_contract_version": "1.0",
+  "packet_schema_version": "1.0",
+
+  "packet_manifest": {
+    "packet_id": "pkt_20260311_001",
+    "book_id": "BOOK_07",
+
+    "has_core_pack": true,
+    "has_generation_pack": true,
+    "has_book_pack": true,
+    "has_book_state": true,
+    "has_chapter_digest": true,
+    "has_request_metadata": true,
+    "has_event_metadata": true,
+
+    "packet_integrity_ok": true,
+    "packet_order_ok": true,
+    "packet_metadata_ok": true,
+
+    "packet_state": "packet_validated"
+  }
+}
+
+Rules
+-----
+- packet_integrity_ok false is an ERROR
+- packet_order_ok false is an ERROR
+- packet_metadata_ok false is an ERROR
+- a valid packet does not mean the request is legal
+- missing book pack for a book-specific generation request is an ERROR
+
+5. Canon Packet Metadata Contract
+---------------------------------
+Primary producer
+- Canon Packet Engine
+
+Consumers
+- Guardian Engine
+- Prompt Builder
+- post_generation_canon_validator
+
+Purpose
+- provide structured canon constraints without requiring prompt parsing
+
+Schema
+------
+{
+  "runtime_contract_version": "1.0",
+  "packet_schema_version": "1.0",
+
+  "packet_metadata": {
+    "book_id": "BOOK_07",
+    "book_year_start": 1620,
+    "book_year_end": 1800,
+
+    "emotional_stage_envelope": [
+      "Stage 3",
+      "Stage 4 transition"
+    ],
+
+    "signal_tier": 3,
+    "allowed_signal_categories": [
+      "touch-contact",
+      "resin",
+      "needle movement",
+      "root pressure",
+      "soil chemistry"
+    ],
+
+    "resonance_budget": 2,
+    "resonance_distribution": "late-book constrained",
+    "transition_guardians_allowed": ["Domenico", "Agata"],
+
+    "allowed_event_ids": ["117", "118", "119"],
+    "allowed_scene_types": ["witness", "transition", "aftermath"],
+
+    "metadata_source": "book_pack_plus_global",
+    "metadata_confidence": "strong"
+  }
+}
+
+Rules
+-----
+- packet metadata should reflect the book pack first, then global canon where needed
+- allowed_event_ids and allowed_scene_types may be partial if the current implementation has not fully materialized them yet
+- metadata_confidence values:
+  - strong
+  - partial
+  - heuristic
+
+6. Guardian Validation Response Contract
+----------------------------------------
+Primary producer
+- Guardian Engine
+
+Consumers
+- project_runner.py
+- UI/controller
+- Prompt Builder
+- post_generation_canon_validator
+
+Purpose
+- state whether the requested scene is legal before generation
+
+Schema
+------
+{
+  "runtime_contract_version": "1.0",
+  "validation_schema_version": "1.0",
+
+  "guardian_validation_valid": true,
+  "guardian_errors": [],
+  "guardian_warnings": [],
+
+  "resolved_request_context": {
+    "book_id": "BOOK_07",
+    "chapter_id": "BOOK_07_CH_06",
+    "event_id": "118",
+    "event_name": "Local uprising after failed harvest",
+    "year": 1718,
+    "guardian": "Agata",
+    "scene_type": "transition"
+  },
+
+  "request_state": "guardian_validated"
+}
+
+Error examples
+--------------
+- guardian does not match legal year/service period
+- event does not belong to selected book
+- scene type not allowed
+- illegal transition request
+- duplicate request should be blocked
+- resonance request illegal for guardian/book/chapter state
+
+Rules
+-----
+- guardian_validation_valid false blocks generation
+- warnings do not block by themselves
+- resolved_request_context is the canonical request context for downstream steps
+
+7. Prompt Payload Contract
+--------------------------
+Primary producer
+- Prompt Builder
+
+Consumers
+- ai_runner.py
+- project_runner.py
+
+Purpose
+- define the model-facing prompt plus sidecar runtime context
+
+Schema
+------
+{
+  "runtime_contract_version": "1.0",
+
+  "prompt_payload": {
+    "provider": "claude",
+    "prompt_text": "ITALUS KNOWLEDGE PACK — CORE\n...",
+
+    "prompt_mode": "resume_aware",
+    "prompt_state": "prompt_built"
+  },
+
+  "validation_sidecar": {
+    "resolved_request_context": { "...": "..." },
+    "packet_manifest": { "...": "..." },
+    "packet_metadata": { "...": "..." },
+    "continuity_context": { "...": "..." }
+  }
+}
+
+Rules
+-----
+- prompt_text is for model consumption
+- validation_sidecar is for runtime validation/orchestration
+- validators should never rely on prompt_text as the sole source of truth
+
+8. AI Response Contract
+-----------------------
+Primary producer
+- ai_runner.py / provider adapters
+
+Consumers
+- project_runner.py
+- post_generation_canon_validator
+- controller/UI
+
+Purpose
+- normalize provider execution results
+
+Current implementation reality
+------------------------------
+Current ai_runner.py exposes provider capability metadata and dispatches by provider id.
+Current dispatch returns raw text on success and raises exceptions for invalid/unimplemented providers.
+Runtime orchestration should normalize that into the following contract.
+
+Normalized schema
+-----------------
+{
+  "runtime_contract_version": "1.0",
+
+  "ai_provider": "claude",
+  "ai_status": "ok",
+  "ai_error": null,
+
+  "generated_text": "Generated prose here...",
+  "raw_response_available": false,
+
+  "generation_state": "ai_generation_completed"
+}
+
+Allowed ai_status values
+------------------------
+- ok
+- provider_invalid
+- provider_not_implemented
+- generation_error
+
+Rules
+-----
+- generated_text may be empty on failure
+- ai_status != ok blocks post-generation prose validation except optional diagnostic modes
+
+9. Post-Generation Validation Contract
+--------------------------------------
+Primary producer
+- post_generation_canon_validator.py
+
+Consumers
+- project_runner.py
+- controller/UI
+- save/commit pipeline
+
+Purpose
+- provide prose-level validation after AI output is returned
+
+Schema
+------
+{
+  "runtime_contract_version": "1.0",
+  "validation_schema_version": "1.0",
+
+  "canon_drift_valid": true,
+  "canon_drift_errors": [],
+  "canon_drift_warnings": [],
+  "canon_drift_info": [],
+
+  "canon_drift_report": "POST-GENERATION VALIDATION REPORT\n...",
+  "validation_state": "prose_validated"
+}
+
+Current implementation note
+---------------------------
+Current post_generation_canon_validator.py still centers on resonance validation, including:
+- resonance_count
+- max_allowed
+- formatted report generation
+This contract is broader than the present code and defines the target normalized shape.
+
+Rules
+-----
+- canon_drift_valid false blocks commit
+- warnings may allow manual override depending on UI policy
+- canon_drift_report should remain human-readable
+
+10. Generation Response Envelope Contract
+-----------------------------------------
+Primary producer
+- project_runner.py
+
+Consumers
+- controller/UI
+- frontend_controller.py
+- ITALUS_PROJECT_RUNNER_MENU_TONE.py
+
+Purpose
+- define the normalized orchestration response returned after generation
+
+Schema
+------
+{
+  "ok": true,
+
+  "data": {
+    "generated_text": "Generated prose here...",
+    "response": "Generated prose here...",
+    "resolved_request": { "...": "..." },
+    "duplicate_candidate": null,
+    "candidate_scene_count": 4
+  },
+
+  "meta": {
+    "ai_provider": "claude",
+    "ai_status": "ok",
+    "ai_error": null,
+    "author_message": "Resume-aware prompt built from recent context.",
+    "resume_status": "resume",
+    "prompt_mode": "resume_aware"
+  },
+
+  "ui_status": {
+    "provider": "claude",
+    "provider_status": "ok",
+    "provider_error": null,
+    "author_message": "Resume-aware prompt built from recent context.",
+    "resume_status": "resume",
+    "prompt_mode": "resume_aware",
+    "has_duplicate_warning": false,
+    "duplicate_scene_id": null
+  },
+
+  "warnings": [],
+  "errors": []
+}
+
+Current implementation note
+---------------------------
+Current controller wrappers already expect fields such as:
+- ok
+- warnings
+- errors
+- meta
+- ui_status
+- generated_text
+- duplicate_candidate
+- resolved_request
+- candidate_scene_count
+
+Rules
+-----
+- ok false means generation should be treated as failed at the controller/UI layer
+- data.generated_text is the preferred UI prose field
+- data.response may be preserved for backward compatibility during transition
+
+11. Save / Commit Request Contract
+----------------------------------
+Primary producer
+- frontend/controller
+- UI save action
+
+Consumer
+- project_runner.py / commit pipeline
+
+Purpose
+- define the accepted-scene payload passed into save/commit
+
+Schema
+------
+{
+  "runtime_contract_version": "1.0",
+  "commit_schema_version": "1.0",
+
+  "request": {
+    "book_id": "BOOK_07",
+    "chapter_id": "BOOK_07_CH_06",
+    "event_id": "118"
+  },
+
+  "generated_text": "Final accepted prose...",
+  "title": "After the Failed Harvest",
+  "summary": "Agata witnesses unrest in the foothills.",
+  "status": "canon"
+}
+
+Rules
+-----
+- generated_text must be the accepted or edited final prose
+- status values may include canon and draft if your workflow supports both
+- commit should not proceed if post-generation validation failed unless an explicit override policy exists
+
+12. Save / Commit Response Contract
+-----------------------------------
+Primary producer
+- project_runner.py / commit pipeline
+
+Consumers
+- controller/UI
+
+Purpose
+- normalize the result of save_accepted_scene()
+
+Schema
+------
+{
+  "ok": true,
+
+  "data": {
+    "scene_id": "SCN_007_042",
+    "title": "After the Failed Harvest",
+    "status": "canon",
+    "book_id": "BOOK_07",
+    "chapter_id": "BOOK_07_CH_06",
+    "event_id": "118",
+    "backup_path": "data/backups/backup_20260311_204500.zip"
+  },
+
+  "ui_status": {
+    "save_status": "saved",
+    "save_error": null
+  },
+
+  "warnings": [],
+  "errors": []
+}
+
+Rules
+-----
+- ok false means the commit pipeline did not complete
+- backup_path should be included when backup creation succeeds
+- scene_id becomes the local continuity key for future requests
+
+13. Controller/UI Generation Contract
+-------------------------------------
+Primary producer
+- ITALUS_PROJECT_RUNNER_MENU_TONE.py
+- frontend_controller.py
+
+Consumer
+- HTML / JS authoring interface
+
+Purpose
+- define the frontend-safe response shape the UI should trust
+
+Schema
+------
+{
+  "ok": true,
+  "generated_text": "Generated prose here...",
+  "warnings": [],
+  "errors": [],
+
+  "meta": {
+    "ai_provider": "claude",
+    "ai_status": "ok"
+  },
+
+  "ui_state": {
+    "provider": "claude",
+    "provider_status": "ok",
+    "provider_error": null,
+    "author_message": "Resume-aware prompt built from recent context.",
+    "resume_status": "resume",
+    "prompt_mode": "resume_aware",
+    "has_duplicate_warning": false,
+    "duplicate_scene_id": null
+  },
+
+  "duplicate_candidate": null,
+  "resolved_request": { "...": "..." },
+  "candidate_scene_count": 4
+}
+
+Rules
+-----
+- ui_state is presentation-safe
+- meta is diagnostic/runtime-safe
+- generated_text is the display field the UI should prefer
+
+IMPLEMENTATION GAPS THIS CONTRACT CLOSES
+----------------------------------------
+1. Formal sidecar manifest and packet metadata shape
+2. Shared severity model
+3. Shared lifecycle state model
+4. Shared generation and save envelopes
+5. Separation between prompt_text and structured validation context
+6. Normalized controller/UI contract
+7. Versioning fields to prevent silent schema drift
+
+KNOWN TRANSITION NOTES
+----------------------
+1. Current project_runner.py still imports duplicate logic from the older validator path and does not yet show full Packet Engine / Guardian Engine integration.
+2. Current ai_runner.py returns raw text and exceptions, so project_runner.py must continue normalizing that into the response envelope.
+3. Current post_generation_canon_validator.py is narrower than the target full prose-validation contract and is still resonance-centered.
+4. Current prompt_builder.py emits prompt text but should grow a structured sidecar output rather than leaving validation context implicit.
+
+RECOMMENDED NEXT IMPLEMENTATION STEPS
+-------------------------------------
+1. Add packet_manifest and packet_metadata builders
+2. Add Guardian Engine request validation response contract implementation
+3. Add structured validation_sidecar output from prompt_builder.py or orchestration
+4. Expand post_generation_canon_validator.py to return the normalized contract
+5. Normalize generate_scene_payload() and save_accepted_scene_payload() to the contracts above
+6. Add schema-level tests for all major envelopes
+
+END STATE
+---------
+When this runtime contracts document is enforced, the Italus engine will have a stable execution interface across architecture docs, current code, and future phases. That is what prevents component drift while the engine grows.

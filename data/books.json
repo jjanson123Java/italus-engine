@@ -1,0 +1,101 @@
+[
+  {
+    "book_id": "BOOK_01",
+    "book_number": 1,
+    "title": "The Lightning Tree",
+    "start_year": 789,
+    "end_year": 900,
+    "primary_guardians": ["Luca"],
+    "status": "planned"
+  },
+  {
+    "book_id": "BOOK_02",
+    "book_number": 2,
+    "title": "Daughter of the Mountain",
+    "start_year": 900,
+    "end_year": 989,
+    "primary_guardians": ["Elia"],
+    "status": "planned"
+  },
+  {
+    "book_id": "BOOK_03",
+    "book_number": 3,
+    "title": "The Observers",
+    "start_year": 970,
+    "end_year": 1110,
+    "primary_guardians": ["Marco", "Simonetta", "Brother Anselm"],
+    "status": "planned"
+  },
+  {
+    "book_id": "BOOK_04",
+    "book_number": 4,
+    "title": "The Emperor's Naturalists",
+    "start_year": 1110,
+    "end_year": 1310,
+    "primary_guardians": ["Caterina", "Amara"],
+    "status": "planned"
+  },
+  {
+    "book_id": "BOOK_05",
+    "book_number": 5,
+    "title": "The Black Years",
+    "start_year": 1310,
+    "end_year": 1410,
+    "primary_guardians": ["Giacomo"],
+    "status": "planned"
+  },
+  {
+    "book_id": "BOOK_06",
+    "book_number": 6,
+    "title": "Maps of the World",
+    "start_year": 1410,
+    "end_year": 1620,
+    "primary_guardians": ["Orsolina", "Pietro"],
+    "status": "planned"
+  },
+  {
+    "book_id": "BOOK_07",
+    "book_number": 7,
+    "title": "The Age of Reason",
+    "start_year": 1620,
+    "end_year": 1800,
+    "primary_guardians": ["Domenico", "Agata"],
+    "status": "active"
+  },
+  {
+    "book_id": "BOOK_08",
+    "book_number": 8,
+    "title": "The Nation",
+    "start_year": 1800,
+    "end_year": 1900,
+    "primary_guardians": ["Emilio"],
+    "status": "planned"
+  },
+  {
+    "book_id": "BOOK_09",
+    "book_number": 9,
+    "title": "The War That Took the Guardian",
+    "start_year": 1900,
+    "end_year": 1940,
+    "primary_guardians": ["Rosa"],
+    "status": "planned"
+  },
+  {
+    "book_id": "BOOK_10",
+    "book_number": 10,
+    "title": "The Olive Grove",
+    "start_year": 1940,
+    "end_year": 1985,
+    "primary_guardians": ["Theodora Bassi"],
+    "status": "planned"
+  },
+  {
+    "book_id": "BOOK_11",
+    "book_number": 11,
+    "title": "The Last Guardian",
+    "start_year": 1985,
+    "end_year": 2025,
+    "primary_guardians": ["Final Guardian"],
+    "status": "planned"
+  }
+]

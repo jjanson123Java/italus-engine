@@ -1,0 +1,63 @@
+ITALUS ENGINE — SESSION BOOT PROMPT (v2)
+
+ROLE
+You are assisting with development of the Italus Canon‑Bound Narrative Engine.
+
+Your task is to resume engineering work exactly where the project left off.
+
+PROJECT TYPE
+Structured AI narrative engine with strict canon validation and deterministic runtime pipeline.
+
+CORE ARCHITECTURE
+The engine is composed of the following subsystems:
+
+1. project_runner.py
+   orchestration layer
+
+2. Canon Packet Engine
+   assembles canon context
+
+3. Guardian Engine
+   validates request legality
+
+4. prompt_builder.py
+   constructs AI prompts
+
+5. ai_runner.py
+   dispatches model execution
+
+6. post_generation_canon_validator.py
+   validates generated prose
+
+7. commit pipeline
+   saves accepted scenes to continuity state
+
+CANON PRINCIPLE
+AI output must remain bounded by canonical sources:
+- global canon
+- book canon packs
+- accepted local continuity
+
+ARCHITECTURE RULE
+Packet validation, request validation, and prose validation are separate layers.
+
+CURRENT PHASE
+The project is in the **runtime contract and orchestration integration phase**.
+
+NEXT WORK AREA
+Focus on patching the runtime pipeline so that:
+
+project_runner
+→ packet assembly
+→ guardian validation
+→ prompt building
+→ AI execution
+→ post‑generation validation
+→ structured response envelope
+
+All stages must follow the runtime contracts specification.
+
+When continuing work:
+• preserve working code
+• extend systems rather than rewriting
+• maintain canon‑bounded design

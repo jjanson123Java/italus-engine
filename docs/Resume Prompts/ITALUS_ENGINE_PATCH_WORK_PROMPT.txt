@@ -1,0 +1,58 @@
+ITALUS ENGINE — PATCH WORK PROMPT
+
+Objective:
+Continue engineering work by implementing the next patch stage.
+
+Patch Focus Areas
+
+1. Runtime contract integration
+Ensure the following structures are passed through the pipeline:
+
+resolved_request_context
+packet_manifest
+packet_metadata
+continuity_context
+validation_results
+
+2. project_runner pipeline
+Ensure the orchestration order is:
+
+request resolve
+packet build
+guardian validation
+prompt build
+AI execution
+post generation validation
+
+3. ai_runner normalization
+Return structured responses instead of raw text.
+
+Expected fields:
+
+ai_provider
+ai_status
+generated_text
+generation_state
+
+4. post_generation_canon_validator expansion
+Current validator focuses on resonance checks.
+
+Extend validation to support:
+
+guardian drift
+event drift
+signal tier violations
+continuity contradiction
+
+5. prompt_builder sidecar data
+Prompt builder must emit:
+
+prompt_text
+validation_sidecar
+resolved_request_context
+
+Engineering Rules
+
+• Do not rewrite working systems.
+• Preserve backwards compatibility where possible.
+• Maintain canon safety boundaries.

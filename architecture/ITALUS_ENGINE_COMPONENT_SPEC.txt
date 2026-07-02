@@ -1,0 +1,344 @@
+ITALUS_ENGINE_COMPONENT_SPEC.txt
+Generated: 2026-03-11
+
+PURPOSE
+-------
+This document defines the stable component boundaries for the Italus engine so development can proceed without architectural role drift. 
+Its purpose is to clarify which subsystem owns canon assembly, request legality, AI prompt construction, generation orchestration, post-generation 
+prose validation, continuity memory, and accepted-scene commit behavior. By locking these responsibilities now, the engine can expand across future 
+phases without collapsing packet validation, request validation, and prose validation into the same layer.
+
+SYSTEM OVERVIEW
+---------------
+The Italus engine is a canon-bounded narrative generation system with strict separation of concerns:
+
+1. Canon Memory Engine stores accepted continuity and supports resume logic.
+2. Canon Packet Engine assembles the canon/runtime packet used for generation.
+3. Guardian Engine validates whether a requested scene is legal before AI runs.
+4. Prompt Builder creates the AI-facing prompt text.
+5. AI Runner executes the model call and normalizes the response.
+6. post_generation_canon_validator validates the generated prose after AI output.
+7. Commit Pipeline persists accepted scenes back into canon memory.
+
+The core architectural rule is:
+- Canon Packet Engine validates the packet being sent.
+- Guardian Engine validates the requested scene.
+- post_generation_canon_validator validates the generated prose.
+
+BOOK PACK CANON NOTE
+--------------------
+"Book pack canon" and "compressed book pack canon" are the same artifact.
+They are not separate canon layers. The difference is runtime usage footprint only.
+
+AUTHORITY ORDER
+---------------
+Validation and continuity resolution should prefer sources in this order:
+1. accepted local continuity
+2. explicit request metadata
+3. book pack canon
+4. global canon
+5. heuristics only if stronger layers are unavailable
+
+COMPONENT SPECIFICATIONS
+========================
+
+1. project_runner.py
+--------------------
+Role
+- Primary orchestration layer for scene generation and save/commit workflows.
+
+Purpose
+- Coordinate the complete generation pipeline from author request to validated AI output.
+
+Responsibilities
+- receive generation request payload from the controller/UI
+- resolve request metadata
+- load continuity context from Canon Memory Engine
+- invoke Canon Packet Engine
+- invoke Guardian Engine
+- invoke Prompt Builder
+- invoke AI Runner
+- invoke post_generation_canon_validator
+- normalize and return the final structured payload to the UI
+- coordinate accepted-scene save/commit calls
+
+Owns
+- orchestration order
+- runtime flow control
+- cross-component handoff
+
+Does NOT own
+- canon packet integrity rules
+- request legality rules
+- prose-level canon validation rules
+
+Design rule
+- project_runner.py is the conductor, not the judge of every rule.
+
+2. canon_memory_engine
+----------------------
+Role
+- Continuity memory and accepted-scene persistence layer.
+
+Purpose
+- Maintain the accepted narrative state of the saga across scenes, chapters, books, and sessions.
+
+Responsibilities
+- store accepted scene records
+- store/update chapter continuity digests
+- store/update book state
+- store/update session state
+- support duplicate discovery memory
+- support coverage analysis inputs
+- support resume workflows
+- provide accepted local continuity context to orchestration
+
+Canonical storage examples
+- data/book_state.json
+- data/chapter_continuity_digests.json
+- data/scenes/*.json
+- data/backups/
+
+Owns
+- accepted continuity state
+- continuity retrieval
+- continuity persistence
+
+Does NOT own
+- prompt writing
+- AI calls
+- packet assembly
+- prose-level drift validation
+
+Design rule
+- Canon Memory Engine stores what the story has become after acceptance.
+
+3. canon_packet_engine.py
+-------------------------
+Role
+- Runtime canon packet assembly and packet integrity validator.
+
+Purpose
+- Assemble the correct canon/context package for the current request and verify that the package is complete, ordered, and internally coherent before generation.
+
+Responsibilities
+- select correct global canon layers
+- select correct book pack canon
+- include continuity bundle from Canon Memory Engine
+- include event/request metadata
+- verify required sections are present
+- verify packet ordering
+- verify metadata consistency
+- emit packet manifest
+- emit packet metadata sidecar for downstream systems
+
+Owns
+- canon packet assembly
+- packet completeness checking
+- packet metadata integrity
+
+Does NOT own
+- request legality
+- prose validation
+- AI generation
+
+Design rule
+- Canon Packet Engine answers: "Did we send the right canon context correctly?"
+
+4. guardian_engine.py
+---------------------
+Role
+- Pre-generation scene legality validator.
+
+Purpose
+- Determine whether the requested scene is legal in canon terms before AI generation begins.
+
+Responsibilities
+- validate guardian/year/event/book legality
+- validate scene type legality
+- validate transition legality
+- validate chapter-position legality
+- validate resonance-request legality
+- detect request-level continuity conflicts
+- detect duplicate request risk
+- block invalid requests before generation
+- return warnings for underspecified or risky requests
+
+Owns
+- pre-generation request validation
+- request blocking when illegal
+- legal request resolution
+
+Does NOT own
+- packet assembly
+- prose editing
+- post-generation drift detection
+
+Design rule
+- Guardian Engine answers: "Is this scene request legal?"
+
+5. prompt_builder.py
+--------------------
+Role
+- AI-facing prompt construction layer.
+
+Purpose
+- Convert the validated canon/context package and request context into model-ready prompt text while preserving structured sidecar data for validation.
+
+Responsibilities
+- assemble AI-facing prompt text
+- include canon packet content in the proper order
+- include continuity summaries
+- include request instructions
+- preserve or emit structured validation sidecar context
+- support provider-specific prompt formatting when needed
+
+Owns
+- prompt wording and layout for AI consumption
+
+Does NOT own
+- legality decisions
+- packet completeness
+- prose validation
+- final acceptance rules
+
+Design rule
+- Prompt Builder serves the model; validators should not depend on parsing its prose.
+
+6. ai_runner.py
+---------------
+Role
+- Model execution and response normalization layer.
+
+Purpose
+- Send prompt payloads to the selected AI provider and normalize responses for downstream handling.
+
+Responsibilities
+- route to selected provider/model
+- execute generation call
+- normalize returned prose
+- normalize provider errors
+- preserve metadata about provider response when needed
+
+Owns
+- provider execution
+- provider abstraction
+- response normalization
+
+Does NOT own
+- canon legality
+- packet assembly
+- continuity persistence
+- prose validation rules
+
+Design rule
+- AI Runner answers: "What did the model return?"
+
+7. post_generation_canon_validator.py
+-------------------------------------
+Role
+- Post-generation prose validator and final canon safety net.
+
+Purpose
+- Evaluate generated prose after AI output and detect whether the text violates canon law, narrative capability limits, or accepted continuity.
+
+Responsibilities
+- detect Italus law violations
+- detect prophecy/future knowledge
+- detect guardian drift implied by prose
+- detect event drift implied by prose
+- detect signal tier violations in prose
+- detect emotional stage drift in prose
+- detect resonance misuse
+- detect continuity contradiction against accepted scenes/chapter state
+- return structured errors, warnings, and validation report
+- provide final accept/reject safety signal to orchestration/UI
+
+Owns
+- post-generation prose legality checks
+- last-mile model disobedience detection
+
+Does NOT own
+- packet assembly
+- request legality as a primary responsibility
+- scene persistence
+
+Design rule
+- post_generation_canon_validator answers: "Even if the packet and request were valid, did the AI still violate canon?"
+
+8. commit pipeline
+------------------
+Role
+- Accepted-scene persistence and continuity update workflow.
+
+Purpose
+- Convert an accepted generated scene into official local continuity state for future generation.
+
+Responsibilities
+- backup canon/state files
+- ensure chapter exists
+- create scene record
+- update coverage
+- update chapter digest
+- update book state
+- update session state
+- preserve rollback/recovery points where implemented
+
+Owns
+- accepted-scene persistence
+- continuity mutation after acceptance
+
+Does NOT own
+- AI generation
+- request legality
+- packet assembly
+
+Design rule
+- Nothing becomes local canon continuity until it passes through the commit pipeline.
+
+CROSS-COMPONENT FLOW
+--------------------
+Generation flow
+
+Author Request
+    |
+    v
+project_runner.py
+    |
+    +-- canon_memory_engine
+    +-- canon_packet_engine.py
+    +-- guardian_engine.py
+    +-- prompt_builder.py
+    +-- ai_runner.py
+    +-- post_generation_canon_validator.py
+    |
+    v
+UI receives prose + validation report
+
+Commit flow
+
+Accepted Scene
+    |
+    v
+project_runner.py
+    |
+    +-- commit pipeline
+          +-- backup state
+          +-- write scene record
+          +-- update chapter digest
+          +-- update book state
+          +-- update session state
+
+NON-NEGOTIABLE DESIGN RULES
+---------------------------
+1. Do not collapse packet validation, request validation, and prose validation into one component.
+2. Do not treat book pack canon and compressed book pack canon as separate canon layers.
+3. Do not make post_generation_canon_validator depend on raw prompt parsing for truth.
+4. Do pass structured context between orchestration and validators.
+5. Do preserve Canon Memory Engine as the continuity authority for accepted local state.
+6. Do keep post-generation validation even after Canon Packet Engine and Guardian Engine mature.
+7. Do use project_runner.py as the orchestrator, not as the home for every rule.
+
+END STATE
+---------
+When these component roles are respected, the Italus engine remains understandable, scalable, and resistant to architectural drift. Each subsystem validates a different class of failure, and together they create a canon-bounded narrative pipeline that is easier to extend across future phases without forcing major rewrites.

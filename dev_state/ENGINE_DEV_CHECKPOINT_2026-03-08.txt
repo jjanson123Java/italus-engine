@@ -1,0 +1,120 @@
+ITALUS BOOK ENGINE — DEVELOPMENT CHECKPOINT
+
+System status
+-------------
+The following components are implemented and functioning:
+
+Core runtime
+- project_runner.py
+- registry.py
+- prompt_builder.py
+- coverage.py
+- drift_precheck.py
+- claude_runner.py
+
+Canon packs
+-----------
+canon_packs/
+    ITALUS_KNOWLEDGE_PACK_CORE.txt
+    ITALUS_KNOWLEDGE_PACK_GENERATION.txt
+    ITALUS_KNOWLEDGE_PACK_BOOK_xx.txt
+
+Canon sources
+-------------
+canon_sources/
+    appendix
+    character bible
+    interaction maps
+    storytelling context
+    world bible
+    saga architecture
+
+Runtime data
+------------
+data/
+    books.json
+    chapters.json
+    scenes.json
+    coverage_map.json
+    event_index.json
+    session_state.json
+    app_settings.json
+    book_state.json
+    chapter_continuity_digests.json
+
+Backup system
+-------------
+data_backups/
+    automatic snapshots triggered before scene save
+
+Session intelligence
+--------------------
+Implemented:
+
+resume detection
+new book detection
+new chapter detection
+long pause detection
+same session detection
+
+Prompt policy
+-------------
+determine_prompt_mode()
+
+startup
+book_start
+chapter_start
+resume
+full_reanchor
+continuation
+
+Author messaging
+----------------
+FIRST WRITING SESSION DETECTED
+NEW BOOK START DETECTED
+NEW CHAPTER DETECTED
+RESUME DETECTED
+LONG-PAUSE RESUME DETECTED
+CONTINUATION DETECTED
+
+Timezone support
+----------------
+data/app_settings.json
+
+example
+
+{
+  "timezone": "America/New_York"
+}
+
+Next system to implement
+------------------------
+
+Continuity Memory Engine
+
+Integrate
+
+data/book_state.json
+data/chapter_continuity_digests.json
+
+Tasks:
+
+1. registry.py
+   add
+   load_book_state()
+   save_book_state()
+   load_chapter_digests()
+   save_chapter_digests()
+
+2. project_runner.py
+   load these files during process_request()
+
+3. prompt_builder.py
+   inject into generation prompt
+
+    book_state
+    chapter continuity digest
+
+Goal
+----
+Provide lightweight narrative memory for Claude so the story remains coherent across chapters without bloating prompts.

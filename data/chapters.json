@@ -1,0 +1,50 @@
+[
+  {
+    "chapter_id": "BOOK_07_CH_06",
+    "book_id": "BOOK_07",
+    "chapter_number": 6,
+    "title": "The Word Forced",
+    "event_id": "EV108",
+    "event_name": "Galileo Trial",
+    "year": 1633,
+    "guardian": "Domenico",
+    "pacing_role": "Major historical event",
+    "status": "active"
+  },
+  {
+    "chapter_id": "BOOK_07_CH_07",
+    "book_id": "BOOK_07",
+    "chapter_number": 7,
+    "title": "After the Word",
+    "event_id": "EV108",
+    "event_name": "Galileo tried by the Inquisition",
+    "year": 1633,
+    "guardian": "Domenico",
+    "pacing_role": "Aftermath and travel",
+    "status": "active"
+  },
+  {
+    "chapter_id": "BOOK_07_CH_08",
+    "book_id": "BOOK_07",
+    "chapter_number": 8,
+    "title": "Northbound",
+    "event_id": "EV108",
+    "event_name": "Galileo tried by the Inquisition",
+    "year": 1633,
+    "guardian": "Domenico",
+    "pacing_role": "Unassigned",
+    "status": "active"
+  },
+  {
+    "chapter_id": "BOOK_01_CH_01",
+    "book_id": "BOOK_01",
+    "chapter_number": 1,
+    "title": "Chapter 1",
+    "event_id": "EV001",
+    "event_name": "Test Event",
+    "year": 0,
+    "guardian": "Test Guardian",
+    "pacing_role": "Unassigned",
+    "status": "active"
+  }
+]

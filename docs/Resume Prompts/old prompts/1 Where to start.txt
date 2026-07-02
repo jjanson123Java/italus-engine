@@ -1,0 +1,47 @@
+How to use them tomorrow
+1️⃣ Start the new chat with
+ITALUS_SESSION_BOOT_PROMPT_v2.txt
+
+This loads the engine architecture and project role.
+
+2️⃣ Immediately follow with
+ITALUS_ENGINE_RESUME_PROMPT_v2.txt
+
+This tells the model:
+
+what the Italus engine is
+
+where the project currently is
+
+what components exist
+
+what the pipeline is
+
+3️⃣ Then give it the task
+ITALUS_ENGINE_PATCH_WORK_PROMPT.txt
+
+This instructs the model to begin implementing the next runtime pipeline patches.
+
+4️⃣ If the conversation gets long
+
+Use:
+
+ITALUS_ENGINE_CONTINUATION_PROMPT.txt
+
+to reset the context without re-explaining everything.
+
+What these prompts ensure
+
+The model will know:
+
+the architecture
+
+the current phase
+
+the engine pipeline
+
+the runtime contracts
+
+the next engineering tasks
+
+So you won’t have to re-explain the project each session.

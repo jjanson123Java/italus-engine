@@ -1,0 +1,401 @@
+<#
+Expressway X15.0.2 RAML API Client
+- Optimized for version 15.x RAML paths
+- Option 5: Formatted Table View of Call Policy Rules
+- Option 6: Help / RAML API Reference with keyword search
+#>
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+
+# Trust all certs (self-signed Expressway) and force TLS 1.2
+Add-Type @"
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+public class TrustAllCertsPolicy : ICertificatePolicy {
+    public bool CheckValidationResult(ServicePoint svcPoint, X509Certificate cert,
+        WebRequest req, int problemCode) { return true; }
+}
+"@
+[Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+[Net.ServicePointManager]::SecurityProtocol  = [Net.SecurityProtocolType]::Tls12
+
+# ---------------------------------------------------------------
+# FUNCTIONS
+# ---------------------------------------------------------------
+
+function Read-NonEmptyString {
+    param([Parameter(Mandatory=$true)][string]$Prompt, [string]$Default = "")
+    while ($true) {
+        $suffix = if ($Default) { " [$Default]" } else { "" }
+        $val = Read-Host "$Prompt$suffix"
+        if ([string]::IsNullOrWhiteSpace($val)) { if ($Default) { return $Default }; continue }
+        return $val.Trim()
+    }
+}
+
+function Invoke-ExpresswayApi {
+    param($ExpresswayHost, $Credential, $Method, $Path)
+    $uri = "https://$ExpresswayHost/api/v1/$($Path.Trim().TrimStart('/'))"
+    $plainUser = $Credential.UserName
+    $plainPass = $Credential.GetNetworkCredential().Password
+    $base64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("${plainUser}:${plainPass}"))
+    $params = @{
+        Uri         = $uri
+        Method      = $Method
+        Headers     = @{ "Accept" = "application/json"; "Authorization" = "Basic $base64" }
+        ContentType = "application/json"
+        TimeoutSec  = 20
+    }
+    Write-Host "Calling: $Method $uri" -ForegroundColor DarkGray
+    return Invoke-RestMethod @params
+}
+
+function Save-Output {
+    param($Object, $FilePath)
+    if ($Object -is [string]) { $Object | Out-File $FilePath -Encoding UTF8 }
+    else { $Object | ConvertTo-Json -Depth 50 | Out-File $FilePath -Encoding UTF8 }
+}
+
+function Show-Menu {
+@"
+
+=========================================
+ Expressway X15.0.2 RAML Client
+=========================================
+1) Manual REST Call
+2) Export Search Rules (JSON)
+3) Convert JSON Search Rules to Readable RAML Summary
+4) Export Web-Managed Call Policy Rules (X15)
+5) View Call Policy Rules as Formatted Table
+6) Help / RAML API Reference
+7) Quit
+"@
+}
+
+function Show-Help {
+    $catalog = @(
+        [PSCustomObject]@{ Category="ACME";                        Path="provisioning/acme/providers" },
+        [PSCustomObject]@{ Category="ACME";                        Path="provisioning/acme/providers/{uuid}" },
+        [PSCustomObject]@{ Category="Certificates";                Path="provisioning/certs/acme/pendingcert" },
+        [PSCustomObject]@{ Category="Certificates";                Path="provisioning/certs/acme/pendingcert/deploy" },
+        [PSCustomObject]@{ Category="Certificates";                Path="provisioning/certs/acme/settings" },
+        [PSCustomObject]@{ Category="Certificates";                Path="provisioning/certs/generate_csr" },
+        [PSCustomObject]@{ Category="Certificates";                Path="provisioning/certs/hsmkey" },
+        [PSCustomObject]@{ Category="Certificates";                Path="provisioning/certs/root" },
+        [PSCustomObject]@{ Category="Certificates";                Path="provisioning/certs/server" },
+        [PSCustomObject]@{ Category="Admin Account";               Path="provisioning/common/adminaccount/configuration" },
+        [PSCustomObject]@{ Category="Admin Account";               Path="provisioning/common/adminaccount/configuration/name/{name}" },
+        [PSCustomObject]@{ Category="Admin Account";               Path="provisioning/common/adminaccount/changepassword" },
+        [PSCustomObject]@{ Category="Cluster";                     Path="provisioning/common/cluster" },
+        [PSCustomObject]@{ Category="Cluster";                     Path="provisioning/common/cluster/addressmaps" },
+        [PSCustomObject]@{ Category="Cluster";                     Path="provisioning/common/cluster/peers" },
+        [PSCustomObject]@{ Category="Cluster";                     Path="provisioning/common/cluster/primary" },
+        [PSCustomObject]@{ Category="Cluster";                     Path="provisioning/common/cluster/status" },
+        [PSCustomObject]@{ Category="Credentials";                 Path="provisioning/common/credential" },
+        [PSCustomObject]@{ Category="DNS";                         Path="provisioning/common/dns/dns" },
+        [PSCustomObject]@{ Category="DNS";                         Path="provisioning/common/dns/dnsserver" },
+        [PSCustomObject]@{ Category="DNS";                         Path="provisioning/common/dns/dnsserver/index/{index}" },
+        [PSCustomObject]@{ Category="DNS";                         Path="provisioning/common/dns/dnsperdomainserver" },
+        [PSCustomObject]@{ Category="DNS";                         Path="provisioning/common/dns/dnsperdomainserver/index/{index}" },
+        [PSCustomObject]@{ Category="Domain";                      Path="provisioning/common/domain" },
+        [PSCustomObject]@{ Category="Domain";                      Path="provisioning/common/domain/name/{name}" },
+        [PSCustomObject]@{ Category="Fail2Ban";                    Path="provisioning/common/fail2ban/configuration" },
+        [PSCustomObject]@{ Category="Fail2Ban";                    Path="provisioning/common/fail2ban/exemptions" },
+        [PSCustomObject]@{ Category="Fail2Ban";                    Path="provisioning/common/fail2ban/fail2banbannedaddress" },
+        [PSCustomObject]@{ Category="Firewall";                    Path="provisioning/common/firewallrules/activation" },
+        [PSCustomObject]@{ Category="Firewall";                    Path="provisioning/common/firewallrules/configuration" },
+        [PSCustomObject]@{ Category="Firewall";                    Path="provisioning/common/firewallrules/configuration/index/{index}" },
+        [PSCustomObject]@{ Category="Firewall";                    Path="provisioning/common/current/active/firewallrules" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/logging/certificationlogging" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/logging/options" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/logging/remotesyslogservers" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/logging/systemmetrics" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/networklog" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/networklog/name/{name}" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/networklog/level/{level}" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/supportlog" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/supportlog/name/{name}" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/supportlog/level/{level}" },
+        [PSCustomObject]@{ Category="Logging";                     Path="provisioning/common/diagnosticlogging" },
+        [PSCustomObject]@{ Category="Network Interface";           Path="provisioning/common/networkinterface/ethernet" },
+        [PSCustomObject]@{ Category="Network Interface";           Path="provisioning/common/networkinterface/ip/LAN" },
+        [PSCustomObject]@{ Category="Network Interface";           Path="provisioning/common/networkinterface/ip/configuration" },
+        [PSCustomObject]@{ Category="Network Interface";           Path="provisioning/common/networkinterface/staticroutes" },
+        [PSCustomObject]@{ Category="Network Interface";           Path="provisioning/common/qos" },
+        [PSCustomObject]@{ Category="Protocol / SIP";              Path="provisioning/common/protocol/sip" },
+        [PSCustomObject]@{ Category="Protocol / SIP";              Path="provisioning/common/protocol/sip/advanced" },
+        [PSCustomObject]@{ Category="Protocol / SIP";              Path="provisioning/common/protocol/sip/authentication" },
+        [PSCustomObject]@{ Category="Protocol / SIP";              Path="provisioning/common/protocol/sip/certrevokecheck" },
+        [PSCustomObject]@{ Category="Protocol / SIP";              Path="provisioning/common/protocol/sip/configuration" },
+        [PSCustomObject]@{ Category="Protocol / SIP";              Path="provisioning/common/protocol/sip/registrationcontrol" },
+        [PSCustomObject]@{ Category="Search Rules and Transforms"; Path="provisioning/common/searchrule" },
+        [PSCustomObject]@{ Category="Search Rules and Transforms"; Path="provisioning/common/searchrule/name/{name}" },
+        [PSCustomObject]@{ Category="Search Rules and Transforms"; Path="provisioning/common/transform" },
+        [PSCustomObject]@{ Category="Search Rules and Transforms"; Path="provisioning/common/transform/priority/{priority}" },
+        [PSCustomObject]@{ Category="Search Rules and Transforms"; Path="provisioning/common/defaultlinks" },
+        [PSCustomObject]@{ Category="Smart Licensing";             Path="provisioning/common/smartlicensing/action" },
+        [PSCustomObject]@{ Category="Smart Licensing";             Path="provisioning/common/smartlicensing/cancelReservationRequest" },
+        [PSCustomObject]@{ Category="Smart Licensing";             Path="provisioning/common/smartlicensing/generateReversationRequest" },
+        [PSCustomObject]@{ Category="Smart Licensing";             Path="provisioning/common/smartlicensing/registerWithReservationAuthorizationCode" },
+        [PSCustomObject]@{ Category="Smart Licensing";             Path="provisioning/common/smartlicensing/registration" },
+        [PSCustomObject]@{ Category="Smart Licensing";             Path="provisioning/common/smartlicensing/returnReservation" },
+        [PSCustomObject]@{ Category="Smart Licensing";             Path="provisioning/common/smartlicensing/transport" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/common/systemadministration" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/common/loginPage" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/common/maintenancemode" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/common/mra" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/common/serviceselect" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/common/sftpconfig" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/common/snmp" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/common/upgrade" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/sysinfo" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/restart" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/notification" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/severitynotification" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/customnotification" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/customnotification/alarm_id/{id}" },
+        [PSCustomObject]@{ Category="System";                      Path="provisioning/system/externalmanager" },
+        [PSCustomObject]@{ Category="Time";                        Path="provisioning/common/time/ntpserver" },
+        [PSCustomObject]@{ Category="Time";                        Path="provisioning/common/time/ntpserver/index/{index}" },
+        [PSCustomObject]@{ Category="Time";                        Path="provisioning/common/time/status" },
+        [PSCustomObject]@{ Category="Time";                        Path="provisioning/common/time/timezone" },
+        [PSCustomObject]@{ Category="Zones";                       Path="provisioning/common/zone/neighborzone" },
+        [PSCustomObject]@{ Category="Zones";                       Path="provisioning/common/zone/neighborzone/name/{name}" },
+        [PSCustomObject]@{ Category="Zones";                       Path="provisioning/common/zone/dnszone" },
+        [PSCustomObject]@{ Category="Zones";                       Path="provisioning/common/zone/dnszone/name/{name}" },
+        [PSCustomObject]@{ Category="Allowlist";                   Path="provisioning/configuration/allowlist/autopaths" },
+        [PSCustomObject]@{ Category="Allowlist";                   Path="provisioning/configuration/allowlist/control" },
+        [PSCustomObject]@{ Category="Allowlist";                   Path="provisioning/configuration/allowlist/manualpaths" },
+        [PSCustomObject]@{ Category="Controller / B2BUA";          Path="provisioning/controller/b2bua/microsoftinterop/configuration" },
+        [PSCustomObject]@{ Category="Controller / B2BUA";          Path="provisioning/controller/b2bua/microsoftinterop/restartservice" },
+        [PSCustomObject]@{ Category="Controller / B2BUA";          Path="provisioning/controller/b2bua/microsoftinterop/trustedhosts" },
+        [PSCustomObject]@{ Category="Controller / B2BUA";          Path="provisioning/controller/b2bua/microsoftinterop/trustedhosts/index/{index}" },
+        [PSCustomObject]@{ Category="Controller / B2BUA";          Path="provisioning/controller/b2bua/turnservers" },
+        [PSCustomObject]@{ Category="Controller / B2BUA";          Path="provisioning/controller/b2bua/turnservers/index/{index}" },
+        [PSCustomObject]@{ Category="Controller / Servers";        Path="provisioning/controller/server/cucm" },
+        [PSCustomObject]@{ Category="Controller / Servers";        Path="provisioning/controller/server/imp" },
+        [PSCustomObject]@{ Category="Controller / Servers";        Path="provisioning/controller/server/ucs" },
+        [PSCustomObject]@{ Category="Controller / Zones";          Path="provisioning/controller/zone/traversalclient" },
+        [PSCustomObject]@{ Category="Controller / Zones";          Path="provisioning/controller/zone/traversalclient/name/{name}" },
+        [PSCustomObject]@{ Category="Controller / Zones";          Path="provisioning/controller/zone/unifiedcommunicationstraversal" },
+        [PSCustomObject]@{ Category="Domain Certificates";         Path="provisioning/domaincerts/domain" },
+        [PSCustomObject]@{ Category="Domain Certificates";         Path="provisioning/domaincerts/domain/{domain}" },
+        [PSCustomObject]@{ Category="Domain Certificates";         Path="provisioning/domaincerts/domain/{domain}/cert" },
+        [PSCustomObject]@{ Category="Domain Certificates";         Path="provisioning/domaincerts/domain/{domain}/csr" },
+        [PSCustomObject]@{ Category="Domain Certificates";         Path="provisioning/domaincerts/domain/{domain}/acme/pendingcert" },
+        [PSCustomObject]@{ Category="Domain Certificates";         Path="provisioning/domaincerts/domain/{domain}/acme/pendingcert/deploy" },
+        [PSCustomObject]@{ Category="Domain Certificates";         Path="provisioning/domaincerts/domain/{domain}/acme/settings" },
+        [PSCustomObject]@{ Category="HSM";                         Path="provisioning/hsm/enroll" },
+        [PSCustomObject]@{ Category="HSM";                         Path="provisioning/hsm/mode" },
+        [PSCustomObject]@{ Category="HSM";                         Path="provisioning/hsm/module" },
+        [PSCustomObject]@{ Category="HSM";                         Path="provisioning/hsm/settings" },
+        [PSCustomObject]@{ Category="Status / Alarms";             Path="status/common/alarms" },
+        [PSCustomObject]@{ Category="Status / Alarms";             Path="status/common/alarms/status/{status}" },
+        [PSCustomObject]@{ Category="Status / Calls";              Path="status/common/call/call" },
+        [PSCustomObject]@{ Category="Status / System";             Path="status/common/clusterpeer" },
+        [PSCustomObject]@{ Category="Status / System";             Path="status/common/diagnosticlogging" },
+        [PSCustomObject]@{ Category="Status / System";             Path="status/common/fail2banbannedaddress" },
+        [PSCustomObject]@{ Category="Status / System";             Path="status/common/hardware" },
+        [PSCustomObject]@{ Category="Status / System";             Path="status/common/resourceusage" },
+        [PSCustomObject]@{ Category="Status / System";             Path="status/common/sysinfo" },
+        [PSCustomObject]@{ Category="Status / System";             Path="status/common/syskeystatus" },
+        [PSCustomObject]@{ Category="Status / System";             Path="status/common/upgradestatus" },
+        [PSCustomObject]@{ Category="Status / System";             Path="status/common/zone" },
+        [PSCustomObject]@{ Category="Status / Smart Licensing";    Path="status/common/smartlicensing/licensing" },
+        [PSCustomObject]@{ Category="Status / Smart Licensing";    Path="status/common/smartlicensing/usage" },
+        [PSCustomObject]@{ Category="Status / Unified Comms";      Path="status/common/unifiedCommunications" },
+        [PSCustomObject]@{ Category="Status / Unified Comms";      Path="status/common/unifiedCommunications/domains" },
+        [PSCustomObject]@{ Category="Status / Unified Comms";      Path="status/common/unifiedCommunications/neighbourZone" },
+        [PSCustomObject]@{ Category="Status / Unified Comms";      Path="status/common/unifiedCommunications/servers" },
+        [PSCustomObject]@{ Category="Status / Unified Comms";      Path="status/common/unifiedCommunications/sshTunnel" },
+        [PSCustomObject]@{ Category="Status / Unified Comms";      Path="status/common/unifiedCommunications/zones" },
+        [PSCustomObject]@{ Category="Status / Controller";         Path="status/controller/ICEPassthroughMetrics" },
+        [PSCustomObject]@{ Category="Status / Controller";         Path="status/controller/UCProxyRequests" }
+    )
+
+    Write-Host "`n=========================================" -ForegroundColor Cyan
+    Write-Host " Expressway X15.0.2 RAML Client - Help" -ForegroundColor Cyan
+    Write-Host "=========================================`n" -ForegroundColor Cyan
+
+    Write-Host "  MENU ITEM DESCRIPTIONS" -ForegroundColor Green
+    Write-Host "  -----------------------`n" -ForegroundColor Green
+
+    Write-Host "  1) Manual REST Call" -ForegroundColor Yellow
+    Write-Host "     Type any API path from the RAML reference below and run an"
+    Write-Host "     immediate GET call against the Expressway. The raw JSON response"
+    Write-Host "     is printed to screen. Useful for quick lookups or testing a path"
+    Write-Host "     before building it into another tool.`n"
+
+    Write-Host "  2) Export Search Rules to JSON File" -ForegroundColor Yellow
+    Write-Host "     Calls the Expressway REST API to retrieve all configured Search"
+    Write-Host "     Rules and saves the raw JSON to output\searchrules_v15.json."
+    Write-Host "     Run this before using option 3.`n"
+
+    Write-Host "  3) Convert JSON Search Rules to Readable RAML Summary" -ForegroundColor Yellow
+    Write-Host "     Reads the JSON saved by option 2 and converts it into a clean"
+    Write-Host "     human-readable YAML-style file saved to output\searchrules_merged.raml."
+    Write-Host "     Each rule is listed with all its properties (name, pattern, priority,"
+    Write-Host "     target zone, state, etc.) making it easy to read, document, or compare"
+    Write-Host "     against another Expressway config.`n"
+
+    Write-Host "  4) Export Web-Managed Call Policy Rules" -ForegroundColor Yellow
+    Write-Host "     Attempts to retrieve Call Policy (CPL) rules via the REST API and save"
+    Write-Host "     them to output\callpolicy_rules.json."
+    Write-Host "     NOTE: Cisco does not expose CPL rules through the REST API on X15."
+    Write-Host "     Rules created manually in the web UI cannot be retrieved this way."
+    Write-Host "     Use the Expressway web UI (Configuration > Call Policy) to export"
+    Write-Host "     the CPL XML file directly.`n"
+
+    Write-Host "  5) View Call Policy Rules as Formatted Table" -ForegroundColor Yellow
+    Write-Host "     Same as option 4 but displays results as a formatted on-screen table"
+    Write-Host "     instead of saving to a file. Subject to the same REST API limitation -"
+    Write-Host "     CPL rules are not exposed via the API on X15.`n"
+
+    Write-Host "  6) Help / RAML API Reference" -ForegroundColor Yellow
+    Write-Host "     Displays this help screen followed by the full list of available API"
+    Write-Host "     endpoints extracted from the Expressway RAML definition. Enter a keyword"
+    Write-Host "     to filter results (e.g. zone, sip, cert, status, cluster) or press"
+    Write-Host "     ENTER to show all $($catalog.Count) endpoints.`n"
+
+    Write-Host "-----------------------------------------" -ForegroundColor Cyan
+    Write-Host "  RAML API ENDPOINT REFERENCE" -ForegroundColor Green
+    Write-Host "-----------------------------------------`n" -ForegroundColor Cyan
+    Write-Host "Enter keyword to filter, or press ENTER to show all:" -ForegroundColor Yellow
+    $filter = (Read-Host "Filter").Trim()
+
+    $currentCategory = ""
+    foreach ($entry in $catalog) {
+        if ($filter -and $entry.Path -notlike "*$filter*" -and $entry.Category -notlike "*$filter*") { continue }
+        if ($entry.Category -ne $currentCategory) {
+            Write-Host "`n  [ $($entry.Category) ]" -ForegroundColor Yellow
+            $currentCategory = $entry.Category
+        }
+        Write-Host "    $($entry.Path)" -ForegroundColor White
+    }
+    Write-Host ""
+}
+
+# ---------------------------------------------------------------
+# SETUP
+# ---------------------------------------------------------------
+Write-Host "`nExpressway X15 Connection Setup" -ForegroundColor Cyan
+$ExpresswayHost = Read-NonEmptyString -Prompt "Expressway Host/IP" -Default "14.49.9.155"
+$username       = Read-NonEmptyString -Prompt "Username" -Default "admin"
+$cred           = New-Object System.Management.Automation.PSCredential ($username, (Read-Host "Password" -AsSecureString))
+
+# Safe output directory: works when double-clicked OR run from a shell
+$scriptRoot = if ($PSCommandPath) { Split-Path -Parent $PSCommandPath } else { $PWD.Path }
+$outDir     = Join-Path $scriptRoot "output"
+if (-not (Test-Path $outDir)) { New-Item -ItemType Directory $outDir | Out-Null }
+
+# ---------------------------------------------------------------
+# MAIN LOOP
+# ---------------------------------------------------------------
+while ($true) {
+    Show-Menu | Write-Host
+    switch (Read-Host "Select (1-7)") {
+        "1" {
+            $p = Read-NonEmptyString "Path (e.g. provisioning/common/sysinfo)"
+            try { (Invoke-ExpresswayApi $ExpresswayHost $cred "GET" $p) | ConvertTo-Json -Depth 5 | Write-Host }
+            catch {
+                $msg = $_.Exception.Message
+                if ($msg -match "404") {
+                    Write-Host "`n  [404] No data returned from the Expressway." -ForegroundColor Red
+                    Write-Host "  The server had no response for '$p'." -ForegroundColor Yellow
+                    Write-Host "  This means the requested item does not exist on this device," -ForegroundColor Yellow
+                    Write-Host "  or the filter value returned no matching records." -ForegroundColor Yellow
+                    Write-Host "  Possible reasons:" -ForegroundColor Yellow
+                    Write-Host "    - The filter value does not exist on this device (e.g. no acknowledged alarms means" -ForegroundColor Yellow
+                    Write-Host "      querying alarms/status/acknowledged returns 404 because there is nothing there)" -ForegroundColor Yellow
+                    Write-Host "    - The status filter value is not a valid option for this endpoint" -ForegroundColor Yellow
+                    Write-Host "    - The path requires a valid name/ID in place of a {placeholder}" -ForegroundColor Yellow
+                    Write-Host "    - The feature this endpoint relates to is not licensed or enabled on this device`n" -ForegroundColor Yellow
+                } elseif ($msg -match "500") {
+                    Write-Host "`n  [500] The Expressway returned an internal server error." -ForegroundColor Red
+                    Write-Host "  This is a known Cisco API behaviour - a 500 is returned instead of" -ForegroundColor Yellow
+                    Write-Host "  an empty result when a filter matches no records." -ForegroundColor Yellow
+                    Write-Host "  Example: querying alarms/status/active when no active alarms exist." -ForegroundColor Yellow
+                    Write-Host "  Try the base path without a filter to confirm data exists first.`n" -ForegroundColor Yellow
+                } elseif ($msg -match "401") {
+                    Write-Host "`n  [401] Authentication failed." -ForegroundColor Red
+                    Write-Host "  The username or password was rejected by the Expressway.`n" -ForegroundColor Yellow
+                } elseif ($msg -match "403") {
+                    Write-Host "`n  [403] Access denied." -ForegroundColor Red
+                    Write-Host "  Your account does not have permission to access this endpoint.`n" -ForegroundColor Yellow
+                } else {
+                    Write-Host "`n  [Error] $msg`n" -ForegroundColor Red
+                }
+            }
+        }
+        "2" {
+            try {
+                $r = Invoke-ExpresswayApi $ExpresswayHost $cred "GET" "provisioning/common/searchrule"
+                Save-Output $r (Join-Path $outDir "searchrules_v15.json")
+                Write-Host "Success: saved to output/searchrules_v15.json" -ForegroundColor Green
+            } catch { Write-Host "Failed to pull search rules: $($_.Exception.Message)" -ForegroundColor Red }
+        }
+        "3" {
+            $src = Join-Path $outDir "searchrules_v15.json"
+            if (-not (Test-Path $src)) { Write-Host "Run option 2 first." -ForegroundColor Yellow; break }
+            try {
+                $json  = Get-Content $src -Raw | ConvertFrom-Json
+                $lines = @("# SearchRules Merged", "searchrules:")
+                $hasItems = $json | Get-Member -Name "items" -MemberType NoteProperty
+                $rules = if ($hasItems) { $json.items } else { @($json) }
+                foreach ($r in $rules) {
+                    $hasName = $r | Get-Member -Name "name" -MemberType NoteProperty
+                    $ruleName = if ($hasName) { $r.name } else { "" }
+                    $lines += "  - name: ""$ruleName"""
+                    foreach ($prop in $r.PSObject.Properties) {
+                        if ($prop.Name -ne "name") {
+                            $val = if ($null -eq $prop.Value) { "" }
+                                   elseif ($prop.Value -is [string] -or $prop.Value -is [int] -or $prop.Value -is [bool]) { "$($prop.Value)" }
+                                   else { $prop.Value | ConvertTo-Json -Compress -Depth 5 }
+                            $lines += "    $($prop.Name): ""$val"""
+                        }
+                    }
+                }
+                $lines | Out-File (Join-Path $outDir "searchrules_merged.raml") -Encoding UTF8
+                Write-Host "Created output/searchrules_merged.raml" -ForegroundColor Green
+            } catch { Write-Host "Error building RAML file: $($_.Exception.Message)" -ForegroundColor Red }
+        }
+        "4" {
+            Write-Host "`nPulling Call Policy Rules..." -ForegroundColor Cyan
+            $paths = @("provisioning/common/callpolicy/rules", "provisioning/common/cpl/rule")
+            $found = $false
+            foreach ($p in $paths) {
+                try {
+                    $r = Invoke-ExpresswayApi $ExpresswayHost $cred "GET" $p
+                    Save-Output $r (Join-Path $outDir "callpolicy_rules.json")
+                    Write-Host "SUCCESS - Rules found at: $p" -ForegroundColor Green
+                    $found = $true; break
+                } catch { Write-Host "Path $p not available." -ForegroundColor Gray }
+            }
+            if (-not $found) { Write-Host "Call Policy rules are not exposed via the REST API on this platform." -ForegroundColor Red }
+        }
+        "5" {
+            Write-Host "`nFetching Call Policy Table View..." -ForegroundColor Cyan
+            $paths   = @("provisioning/common/callpolicy/rules", "provisioning/common/cpl/rule")
+            $success = $false
+            foreach ($p in $paths) {
+                try {
+                    $r     = Invoke-ExpresswayApi $ExpresswayHost $cred "GET" $p
+                    $rules = if ($r.items) { $r.items } else { @($r) }
+                    Write-Host "`nCall Policy Rules via $p`:" -ForegroundColor Green
+                    $rules | Select-Object `
+                        @{Name='Action';      Expression={$_.action}},
+                        @{Name='Pattern';     Expression={$_.pattern}},
+                        @{Name='Source';      Expression={$_.source}},
+                        @{Name='Destination'; Expression={$_.destination}},
+                        @{Name='State';       Expression={$_.state}} |
+                        Format-Table -AutoSize
+                    $success = $true; break
+                } catch { continue }
+            }
+            if (-not $success) { Write-Host "Call Policy rules are not exposed via the REST API on this platform." -ForegroundColor Red }
+        }
+        "6" { Show-Help }
+        "7" { return }
+    }
+}

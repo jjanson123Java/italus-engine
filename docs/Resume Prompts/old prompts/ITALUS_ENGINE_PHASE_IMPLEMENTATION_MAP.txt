@@ -1,0 +1,161 @@
+ITALUS_ENGINE_PHASE_IMPLEMENTATION_MAP.txt
+ITALUS ENGINE – PHASE IMPLEMENTATION MAP
+
+This file tells the AI which files must be modified in each phase.
+
+--------------------------------------------------
+
+PHASE 2 – PROTOTYPE ENGINE
+
+OBJECTIVE
+Create the first working Italus generation engine.
+
+FILES
+project_runner.py
+prompt_builder.py
+request_builder.py
+ITALUS_PROJECT_RUNNER_MENU_TONE.py
+
+ORDER
+
+1
+Load canon packs in project_runner.py
+
+2
+Inject canon into prompt_builder.py
+
+3
+Build request_builder.py
+
+4
+Wire CLI menu to runner
+
+5
+Implement output saving
+
+DONE WHEN
+
+User can generate scenes from CLI and results are saved.
+
+--------------------------------------------------
+
+PHASE 3 – FRONTEND / AUTHOR WORKFLOW
+
+OBJECTIVE
+Create a usable author interface.
+
+FILES
+
+ui/italus_book_engine_frontend_mockup.html
+ITALUS_PROJECT_RUNNER_MENU_TONE.py
+project_runner.py
+prompt_builder.py
+
+ORDER
+
+1
+Stabilize project_runner API
+
+2
+Define controller methods in MENU_TONE
+
+3
+Wire frontend to controller
+
+4
+Return generation results to UI
+
+5
+Add save and approve actions
+
+DONE WHEN
+
+User can generate scenes from a visual interface.
+
+--------------------------------------------------
+
+PHASE 4 – CANON ENFORCEMENT LAYER
+
+OBJECTIVE
+Prevent canon violations before generation.
+
+FILES
+
+canon_validator.py
+project_runner.py
+prompt_builder.py
+
+FEATURES
+
+guardian overlap validation
+stage legality checks
+historical year validation
+travel route validation
+
+DONE WHEN
+
+Invalid generation requests are rejected before prompt execution.
+
+--------------------------------------------------
+
+PHASE 5 – CHAPTER / EVENT CANON EXPANSION
+
+OBJECTIVE
+Increase canon precision.
+
+FILES
+
+chapter_pack_builder.py
+event_pack_builder.py
+
+FEATURES
+
+chapter canon packs
+event canon packs
+fine-grained timeline slices
+
+DONE WHEN
+
+Generation uses book + chapter + event canon.
+
+--------------------------------------------------
+
+PHASE 6 – MULTI-GENRE ENGINE
+
+OBJECTIVE
+Convert Italus prototype into reusable story engine.
+
+FEATURES
+
+template-driven canon builders
+genre plugin system
+schema abstraction layer
+
+FILES
+
+engine_core/
+canon_templates/
+genre_plugins/
+
+DONE WHEN
+
+New genre engines can be created using canon templates.
+
+--------------------------------------------------
+
+PHASE 7 – PRODUCTION ENGINE
+
+OBJECTIVE
+Studio-quality system.
+
+FEATURES
+
+persistent storage
+versioned canon
+testing harness
+audit logs
+export tools
+
+DONE WHEN
+
+Engine can be used for large multi-book projects.

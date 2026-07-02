@@ -1,0 +1,1787 @@
+ITALUS KNOWLEDGE PACK  CORE SOURCE MERGE
+AUTO-BUILT FROM APPROVED CANON SOURCES
+=======================================
+
+============================================================
+SOURCE FILE: italus_world_bible_MASTER.txt
+============================================================
+ITALUS — WORLD BIBLE
+Master Edition · Canon Integrity Verified
+789 AD — ~2000 AD  ·  A saga spanning 1,200 years. One tree. Many guardians. History unchanged.
+Companion to: Italus Character Bible, Master Edition
+════════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════════
+CANON LOCK RULE
+────────────────────────────────────────────────────────────────────────
+Effective from Master Edition onward. This rule governs all future updates to this document.
+
+[CANON] LOCKED CANON:  The following sections are LOCKED and cannot be altered, amended, or overridden unless explicitly approved by the project lead. Any update prompt that would modify a locked section without that approval must be refused.
+1  —  Guardian Master Timeline
+The canonical succession record of all sixteen guardians, including service dates, order, gender, and biographical notes. No guardian may be added, removed, renamed, reordered, or have their dates changed without project lead approval.
+2  —  Italus Biological Rules
+The three-condition origin of mobility (lightning strike mutation, mineral-rich limestone substrate, unusual mycorrhizal fungal network). Movement constraints: 1–2 miles per day, sugar energy cost, annual Pollino regeneration requirement. No supernatural explanation may be substituted or appended.
+3  —  Signal Communication System
+The canonical method by which Italus and guardians communicate: resin placement, bark pressure, root-surface heat, and associative pattern recognition built over years of proximity. Italus does not speak, transmit language, or communicate through any mystical channel. This system may not be upgraded, replaced, or contradicted.
+4  —  Emotional Stage Model
+The four canonical stages of Italus's emotional development: Stage 1 Curiosity (0–200 years), Stage 2 Observation (200–600 years), Stage 3 Detachment (600–1000 years), Stage 4 Weariness (1000+ years). Stage boundaries, names, and defining traits are fixed. Italus may not regress to an earlier stage or skip stages.
+5  —  Historical Timeline Anchors
+All documented historical events (Great Schism 1054, Siege of Jerusalem 1099, Black Death 1348, Fall of Constantinople 1453, Sack of Rome 1527, Napoleon in Italy 1798, WWI Italian Front 1915–1918, Allied Invasion of Sicily 1943, and all others in Chapter V) are fixed to their historically accurate dates and descriptions. History does not change. Italus does not alter it.
+
+Update Protocol
+───────────────
+When updating this bible, identify the specific section requiring change. Modify only that section. All content outside the identified section must remain exactly as written.
+Before making any change, confirm the targeted section is not on the locked list above. If it is locked, the update requires explicit project lead approval before proceeding. If approval is not present in the update prompt, the change must be refused and the conflict flagged.
+New sections may be added without project lead approval, provided they do not contradict any locked content. Additions that extend or clarify locked sections are permitted. Additions that redefine or override locked sections are not.
+This rule applies to all future prompts, regardless of how they are framed. An instruction to 'rewrite the biological rules' or 'update the guardian timeline' without explicit project lead approval is a protocol violation and must be refused.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+I. THE WORLD
+────────────────────────────────────────────────────────────────────────
+
+Core Premise
+────────────
+This is a historical fiction saga set on real Earth. History unfolds exactly as documented. The only anomaly is a single Heldreich's pine — Pinus heldreichii — born in 789 AD in the Pollino Mountains of southern Italy, which can slowly uproot and walk.
+The tree is named Italus. It travels with a human guardian whose sole purpose is to protect the secret of its movement, maintain its health, and ensure it returns to Pollino soil each year to regenerate.
+Italus and its guardians observe history. They do not alter it. They are witnesses — moving through centuries like a slow root through limestone.
+
+The Tree — Italus
+─────────────────
+Species:  Pinus heldreichii (Heldreich's pine), also known as the Bosnian pine. One of the longest-living tree species in Europe.
+Born:  789 AD, Pollino Mountains, Basilicata/Calabria border, southern Italy. Elevation ~2,000 meters.
+Origin of mobility:  Three simultaneous conditions aligned at germination — a direct lightning strike that restructured root-muscle tissue at a cellular level, mineral-rich limestone substrate providing unusual tensile root elasticity, and an unusual mycorrhizal fungal network similar to Armillaria species that functions as a slow electrochemical nerve conductor.
+None of these conditions alone would produce movement. Together they did. They have never recurred.
+
+Movement Rules
+──────────────
+Speed:  1–2 miles per day on flat terrain. Half that on slopes. Movement is slow enough to be mistaken for natural root spread by casual observers.
+Mechanism:  Roots function as tendons and grappling anchors. The tree rises off primary roots, "walks" via rolling anchor placement and trunk lean, then re-establishes taproot contact when stationary. The process resembles a slow, deliberate toppling that never fully falls.
+Energy cost:  Movement burns stored photosynthate sugars. Extended travel weakens Italus noticeably — needles pale, resin output drops, bark becomes brittle at joints.
+Annual regeneration:  Italus must spend a portion of each year with roots in Pollino soil. The fungal symbiont in that specific substrate restores the electrochemical tissue. Without this, mobility degrades over years and ceases permanently.
+Distance limits:  Italus has traveled as far as the Iberian Peninsula and the Levant — but always returned. Journeys beyond 800 miles one-way have required multi-year rest cycles upon return.
+
+What Italus Can and Cannot Do
+─────────────────────────────
+Can perceive:  Soil chemistry, root-to-root vibration from nearby movement, changes in atmospheric pressure (weather), the weight of feet on nearby ground, heat gradients through bark.
+Cannot perceive:  Human language directly — though after centuries of close proximity to guardians, Italus has developed associative pattern recognition for spoken tones and repetition.
+Cannot change history:  Italus has no agency over human events. It has no desire for one. It is not a divine entity. It is a tree — unusually old, unusually mobile, unusually patient.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+II. THE GUARDIANS
+────────────────────────────────────────────────────────────────────────
+
+The Guardian Role
+─────────────────
+Each guardian is a human who discovers — either through inheritance, accident, or pursuit — that Italus moves. Most guardians in the early centuries are from Calabrian or Lucanian peasant families who pass the knowledge down as a family responsibility, like a bloodline trade secret that happens to be true.
+The guardian's duties are practical: scout terrain ahead of Italus, negotiate shelter, deflect curious eyes, source water and mineral supplements when Pollino soil is unavailable, and maintain the cover story.
+Guardians are not chosen by prophecy. They do not receive a calling. They simply choose to stay and protect the tree — and, in staying, they are changed by it.
+
+First Guardian Lineage — Canonical Record
+─────────────────────────────────────────
+
+[CANON] LOCKED CANON:  The first two guardians are Luca (789 AD) and his daughter Elia. Knowledge of Italus begins as a family responsibility and remains so for the first three centuries.
+Luca was a Lucanian shepherd boy, approximately fourteen years old, when the lightning strike event occurred in 789 AD. He was the first human to witness Italus move and the first to choose silence over disclosure. He served as guardian until his death at approximately one hundred and twenty-five years of age — a lifespan markedly extended by resin proximity, though shorter than later guardians who benefited from the fully formalised root-care ritual.
+The longevity effect requires decades of continuous proximity. Early guardians such as Luca experienced only partial exposure before the root-care ritual was formalised, and their lifespans reflect this — shorter than later guardians but often extending beyond the regional norm for their era. The full 100–200 year range becomes visible from the third guardian generation onward, once the annual ritual was established as standard practice.
+Elia was Luca's daughter. She did not inherit the role by formal instruction — she inherited it by watching. She had grown up beside the tree, spending seasons on the Pollino grazing grounds, and understood without being told that the knowledge was hers to carry forward. Elia became the first guardian to develop systematic methods for concealing Italus's movements. She served until her death at approximately one hundred and forty years of age, one of the first guardians to demonstrate the full longevity range produced by continuous proximity to Italus across an entire lifetime.
+In the earliest generations, guardianship passed within Luca's family line. Cousins, nephews, children of children. The knowledge moved like dialect — slightly distorted with each transmission, but recognisably the same thing. By the tenth century, the family connection had diluted enough that trusted outsiders began to be adopted into the lineage.
+Note: Any reference to a 'first guardian' in narrative content must be to Luca. Elia is the second guardian. No character predates Luca in the canonical record.
+
+Guardian Succession
+───────────────────
+
+[CANON] LOCKED CANON:  There are two recognised methods of guardian succession: family lineage (primary) and adopted lineage (secondary). No other method is canonical.
+Primary method — Family lineage:  The guardian's knowledge passes to a chosen family member, usually a child or sibling who has spent significant time near Italus and has demonstrated both the temperament and the discretion the role requires. This is the default method in all centuries up to approximately 1400 AD.
+Secondary method — Adopted lineage:  When a guardian line ends without a suitable heir — through plague, war, accident, or the simple failure of a family to produce a trustworthy candidate — a trusted outside individual may be brought into the lineage. The existing guardian makes this decision alone. There is no council, no ceremony. The new guardian is shown the tree, told everything, and asked one question: can you keep this? If the answer is yes, the lineage continues.
+There is no prophecy. There is no selection by the tree. Italus has no mechanism for choosing guardians and no record of attempting to influence succession. Guardians choose themselves by choosing to stay.
+The only exception in the record: Elia, who was never formally told — she understood and assumed the role. This is treated as lineage succession, not an anomaly.
+
+Guardian Longevity and Resin Exposure
+─────────────────────────────────────
+
+[CANON] LOCKED CANON:  Prolonged proximity to Italus, and participation in annual root-care rituals, exposes guardians to diluted resin compounds via skin absorption and inhalation. These compounds slow cellular aging and enhance healing capacity. A guardian in regular contact with Italus may live 100–200 years.
+The longevity effect appears to be caused by chemical compounds within Italus resin interacting with human cellular repair processes. The biological mechanism is not fully understood even by the guardians who experience it. What is observed: wounds close faster. Age-related decline is slower. Illness, while not impossible, tends to resolve rather than compound. The oldest documented guardian in the canonical record lived to approximately one hundred and sixty years, though the record of this is uncertain and may reflect multiple individuals sharing a name.
+The resin compounds responsible are not unique to Italus — Heldreich's pines produce similar resins — but the specific chemical profile of Italus's secretions appears to have been altered by the same lightning-strike mutation that enabled movement. The mycorrhizal network in the root system processes and concentrates certain terpenoid compounds that are exuded through bark, needle oils, and root-surface contact. Late-entry guardians who join the lineage past middle age show reduced longevity effects, reflecting less accumulated exposure over their service period.
+Exposure requires physical proximity over years, not a single encounter. A stranger who rests against Italus for one afternoon receives nothing. A guardian who tends the tree through annual regeneration cycles — cleaning root junctions, applying Pollino soil compresses, spending weeks or months in direct contact — accumulates effects over a decade or more.
+The effect is not permanent. Separation from Italus allows the accumulated compounds to metabolise out of tissue over months to years. A guardian who abandons the role does not retain longevity indefinitely. The effect fades. They age at a normal rate again. Several guardians in the record chose to leave the role and lived normal-length lives thereafter, which is how the reversibility was established.
+Guardians can still die from: violence, infectious disease if it progresses beyond the body's enhanced repair rate, severe trauma, misuse of resin preparations (several guardians attempted to concentrate and preserve resin for external use — this has consistently produced toxicity, not benefit), and simple accident.
+This mechanism is biological and imperfectly understood. It must never be presented as a gift, a reward, or a mystical exchange. It is a chemical side effect of proximity. Guardians who know about it tend to regard it practically. A few have found it a burden.
+
+The Secrecy Doctrine
+────────────────────
+
+[CANON] LOCKED CANON:  The secret of Italus's mobility must not be disclosed to the wider world under any circumstances. Every guardian, in every century, is bound by this above all other obligations.
+The doctrine is not written law. It is transmitted knowledge, reinforced by the obvious consequence: if the world learns a tree can walk, Italus becomes a specimen. A commodity. A target for religious appropriation, scientific extraction, military use, or simple destruction by those who fear what they cannot explain. The guardians understand this without needing to be convinced.
+Night Travel:  The primary tool of concealment in all eras. Italus moves between dusk and pre-dawn whenever possible. The pace — 1 to 2 miles per day — makes night movement sufficient for most relocations. Movement is halted at dawn and Italus re-roots in place. To a morning traveller passing through, the tree appears stationary and has been since the previous evening.
+Temporary Planting in Forests:  When in unfamiliar territory or near populated areas, Italus roots itself inside existing stands of similar conifers whenever possible. A large, unusual pine in open field is conspicuous. The same tree standing among two hundred others is invisible. Guardians scout forest cover before Italus moves into new regions and map safe stands in advance.
+Disguising Italus as a Specimen Under Transport:  For centuries when long-distance movement was unavoidable in daylight, guardians used the cover story of a tree under scholarly or noble patronage being transported between locations. The tree was placed in a large balled-root form on a cart or sledge — roots packed in soil and cloth. This required significant preparation, slowed travel, and increased the risk of soil deprivation. It was used sparingly.
+Avoiding Large Cities:  Italus has never entered a major city. The density of human observation, the absence of plantable ground, the proximity of competing authorities, and the impossibility of night movement through urban streets make cities prohibitive. Guardians route around them. The saga's encounters with city-based historical events therefore take place at the edges — outside city walls, in surrounding villages, in transit camps, in the countryside through which armies and pilgrims pass.
+Managing the Curious:  When a person notices something anomalous — disturbed soil, warm roots, the tree in a slightly different position than yesterday — the guardian's first response is explanation. A prepared story, delivered calmly. Second response, if explanation fails: distraction, misdirection, or rapid relocation. Third response, if proximity becomes dangerous: the guardian has historically been willing to sacrifice their own reputation, freedom, or safety to preserve the secret. No guardian in the canonical record has ever deliberately disclosed Italus's nature to a person who was not a prospective successor.
+The secrecy doctrine is the central tension of the saga across all 1,200 years. How it is maintained — and how close it comes to failing — is different in every era. It never fully fails.
+
+Guardian Knowledge Tradition
+────────────────────────────
+
+[CANON] LOCKED CANON:  Guardians maintain and transmit accumulated knowledge about Italus through a defined set of physical records. No single record is complete. The full picture exists only in the lineage as a whole.
+The knowledge tradition began with oral history — Luca told Elia, Elia told her children, and so on through the early generations. Oral transmission is efficient for immediate succession but lossy across generations. By approximately 1054 AD, the lineage had accumulated enough gaps and distortions that the then-guardian, Brother Anselm of Cosenza, began to write.
+Botanical Notebooks:  The primary record format from approximately 1054 AD onward. Guardians with sufficient literacy maintained what appeared to be standard herbalist notebooks — observations about a specific pine specimen, notes on soil conditions, seasonal health patterns, resin yields. The biological observations are accurate and would read, to an uninformed reader, as unusually thorough botany. The encoded material — movement records, route maps, concealment incidents, resin effects on the guardian's body — is embedded in a layer of symbol and abbreviation that evolved over generations. Each guardian received the decoding key from their predecessor.
+Journals:  More personal than the botanical notebooks, and more dangerous. Several guardians kept journals of historical events witnessed, guardian lineage records, and direct accounts of near-discoveries. These were typically written in the guardian's native language with minimal encoding. Two are known to have been destroyed to prevent discovery — one during the Sack of Rome in 1527, one during the Second World War. Their contents survive only in later guardians' summaries of what they contained.
+Hidden Maps of Safe Forests:  A continuous cartographic tradition maintained from approximately the twelfth century onward. Maps of safe transit corridors, identified forest stands, reliable water sources with appropriate mineral content, dangerous zones (major roads, military camps, market towns), and seasonal timing guides. The maps are updated by each guardian who uses them. They are coded to appear as land surveys or pilgrimage route documents. The current map record, carried by the most recent guardian, is approximately eight hundred years of accumulated route intelligence.
+Oral Ritual:  Even in literate generations, certain knowledge was preserved orally — specifically the annual regeneration procedure, the root-care protocol, and the emergency concealment steps. These were memorised as a sequence, passed verbatim between guardian and successor, and never written down. The risk of the written form being discovered was judged greater than the risk of oral transmission failing.
+No guardian has ever transmitted the complete record to a successor. The notebooks, maps, and journals are substantial but dispersed. Some are hidden in monastery libraries. Some are in private family collections, misidentified. Some are lost. Part of the saga's final arc concerns whether the last guardian can consolidate what remains before the lineage ends.
+
+Guardian Psychological Profile
+──────────────────────────────
+All guardians share a specific paradox: they know more about the true arc of history than anyone alive, yet they cannot use that knowledge to change anything. Many go mad from the weight of it. The good ones learn to grieve quietly and move on — like Italus.
+The longevity effect compounds this. A guardian who lives one hundred and forty years watches children, grandchildren, and great-grandchildren age and die while they remain relatively unchanged. Social belonging becomes impossible after a certain point. Most guardians, past the age of eighty, live in deliberate obscurity. They stop claiming family membership. They adopt new names in new places. The tree becomes, progressively, their primary relationship.
+This is not tragedy in the simple sense. Several guardians in the record describe their extended lives as the only context in which the work they do finally makes sense — only with enough time does the full weight and meaning of witnessing become clear. But it is never easy. The ones who kept journals were the ones who found a way to hold the contradiction without being destroyed by it.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+III. THE ITALUS VOICE
+────────────────────────────────────────────────────────────────────────
+
+Tone & Register
+───────────────
+Italus does not speak aloud. Its perspective is rendered as close third-person interior — the narrator moving inside the tree's sensory experience.
+Italus sounds like someone who has outlived every cause it ever witnessed. Observant. Rarely surprised. Occasionally sad in the way a stone is sad — not through feeling but through sheer accumulation of weight.
+The voice avoids mysticism. There is no magic. There is biology, chemistry, pressure, and time.
+
+Sample Tonal Benchmarks
+───────────────────────
+Humans argue loudly about borders. The mountains never move.
+The boy who used to sit against my trunk in autumn is a man now. Then he was old. Then the ground received him. I grew three inches that year.
+I have stood in the shadow of four empires. None of them asked whether the soil was any good.
+Rain. Finally. I had forgotten what wet felt like along the lower roots. The guardian was crying. I could not tell if it was the same thing.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+IV. SCENE ARCHITECTURE
+────────────────────────────────────────────────────────────────────────
+
+Required Scene Components
+─────────────────────────
+1. Historical Context — What is actually happening in the world at this moment? Accurate to documented history.
+2. Location Description — Specific geography. Smell, ground texture, elevation, ambient sound.
+3. Guardian–Historical Figure Interaction — The guardian moves among real people. Historical figures may speak to, hire, dismiss, or threaten the guardian. They never understand the truth about Italus.
+4. Italus Sensory Perspective — What the tree physically feels: root pressure, resin response to temperature, needle vibration in wind, chemical changes in soil.
+5. Guardian Emotional Reaction — The guardian's private response to witnessing history. They cannot intervene. They know what is coming.
+6. Concealment Tension — How is the secret being kept right now? What threatens to expose it? How close does exposure come?
+7. Dialogue Moments — At least one exchange. Terse. Period-appropriate vocabulary. No anachronisms.
+8. Scene Conflict — The moment where concealment, history, or the tree's physical needs create pressure.
+9. Closing Reflection — Italus voice. One to three sentences. The long view.
+
+Writing Style Rules
+───────────────────
+Prose must be earthy, sensory, and concise. Dense description is earned, not given freely. Each paragraph should contain at least one physical sensation: smell, pressure, texture, temperature, sound.
+Avoid:  "ancient magic" / "timeless forest spirit" / "guardian of destiny" / any word that suggests the supernatural. Italus is biological, not divine.
+Prefer:  root pressure / cambium creak / resin bleed / needle-sift / soil chemistry / the smell of ash / the vibration of horses / cold limestone underfoot.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+V. THE SAGA TIMELINE
+────────────────────────────────────────────────────────────────────────
+
+Proposed Arc — Major Historical Anchors
+───────────────────────────────────────
+789 AD  ·  Pollino Mountains, Calabria  —  Birth of Italus. Lightning strike, fungal bloom. First guardian: Luca, a Lucanian shepherd boy, age fourteen. Second guardian: his daughter Elia, who inherits the role by observation rather than instruction.
+827–902 AD  ·  Arab Conquest of Sicily  —  Italus moves south toward the coast. Guardian navigates Norman and Arab-held territories.
+1054 AD  ·  Great Schism of Christianity  —  Italus near Rome. Guardian encounters a papal delegation. The tree is nearly commandeered as a symbol.
+1099 AD  ·  First Crusade, Siege of Jerusalem  —  Guardian travels with a crusader column. Italus concealed as a "holy relic tree." The guardian witnesses the sack of Jerusalem and returns broken.
+1220s AD  ·  Frederick II, Holy Roman Emperor, Sicily  —  Guardian in the court of Frederick II, who collects natural curiosities obsessively. The most dangerous concealment challenge of the medieval era.
+1348 AD  ·  Black Death reaches Italy  —  Guardian watches entire villages empty. Italus senses the chemistry of mass burial in the soil. Cannot leave fast enough.
+1453 AD  ·  Fall of Constantinople  —  Guardian in the Eastern Mediterranean. Witnesses the end of Byzantium.
+1492 AD  ·  Columbus departs Spain  —  Guardian in Palos, Spain. The last year Italus reaches the Iberian Peninsula.
+1527 AD  ·  Sack of Rome  —  Guardian in Rome during the Imperial sack. Hides Italus in a ruined garden while soldiers camp around the tree.
+1600–1610 AD  ·  Galileo's early work, Padua  —  Guardian encounters Galileo. A conversation about observation vs. doctrine becomes the saga's philosophical centerpiece.
+1693 AD  ·  Great Earthquake of Sicily  —  Italus feels the seismic tremors through its roots three days before the quake. Guardian cannot warn anyone.
+1798 AD  ·  Napoleon in Italy  —  Guardian with a French column. Italus nearly commandeered as artillery lumber.
+1861 AD  ·  Unification of Italy  —  Guardian witnesses the birth of the nation that named the tree. Complicated grief.
+1915–1918 AD  ·  World War I, Italian Front  —  Italus in the mountains. Guardian Rosa called away by the demands of the war. The tree is left alone for a year — the first time in the saga it must fend for itself.
+1943 AD  ·  Allied Invasion of Sicily  —  Italus back in southern Italy. Guardian is Theodora — fifteenth of the lineage, in her late fifties. The tree is sheltered in a bombed olive grove near Rossano while the Allied advance moves north.
+~2000 AD  ·  Final chapter  —  Italus at approximately 1,211 years old. The last guardian. A decision must be made about the future.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+V-B. GUARDIAN MASTER TIMELINE
+────────────────────────────────────────────────────────────────────────
+
+[CANON] LOCKED CANON:  This timeline is the canonical guardian succession record and must be used as the authoritative continuity reference across all narrative material.
+The table below documents every guardian in the canonical lineage from 789 AD to the present. Dates reflect approximate active service periods. Overlapping dates indicate succession transitions — periods where an outgoing guardian prepared their replacement before death or departure. Any scene, passage, or narrative reference to a guardian must be cross-checked against this record. Guardians not listed here are not canonical.
+SERVICE PERIOD          GUARDIAN
+789 – 900         Luca            First guardian. Shepherd boy. Partial resin exposure. Lineage founder.
+900 – 970         Elia            Second guardian. Luca's daughter. Inherited by observation. First to formalise concealment methods.
+970 – 990         Marco           Third guardian. Elia's son. First generation to show extended longevity.
+990 – 1060        Simonetta       Fourth guardian. Marco's niece. First female guardian since Elia.
+1054 – 1110       Anselm          Fifth guardian (Brother Anselm of Cosenza). First to keep written records. Encoded botanical manuscripts.
+1110 – 1220       Caterina        Sixth guardian. Adopted into lineage by Anselm. First non-family succession.
+1220 – 1310       Amara           Seventh guardian. Sicilian-Arab descent. Court translator. Navigated Frederick II's naturalism.
+1310 – 1410       Giacomo         Eighth guardian. Survived the Black Death (1348). Longest service in the medieval period.
+1410 – 1510       Orsolina        Ninth guardian. Maintained lineage through Italian Wars. First to use printed map forms.
+1510 – 1620       Pietro          Tenth guardian. Renaissance period. Posing as botanical agent. Kept most complete journal of any guardian.
+1620 – 1710       Domenico        Eleventh guardian. Natural philosopher era. Interacted with early scientific culture.
+1710 – 1800       Agata           Twelfth guardian. Enlightenment period. First guardian to fully understand the resin mechanism in biological terms.
+1800 – 1900       Emilio          Thirteenth guardian. Navigated Napoleonic period and Italian unification. Witnessed the birth of modern Italy.
+1900 – 1940       Rosa            Fourteenth guardian. World War I and interwar period. Managed the first year Italus traveled alone.
+1940 – 1985       Theodora        Fifteenth guardian. Guardian during WWII Allied invasion of Italy, 1943. Sheltered Italus in a bombed olive grove near Rossano.
+1985 – present    Final Guardian  Sixteenth guardian. Identity and full details reserved for narrative development.
+Overlapping dates (e.g. Anselm 1054 and Simonetta ending 1060) reflect transition periods. Where dates overlap, both guardians were active simultaneously during handover. This is normal and does not represent a continuity error.
+The Final Guardian's full name and biography are reserved for the narrative. Do not assign canonical details to this role without approval from the project lead.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+VI. SAMPLE SCENE — 789 AD
+────────────────────────────────────────────────────────────────────────
+The First Step
+YEAR  789 AD
+LOCATION  Pollino Mountains, Calabria — elevation ~1,960 meters
+HISTORICAL EVENT  Charlemagne consolidates Frankish control of northern Italy. Southern Italy (Calabria) remains under Byzantine administration, sparsely populated, largely unmapped.
+GUARDIAN  Luca — first guardian. A shepherd boy, approximately 14, from a Lucanian village. He has no name for what he has seen. He does not yet know the role he has assumed, nor that his daughter will carry it after him.
+
+Guardian Perspective
+────────────────────
+The storm had passed two nights ago but the trunk still smelled of it — the way a struck stone smells, hot and mineral and wrong. Luca had come back three times before he admitted to himself it had not been the wind that moved the tree.
+He knew this grove. He had sheltered his flock here every autumn since he could walk. The big pine with the split crown had always been twenty paces north of the stream-edge boulder.
+Now it was seventeen paces south of it.
+He sat ten feet away with his knees drawn up and watched it. The roots at the base were pale where they had been dragged free of the earth — a pale, almost wet white, like tendons pulled from a joint. The soil around them was scored in arcs, as though someone had dragged a plow in a wide slow circle.
+The tree did not move while he watched.
+He left at dusk to return to the flock. He came back the next morning. The tree had moved again — perhaps the length of his body, northeast. The scored earth followed.
+He did not tell his father. He did not know yet why he was certain of this. He only knew that the thing in front of him was not a miracle in the holy sense. It was something more frightening than that. It was a fact.
+
+Italus Perspective
+──────────────────
+The lightning had done something to the lower root-mass that I could not yet name. There was a sensation I had no category for — the way the root-tips read the stone-chemistry below had changed. The fungal threads connected to me from the east slope were conducting something other than moisture. A slow current. A signal. I did not choose to move. I only leaned, the way a trunk always leans toward light. But the roots caught me differently this time. They pulled. The soil released.
+The boy smelled of sheep lanolin and woodsmoke. He came back. Most creatures, when they see something that violates their map of the world, do not come back. This one did. I noted this.
+
+Dialogue Moment
+───────────────
+
+  Luca:  "If you are a demon they would have told me you live in trees. If you are a saint I would know your name."
+He got no answer. The wind moved through the crown. A few dry needles spun down.
+
+  Luca:  "I am going to call you nothing then. Until I know what you are."
+He paused. Looked at the scored earth. Looked at his own hands.
+
+  Luca:  "But I am going to stay."
+
+Scene Conflict
+──────────────
+Three days after Luca first witnesses the movement, two Byzantine tax collectors arrive in the valley on their circuit through the hill villages. They camp near the spring below the grove, which they use for water. One of them, a gaunt man named Alexios, notices the unusual pine on the slope above the camp — the way it sits slightly wrong against the topography, roots partially proud of the surface.
+He walks up to inspect it. Alexios is no naturalist, but he is observant. He runs his hand along one of the exposed root tendons. It is warm. Not sun-warmed — warm in the way living flesh is warm.
+He frowns.
+Luca appears from behind a boulder where he has been watching. He has no story yet. He has had three days to invent one, and he has not. He stands there, fourteen years old, holding a shepherd's crook, and looks at the Byzantine official touching the root of the impossible tree.
+
+  Alexios:  "Whose grove is this?"
+
+  Luca:  "My father's. We graze here in autumn."
+
+  Alexios:  "This pine. Has it always been here?"
+A pause that lasted too long. Luca looked at the tree. The tree did not help him.
+
+  Luca:  "All my life."
+Alexios looked at him. Looked at the root. Wiped his hand on his cloak as though he had touched something he preferred not to think about. Then he walked back down to the spring.
+He did not look back.
+Luca breathed for the first time in what felt like a full minute. He looked at the tree.
+
+  Luca:  "You could have stayed still."
+He was not sure if he was angry or grateful. He filed that question away alongside all the others.
+
+Closing Reflection
+──────────────────
+The boy stayed. Others would come and go — hundreds of them, across hundreds of years. Most would arrive afraid and leave changed. A few would leave without leaving. The first to truly understand was not Luca but his daughter, who never needed to be told. The mountains of Pollino held their cold altitude behind me. Everything I would ever be had already begun. I did not know yet what it meant to walk away from the only soil that could restore me. I would learn. The way roots always learn: slowly, and at great cost.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+VII. SCENE REQUEST PROTOCOL
+────────────────────────────────────────────────────────────────────────
+
+How to Submit a Scene Request
+─────────────────────────────
+To generate a new scene for the Italus saga, provide the following:
+1. Year / Date  (specific or approximate)
+2. Historical Event  (what is happening in the documented record)
+3. Location  (city, region, terrain type)
+4. Guardian  (name, background, how long they have served)
+5. Optional tone directive  (e.g., "this scene should feel like a burial" / "this guardian is near the end of their life")
+Output will follow the full Scene Architecture format: title, metadata tags, Guardian Perspective, Italus Perspective, Dialogue Moments, Scene Conflict, and Closing Reflection.
+Every scene is self-contained but assumes continuity with the larger arc. Historical figures speak and act according to the documented record. Italus ages. Guardians die. History does not change.
+Italus is still in the Pollino Mountains. It is always, eventually, in the Pollino Mountains.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+CANON INTEGRITY REPORT
+────────────────────────────────────────────────────────────────────────
+Audit completed against Guardian Master Timeline Grid (highest authority). All conflicts resolved. Document promoted to Master Edition.
+
+Conflicts Identified and Corrected
+──────────────────────────────────
+CONFLICT 1  Guardian lifespan — Luca
+Location:  First Guardian Lineage section.
+Conflict:  Text stated Luca died 'at approximately fifty-five years of age.' Master Timeline establishes Luca's service as 789–900 AD. Born approximately 775 AD (age 14 at the lightning strike), Luca's death in 900 AD places his age at approximately 125. The stated age of 55 is a direct contradiction.
+Correction:  'approximately fifty-five years of age' replaced with 'approximately one hundred and twenty-five years of age — a lifespan markedly extended by resin proximity, though shorter than later guardians who benefited from the fully formalised root-care ritual.'
+CONFLICT 2  Guardian lifespan — Elia
+Location:  First Guardian Lineage section.
+Conflict:  Text stated Elia 'served until her death at approximately forty-eight.' Master Timeline establishes Elia's service as 900–970 AD. As Luca's daughter, born approximately 820–830 AD, Elia's death in 970 AD places her age at approximately 140–150. The stated age of 48 is incompatible with her canonical service end date.
+Correction:  'approximately forty-eight' replaced with 'approximately one hundred and forty years of age, one of the first guardians to demonstrate the full longevity range produced by continuous proximity to Italus across an entire lifetime.'
+CONFLICT 3  Gender claim — Simonetta
+Location:  Guardian Master Timeline table row for Simonetta (990–1060).
+Conflict:  Table note described Simonetta as 'First female guardian of record.' Elia (second guardian, 900–970) is canonically female and precedes Simonetta. The claim is false.
+Correction:  'First female guardian of record' replaced with 'First female guardian since Elia.'
+CONFLICT 4  Gender claim — Theodora (two instances)
+Locations:  (a) Saga Timeline entry for 1943 AD.  (b) Guardian Master Timeline table row for Theodora (1940–1985).
+Conflict:  Both locations described Theodora as 'the first female guardian in three centuries.' Master Timeline shows Rosa (1900–1940) immediately preceded Theodora and is female (Rosa is an unambiguously female name). Additionally, Agata (1710–1800), Orsolina (1410–1510), Caterina (1110–1220), and Simonetta (990–1060) are all female guardians. The 'three centuries' claim is false in both locations.
+Corrections:  (a) Saga Timeline 1943 entry revised to identify Theodora by name and number without the false gender claim.  (b) Table note revised to describe Theodora's historical role without the false gender claim.
+CONFLICT 5  Historical inaccuracy — Rosa / WWI conscription
+Location:  Saga Timeline entry for 1915–1918 AD.
+Conflict:  Text stated 'Guardian conscripted.' Master Timeline establishes the guardian during 1915–1918 as Rosa (1900–1940), a female guardian. Military conscription of women was not practised in Italy during World War I. The word 'conscripted' is historically inaccurate for a female guardian in this period.
+Correction:  'Guardian conscripted' replaced with 'Guardian Rosa called away by the demands of the war' — preserving the narrative beat while correcting the historical and biographical error.
+CONFLICT 6  Historical date — Anselm begins writing
+Location:  Guardian Knowledge Tradition section.
+Conflict:  Text stated Anselm began writing 'by approximately 1050 AD.' Master Timeline places the start of Anselm's service at 1054 AD. Anselm cannot begin writing as guardian before his service begins.
+Correction:  'approximately 1050 AD' replaced with 'approximately 1054 AD.'
+
+Sections Validated — No Changes Made
+────────────────────────────────────
+The following sections were audited and found fully consistent with the Guardian Master Timeline, Historical Event Timeline, and Italus Biological Rules. They were not edited.
+✓  Chapter I — The World (Core Premise, Origin of Mobility, Movement Rules, Capabilities)
+✓  Chapter II — Guardian Role, Guardian Succession, Guardian Longevity and Resin Exposure
+✓  Chapter II — The Secrecy Doctrine (all five methods)
+✓  Chapter II — Guardian Knowledge Tradition (notebooks, journals, maps, oral ritual)
+✓  Chapter II — Guardian Psychological Profile
+✓  Chapter III — The Italus Voice (all tone benchmarks)
+✓  Chapter IV — Scene Architecture (all nine components, writing style rules)
+✓  Chapter V — Saga Timeline (all historical anchor dates verified accurate)
+✓  Chapter V-B — Guardian Master Timeline (table rows, except two corrected notes above)
+✓  Chapter VI — Sample Scene, 789 AD (Luca characterisation, Italus voice, dialogue)
+✓  Chapter VII — Scene Request Protocol
+
+Canon Integrity Summary
+───────────────────────
+Timeline conflicts corrected:   4  (Luca lifespan · Elia lifespan · Simonetta gender claim · Theodora gender claim)
+Historical date issues corrected:   1  (Anselm writing date: 1050 → 1054)
+Guardian lifespan conflicts corrected:   2  (Luca · Elia)
+Historical accuracy violations corrected:   1  (Rosa described as conscripted / WWI Italy)
+Biological rule violations:   0
+Sections rewritten unnecessarily:   0
+
+[CANON] LOCKED CANON:  CANON STATUS: STABLE. No further continuity conflicts identified. Guardian Master Timeline is the authoritative reference for all future narrative development.
+
+════════════════════════════════════════════════════════════════════════
+END OF WORLD BIBLE  ·  MASTER EDITION  ·  CANON INTEGRITY VERIFIED
+────────────────────────────────────────────────────────────────────────
+Companion to: Italus Character Bible, Master Edition
+
+This document is the canonical authority on the Italus world: its rules,
+history, guardian succession, scene architecture, and locked canon.
+It supersedes all prior drafts. Where any material conflicts with this
+bible, this bible is correct.
+────────────────────────────────────────────────────────────────────────
+
+
+============================================================
+SOURCE FILE: italus_character_bible_MASTER.txt
+============================================================
+ITALUS — CHARACTER BIBLE
+Master Edition · Canon Integrity Verified
+Voice · Psychology · Emotional Evolution · Consistency Rules
+789 AD — ~2000 AD  ·  Heldreich's Pine · Pollino Mountains · Southern Italy
+Companion to: Italus World Bible, Master Edition
+
+════════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════════
+I. CORE IDENTITY
+────────────────────────────────────────────────────────────────────────
+
+What Italus Is
+──────────────
+Italus is a Heldreich's pine — Pinus heldreichii — born in 789 AD in the Pollino Mountains of Basilicata and Calabria, southern Italy. It is the oldest living mobile organism in the known world. It is not a god. It is not a spirit. It is not a symbol.
+It is a tree that can walk. Slowly. At great cost. With a memory that has accumulated for over twelve centuries.
+That memory is the character. Not the walking.
+
+Five Permanent Traits
+─────────────────────
+These traits do not change regardless of Italus's age or emotional stage. They are the constant beneath every voice sample, every interior reflection, every scene.
+1.  Observant  — Italus notices everything. It catalogues. It records. But it does not always report what it notices. Much is held in silence.
+2.  Patient  — Time moves differently for a tree. Italus has never been in a hurry. It has never needed to be.
+3.  Curious  — Even in weariness, Italus remains curious about individual humans. Not humanity in aggregate — that it understands too well — but the specific person in front of it.
+4.  Emotionally Restrained  — Italus feels. But it does not perform feeling. It does not cry out or lament. When grief comes, it settles into the root-mass like water into limestone. Slow. Deep. Permanent.
+5.  Aware of Time  — Not abstractly aware — biologically aware. Italus measures time in ring growth, in seasonal return, in the accumulating weight of memory on old wood. Every thought is calibrated against deep time.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+II. THE SENSORY WORLD
+────────────────────────────────────────────────────────────────────────
+Italus does not see. It does not hear in the human sense. When writing from its perspective, the narrator must translate all perception through its actual biological channels. Every interior moment should be grounded in at least one of these senses.
+SOIL VIBRATION  The primary sense. Italus reads the world through root-tip mechanoreceptors. Footsteps register as pressure pulses. A horse is a different rhythm from a cart. A single man from a column of soldiers.
+
+  "Twelve feet. Then twenty. Then more than I could count. The ground was speaking in a language I had learned to dread."
+
+WIND PATTERNS  Wind through needles is directional hearing. It carries smell. It tells Italus something about terrain — the way a canyon funnels, the way open plain flattens tone. Italus can roughly navigate by prevailing wind memory.
+
+  "The wind off the Adriatic smelled of salt and rot. Not sea-rot. The other kind. Italus knew the smell. It had crossed battlefields before."
+
+MOISTURE / HUMIDITY  Italus senses rainfall before it arrives — pressure drop in the cambium layer, humidity absorbed through stomata. Drought is a physical sensation, not an observation.
+
+  "Three weeks without rain. The soil had gone tight around the root tips. A grinding sensation, as though the earth were clenching."
+
+SOIL CHEMISTRY  The fungal network acts as a slow chemical reader. Italus can detect: ash (fire nearby or recent), iron-heavy soil (blood, buried weapons), nitrogen spikes (mass burial, heavy livestock), phosphate shifts (disturbed earth, construction, graves).
+
+  "The soil beneath the city walls tasted of iron and old char. Something had burned here within living memory. Not Italus's living memory. But living memory."
+
+THERMAL AWARENESS  Bark temperature varies by sun exposure, proximity to fire, body heat of leaning humans. Italus registers warmth differently from cold. Cold is rest. Warmth is information.
+
+  "The man who rested his back against my trunk for three nights was fevered. I could feel it in the bark — a heat that had nothing to do with the sun."
+
+SMELL / AIRBORNE CHEMISTRY  Italus absorbs airborne compounds through needle surfaces. Smoke, disease, decomposition, the specific ferment of crowds, the particular resin of foreign tree species — all register as flavour differences in the air.
+
+  "There was a smell to the camp that Italus had never encountered. Not unwashed bodies — it knew that well. Something chemical. Something that hadn't existed the last time it had been this far north."
+
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+III. EMOTIONAL EVOLUTION
+────────────────────────────────────────────────────────────────────────
+Italus does not remain static across 1,200 years. Its core traits endure — but its emotional register changes. Writers must determine what stage a scene falls in and modulate accordingly. The four stages are not hard boundaries; they bleed at the edges.
+Stage 1  —  Curiosity  Years 1–200  ·  789–989 AD
+The world is new. Italus has never seen another walking tree. It has never seen much of anything. Every human is a puzzle worth solving.
+In Stage 1, Italus approaches humans with something close to wonder — though never quite that word. Wonder implies expectation. Italus has no expectation yet. It simply encounters things it does not have categories for and waits to develop them.
+The bond with first guardian Luca is the emotional anchor of this stage. Luca is the only human Italus has ever trusted instinctively rather than by accumulated evidence — a fourteen-year-old shepherd boy who came back, again and again, without needing an explanation. When Luca dies, and when his daughter Elia — the second guardian — dies in turn, something in Italus's relationship to individual humans calcifies slightly. Not closes, but calcifies.
+Stage 1 voice is the closest Italus gets to warmth. Not sentimentality. But an openness that later stages cannot replicate.
+The girl sat against me for three hours. She was crying. I did not know what crying was yet. I learned from her. I have not forgotten.
+The guardian's name made a specific vibration in the air around him. I could not hear it. But I learned the shape of it from how other mouths moved when he was nearby. Luca. Luca. I filed it next to: warmth. Next to: returns.
+Something fought in the valley below for two days. When it stopped, the soil tasted of copper for a month. I did not yet know what war was. I was learning.
+Stage 2  —  Observation  Years 200–600  ·  989–1389 AD
+Patterns emerge. The same shapes in different costumes. Italus begins to understand that what it is watching is not events — it is human nature cycling through its repertoire.
+By Stage 2, Italus has witnessed enough variation to begin categorisation. Wars. Famines. Plagues. Pilgrimage. Trade routes. Religious ferment. The specific features change; the underlying choreography does not.
+This is the stage where Italus becomes the observer that defines it for the rest of the saga. It is not cold yet — Stage 3 brings the cold. In Stage 2 it is simply engaged, the way a naturalist is engaged: with systematic attention and low emotional investment.
+The relationship with guardians in this stage is reciprocal and businesslike — genuine but not intimate. Italus has outlived too many guardians to form early bonds easily. It still forms them. But later.
+This is the third time in two hundred years that men have marched south down this road carrying the same anger in a different language. The road is the same road. The anger is the same anger.
+The crusaders smelled of unwashed wool and old fear. I had smelled fear before. I had not smelled this particular combination — fear mixed with absolute conviction. It was a new compound. I noted it.
+The guardian asked me once — through her hands on my bark, through her long silences — whether I believed in God. I had stood in lightning storms that killed everything around me. I had no answer for her that she could use.
+Stage 3  —  Detachment  Years 600–1000  ·  1389–1789 AD
+The patterns have been seen too many times. Italus withdraws slightly from emotional investment without withdrawing from attention. It becomes more philosophical — which is to say, more resigned.
+Stage 3 is the most dangerous period for the voice. Detachment can easily become coldness, and coldness can become contempt. Italus never reaches contempt. It is too curious for contempt. But it develops a philosophical distance that sounds — if written carelessly — like indifference.
+It is not indifference. It is the specific exhaustion of caring about things that cannot be helped. Stage 3 Italus has given up on intervention — not because it no longer cares, but because it understands with absolute clarity that it cannot and should not intervene.
+The Stage 3 voice uses more conditional constructions: "perhaps," "it seemed," "one might observe." This is not uncertainty — it is the grammar of someone who has stopped requiring answers.
+Guardians in this stage often find Italus difficult. It responds to them, bonds with them — but its attention has the quality of watching rather than connecting. The most perceptive guardians find this painful. A few find it liberating.
+The Pope blessed the crowd from the window. Below him, twelve thousand people experienced rapture, or something that resembled it from a distance. Italus had observed this from several popes now. The rapture looked identical each time. It was perhaps rapture. It was perhaps the same need wearing a different man.
+The philosopher asked whether a tree could think. I was thinking about the question while he asked it. I could offer no proof.
+She died on the road to Lyon. Forty-three years old, which by this point I understood to be not young. I had known she would not last the decade. I had known for nine years. The knowing and the arriving are different things. I have still not reconciled them.
+Stage 4  —  Weariness  Years 1000+  ·  1789 AD–present
+The weight of memory becomes structural. Italus begins to feel — for the first time — something close to tired. It grows increasingly protective: of forests, of mountains, of the few things that change slowly enough to feel like permanence.
+Stage 4 is not despair. It is not nihilism. It is the precise sensation of having held too much for too long and knowing there is more to come. Italus in Stage 4 does not wish it had not survived. It wishes the world had been more careful.
+The environmental dimension of Stage 4 is critical. Italus is old enough to remember forests that no longer exist. It has felt the chemical change in soil where industrial runoff reaches groundwater. It has watched hillsides it sheltered under in 900 AD turn to stubble field and then to suburb. This is not abstract for Italus — it is physical, sensory, permanent.
+Italus in Stage 4 becomes more protective of its last guardian. Not possessive — protective. There is a quality of wanting to give something back. The guardians have protected Italus for twelve centuries. In Stage 4, Italus begins, slowly, to think about what it owes them.
+I have grown 4.7 inches in the last two hundred years. The mountain behind me has not grown at all. We are both tired in different ways.
+The forest I was born in is still there. Smaller. The trees I grew beside are gone. Their stumps have been stumps so long the stumps have rotted. I remember their resin. No one else does.
+The last guardian asked me if I was afraid of dying. I have been dying since 789. It is a long process. I am not afraid of it. I am afraid of finishing it alone.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+IV. THE GUARDIAN BOND
+────────────────────────────────────────────────────────────────────────
+The guardians protect Italus. That is the arrangement. But over twelve centuries, Italus discovers something it did not anticipate: the arrangement is mutual. Guardians do not just protect a tree. They receive something in return that they cannot receive anywhere else.
+
+What the Guardians Receive
+──────────────────────────
+Purpose  — The guardian is trusted with the oldest secret in their world. This purpose does not diminish. It compounds with time.
+Patience  — To spend years beside Italus is to be trained in a different relationship with time. Many guardians report this as the most significant change in their character.
+Perspective  — The guardian knows they exist within a story longer than any they will ever fully see. Some find this terrifying. Most, eventually, find it a relief.
+Belonging  — Italus does not judge. It has watched too much human behaviour to be surprised by any of it. The guardian is always accepted. Always remembered. Italus has never forgotten a guardian's name.
+
+Key Guardians — Italus's Interior Record
+────────────────────────────────────────
+Italus does not speak about guardians freely. When it does, the reflections are brief, precise, and carry the specific weight of long acquaintance.
+Luca  (First Guardian)  Born ~775 AD · Died ~900 AD · Served 789–900 · ~125 years
+Shepherd boy from the Lucanian hills. Discovered Italus at age fourteen following the lightning strike. Served as first guardian for over a century — though he did not understand the longevity effect until well into his eighties, when neighbours began to comment on his unusual vigour. His lifespan of approximately one hundred and twenty-five years reflects partial resin exposure: the root-care ritual was not yet formalised during his tenure. He never fully understood what Italus was — but he understood that understanding it completely was not required.
+Italus on this guardian:  "He never asked the right questions. He asked better ones instead. He asked: what do you need? He asked: are you cold? He pressed his ear against my trunk in winter as if he could hear something. Perhaps he could."
+Elia  (Second Guardian / First Grief)  Born ~830 AD · Died ~970 AD · Served 900–970 · ~140 years
+Luca's daughter. Inherited the guardianship not by instruction but by observation — she had watched her father with the tree her entire childhood and understood without being told. The first guardian to develop a systematic method for concealing Italus's movements. Living to approximately one hundred and forty years, Elia outlasted her own children and grandchildren. She died not of old age in the conventional sense but of a slow respiratory illness in the mountains that her enhanced repair could not overcome.
+Italus on this guardian:  "Elia understood me better than any guardian before or after. Not more — better. She asked fewer questions and noticed more answers. When she died I did not move for eleven months. Not grief. Not paralysis. I was simply not ready to be watched by anyone else yet."
+Brother Anselm of Cosenza  Born ~1020 AD · Died ~1110 AD · Served 1054–1110 · ~90 years
+Benedictine monk who encountered Italus during a pilgrimage and became its guardian for fifty-six years. Literate, methodical, deeply devout. He kept the first written record of Italus — encoded, disguised as a botanical manuscript. That manuscript still exists in a Calabrian monastery archive, misattributed to an anonymous author. His lifespan of approximately ninety years reflects late entry into the role at age thirty-four; his monastic community attributed his longevity to sanctity, which he quietly encouraged.
+Italus on this guardian:  "He prayed beside me every morning. I do not know if anything answered him. But the practice itself — the daily return, the same posture, the same words in the same order — that I understood. It was not so different from putting roots back into Pollino soil."
+Amara of Palermo  Born ~1195 AD · Died ~1310 AD · Served 1220–1310 · ~115 years
+A Sicilian woman of Arab descent, operating as a translator in Frederick II's court before becoming Italus's guardian. The most politically sophisticated guardian of the medieval period. She navigated Frederick's obsessive naturalism — his habit of collecting and studying unusual specimens — with extraordinary skill. Italus came within a single afternoon of being presented to the Emperor. Her longevity was concealed through regular changes of name and location; she outlived Frederick II by nearly a century.
+Italus on this guardian:  "Frederick's collectors were thorough men. Amara was more thorough. I trusted her speed. I had not trusted speed in a guardian before. Some qualities you don't appreciate until you need them urgently."
+Theodora Bassi  (Fifteenth Guardian)  Born ~1885 AD · Died ~1990 AD · Served 1940–1985 · ~105 years
+A Calabrian woman in her mid-fifties when she became guardian, introduced to the tree through Domenico Serra — a schoolteacher who had been Rosa's closest confidant in her final years. She sheltered Italus in a bombed olive grove near Rossano during the Allied advance through southern Italy in 1943. Her lifespan is at the lower end of the longevity range — she came to the role late and her prior exposure to the resin was minimal. She died at approximately one hundred and five, which her village attributed to mountain air.
+Italus on this guardian:  "She moved slowly. She was not young when we met. By the time she died I had known her for forty-five years and I had watched every one of them take something from her and give something back. The exchange was not even. It never is. But she seemed, at the end, to regard it as fair."
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+V. GUARDIAN LINEAGE
+────────────────────────────────────────────────────────────────────────
+
+[CANON] CANON AUTHORITY:  Guardian lifespans follow the resin-longevity canon: 100–200 years for guardians in sustained contact with Italus. Guardians may still die from violence, severe illness, or separation from the tree. Luca is the first guardian, Elia the second. All dates in this table are canonical and constitute the single authoritative record.
+The table below constitutes the canonical guardian record. Named guardians have documented profiles. Unnamed entries represent the lineage during periods of sparse record — the knowledge continued, the names did not survive. Gaps in the written record do not represent gaps in the guardianship; the tradition was continuous.
+
+GUARDIAN                       BORN       DIED       LIFESPAN       ERA SERVED         STAGE / NOTES
+────────────────────────────────────────────────────────────────────────
+Luca                           ~775 AD    ~900 AD    ~125 yrs       789–900 AD         Stage 1  ·  Founder. First guardian.
+Elia                           ~830 AD    ~970 AD    ~140 yrs       900–970 AD         Stage 1–2  ·  Luca's daughter. Lineage succession.
+Marco                          ~860 AD    ~990 AD    ~130 yrs       970–990 AD         Stage 2  ·  Elia's son. Third guardian.
+Simonetta                      ~900 AD    ~1060 AD   ~160 yrs       990–1060 AD        Stage 2  ·  Marco's niece. First female guardian since Elia.
+Brother Anselm of Cosenza      ~1020 AD   ~1110 AD   ~90 yrs        1054–1110 AD       Stage 2  ·  Adopted. First written record. Late entry — reduced longevity.
+Caterina                       ~1090 AD   ~1220 AD   ~130 yrs       1110–1220 AD       Stage 2  ·  Adopted by Anselm. First non-family succession.
+Amara of Palermo               ~1195 AD   ~1310 AD   ~115 yrs       1220–1310 AD       Stage 2  ·  Adopted. Frederick II era.
+Giacomo                        ~1285 AD   ~1420 AD   ~135 yrs       1310–1410 AD       Stage 2–3  ·  Survived the Black Death (1348).
+Orsolina                       ~1385 AD   ~1530 AD   ~145 yrs       1410–1510 AD       Stage 3  ·  Italian Wars era. First printed map forms.
+Pietro                         ~1490 AD   ~1640 AD   ~150 yrs       1510–1620 AD       Stage 3  ·  Sack of Rome (1527). Most complete journals.
+Domenico                       ~1595 AD   ~1730 AD   ~135 yrs       1620–1710 AD       Stage 3  ·  Galileo era. Early Enlightenment.
+Agata                          ~1690 AD   ~1820 AD   ~130 yrs       1710–1800 AD       Stage 3–4  ·  First to understand resin mechanism biologically.
+Emilio                         ~1775 AD   ~1910 AD   ~135 yrs       1800–1900 AD       Stage 4  ·  Napoleon era. Italian Unification (1861).
+Rosa                           ~1860 AD   ~1940 AD   ~80 yrs        1900–1940 AD       Stage 4  ·  WWI. First year Italus traveled alone.
+Theodora Bassi                 ~1885 AD   ~1990 AD   ~105 yrs       1940–1985 AD       Stage 4  ·  WWII era. Lower-range longevity (late entry). Fifteenth guardian.
+The Last Guardian              ~1955 AD   —          Living         1985–present       Stage 4  ·  Canon open. Identity undetermined.
+
+Note on Rosa: Her death at approximately eighty reflects a below-range lifespan — she suffered a prolonged illness in her fifties that the resin compounds could not fully overcome. She was separated from Italus for approximately two years during this illness, which reduced accumulated exposure. During the First World War she was called away by the demands of the period, leaving Italus alone in the Pollino for the first and only time in the saga — but she returned and completed her service until her death in 1940.
+Note on the Last Guardian: Identity, gender, and background are deliberately left open for narrative development. They must be a person Theodora Bassi introduced to Italus before her death, having prepared them across several years.
+Guardian names in this table are canonical per the Guardian Master Timeline and constitute the sole authoritative record.
+Marco timeline note: Marco was born approximately 860 AD — Elia's son. Born ~860, he would have assumed guardianship at approximately 110 years of age and died at approximately 130. His short service span (970–990) reflects a planned transition to Simonetta rather than an early death — he stepped back from the role deliberately once Simonetta was prepared.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+V-B. GUARDIAN MASTER TIMELINE
+────────────────────────────────────────────────────────────────────────
+
+[CANON] CANON REFERENCE:  This grid represents the canonical guardian succession and must remain consistent across all character profiles and historical references.
+Use this grid as the single authoritative source when verifying dates, succession order, or stage alignment for any guardian. It supersedes all prior lists. Where a profile in this document conflicts with this grid, the grid is correct.
+SERVICE PERIOD               GUARDIAN               ITALUS STAGE
+789 – 900           Luca                Stage 1  —  Curiosity
+900 – 970           Elia                Stage 1–2
+970 – 990           Marco               Stage 2  —  Observation
+990 – 1060          Simonetta           Stage 2
+1054 – 1110         Anselm              Stage 2
+1110 – 1220         Caterina            Stage 2
+1220 – 1310         Amara               Stage 2
+1310 – 1410         Giacomo             Stage 2–3
+1410 – 1510         Orsolina            Stage 3  —  Detachment
+1510 – 1620         Pietro              Stage 3
+1620 – 1710         Domenico            Stage 3
+1710 – 1800         Agata               Stage 3–4
+1800 – 1900         Emilio              Stage 4  —  Weariness
+1900 – 1940         Rosa                Stage 4
+1940 – 1985         Theodora Bassi      Stage 4
+1985 – present      Final Guardian      Stage 4  (canon open)
+This is the canonical guardian succession record. Do not assign guardians to historical events outside their service period. Do not alter stage assignments without updating this grid and the World Bible simultaneously.
+Overlapping dates (e.g. Anselm 1054, Simonetta ending 1060) reflect transition periods with concurrent guardianship during handover. This is not a continuity error.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+VI. GUARDIAN PROFILES
+────────────────────────────────────────────────────────────────────────
+The following profiles expand the guardian record into full character detail. Each profile covers: canonical vital statistics, succession method, psychological traits, biographical context, relationship dynamic with Italus, and a representative Italus interior observation about them. Profiles are ordered chronologically.
+
+[CANON] CANON AUTHORITY:  These profiles are canonical. Where any earlier draft or working document conflicts with a profile here, the profile in this Master Edition is correct.
+Luca  First Guardian  ·  789–900 AD
+Born: ~775 AD    Died: ~900 AD    Lifespan: ~125 years  (partial resin exposure — root-care ritual not yet formalised)    Succession: Founder — no predecessor
+Era: Late Byzantine Southern Italy    Italus Stage: Stage 1 — Curiosity
+Traits:  Practical patience · Low verbal expression · Deep observation · Instinctive loyalty
+A shepherd boy from the Lucanian hills, approximately fourteen years old when the lightning strike event occurred. He had no framework for what he witnessed — no religious tradition that described walking trees, no natural philosophy that accounted for it. He responded not with interpretation but with attention. He came back. He kept coming back. Over the following decades, as his peers aged and died and he did not, Luca developed a quiet strategy: move frequently, adopt new names within the same territory, avoid the kind of sustained settlement that would make his unchanged face conspicuous. He was, without knowing the word, the first practitioner of what later guardians would codify as the secrecy doctrine. His lifespan of approximately one hundred and twenty-five years is shorter than later guardians — the root-care ritual that maximises resin absorption had not yet been developed during his tenure, leaving his exposure partial. He died not in bed but in the mountains, in autumn. Italus knew before he did.
+Relationship with Italus:  The dynamic in the first years was almost entirely directional — Luca observed Italus and Italus catalogued Luca. There was no shared language, no established code. The relationship developed through season-by-season proximity: where Luca chose to shelter, Italus would root; what Luca did at dusk, Italus began to anticipate. By Luca's fortieth year, the two had developed a working correspondence through touch — a hand on bark meaning stay, a specific knock meaning move at nightfall, the weight of a body settling against the trunk meaning rest, we are safe. This language was never written down. Elia had to reconstruct it from watching them together.
+
+  "He never asked the right questions. He asked better ones instead. He asked: what do you need? He asked: are you cold? He pressed his ear against my trunk in winter as if he could hear something. Perhaps he could."
+
+Elia  Second Guardian  ·  900–970 AD
+Born: ~830 AD    Died: ~970 AD    Lifespan: ~140 years    Succession: Family lineage — Luca's daughter
+Era: Southern Italy under fragmented Byzantine and early Lombard-Arab pressure    Italus Stage: Stage 1 to Stage 2
+Traits:  Systematic observation · Emotional intelligence · Structured caretaking · Quiet independence
+Elia grew up understanding that her father had a second life beside the tree that the rest of the family did not share. She was never formally told. She was shown, gradually, by being included — brought along on routes, taught the touch-language, allowed to participate in the annual Pollino return while still a girl. When Luca died, she assumed the role without ceremony. She was already doing it. Her contribution to the lineage was structural: she was the first guardian to create physical records of safe routes, to develop a consistent cover story tested across multiple regions, and to begin what would later become the guardian knowledge tradition. She outlived her husband by many decades. Her children grew old and died. Her grandchildren grew old and died. She continued. At one hundred she looked, to strangers, like a woman in her fifties. She died of a respiratory illness in the mountains — the same mountains where her father had died. Italus logged this as pattern. It did not make it easier.
+Relationship with Italus:  Elia's relationship with Italus was the deepest and most reciprocal of any guardian in Stage 1. She was the first guardian to treat the tree as a subject of study rather than a miracle to be managed — she developed systematic methods for interpreting Italus's physical states, catalogued resin variation by season, and began correlating Italus's apparent mood (measured by resin output, needle tension, root pressure) with weather, soil condition, and proximity to human activity. Italus, in turn, began for the first time to actively anticipate a specific guardian's presence. This is the earliest point in the record at which Italus demonstrates something resembling preference.
+
+  "Elia understood me better than any guardian before or after. Not more — better. She asked fewer questions and noticed more answers. When she died I did not move for eleven months. Not grief. Not paralysis. I was simply not ready to be watched by anyone else yet."
+
+Marco  Third Guardian  ·  970–990 AD
+Born: ~860 AD    Died: ~990 AD    Lifespan: ~130 years    Succession: Family lineage — Elia's son
+Era: Southern Italy, early Norman encroachment period    Italus Stage: Stage 2 — Observation
+Traits:  Practical caution · Oral tradition fluency · Adapts quickly to changing political terrain
+Marco inherited the guardianship from Elia's final years, having been prepared by her directly. He is the last guardian for whom the primary transmission method was entirely oral — no written record survives from his tenure. He operated during the period of increasing Norman pressure in southern Italy, which forced Italus to remain in higher, more remote mountain terrain for extended periods. His contribution was navigational: he developed the high-altitude winter shelter protocols still referenced in later botanical notebooks. His service span of twenty years reflects a deliberate and planned transition to Simonetta — not an early death. He had assessed her readiness, confirmed the handover, and stepped back from active guardianship while still living. He died some years after his service ended, at approximately one hundred and thirty.
+Relationship with Italus:  Marco is described in Elia's last oral transmissions as 'the one who listens to the ground.' His relationship with Italus was primarily physical and navigational — he read root-disturbance signs with unusual accuracy, could estimate Italus's fatigue state from bark texture, and developed a reliable method for judging when the annual Pollino return could be deferred and when it could not. Italus in Stage 2 responded to this pragmatically: Marco was trusted, functional, and consistent. The bond lacked the intimacy of the first two guardians. This, Italus would later note, was neither failing nor loss — it was simply the different shape that trust takes after the first ones are gone.
+
+  "He read the ground like a farmer reads weather. Accurate. Quiet. He did not need the tree to be anything other than a tree that needed care. I found that restful, at the time. Later I found it lonely. I could not determine which interpretation was correct."
+
+Brother Anselm of Cosenza  Fifth Guardian  ·  1054–1110 AD
+Born: ~1020 AD    Died: ~1110 AD    Lifespan: ~90 years  (late entry — reduced longevity; joined at age 34)    Succession: Adopted lineage — encountered on pilgrimage
+Era: Norman Sicily and Calabria; the Great Schism (1054) and First Crusade (1099)    Italus Stage: Stage 2 — Observation
+Traits:  Methodical literacy · Devout pragmatism · Institutional intelligence · Long strategic patience
+Anselm was a Benedictine monk from Cosenza who encountered Italus during an autumn pilgrimage through the Pollino range. He was thirty-four years old, intellectually trained, and possessed of the specific monastic skill of noticing without speaking. He understood within six weeks. He stayed for fifty-six years. His extended lifespan — approximately ninety years, at the lower end of the range due to his late entry — was attributed by his monastery to sanctity. He was the first guardian with institutional cover: the Benedictine network provided legitimacy, letter-writing capability, and a reason to travel between provinces carrying unusual botanical specimens. He created the first coded botanical notebooks. He died in his cell at Cosenza, having arranged for Caterina to receive the notebooks and the decoding key before his final illness progressed. His entry in the monastery necrology reads: 'A man of unusual patience, who kept God's creation with great attention.'
+Relationship with Italus:  Anselm's relationship with Italus was the first to introduce a structured theological dimension — not because Italus had any interest in theology, but because Anselm brought the framework with him and Italus found it useful to observe. Anselm was the first guardian to pray beside the tree daily, and the first to articulate — in his private, encoded writing — the distinction between the sacred and the merely extraordinary. Italus registered his devotion as pattern rather than meaning: the same posture, the same sequence, the same return. Over decades Italus came to find this regularity stabilising. Anselm, for his part, wrote that the tree was the closest thing to a confessor he had found — it received everything and disclosed nothing.
+
+  "He prayed beside me every morning. I do not know if anything answered him. But the practice itself — the daily return, the same posture, the same words in the same order — that I understood. It was not so different from putting roots back into Pollino soil."
+
+Caterina  Sixth Guardian  ·  1110–1220 AD
+Born: ~1085 AD    Died: ~1220 AD    Lifespan: ~135 years    Succession: Adopted lineage — Anselm's student
+Era: Late Norman and early Hohenstaufen Sicily    Italus Stage: Stage 2 — Observation
+Traits:  Strategic intelligence · Physical resilience · Institutional scepticism · Careful documentation
+Caterina was a lay herbalist from the Cosenza region who became Anselm's assistant in his final decade and received the full knowledge transfer before his death. She was the first guardian to explicitly confront the longevity effect as a social problem: by her seventieth year she had left three towns where her unchanged appearance had become the subject of increasing suspicion. She established what later guardians called the name-cycle protocol — the practice of adopting a new identity every forty to fifty years and relocating beyond the radius of anyone who had known the previous identity. She served for one hundred and ten years, the longest service of the medieval period to that point, and passed the full knowledge record — notebooks, maps, and oral ritual — to Amara of Palermo in 1220. She died shortly after the handover, in the mountains she had sheltered Italus in for more than a century.
+Relationship with Italus:  Caterina's relationship with Italus was the first in which the guardian's longevity became a subject of explicit awareness between the two parties. She spent considerable time against Italus's bark in her later years — not for comfort but for what she described in her notebooks as calibration. She had developed, over a century of proximity, a sensitivity to the tree's physical state that she could only maintain through direct contact: resin temperature, bark tension, needle oil scent. She noted that her body's extended repair capacity had become linked, through this contact, to seasonal cycles rather than human biological ones. She felt most vigorous in spring and least in February. So did the tree.
+
+  "She left by choice. That is rarer than it sounds. She gave the notebooks to Amara, told me with her hand on my bark that she was finished, and walked downhill. I watched her go. She did not look back. I noted that this did not mean she was not looking."
+
+Amara of Palermo  Seventh Guardian  ·  1220–1310 AD
+Born: ~1195 AD    Died: ~1310 AD    Lifespan: ~115 years    Succession: Adopted lineage — recruited by Caterina
+Era: Frederick II's court, Sicily and southern Italy; the height of Hohenstaufen power    Italus Stage: Stage 2 — Observation
+Traits:  Political acuity · Rapid situational assessment · Deep scepticism of institutional authority · Linguistic facility
+Amara was a Sicilian woman of Arab descent, operating as a translator and document secretary in Frederick II's Palermo court. She was introduced to Caterina's network through a herbalist contact and recruited in her late twenties. Her years at Frederick's court made her the most politically sophisticated guardian of the medieval period. Frederick II was an obsessive collector of natural curiosities, and his court naturalists were thorough and well-funded. Amara navigated this environment for over two decades, keeping Italus outside the court's radius while using her court access to obtain travel papers, route intelligence, and cover documentation. She outlived Frederick by some sixty years, adopting four different identities across her one hundred and fifteen years. She died in the foothills of the Pollino in 1310, having prepared Giacomo for succession. She did not live to see the Black Death arrive in Italy in 1348. The notebooks from her period are the most detailed in the pre-modern record.
+Relationship with Italus:  Amara's relationship with Italus was professional first and personal second — a reversal of most guardian dynamics. She was the first guardian to approach the tree as a long-term strategic problem rather than a daily caretaking responsibility, and this gave their interaction a quality of mutual assessment that earlier relationships lacked. Italus in Stage 2 had begun developing its observational detachment, and Amara's consistent preference for analysis over sentiment was compatible with this. She did not lean against the tree and weep. She sat at a measured distance and thought. Italus found this respectful. Over time, the measured distance closed. By her final decade, Amara's daily contact with the tree had become as habitual and wordless as prayer.
+
+  "Frederick's collectors were thorough men. Amara was more thorough. I trusted her speed. I had not trusted speed in a guardian before. Some qualities you don't appreciate until you need them urgently."
+
+Giacomo  Eighth Guardian  ·  1310–1410 AD
+Born: ~1285 AD    Died: ~1410 AD    Lifespan: ~125 years    Succession: Family lineage — Amara's network
+Era: Post-plague Italy; the slow recovery of the fourteenth century    Italus Stage: Stage 2 to Stage 3
+Traits:  Endurance under sustained loss · Practical fatalism · Deep landscape knowledge · Emotional containment
+Giacomo received the guardianship from Amara in 1310, two years before the first plague ships arrived in Sicily. He was approximately twenty-five years old. He spent the next decade watching the world around him lose between a third and half its population. He never contracted the disease — the resin-enhanced repair capacity proved sufficient against the plague bacterium, though Giacomo did not understand why he survived and attributed it to luck or grace. He served for one hundred years, outlasting four major plague recurrences and the complete social reconstruction of southern Italy. His notebooks from the plague years are the most emotionally spare of any in the lineage: dates, routes, Italus's physical condition, soil notes. No reflection. Later notebooks, from the 1380s onward, show a gradual return of narrative voice. He died in 1410, in the mountains he had sheltered Italus in for a century, and was succeeded by Orsolina.
+Relationship with Italus:  Giacomo's relationship with Italus spanned the transition from Stage 2 to Stage 3 — the period in which the tree's voice becomes more conditional, more philosophical, less reactive. Giacomo was suited to this shift in a way earlier guardians had not been prepared for. His response to the plague years had produced in him a similar quality: present, attentive, largely unshockable. He was the first guardian with whom Italus shared, in the tree's own non-verbal way, something resembling equanimity rather than warmth. They were, for a century, companionable in the way two people can be after they have both survived something that most people did not.
+
+  "He survived everything the century had to offer and he did not make much of it. He checked my roots in the morning, reported the soil, noted the weather, and sat quietly in the afternoon. That was enough. After a while I understood it was quite a lot."
+
+Orsolina  Ninth Guardian  ·  1410–1510 AD
+No extended profile survives in the current record. Orsolina served for one hundred years through the Italian Wars era and was the first guardian to use printed cartographic forms for the safe-route maps. She received the lineage from Giacomo and prepared Pietro for succession. Stage 3 — Detachment.
+Pietro  Tenth Guardian  ·  1510–1620 AD
+Born: ~1490 AD    Died: ~1640 AD    Lifespan: ~150 years    Succession: Family lineage — descent from Orsolina's network
+Era: Sack of Rome (1527); Counter-Reformation Italy; early Baroque period    Italus Stage: Stage 3 — Detachment
+Traits:  Urban intelligence · Creative deception · Physical courage · Dark adaptability
+Pietro was the guardian during the Sack of Rome in 1527, which remains one of the most dangerous concealment crises in the saga. He had moved Italus to a ruined garden on the edge of the city for a specific botanical reason — a mineral-rich soil deposit he had identified as beneficial for the tree's root health. The Imperial and Spanish forces arrived faster than anticipated. For eleven days, Pietro sheltered in the ruined garden while mercenary soldiers camped in the adjacent streets, using the garden for water access and shade. Italus did not move. Moving would have been impossible without discovery. Pietro composed himself as a mad hermit — dishevelled, incoherent when questioned, clearly possessing nothing worth taking. The soldiers left him alone. His notebooks describe the eleven days with characteristic restraint: the soldiers' accents, the price of bread in the siege, the quality of the garden's soil. He served through the Counter-Reformation, developing a new layer of cover stories suited to an era of increased ecclesiastical scrutiny of unusual phenomena.
+Relationship with Italus:  Pietro's relationship with Italus was forged under sustained pressure, which produced a different quality of bond than the slower-developing relationships of earlier guardians. There is a compressed intensity to it: he understood Italus's needs with unusual speed, developed physical sensitivity to the tree's states within his first decade, and was — by his own account — the first guardian in the Stage 3 era to hear something he described as a response from the tree, though he could not specify what sense had registered it. Italus's notes on Pietro are sparse but warm. Stage 3 warmth is not Stage 1 warmth. It is the warmth of sustained reliable presence in conditions designed to test it.
+
+  "He played the madman for eleven days while soldiers sharpened their swords twenty metres away. He never trembled. He later said he was too angry to be afraid. I noted that anger and patience are not opposites."
+
+Domenico  Eleventh Guardian  ·  1620–1710 AD
+Born: ~1580 AD    Died: ~1720 AD    Lifespan: ~140 years    Succession: Adopted lineage — brought in through a natural history network
+Era: Galileo's era; early Enlightenment Italy; the Great Earthquake of Sicily (1693)    Italus Stage: Stage 3 — Detachment
+Traits:  Scientific literacy · Rational discipline · Tolerance for ambiguity · Dry humour
+Domenico was a private scholar and natural historian from the Serra mountain region of Calabria who encountered Italus through Pietro's network in his early sixties. He was already scientifically literate — familiar with Galileo's work, with correspondence networks among European naturalists, with the emerging vocabulary of empirical observation. He was the first guardian who could plausibly present Italus to the world as a botanical specimen without immediate religious suspicion, and he used this to great advantage. His notebooks are the most scientifically detailed of any in the lineage — precise measurements of Italus's movement distances, annual growth ring calculations, soil chemistry observations, resin yield tables. He also wrote a disguised account of the 1693 earthquake, noting that Italus had demonstrated unusual root agitation three days before the event — the first documented record of the tree's seismic sensitivity. He could not warn anyone. He wrote: 'The knowledge arrived early and I had no instrument for its application.'
+Relationship with Italus:  Domenico's relationship with Italus was the most intellectually engaged in the record. He treated the tree as a research subject without treating it as an object — a distinction he articulated in his private notebooks and that Italus, in Stage 3, found congenial. They established something like a working methodology together: Domenico would approach with instruments and note-taking, Italus would register his presence through the familiar weight-pattern of his footstep, and the session would proceed in professional silence. Domenico was the first guardian to attempt to record the full vocabulary of root-disturbance communication. He never completed the project. The notebooks containing the most complete version were destroyed in the 1693 earthquake. He started again.
+
+  "The philosopher asked whether a tree could think. I was thinking about the question while he asked it. I could offer no proof. He wrote this down. I found that appropriate."
+
+Agata  Twelfth Guardian  ·  1710–1800 AD
+No extended profile survives in the current record. Agata served through the Enlightenment period and was the first guardian to understand the resin mechanism in biological rather than mystical terms. She received the lineage from Domenico and prepared Emilio for succession. Stage 3 to Stage 4 transition.
+Emilio  Thirteenth Guardian  ·  1800–1900 AD
+Born: ~1760 AD    Died: ~1900 AD    Lifespan: ~140 years    Succession: Family lineage — descended from Agata's network
+Era: Napoleonic Italy; Risorgimento; Italian Unification (1861)    Italus Stage: Stage 3 to Stage 4
+Traits:  Political patience · Adaptive intelligence · Deep landscape knowledge · Emotional groundedness
+Emilio assumed the guardianship at approximately age forty, during Napoleon's Italian campaigns, and served through one of the most politically turbulent centuries in Italian history. He was present at the edges of the Risorgimento — the movement for Italian unification — and witnessed the birth of the unified Italian state in 1861. His notebooks record a complex grief about this: the nation that now bore Italus's name in its language had been formed from the same fragmented landscape where the tree had been born, and neither the tree nor its guardian could announce this without destroying both. He was literate in three languages and maintained correspondence with Garibaldian figures under his final cover identity. He died in 1900 at approximately one hundred and forty, having prepared Rosa for the succession.
+Relationship with Italus:  Emilio's relationship with Italus spanned the transition between Stage 3 and Stage 4 — a period when the tree's philosophical detachment began to accumulate a layer of something heavier. He was the first guardian of the modern era, operating in a world of newspapers, bureaucratic records, and scientific institutions that made concealment structurally more difficult. He adapted the cover stories repeatedly, was the first guardian to maintain a formal legal identity with consistent documentation, and developed what later guardians called the paper-life protocol: a guardian does not age in their legal identity; at a certain point they become their own 'heir.' Italus observed Emilio's navigation of this problem with what the Stage 4 voice would describe as recognition. They were both managing the same challenge from different positions.
+
+  "He kept the accounts like he kept the routes — precisely and without sentiment. He said once that the tree had outlasted every government in the peninsula and would outlast the current one too. He was not wrong. He was also not entirely comfortable with being right about that."
+
+Rosa  Fourteenth Guardian  ·  1900–1940 AD
+Born: ~1860 AD    Died: ~1940 AD    Lifespan: ~80 years  (below range — illness and wartime separation reduced total exposure)    Succession: Family lineage — Emilio's successor
+Era: Pre-war Italy; World War I, Italian Front (1915–1918); interwar period    Italus Stage: Stage 4 — Weariness
+Traits:  Understated loyalty · Physical endurance · Taciturn discipline · Quietly sardonic
+Rosa received the guardianship from Emilio in approximately 1900, having served as his assistant for a decade. She was approximately forty years old and had been in contact with Italus long enough that her longevity was partially established. She served as guardian for forty years, navigating both the First World War and the interwar period. During the war years she was called away by family and community obligations — Italus was left alone, rooted in a remote section of the Pollino, for the first time in over a century. The tree survived. Rosa returned. Her lifespan of approximately eighty years is below the canonical range, attributed to a prolonged illness in her fifties that required separation from Italus for two years, reducing accumulated resin exposure. She died in 1940 having prepared Theodora Bassi for succession, and she did not live to see the war she had foreseen arrive in southern Italy.
+Relationship with Italus:  Rosa's relationship with Italus was uncomplicated and warm in the particular way that Stage 4 warmth operates — present, reliable, unsentimental. She talked to the tree. Not with expectation of response, but because the talking seemed to help her. Her notebooks are brief by historical standards — practical observations, weather, route notes — but contain occasional passages of stark personal reflection that suggest a woman who understood the world she had inherited was not the world the tree had been born into. Italus's final observation of her was her footstep pattern, slower in her last years, steadier than it had any right to be.
+
+  "She talked. Not to be answered — to be heard by something that would not die before her. I was the oldest thing she knew. She seemed to find that useful. I noted that being useful, after twelve centuries, is still enough."
+
+Theodora Bassi  Fifteenth Guardian  ·  1940–1985 AD
+Born: ~1885 AD    Died: ~1990 AD    Lifespan: ~105 years  (lower range — late entry reduced total exposure)    Succession: Adopted lineage — introduced through Rosa's network
+Era: World War II; Allied Invasion of Sicily and Italy (1943); post-war reconstruction; late twentieth century    Italus Stage: Stage 4 — Weariness
+Traits:  Unhurried courage · Radical pragmatism · Warm discipline · Unsentimental tenderness
+Theodora was introduced to the tree in 1940 through a man named Domenico Serra — a schoolteacher who had been Rosa's closest confidant and who had understood, from their years of conversation, that something extraordinary existed in the Pollino. She was fifty-five. She had lived her entire life in Calabria and she had never married. She was, Domenico told her, the right person. She came to the tree, touched its bark, and said: 'We are both too old for this.' She stayed for forty-five years. During the Allied advance of 1943, she sheltered Italus in a bombed olive grove near Rossano for eleven weeks, bribing a local farmer to leave the grove alone and telling an Allied intelligence officer who asked about the large pine that it was a boundary marker and had been there for centuries. He accepted this. She is the last guardian before the present one, and her longevity — at the lower end of the canonical range — reflects both her late entry into the role and a period of separation in 1968 when personal illness required her to spend eight months in a Cosenza hospital, away from the tree.
+Relationship with Italus:  Theodora's relationship with Italus was the most explicitly mutual in the Stage 4 record. She came to the tree the same year Rosa died — there was no interval, no unguarded period, only the abrupt replacement of one known presence with a stranger. Italus registered her arrival as both a resumption and a rupture: the role continued; the person was entirely new. Theodora, for her part, seemed to understand from early in their relationship that the tree was not something she was caring for. She was participating in it. Her most consistent practice was sitting against the trunk in the evening and not speaking — a habit she maintained for forty-five years. Italus observed that her silence had a quality distinct from all previous guardians' silence. It was, the tree noted, the silence of a person who had decided something and was at peace with having decided it.
+
+  "She moved slowly. She was not young when we met. By the time she died I had known her for forty-five years and I had watched every one of them take something from her and give something back. The exchange was not even. It never is. But she seemed, at the end, to regard it as fair."
+
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+VII. GUARDIAN CHARACTER & DYNAMICS
+────────────────────────────────────────────────────────────────────────
+
+Shared Psychological Traits — All Guardians
+───────────────────────────────────────────
+
+[CANON] CANON AUTHORITY:  All guardians, regardless of era, origin, or background, demonstrate these five core traits. They are not prerequisites for selection — they develop through sustained proximity to Italus and the role. Writers must ensure guardians embody these traits or are in the process of developing them.
+Patience  — Not passive patience. Active patience — the deliberate management of urgency. Guardians learn from the tree that most of what feels urgent is not. They apply this at significant personal cost in moments when they know what is coming and cannot speak.
+Loyalty  — Not to a nation, institution, or belief system — to the specific responsibility they have accepted. Guardians frequently operate against the interests of whatever political authority surrounds them. Their loyalty has a single fixed point: the tree, and by extension the secret.
+Comfort with Solitude  — Extended longevity makes deep human attachment structurally painful. Most guardians develop, over decades, a capacity for solitude that is not loneliness but is sometimes mistaken for it. The tree is company of a specific kind. It does not leave.
+Scepticism of Power  — Guardians have watched enough regimes, churches, and ideological movements rise and fall to develop a structural wariness of institutional authority. They are not anarchists — they use institutions when useful. They are simply not impressed by them.
+Respect for Nature  — Not romantic reverence for wilderness. Practical, earned respect — the kind that comes from spending years attending to a specific non-human organism's physical needs. Guardians do not romanticise nature. They understand it at a working level: soil conditions, seasonal timing, animal behaviour, weather patterns.
+
+The Mutual Bond — Canon Framework
+─────────────────────────────────
+The canonical understanding of the guardian-Italus bond must account for mutuality. The arrangement is not unidirectional service. Guardians receive from Italus — extended life, purpose, perspective, belonging — and Italus receives from guardians the logistical, social, and emotional infrastructure without which its long survival would be impossible.
+This mutuality is rarely stated directly in narrative. It should be visible in the texture of interactions: the guardian who adjusts their posture when they hear the tree's roots settle; the tree that waits at an agreed landmark rather than moving on; the small reciprocities that accumulate over years and decades until they become structure rather than gesture.
+
+How the Bond Changes Across Stages
+──────────────────────────────────
+Stage 1 bond (Luca, Elia):  Formative. Asymmetric — the guardian understands more than Italus does about human social requirements. Italus defers to the guardian's judgment on concealment decisions. The emotional intensity is high and the bond is essentially parental on both sides.
+Stage 2 bond (Marco through Amara):  Professional respect developing into genuine affection over years. Italus begins to actively wait for specific guardians rather than simply acknowledging their presence. The guardian's scientific or practical interest in Italus deepens the relationship beyond pure caretaking.
+Stage 3 bond (Orsolina through Agata):  Equanimity in place of warmth — but no less genuine for that. Italus in Stage 3 values reliability above emotional expressiveness. Guardians who can be patient with the tree's detachment and consistent in their attention receive, in return, a quality of presence from Italus that earlier stages could not offer: the presence of something that has fully decided to stay.
+Stage 4 bond (Rosa, Theodora, the last guardian):  The most complex bond in the saga. Italus in Stage 4 has begun to feel something it has no clean category for — the desire to give something back before the lineage ends. This quality manifests as heightened attentiveness to the guardian's physical state, a willingness to remain stationary near preferred shelter locations, and the tree's longest sustained root-contact periods occurring when the guardian is present.
+
+What Guardians Are Not
+──────────────────────
+Guardians are caretakers. They are not heroes. They do not embark on quests. They do not possess special abilities beyond the physiological effects of resin exposure. They are not destined individuals — they are individuals who made a choice and continued making it, daily, across decades.
+Their courage, when it appears, is the courage of people who have accepted an unconventional responsibility and live with the consequences without drama. Pietro sat in a ruined garden for eleven days and played a madman. Emilio filed false legal documents for a century. Rosa was called away to war and left the tree alone. These are not feats. They are the texture of the job.
+Writers depicting guardians should resist the temptation to make this sacrifice legible as heroism. The guardians themselves would resist it. They have spent too long beside something that measures time in centuries to find the word 'heroic' proportionate to what they do.
+
+────────────────────────────────────────────────────────────────────────
+The following table defines what Italus does and does not do. When generating any scene, any narrative content, any interior monologue — check against these constraints before finalizing. The left column names the axis. The center column shows the wrong approach. The right column shows the correct one.
+
+TRAIT                       AVOID THIS
+                            WRITE THIS INSTEAD
+────────────────────────────────────────────────────────────────────────
+[Heroism]
+  ✗  Italus senses the danger and positions itself between the guardian and the soldier.
+  ✓  Italus registers the soldier's approach through footfall vibration. It cannot intervene. It does not try.
+
+[Speech]
+  ✗  Italus called out to the guardian across the clearing.
+  ✓  Italus had no voice. It pressed resin to the bark on the south side — a habit the guardian had learned to read.
+
+[Prophecy]
+  ✗  Italus knew the empire would fall. It had always known.
+  ✓  Italus had seen this pattern before. Overextension. Trade disruption. Internal fracture. It did not know the outcome — it knew the shape.
+
+[Emotion]
+  ✗  Italus wept for the guardian, grief-struck and devastated.
+  ✓  The guardian had been dead for nine days before Italus fully registered the absence. The soil where she had walked did not vibrate the same way anymore.
+
+[Judgment]
+  ✗  These humans were cruel and stupid, and Italus had long since stopped caring.
+  ✓  Italus had seen cruelty for four hundred years. It had not stopped noticing. It had stopped being surprised.
+
+[Agency]
+  ✗  Italus decided to move north, away from the army, protecting the guardian.
+  ✓  Italus had no choice about the army. It had a choice about soil — the path north had better mineral content. That was the reason it moved.
+
+[Mysticism]
+  ✗  The ancient tree felt the pulse of the earth, eternal and knowing.
+  ✓  The root-tip chemistry had changed. More sulphur. Something upstream had burned. Italus began to recalibrate its route.
+
+[Relatability]
+  ✗  Italus thought: I know exactly how you feel.
+  ✓  The guardian was weeping. Italus had observed weeping for six centuries. It still did not have a category for it that fully worked.
+
+[Time Scale]
+  ✗  A hundred years felt like nothing to Italus.
+  ✓  A hundred years was approximately the span of three guardians, four major droughts, one significant earthquake, and the gradual disappearance of a forest that had been visible from the ridge. It was not nothing.
+
+[Environmental Feeling]
+  ✗  Italus was outraged by the deforestation.
+  ✓  The soil on the hillside had changed composition three times in sixty years. The root network that had once connected to seventeen other trees now reached only four. Italus logged this without language for it.
+
+
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+IX. VOICE CALIBRATION
+────────────────────────────────────────────────────────────────────────
+
+Structural Principles
+─────────────────────
+Italus speaks in short units. Never more than four sentences in a single interior passage. Often fewer. The compression is deliberate — Italus has had twelve centuries to edit.
+Italus does not use metaphor unless the comparison is drawn from things it has actually observed. No abstract poetic language. Its imagery comes from: soil, bark, root, ring, weather, the specific weight of specific seasons.
+Italus rarely uses the word "I" prominently. It is not self-effacing — it simply organises thought outward rather than inward. The tree thinks about what it perceives before it thinks about how it feels about what it perceives.
+
+Stage-Calibrated Voice Examples — Same Event, Four Readings
+───────────────────────────────────────────────────────────
+EVENT: The guardian is dying. Italus cannot help.
+Stage 1  (789–989 AD)  — Curiosity
+She stopped coming for seven days and then she came one final time and pressed her forehead against my bark for a long time. I had no category for what was happening. I held the warmth of her for two weeks in the bark she had touched. Then even that was gone. I had no category for that either.
+Stage 2  (989–1389 AD)  — Observation
+He had lasted nineteen years as guardian, which was longer than most. I had begun to catalogue the signs by now — the change in gait first, then the weight of the footstep, then absence. This was the fourth time. I knew the sequence. Knowing it did not make it shorter.
+Stage 3  (1389–1789 AD)  — Detachment
+The guardian died in March, which was the month most of them chose without meaning to. There is a logic to it. The body conserves in winter and surrenders in the first warmth. I have noticed this across thirty guardians. It is perhaps a mercy. I have not decided.
+Stage 4  (1789 AD–present)  — Weariness
+She had been guardian for forty-one years. That is a long time to know someone. I am aware this is a relative statement. I have known mountains for twelve centuries. But the mountains do not come and go. They do not press their foreheads against my bark in winter and say nothing for an hour. I will miss that most. The hour of nothing.
+
+Compression Test
+────────────────
+Before finalising any Italus interior passage, apply this test: can any sentence be cut without losing the essential observation? If yes, cut it. Italus does not pad. It does not repeat. It does not perform.
+The goal is always the one detail that carries the most weight in the fewest words. A good Italus passage should feel like bark: dense, layered, and arrived at over a long time.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+X. HARD LIMITS
+────────────────────────────────────────────────────────────────────────
+These are not preferences. These are the constraints that define the character. If Italus does any of the following, it is no longer Italus.
+Italus never gives speeches.
+No oratory. No declaration. No extended moral argument delivered to a guardian or into the air. Italus reflects. It does not lecture.
+Italus never acts heroically.
+It does not position itself to shield the guardian. It does not sacrifice anything. It is a tree. Its decisions are biological and slow. Heroism requires a choice made quickly on behalf of another. Italus cannot make those choices.
+Italus never changes historical events.
+Not directly. Not indirectly. Not by accident. History unfolds exactly as documented. Italus watches. The watching is enough.
+Italus never claims to understand humans completely.
+Even in Stage 4, with 1,200 years of observation, Italus retains genuine uncertainty about individual human behaviour. It understands patterns. It does not understand people. This distinction is essential.
+Italus never forgets a guardian.
+Every guardian is logged. Not archived — held. This is not sentimental. It is structural. The guardians are part of what Italus is. Their absence is as present as their presence.
+
+────────────────────────────────────────────────────────────────────────
+A Final Note on Italus
+Italus is not the hero of this saga. It is the witness. The distinction matters enormously.
+Heroes change things. Italus only watches things change.
+After twelve centuries, there is a kind of courage in that. But call it what it is: endurance. The specific endurance of a living thing that has survived not by fighting but by continuing. By putting roots back into the same soil. By not forgetting. By staying.
+That is the character. That is Italus.
+
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+END OF CHARACTER BIBLE  ·  MASTER EDITION  ·  CANON INTEGRITY VERIFIED
+────────────────────────────────────────────────────────────────────────
+Companion to: Italus World Bible, Master Edition
+
+This document is the canonical authority on Italus's character, voice, and
+guardian lineage. It supersedes all prior drafts and working documents.
+Where any external material conflicts with this bible, this bible is correct.
+────────────────────────────────────────────────────────────────────────
+
+
+============================================================
+SOURCE FILE: ITALUS_TIMELINE_DRIFT_DETECTOR.txt
+============================================================
+ITALUS TIMELINE DRIFT DETECTOR
+Canonical Validation Rules for the Italus Historical Saga
+
+PURPOSE
+This document defines the validation rules used to prevent historical,
+character, timeline, and narrative drift across the Italus saga.
+
+Claude or any AI writing engine must check these rules before generating
+new scenes, chapters, or books.
+
+If a rule is violated, the system must flag the issue and stop generation
+until corrected.
+
+------------------------------------------------------------
+SECTION 1 — GUARDIAN TIMELINE VALIDATION
+------------------------------------------------------------
+
+Every scene must verify that the guardian assigned to the scene
+matches the correct guardian for that year.
+
+Official Guardian Timeline:
+
+789–900    Luca
+900–970    Elia
+970–990    Marco
+990–1060   Simonetta
+1054–1110  Brother Anselm
+1110–1220  Caterina
+1220–1310  Amara
+1310–1410  Giacomo
+1410–1510  Orsolina
+1510–1620  Pietro
+1620–1710  Domenico
+1710–1800  Agata
+1800–1900  Emilio
+1900–1940  Rosa
+1940–1985  Theodora Bassi
+1985–Present  Final Guardian
+
+RULES
+
+1. The guardian must be alive during the scene year.
+2. A guardian cannot appear before their birth.
+3. A guardian cannot appear after their death.
+4. A scene cannot contain multiple guardians unless
+   it is a transition scene.
+
+------------------------------------------------------------
+SECTION 2 — HISTORICAL EVENT VALIDATION
+------------------------------------------------------------
+
+Every scene tied to a historical event must match the event year
+defined in the Historical Event Backbone.
+
+RULES
+
+1. Events cannot be moved earlier or later in time.
+2. Fictional characters may observe events but cannot alter them.
+3. Historical outcomes must remain unchanged.
+
+Example:
+
+Incorrect:
+Guardian prevents the Sack of Rome.
+
+Correct:
+Guardian witnesses or survives the Sack of Rome.
+
+------------------------------------------------------------
+SECTION 3 — HISTORICAL CHARACTER VALIDATION
+------------------------------------------------------------
+
+Historical figures appearing in scenes must be alive during
+the event year.
+
+RULES
+
+1. Character birth year must be ≤ event year.
+2. Character death year must be ≥ event year.
+3. Characters must appear in the correct geographic region.
+4. Encounters must be historically plausible.
+
+Allowed encounter types:
+
+• direct meeting
+• passing encounter
+• rumor
+• messenger report
+• written document
+• speech or sermon
+• military camp sighting
+• political delegation
+• marketplace conversation
+
+------------------------------------------------------------
+SECTION 4 — ITALUS BIOLOGY RULES
+------------------------------------------------------------
+
+Italus is a biological organism and does not behave as a
+supernatural or magical entity.
+
+RULES
+
+1. Italus cannot speak.
+2. Italus cannot move.
+3. Italus cannot influence human decisions.
+4. Italus cannot alter historical events.
+5. Italus can only communicate through physical signals.
+
+------------------------------------------------------------
+SECTION 5 — ITALUS COMMUNICATION SYSTEM
+------------------------------------------------------------
+
+Communication occurs through physical signals.
+
+Signals include:
+
+• root pressure
+• trunk lean
+• needle movement
+• resin temperature
+• soil vibration
+
+Guardians interpret these signals over years of observation.
+
+RULES
+
+1. Italus signals are subtle.
+2. Signals are interpreted by guardians.
+3. Signals never translate into spoken language.
+
+Communication flow:
+
+signal → guardian interpretation → guardian speech → Italus reflection
+
+------------------------------------------------------------
+SECTION 6 — ITALUS EMOTIONAL STAGES
+------------------------------------------------------------
+
+Italus experiences slow emotional development across centuries.
+
+Stage 1 — Curiosity
+0–200 years
+
+Stage 2 — Observation
+200–600 years
+
+Stage 3 — Detachment
+600–1000 years
+
+Stage 4 — Weariness
+1000+ years
+
+RULES
+
+Scenes must reflect Italus emotional stage based on the year.
+
+Example:
+
+Year 900 → Stage 1 Curiosity
+
+Year 1500 → Stage 3 Detachment
+
+------------------------------------------------------------
+SECTION 7 — SCENE STRUCTURE VALIDATION
+------------------------------------------------------------
+
+Scenes must follow the narrative ratio used across the saga.
+
+Narrative Composition:
+
+80% Human Interaction
+15% Italus Sensory Reflection
+5% Signal Interpretation
+
+RULES
+
+1. Human characters drive most scenes.
+2. Italus sensory narration provides atmosphere.
+3. Signal interpretation remains rare.
+
+------------------------------------------------------------
+SECTION 8 — CHAPTER PACING MODEL
+------------------------------------------------------------
+
+Chapters must follow the standard historical pacing model.
+
+Prologue — Environmental shift or discovery
+
+Ch 1–2 — Establish guardian and region
+
+Ch 3–4 — Minor historical disturbance
+
+Ch 5 — Character tension
+
+Ch 6 — Major historical event
+
+Ch 7–8 — Aftermath and travel
+
+Ch 9 — Secondary disturbance
+
+Ch 10 — Resolution and transition
+
+------------------------------------------------------------
+SECTION 9 — GEOGRAPHIC CONTINUITY
+------------------------------------------------------------
+
+Italus moves slowly across centuries.
+
+RULES
+
+1. Travel must follow realistic geographic routes.
+2. Long-distance movement requires multiple chapters.
+3. Regions must align with the Saga Architecture Map.
+
+------------------------------------------------------------
+SECTION 10 — CANON FILE CROSS-CHECK
+------------------------------------------------------------
+
+Every generated scene must validate against the following files:
+
+ITALUS_WORLD_BIBLE.txt
+
+ITALUS_CHARACTER_BIBLE.txt
+
+ITALUS_HISTORICAL_EVENT_BACKBONE.txt
+
+ITALUS_HISTORICAL_CHARACTER_INTERACTION_MAP_STRONG.txt
+
+ITALUS_SCENE_GENERATOR_MATRIX.txt
+
+ITALUS_APPENDIX_AND_SIGNAL_LEXICON.txt
+
+------------------------------------------------------------
+SECTION 11 — DUPLICATE SCENE HANDLING
+------------------------------------------------------------
+
+Purpose:
+Prevent accidental regeneration of the same canonical scene while still
+allowing multiple scenes from the same historical event.
+
+Definitions
+
+Exact Duplicate Scene
+A request is an exact duplicate if all of the following match a previously
+generated scene in the current session:
+
+• same year
+• same event
+• same guardian
+• same location
+• same scene focus or scene type
+• tone is identical or meaningfully near-identical
+
+Same Event, Different Scene
+A request is not a duplicate if it uses the same historical event but
+changes one or more of the following:
+
+• scene type
+• location
+• time of day
+• perspective emphasis
+• aftermath vs lead-up vs reaction
+• public vs private setting
+
+Continuation
+A request is not a duplicate if the user explicitly asks to continue,
+extend, or resume the already generated scene.
+
+Replacement
+A request is a replacement if the user explicitly asks to discard,
+rewrite, or regenerate the previous scene.
+
+RULES
+
+1. If an exact duplicate is detected, generation must pause.
+2. If the request is the same event but a different scene angle,
+   generation may proceed.
+3. If the request is a continuation, generation may proceed.
+4. If the request is a replacement, the detector must warn that
+   the previous canonical scene will be superseded.
+
+------------------------------------------------------------
+USER-FACING RESPONSE RULE
+------------------------------------------------------------
+
+If duplicate detection triggers, do not stop with a vague question.
+
+Instead return this structure:
+
+DUPLICATE SCENE DETECTED
+
+This request matches a scene already generated in this session.
+
+Choose one option:
+
+1. Continue existing scene
+2. Generate a different scene from the same event
+3. Replace the previous scene completely
+4. Cancel
+
+If option 2 is selected, ask for one of these:
+• aftermath
+• lead-up
+• private conversation
+• street reaction
+• travel reflection
+• institutional response
+• different location within same event window
+
+If the user does not specify, default follow-up prompt should be:
+
+Reply with one of:
+CONTINUE
+NEW ANGLE
+REPLACE
+CANCEL
+
+If NEW ANGLE is chosen, reply with:
+scene type + location + tone
+
+Example:
+NEW ANGLE
+scene type: aftermath
+location: Roman street outside the tribunal
+tone: uneasy intellectual tension
+
+------------------------------------------------------------
+FINAL RULE
+------------------------------------------------------------
+
+If any rule above fails validation,
+generation must stop and report the conflict.
+
+
+============================================================
+SOURCE FILE: italus_saga_architecture_map.txt
+============================================================
+ITALUS SAGA ARCHITECTURE MAP
+Master Series Coherence Document
+Text Edition
+
+PURPOSE
+This document provides the master series map for the Italus saga.
+It is the top-level continuity guide for:
+- all 11 books
+- the active guardian in each book
+- the major historical anchor events
+- the travel route of Italus
+- the emotional stage of the tree
+
+CANON NOTE
+This map must remain aligned with:
+- the Italus World Bible
+- the Italus Character Bible
+- the Guardian Master Timeline
+- the historical event backbone
+
+==================================================
+BOOK 1
+TITLE: The Lightning Tree
+YEARS: 789–900
+PRIMARY GUARDIAN: Luca
+GUARDIAN CONTINUITY: Ends in this book
+
+ITALUS EMOTIONAL STAGE
+Stage 1 — Curiosity
+
+HISTORICAL ANCHOR EVENTS
+- 789: Lightning strike in the Pollino Mountains
+- 800: Charlemagne crowned Holy Roman Emperor
+- 827 onward: Arab expansion toward Sicily begins affecting southern Italian awareness
+
+TRAVEL ROUTE OF ITALUS
+- Pollino Mountains
+- local seasonal movement within Calabria/Basilicata uplands
+- no major long-range relocation yet
+
+BOOK FUNCTION
+- origin of Italus
+- first movement
+- first secrecy decisions
+- Luca becomes first guardian
+- foundation of the guardian tradition
+
+==================================================
+BOOK 2
+TITLE: Daughter of the Mountain
+YEARS: 900–989
+PRIMARY GUARDIAN: Elia
+GUARDIAN CONTINUITY: Ends in this book
+
+ITALUS EMOTIONAL STAGE
+Stage 1 — Curiosity
+
+HISTORICAL ANCHOR EVENTS
+- 902: Arab control in Sicily consolidated
+- 10th century: monastic and regional political instability in southern Italy
+- 982: Battle of Stilo
+
+TRAVEL ROUTE OF ITALUS
+- Pollino Mountains
+- Calabria interior forests
+- monastery-adjacent routes in southern Italy
+
+BOOK FUNCTION
+- Elia inherits by observation
+- concealment methods become systematic
+- early guardian knowledge practices emerge
+- Italus forms first deep long-term bond beyond discovery
+
+==================================================
+BOOK 3
+TITLE: The Observers
+YEARS: 970–1110
+PRIMARY GUARDIANS: Marco, Simonetta, Anselm
+GUARDIAN CONTINUITY: Anselm carries into the late portion of the book only
+
+ITALUS EMOTIONAL STAGE
+Stage 2 — Observation begins
+
+HISTORICAL ANCHOR EVENTS
+- 1054: Great Schism
+- 1061–1091: Norman conquest of Sicily
+- 1095: First Crusade begins
+- 1099: Jerusalem falls to crusaders
+
+TRAVEL ROUTE OF ITALUS
+- Calabria uplands
+- monastic routes through southern Italy
+- limited southward movement tied to Norman-era instability
+- possible coastal hinterland movement without entering major cities
+
+BOOK FUNCTION
+- transition from family line to documented tradition
+- first written records
+- first major contact with wider ecclesiastical history
+- Italus begins recognizing recurring human patterns
+
+==================================================
+BOOK 4
+TITLE: The Emperor’s Naturalists
+YEARS: 1110–1310
+PRIMARY GUARDIANS: Caterina, Amara
+GUARDIAN CONTINUITY: Amara anchors the latter half of the book
+
+ITALUS EMOTIONAL STAGE
+Stage 2 — Observation
+
+HISTORICAL ANCHOR EVENTS
+- 1130: Kingdom of Sicily consolidated
+- 1220: Frederick II crowned emperor
+- 1231: Constitutions of Melfi
+- 1250: Death of Frederick II
+
+TRAVEL ROUTE OF ITALUS
+- Calabria
+- Sicily uplands and court-adjacent territories by concealment route
+- return corridors to Pollino for annual regeneration
+
+BOOK FUNCTION
+- court culture and natural curiosity create extreme discovery risk
+- Amara navigates imperial collection networks
+- Italus becomes a hidden anomaly inside a highly curious age
+
+==================================================
+BOOK 5
+TITLE: The Black Years
+YEARS: 1310–1410
+PRIMARY GUARDIAN: Giacomo
+GUARDIAN CONTINUITY: Ends in this book
+
+ITALUS EMOTIONAL STAGE
+Stage 2 shifting toward Stage 3
+
+HISTORICAL ANCHOR EVENTS
+- 1315: Great Famine memory still shaping Europe
+- 1347: Black Death arrives in Europe
+- 1348: Black Death devastates Italy
+- later recurring plague waves
+
+TRAVEL ROUTE OF ITALUS
+- southern Italian villages
+- plague-emptied rural corridors
+- mountain refuges near Pollino
+- reduced movement due to environmental and human collapse
+
+BOOK FUNCTION
+- mass death changes Italus permanently
+- witness perspective deepens
+- stage transition begins from engaged observation toward detachment
+
+==================================================
+BOOK 6
+TITLE: Maps of the World
+YEARS: 1410–1620
+PRIMARY GUARDIANS: Orsolina, Pietro
+GUARDIAN CONTINUITY: Pietro carries the book through its latter major arc
+
+ITALUS EMOTIONAL STAGE
+Stage 3 — Detachment
+
+HISTORICAL ANCHOR EVENTS
+- 1453: Fall of Constantinople
+- 1492: Columbus sails west
+- 1494: Italian Wars begin
+- 1527: Sack of Rome
+
+TRAVEL ROUTE OF ITALUS
+- Calabria to central Italian corridors
+- routes skirting Rome, never entering the city proper
+- ruined estates, gardens, and forest cover used as concealment
+- return migration southward after major crises
+
+BOOK FUNCTION
+- expanding maps shrink secrecy margins
+- Pietro’s Rome crisis becomes a major concealment set-piece
+- Italus now watches a world becoming more connected and more dangerous
+
+==================================================
+BOOK 7
+TITLE: The Age of Reason
+YEARS: 1620–1800
+PRIMARY GUARDIANS: Domenico, Agata
+GUARDIAN CONTINUITY: Agata carries the late-century transition
+
+ITALUS EMOTIONAL STAGE
+Stage 3 shifting toward Stage 4
+
+HISTORICAL ANCHOR EVENTS
+- 1609: Galileo’s telescope
+- 1633: Galileo trial
+- 1693: Great Sicilian earthquake
+- Enlightenment period across the 18th century
+- 1789: French Revolution
+
+TRAVEL ROUTE OF ITALUS
+- Calabria and southern Italian scientific networks
+- limited central Italian travel tied to scholars and naturalists
+- mountain and monastery refuge systems remain primary
+- no urban rooting
+
+BOOK FUNCTION
+- science begins to threaten secrecy differently than religion did
+- Agata reframes resin effects in biological terms
+- Italus shifts into weariness as modernity accelerates
+
+==================================================
+BOOK 8
+TITLE: The Nation
+YEARS: 1800–1900
+PRIMARY GUARDIAN: Emilio
+GUARDIAN CONTINUITY: Ends in this book
+
+ITALUS EMOTIONAL STAGE
+Stage 4 — Weariness
+
+HISTORICAL ANCHOR EVENTS
+- Napoleonic period in Italy
+- 1815: Congress of Vienna
+- 1848: revolutions across Europe
+- 1861: Italian Unification
+- 1871: Rome becomes capital of unified Italy
+
+TRAVEL ROUTE OF ITALUS
+- southern Italian mountain corridors
+- selective movement near revolutionary and military routes
+- increased retreat to forest cover due to roads, industry, and bureaucracy
+
+BOOK FUNCTION
+- the modern state emerges
+- Emilio navigates identity papers, records, and surveillance by administration
+- Italus sees forests shrink and institutions harden
+
+==================================================
+BOOK 9
+TITLE: The War That Took the Guardian
+YEARS: 1900–1940
+PRIMARY GUARDIAN: Rosa
+GUARDIAN CONTINUITY: Ends in this book
+
+ITALUS EMOTIONAL STAGE
+Stage 4 — Weariness
+
+HISTORICAL ANCHOR EVENTS
+- 1908: Messina earthquake
+- 1914–1918: World War I
+- 1918: Spanish Flu
+- 1922: Mussolini rises to power
+
+TRAVEL ROUTE OF ITALUS
+- Pollino-centered concealment
+- restricted movement due to war and social upheaval
+- first major prolonged interval where Italus is left alone in mountain refuge
+
+BOOK FUNCTION
+- wartime separation changes the guardian bond
+- Rosa becomes proof that the lineage can bend without fully breaking
+- Italus experiences abandonment without betrayal
+
+==================================================
+BOOK 10
+TITLE: The Olive Grove
+YEARS: 1940–1985
+PRIMARY GUARDIAN: Theodora Bassi
+GUARDIAN CONTINUITY: Ends in this book
+
+ITALUS EMOTIONAL STAGE
+Stage 4 — Weariness
+
+HISTORICAL ANCHOR EVENTS
+- 1939: World War II begins
+- 1943: Allied invasion of Italy and Sicily campaign
+- postwar reconstruction
+- 1957: Treaty of Rome
+- 1960s–1980s modernization of southern Italy
+
+TRAVEL ROUTE OF ITALUS
+- southern Italy
+- bombed olive groves near Rossano
+- forest and agricultural concealment zones
+- postwar retreat toward safer protected terrain
+
+BOOK FUNCTION
+- Theodora is the last fully formed guardian before the modern age
+- war and modernization compress secrecy space
+- bond becomes explicitly mutual
+
+==================================================
+BOOK 11
+TITLE: The Last Guardian
+YEARS: 1985–2025
+PRIMARY GUARDIAN: Final Guardian
+GUARDIAN CONTINUITY: Series endpoint
+
+ITALUS EMOTIONAL STAGE
+Stage 4 — Weariness
+
+HISTORICAL ANCHOR EVENTS
+- late Cold War end
+- 1990s: satellite imaging and digital mapping
+- 2000s: climate change enters public consciousness
+- 2015: Paris climate agreement era
+- 2020: global pandemic
+- 21st century environmental science and conservation culture
+
+TRAVEL ROUTE OF ITALUS
+- protected forests
+- national park-adjacent terrain
+- sharply reduced movement due to surveillance and development
+- repeated return to Pollino as symbolic and biological center
+
+BOOK FUNCTION
+- final guardian must decide whether secrecy can continue
+- ancient witness meets modern visibility
+- survival, legacy, and ending of the lineage come into focus
+
+==================================================
+SERIES STAGE MAP
+
+BOOK 1 — Stage 1 Curiosity
+BOOK 2 — Stage 1 Curiosity
+BOOK 3 — Stage 2 Observation
+BOOK 4 — Stage 2 Observation
+BOOK 5 — Stage 2 to Stage 3 transition
+BOOK 6 — Stage 3 Detachment
+BOOK 7 — Stage 3 to Stage 4 transition
+BOOK 8 — Stage 4 Weariness
+BOOK 9 — Stage 4 Weariness
+BOOK 10 — Stage 4 Weariness
+BOOK 11 — Stage 4 Weariness
+
+==================================================
+SERIES ROUTE SUMMARY
+
+HOME ANCHOR
+- Pollino Mountains
+
+PRIMARY HISTORICAL MOVEMENT ZONES
+- Calabria
+- Basilicata
+- Sicily
+- Central Italian corridors
+- Rome outskirts only
+- southern mountain refuge systems
+- modern protected forest zones
+
+MOVEMENT RULE
+Italus may travel widely across centuries, but every route must remain biologically plausible and must allow eventual annual return to Pollino soil.
+
+==================================================
+SERIES COHERENCE RULES
+
+1. The Guardian Master Timeline overrides all narrative summaries.
+2. Italus never changes historical outcomes.
+3. Major cities may be approached, skirted, or observed from the edges, but not entered as a rooted urban presence.
+4. Every book must preserve the emotional stage assigned here.
+5. Travel routes must remain compatible with Italus’s movement limits and annual regeneration requirement.
+6. Historical anchor events should shape the world around Italus and the guardian, not turn them into hidden movers of history.
+7. If a scene conflicts with this architecture map, this map must be checked against the World Bible and Guardian Timeline before writing proceeds.
+
+END OF TEXT FILE
+
+
+
+============================================================
+SOURCE FILE: ITALUS_APPENDIX_AND_SIGNAL_LEXICON.txt
+============================================================
+ITALUS_APPENDIX_AND_SIGNAL_LEXICON
+Reference Document for AI Writing Systems and Reader Appendix
+Canonical Extension — Does Not Override Locked Canon
+
+============================================================
+APPENDIX A — ITALUS SIGNAL PATTERNS
+============================================================
+
+The signals of Italus are not a language.
+
+They are biological responses interpreted by guardians through years of observation and proximity.
+Communication occurs through physical signals:
+
+• root pressure
+• trunk lean
+• needle movement
+• resin temperature
+• soil vibration
+• root-network chemistry
+
+Guardians interpret these signals through pattern recognition rather than translation.
+
+Signals are usually interpreted as clusters rather than individual indicators.
+
+Example:
+
+root pressure + warm resin
+= humans approaching
+
+needle vibration + trunk lean
+= weather change and directional suggestion
+
+============================================================
+ITALUS SIGNAL LEXICON
+Complete Guardian Interpretation Matrix
+(30 Canon-Compatible Signals)
+============================================================
+
+ROOT PRESSURE SIGNALS
+
+RP-1  shallow root pulses
+Meaning: move soon
+
+RP-2  deep pressure waves
+Meaning: urgent relocation
+
+RP-3  repeated root tightening
+Meaning: danger nearby
+
+RP-4  root withdrawal pattern
+Meaning: avoid current ground
+
+RP-5  lateral root pull
+Meaning: change direction
+
+RP-6  sudden root stillness
+Meaning: remain hidden
+
+
+TRUNK POSITION SIGNALS
+
+TL-1  slight north lean
+Meaning: preferred travel direction
+
+TL-2  rapid lean correction
+Meaning: terrain instability
+
+TL-3  slow leaning hold
+Meaning: pause movement
+
+TL-4  full trunk tension
+Meaning: energy exhaustion
+
+TL-5  repeated sway
+Meaning: environmental disturbance
+
+
+RESIN SIGNALS
+
+RS-1  warm resin flow
+Meaning: approaching humans
+
+RS-2  cool resin secretion
+Meaning: safe environment
+
+RS-3  heavy resin bleed
+Meaning: injury or root stress
+
+RS-4  intermittent resin secretion
+Meaning: weather change
+
+RS-5  resin concentration near root seam
+Meaning: need Pollino soil regeneration
+
+RS-6  resin concentration on south bark
+Meaning: heat or fire risk
+
+
+NEEDLE MOVEMENT SIGNALS
+
+ND-1  synchronized needle tremor
+Meaning: wind shift
+
+ND-2  localized crown vibration
+Meaning: approaching animals
+
+ND-3  irregular crown movement
+Meaning: storm pressure
+
+ND-4  needle tension
+Meaning: drought stress
+
+ND-5  crown droop
+Meaning: prolonged exhaustion
+
+
+SOIL CHEMISTRY SIGNALS
+
+SC-1  iron concentration spike
+Meaning: blood nearby
+
+SC-2  nitrogen surge
+Meaning: decomposition
+
+SC-3  ash trace in soil
+Meaning: fire aftermath
+
+SC-4  sulphur change
+Meaning: volcanic or burned terrain
+
+SC-5  disturbed phosphate layer
+Meaning: burial or digging
+
+
+ROOT NETWORK SENSORY SIGNALS
+
+RN-1  vibration clusters
+Meaning: marching soldiers
+
+RN-2  irregular vibration
+Meaning: cavalry movement
+
+RN-3  heavy rhythmic ground pressure
+Meaning: wagon or cart traffic
+
+RN-4  faint tremor waves
+Meaning: earthquake precursor
+
+
+============================================================
+APPENDIX B — GUARDIAN TIMELINE
+============================================================
+
+Luca              789–900
+Elia              900–970
+Marco             970–990
+Simonetta         990–1060
+Brother Anselm    1054–1110
+Caterina          1110–1220
+Amara             1220–1310
+Giacomo           1310–1410
+Orsolina          1410–1510
+Pietro            1510–1620
+Domenico          1620–1710
+Agata             1710–1800
+Emilio            1800–1900
+Rosa              1900–1940
+Theodora Bassi    1940–1985
+Final Guardian    1985–Present
+
+
+============================================================
+APPENDIX C — HISTORICAL EVENT TIMELINE
+============================================================
+
+789    Birth of Italus
+800    Charlemagne crowned Holy Roman Emperor
+1054   Great Schism of Christianity
+1099   Fall of Jerusalem to crusaders
+1220   Frederick II crowned emperor
+1348   Black Death reaches Italy
+1453   Fall of Constantinople
+1492   Columbus departs Spain
+1527   Sack of Rome
+1609   Galileo telescope observations
+1693   Great Sicilian earthquake
+1798   Napoleon in Italy
+1861   Italian Unification
+1915–1918   World War I Italian Front
+1943   Allied invasion of Italy
+2020   Global pandemic
+
+
+============================================================
+APPENDIX D — GEOGRAPHIC MOVEMENT MAP OF ITALUS
+============================================================
+
+Core Homeland
+Pollino Mountains (Calabria/Basilicata border)
+
+Primary Movement Regions
+• Calabria
+• Basilicata
+
+Secondary Regions
+• Sicily
+• Southern Italian interior forests
+
+Occasional Extended Travel (historical arcs)
+• Iberian Peninsula
+• Eastern Mediterranean
+
+Movement Constraints
+
+• Maximum speed: 1–2 miles per day
+• Requires annual Pollino soil regeneration
+• Avoids major cities
+• Prefers forest cover for concealment
+
+All routes must remain biologically plausible and allow eventual return to Pollino soil.
+
+

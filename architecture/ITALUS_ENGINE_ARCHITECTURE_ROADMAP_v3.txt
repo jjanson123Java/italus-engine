@@ -1,0 +1,235 @@
+ITALUS ENGINE — ARCHITECTURE ROADMAP (v3)
+Generated: 2026-03-11
+
+PURPOSE
+-------
+This document defines the forward roadmap using the corrected architecture now being followed.
+
+ARCHITECTURAL CORRECTIONS
+-------------------------
+1. "Book pack canon" and "compressed book pack canon" are the same artifact.
+2. Canon Packet Engine is an input-contract validator and packet assembler.
+3. Guardian Engine is a pre-generation legality validator.
+4. post_generation_canon_validator is a post-generation prose validator.
+5. Canon Memory Engine remains the continuity memory and commit foundation.
+6. Drift validation is no longer modeled as a single mixed-purpose blob.
+
+PHASE 1 — CANON FOUNDATION
+--------------------------
+Purpose
+- prove canon-bounded prompting
+- validate core canon structure
+- establish historical backbone and generation rules
+
+Components
+- World / core canon
+- historical backbone
+- scene generator matrix
+- generation rules
+- early prompt prototypes
+
+Outcome
+- AI generation proved capable of following canon when given properly structured material
+
+PHASE 2 — CANON MEMORY ENGINE (CURRENT IMPLEMENTATION BASE)
+-----------------------------------------------------------
+Purpose
+- maintain accepted continuity across books, chapters, and scenes
+
+Responsibilities
+- store accepted scenes
+- maintain chapter continuity digests
+- maintain book state
+- support duplicate discovery
+- support coverage analysis
+- support resume workflows
+- provide continuity context to orchestration
+
+Core persistent memory
+data/
+ ├ book_state.json
+ ├ chapter_continuity_digests.json
+ ├ scenes/
+ └ backups/
+
+PHASE 3 — AUTHORING INTERFACE
+-----------------------------
+Purpose
+- move from CLI-driven authoring toward browser-based authoring
+
+Capabilities
+- Canon Browser
+- Scene Generator
+- Prose Editor
+- validation / warning display
+- provider selector
+- session resume controls
+- save / commit controls
+
+Flow
+HTML / JS UI
+   │
+   ▼
+Controller API / UI bridge
+   │
+   ▼
+project_runner.py
+
+PHASE 4 — CANON PACKET ENGINE
+-----------------------------
+Purpose
+- assemble the runtime canon packet correctly before prompting AI
+
+Responsibilities
+- select correct global canon layers
+- select correct book pack
+- inject continuity bundle
+- inject request / event metadata
+- validate packet completeness
+- validate packet ordering
+- validate metadata integrity
+- emit packet manifest and packet metadata
+
+Canon packet contents
+- CORE canon
+- GENERATION canon
+- BOOK pack canon
+- chapter digest
+- book state
+- event metadata
+- request metadata
+
+Important rule
+- Canon Packet Engine validates the package being sent
+- it does NOT validate whether the requested scene is story-legal
+
+PHASE 5 — GUARDIAN ENGINE
+-------------------------
+Purpose
+- validate scene legality before AI generation
+
+Responsibilities
+- guardian/year/event/book legality
+- transition legality
+- duplicate request blocking
+- scene type legality
+- chapter-position legality
+- resonance-request legality
+- pre-generation continuity conflict warnings
+- request blocking when invalid
+
+Design rule
+- Guardian Engine NEVER rewrites prose
+- Guardian Engine validates the request, not the AI output
+
+PHASE 6 — POST-GENERATION CANON VALIDATION
+------------------------------------------
+Purpose
+- validate generated prose after AI output is returned
+
+Primary component
+- post_generation_canon_validator.py
+
+Responsibilities
+- detect Italus law violations
+- detect prophecy / future knowledge
+- detect guardian drift implied by prose
+- detect signal tier and stage violations in prose
+- detect resonance misuse
+- detect continuity contradiction
+- act as final accept/reject safety net
+
+Design rule
+- This layer validates output prose, not packet assembly or request legality
+
+PHASE 7 — VECTOR CANON MEMORY (FUTURE SCALING)
+----------------------------------------------
+Purpose
+- support large-saga semantic retrieval and continuity assistance
+
+Capabilities
+- semantic scene search
+- theme retrieval
+- character interaction retrieval
+- callback discovery
+- continuity hinting
+- large-scale similarity search
+
+Design rule
+- Vector memory augments retrieval; it does not replace packet assembly,
+  request validation, or post-generation prose validation
+
+FINAL STABLE ARCHITECTURE
+-------------------------
+Author Interface
+      │
+      ▼
+Controller Layer
+      │
+      ▼
+Orchestration Layer (project_runner.py)
+      │
+      ├── Canon Memory Engine
+      ├── Canon Packet Engine
+      ├── Guardian Engine
+      ├── Prompt Builder
+      ├── AI Runner
+      └── post_generation_canon_validator
+      │
+      ▼
+Accept / Reject / Commit Pipeline
+      │
+      ▼
+Canon State Updated
+
+ROLE DEFINITIONS
+----------------
+Canon Memory Engine
+- continuity memory and accepted-scene state
+
+Canon Packet Engine
+- packet assembly and packet integrity
+
+Guardian Engine
+- request legality before generation
+
+Prompt Builder
+- AI-facing prompt text assembly
+
+AI Runner
+- model/provider execution and normalization
+
+post_generation_canon_validator
+- generated-prose legality after generation
+
+Commit Pipeline
+- persist accepted canon updates
+
+IMPLEMENTATION SEQUENCE
+-----------------------
+Near-term
+1. formalize Canon Packet Engine sidecar manifest
+2. formalize Guardian Engine request validation schema
+3. rename and narrow validator responsibilities to post_generation_canon_validator
+4. pass structured validation context from runner to validator
+5. preserve current save/commit flow
+
+Mid-term
+1. move packet completeness checks fully out of validator
+2. move request legality checks fully into Guardian Engine
+3. keep only prose-level checks in post_generation_canon_validator
+4. add stronger continuity contradiction checks
+
+Later
+1. add vector memory retrieval
+2. add semantic similarity duplicate support
+3. add richer callback recommendation support
+4. add large-saga performance optimizations
+
+NON-NEGOTIABLE DESIGN RULES
+---------------------------
+1. Do not model packet validation, request validation, and prose validation as one component.
+2. Do not treat book pack canon and compressed book pack canon as separate canon layers.
+3. Do not make the prose validator depend on raw prompt parsing.
+4. Do build structured validation context in orchestration.
+5. Do keep post-generation validation even after Packet Engine and Guardian Engine are mature.

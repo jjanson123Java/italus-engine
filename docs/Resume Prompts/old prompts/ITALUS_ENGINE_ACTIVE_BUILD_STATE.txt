@@ -1,0 +1,79 @@
+2️⃣ ITALUS_ENGINE_ACTIVE_BUILD_STATE.txt
+ITALUS ENGINE – ACTIVE BUILD STATE
+
+CURRENT PHASE
+Phase 2 – Italus Prototype
+
+GOAL
+Complete the first working engine capable of generating scenes using the canon system.
+
+--------------------------------------------------
+
+COMPLETED
+
+- Canon architecture defined
+- Architecture map built
+- Historical backbone created
+- Scene generator matrix created
+- Core canon pack written
+- Generation canon pack written
+- Canon bootstrap builder implemented
+- Book canon packs generated
+- Guardian continuity logic implemented
+- Stage transition logic implemented
+- Dominant / transition / carryover separation added
+- Canon audit against source files completed
+
+--------------------------------------------------
+
+CURRENT FILES OF INTEREST
+
+app/canon_bootstrap_book_builder.py
+app/project_runner.py
+app/prompt_builder.py
+app/request_builder.py
+app/ITALUS_PROJECT_RUNNER_MENU_TONE.py
+
+--------------------------------------------------
+
+CURRENT CANON FILES
+
+italus_saga_architecture_map.txt
+ITALUS_HISTORICAL_EVENT_BACKBONE.txt
+ITALUS_SCENE_GENERATOR_MATRIX.txt
+ITALUS_KNOWLEDGE_PACK_CORE.txt
+ITALUS_KNOWLEDGE_PACK_GENERATION.txt
+ITALUS_KNOWLEDGE_PACK_BOOK_01.txt
+...
+ITALUS_KNOWLEDGE_PACK_BOOK_11.txt
+
+--------------------------------------------------
+
+CURRENT TASK
+
+Implement Canon Loader in project_runner.py.
+
+The runner must load the appropriate book canon pack and inject it into the prompt builder during generation.
+
+--------------------------------------------------
+
+REMAINING PHASE 2 TASKS
+
+1. Canon Loader
+2. Prompt Builder integration
+3. Request Builder
+4. Runner wiring
+5. Output storage
+6. CLI menu integration
+7. Prototype generation test
+
+--------------------------------------------------
+
+WARNINGS
+
+Do not rename guardian terminology.
+Do not refactor for multi-genre yet.
+Preserve bootstrap builder functionality.
+Prototype completion takes priority.
+
+NEXT TASK: Phase 2 Step 1 – Implement Canon Loader in project_runner.py

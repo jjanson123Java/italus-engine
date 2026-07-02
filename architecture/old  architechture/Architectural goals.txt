@@ -1,0 +1,267 @@
+┌─────────────────────────────────────────────────────────────────────┐
+│                         AUTHOR INTERFACE LAYER                      │
+│                                                                     │
+│  HTML / JS AUTHORING UI                                             │
+│                                                                     │
+│  Components                                                         │
+│  ├── Canon Browser (Books / Chapters / Events)                      │
+│  ├── Scene Generator Panel                                          │
+│  ├── Prose Editor                                                   │
+│  ├── Drift Warning Popups                                           │
+│  ├── AI Provider Selector                                           │
+│  ├── Session Status / Resume Banner                                 │
+│  └── Save / Commit Controls                                         │
+│                                                                     │
+│  Communication                                                      │
+│  └── HTTP / API / Local Controller Calls                            │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                       CONTROLLER / UI BRIDGE                        │
+│                                                                     │
+│  ITALUS_PROJECT_RUNNER_MENU_TONE.py                                 │
+│                                                                     │
+│  Responsibilities                                                   │
+│  ├── UI menu logic                                                  │
+│  ├── request assembly                                               │
+│  ├── generation invocation                                          │
+│  ├── save invocation                                                │
+│  ├── controller session state                                       │
+│  │     ├ last_generation_result                                     │
+│  │     └ last_save_result                                           │
+│  └── presentation formatting                                        │
+│                                                                     │
+│  APIs used                                                          │
+│  ├ generate_scene_payload()                                         │
+│  ├ save_accepted_scene_payload()                                    │
+│  └ get_ai_provider_config()                                         │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                       ORCHESTRATION LAYER                           │
+│                                                                     │
+│  project_runner.py                                                  │
+│                                                                     │
+│  Core responsibilities                                              │
+│                                                                     │
+│  1. Canon context resolution                                        │
+│  2. Duplicate detection                                             │
+│  3. Continuation validation                                         │
+│  4. Prompt construction                                             │
+│  5. AI provider routing                                             │
+│  6. Canon commit pipeline                                           │
+│                                                                     │
+│  Major methods                                                      │
+│                                                                     │
+│  process_request()                                                  │
+│      │                                                              │
+│      ├ resolve_event_context                                        │
+│      ├ duplicate precheck                                           │
+│      ├ coverage analysis                                            │
+│      ├ prompt_builder                                               │
+│      └ ai_runner.generate_with_ai                                   │
+│                                                                     │
+│  Wrappers exposed to UI                                             │
+│                                                                     │
+│  ├ generate_scene_payload()                                         │
+│  └ save_accepted_scene_payload()                                    │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                     CANON MEMORY ENGINE                             │
+│                                                                     │
+│  Modules                                                            │
+│                                                                     │
+│  canon_manifest_loader                                              │
+│      ├ books_manifest.json                                          │
+│      ├ events_manifest.json                                         │
+│      └ scene_types_manifest.json                                    │
+│                                                                     │
+│  drift_precheck                                                     │
+│      ├ duplicate scene detection                                    │
+│      └ event scene discovery                                        │
+│                                                                     │
+│  coverage.py                                                        │
+│      └ saga coverage analysis                                       │
+│                                                                     │
+│  prompt_builder.py                                                  │
+│      └ builds AI prompts from canon context                         │
+│                                                                     │
+│  bootstrap_manifests.py                                             │
+│      └ initialize canon data                                        │
+│                                                                     │
+│  Canon State Files                                                  │
+│                                                                     │
+│  data/                                                              │
+│  ├ book_state.json                                                  │
+│  ├ chapter_continuity_digests.json                                  │
+│  ├ scenes/                                                          │
+│  └ backups/                                                         │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                        AI PROVIDER LAYER                            │
+│                                                                     │
+│  ai_runner.py                                                       │
+│                                                                     │
+│  Responsibilities                                                   │
+│  ├ provider selection                                               │
+│  ├ response normalization                                           │
+│  └ routing to vendor runner                                         │
+│                                                                     │
+│  Provider resolution                                                │
+│                                                                     │
+│  request["ai_provider"]                                             │
+│      ↓                                                              │
+│  app_settings["ai_provider"]                                        │
+│      ↓                                                              │
+│  default = claude                                                   │
+│                                                                     │
+│  Vendor runners                                                     │
+│                                                                     │
+│  ├ claude_runner.py                                                 │
+│  ├ openai_runner.py                                                 │
+│  └ novelcraft_runner.py                                             │
+│                                                                     │
+│  Return format                                                      │
+│                                                                     │
+│  {                                                                  │
+│     response                                                        │
+│     provider                                                        │
+│     status                                                          │
+│     error                                                           │
+│  }                                                                  │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                         AI MODEL PROVIDERS                          │
+│                                                                     │
+│  External APIs                                                      │
+│                                                                     │
+│  ├ Claude API                                                       │
+│  ├ OpenAI API                                                       │
+│  └ NovelCraft API                                                   │
+│                                                                     │
+│  Future possible providers                                          │
+│                                                                     │
+│  ├ Local LLM (Llama / Mistral)                                      │
+│  ├ Story Engine                                                     │
+│  └ Custom training models                                           │
+└─────────────────────────────────────────────────────────────────────┘
+
+
+
+CANON MEMORY ENGINE — INTERNAL DATA FLOW
+
+THIS IS THE ACTUAL GENERATION PIPELINE.
+
+author request
+      │
+      ▼
+menu/controller
+      │
+      ▼
+generate_scene_payload()
+      │
+      ▼
+process_request()
+      │
+      ├ resolve canon context
+      │
+      ├ load session state
+      │
+      ├ duplicate detection
+      │
+      ├ coverage analysis
+      │
+      ├ prompt_builder
+      │
+      ▼
+ai_runner.generate_with_ai()
+      │
+      ▼
+AI provider
+      │
+      ▼
+generated prose
+      │
+      ▼
+payload returned to UI
+
+
+
+CANON COMMIT PIPELINE
+
+WHEN THE AUTHOR ACCEPTS A SCENE:
+
+generated scene
+      │
+author edits / confirms
+      │
+      ▼
+save_accepted_scene_payload()
+      │
+      ▼
+save_accepted_scene()
+      │
+      ├ backup canon files
+      ├ ensure chapter exists
+      ├ create scene record
+      ├ update coverage
+      ├ update chapter digest
+      ├ update book state
+      └ update session state
+      ▼
+scene committed to canon
+
+
+
+
+CANON MEMORY STATE
+
+THE ENGINE REMEMBERS CONTINUITY THROUGH THESE FILES:
+
+data/
+├ book_state.json
+│
+├ chapter_continuity_digests.json
+│
+├ scenes/
+│   ├ scene_001.json
+│   ├ scene_002.json
+│   └ ...
+│
+└ backups/
+
+These allow the engine to:
+
+track narrative progress
+prevent duplicate scenes
+maintain historical continuity
+resume writing sessions
+
+
+┌────────────────────────────────────┐
+│									 │
+│ Layer         | Responsibility     │
+│ ------------- | ------------------ │
+│ UI            | author interaction │
+│ Controller    | UI logic           │
+│ Orchestrator  | canon rules        │
+│ Memory engine | canon knowledge    │
+│ AI layer      | text generation    │
+└────────────────────────────────────┘
+
+
+
+

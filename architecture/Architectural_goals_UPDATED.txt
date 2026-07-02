@@ -1,0 +1,293 @@
+ITALUS ENGINE — ARCHITECTURAL GOALS (UPDATED)
+Generated: 2026-03-11
+
+PURPOSE
+-------
+This document defines the CURRENT WORKING ARCHITECTURE the Italus engine is now following.
+
+It replaces the older understanding where drift_precheck acted as a mixed-role validator.
+The correct architecture now separates:
+- Canon Packet Engine
+- Guardian Engine
+- post_generation_canon_validator
+- Canon Memory Engine
+- commit pipeline
+
+BOOK PACK CANON NOTE
+--------------------
+"Book pack canon" and "compressed book pack canon" are the SAME artifact.
+They are not separate layers of canon authority.
+The difference is only runtime usage footprint, not canon status.
+
+AUTHORITATIVE CANON LAYERS
+--------------------------
+1. Global canon
+   - ITALUS_KNOWLEDGE_PACK_CORE.txt
+   - ITALUS_KNOWLEDGE_PACK_GENERATION.txt
+   - italus_saga_architecture_map.txt
+   - ITALUS_HISTORICAL_EVENT_BACKBONE.txt
+   - ITALUS_SCENE_GENERATOR_MATRIX.txt
+
+2. Book pack canon
+   - ITALUS_KNOWLEDGE_PACK_BOOK_XX.txt
+   - single runtime artifact for the requested book
+
+3. Accepted local continuity
+   - book_state.json
+   - chapter_continuity_digests.json
+   - accepted scene records
+   - session state
+
+FINAL STABLE ARCHITECTURE
+-------------------------
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                         AUTHOR INTERFACE LAYER                      │
+│                                                                     │
+│  HTML / JS AUTHORING UI                                             │
+│                                                                     │
+│  Components                                                         │
+│  ├── Canon Browser                                                  │
+│  ├── Scene Generator Panel                                          │
+│  ├── Prose Editor                                                   │
+│  ├── Validation / Drift Warnings                                    │
+│  ├── AI Provider Selector                                           │
+│  ├── Session Status / Resume Banner                                 │
+│  └── Save / Commit Controls                                         │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                       CONTROLLER / UI BRIDGE                        │
+│                                                                     │
+│  ITALUS_PROJECT_RUNNER_MENU_TONE.py or future API controller        │
+│                                                                     │
+│  Responsibilities                                                   │
+│  ├── request assembly                                               │
+│  ├── generation invocation                                          │
+│  ├── save invocation                                                │
+│  ├── controller session state                                       │
+│  └── presentation formatting                                        │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                     ORCHESTRATION LAYER                             │
+│                                                                     │
+│  project_runner.py                                                  │
+│                                                                     │
+│  Responsibilities                                                   │
+│  ├── resolve canon context                                          │
+│  ├── load continuity context                                        │
+│  ├── call Canon Packet Engine                                       │
+│  ├── call Guardian Engine                                           │
+│  ├── call Prompt Builder                                            │
+│  ├── call AI Runner                                                 │
+│  ├── call post_generation_canon_validator                           │
+│  └── return structured generation payload                           │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                      CANON MEMORY ENGINE                            │
+│                                                                     │
+│  Responsibilities                                                   │
+│  ├── track accepted scenes                                          │
+│  ├── track chapter continuity                                       │
+│  ├── track book continuity                                          │
+│  ├── support duplicate discovery memory                             │
+│  ├── support coverage analysis                                      │
+│  └── support resume workflows                                       │
+│                                                                     │
+│  State files                                                        │
+│  ├── data/book_state.json                                           │
+│  ├── data/chapter_continuity_digests.json                           │
+│  ├── data/scenes/*.json                                             │
+│  └── data/backups/                                                  │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                      CANON PACKET ENGINE                            │
+│                                                                     │
+│  Mission                                                            │
+│  └── build and validate the runtime canon packet                    │
+│                                                                     │
+│  Responsibilities                                                   │
+│  ├── select correct global canon layers                             │
+│  ├── select correct book pack                                       │
+│  ├── inject continuity bundle                                       │
+│  ├── inject request/event metadata                                  │
+│  ├── verify packet completeness                                     │
+│  ├── verify packet ordering                                         │
+│  ├── verify packet metadata integrity                               │
+│  └── emit packet manifest + packet metadata                         │
+│                                                                     │
+│  It DOES NOT                                                        │
+│  └── judge whether the requested scene is legal                     │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                        GUARDIAN ENGINE                              │
+│                                                                     │
+│  Mission                                                            │
+│  └── validate requested scene legality BEFORE generation            │
+│                                                                     │
+│  Responsibilities                                                   │
+│  ├── guardian/year/event/book validation                            │
+│  ├── transition legality                                            │
+│  ├── duplicate request blocking                                     │
+│  ├── scene type legality                                            │
+│  ├── chapter-position legality                                      │
+│  ├── resonance request legality                                     │
+│  └── pre-generation continuity conflict checks                      │
+│                                                                     │
+│  It NEVER                                                           │
+│  └── rewrites prose or edits AI output                              │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                         PROMPT BUILDER                              │
+│                                                                     │
+│  Responsibilities                                                   │
+│  ├── assemble AI-facing prompt text                                 │
+│  ├── include canon packet text in required order                    │
+│  ├── include continuity summaries                                   │
+│  └── preserve structured validation sidecar context                 │
+│                                                                     │
+│  Design rule                                                        │
+│  └── validator must NOT depend on raw prompt parsing                │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                           AI RUNNER                                 │
+│                                                                     │
+│  Responsibilities                                                   │
+│  ├── provider routing                                               │
+│  ├── response normalization                                         │
+│  └── normalized error handling                                      │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                 POST-GENERATION CANON VALIDATOR                     │
+│                                                                     │
+│  File role                                                          │
+│  └── post_generation_canon_validator.py                             │
+│                                                                     │
+│  Mission                                                            │
+│  └── validate generated prose AFTER AI output                       │
+│                                                                     │
+│  Responsibilities                                                   │
+│  ├── Italus law violations                                          │
+│  ├── signal tier violations in prose                                │
+│  ├── emotional stage drift in prose                                 │
+│  ├── resonance misuse                                               │
+│  ├── guardian/event drift implied by prose                          │
+│  ├── continuity contradiction                                       │
+│  └── final accept/reject safety net                                 │
+│                                                                     │
+│  It DOES NOT                                                        │
+│  ├── build packets                                                  │
+│  ├── validate packet completeness                                   │
+│  └── validate request legality as its primary role                  │
+└─────────────────────────────────────────────────────────────────────┘
+
+CURRENT GENERATION FLOW
+-----------------------
+
+author request
+      │
+      ▼
+generate_scene_payload()
+      │
+      ▼
+process_request()
+      │
+      ├ resolve canon context
+      ├ load continuity state
+      ├ Canon Packet Engine
+      ├ Guardian Engine
+      ├ coverage analysis
+      ├ Prompt Builder
+      ├ AI Runner
+      └ post_generation_canon_validator
+      ▼
+payload returned to UI
+
+CURRENT ACCEPT / COMMIT FLOW
+----------------------------
+
+generated scene
+      │
+author reviews / edits / accepts
+      │
+      ▼
+save_accepted_scene_payload()
+      │
+      ▼
+save_accepted_scene()
+      │
+      ├ backup canon files
+      ├ ensure chapter exists
+      ├ create scene record
+      ├ update coverage
+      ├ update chapter digest
+      ├ update book state
+      └ update session state
+      ▼
+scene committed to canon
+
+AUTHORITY ORDER FOR VALIDATION
+------------------------------
+Validation should resolve authority in this order:
+
+1. accepted local continuity
+2. explicit request metadata
+3. book pack canon
+4. global canon
+5. heuristics only if a stronger layer is unavailable
+
+DESIGN RULES
+------------
+1. Packet Engine validates the canon package.
+2. Guardian Engine validates the requested scene.
+3. post_generation_canon_validator validates the generated prose.
+4. Book pack canon is one artifact, not a separate compressed canon layer.
+5. Prompt text is for AI consumption; structured validation context is for validator consumption.
+6. As the pipeline matures, validation responsibilities should move upstream where appropriate,
+   but post-generation prose validation remains required.
+
+CURRENT FILE ROLE MAP
+---------------------
+project_runner.py
+    orchestration and payload return
+
+prompt_builder.py
+    AI-facing prompt assembly
+
+post_generation_canon_validator.py
+    prose-level canon validation after generation
+
+canon_bootstrap_book_builder.py
+    book-pack generation
+
+bootstrap_manifests.py
+    manifest/bootstrap setup
+
+registry.py / models.py
+    configuration and data modeling support
+
+FUTURE OPTIONAL LAYER
+---------------------
+Vector Canon Memory may later support:
+- semantic retrieval
+- scene similarity
+- thematic continuity hints
+- callback discovery
+- large-saga scaling
+
+This does not replace the Canon Packet Engine, Guardian Engine, or post-generation validator.

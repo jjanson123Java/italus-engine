@@ -1,0 +1,289 @@
+PHASE 1 — CANON FOUNDATION
+(Concept validation)
+Author
+  │
+  ▼
+Prompt Prototype
+  │
+  ▼
+AI Model
+What existed in Phase 1
+
+Static canon documents:
+
+World Bible
+Timeline Drift Detector
+Historical Interaction Maps
+Generation Engine Rules
+
+Canon was manually injected into prompts.
+
+Purpose of this phase:
+
+prove AI can obey canon rules
+
+test drift detection
+
+test duplicate detection
+
+This phase proved the concept works.
+
+PHASE 2 — CANON MEMORY ENGINE
+
+(Current phase)
+
+This is where the system becomes a real narrative engine.
+
+AUTHOR INTERFACE (CLI / MENU)
+        │
+        ▼
+ITALUS_PROJECT_RUNNER_MENU_TONE.py
+        │
+        ▼
+project_runner.py
+        │
+        ▼
+CANON MEMORY ENGINE
+        │
+        ▼
+prompt_builder.py
+        │
+        ▼
+ai_runner.py
+        │
+        ▼
+AI PROVIDERS
+New systems introduced in Phase 2
+Canon Memory Engine
+
+Persistent memory for narrative continuity.
+
+data/
+ ├ book_state.json
+ ├ chapter_continuity_digests.json
+ ├ scenes/
+ └ backups/
+
+Responsibilities:
+
+track narrative progress
+detect duplicate scenes
+maintain timeline continuity
+resume writing sessions
+store accepted scenes
+Canon Commit Pipeline
+
+When an author accepts a scene:
+
+generated scene
+     │
+author edits
+     │
+     ▼
+save_accepted_scene()
+     │
+     ├ backup canon files
+     ├ create scene record
+     ├ update chapter digest
+     ├ update book state
+     └ update session state
+
+This makes the engine stateful.
+
+AI Provider Abstraction
+ai_runner.py
+     │
+     ├ claude_runner.py
+     ├ openai_runner.py
+     └ novelcraft_runner.py
+
+Purpose:
+
+allow multiple AI providers
+
+normalize responses
+
+switch models without rewriting engine logic
+
+PHASE 3 — AUTHORING INTERFACE
+
+(Next phase)
+
+The CLI controller will be replaced by a web authoring environment.
+
+┌──────────────────────────────┐
+│        HTML AUTHOR UI        │
+│                              │
+│ Canon Browser                │
+│ Scene Generator              │
+│ Prose Editor                 │
+│ Drift Warnings               │
+│ AI Provider Selector         │
+│ Session Resume Banner        │
+│ Save / Commit Controls       │
+└──────────────┬───────────────┘
+               │
+               ▼
+    UI Controller Layer
+
+Controller layer replaces the CLI.
+
+HTML UI
+   │
+   ▼
+Controller API
+   │
+   ▼
+project_runner.py
+
+Engine remains unchanged.
+
+PHASE 4 — CANON PACKET ENGINE
+
+(Continuity safeguard layer)
+
+This phase introduces Canon Packet Assembly.
+
+project_runner
+      │
+      ▼
+Canon Packet Builder
+      │
+      ├ Canon Pack ordering
+      ├ metadata validation
+      ├ packet integrity checks
+      └ runtime memory injection
+      │
+      ▼
+prompt_builder
+
+Canon packet contains:
+
+CORE canon
+GENERATION canon
+BOOK canon
+chapter digest
+book state
+event metadata
+
+Purpose:
+
+guarantee canon ordering
+
+prevent missing canon layers
+
+prevent corrupted prompts
+
+PHASE 5 — VECTOR CANON MEMORY
+
+(Future scaling)
+
+When the saga grows to thousands of scenes, we add semantic memory.
+
+Canon Memory Engine
+       │
+       ▼
+Vector Canon Index
+       │
+       ▼
+Relevant Scene Retrieval
+       │
+       ▼
+Canon Packet Builder
+
+Capabilities added:
+
+semantic scene search
+theme detection
+character interaction history
+plot arc analysis
+automatic continuity hints
+
+This turns Italus into a true narrative intelligence engine.
+
+FULL FINAL ARCHITECTURE
+┌─────────────────────────────────────────┐
+│            AUTHOR INTERFACE             │
+│ HTML / JS Authoring UI                  │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│           CONTROLLER LAYER              │
+│ UI Bridge / Controller API              │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│           ORCHESTRATION LAYER           │
+│ project_runner.py                       │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│        CANON MEMORY ENGINE              │
+│                                         │
+│ canon manifests                         │
+│ drift detection                         │
+│ coverage analysis                       │
+│ narrative memory                        │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│         CANON PACKET BUILDER            │
+│ canon pack ordering                     │
+│ metadata validation                     │
+│ runtime memory injection                │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│           PROMPT BUILDER                │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│            AI RUNNER                    │
+│ provider routing                        │
+└──────────────┬──────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────────┐
+│            AI PROVIDERS                 │
+│ Claude / OpenAI / NovelCraft / Local    │
+└─────────────────────────────────────────┘
+Why this roadmap diagram is important
+
+Future OpenAI sessions will instantly understand:
+
+what layer they are modifying
+
+what phase the project is in
+
+what components exist already
+
+where new systems belong
+
+Without this, AI sessions tend to:
+
+rewrite architecture
+
+forget continuity systems
+
+break module separation
+
+Recommendation
+
+Save this architecture as:
+
+ITALUS_ENGINE_ARCHITECTURE_ROADMAP.txt
+
+in the dev_state folder with your checkpoint files.
+
+Example:
+
+ITALUS_MASTER_FOLDER/
+   dev_state/
+       ENGINE_DEV_CHECKPOINT_2026-03-08.txt
+       ITALUS_ENGINE_ARCHITECTURE_ROADMAP.txt

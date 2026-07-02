@@ -1,0 +1,50 @@
+{
+  "saga_id": "ITALUS_SAGA",
+  "generated_at": "2026-03-08T20:41:33.673212",
+  "events": {
+    "Galileo tried by the Inquisition": {
+      "scene_count": 3,
+      "locations_used": [
+        "Niccolini garden, Rome",
+        "Umbrian foothills",
+        "Via Flaminia"
+      ],
+      "povs_used": [
+        "Domenico"
+      ],
+      "scene_types_used": [
+        "continuation",
+        "private conversation"
+      ],
+      "recommended_scene_types": [
+        "aftermath",
+        "lead-up",
+        "street reaction",
+        "travel reflection",
+        "institutional response",
+        "trial observer"
+      ]
+    },
+    "Test Event": {
+      "scene_count": 15,
+      "locations_used": [
+        "Test Location"
+      ],
+      "povs_used": [
+        "third_person"
+      ],
+      "scene_types_used": [
+        "dialogue"
+      ],
+      "recommended_scene_types": [
+        "aftermath",
+        "lead-up",
+        "private conversation",
+        "street reaction",
+        "travel reflection",
+        "institutional response",
+        "trial observer"
+      ]
+    }
+  }
+}

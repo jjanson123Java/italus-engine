@@ -1,0 +1,201 @@
+
+ITALUS ENGINE — FULL DEVELOPMENT ROADMAP ARCHITECTURE (v2 with Guardian Engine)
+Generated: 2026-03-10T01:38:07.861310
+
+PHASE 1 — CANON FOUNDATION
+Purpose: Validate canon-driven prompting.
+
+Components
+- World Bible
+- Timeline Drift Detector
+- Historical Interaction Maps
+- Generation Engine Rules
+
+Flow
+Author → Prompt Prototype → AI Model
+
+Outcome
+AI generation proved capable of respecting canon rules.
+
+------------------------------------------------------------
+
+PHASE 2 — CANON MEMORY ENGINE (Current Phase)
+
+Architecture
+
+Author CLI / Menu
+      │
+      ▼
+ITALUS_PROJECT_RUNNER_MENU_TONE.py
+      │
+      ▼
+project_runner.py
+      │
+      ▼
+CANON MEMORY ENGINE
+      │
+      ▼
+prompt_builder.py
+      │
+      ▼
+ai_runner.py
+      │
+      ▼
+AI PROVIDERS
+
+Persistent Canon Memory
+
+data/
+ ├ book_state.json
+ ├ chapter_continuity_digests.json
+ ├ scenes/
+ └ backups/
+
+Responsibilities
+- track narrative progress
+- detect duplicate scenes
+- maintain timeline continuity
+- resume writing sessions
+- store accepted scenes
+
+------------------------------------------------------------
+
+PHASE 3 — AUTHORING INTERFACE
+
+CLI replaced by web UI.
+
+HTML / JS Authoring UI
+
+Features
+- Canon Browser
+- Scene Generator
+- Prose Editor
+- Drift Warning Popups
+- AI Provider Selector
+- Session Resume Banner
+- Save / Commit Controls
+
+Flow
+
+HTML UI
+   │
+   ▼
+Controller API
+   │
+   ▼
+project_runner.py
+
+------------------------------------------------------------
+
+PHASE 4 — CANON PACKET ENGINE
+
+Introduces Canon Packet Assembly.
+
+project_runner
+      │
+      ▼
+Canon Packet Builder
+      │
+      ├ Canon Pack ordering
+      ├ metadata validation
+      ├ packet integrity checks
+      └ runtime memory injection
+      │
+      ▼
+prompt_builder
+
+Canon Packet Contents
+
+CORE canon
+GENERATION canon
+BOOK canon
+chapter digest
+book state
+event metadata
+
+Purpose
+- guarantee canon ordering
+- prevent missing canon layers
+- prevent corrupted prompts
+
+------------------------------------------------------------
+
+PHASE 5 — GUARDIAN ENGINE (Continuity Enforcement Layer)
+
+The Guardian Engine validates narrative integrity before AI generation.
+
+Architecture
+
+Canon Packet Builder
+      │
+      ▼
+Guardian Engine
+      │
+      ├ timeline validation
+      ├ canon conflict detection
+      ├ duplicate scene detection
+      ├ character consistency validation
+      └ narrative drift warnings
+      │
+      ▼
+Prompt Builder
+
+Design Rule
+
+The Guardian Engine NEVER modifies prose.
+It only warns the author or blocks invalid scene requests.
+
+------------------------------------------------------------
+
+PHASE 6 — VECTOR CANON MEMORY (Future Scaling)
+
+When sagas contain thousands of scenes.
+
+Canon Memory Engine
+       │
+       ▼
+Vector Canon Index
+       │
+       ▼
+Relevant Scene Retrieval
+       │
+       ▼
+Canon Packet Builder
+
+Capabilities
+
+- semantic scene search
+- theme detection
+- character interaction history
+- plot arc analysis
+- automatic continuity hints
+
+------------------------------------------------------------
+
+FINAL SYSTEM ARCHITECTURE
+
+Author Interface (HTML UI)
+        │
+        ▼
+Controller Layer
+        │
+        ▼
+Orchestration Layer (project_runner.py)
+        │
+        ▼
+Canon Memory Engine
+        │
+        ▼
+Canon Packet Builder
+        │
+        ▼
+Guardian Engine
+        │
+        ▼
+Prompt Builder
+        │
+        ▼
+AI Runner
+        │
+        ▼
+AI Providers

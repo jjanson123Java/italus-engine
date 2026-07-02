@@ -1,0 +1,38 @@
+ITALUS ENGINE — ARCHITECTURE CONTEXT PROMPT
+
+This system is a canon‑bounded narrative generation engine.
+
+The architecture separates concerns into independent validation layers.
+
+LAYER 1
+Canon Packet Engine
+Assembles canonical context for generation.
+
+LAYER 2
+Guardian Engine
+Validates the legality of the requested scene.
+
+LAYER 3
+Prompt Builder
+Transforms canonical context into AI prompts.
+
+LAYER 4
+AI Runner
+Executes model inference.
+
+LAYER 5
+Post‑Generation Validator
+Ensures the generated prose obeys canon rules.
+
+LAYER 6
+Commit Pipeline
+Stores accepted scenes as local continuity.
+
+Authority Order
+
+1. accepted continuity
+2. request metadata
+3. book canon pack
+4. global canon
+
+The orchestration layer is project_runner.py.

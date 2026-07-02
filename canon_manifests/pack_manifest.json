@@ -1,0 +1,17 @@
+{
+  "core_pack": "canon_packs/ITALUS_KNOWLEDGE_PACK_CORE.txt",
+  "generation_pack": "canon_packs/ITALUS_KNOWLEDGE_PACK_GENERATION.txt",
+  "book_packs": {
+    "BOOK_01": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_01.txt",
+    "BOOK_02": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_02.txt",
+    "BOOK_03": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_03.txt",
+    "BOOK_04": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_04.txt",
+    "BOOK_05": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_05.txt",
+    "BOOK_06": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_06.txt",
+    "BOOK_07": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_07.txt",
+    "BOOK_08": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_08.txt",
+    "BOOK_09": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_09.txt",
+    "BOOK_10": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_10.txt",
+    "BOOK_11": "canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_11.txt"
+  }
+}

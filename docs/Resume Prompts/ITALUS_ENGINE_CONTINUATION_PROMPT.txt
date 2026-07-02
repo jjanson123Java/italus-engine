@@ -1,0 +1,21 @@
+ITALUS ENGINE — LONG SESSION CONTINUATION PROMPT
+
+Context:
+The Italus engine conversation became too long.
+
+Resume development using the previously defined architecture and runtime contracts.
+
+Current focus:
+
+• pipeline reliability
+• validator integration
+• structured response envelopes
+• commit pipeline correctness
+
+When continuing development:
+
+1. analyze current code
+2. determine missing runtime contract fields
+3. implement minimal patches
+4. validate pipeline flow
+5. avoid rewriting existing systems

@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITALUS Book Engine – Frontend Mockup</title>
+  <style>
+    :root {
+      --bg: #0d1520;
+      --panel: rgba(18, 28, 40, 0.88);
+      --panel-2: rgba(24, 36, 51, 0.95);
+      --line: rgba(145, 175, 210, 0.18);
+      --text: #e7edf7;
+      --muted: #9aa8ba;
+      --accent: #4aa3ff;
+      --accent-2: #f0a96b;
+      --good: #59d38a;
+      --warn: #ffcc66;
+      --danger: #ff7b7b;
+      --shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --font-ui: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      --font-prose: Georgia, Cambria, "Times New Roman", serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font-ui);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 80%, rgba(74,163,255,0.18), transparent 22%),
+        radial-gradient(circle at 78% 10%, rgba(74,163,255,0.14), transparent 18%),
+        linear-gradient(180deg, #162434 0%, #0c141e 100%);
+      overflow: hidden;
+    }
+
+    .window {
+      width: min(1500px, calc(100vw - 28px));
+      height: min(900px, calc(100vh - 28px));
+      margin: 14px auto;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-rows: 54px 1fr;
+      gap: 12px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 320px 1fr 240px;
+      align-items: center;
+      gap: 14px;
+      padding: 0 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #f2f5fa;
+    }
+
+    .brand-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, var(--accent-2), #d47741);
+      display: grid;
+      place-items: center;
+      color: #101821;
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow: 0 0 18px rgba(240, 169, 107, 0.35);
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      height: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+    }
+
+    .search input {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .window-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 24px;
+      user-select: none;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 260px 1fr 390px;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .panel {
+      min-height: 0;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 16px 18px 10px;
+      font-size: 13px;
+      color: #c9d3df;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .nav-panel {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .nav-groups {
+      padding: 10px;
+      overflow: auto;
+    }
+
+    .nav-section-title {
+      padding: 12px 10px 6px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 12px;
+      margin: 3px 0;
+      border-radius: 12px;
+      color: #d7dfeb;
+      cursor: pointer;
+      transition: 0.18s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-item:hover { background: rgba(255,255,255,0.04); }
+    .nav-item.active {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(240,169,107,0.18);
+      box-shadow: inset 3px 0 0 var(--accent-2);
+    }
+
+    .nav-icon {
+      width: 18px;
+      text-align: center;
+      color: var(--accent-2);
+      opacity: 0.95;
+    }
+
+    .nav-footer {
+      padding: 14px 12px 16px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: grid;
+      gap: 10px;
+    }
+
+    .status-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: #c8d4e3;
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--good);
+      box-shadow: 0 0 14px rgba(89,211,138,0.55);
+      flex: 0 0 auto;
+    }
+
+    .reader-panel {
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      min-height: 0;
+      background: linear-gradient(180deg, rgba(20,29,41,0.92), rgba(15,22,32,0.98));
+    }
+
+    .reader-toolbar-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 14px 18px 0;
+    }
+
+    .reader-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .reader-meta {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 28px 0;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .reader-body {
+      overflow: auto;
+      padding: 10px 48px 28px;
+      font-family: var(--font-prose);
+      line-height: 1.8;
+      color: #eadbc8;
+    }
+	
+	.editor-body {
+    overflow-y: auto;
+    padding: 10px 48px 28px;
+    font-family: var(--font-prose);
+    line-height: 1.8;
+    color: #eadbc8;
+}
+
+    .reader-body h1, .reader-body h2 {
+      color: #f0d7b1;
+      margin: 0 0 18px;
+      font-weight: 700;
+    }
+
+    .reader-body h1 { font-size: 16px; text-transform: uppercase; letter-spacing: 0.12em; color: #e1c9a5; }
+    .reader-body h2 { font-size: 22px; }
+    .reader-body p { margin: 0 0 18px; font-size: 18px; }
+    .highlight {
+      background: rgba(240,169,107,0.22);
+      border-radius: 4px;
+      padding: 2px 4px;
+      position: relative;
+    }
+    .inline-note {
+      display: inline-grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      margin-left: 6px;
+      border-radius: 7px;
+      background: rgba(240,169,107,0.88);
+      color: #1a222d;
+      font-size: 12px;
+      font-family: var(--font-ui);
+      vertical-align: middle;
+    }
+
+    .reader-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 24px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .assistant-panel {
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      background: linear-gradient(180deg, rgba(0,20,42,0.96), rgba(0,9,24,0.98));
+    }
+
+    .assistant-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 16px 18px 10px;
+      border-bottom: 1px solid rgba(38, 112, 183, 0.18);
+    }
+
+    .assistant-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .assistant-sub {
+      color: var(--good);
+      font-size: 12px;
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .assistant-stat {
+      text-align: right;
+      font-size: 12px;
+      color: #b1c1d8;
+      line-height: 1.6;
+    }
+
+    .assistant-sessions {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px 8px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(38, 112, 183, 0.12);
+    }
+
+    .pill {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid rgba(74,163,255,0.25);
+      color: #d8e8fb;
+      background: rgba(74,163,255,0.08);
+    }
+
+    .terminal {
+      overflow: auto;
+      padding: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #9ce3ff;
+      white-space: pre-wrap;
+    }
+
+    .term-line { margin-bottom: 12px; }
+    .term-cmd { color: #1ad1ff; }
+    .term-agent { color: #ffa467; }
+    .term-ok { color: #8be4a5; }
+    .term-note { color: #c8d7ea; }
+    .term-warn { color: #ffd37e; }
+
+    .assistant-input-wrap {
+      padding: 14px;
+      border-top: 1px solid rgba(38, 112, 183, 0.16);
+      display: grid;
+      gap: 10px;
+    }
+
+    .context-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .context-badge {
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.035);
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .assistant-input {
+      display: grid;
+      grid-template-columns: 1fr 50px;
+      gap: 10px;
+    }
+
+    .assistant-input input {
+      width: 100%;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(74,163,255,0.35);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      padding: 0 14px;
+      outline: none;
+    }
+
+    .assistant-input button,
+    .primary-btn,
+    .secondary-btn,
+    .danger-btn {
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: 0.18s ease;
+    }
+
+    .assistant-input button {
+      background: rgba(26, 209, 255, 0.14);
+      border: 1px solid rgba(26,209,255,0.35);
+      color: #9ce3ff;
+      font-size: 18px;
+    }
+
+    .assistant-input button:hover,
+    .primary-btn:hover,
+    .secondary-btn:hover,
+    .danger-btn:hover { transform: translateY(-1px); }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 10, 16, 0.54);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 24px;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      width: min(1080px, 100%);
+      height: min(760px, calc(100vh - 40px));
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(17,25,37,0.98), rgba(12,18,28,0.99));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .close-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .modal-body {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 0;
+    }
+
+    .wizard-sidebar {
+      border-right: 1px solid rgba(255,255,255,0.05);
+      padding: 18px 14px;
+      background: rgba(255,255,255,0.02);
+      overflow: auto;
+    }
+
+    .wizard-step {
+      padding: 12px 14px;
+      border-radius: 14px;
+      margin-bottom: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      color: #d7e2ee;
+    }
+
+    .wizard-step.active {
+      background: rgba(74,163,255,0.08);
+      border-color: rgba(74,163,255,0.2);
+    }
+
+    .wizard-step small { display: block; color: var(--muted); margin-top: 4px; }
+
+    .wizard-content {
+      padding: 20px;
+      overflow: auto;
+    }
+
+    .view { display: none; }
+    .view.active { display: block; }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer;
+    }
+
+    .list-item.active {
+      border-color: rgba(74,163,255,0.24);
+      background: rgba(74,163,255,0.08);
+    }
+
+    .list-item-title { font-weight: 600; }
+    .list-item-meta { color: var(--muted); font-size: 12px; margin-top: 4px; }
+
+    .tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(240,169,107,0.12);
+      color: #ffcc9d;
+      border: 1px solid rgba(240,169,107,0.18);
+      white-space: nowrap;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .field { display: grid; gap: 8px; }
+    .field label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      padding: 11px 12px;
+      outline: none;
+      font: inherit;
+    }
+
+    .field textarea { min-height: 100px; resize: vertical; }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, rgba(74,163,255,0.28), rgba(74,163,255,0.12));
+      border: 1px solid rgba(74,163,255,0.35);
+      color: #eef6ff;
+      padding: 11px 16px;
+    }
+
+    .secondary-btn {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      padding: 11px 16px;
+    }
+
+    .danger-btn {
+      background: rgba(255,123,123,0.1);
+      border: 1px solid rgba(255,123,123,0.2);
+      color: #ffd0d0;
+      padding: 11px 16px;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .muted { color: var(--muted); }
+
+    .project-tree {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      color: #cfe0f6;
+    }
+
+    .tree-line { padding-left: 8px; }
+
+    @media (max-width: 1250px) {
+      .content { grid-template-columns: 220px 1fr 340px; }
+      .reader-body { padding: 10px 30px 24px; }
+    }
+
+    @media (max-width: 980px) {
+      .content { grid-template-columns: 1fr; }
+      .nav-panel, .assistant-panel { display: none; }
+      .modal-body { grid-template-columns: 1fr; }
+      .wizard-sidebar { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+      .form-grid, .grid-two { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">I</div>
+        <div>ITALUS BOOK ENGINE</div>
+      </div>
+      <div class="search">
+        <span>🔎</span>
+        <input type="text" placeholder="Search books, chapters, events, notes, backups..." />
+      </div>
+      <div class="window-actions"><span>−</span><span>□</span><span>×</span></div>
+    </div>
+
+    <div class="content">
+      <aside class="panel nav-panel">
+        <div>
+          <div class="panel-header">Navigation</div>
+          <div class="nav-groups">
+            <div class="nav-section-title">Project</div>
+            <div class="nav-item active" data-open="projectModal"><div class="nav-icon">📚</div><div>Library</div></div>
+
+            <div class="nav-section-title">Writing</div>
+            <div class="nav-item" data-open="authoringModal"><div class="nav-icon">📘</div><div>Books</div></div>
+            <div class="nav-item" data-open="authoringModal"><div class="nav-icon">🧾</div><div>Chapters</div></div>
+            <div class="nav-item" data-open="authoringModal"><div class="nav-icon">🧭</div><div>Events</div></div>
+            <div class="nav-item" data-open="authoringModal"><div class="nav-icon">✍️</div><div>Scenes</div></div>
+
+            <div class="nav-section-title">Workspace</div>
+            <div class="nav-item"><div class="nav-icon">📖</div><div>Reader</div></div>
+            <div class="nav-item"><div class="nav-icon">🤖</div><div>AI Assistant</div></div>
+            <div class="nav-item" data-open="backupsModal"><div class="nav-icon">🕘</div><div>Backups / History</div></div>
+
+            <div class="nav-section-title">Canon</div>
+            <div class="nav-item" data-open="canonModal"><div class="nav-icon">📂</div><div>Canon Packs</div></div>
+            <div class="nav-item" data-open="settingsModal"><div class="nav-icon">⚙️</div><div>Settings</div></div>
+          </div>
+        </div>
+        <div></div>
+        <div class="nav-footer">
+          <div class="status-card"><span class="dot"></span><span>AI Engine: Active</span></div>
+          <div class="status-card"><span>Project:</span><strong>ITALUS_MASTER_FOLDER</strong></div>
+        </div>
+      </aside>
+
+      <main class="panel reader-panel">
+        <div class="panel-header">Reader</div>
+        <div class="reader-toolbar-wrap">
+          <div class="reader-toolbar">
+            <span>−</span>
+            <span>Aa</span>
+            <span>+</span>
+            <span>|</span>
+            <strong style="color:#f1d9b6; text-decoration: underline;">Serif</strong>
+            <span>Sans-serif</span>
+            <span>|</span>
+            <span>🔖 Bookmarks</span>
+          </div>
+        </div>
+        <div class="reader-meta">
+          <div>The Silent Echo</div>
+          <div>23</div>
+        </div>
+<div class="editor-body" contenteditable="true">
+
+<h1>THE SILENT ECHO</h1>
+<h2>Chapter 3: Whispers</h2>
+
+<p>
+The bells of Florence had not yet begun their morning argument with the sky, but the city was already awake in quieter ways. Luca stood beneath the stone archway of the gallery courtyard, listening to the thin wind move through the columns like a breath passing through the ribs of some sleeping animal. There were moments when the city felt ancient enough to remember things the living had forgotten, and tonight was one of those moments.
+</p>
+
+<p>
+He traced the worn grooves of the marble wall with his fingertips, feeling the shallow scars left by centuries of passing hands. Pilgrims, scholars, thieves, and kings had all touched this stone. Some of them had come searching for answers. Others had come hoping to hide from them. Luca was not certain which kind of man he had become.
+</p>
+
+<p>
+Above him, a lantern swung slowly in the wind. Its chain creaked with a sound that carried farther than it should have. The courtyard swallowed most noises, but that faint metallic whisper seemed to echo between the pillars and return with a slightly different voice each time. It was the kind of sound that made a man wonder if he was being listened to.
+</p>
+
+<p>
+A page of notes rustled in Luca's coat pocket. He had written them hours ago in the dim light of a tavern table, scribbling fragments of ideas before they dissolved into sleep and wine. Now the ink looked different in the cold lantern glow. Words that had once seemed harmless carried a weight he had not noticed before.
+</p>
+
+<p>
+<span class="highlight">The pattern was repeating again.</span><span class="inline-note">✎</span>
+That was the truth he had tried to avoid. Every archive record, every marginal note, every carved symbol in forgotten halls had begun to point toward the same quiet conclusion. The guardians had not been protecting the world from chaos. They had been protecting the world from knowledge.
+</p>
+
+<p>
+Footsteps echoed somewhere beyond the courtyard wall. Luca froze. The rhythm was wrong for a casual passerby. Too measured. Too careful. Whoever approached was not merely walking through the street — they were listening.
+</p>
+
+<p>
+The lantern above him shifted again, throwing long ribs of shadow across the courtyard stones. Luca moved into the darker edge of the archway and waited. Years ago he might have rushed to confront whoever approached. Experience had taught him that patience was the sharper blade.
+</p>
+
+<p>
+Another step sounded. Then another. The echo carried through the stone passage like a coded message repeating itself through a network of old wires. Luca held his breath and counted the seconds between them.
+</p>
+
+<p>
+Three seconds. Always three seconds.
+</p>
+
+<p>
+A deliberate rhythm.
+</p>
+
+<p>
+The same rhythm described in the records of the first council meeting nearly six hundred years ago.
+</p>
+
+<p>
+Luca felt the small notebook in his pocket again. The page he needed was already folded open from reading it too many times. The old archivist who had written those words had ended the entry with a warning so brief it almost seemed like a mistake.
+</p>
+
+<p>
+<i>If you hear the third step, the watchers already know you are there.</i>
+</p>
+
+<p>
+The wind died. The lantern stopped moving. The courtyard fell silent in a way that made even the city feel distant. Somewhere beyond the archway, the footsteps stopped.
+</p>
+
+<p>
+Luca waited.
+</p>
+
+<p>
+Seconds stretched.
+</p>
+
+<p>
+Then a voice spoke from the darkness beyond the stone passage.
+</p>
+
+<p>
+“Guardian Luca,” it said quietly, as if the night itself had decided to speak.
+</p>
+
+<p>
+“We have been expecting you.”
+</p>
+
+<p>
+Luca closed the notebook and slipped it back into his coat. Whatever answers waited beyond the archway, they were no longer hiding.
+</p>
+
+<p>
+He stepped forward into the lantern light.
+</p>
+
+<p>
+And the echo finally spoke back.
+</p>
+
+</div>
+        <div class="reader-footer">
+          <div>View: Chapter Draft • Mode: Reader</div>
+          <div>Page 32</div>
+        </div>
+      </main>
+
+      <aside class="panel assistant-panel">
+        <div class="assistant-top">
+          <div>
+            <div class="assistant-title">AI Chat Terminal</div>
+            <div class="assistant-sub">RUNNING (v2.1)</div>
+          </div>
+          <div class="assistant-stat">
+            <div>EXECUTABLE STATUS</div>
+            <div>RESPONSE TIME: 45ms</div>
+          </div>
+        </div>
+        <div class="assistant-sessions">
+          <div class="pill">Prompt Summary</div>
+          <div class="pill">Continuity Warnings</div>
+          <div class="pill">Agent Actions</div>
+        </div>
+        <div class="terminal">
+          <div class="term-line"><span class="term-cmd">&gt; /summarize</span><br><span class="term-agent">CLAUDE:</span> <span class="term-note">This panel can show the live Claude response stream, prompt summary, and continuity notes after backend integration is active.</span></div>
+          <div class="term-line"><span class="term-cmd">&gt; /analyze style</span><br><span class="term-ok">LOCAL EXE:</span> <span class="term-note">The frontend can pass the current chapter or selected passage to style-analysis and revision agents.</span></div>
+          <div class="term-line"><span class="term-cmd">&gt; /continuity check</span><br><span class="term-warn">LOCAL EXE:</span> <span class="term-note">Later this area can display continuity conflicts against book_state, chapter digests, and event canon.</span></div>
+          <div class="term-line"><span class="term-cmd">&gt; /search definitions</span><br><span class="term-ok">LOCAL EXE:</span> <span class="term-note">Search tools and helper agents can be presented here without exposing raw prompts to the user by default.</span></div>
+          <div class="term-line"><span class="term-cmd">&gt; /ask local exe to analyze...</span><br><span style="color:#1ad1ff">▌</span></div>
+        </div>
+        <div class="assistant-input-wrap">
+          <div class="context-bar">
+            <div class="context-badge">Context (Current Page)</div>
+          </div>
+          <div class="assistant-input">
+            <input type="text" placeholder="/ ask local exe to analyze this chapter..." />
+            <button title="Send">➤</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Project Modal -->
+  <div class="modal-backdrop open" id="projectModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Project Manager</div>
+          <div class="muted">Start a new project, open an existing project, or continue recent work.</div>
+        </div>
+        <button class="close-btn" data-close="projectModal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="wizard-sidebar">
+          <div class="wizard-step active" data-target="projectStartView">Project Start<small>New Project • Open Existing • Recent Projects</small></div>
+          <div class="wizard-step" data-target="authoringView">Authoring Flow<small>Book • Chapter • Event • Scene Type</small></div>
+          <div class="wizard-step" data-target="canonView">Canon Manager<small>CORE • GENERATION • Book Packs</small></div>
+          <div class="wizard-step" data-target="backupView">Backups<small>Snapshots • Restore • Retention</small></div>
+        </div>
+        <div class="wizard-content">
+          <div class="view active" id="projectStartView">
+            <div class="grid-two">
+              <div class="card">
+                <h3>New Project</h3>
+                <div class="muted">Create a new local-first project folder with canon packs, manifests, data, and backups.</div>
+                <div class="form-grid">
+                  <div class="field"><label>Project Name</label><input value="ITALUS_MASTER_FOLDER" /></div>
+                  <div class="field"><label>Location</label><input value="C:\Users\Author\Documents\Book Projects" /></div>
+                </div>
+                <div class="button-row">
+                  <button class="primary-btn">Create New Project</button>
+                  <button class="secondary-btn" data-open="authoringModal">Open Authoring Workflow</button>
+                </div>
+              </div>
+              <div class="card">
+                <h3>Open Existing Project</h3>
+                <div class="muted">Select a project folder that already contains canon packs, manifests, and runtime data.</div>
+                <div class="button-row">
+                  <button class="primary-btn">Browse for Project...</button>
+                </div>
+                <div class="project-tree">
+                  <div class="tree-line">ITALUS_MASTER_FOLDER/</div>
+                  <div class="tree-line">├─ canon_packs/</div>
+                  <div class="tree-line">├─ canon_manifests/</div>
+                  <div class="tree-line">├─ data/</div>
+                  <div class="tree-line">├─ data_backups/</div>
+                  <div class="tree-line">├─ manuscripts/</div>
+                  <div class="tree-line">└─ project_config.json</div>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="margin-top:14px;">
+              <h3>Recent Projects</h3>
+              <div class="list">
+                <div class="list-item">
+                  <div>
+                    <div class="list-item-title">ITALUS_MASTER_FOLDER</div>
+                    <div class="list-item-meta">Last opened: Today 4:15 PM • Local path: C:\Users\Author\Documents\Italus novel</div>
+                  </div>
+                  <span class="tag">Active</span>
+                </div>
+                <div class="list-item">
+                  <div>
+                    <div class="list-item-title">Experimental_Saga_Project</div>
+                    <div class="list-item-meta">Last opened: Yesterday • Frontend-only mock project</div>
+                  </div>
+                  <span class="tag">Recent</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="view" id="authoringView">
+            <div class="card">
+              <h3>Manifest-Driven Authoring Flow</h3>
+              <div class="muted">Dummy navigation is included so you can preview how the frontend will feel before the backend hooks are active.</div>
+              <div class="grid-two" style="margin-top:14px;">
+                <div class="card">
+                  <h3>Books</h3>
+                  <div class="list" id="bookList"></div>
+                </div>
+                <div class="card">
+                  <h3>Chapters</h3>
+                  <div class="list" id="chapterList"></div>
+                </div>
+              </div>
+              <div class="grid-two" style="margin-top:14px;">
+                <div class="card">
+                  <h3>Events</h3>
+                  <div class="list" id="eventList"></div>
+                </div>
+                <div class="card">
+                  <h3>Scene Types</h3>
+                  <div class="list" id="sceneTypeList"></div>
+                </div>
+              </div>
+              <div class="card" style="margin-top:14px;">
+                <h3>Generated Request Preview</h3>
+                <div class="form-grid">
+                  <div class="field"><label>Book ID</label><input id="previewBook" value="BOOK_01" /></div>
+                  <div class="field"><label>Chapter ID</label><input id="previewChapter" value="BOOK_01_CH_01" /></div>
+                  <div class="field"><label>Event ID</label><input id="previewEvent" value="001" /></div>
+                  <div class="field"><label>Scene Type</label><input id="previewSceneType" value="prologue" /></div>
+                  <div class="field"><label>Guardian</label><input id="previewGuardian" value="Luca" /></div>
+                  <div class="field"><label>Location</label><input id="previewLocation" value="Florence" /></div>
+                </div>
+                <div class="button-row">
+                  <button class="primary-btn">Generate Scene (Dummy)</button>
+                  <button class="secondary-btn">Send to project_runner (Hook later)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="view" id="canonView">
+            <div class="grid-two">
+              <div class="card">
+                <h3>CORE Canon</h3>
+                <div class="muted">Upload or replace the saga-level canon law file.</div>
+                <div class="button-row">
+                  <button class="primary-btn">Upload CORE Canon</button>
+                  <button class="secondary-btn">Preview</button>
+                </div>
+              </div>
+              <div class="card">
+                <h3>GENERATION Canon</h3>
+                <div class="muted">Upload or replace the generation rules and writing behavior file.</div>
+                <div class="button-row">
+                  <button class="primary-btn">Upload GENERATION Canon</button>
+                  <button class="secondary-btn">Preview</button>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="margin-top:14px;">
+              <h3>Book Canon Packs</h3>
+              <div class="list">
+                <div class="list-item"><div><div class="list-item-title">BOOK_01</div><div class="list-item-meta">canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_01.txt</div></div><span class="tag">Empty</span></div>
+                <div class="list-item"><div><div class="list-item-title">BOOK_02</div><div class="list-item-meta">canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_02.txt</div></div><span class="tag">Empty</span></div>
+                <div class="list-item"><div><div class="list-item-title">BOOK_03</div><div class="list-item-meta">canon_packs/ITALUS_KNOWLEDGE_PACK_BOOK_03.txt</div></div><span class="tag">Empty</span></div>
+              </div>
+              <div class="button-row">
+                <button class="primary-btn">Bootstrap Book Packs</button>
+                <button class="secondary-btn">Open Pack Manifest</button>
+                <button class="secondary-btn">Reload Manifests</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="view" id="backupView">
+            <div class="card">
+              <h3>Backups / History</h3>
+              <div class="muted">Human-readable backup labels let authors correlate snapshots to book, chapter, and event.</div>
+              <div class="list" style="margin-top:14px;">
+                <div class="list-item">
+                  <div>
+                    <div class="list-item-title">20260308_163249_BOOK_01_BOOK_01_CH_01_001_before_scene_save</div>
+                    <div class="list-item-meta">BOOK_01 • BOOK_01_CH_01 • Event 001 • before_scene_save</div>
+                  </div>
+                  <div class="button-row" style="margin:0;">
+                    <button class="secondary-btn">View Files</button>
+                    <button class="primary-btn">Restore</button>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <div>
+                    <div class="list-item-title">20260308_162002_BOOK_01_BOOK_01_CH_01_000_before_scene_save</div>
+                    <div class="list-item-meta">BOOK_01 • BOOK_01_CH_01 • prior save point</div>
+                  </div>
+                  <div class="button-row" style="margin:0;">
+                    <button class="secondary-btn">View Files</button>
+                    <button class="primary-btn">Restore</button>
+                  </div>
+                </div>
+              </div>
+              <div class="button-row">
+                <button class="secondary-btn">Refresh Backup Index</button>
+                <button class="danger-btn">Prune Old Backups</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="muted">Frontend-only framework preview. Backend hooks are placeholders for now.</div>
+        <div class="button-row" style="margin:0;">
+          <button class="secondary-btn" data-close="projectModal">Close</button>
+          <button class="primary-btn" data-target-open="authoringView">Go to Authoring Flow</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="authoringModal"></div>
+  <div class="modal-backdrop" id="canonModal"></div>
+  <div class="modal-backdrop" id="backupsModal"></div>
+  <div class="modal-backdrop" id="settingsModal"></div>
+
+  <script>
+    const demoData = {
+      books: [
+        { id: 'BOOK_01', title: 'Book One' },
+        { id: 'BOOK_02', title: 'Book Two' },
+        { id: 'BOOK_03', title: 'Book Three' }
+      ],
+      chapters: {
+        BOOK_01: [
+          { id: 'BOOK_01_CH_01', title: 'Chapter 1' },
+          { id: 'BOOK_01_CH_02', title: 'Chapter 2' },
+          { id: 'BOOK_01_CH_03', title: 'Chapter 3' }
+        ],
+        BOOK_02: [
+          { id: 'BOOK_02_CH_01', title: 'Chapter 1' },
+          { id: 'BOOK_02_CH_02', title: 'Chapter 2' }
+        ],
+        BOOK_03: [
+          { id: 'BOOK_03_CH_01', title: 'Chapter 1' }
+        ]
+      },
+      events: {
+        BOOK_01_CH_01: [
+          { id: '001', name: 'The Silent Echo', guardian: 'Luca', location: 'Florence' },
+          { id: '002', name: 'The First Warning', guardian: 'Luca', location: 'Arezzo' }
+        ],
+        BOOK_01_CH_02: [
+          { id: '003', name: 'A Voice in Stone', guardian: 'Elia', location: 'Siena' }
+        ],
+        BOOK_01_CH_03: [
+          { id: '004', name: 'Whispers in the Gallery', guardian: 'Luca', location: 'Florence' }
+        ],
+        BOOK_02_CH_01: [
+          { id: '021', name: 'The Northern Crossing', guardian: 'Amara', location: 'Milan' }
+        ],
+        BOOK_02_CH_02: [
+          { id: '022', name: 'Council at Dusk', guardian: 'Amara', location: 'Turin' }
+        ],
+        BOOK_03_CH_01: [
+          { id: '031', name: 'Ashes of the Forum', guardian: 'Pietro', location: 'Rome' }
+        ]
+      },
+      sceneTypes: ['prologue', 'dialogue', 'lead-up', 'travel reflection', 'aftermath']
+    };
+
+    const state = {
+      bookId: 'BOOK_01',
+      chapterId: 'BOOK_01_CH_01',
+      eventId: '001',
+      sceneType: 'prologue',
+      guardian: 'Luca',
+      location: 'Florence'
+    };
+
+    const byId = (id) => document.getElementById(id);
+
+    function renderBooks() {
+      const wrap = byId('bookList');
+      wrap.innerHTML = '';
+      demoData.books.forEach((book, idx) => {
+        const div = document.createElement('div');
+        div.className = 'list-item' + (book.id === state.bookId ? ' active' : '');
+        div.innerHTML = `<div><div class="list-item-title">${book.title}</div><div class="list-item-meta">${book.id}</div></div><span class="tag">Book ${idx + 1}</span>`;
+        div.onclick = () => {
+          state.bookId = book.id;
+          const firstChapter = demoData.chapters[book.id]?.[0];
+          state.chapterId = firstChapter?.id || '';
+          const firstEvent = demoData.events[state.chapterId]?.[0];
+          state.eventId = firstEvent?.id || '';
+          state.guardian = firstEvent?.guardian || '';
+          state.location = firstEvent?.location || '';
+          renderAll();
+        };
+        wrap.appendChild(div);
+      });
+    }
+
+    function renderChapters() {
+      const wrap = byId('chapterList');
+      wrap.innerHTML = '';
+      (demoData.chapters[state.bookId] || []).forEach((chapter) => {
+        const div = document.createElement('div');
+        div.className = 'list-item' + (chapter.id === state.chapterId ? ' active' : '');
+        div.innerHTML = `<div><div class="list-item-title">${chapter.title}</div><div class="list-item-meta">${chapter.id}</div></div>`;
+        div.onclick = () => {
+          state.chapterId = chapter.id;
+          const firstEvent = demoData.events[state.chapterId]?.[0];
+          state.eventId = firstEvent?.id || '';
+          state.guardian = firstEvent?.guardian || '';
+          state.location = firstEvent?.location || '';
+          renderAll();
+        };
+        wrap.appendChild(div);
+      });
+    }
+
+    function renderEvents() {
+      const wrap = byId('eventList');
+      wrap.innerHTML = '';
+      (demoData.events[state.chapterId] || []).forEach((event) => {
+        const div = document.createElement('div');
+        div.className = 'list-item' + (event.id === state.eventId ? ' active' : '');
+        div.innerHTML = `<div><div class="list-item-title">${event.name}</div><div class="list-item-meta">Event ${event.id} • ${event.location}</div></div><span class="tag">${event.guardian}</span>`;
+        div.onclick = () => {
+          state.eventId = event.id;
+          state.guardian = event.guardian;
+          state.location = event.location;
+          renderAll();
+        };
+        wrap.appendChild(div);
+      });
+    }
+
+    function renderSceneTypes() {
+      const wrap = byId('sceneTypeList');
+      wrap.innerHTML = '';
+      demoData.sceneTypes.forEach((sceneType) => {
+        const div = document.createElement('div');
+        div.className = 'list-item' + (sceneType === state.sceneType ? ' active' : '');
+        div.innerHTML = `<div><div class="list-item-title">${sceneType}</div><div class="list-item-meta">Dummy frontend selection</div></div>`;
+        div.onclick = () => {
+          state.sceneType = sceneType;
+          renderAll();
+        };
+        wrap.appendChild(div);
+      });
+    }
+
+    function renderPreview() {
+      byId('previewBook').value = state.bookId;
+      byId('previewChapter').value = state.chapterId;
+      byId('previewEvent').value = state.eventId;
+      byId('previewSceneType').value = state.sceneType;
+      byId('previewGuardian').value = state.guardian;
+      byId('previewLocation').value = state.location;
+    }
+
+    function renderAll() {
+      renderBooks();
+      renderChapters();
+      renderEvents();
+      renderSceneTypes();
+      renderPreview();
+    }
+
+    document.querySelectorAll('.wizard-step').forEach(step => {
+      step.addEventListener('click', () => {
+        document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        step.classList.add('active');
+        byId(step.dataset.target).classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('[data-close]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        byId(btn.dataset.close).classList.remove('open');
+      });
+    });
+
+    document.querySelectorAll('[data-open]').forEach(el => {
+      el.addEventListener('click', () => {
+        const target = byId(el.dataset.open);
+        if (target) target.classList.add('open');
+      });
+    });
+
+    document.querySelectorAll('[data-target-open]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.targetOpen;
+        document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.querySelector(`.wizard-step[data-target="${target}"]`)?.classList.add('active');
+        byId(target)?.classList.add('active');
+      });
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>

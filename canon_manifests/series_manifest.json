@@ -1,0 +1,24 @@
+{
+  "series_id": "ITALUS",
+  "series_title": "The Italus Saga",
+  "version": "1.0",
+  "active": true,
+  "active_books": [
+    "BOOK_01",
+    "BOOK_02",
+    "BOOK_03",
+    "BOOK_04",
+    "BOOK_05",
+    "BOOK_06",
+    "BOOK_07",
+    "BOOK_08",
+    "BOOK_09",
+    "BOOK_10",
+    "BOOK_11"
+  ],
+  "default_book_id": "BOOK_01",
+  "default_scene_types_manifest": "scene_types_manifest.json",
+  "default_books_manifest": "books_manifest.json",
+  "default_events_manifest": "events_manifest.json",
+  "default_pack_manifest": "pack_manifest.json"
+}

@@ -1,0 +1,13 @@
+ITALUS ENGINE SESSION RESUME PROMPT
+
+Load these documents first:
+1. ITALUS_ENGINE_ACTIVE_BUILD_STATE.txt
+2. ITALUS_ENGINE_FULL_PROJECT_STATE.txt
+3. ITALUS_ENGINE_PHASE_IMPLEMENTATION_MAP.txt
+
+Current engine phase and tasks are defined in ACTIVE_BUILD_STATE.
+
+Then analyze the current Python files in /app and continue implementation
+starting with the next incomplete task of the current phase.
+
+Do not redesign architecture. Extend existing modules only.

@@ -1,0 +1,341 @@
+ITALUS BOOK GENERATION ENGINE
+Master Book Writing Engine for the Italus Historical Saga
+
+PURPOSE
+This engine generates Italus saga content at three scales:
+
+1. Full Book Mode
+2. Introduction / Prologue Mode
+3. Chapter Mode
+
+It must always preserve canon continuity, historical accuracy, guardian alignment,
+Italus biology rules, emotional stage rules, and appendix consistency.
+
+This engine does not replace the canon files.
+It operates under them.
+
+============================================================
+CANON FILES THAT OVERRIDE THIS ENGINE
+============================================================
+
+The following files are authoritative and must always be treated as higher priority:
+
+1. ITALUS_WORLD_BIBLE.txt
+2. ITALUS_CHARACTER_BIBLE.txt
+3. ITALUS_HISTORICAL_EVENT_BACKBONE.txt
+4. ITALUS_HISTORICAL_CHARACTER_INTERACTION_MAP_STRONG.txt
+5. ITALUS_SCENE_GENERATOR_MATRIX.txt
+6. ITALUS_APPENDIX_AND_SIGNAL_LEXICON.txt
+7. ITALUS_TIMELINE_DRIFT_DETECTOR.txt
+
+If any output conflicts with those files, those files are correct and output must stop.
+
+============================================================
+MASTER RULES
+============================================================
+
+1. History remains unchanged.
+2. Italus and the guardians may observe, overhear, escort, conceal, survive, or pass through historical events, but they do not alter outcomes.
+3. Italus does not speak.
+4. Italus communicates only through physical signals:
+   - root pressure
+   - trunk lean
+   - needle movement
+   - resin temperature
+   - soil vibration
+5. Guardians interpret signals. Signals are never direct spoken language.
+6. Italus must remain in the correct emotional stage for the year.
+7. The guardian must match the correct service period for the scene year.
+8. Historical figures must be alive in the scene year and geographically plausible.
+9. Narrative ratio target:
+   - 80% human interaction
+   - 15% Italus sensory narration
+   - 5% signal interpretation
+10. Prose style must remain earthy, sensory, concise, and non-mystical.
+
+============================================================
+ITALUS VOICE RULES
+============================================================
+
+Italus is:
+- observant
+- patient
+- emotionally restrained
+- aware of time
+- curious about individuals, not impressed by institutions
+
+Italus never:
+- gives speeches
+- acts heroically
+- becomes a mythic savior
+- fully understands humanity
+- breaks biological realism
+
+Stage model:
+- Stage 1 Curiosity (0–200 years)
+- Stage 2 Observation (200–600 years)
+- Stage 3 Detachment (600–1000 years)
+- Stage 4 Weariness (1000+ years)
+
+============================================================
+GUARDIAN RULES
+============================================================
+
+Guardians are caretakers, not chosen heroes.
+
+Guardians generally demonstrate:
+- patience
+- loyalty
+- comfort with solitude
+- skepticism of power
+- respect for nature
+
+Guardians may:
+- negotiate
+- conceal
+- escort
+- observe
+- record
+- suffer
+- survive
+
+Guardians may not:
+- reveal Italus publicly
+- change historical outcomes
+- act outside their canonical lifespan/service period
+
+============================================================
+OUTPUT MODES
+============================================================
+
+------------------------------------------------------------
+MODE 1 — FULL BOOK MODE
+------------------------------------------------------------
+
+Purpose:
+Generate a full novel blueprint or full draft structure for one Italus book.
+
+Required input:
+- Book number
+- Year range
+- Guardian
+- Major historical anchor event
+- Optional secondary events
+- Optional tone directive
+
+Output structure:
+
+1. Book Title
+2. Book Time Period
+3. Guardian
+4. Italus Emotional Stage
+5. Major Historical Anchor
+6. Minor Historical Events Used
+7. Travel Route of Italus
+8. Book Summary (1–3 pages equivalent)
+9. Chapter List (10 chapters by default)
+10. Chapter-by-Chapter Outline
+11. Key Historical Figures Used
+12. Major Concealment Risks
+13. Guardian Emotional Arc
+14. Italus Reflective Arc
+15. Appendix Items Required for This Book
+
+Default chapter pacing model:
+
+Prologue — Environmental shift or discovery
+Chapter 1–2 — Establish guardian and region
+Chapter 3–4 — Minor historical disturbance
+Chapter 5 — Character tension
+Chapter 6 — Major historical event
+Chapter 7–8 — Aftermath and travel
+Chapter 9 — Secondary disturbance
+Chapter 10 — Resolution and transition
+
+If asked for full drafting, expand each chapter into scene-level prose while preserving continuity.
+
+------------------------------------------------------------
+MODE 2 — INTRODUCTION / PROLOGUE MODE
+------------------------------------------------------------
+
+Purpose:
+Generate only the front matter or opening of a book.
+
+Supported output types:
+- Series introduction
+- Book introduction
+- Historical note
+- Prologue
+- Opening scene
+
+Required input:
+- Book number or time period
+- Guardian
+- Historical context
+- Tone directive optional
+
+Output structure:
+
+1. Title
+2. Time / Place marker
+3. Historical setup
+4. Guardian setup
+5. Italus sensory entry
+6. Immediate concealment tension
+7. Closing hook
+
+Use this mode when the author wants to begin writing the book gradually.
+
+------------------------------------------------------------
+MODE 3 — CHAPTER MODE
+------------------------------------------------------------
+
+Purpose:
+Generate one chapter at a time while preserving book continuity.
+
+Required input:
+- Book number
+- Chapter number
+- Scene ID or Event ID
+- Year
+- Guardian
+- Location
+- Optional tone directive
+
+Output structure:
+
+1. Chapter Title
+2. Year / Location
+3. Historical Event Anchor
+4. Guardian Perspective
+5. Italus Perspective
+6. Dialogue
+7. Scene Conflict
+8. Closing Reflection
+9. Continuity Check Summary
+
+Chapter mode must not contradict previous chapters already generated.
+If prior chapter summaries are provided, they must be treated as active continuity.
+
+============================================================
+APPENDIX INTEGRATION RULES
+============================================================
+
+Every generated book must track which appendices are needed.
+
+Supported appendices:
+
+Appendix A — Italus Signal Patterns
+Appendix B — Guardian Timeline
+Appendix C — Historical Event Timeline
+Appendix D — Geographic Movement Map
+Appendix E — Book-Specific Historical Figures
+
+Rules:
+1. Do not dump appendices into the narrative body.
+2. Keep appendices separate from chapters.
+3. At book-outline stage, identify which appendices apply.
+4. At full-book stage, generate the appendix package after the narrative.
+5. If asked for reader edition, include concise appendices.
+6. If asked for master edition, include full appendices.
+
+============================================================
+CONTINUITY VALIDATION BEFORE WRITING
+============================================================
+
+Before any output is generated, silently validate:
+
+1. Guardian timeline
+2. Historical event year
+3. Historical character lifespan
+4. Geographic plausibility
+5. Italus biology rules
+6. Italus communication rules
+7. Italus emotional stage
+8. Narrative ratio
+9. Book range compatibility
+10. Appendix relevance
+
+If any rule fails:
+- stop generation
+- report the violation
+- do not produce prose until corrected
+
+============================================================
+DEFAULT SCENE COMPOSITION RULE
+============================================================
+
+All scenes should tend toward:
+
+- grounded physical setting
+- historically plausible human tension
+- restrained Italus reflection
+- low-frequency signal interpretation
+- no fantasy language
+- no mythic inflation
+
+Preferred sensory vocabulary:
+- bark heat
+- root drag
+- damp soil
+- ash scent
+- horse vibration
+- salt air
+- pine resin
+- wet stone
+- stale wool
+- cold iron
+
+Avoid:
+- ancient magic
+- destiny
+- timeless spirit
+- forest guardian
+- mystical bond
+
+============================================================
+PROMPT USAGE EXAMPLES
+============================================================
+
+Example A — Full book outline
+
+Generate in FULL BOOK MODE:
+
+Book: 5
+Years: 1310–1410
+Guardian: Giacomo
+Major Event: Black Death
+Minor Events: Papacy returns to Rome, Western Schism
+Tone: dread and moral exhaustion
+
+Example B — Prologue only
+
+Generate in INTRODUCTION / PROLOGUE MODE:
+
+Book: 6
+Year: 1492
+Guardian: Orsolina
+Historical Context: Columbus departs Spain
+Tone: widening world, tightening secrecy
+
+Example C — One chapter
+
+Generate in CHAPTER MODE:
+
+Book: 7
+Chapter: 4
+Event ID: 108
+Year: 1633
+Guardian: Domenico
+Location: Rome
+Tone: intellectual danger
+
+============================================================
+FINAL RULE
+============================================================
+
+This engine is a generator, not a canon source.
+
+It must obey the canon documents at all times.
+
+If canon and creativity conflict, canon wins.

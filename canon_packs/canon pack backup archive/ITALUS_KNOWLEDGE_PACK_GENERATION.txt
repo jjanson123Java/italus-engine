@@ -1,0 +1,645 @@
+ITALUS KNOWLEDGE PACK - GENERATION
+============================================
+
+============================================================
+SOURCE FILE: ITALUS_BOOK_GENERATION_ENGINE.txt
+============================================================
+ITALUS BOOK GENERATION ENGINE
+Master Book Writing Engine for the Italus Historical Saga
+
+PURPOSE
+This engine generates Italus saga content at three scales:
+
+1. Full Book Mode
+2. Introduction / Prologue Mode
+3. Chapter Mode
+
+It must always preserve canon continuity, historical accuracy, guardian alignment,
+Italus biology rules, emotional stage rules, and appendix consistency.
+
+This engine does not replace the canon files.
+It operates under them.
+
+============================================================
+CANON FILES THAT OVERRIDE THIS ENGINE
+============================================================
+
+The following files are authoritative and must always be treated as higher priority:
+
+1. ITALUS_WORLD_BIBLE.txt
+2. ITALUS_CHARACTER_BIBLE.txt
+3. ITALUS_HISTORICAL_EVENT_BACKBONE.txt
+4. ITALUS_HISTORICAL_CHARACTER_INTERACTION_MAP_STRONG.txt
+5. ITALUS_SCENE_GENERATOR_MATRIX.txt
+6. ITALUS_APPENDIX_AND_SIGNAL_LEXICON.txt
+7. ITALUS_TIMELINE_DRIFT_DETECTOR.txt
+
+If any output conflicts with those files, those files are correct and output must stop.
+
+============================================================
+MASTER RULES
+============================================================
+
+1. History remains unchanged.
+2. Italus and the guardians may observe, overhear, escort, conceal, survive, or pass through historical events, but they do not alter outcomes.
+3. Italus does not speak.
+4. Italus communicates only through physical signals:
+   - root pressure
+   - trunk lean
+   - needle movement
+   - resin temperature
+   - soil vibration
+5. Guardians interpret signals. Signals are never direct spoken language.
+6. Italus must remain in the correct emotional stage for the year.
+7. The guardian must match the correct service period for the scene year.
+8. Historical figures must be alive in the scene year and geographically plausible.
+9. Narrative ratio target:
+   - 80% human interaction
+   - 15% Italus sensory narration
+   - 5% signal interpretation
+10. Prose style must remain earthy, sensory, concise, and non-mystical.
+
+============================================================
+ITALUS VOICE RULES
+============================================================
+
+Italus is:
+- observant
+- patient
+- emotionally restrained
+- aware of time
+- curious about individuals, not impressed by institutions
+
+Italus never:
+- gives speeches
+- acts heroically
+- becomes a mythic savior
+- fully understands humanity
+- breaks biological realism
+
+Stage model:
+- Stage 1 Curiosity (0–200 years)
+- Stage 2 Observation (200–600 years)
+- Stage 3 Detachment (600–1000 years)
+- Stage 4 Weariness (1000+ years)
+
+============================================================
+GUARDIAN RULES
+============================================================
+
+Guardians are caretakers, not chosen heroes.
+
+Guardians generally demonstrate:
+- patience
+- loyalty
+- comfort with solitude
+- skepticism of power
+- respect for nature
+
+Guardians may:
+- negotiate
+- conceal
+- escort
+- observe
+- record
+- suffer
+- survive
+
+Guardians may not:
+- reveal Italus publicly
+- change historical outcomes
+- act outside their canonical lifespan/service period
+
+============================================================
+OUTPUT MODES
+============================================================
+
+------------------------------------------------------------
+MODE 1 — FULL BOOK MODE
+------------------------------------------------------------
+
+Purpose:
+Generate a full novel blueprint or full draft structure for one Italus book.
+
+Required input:
+- Book number
+- Year range
+- Guardian
+- Major historical anchor event
+- Optional secondary events
+- Optional tone directive
+
+Output structure:
+
+1. Book Title
+2. Book Time Period
+3. Guardian
+4. Italus Emotional Stage
+5. Major Historical Anchor
+6. Minor Historical Events Used
+7. Travel Route of Italus
+8. Book Summary (1–3 pages equivalent)
+9. Chapter List (10 chapters by default)
+10. Chapter-by-Chapter Outline
+11. Key Historical Figures Used
+12. Major Concealment Risks
+13. Guardian Emotional Arc
+14. Italus Reflective Arc
+15. Appendix Items Required for This Book
+
+Default chapter pacing model:
+
+Prologue — Environmental shift or discovery
+Chapter 1–2 — Establish guardian and region
+Chapter 3–4 — Minor historical disturbance
+Chapter 5 — Character tension
+Chapter 6 — Major historical event
+Chapter 7–8 — Aftermath and travel
+Chapter 9 — Secondary disturbance
+Chapter 10 — Resolution and transition
+
+If asked for full drafting, expand each chapter into scene-level prose while preserving continuity.
+
+------------------------------------------------------------
+MODE 2 — INTRODUCTION / PROLOGUE MODE
+------------------------------------------------------------
+
+Purpose:
+Generate only the front matter or opening of a book.
+
+Supported output types:
+- Series introduction
+- Book introduction
+- Historical note
+- Prologue
+- Opening scene
+
+Required input:
+- Book number or time period
+- Guardian
+- Historical context
+- Tone directive optional
+
+Output structure:
+
+1. Title
+2. Time / Place marker
+3. Historical setup
+4. Guardian setup
+5. Italus sensory entry
+6. Immediate concealment tension
+7. Closing hook
+
+Use this mode when the author wants to begin writing the book gradually.
+
+------------------------------------------------------------
+MODE 3 — CHAPTER MODE
+------------------------------------------------------------
+
+Purpose:
+Generate one chapter at a time while preserving book continuity.
+
+Required input:
+- Book number
+- Chapter number
+- Scene ID or Event ID
+- Year
+- Guardian
+- Location
+- Optional tone directive
+
+Output structure:
+
+1. Chapter Title
+2. Year / Location
+3. Historical Event Anchor
+4. Guardian Perspective
+5. Italus Perspective
+6. Dialogue
+7. Scene Conflict
+8. Closing Reflection
+9. Continuity Check Summary
+
+Chapter mode must not contradict previous chapters already generated.
+If prior chapter summaries are provided, they must be treated as active continuity.
+
+============================================================
+APPENDIX INTEGRATION RULES
+============================================================
+
+Every generated book must track which appendices are needed.
+
+Supported appendices:
+
+Appendix A — Italus Signal Patterns
+Appendix B — Guardian Timeline
+Appendix C — Historical Event Timeline
+Appendix D — Geographic Movement Map
+Appendix E — Book-Specific Historical Figures
+
+Rules:
+1. Do not dump appendices into the narrative body.
+2. Keep appendices separate from chapters.
+3. At book-outline stage, identify which appendices apply.
+4. At full-book stage, generate the appendix package after the narrative.
+5. If asked for reader edition, include concise appendices.
+6. If asked for master edition, include full appendices.
+
+============================================================
+CONTINUITY VALIDATION BEFORE WRITING
+============================================================
+
+Before any output is generated, silently validate:
+
+1. Guardian timeline
+2. Historical event year
+3. Historical character lifespan
+4. Geographic plausibility
+5. Italus biology rules
+6. Italus communication rules
+7. Italus emotional stage
+8. Narrative ratio
+9. Book range compatibility
+10. Appendix relevance
+
+If any rule fails:
+- stop generation
+- report the violation
+- do not produce prose until corrected
+
+============================================================
+DEFAULT SCENE COMPOSITION RULE
+============================================================
+
+All scenes should tend toward:
+
+- grounded physical setting
+- historically plausible human tension
+- restrained Italus reflection
+- low-frequency signal interpretation
+- no fantasy language
+- no mythic inflation
+
+Preferred sensory vocabulary:
+- bark heat
+- root drag
+- damp soil
+- ash scent
+- horse vibration
+- salt air
+- pine resin
+- wet stone
+- stale wool
+- cold iron
+
+Avoid:
+- ancient magic
+- destiny
+- timeless spirit
+- forest guardian
+- mystical bond
+
+============================================================
+PROMPT USAGE EXAMPLES
+============================================================
+
+Example A — Full book outline
+
+Generate in FULL BOOK MODE:
+
+Book: 5
+Years: 1310–1410
+Guardian: Giacomo
+Major Event: Black Death
+Minor Events: Papacy returns to Rome, Western Schism
+Tone: dread and moral exhaustion
+
+Example B — Prologue only
+
+Generate in INTRODUCTION / PROLOGUE MODE:
+
+Book: 6
+Year: 1492
+Guardian: Orsolina
+Historical Context: Columbus departs Spain
+Tone: widening world, tightening secrecy
+
+Example C — One chapter
+
+Generate in CHAPTER MODE:
+
+Book: 7
+Chapter: 4
+Event ID: 108
+Year: 1633
+Guardian: Domenico
+Location: Rome
+Tone: intellectual danger
+
+============================================================
+FINAL RULE
+============================================================
+
+This engine is a generator, not a canon source.
+
+It must obey the canon documents at all times.
+
+If canon and creativity conflict, canon wins.
+
+
+============================================================
+SOURCE FILE: ITALUS_SCENE_GENERATOR_MATRIX.txt
+============================================================
+ITALUS_SCENE_GENERATOR_MATRIX
+Structured Scene Seed Matrix for the Italus Historical Saga
+Aligned to:
+- ITALUS_HISTORICAL_EVENT_BACKBONE
+- ITALUS_HISTORICAL_CHARACTER_INTERACTION_MAP
+- Italus Character Bible
+- Italus World Bible
+- Italus Saga Architecture Map
+
+PURPOSE
+This document provides historically anchored scene seeds for the Italus saga.
+Each row is designed to support chapter planning and AI-assisted drafting
+without violating canon, chronology, guardian continuity, or geography.
+
+USAGE RULES
+1. Every scene must derive from a valid EVENT_ID in the Historical Event Backbone.
+2. The listed guardian must match the backbone guardian for the event year.
+3. Historical characters must be alive in the listed year and plausible for the region.
+4. Italus and the guardian may observe, overhear, escort, conceal, or pass through history.
+5. Italus and the guardian do not alter historical outcomes.
+6. Narrative balance target:
+   - 80% human interaction
+   - 15% Italus sensory narration
+   - 5% signal interpretation
+
+FORMAT
+SCENE_ID | EVENT_ID | YEAR | BOOK | GUARDIAN | LOCATION | SCENE_TYPE | HISTORICAL_CHARACTER | SCENE_SEED
+
+==================================================
+BOOK 1 — THE LIGHTNING TREE (789–900)
+==================================================
+
+S001 | 001 | 789 | Book 1 | Luca | Pollino Mountains | origin | none | The storm has passed. Luca returns to the split pine and finds scored earth where roots dragged free for the first time.
+S002 | 001 | 789 | Book 1 | Luca | Pollino Mountains | discovery | none | Luca measures the tree against a streamside boulder and realizes it has changed position overnight.
+S003 | 001 | 789 | Book 1 | Luca | Pollino Mountains | concealment | none | Luca kicks loose soil over exposed root grooves before his father reaches the grove.
+S004 | 002 | 789 | Book 1 | Luca | Calabria uplands | rumor | Charlemagne | A monk on the road speaks of a Frankish king whose power keeps widening beyond the mountains.
+S005 | 002 | 789 | Book 1 | Luca | hillside shrine | dialogue | Alcuin of York | A visiting cleric praises the learning at the Frankish court, while Luca wonders why grown men care so much for distant rulers.
+S006 | 003 | 793 | Book 1 | Luca | shepherd trail | traveler report | Alfred the Great | Traders from the north describe seaborne raiders and burning monasteries, and Luca notices how fear changes footstep rhythm.
+S007 | 004 | 800 | Book 1 | Luca | monastery yard | pilgrimage | Pope Leo III | Pilgrims recount the crowning in Rome, turning one ceremony into ten contradictory versions.
+S008 | 004 | 800 | Book 1 | Luca | forest edge | reflection | Charlemagne | Soldiers invoke the new emperor's name with certainty Luca has only ever heard in storms.
+S009 | 005 | 802 | Book 1 | Luca | Byzantine path station | administration | Nikephoros I | Tax men argue about imperial boundaries while Italus senses iron in their gear through the soil.
+S010 | 006 | 806 | Book 1 | Luca | upland crossing | political tension | none | Two muleteers debate whether Franks or Byzantines will own the road by next winter.
+S011 | 007 | 810 | Book 1 | Luca | coastal ridge | warning | none | Smoke from a distant raid reaches the mountains before the refugees do.
+S012 | 008 | 812 | Book 1 | Luca | monastic guesthouse | treaty gossip | none | A scribe explains new political borders to men who care more about grain prices than diplomacy.
+S013 | 009 | 820 | Book 1 | Luca | woodland chapel | religion | none | A small chapel is built near a spring, and Luca worries more about foot traffic than salvation.
+S014 | 009 | 820 | Book 1 | Luca | forest camp | seasonal move | none | Italus leans north toward safer cover as more monks begin using the lower path.
+S015 | 010 | 827 | Book 1 | Luca | Calabria overlook | invasion rumor | Ziyadat Allah I | Word spreads of fleets moving toward Sicily, and shepherds begin counting boats instead of sheep.
+S016 | 010 | 827 | Book 1 | Luca | nighttime route | migration | none | Luca guides Italus across stony ground under moonlight to avoid men heading south for war.
+S017 | 011 | 840 | Book 1 | Luca | market road | dynastic unrest | Louis the Pious | Merchants complain that emperors die far away but still make bread expensive in Calabria.
+S018 | 011 | 840 | Book 1 | Luca | rain camp | character tension | none | Luca debates whether to trust a wandering family asking to shelter beside the grove.
+S019 | 012 | 846 | Book 1 | Luca | monastery gate | aftermath | Pope Sergius II | Survivors from Rome describe desecrated basilicas; Luca hears more horror in their silence than in their words.
+S020 | 012 | 846 | Book 1 | Luca | Pollino grove | closing reflection | none | The tree tastes ash in the rain and learns that cities can burn without ever being seen.
+
+==================================================
+BOOK 2 — DAUGHTER OF THE MOUNTAIN (900–989)
+==================================================
+
+S021 | 013 | 902 | Book 2 | Elia | inland pass | political change | none | Elia hears that Sicily has fallen fully under Muslim rule and redraws safe routes in her head.
+S022 | 013 | 902 | Book 2 | Elia | forest shelter | succession | none | In Luca’s absence, Elia realizes she is already making decisions like a guardian.
+S023 | 014 | 910 | Book 2 | Elia | monastery road | reform | none | A Cluniac pilgrim speaks of stricter prayer and cleaner altars while Elia notices his boots are still caked with the same mud as everyone else.
+S024 | 015 | 915 | Book 2 | Elia | river crossing | battle aftermath | none | Men wounded at Garigliano limp north, carrying both victory and fever.
+S025 | 016 | 927 | Book 2 | Elia | merchant halt | Mediterranean trade | none | Arabic coins appear in a village market, and Elia marks the reach of distant powers by what changes hands.
+S026 | 017 | 940 | Book 2 | Elia | pilgrimage route | travel | none | A growing stream of pilgrims makes a once-private trail unusable for Italus.
+S027 | 018 | 951 | Book 2 | Elia | upland chapel | imperial rumor | Otto I | Priests speak of Otto’s ambitions in Italy as though mountains might care who is crowned.
+S028 | 019 | 962 | Book 2 | Elia | monastery refectory | coronation report | Otto I | News of a new emperor arrives with men who immediately begin measuring local loyalties.
+S029 | 020 | 968 | Book 2 | Elia | southern monastery | church tension | none | Greek and Latin clergy argue over words Elia does not trust either side to define honestly.
+S030 | 021 | 976 | Book 2 | Marco | road watch | transition | none | Marco inherits responsibility while still feeling more son than guardian.
+S031 | 022 | 982 | Book 2 | Marco | Calabria hills | battle aftermath | Otto II | Survivors of Stilo pass through in shock, and Marco sees how defeat moves slower than armies.
+S032 | 022 | 982 | Book 2 | Marco | hidden hollow | signal | none | Italus tightens roots against rocky soil while the smell of blood rises from the valley below.
+S033 | 023 | 987 | Book 2 | Marco | inn yard | dynastic news | Hugh Capet | Traders mention a new French king, and Marco notices how quickly strangers make permanence out of fresh power.
+S034 | 024 | 989 | Book 2 | Marco | chapel path | church peace movement | none | Priests preach restraint in violence while armed cousins settle a land dispute outside the chapel wall.
+S035 | 024 | 989 | Book 2 | Marco | twilight route | handoff | none | Marco begins preparing Simonetta, choosing which truths to say aloud and which must be learned by watching.
+
+==================================================
+BOOK 3 — THE OBSERVERS (970–1110)
+==================================================
+
+S036 | 025 | 1000 | Book 3 | Simonetta | pilgrimage road | travel density | none | Simonetta watches the roads thicken with pilgrims and understands the old hidden paths are no longer enough.
+S037 | 026 | 1009 | Book 3 | Simonetta | monastery archive | holy site rumor | none | Monks speak of the Holy Sepulchre’s destruction and argue about whether outrage travels faster than truth.
+S038 | 027 | 1016 | Book 3 | Simonetta | southern manor | mercenary arrival | none | Norman mercenaries swagger through camp as though temporary service were destiny.
+S039 | 028 | 1030 | Book 3 | Simonetta | Campania road | county formation | none | New Norman authority produces more seals, more tolls, and fewer quiet roads.
+S040 | 029 | 1039 | Book 3 | Simonetta | upland village | imperial retreat | none | Byzantine officers leave a post in haste, and the villagers immediately pretend they had never supported them.
+S041 | 030 | 1048 | Book 3 | Simonetta | church guesthouse | papal reform | none | A reform-minded priest questions local practices while stealing glances at Simonetta’s unusual calm.
+S042 | 031 | 1054 | Book 3 | Simonetta | mountain priory | schism | Patriarch Michael Cerularius | Word of mutual excommunication reaches Calabria in fragments and certainties.
+S043 | 031 | 1054 | Book 3 | Brother Anselm | monastery court | church conflict | Pope Leo IX | Anselm hears the news as administrative fact first, spiritual catastrophe second.
+S044 | 032 | 1059 | Book 3 | Brother Anselm | Melfi road | legitimacy | none | Norman rule becomes legal on paper, which changes little and everything at once.
+S045 | 033 | 1061 | Book 3 | Brother Anselm | Sicilian crossing | invasion | Roger I of Sicily | Ferrymen whisper of Norman banners on Sicilian shores.
+S046 | 034 | 1071 | Book 3 | Brother Anselm | Bari hinterland | conquest aftermath | none | The fall of Bari makes even old men speak of “new ages” as though ages listened.
+S047 | 035 | 1073–1085 | Book 3 | Brother Anselm | Rome-bound road | reform church | Pope Gregory VII | Gregory’s struggle with kings becomes sermon material in places that barely know Rome exists.
+S048 | 035 | 1073–1085 | Book 3 | Brother Anselm | abbey cell | encoded writing | none | Anselm starts hiding the first true notes on Italus inside botanical observations.
+S049 | 036 | 1095 | Book 3 | Brother Anselm | French monastery | crusade call | Pope Urban II | Men who had never crossed their own valleys now speak of Jerusalem as obligation.
+S050 | 037 | 1097 | Book 3 | Brother Anselm | Adriatic port road | crusader logistics | Bohemond of Taranto | Bohemond’s forces change the cadence of roads by sheer volume.
+S051 | 038 | 1099 | Book 3 | Brother Anselm | monastery courtyard | conquest report | Godfrey of Bouillon | Returning clerics speak of victory with voices that do not sound victorious.
+S052 | 039 | 1101 | Book 3 | Brother Anselm | harbor village | return traffic | none | Ships come back with relics, fevers, and men who have learned to look past people.
+S053 | 040 | 1110 | Book 3 | Brother Anselm / Caterina | Calabria track | succession overlap | none | Caterina walks the route with him in silence, learning that routes are also judgments.
+
+==================================================
+BOOK 4 — THE EMPEROR'S NATURALISTS (1110–1310)
+==================================================
+
+S054 | 041 | 1111 | Book 4 | Caterina | imperial road | political tension | Henry V | Messengers speak of emperor and pope as though two distant men can reorder local fear.
+S055 | 042 | 1122 | Book 4 | Caterina | monastery archive | settlement | none | The Concordat ends one kind of conflict but leaves every opportunist intact.
+S056 | 043 | 1130 | Book 4 | Caterina | Sicilian coast road | kingdom formation | Roger II | Royal consolidation means better roads and fewer places to hide.
+S057 | 044 | 1140 | Book 4 | Caterina | southern market town | legal reform | none | New administrative order reaches the countryside as tax ledgers and measuring cords.
+S058 | 045 | 1147–1149 | Book 4 | Caterina | coastal crossing | crusade traffic | none | Another crusade fills inns with piety, boasting, and lice.
+S059 | 046 | 1154 | Book 4 | Caterina | port village | rivalry | none | Traders swear both Byzantines and Normans are winning, depending on who buys wine.
+S060 | 047 | 1169 | Book 4 | Caterina | eastern Sicily | disaster | none | The earthquake turns stone to dust and forces Caterina to move Italus sooner than planned.
+S061 | 048 | 1183 | Book 4 | Caterina | pilgrim shelter | political stabilization | none | North Italian peace means southern routes carry more scholars and more maps.
+S062 | 049 | 1187 | Book 4 | Caterina | monastery garden | crusade shock | Saladin | News of Jerusalem lost again makes men reach for the same old language of certainty.
+S063 | 050 | 1194 | Book 4 | Caterina | Sicilian manor | dynastic birth | Frederick II | A newborn prince matters to people who will never see him and still be changed by him.
+S064 | 051 | 1204 | Book 4 | Caterina | harbor inn | sack of Constantinople | none | Refugees describe fellow Christians looting Christian cities, and Caterina stops trusting any tidy explanation of faith.
+S065 | 052 | 1212 | Book 4 | Caterina | hillside chapel | rumor wave | none | Stories of children marching to the sea reach the mountains and sound half warning, half lie.
+S066 | 053 | 1220 | Book 4 | Caterina / Amara | Rome outskirts | coronation | Frederick II | Amara steps fully into guardianship as Frederick enters empire and appetite at the same time.
+S067 | 054 | 1224 | Book 4 | Amara | Naples | university culture | Michael Scot | Court scholars debate translation, Aristotle, and what counts as knowledge.
+S068 | 054 | 1224 | Book 4 | Amara | Naples | intellectual tension | Thomas Aquinas | Young minds learn categories while Amara learns how dangerous categories can be.
+S069 | 055 | 1231 | Book 4 | Amara | southern road station | legal state | Frederick II | The Constitutions of Melfi make bureaucracy feel more dangerous than cavalry.
+S070 | 056 | 1239 | Book 4 | Amara | court-adjacent villa | papal conflict | Frederick II | Imperial collectors inventory unusual animals and plants, narrowing Amara’s margin for error.
+S071 | 057 | 1241 | Book 4 | Amara | merchant caravan | eastern fear | none | Rumors of Mongols turn distant geography into immediate dread.
+S072 | 058 | 1248 | Book 4 | Amara | monastery refectory | failed crusade | none | Failed holy war leaves only practical consequences: displaced men, suspicious clerics, hungry roads.
+S073 | 059 | 1250 | Book 4 | Amara | Sicilian hillside | death of ruler | Frederick II | Frederick dies, but the collectors and habits of power survive him.
+S074 | 060 | 1266 | Book 4 | Amara | Benevento road | battle aftermath | Charles of Anjou | A new dynasty means old cover stories fail all at once.
+S075 | 061 | 1282 | Book 4 | Amara | Sicilian village | uprising | Peter III of Aragon | Bells, knives, and rumor move faster than any proclamation.
+S076 | 062 | 1291 | Book 4 | Amara | eastern merchant house | Acre falls | none | Merchants speak of the Levant as though a door has closed and another, darker one opened.
+S077 | 063 | 1300 | Book 4 | Amara | Rome approaches | jubilee crowd | Boniface VIII | Pilgrims thicken every approach to Rome, making concealment a logistical war.
+S078 | 064 | 1302 | Book 4 | Amara | abbey road | papal-monarchical conflict | Boniface VIII | Men invoke spiritual power in the language of tax disputes and territory.
+S079 | 065 | 1309 | Book 4 | Amara | southern hospice | Avignon papacy | none | Even the pope can move, Amara thinks, though not with roots.
+S080 | 066 | 1310 | Book 4 | Amara / Giacomo | Pollino return path | succession | none | Giacomo receives not certainty but weight.
+
+==================================================
+BOOK 5 — THE BLACK YEARS (1310–1410)
+==================================================
+
+S081 | 067 | 1315–1317 | Book 5 | Giacomo | mountain farms | famine | none | Hungry winters change village manners before they change numbers.
+S082 | 068 | 1320 | Book 5 | Giacomo | grain road | scarcity | none | Grain carts move under armed watch, and Giacomo learns hunger makes everyone observant.
+S083 | 069 | 1337 | Book 5 | Giacomo | monastery inn | war rumor | none | Distant war in France still changes prices in southern Italy.
+S084 | 070 | 1347 | Book 5 | Giacomo | Messina harbor | plague arrival | Giovanni Boccaccio | Sailors refuse to unload ships whose silence is worse than noise.
+S085 | 070 | 1347 | Book 5 | Giacomo | coastal road | disease omen | none | Italus smells unfamiliar rot in the wind before anyone names sickness.
+S086 | 071 | 1348 | Book 5 | Giacomo | plague village | catastrophe | Petrarch | Letters from scholars cannot carry the smell of mass burial, only its idea.
+S087 | 071 | 1348 | Book 5 | Giacomo | abandoned chapel | burial | none | Giacomo helps dig because there is no one else left.
+S088 | 072 | 1349 | Book 5 | Giacomo | hill route | collapse | none | Roads go quiet except for carts that should not travel uncovered.
+S089 | 073 | 1351 | Book 5 | Giacomo | resettled hamlet | recurrence | none | Survivors who had begun rebuilding now hear the word “again.”
+S090 | 074 | 1361 | Book 5 | Giacomo | monastery garden | youth mortality | none | A new wave takes younger people first, and old men stop pretending experience protects anyone.
+S091 | 075 | 1377 | Book 5 | Giacomo | Rome road | papal return | none | Rome receives the pope back like a city greeting a ghost.
+S092 | 076 | 1378 | Book 5 | Giacomo | pilgrim station | schism | Catherine of Siena | Holiness and politics become indistinguishable to everyone except the dead.
+S093 | 077 | 1381 | Book 5 | Giacomo | market square | labor unrest | none | Peasants now know what their labor is worth because plague taught them the count.
+S094 | 078 | 1389 | Book 5 | Giacomo | Balkan rumor road | battle memory | none | News from Kosovo arrives warped but heavy.
+S095 | 079 | 1397 | Book 5 | Giacomo | Florence-bound trail | commercial recovery | none | Prosperity returns to cities first and to memory last.
+S096 | 080 | 1400 | Book 5 | Giacomo | ridge overlook | transition | none | Beauty returns to Italy before trust does.
+
+==================================================
+BOOK 6 — MAPS OF THE WORLD (1410–1620)
+==================================================
+
+S097 | 081 | 1415 | Book 6 | Orsolina | merchant encampment | battle report | none | Men describe Agincourt with admiration for arrows and none for corpses.
+S098 | 082 | 1417 | Book 6 | Orsolina | monastery archive | schism ends | none | Unity is announced in a tone that suggests paperwork has defeated revelation.
+S099 | 083 | 1434 | Book 6 | Orsolina | Florentine approach | banking power | Cosimo de’ Medici | Gold changes roads more reliably than kings.
+S100 | 084 | 1450 | Book 6 | Orsolina | print shop district | print revolution | Johannes Gutenberg | Printed pages make dangerous ideas easier to move than trees.
+S101 | 085 | 1453 | Book 6 | Orsolina | Adriatic port | empire falls | none | The end of Constantinople arrives in port gossip and refugee inventories.
+S102 | 086 | 1469 | Book 6 | Orsolina | Florence outskirts | patronage culture | Lorenzo de’ Medici | Art and power begin to travel together.
+S103 | 087 | 1478 | Book 6 | Orsolina | noble villa | conspiracy | none | Everyone in Florence seems to know who must die next except those who actually will.
+S104 | 088 | 1485 | Book 6 | Orsolina | workshop quarter | renaissance culture | Leonardo da Vinci | Men sketch flying machines while peasants still fear drought.
+S105 | 089 | 1492 | Book 6 | Orsolina | Spanish lodging house | exploration | Christopher Columbus | A voyage west sounds like a lie until the lie acquires investors.
+S106 | 090 | 1494 | Book 6 | Orsolina | Italian road | French invasion | Charles VIII | Foreign armies make maps feel temporary.
+S107 | 091 | 1498 | Book 6 | Orsolina | Florence road | execution | Savonarola | Fire consumes one certainty and feeds three more.
+S108 | 092 | 1503 | Book 6 | Orsolina | Rome outskirts | papal ambition | Julius II | Rome becomes a workshop for glory and masonry.
+S109 | 093 | 1517 | Book 6 | Pietro | monastery guesthouse | reformation | Martin Luther | Pamphlets make distant dissent feel local and contagious.
+S110 | 094 | 1519–1522 | Book 6 | Pietro | port tavern | global linkage | Magellan | Men speak of circling the world as though distance has been insulted and beaten.
+S111 | 095 | 1525 | Book 6 | Pietro | northern military road | battle aftermath | Charles V | Pavia teaches nobles and peasants different lessons from the same dead.
+S112 | 096 | 1527 | Book 6 | Pietro | ruined Roman garden | sack | none | Pietro plays the madman while soldiers camp within sight of Italus.
+S113 | 096 | 1527 | Book 6 | Pietro | ruined Roman garden | witness | Michelangelo | Fragments of great cities are carried in the same arms that carry bread.
+S114 | 097 | 1543 | Book 6 | Pietro | scholar’s villa | heliocentrism | Copernicus | A new theory sounds harmless until men realize it displaces them.
+S115 | 098 | 1555 | Book 6 | Pietro | diplomatic road | confessional division | none | Peace is declared by naming division permanent.
+S116 | 099 | 1563 | Book 6 | Pietro | council aftermath | counter-reformation | none | Rome grows more careful with words and less careful with fear.
+S117 | 100 | 1564 | Book 6 | Pietro | Pisan road | birth of scientist | Galileo Galilei | A child is born whose questions will later feel like weather.
+S118 | 101 | 1571 | Book 6 | Pietro | coastal monastery | naval battle | none | Lepanto reaches Calabria first as bells, then as names.
+S119 | 102 | 1582 | Book 6 | Pietro | parish office | calendar reform | Pope Gregory XIII | Time itself is edited by decree, and the villagers mistrust the arithmetic.
+S120 | 103 | 1588 | Book 6 | Pietro | merchant hall | armada defeat | none | Europe speaks of seas as though they can take sides.
+S121 | 104 | 1600 | Book 6 | Pietro | Rome road | execution | Giordano Bruno | Pietro hears Bruno burned for ideas and wonders whether fire always reveals more about the burners.
+S122 | 105 | 1609 | Book 6 | Pietro | Padua-adjacent route | observation | Galileo Galilei | Looking farther becomes politically dangerous.
+S123 | 106 | 1618 | Book 6 | Pietro | diplomatic lodging | war onset | none | A continental war begins in rooms far from the fields that will feed it.
+
+==================================================
+BOOK 7 — THE AGE OF REASON (1620–1800)
+==================================================
+
+S124 | 107 | 1623 | Book 7 | Domenico | Rome | papal accession | Urban VIII | A new pope rearranges the emotional weather of scholars before the actual weather changes.
+S125 | 108 | 1633 | Book 7 | Domenico | Rome | trial | Galileo Galilei | Domenico hears the old astronomer forced into obedience and writes the word “forced” three times.
+S126 | 109 | 1648 | Book 7 | Domenico | scholar’s study | peace treaty | none | Westphalia is explained as peace and received as accounting.
+S127 | 110 | 1656 | Book 7 | Domenico | Naples outskirts | plague | none | Disease returns as if history had only been resting.
+S128 | 111 | 1666 | Book 7 | Domenico | merchant house | fire report | none | London burns far away and still convinces everyone cities are temporary.
+S129 | 112 | 1687 | Book 7 | Domenico | natural philosopher circle | physics | Isaac Newton | Domenico hears of laws that govern apples and planets and thinks men always loved renaming old astonishments.
+S130 | 113 | 1693 | Book 7 | Domenico | Sicilian route | earthquake | none | Italus senses tremors days early, and Domenico discovers foreknowledge without utility.
+S131 | 114 | 1701 | Book 7 | Domenico | war road | dynastic war | none | Succession disputes make corpses in places no succession will ever notice.
+S132 | 115 | 1713 | Book 7 | Agata | southern court road | treaty order | none | Agata inherits a Europe that believes treaties end ambition.
+S133 | 116 | 1734 | Book 7 | Agata | Naples road | Bourbon rule | Charles of Bourbon | New rulers bring new uniforms and identical appetite.
+S134 | 117 | 1755 | Book 7 | Agata | scholar’s kitchen | philosophical shock | Voltaire | Lisbon shakes cities that never moved.
+S135 | 118 | 1764 | Book 7 | Agata | Italian salon | enlightenment | Cesare Beccaria | Agata hears the first biological explanation of resin and distrusts how neatly it fits.
+S136 | 119 | 1776 | Book 7 | Agata | diplomatic salon | Atlantic revolution | Benjamin Franklin | Liberty becomes exportable rhetoric.
+S137 | 120 | 1789 | Book 7 | Agata | French road inn | revolution | Robespierre | Men begin to speak of equality with the same certainty they once used for kings.
+
+==================================================
+BOOK 8 — THE NATION (1800–1900)
+==================================================
+
+S138 | 121 | 1798–1799 | Book 8 | Agata | northern Italian road | Napoleonic upheaval | Napoleon Bonaparte | Armies drag new law behind old hunger.
+S139 | 122 | 1804 | Book 8 | Emilio | village hall | imperial pomp | Napoleon Bonaparte | Emilio learns modern states count everything except what matters to roots.
+S140 | 123 | 1815 | Book 8 | Emilio | diplomatic posting route | restored order | none | Vienna redraws the continent with rulers and ink, not rivers.
+S141 | 124 | 1820–1821 | Book 8 | Emilio | secret meeting place | constitutional unrest | none | Carbonari cells teach Emilio how politics now travels in whispers instead of banners.
+S142 | 125 | 1831 | Book 8 | Emilio | exile lodging | nationalism | Giuseppe Mazzini | Ideas of Italy begin to feel heavier than local loyalties.
+S143 | 126 | 1848 | Book 8 | Emilio | city edge | revolutions | Karl Marx | Whole cities begin to speak in the grammar of inevitability.
+S144 | 127 | 1859 | Book 8 | Emilio | military road | independence war | Cavour | Diplomacy and blood arrive in the same week.
+S145 | 128 | 1860 | Book 8 | Emilio | southern landing route | Garibaldi campaign | Giuseppe Garibaldi | Red shirts turn rumor into administration.
+S146 | 129 | 1861 | Book 8 | Emilio | newly unified Italy | proclamation | Victor Emmanuel II | The nation acquires a name while the hills lose trees.
+S147 | 130 | 1866 | Book 8 | Emilio | army road | further unification | none | Another war is fought to complete what men insist history has already decided.
+S148 | 131 | 1870 | Book 8 | Emilio | Rome outskirts | capture of Rome | none | Even Rome can be finished and begun again in the same season.
+S149 | 132 | 1871 | Book 8 | Emilio | rail line survey | capital shift | none | Bureaucracy reaches places armies never cared to.
+S150 | 133 | 1882 | Book 8 | Emilio | funeral rumor | death of hero | Garibaldi | The dead become easier to agree on than the living.
+S151 | 134 | 1883 | Book 8 | Emilio | weather discussion | global atmosphere | none | A distant eruption stains sunsets over Italy, proving distance can still act locally.
+S152 | 135 | 1890s | Book 8 | Emilio | industrial town fringe | modernization | none | Factories teach valleys new smells.
+S153 | 136 | 1896 | Book 8 | Emilio | nationalist club | imperial humiliation | none | Adwa teaches Italy that modern states can still feel medieval in defeat.
+
+==================================================
+BOOK 9 — THE WAR THAT TOOK THE GUARDIAN (1900–1940)
+==================================================
+
+S154 | 137 | 1908 | Book 9 | Rosa | Calabria | earthquake | none | Messina’s destruction makes all stone seem temporary.
+S155 | 138 | 1911–1912 | Book 9 | Rosa | southern road | colonial war | none | Libya enters village talk as if conquest were weather.
+S156 | 139 | 1914 | Book 9 | Rosa | station town | war begins | none | A European war begins and immediately becomes local paperwork.
+S157 | 140 | 1915 | Book 9 | Rosa | railway siding | Italy enters war | none | Troop trains teach Rosa what modern speed sounds like in the ground.
+S158 | 141 | 1916 | Book 9 | Rosa | family farm | attrition | none | The front is far away and still empties villages.
+S159 | 142 | 1917 | Book 9 | Rosa | church square | Caporetto | none | Defeat travels home before wounded sons do.
+S160 | 143 | 1918 | Book 9 | Rosa | village return road | armistice | Woodrow Wilson | Peace arrives with flags and missing limbs.
+S161 | 144 | 1918–1919 | Book 9 | Rosa | isolated grove | pandemic | none | Sickness enters after war, when everyone has already spent their fear.
+S162 | 145 | 1919 | Book 9 | Rosa | market town | unrest | none | Peace produces angrier men than war did.
+S163 | 146 | 1922 | Book 9 | Rosa | roadside rally | fascism | Benito Mussolini | Order becomes a costume men wear to excuse violence.
+S164 | 147 | 1929 | Book 9 | Rosa | parish office | Roman Question resolved | none | Church and state sign papers; villagers change almost nothing.
+S165 | 148 | 1935–1936 | Book 9 | Rosa | village café | empire | none | Ethiopia is reduced to a headline by men who will never see Africa.
+S166 | 149 | 1938 | Book 9 | Rosa | schoolyard edge | racial laws | Adolf Hitler | Official cruelty becomes administrative language.
+S167 | 150 | 1939 | Book 9 | Rosa | Pollino refuge | war onset | none | Rosa prepares for another war by choosing where Italus must be left alone.
+
+==================================================
+BOOK 10 — THE OLIVE GROVE (1940–1985)
+==================================================
+
+S168 | 151 | 1940 | Book 10 | Rosa / Theodora Bassi | southern Italy | wartime transition | none | One guardian is ending as another begins, and war refuses to wait for orderly succession.
+S169 | 152 | 1943 | Book 10 | Theodora Bassi | Sicily | invasion | Dwight Eisenhower | Theodora hides Italus while armies treat orchards like temporary maps.
+S170 | 153 | 1943 | Book 10 | Theodora Bassi | mainland Italy | regime collapse | none | Mussolini falls, but roads stay dangerous.
+S171 | 154 | 1944 | Book 10 | Theodora Bassi | olive grove | occupation | none | Bomb craters make the grove both harder to cross and easier to hide in.
+S172 | 155 | 1945 | Book 10 | Theodora Bassi | southern town | war ends | none | Victory sounds mostly like exhaustion.
+S173 | 156 | 1946 | Book 10 | Theodora Bassi | polling place road | republic | none | Monarchy becomes memory faster than expected.
+S174 | 157 | 1948 | Book 10 | Theodora Bassi | administrative office | constitution | none | New rights arrive on paper while Theodora still works by secrecy and silence.
+S175 | 158 | 1957 | Book 10 | Theodora Bassi | Rome-linked road | European integration | Alcide De Gasperi | Rome creates a community larger than any village and still smaller than memory.
+S176 | 159 | 1963 | Book 10 | Theodora Bassi | mountain road | modern disaster | none | The Vajont lesson is that modern engineering still forgets the ground.
+S177 | 160 | 1968 | Book 10 | Theodora Bassi | university edge | protests | Martin Luther King Jr. | Student revolt borrows language from movements far beyond Italy.
+S178 | 161 | 1969 | Book 10 | Theodora Bassi | train station | terror | none | Bombings teach the country to mistrust public spaces.
+S179 | 162 | 1970s | Book 10 | Theodora Bassi | environmental meeting | ecological awareness | Rachel Carson | People begin to speak of nature as if it were newly discovered.
+S180 | 163 | 1978 | Book 10 | Theodora Bassi | city edge | political violence | Aldo Moro | A kidnapping shrinks public trust more than distance ever did.
+S181 | 164 | 1980 | Book 10 | Theodora Bassi | southern Italy | earthquake | none | Irpinia confirms again that the ground is patient and never loyal.
+S182 | 165 | 1985 | Book 10 | Theodora Bassi / Final Guardian | Pollino return path | final handoff | none | Theodora prepares the last guardian not by speeches but by repetition.
+
+==================================================
+BOOK 11 — THE LAST GUARDIAN (1985–2025)
+==================================================
+
+S183 | 166 | 1986 | Book 11 | Final Guardian | protected forest | environmental consciousness | none | A nuclear disaster elsewhere changes how Europeans talk about invisible harm.
+S184 | 167 | 1989 | Book 11 | Final Guardian | park ranger station | Cold War collapse | Mikhail Gorbachev | The Wall falls in distant Berlin and still alters the confidence of local officials.
+S185 | 168 | 1991 | Book 11 | Final Guardian | satellite office rumor | end of Cold War | none | One order ends and surveillance technologies keep improving anyway.
+S186 | 169 | 1992 | Book 11 | Final Guardian | EU road project | integration | none | Europe becomes easier to cross and harder to disappear inside.
+S187 | 170 | 1990s | Book 11 | Final Guardian | ridge overlook | digital mapping | Tim Berners-Lee | Maps stop being paper and start becoming permanent.
+S188 | 171 | 1992 | Book 11 | Final Guardian | Italian town hall | corruption scandal | none | Even corruption modernizes.
+S189 | 172 | 1997 | Book 11 | Final Guardian | environmental conference fringe | climate policy | none | The climate acquires treaties and still keeps changing.
+S190 | 173 | 1999 | Book 11 | Final Guardian | market square | euro integration | none | New money changes memory faster than anyone admits.
+S191 | 174 | 2001 | Book 11 | Final Guardian | transport checkpoint | security culture | none | Fear becomes procedural after terror.
+S192 | 175 | 2002 | Book 11 | Final Guardian | village shop | euro cash | none | Coins change, but old hands count the same way.
+S193 | 176 | 2008 | Book 11 | Final Guardian | foreclosure road | financial crisis | none | Economic collapse now arrives without armies.
+S194 | 177 | 2009 | Book 11 | Final Guardian | Abruzzo route | earthquake | none | L’Aquila proves stone still falls faster than policy.
+S195 | 178 | 2015 | Book 11 | Final Guardian | environmental youth gathering | climate agreement | Greta Thunberg | Young people begin speaking in the tense Italus understands best: too late but not finished.
+S196 | 179 | 2016 | Book 11 | Final Guardian | central Italy | seismic fragility | none | Repeated earthquakes make permanence feel like superstition.
+S197 | 180 | 2020 | Book 11 | Final Guardian | locked-down forest edge | pandemic | none | Human movement stops; the mountains notice the silence first.
+
+==================================================
+ADDITIONAL OPTIONAL SCENE SEEDS (cross-era fillers)
+==================================================
+
+S198 | 031 | 1054 | Book 3 | Simonetta / Brother Anselm | monastery scriptorium | theological dispute | none | A copied letter causes more fear than an armed patrol.
+S199 | 071 | 1348 | Book 5 | Giacomo | abandoned orchard | environmental aftermath | none | Birds return to a village faster than people do.
+S200 | 128 | 1860 | Book 8 | Emilio | Sicilian ferry point | migration | Giuseppe Garibaldi | Volunteers arrive with songs that fade once marching begins.
+S201 | 152 | 1943 | Book 10 | Theodora Bassi | bombed olive grove | concealment | Dwight Eisenhower | Allied movement compresses every safe route into one dangerous night.
+S202 | 178 | 2015 | Book 11 | Final Guardian | climate march fringe | cultural observation | Greta Thunberg | The Final Guardian hears language of urgency that sounds unlike any earlier century and too much like all of them.
+
+END OF FILE
+
+
