@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help | ITALUS Narrative Studio</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body class="help-body">
+  <header class="site-header help-header" aria-label="Primary navigation">
+    <a class="brand-link" href="/" aria-label="ITALUS home">
+      <img src="/assets/italus-tree-circle.png" alt="" class="brand-mark">
+      <span class="brand-name">ITALUS</span>
+    </a>
+
+    <nav class="main-nav dropdown-nav" aria-label="Main menu">
+      <div class="nav-item">
+        <button type="button" class="nav-trigger">File</button>
+        <div class="dropdown-menu">
+          <a href="/" class="menu-item">Home</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <button type="button" class="nav-trigger">Project</button>
+        <div class="dropdown-menu">
+          <a href="/workspace?mode=new">New Project</a>
+          <a href="/workspace?mode=open">Existing Project</a>
+          <a href="/workspace?mode=archive">Archived Project</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <button type="button" class="nav-trigger">Settings</button>
+        <div class="dropdown-menu">
+          <span class="disabled-item">Application Settings</span>
+          <span class="disabled-item">Theme Settings</span>
+          <span class="disabled-item">Provider Settings</span>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <button type="button" class="nav-trigger">Help</button>
+        <div class="dropdown-menu">
+          <a href="/help">Documentation</a>
+          <a href="/">About Italus</a>
+          <a href="/api/health">API Health</a>
+        </div>
+      </div>
+    </nav>
+
+    <p class="header-quote">
+      Build canon first.<br>
+      Generate second.<br>
+      <span>Validate always.</span>
+    </p>
+  </header>
+
+  <main class="help-shell">
+    <section class="help-hero parchment-panel">
+      <p class="eyebrow">First-Time Author Guide</p>
+      <h1>How to Use ITALUS Narrative Studio</h1>
+      <p>
+        This guide walks you through the exact order of operations for building a narrative project:
+        create the project, set the token budget, build canon files, create the book structure,
+        generate scenes, and validate continuity.
+      </p>
+    </section>
+
+    <section class="help-section parchment-panel" id="start">
+      <h2>1. Start Here: What ITALUS Does</h2>
+      <p>
+        ITALUS is a browser-based narrative workspace. You, the author, define the story world,
+        characters, timeline, rules, and scene goals. The backend organizes that information into
+        project context, canon packets, prompts, generation requests, and validation results.
+      </p>
+
+      <div class="help-callout">
+        <strong>Author rule:</strong>
+        Do not begin generation until the project has a token budget and basic canon files.
+        Without canon, the system has no stable truth to preserve.
+      </div>
+
+      <figure class="help-figure">
+        <div class="figure-placeholder">Figure Placeholder</div>
+        <figcaption>
+          <strong>Figure 1. Narrative Studio Workflow</strong>
+          <span>Project setup flows into canon creation, then book structure, generation, and validation.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="help-section parchment-panel" id="landing">
+      <h2>2. Landing Portal</h2>
+      <p>
+        The landing portal is the entry point. It is not where writing happens. It is where you choose
+        what kind of project session to begin.
+      </p>
+
+      <div class="workflow-grid">
+        <article>
+          <h3>File</h3>
+          <p>
+            Use <strong>Home</strong> to return to the landing page. Use exit only when the application
+            later confirms the project is safe to close.
+          </p>
+        </article>
+
+        <article>
+          <h3>Project</h3>
+          <p>
+            Use <strong>New Project</strong> when starting a new story world. Use
+            <strong>Existing Project</strong> to resume active work. Use
+            <strong>Archived Project</strong> for read-only or retired work.
+          </p>
+        </article>
+
+        <article>
+          <h3>Settings</h3>
+          <p>
+            Use settings before serious generation to configure theme, provider preferences, and project
+            behavior. Token budget belongs to project setup and must be reviewed early.
+          </p>
+        </article>
+
+        <article>
+          <h3>Help</h3>
+          <p>
+            Use Help when you need workflow guidance. API Health checks whether the backend server is alive.
+          </p>
+        </article>
+      </div>
+
+      <figure class="help-figure">
+        <div class="figure-placeholder">Figure Placeholder</div>
+        <figcaption>
+          <strong>Figure 2. Landing Portal</strong>
+          <span>The landing page routes you into a new, existing, or archived project workflow.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="help-section parchment-panel" id="new-project">
+      <h2>3. New Project Workflow</h2>
+      <p>
+        A new project is not just an empty writing page. It is a controlled workspace with its own
+        identity, token budget, canon files, book structure, and validation rules.
+      </p>
+
+      <ol class="help-steps">
+        <li>
+          <strong>Click Project → New Project.</strong>
+          The browser opens the workspace in new-project mode.
+        </li>
+        <li>
+          <strong>Name the project.</strong>
+          Use a durable name, not a temporary idea. Example: <em>The Ashen Crown</em>.
+        </li>
+        <li>
+          <strong>Choose the narrative type or genre.</strong>
+          This helps future templates, validation rules, and generation behavior.
+        </li>
+        <li>
+          <strong>Set the token budget.</strong>
+          This controls how much context the system may load into prompts. Larger budgets allow more canon
+          and scene context, but cost more and can slow generation.
+        </li>
+        <li>
+          <strong>Create canon files before writing scenes.</strong>
+          Canon files are the source of truth for world rules, characters, timeline, locations, and style.
+        </li>
+        <li>
+          <strong>Create the first book record.</strong>
+          A project may contain multiple books. The book becomes the container for chapters, events, and scenes.
+        </li>
+        <li>
+          <strong>Create chapters, events, or scenes.</strong>
+          This gives generation a specific target instead of asking the system to write blindly.
+        </li>
+        <li>
+          <strong>Build the first prompt.</strong>
+          The prompt should reference the current scene goal, relevant canon, characters, and continuity needs.
+        </li>
+        <li>
+          <strong>Generate, review, then validate.</strong>
+          Generation creates text. Validation checks whether the text obeys the project canon.
+        </li>
+      </ol>
+
+      <div class="help-callout warning">
+        <strong>Common mistake:</strong>
+        New authors often click Generate too early. The correct first work is project setup,
+        token budget, and canon creation.
+      </div>
+
+      <figure class="help-figure">
+        <div class="figure-placeholder">Figure Placeholder</div>
+        <figcaption>
+          <strong>Figure 3. New Project Sequence</strong>
+          <span>The correct first-time flow is project setup → token budget → canon → book → scenes.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="help-section parchment-panel" id="token-budget">
+      <h2>4. Token Budget Setup</h2>
+      <p>
+        The token budget is the project’s context limit. It determines how much information can be sent
+        into generation and validation at one time.
+      </p>
+
+      <div class="workflow-grid">
+        <article>
+          <h3>Why it matters</h3>
+          <p>
+            Canon, scene instructions, prior events, character state, and style rules all compete for space.
+            A weak budget creates shallow prompts. An uncontrolled budget creates cost and performance risk.
+          </p>
+        </article>
+
+        <article>
+          <h3>What to decide</h3>
+          <p>
+            Decide whether the project needs short-scene drafting, long chapter drafting, deep canon loading,
+            or validation-heavy workflows.
+          </p>
+        </article>
+
+        <article>
+          <h3>Author action</h3>
+          <p>
+            Set the budget before creating generation workflows. Revisit it when the project grows.
+          </p>
+        </article>
+
+        <article>
+          <h3>Backend action</h3>
+          <p>
+            The backend will later use this setting to limit prompt assembly, canon packet size, and validation scope.
+          </p>
+        </article>
+      </div>
+
+      <figure class="help-figure">
+        <div class="figure-placeholder">Figure Placeholder</div>
+        <figcaption>
+          <strong>Figure 4. Token Budget</strong>
+          <span>The token budget controls how much story context can be loaded into each backend workflow.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="help-section parchment-panel" id="canon">
+      <h2>5. Canon Files: The First Real Author Task</h2>
+      <p>
+        Canon files are the controlled truth of the project. They prevent the story from drifting.
+        Before serious generation, create at least the core canon files below.
+      </p>
+
+      <div class="workflow-grid">
+        <article>
+          <h3>World Canon</h3>
+          <p>
+            Defines the setting, laws of the world, history, factions, technology, magic, religion,
+            political structures, and hard rules the story must obey.
+          </p>
+        </article>
+
+        <article>
+          <h3>Character Canon</h3>
+          <p>
+            Defines names, roles, goals, wounds, relationships, voice, appearance, secrets,
+            and what each character knows at each stage of the story.
+          </p>
+        </article>
+
+        <article>
+          <h3>Timeline Canon</h3>
+          <p>
+            Defines what happened, when it happened, what has not happened yet, and what events cannot be contradicted.
+          </p>
+        </article>
+
+        <article>
+          <h3>Location Canon</h3>
+          <p>
+            Defines places, geography, rooms, travel limits, atmosphere, access rules, and recurring visual details.
+          </p>
+        </article>
+
+        <article>
+          <h3>Style Canon</h3>
+          <p>
+            Defines tone, prose style, banned phrases, point of view, tense, pacing, and genre expectations.
+          </p>
+        </article>
+
+        <article>
+          <h3>Continuity Rules</h3>
+          <p>
+            Defines what the validator must protect: injuries, deaths, travel time, relationship state,
+            unresolved clues, promises, objects, and cause-effect chains.
+          </p>
+        </article>
+      </div>
+
+      <ol class="help-steps">
+        <li>Create or import the canon file.</li>
+        <li>Assign the canon type.</li>
+        <li>Attach it to the active project.</li>
+        <li>Review it for contradictions.</li>
+        <li>Allow the backend to package it later into canon packets for generation and validation.</li>
+      </ol>
+
+      <figure class="help-figure">
+        <div class="figure-placeholder">Figure Placeholder</div>
+        <figcaption>
+          <strong>Figure 5. Canon Creation</strong>
+          <span>Canon files become the foundation for prompt building, generation, and continuity validation.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="help-section parchment-panel" id="workspace">
+      <h2>6. Workspace Overview</h2>
+      <p>
+        The workspace is where the application becomes active. Each pane has a specific purpose.
+      </p>
+
+      <div class="workflow-grid">
+        <article>
+          <h3>Project Explorer</h3>
+          <p>
+            Shows project structure: books, chapters, events, scenes, canon files, and generated artifacts.
+            Start here after project creation.
+          </p>
+        </article>
+
+        <article>
+          <h3>Author Workspace</h3>
+          <p>
+            The central writing surface. Use it to draft prompts, review generated prose, and revise scene text.
+          </p>
+        </article>
+
+        <article>
+          <h3>Inspector</h3>
+          <p>
+            Shows metadata, selected item details, canon links, validation status, and future Guardian guidance.
+          </p>
+        </article>
+
+        <article>
+          <h3>Runtime Console</h3>
+          <p>
+            Shows backend activity, route status, generation status, validation results, and system warnings.
+          </p>
+        </article>
+      </div>
+
+      <figure class="help-figure">
+        <div class="figure-placeholder">Figure Placeholder</div>
+        <figcaption>
+          <strong>Figure 6. Workspace Layout</strong>
+          <span>The workspace separates structure, writing, inspection, and runtime feedback.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="help-section parchment-panel" id="author-workflow">
+      <h2>7. Recommended Author Workflow</h2>
+
+      <ol class="help-steps">
+        <li><strong>Create project.</strong> Establish the project container.</li>
+        <li><strong>Set token budget.</strong> Define context limits before generation.</li>
+        <li><strong>Create canon files.</strong> Build the source of truth.</li>
+        <li><strong>Create book.</strong> Define the first major story container.</li>
+        <li><strong>Create chapter or event.</strong> Add structure before scene generation.</li>
+        <li><strong>Create scene.</strong> Define point of view, location, characters, and scene goal.</li>
+        <li><strong>Build prompt.</strong> Combine author intent with selected canon and scene context.</li>
+        <li><strong>Generate.</strong> Backend sends a controlled request to the generation service.</li>
+        <li><strong>Validate.</strong> Backend checks continuity, canon, timeline, character, and location consistency.</li>
+        <li><strong>Revise.</strong> The author accepts, edits, regenerates, or repairs the scene.</li>
+      </ol>
+
+      <figure class="help-figure">
+        <div class="figure-placeholder">Figure Placeholder</div>
+        <figcaption>
+          <strong>Figure 7. Author Workflow</strong>
+          <span>The author moves from structure to canon to controlled generation and validation.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="help-section parchment-panel" id="backend">
+      <h2>8. What the Backend Does</h2>
+      <p>
+        The backend owns lifecycle, state, orchestration, generation, canon packaging, and validation.
+        The frontend should never directly decide whether project state is valid.
+      </p>
+
+      <div class="backend-flow">
+        <span>Browser UI</span>
+        <span>FastAPI Routes</span>
+        <span>Project Service</span>
+        <span>Canon Service</span>
+        <span>Generation Service</span>
+        <span>Validation Service</span>
+      </div>
+
+      <p>
+        When you click a workspace action, the browser should call an API route. The route delegates to a
+        service. The service loads project context, prepares canon, performs the requested workflow, and
+        returns a structured result to the browser.
+      </p>
+    </section>
+
+    <section class="help-section parchment-panel" id="validation">
+      <h2>9. Validation Workflow</h2>
+      <p>
+        Validation protects the story from uncontrolled drift. It should happen after generation and before
+        the author treats generated text as accepted canon.
+      </p>
+
+      <div class="workflow-grid">
+        <article>
+          <h3>Continuity Validation</h3>
+          <p>Checks whether events, injuries, promises, objects, and knowledge remain consistent.</p>
+        </article>
+
+        <article>
+          <h3>Canon Validation</h3>
+          <p>Checks whether generated text violates established world, character, location, or style canon.</p>
+        </article>
+
+        <article>
+          <h3>Timeline Validation</h3>
+          <p>Checks whether the scene occurs in the correct order and respects elapsed time.</p>
+        </article>
+
+        <article>
+          <h3>Character Validation</h3>
+          <p>Checks whether characters speak, act, and know things consistent with their current state.</p>
+        </article>
+      </div>
+
+      <figure class="help-figure">
+        <div class="figure-placeholder">Figure Placeholder</div>
+        <figcaption>
+          <strong>Figure 8. Validation Cycle</strong>
+          <span>Generated text is reviewed against canon before it becomes trusted story material.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="help-section parchment-panel" id="future">
+      <h2>10. Future Features</h2>
+      <p>
+        Future workspace panels may include advanced canon packet review, AI provider selection,
+        export workflows, chapter planning, timeline visualization, and Guardian continuity assistance.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer help-footer">
+    <span>ITALUS Narrative Studio</span>
+    <span>Canon first. Continuity always.</span>
+  </footer>
+</body>
+</html>

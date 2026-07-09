@@ -28,3 +28,19 @@ generated_prompt.txt
 # Backups
 *_BACKUP_*
 data_backups/
+
+# Italus patch artifacts / local archives
+archive/
+pack updates/
+patch_backup_*/
+*_patch.zip
+*_delivery.zip
+downloads/
+
+# Italus local runtime/generated artifacts
+budget_estimate_response.json
+data/projects/
+canon_sources/* - Copy.txt
+
+# Asset source bundles
+assets/*.zip

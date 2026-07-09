@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ITALUS Narrative Studio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell" aria-label="ITALUS Narrative Studio landing page">
+    <img class="background-art" src="assets/library-desk-bg.png" alt="Narrative Studio library desk background">
+
+    <header class="site-header" aria-label="Primary navigation">
+      <a class="brand-link" href="#" aria-label="ITALUS home">
+        <img src="assets/italus-tree-circle.png" alt="" class="brand-mark">
+        <span class="brand-name">ITALUS</span>
+      </a>
+
+      
+      <nav class="main-nav dropdown-nav" aria-label="Main menu">
+
+        <div class="nav-item">
+          <button type="button" class="nav-trigger">File</button>
+          <div class="dropdown-menu">
+            <a href="/" class="menu-item">Home</a>
+
+            <div class="menu-divider"></div>
+
+            <a href="#"
+               id="exit-narrative-studio"
+               class="menu-item menu-danger">
+              Exit Narrative Studio
+            </a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button type="button" class="nav-trigger">Project</button>
+          <div class="dropdown-menu">
+            <a href="#" data-project-action="new">New Project</a>
+            <a href="#" data-project-action="existing">Existing Project</a>
+            <a href="#" data-project-action="archived">Archived Project</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button type="button" class="nav-trigger">Settings</button>
+          <div class="dropdown-menu">
+            <span class="disabled-item">Application Settings</span>
+            <span class="disabled-item">Theme Settings</span>
+            <span class="disabled-item">Provider Settings</span>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button type="button" class="nav-trigger">Help</button>
+          <div class="dropdown-menu">
+            <a href="/help">Documentation</a>
+            <a href="#learn-more">About Italus</a>
+            <a href="/api/health">API Health</a>
+          </div>
+        </div>
+
+      </nav>
+
+      <p class="header-quote">
+        The longest stories<br>
+        begin with timeless roots.<br>
+        <span>— ITALUS, 789 AD</span>
+      </p>
+
+      
+    </header>
+
+    <section class="project-tiles" aria-label="Project actions">
+      <a class="project-tile tile-one" href="#" data-project-action="new" aria-label="Create a new project">
+        <img src="assets/tile-new-project.png" alt="New Project — Create New">
+      </a>
+      <a class="project-tile tile-two" href="#" data-project-action="existing" aria-label="Open an existing project">
+        <img src="assets/tile-existing-project.png" alt="Existing Project — Open Project">
+      </a>
+      <a class="project-tile tile-three" href="#" data-project-action="archived" aria-label="Browse archived projects">
+        <img src="assets/tile-archived-project.png" alt="Archived Project — Browse Archive">
+      </a>
+    </section>
+
+    <a class="learn-more-link" href="#learn-more" aria-label="Learn more about Italus">
+      Learn More
+    </a>
+  </main>
+
+  <section class="studio-modal-layer" id="studio-modal-layer" aria-hidden="true">
+    <div class="studio-modal-backdrop" data-modal-close></div>
+
+    <section class="studio-modal" id="new-project-modal" role="dialog" aria-modal="true" aria-labelledby="new-project-title" hidden>
+      <button type="button" class="studio-modal-close" data-modal-close aria-label="Close New Project setup">×</button>
+      <header class="studio-modal-header">
+        <p class="eyebrow">Project Setup</p>
+        <h2 id="new-project-title">Create New Project</h2>
+        <p>Define the project shell before entering the workspace. Canon setup follows after this stage.</p>
+      </header>
+
+      <form id="new-project-form" class="wizard-form">
+        <div class="form-grid">
+          <label>
+            Project Name
+            <input name="project_name" type="text" placeholder="Book or series title" required>
+          </label>
+
+          <label>
+            Project Type
+            <select name="project_kind">
+              <option value="single_book">Single Book</option>
+              <option value="series">Series</option>
+            </select>
+          </label>
+
+          <label>
+            Book Count
+            <input name="book_count" type="number" min="1" value="1" required>
+          </label>
+
+          <label>
+            Chapters Per Book
+            <input name="chapters_per_book" type="number" min="1" value="40" required>
+          </label>
+
+          <label>
+            Target Words Per Chapter
+            <input name="target_words_per_chapter" type="number" min="250" step="250" value="4000" required>
+          </label>
+
+          <label>
+            Total Token Budget
+            <input name="token_budget_total" type="number" min="1000" step="1000" value="250000" required>
+          </label>
+
+          <label>
+            Token Budget Per Generation
+            <input name="token_budget_per_generation" type="number" min="1000" step="500" value="12000" required>
+          </label>
+
+          <label>
+            Genre
+            <select name="genre">
+              <option value="historical_epic">Historical Epic</option>
+              <option value="mystery">Mystery</option>
+              <option value="fantasy">Fantasy</option>
+              <option value="science_fiction">Science Fiction</option>
+              <option value="literary">Literary</option>
+            </select>
+          </label>
+        </div>
+
+        <section class="budget-preview" id="budget-preview" aria-live="polite">
+          Complete the project basics to estimate word and token load.
+        </section>
+
+        <div class="wizard-actions">
+          <button type="button" class="secondary-button" data-modal-close>Cancel</button>
+          <button type="button" class="secondary-button" id="save-project-draft">Save Draft</button>
+          <button type="submit" class="primary-button">Continue to Canon Setup</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="studio-modal" id="existing-project-modal" role="dialog" aria-modal="true" aria-labelledby="existing-project-title" hidden>
+      <button type="button" class="studio-modal-close" data-modal-close aria-label="Close Existing Project picker">×</button>
+      <header class="studio-modal-header">
+        <p class="eyebrow">Resume Work</p>
+        <h2 id="existing-project-title">Existing Projects</h2>
+        <p>Incomplete projects resume their setup wizard. Ready projects open the workspace.</p>
+      </header>
+      <div class="project-picker-state" id="existing-project-state">
+        Project listing is not wired yet. Backend lifecycle routes will populate this panel.
+      </div>
+      <div class="wizard-actions">
+        <button type="button" class="secondary-button" data-modal-close>Close</button>
+      </div>
+    </section>
+
+    <section class="studio-modal" id="archived-project-modal" role="dialog" aria-modal="true" aria-labelledby="archived-project-title" hidden>
+      <button type="button" class="studio-modal-close" data-modal-close aria-label="Close Archived Project browser">×</button>
+      <header class="studio-modal-header">
+        <p class="eyebrow">Archive</p>
+        <h2 id="archived-project-title">Archived Projects</h2>
+        <p>Archived projects are restored before resuming setup or workspace entry.</p>
+      </header>
+      <div class="project-picker-state" id="archived-project-state">
+        Archive browsing is not wired yet. Backend archive routes will populate this panel.
+      </div>
+      <div class="wizard-actions">
+        <button type="button" class="secondary-button" data-modal-close>Close</button>
+      </div>
+    </section>
+
+    <section class="studio-modal" id="canon-setup-modal" role="dialog" aria-modal="true" aria-labelledby="canon-setup-title" hidden>
+      <button type="button" class="studio-modal-close" data-modal-close aria-label="Close Canon Setup">×</button>
+      <header class="studio-modal-header">
+        <p class="eyebrow">Canon Setup</p>
+        <h2 id="canon-setup-title">Genre Template</h2>
+        <p>Confirm the selected genre template before authoring required canon sets.</p>
+      </header>
+      <div class="project-picker-state canon-setup-state" id="canon-setup-state">
+        Select or create a project in Canon Setup to load template requirements.
+      </div>
+      <div class="wizard-actions">
+        <button type="button" class="secondary-button" id="canon-back-to-project">Back to Project Setup</button>
+        <button type="button" class="primary-button" id="accept-genre-template">Confirm Genre Template</button>
+        <button type="button" class="secondary-button" data-modal-close>Close</button>
+      </div>
+    </section>
+  </section>
+
+  <script src="/js/project_wizard.js"></script>
+  <script src="/js/project_lifecycle.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

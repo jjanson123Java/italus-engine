@@ -1,0 +1,257 @@
+/* Narrative Studio / Italus exact-reference page */
+
+:root {
+  --gold: #c9a05b;
+  --gold-bright: #f0d491;
+  --green: #153321;
+  --green-bright: #25583b;
+  --ink: #06100d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #050b09;
+  overflow: hidden;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.app-shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 45% 35%, rgba(206, 157, 75, 0.12), transparent 28%),
+    linear-gradient(180deg, #091512, #030706);
+}
+
+/* The reference image preserves the approved visual direction exactly. */
+.reference-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Live menu overlay */
+.top-nav {
+  position: absolute;
+  left: 18.4%;
+  top: 8.1%;
+  width: 42%;
+  height: 4.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 4;
+}
+
+.top-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  height: 32px;
+  color: transparent;
+  text-decoration: none;
+  border-radius: 999px;
+  outline: none;
+}
+
+.top-nav a::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 2px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.top-nav a:hover::after,
+.top-nav a:focus-visible::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.top-nav a:focus-visible {
+  outline: 1px solid rgba(240, 212, 145, 0.9);
+  outline-offset: 3px;
+}
+
+/* Project cards are clickable/animated overlays aligned to the visual tiles. */
+.project-actions {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  perspective: 1100px;
+  pointer-events: none;
+}
+
+.project-card {
+  position: absolute;
+  display: block;
+  width: 18%;
+  height: 38%;
+  top: 40.7%;
+  border-radius: 10px;
+  pointer-events: auto;
+  text-decoration: none;
+  transform-style: preserve-3d;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    filter 180ms ease;
+  border: 1px solid rgba(201, 160, 91, 0.16);
+  background: rgba(13, 35, 24, 0.01);
+}
+
+.card-new {
+  left: 36.05%;
+}
+
+.card-existing {
+  left: 55.2%;
+}
+
+.card-archive {
+  left: 74.35%;
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  opacity: 0;
+  background:
+    radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(240, 212, 145, 0.25), transparent 34%),
+    linear-gradient(135deg, rgba(240, 212, 145, 0.35), rgba(21, 51, 33, 0.02) 45%, rgba(240, 212, 145, 0.2));
+  transition: opacity 180ms ease;
+  mix-blend-mode: screen;
+}
+
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(240, 212, 145, 0);
+  transition: border-color 180ms ease;
+}
+
+.card-glow {
+  position: absolute;
+  inset: 68% 15% 7% 15%;
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(47, 103, 68, 0.18), rgba(19, 61, 37, 0.02));
+  opacity: 0;
+  transition: opacity 180ms ease, box-shadow 180ms ease;
+}
+
+.project-card:hover,
+.project-card:focus-visible {
+  transform: translateY(-8px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(1.025);
+  box-shadow:
+    0 22px 55px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(201, 160, 91, 0.24),
+    inset 0 0 24px rgba(201, 160, 91, 0.08);
+  border-color: rgba(240, 212, 145, 0.55);
+  filter: saturate(1.08) brightness(1.08);
+}
+
+.project-card:hover::before,
+.project-card:focus-visible::before {
+  opacity: 1;
+}
+
+.project-card:hover::after,
+.project-card:focus-visible::after {
+  border-color: rgba(240, 212, 145, 0.42);
+}
+
+.project-card:hover .card-glow,
+.project-card:focus-visible .card-glow {
+  opacity: 1;
+  box-shadow:
+    0 0 18px rgba(240, 212, 145, 0.16),
+    0 0 28px rgba(39, 103, 64, 0.28);
+}
+
+/* Bottom CTA overlay */
+.learn-more {
+  position: absolute;
+  right: 3.55%;
+  bottom: 4.95%;
+  width: 8.6%;
+  height: 4.7%;
+  z-index: 5;
+  border-radius: 6px;
+  text-decoration: none;
+  border: 1px solid rgba(201, 160, 91, 0.08);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.learn-more:hover,
+.learn-more:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(240, 212, 145, 0.06);
+  border-color: rgba(240, 212, 145, 0.58);
+  box-shadow: 0 0 20px rgba(201, 160, 91, 0.22);
+  outline: none;
+}
+
+@media (max-aspect-ratio: 16 / 10) {
+  .top-nav {
+    left: 18%;
+    width: 44%;
+  }
+
+  .project-card {
+    top: 41%;
+    height: 37%;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow: auto;
+  }
+
+  .app-shell {
+    min-width: 1200px;
+    min-height: 760px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-card::before,
+  .project-card::after,
+  .top-nav a::after,
+  .learn-more {
+    transition: none;
+  }
+
+  .project-card:hover,
+  .project-card:focus-visible {
+    transform: translateY(-3px);
+  }
+}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Narrative Studio — Italus</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!--
+    Exact-reference implementation:
+    The supplied design image is used as the visual background so the page keeps the same atmosphere.
+    Interactive menu links and project tiles are overlaid as live HTML anchors.
+    Replace all href="#" values when Morpheus wires this into the application.
+  -->
+
+  <main class="app-shell" aria-label="Narrative Studio landing page">
+    <img class="reference-bg" src="./assets/narrative-studio-reference.png" alt="" />
+
+    <nav class="top-nav" aria-label="Primary navigation">
+      <a href="#" data-link="file">File</a>
+      <a href="#" data-link="project">Project</a>
+      <a href="#" data-link="engine">Engine</a>
+      <a href="#" data-link="generate">Generate</a>
+      <a href="#" data-link="validation">Validation</a>
+      <a href="#" data-link="view">View</a>
+      <a href="#" data-link="settings">Settings</a>
+      <a href="#" data-link="help">Help</a>
+    </nav>
+
+    <section class="project-actions" aria-label="Project actions">
+      <a class="project-card card-new" href="#" data-link="new-project" aria-label="Create new project">
+        <span class="card-glow"></span>
+      </a>
+
+      <a class="project-card card-existing" href="#" data-link="existing-project" aria-label="Open existing project">
+        <span class="card-glow"></span>
+      </a>
+
+      <a class="project-card card-archive" href="#" data-link="archived-project" aria-label="Browse archived projects">
+        <span class="card-glow"></span>
+      </a>
+    </section>
+
+    <a class="learn-more" href="#" data-link="learn-more" aria-label="Learn more about Italus"></a>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

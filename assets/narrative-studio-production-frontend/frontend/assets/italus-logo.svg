@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 72" role="img" aria-labelledby="title">
+<title>Italus logo</title>
+<defs>
+  <linearGradient id="g" x1="0" x2="1">
+    <stop offset="0" stop-color="#d8a955"/>
+    <stop offset="1" stop-color="#f5dc9b"/>
+  </linearGradient>
+</defs>
+<g fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M34 60 V24"/>
+  <path d="M34 25 C22 29 14 39 11 52"/>
+  <path d="M34 25 C48 29 57 40 61 54"/>
+  <path d="M34 38 C25 38 19 42 14 48"/>
+  <path d="M34 38 C44 39 51 44 57 51"/>
+  <path d="M34 48 C27 48 23 51 19 56"/>
+  <path d="M34 48 C43 49 49 53 54 59"/>
+  <path d="M25 60 H43"/>
+  <path d="M34 24 C29 17 31 9 34 6 C38 11 40 18 34 24Z"/>
+</g>
+<text x="78" y="45" font-family="Georgia, 'Times New Roman', serif" font-size="34" letter-spacing="6" fill="url(#g)">ITALUS</text>
+</svg>

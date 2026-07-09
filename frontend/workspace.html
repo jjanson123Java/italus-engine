@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Narrative Studio Workspace</title>
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="workspace.css" />
+</head>
+
+<body class="workspace-body">
+  <div class="workspace-shell">
+
+    <header class="workspace-nav">
+      <a class="workspace-brand" href="/">
+        <img src="assets/italus-tree-circle.png" alt="Italus" />
+        <span>ITALUS</span>
+      </a>
+
+      <nav aria-label="Workspace commands">
+        <a href="/" data-top-menu="file">File</a>
+        <a href="#project" data-top-menu="project">Project</a>
+        <a href="#engine" data-top-menu="engine">Engine</a>
+        <a href="#generate" data-top-menu="generate" class="disabled-link" aria-disabled="true">Generate</a>
+        <a href="#validation" data-top-menu="validation" class="disabled-link" aria-disabled="true">Validation</a>
+        <a href="#view" data-top-menu="view">View</a>
+        <a href="#settings" data-top-menu="settings">Settings</a>
+        <a href="/help">Help</a>
+      </nav>
+    </header>
+
+    <main class="workspace-grid">
+
+      <aside class="project-explorer panel">
+        <h2>Project Explorer</h2>
+
+        <section>
+          <h3>Project</h3>
+          <button type="button" data-workspace-section="dashboard">Dashboard</button>
+          <button type="button" data-workspace-section="manuscript_plan">Manuscript Plan</button>
+          <button type="button" data-workspace-section="budget_plan">Budget Plan</button>
+        </section>
+
+        <section>
+          <h3>Library</h3>
+          <button type="button" data-workspace-section="books">Books</button>
+          <button type="button" data-workspace-section="chapters">Chapters</button>
+          <button type="button" data-workspace-section="events">Events</button>
+          <button type="button" data-workspace-section="scenes">Scenes</button>
+          <button type="button" data-workspace-section="characters">Characters</button>
+        </section>
+
+        <section>
+          <h3>Canon</h3>
+          <button type="button" data-workspace-section="canon_dashboard">Canon Dashboard</button>
+          <button type="button" data-workspace-section="world_canon">World Canon</button>
+          <button type="button" data-workspace-section="character_canon">Character Canon</button>
+          <button type="button" data-workspace-section="story_flow">Story Flow / Saga Canon</button>
+          <button type="button" data-workspace-section="timeline_backbone">Timeline / Event Backbone</button>
+          <button type="button" data-workspace-section="continuity_rules">Continuity Rules</button>
+        </section>
+
+        <section>
+          <h3>Runtime Packs</h3>
+          <button type="button" data-workspace-section="core_pack">Core Pack</button>
+          <button type="button" data-workspace-section="generation_pack">Generation Pack</button>
+          <button type="button" data-workspace-section="book_packs">Book Packs</button>
+        </section>
+
+        <section>
+          <h3>Runtime</h3>
+          <button type="button" data-workspace-section="runtime_storage_preview">Project Writing Memory</button>
+          <button type="button" data-workspace-section="memory_continuity" disabled>Memory / Continuity</button>
+          <button type="button" data-workspace-section="validation" disabled>Validation</button>
+          <button type="button" data-workspace-section="output" disabled>Output</button>
+        </section>
+
+        <section>
+          <h3>Project Control</h3>
+          <button type="button" data-workspace-section="settings">Settings</button>
+          <button type="button" data-workspace-section="archive">Archive</button>
+        </section>
+      </aside>
+
+      <section class="author-workspace panel">
+        <div class="workspace-title-row">
+          <div>
+            <p class="eyebrow">Author Workspace</p>
+            <h1 id="workspace-heading">Project Dashboard</h1>
+          </div>
+          <span id="workspace-mode">Mode: Workspace</span>
+        </div>
+
+        <div class="workspace-tabs" aria-label="Workspace section tabs">
+          <button type="button" class="active" data-workspace-tab="overview">Overview</button>
+          <button type="button" data-workspace-tab="details">Details</button>
+          <button type="button" data-workspace-tab="references">References</button>
+          <button type="button" data-workspace-tab="runtime_status">Runtime Status</button>
+        </div>
+
+        <div class="editor-surface" id="workspace-main-panel">
+          <p class="placeholder">
+            Loading project workspace. Generation remains disabled until runtime migration is complete.
+          </p>
+        </div>
+      </section>
+
+      <aside class="inspector panel">
+        <h2>Inspector</h2>
+
+        <div class="status-card">
+          <h3>Project Status</h3>
+          <p id="inspector-project-status">Loading</p>
+        </div>
+
+        <div class="status-card">
+          <h3>Canon Status</h3>
+          <p id="inspector-canon-status">Loading</p>
+        </div>
+
+        <div class="status-card">
+          <h3>Runtime Status</h3>
+          <p id="inspector-runtime-status">Generation disabled</p>
+        </div>
+
+        <div class="status-card">
+          <h3>Token Budget</h3>
+          <p id="inspector-budget-status">Loading</p>
+        </div>
+      </aside>
+
+    </main>
+
+    <footer class="runtime-console panel">
+      <h2>Runtime Console</h2>
+      <p id="runtime-log">Workspace loading.</p>
+    </footer>
+
+  </div>
+
+  <script src="workspace.js"></script>
+</body>
+</html>
