@@ -1497,3 +1497,100 @@ form[data-canon-section-form] .wizard-actions {
   color: #d7ffd9;
   opacity: 0.92;
 }
+
+/* Canon Setup UX workspace patch */
+#canon-setup-modal[hidden] {
+  display: none;
+}
+
+#canon-setup-modal:not([hidden]) {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: 100vh;
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#canon-setup-modal .studio-modal-header {
+  flex: 0 0 auto;
+  max-width: none;
+  margin-bottom: 18px;
+  padding-right: 48px;
+}
+
+#canon-setup-modal .canon-setup-state {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding-right: 10px;
+}
+
+#canon-setup-modal > .wizard-actions {
+  flex: 0 0 auto;
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  margin-top: 14px;
+  padding-top: 14px;
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 13, 13, 0),
+    rgba(4, 13, 13, 0.96) 26%,
+    rgba(4, 13, 13, 0.99)
+  );
+}
+
+#canon-setup-modal [data-canon-section-editor] {
+  scroll-margin-top: 16px;
+  outline: none;
+}
+
+#canon-setup-modal [data-canon-section-editor]:focus {
+  border-color: rgba(214, 168, 95, 0.64);
+  box-shadow: 0 0 0 2px rgba(214, 168, 95, 0.12);
+}
+
+#canon-setup-modal [data-canon-run-validation][aria-busy="true"] {
+  cursor: wait;
+  opacity: 1;
+  color: #fff8e8;
+  background: rgba(94, 101, 102, 0.94);
+  border-color: rgba(214, 168, 95, 0.78);
+}
+
+#canon-setup-modal [data-canon-run-validation][aria-busy="true"]:disabled {
+  color: #fff8e8;
+  opacity: 1;
+}
+
+#canon-setup-modal [data-canon-workbook-message] {
+  margin: 12px 0;
+}
+
+#canon-setup-modal .canon-validation-summary {
+  margin-top: 12px;
+}
+
+@media (max-width: 760px) {
+  .studio-modal-layer {
+    padding: 0;
+  }
+
+  #canon-setup-modal:not([hidden]) {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    padding: 20px 16px;
+  }
+
+  #canon-setup-modal .canon-setup-state {
+    padding-right: 4px;
+  }
+}

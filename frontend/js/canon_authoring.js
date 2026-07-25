@@ -13,6 +13,8 @@ write runtime memory, or unlock generation.
   const AUTHORING_ROUTE_SUFFIX = '/canon/authoring';
   const MARKDOWN_STATUS_ROUTE_SUFFIX = '/canon/markdown';
   const MARKDOWN_RENDER_ROUTE_SUFFIX = '/canon/markdown/render';
+  const VALIDATION_STATUS_ROUTE_SUFFIX = '/canon/validation';
+  const VALIDATION_RUN_ROUTE_SUFFIX = '/canon/validation/run';
   const TARGET_STATE = new Map();
 
   function escapeHtml(value) {
@@ -201,9 +203,100 @@ write runtime memory, or unlock generation.
     `;
   }
 
+  function validationIssueListHtml(items, emptyMessage) {
+    if (!Array.isArray(items) || !items.length) {
+      return `<p class="setup-note">${escapeHtml(emptyMessage)}</p>`;
+    }
+
+    return `
+      <ul class="canon-item-list">
+        ${items.map((item) => `
+          <li class="canon-item-card">
+            <strong>${escapeHtml(item.code || item.severity || 'validation finding')}</strong>
+            <span>${escapeHtml(item.message || 'Canon validation finding')}</span>
+            ${item.section_id ? `<small>Section: ${escapeHtml(item.section_id)}</small>` : ''}
+          </li>
+        `).join('')}
+      </ul>
+    `;
+  }
+
+  function renderValidationStatusPanel(validationStatus) {
+    const status = validationStatus && typeof validationStatus === 'object' ? validationStatus : {};
+    const validationState = normalizeStatus(status.status);
+    const ready = Boolean(status.ready_for_packet_generation);
+    const issues = Array.isArray(status.issues) ? status.issues : [];
+    const warnings = Array.isArray(status.warnings) ? status.warnings : [];
+    const missingRequired = Array.isArray(status.missing_required_sections)
+      ? status.missing_required_sections
+      : [];
+    const missingSources = Array.isArray(status.missing_rendered_sources)
+      ? status.missing_rendered_sources
+      : [];
+    const expectedAuthoringCodes = new Set([
+      'required_section_not_complete',
+      'missing_required_section'
+    ]);
+    const unexpectedIssues = issues.filter((item) => !expectedAuthoringCodes.has(item && item.code));
+    const reportWritten = Boolean(status.report_written);
+    const stateLabel = validationState.replaceAll('_', ' ').toUpperCase();
+    const incompleteCount = missingRequired.length || Math.max(
+      0,
+      number(status.required_sections_total) - number(status.required_sections_complete)
+    );
+
+    return `
+      <article class="canon-group-card" data-canon-validation-status data-status="${ready ? 'READY' : 'LOCKED'}">
+        <header>
+          <h3>Canon Validation</h3>
+          <span>${escapeHtml(stateLabel)}</span>
+        </header>
+        <p class="setup-note">
+          Validation checks project-local canon completion and rendered Markdown sources.
+          It does not generate packets, call providers, write runtime memory, or unlock generation.
+        </p>
+        <dl>
+          <div><dt>Required Complete</dt><dd>${number(status.required_sections_complete)} / ${number(status.required_sections_total)}</dd></div>
+          <div><dt>Rendered Sources</dt><dd>${number(status.rendered_sources_total)}</dd></div>
+          <div><dt>Blocking Issues</dt><dd>${number(unexpectedIssues.length)}</dd></div>
+          <div><dt>Warnings</dt><dd>${number(warnings.length)}</dd></div>
+          <div><dt>Report</dt><dd>${reportWritten ? 'WRITTEN' : 'STATUS ONLY'}</dd></div>
+        </dl>
+        <div class="wizard-actions">
+          <button type="button" class="secondary" data-canon-run-validation>
+            Run Canon Validation
+          </button>
+        </div>
+        ${incompleteCount
+          ? `<p class="setup-note canon-validation-summary">
+               ${number(incompleteCount)} required canon section${incompleteCount === 1 ? '' : 's'} remain incomplete.
+               Open a section below to continue authoring.
+             </p>`
+          : '<p class="setup-note">All required sections are complete.</p>'}
+        ${missingSources.length
+          ? validationIssueListHtml(
+              missingSources.map((item) => ({
+                code: 'missing_rendered_source',
+                message: item.expected_file || item.label || item.section_id || 'Rendered source missing',
+                section_id: item.section_id
+              })),
+              'All completed sections have rendered sources.'
+            )
+          : '<p class="setup-note">No completed-section Markdown sources are missing.</p>'}
+        ${unexpectedIssues.length
+          ? validationIssueListHtml(unexpectedIssues, 'No unexpected blocking validation issues reported.')
+          : ''}
+        ${warnings.length
+          ? validationIssueListHtml(warnings, 'No validation warnings reported.')
+          : ''}
+      </article>
+    `;
+  }
+
   function renderAuthoringStatus(target, payload, selectedSectionHtml) {
     const state = TARGET_STATE.get(target.id || 'canon-workbook-shell') || {};
     const markdownStatus = state.lastMarkdownStatus || {};
+    const validationStatus = state.lastValidationStatus || {};
     const sections = Array.isArray(payload.sections) ? payload.sections : [];
     const required = Number(payload.required_section_count || 0);
     const complete = Number(payload.completed_required_section_count || 0);
@@ -227,10 +320,14 @@ write runtime memory, or unlock generation.
         </dl>
       </article>
       ${renderMarkdownStatusPanel(markdownStatus)}
-      <div class="canon-item-list" aria-label="Canon Workbook Sections">
+      ${renderValidationStatusPanel(validationStatus)}
+      ${state.flashMessage
+        ? `<p class="setup-message ${escapeHtml(state.flashTone || 'success')}" data-canon-workbook-message>${escapeHtml(state.flashMessage)}</p>`
+        : ''}
+      <div class="canon-item-list" aria-label="Canon Workbook Sections" data-canon-section-list>
         ${sections.length ? sections.map(renderSectionCard).join('') : '<p class="setup-note">No canon questionnaire sections were returned.</p>'}
       </div>
-      <section class="canon-group-card" data-canon-section-editor aria-label="Canon Section Editor">
+      <section class="canon-group-card" data-canon-section-editor aria-label="Canon Section Editor" tabindex="-1">
         ${selectedSectionHtml || '<p class="setup-note">Open a section to edit project-local author canon answers.</p>'}
       </section>
     `;
@@ -421,6 +518,14 @@ write runtime memory, or unlock generation.
     return apiPost(projectId, `/canon/markdown/section/${encodeURIComponent(sectionId)}`);
   }
 
+  async function loadCanonValidationStatus(projectId) {
+    return apiGet(projectId, VALIDATION_STATUS_ROUTE_SUFFIX);
+  }
+
+  async function runCanonValidation(projectId) {
+    return apiPost(projectId, VALIDATION_RUN_ROUTE_SUFFIX);
+  }
+
   async function loadCanonSection(projectId, sectionId) {
     return apiGet(projectId, `/canon/section/${encodeURIComponent(sectionId)}`);
   }
@@ -544,8 +649,38 @@ write runtime memory, or unlock generation.
         message: error && error.message ? error.message : 'Markdown status unavailable.'
       };
     }
+    try {
+      state.lastValidationStatus = await loadCanonValidationStatus(state.projectId);
+    } catch (error) {
+      state.lastValidationStatus = {
+        status: 'unavailable',
+        ready_for_packet_generation: false,
+        issues: [],
+        warnings: [],
+        message: error && error.message ? error.message : 'Validation status unavailable.'
+      };
+    }
     state.selectedSectionId = selectedSectionId || state.selectedSectionId || null;
     renderAuthoringStatus(target, status, selectedHtml);
+  }
+
+  function revealSectionList(target) {
+    const sectionList = target.querySelector('[data-canon-section-list]');
+    if (!sectionList) return;
+
+    window.requestAnimationFrame(() => {
+      sectionList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function revealSectionEditor(target) {
+    const editor = target.querySelector('[data-canon-section-editor]');
+    if (!editor) return;
+
+    window.requestAnimationFrame(() => {
+      editor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      editor.focus({ preventScroll: true });
+    });
   }
 
   async function openSection(target, state, sectionId, message, tone) {
@@ -554,6 +689,7 @@ write runtime memory, or unlock generation.
     state.lastSection = payload;
     const editorHtml = renderSectionEditor(payload, message, tone);
     await refreshWorkbook(target, state, sectionId, editorHtml);
+    revealSectionEditor(target);
   }
 
   function bindWorkbookEvents(target) {
@@ -566,6 +702,7 @@ write runtime memory, or unlock generation.
       const reopenButton = event.target.closest('[data-canon-reopen-section]');
       const renderAllButton = event.target.closest('[data-canon-render-all-markdown]');
       const renderSectionButton = event.target.closest('[data-canon-render-section-markdown]');
+      const runValidationButton = event.target.closest('[data-canon-run-validation]');
       const addButton = event.target.closest('[data-canon-add-record]');
       const removeButton = event.target.closest('[data-canon-remove-record]');
       const state = TARGET_STATE.get(target.id || 'canon-workbook-shell') || {};
@@ -616,6 +753,29 @@ write runtime memory, or unlock generation.
           return;
         }
 
+        if (runValidationButton) {
+          const validationStartedAt = Date.now();
+          runValidationButton.disabled = true;
+          runValidationButton.setAttribute('aria-busy', 'true');
+          runValidationButton.textContent = 'Running Validation...';
+
+          state.lastValidationStatus = await runCanonValidation(state.projectId);
+
+          const minimumFeedbackMs = 650;
+          const elapsedMs = Date.now() - validationStartedAt;
+          if (elapsedMs < minimumFeedbackMs) {
+            await new Promise((resolve) => window.setTimeout(resolve, minimumFeedbackMs - elapsedMs));
+          }
+
+          await refreshWorkbook(
+            target,
+            state,
+            state.selectedSectionId,
+            state.lastSection ? renderSectionEditor(state.lastSection, 'Canon validation completed.', 'ok') : null
+          );
+          return;
+        }
+
         if (addButton) {
           const group = addButton.closest('[data-canon-record-id]');
           if (group) cloneRecordItem(group);
@@ -641,7 +801,12 @@ write runtime memory, or unlock generation.
 
       try {
         await saveCanonSectionDraft(state.projectId, sectionId, payload);
-        await openSection(target, state, sectionId, 'Draft saved to project-local author canon storage.', 'ok');
+        state.selectedSectionId = null;
+        state.lastSection = null;
+        state.flashMessage = 'Draft saved to project-local author canon storage.';
+        state.flashTone = 'success';
+        await refreshWorkbook(target, state, null, null);
+        revealSectionList(target);
       } catch (error) {
         renderError(target, error && error.message ? error.message : 'Canon Workbook draft save failed.');
       }
@@ -672,6 +837,17 @@ write runtime memory, or unlock generation.
           message: markdownError && markdownError.message ? markdownError.message : 'Markdown status unavailable.'
         };
       }
+      try {
+        state.lastValidationStatus = await loadCanonValidationStatus(state.projectId);
+      } catch (validationError) {
+        state.lastValidationStatus = {
+          status: 'unavailable',
+          ready_for_packet_generation: false,
+          issues: [],
+          warnings: [],
+          message: validationError && validationError.message ? validationError.message : 'Validation status unavailable.'
+        };
+      }
       renderAuthoringStatus(target, payload || {});
     } catch (error) {
       renderError(target, error && error.message ? error.message : 'Canon Workbook status could not be loaded.');
@@ -684,6 +860,8 @@ write runtime memory, or unlock generation.
     loadCanonMarkdownStatus,
     renderCompletedCanonSources,
     renderCanonSectionMarkdown,
+    loadCanonValidationStatus,
+    runCanonValidation,
     loadCanonSection,
     saveCanonSectionDraft,
     completeCanonSection,
