@@ -16,6 +16,7 @@ from app.services import (
     canon_template_service,
     canon_authoring_service,
     canon_markdown_renderer_service,
+    canon_validation_service,
 )
 
 
@@ -316,6 +317,35 @@ def render_canon_section_markdown(project_id: str, section_id: str):
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     except canon_markdown_renderer_service.CanonMarkdownSectionNotCompleteError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/canon/validation")
+def get_canon_validation_status(project_id: str):
+    """Return read-only project-local canon validation status."""
+    try:
+        return canon_validation_service.get_canon_validation_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/canon/validation/run")
+def run_canon_validation(project_id: str):
+    """Validate project-local canon and write the validation report."""
+    try:
+        return canon_validation_service.validate_project_canon(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/canon/validation/section/{section_id}")
+def validate_canon_section(project_id: str, section_id: str):
+    """Validate one project-local canon section without writing a report."""
+    try:
+        return canon_validation_service.validate_section(project_id, section_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_validation_service.CanonValidationSectionNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @router.post("/api/project/{project_id}/canon/initialize")
