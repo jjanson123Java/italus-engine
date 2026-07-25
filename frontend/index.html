@@ -56,7 +56,7 @@
           <button type="button" class="nav-trigger">Help</button>
           <div class="dropdown-menu">
             <a href="/help">Documentation</a>
-            <a href="#learn-more">About Italus</a>
+            <a href="#learn-more" data-project-action="learnMore">About Italus</a>
             <a href="/api/health">API Health</a>
           </div>
         </div>
@@ -84,7 +84,7 @@
       </a>
     </section>
 
-    <a class="learn-more-link" href="#learn-more" aria-label="Learn more about Italus">
+    <a class="learn-more-link" href="#learn-more" data-project-action="learnMore" aria-label="Learn more about Italus">
       Learn More
     </a>
   </main>
@@ -194,6 +194,95 @@
       </div>
     </section>
 
+    <section class="studio-modal learn-more-modal" id="learn-more-modal" role="dialog" aria-modal="true" aria-labelledby="learn-more-title" hidden>
+      <button type="button" class="studio-modal-close" data-modal-close aria-label="Close About Italus">×</button>
+      <div class="learn-more-hero">
+        <div class="learn-more-tree-wrap" aria-hidden="true">
+          <img src="assets/italus-tree-circle.png" alt="" class="learn-more-tree">
+        </div>
+        <div class="learn-more-hero-copy">
+          <p class="eyebrow">About Italus Narrative Studio</p>
+          <h2 id="learn-more-title">Rooted in Time, Built for Eternity</h2>
+          <p>
+            Great stories endure when their roots run deep. Italus helps authors protect canon,
+            preserve creative voice, and build literary worlds that can stand across time.
+          </p>
+        </div>
+      </div>
+
+      <div class="learn-more-section">
+        <h3>The Historical Legacy</h3>
+        <div class="learn-more-card-grid">
+          <article class="learn-more-card">
+            <span class="learn-more-card-kicker">Ancient Origins</span>
+            <p>Germinated in 789 AD, surviving over 1,230 years of European history.</p>
+          </article>
+          <article class="learn-more-card">
+            <span class="learn-more-card-kicker">Scientific Milestone</span>
+            <p>Officially recognized as Europe’s oldest scientifically dated living tree.</p>
+          </article>
+          <article class="learn-more-card">
+            <span class="learn-more-card-kicker">Unshaken Foundation</span>
+            <p>Thrives in high-altitude terrain, weathering centuries of shifting climates and eras.</p>
+          </article>
+          <article class="learn-more-card">
+            <span class="learn-more-card-kicker">The Living Core</span>
+            <p>Remains vibrant and growing, proving that a strong foundation can endure indefinitely.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="learn-more-section">
+        <h3>The Symbolic Essence</h3>
+        <div class="learn-more-card-grid">
+          <article class="learn-more-card">
+            <span class="learn-more-card-kicker">Guardians of Authenticity</span>
+            <p>Just as Italus remains true to its ancient roots, the studio preserves the immutable core of your narrative.</p>
+          </article>
+          <article class="learn-more-card">
+            <span class="learn-more-card-kicker">Structural Depth</span>
+            <p>Canon becomes the deep root system that keeps a story stable, structured, and consistent.</p>
+          </article>
+          <article class="learn-more-card">
+            <span class="learn-more-card-kicker">Creative Resilience</span>
+            <p>Your authorial voice is protected as trends shift, while the original creative truth remains intact.</p>
+          </article>
+          <article class="learn-more-card">
+            <span class="learn-more-card-kicker">Enduring Legacy</span>
+            <p>Human inspiration and AI guardrails work together to build stories meant to endure.</p>
+          </article>
+        </div>
+      </div>
+
+      <blockquote class="learn-more-manifesto">
+        <span>Our Manifesto</span>
+        <p>
+          At our Narrative Studio, we believe great stories are like Italus. They require deep roots
+          to stand tall. In an era of rapid AI generation, we do not replace the creator; we anchor them.
+          The studio acts as digital bedrock for authors — managing canon consistency, protecting creative
+          authenticity, and ensuring your literary universe remains unbreakable over time.
+        </p>
+        <strong>Built to protect your voice. Engineered to endure.</strong>
+      </blockquote>
+
+      <div class="learn-more-section">
+        <h3>How It Works: Guarding the Core of Your Narrative</h3>
+        <ol class="learn-more-steps">
+          <li><strong>Map Your Lore</strong><span>Input world-building rules, character arcs, and core plot points.</span></li>
+          <li><strong>Anchor the Canon</strong><span>Create an unshakeable digital root system for your story.</span></li>
+          <li><strong>Write with Guardrails</strong><span>Draft freely while the system watches for canon drift.</span></li>
+          <li><strong>Flag Inconsistencies</strong><span>Surface timeline, plot, or character conflicts before they spread.</span></li>
+          <li><strong>Protect the Voice</strong><span>Track style so AI never overwrites your creative identity.</span></li>
+          <li><strong>Build an Eternity</strong><span>Prepare a consistent manuscript ready to stand the test of time.</span></li>
+        </ol>
+      </div>
+
+      <div class="wizard-actions learn-more-actions">
+        <button type="button" class="secondary-button" data-modal-close>Close</button>
+        <button type="button" class="primary-button" data-modal-close>Begin With Deep Roots</button>
+      </div>
+    </section>
+
     <section class="studio-modal" id="canon-setup-modal" role="dialog" aria-modal="true" aria-labelledby="canon-setup-title" hidden>
       <button type="button" class="studio-modal-close" data-modal-close aria-label="Close Canon Setup">×</button>
       <header class="studio-modal-header">
@@ -213,6 +302,7 @@
   </section>
 
   <script src="/js/project_wizard.js"></script>
+  <script src="/js/canon_authoring.js"></script>
   <script src="/js/project_lifecycle.js"></script>
   <script src="script.js"></script>
 </body>

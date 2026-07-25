@@ -271,3 +271,114 @@ Locked until later:
 - frontend generation UI
 - runtime JSON content writes
 
+
+## Project-Local Control Pack Boundary
+
+``text
+italus_project_local_control_pack_boundary_patch: deployed / verified
+``
+
+The service-only boundary records expected project-local canon/control packet readiness. It remains read-only and does not wire generation, providers, prompt construction, validation, export, or approved persistence.
+
+## ITALUS_CONTROL_PACK_STATUS_ROUTE_PATCH_DEPLOYED_VERIFIED
+
+Completed patch: italus_control_pack_status_route_patch
+
+Result:
+- Project-local control pack boundary is now exposed through a read-only backend status route.
+- No workspace UI wiring was added in this patch.
+- No generation or provider execution was enabled.
+
+Next possible phase:
+- Review whether workspace bootstrap should include this status payload as locked/read-only readiness data.
+
+## italus_workspace_control_packet_bootstrap_patch
+
+Status: DEPLOYED / VERIFIED
+
+Marker: italus_workspace_control_packet_bootstrap_patch deployed verified
+
+Patch Scope:
+- app/services/workspace_service.py only.
+- Backend workspace bootstrap payload now includes read-only project-local control packet status.
+- No frontend rendering or generation wiring was added.
+
+## italus_workspace_control_packet_readiness_ui_patch
+
+Status: DEPLOYED / VERIFIED
+
+Marker: italus_workspace_control_packet_readiness_ui_patch deployed / verified
+
+Outcome: Workspace now renders control packet readiness as read-only status using existing bootstrap data.
+
+Next gated phase: continue frontend readiness display only, or stop for project state snapshot before any generation-control design.
+
+## Generation Control Status Service
+
+The first Generation Control Layer patch adds an inert service boundary at app/services/generation_control_service.py. It reports generation lock state, readiness inputs, and blocking reasons only. It does not expose an API route or wire generation execution.
+
+## Current Patch: italus_canon_template_questionnaire_service_patch
+
+Purpose:
+Create an inert Canon Template Questionnaire Service so future author-facing canon forms can be generated from structured genre schemas.
+
+Scope:
+- Backend service boundary only.
+- No API route.
+- No frontend.
+- No author answer persistence.
+- No generated packet creation.
+- No generation or provider execution.
+
+## Completed: Canon Questionnaire API Route
+- The canon questionnaire service is now exposed through read-only API routes.
+- Frontend canon workbook and author answer storage remain future phases.
+
+## italus_project_canon_storage_service_patch - DEPLOYED / VERIFIED
+- Added project-local author canon storage service boundary.
+- Target: app/services/project_canon_service.py.
+- Scope: backend storage boundary only; no API route, no frontend, no Markdown rendering, no generation.
+
+## Completed Patch: italus_canon_authoring_workflow_service_patch
+- Added backend workflow boundary for project-local author canon section operations.
+- The service coordinates questionnaire schema and project-local author canon storage.
+- Supported service actions: authoring status, section load, save draft, mark complete, reopen section.
+- Next planned layer: read-only/API authoring routes after patch review.
+
+## Current Patch: italus_canon_authoring_api_route_patch
+- Status: DEPLOYED / VERIFIED.
+- Primary file: app/api/routes/project.py.
+- Purpose: expose the validated canon authoring workflow service through bounded API routes.
+- Next step: design frontend Canon Workbook only after API behavior is confirmed.
+
+## Next migration checkpoint: Canon Workbook frontend shell
+- Status: deployed and verified.
+- Patch: italus_canon_workbook_frontend_shell_patch.
+- Scope: frontend read-only Canon Workbook shell.
+- Next: build a controlled section editor/save UI only after this shell is verified.
+
+PATCH: italus_canon_workbook_section_editor_patch
+Scope: frontend Canon Workbook section editor.
+Files: frontend/js/canon_authoring.js.
+Adds: open section, load section schema, save draft, mark complete, reopen section.
+Boundary: uses existing canon authoring API routes only.
+Still locked: generation, providers, prompt builder, runtime writes, Markdown rendering, validation/export.
+
+## italus_canon_markdown_renderer_service_patch
+- Completed backend Markdown renderer service boundary for completed author canon sections.
+- Next planned boundary remains validation/API exposure after renderer verification.
+- Generation remains locked.
+
+## italus_canon_markdown_renderer_api_route_patch - 2026-07-15
+- Completed: Markdown renderer API route boundary.
+- Next: frontend render/status controls or canon validation service after route verification.
+- Guard: generation remains locked and packet generation remains deferred.
+
+### Completed: italus_canon_markdown_frontend_controls_patch
+- Canon Workbook can now display Markdown source status.
+- Authors can request rendering for all completed canon sections or one completed section.
+- Next planned layer remains canon validation service after manual frontend validation.
+
+- italus_canon_workbook_field_layout_patch
+  - Adds CSS for project-local Canon Workbook field layout.
+  - Preserves existing authoring, Markdown rendering, and generation lock behavior.

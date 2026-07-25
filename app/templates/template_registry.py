@@ -105,7 +105,6 @@ _TEMPLATE_REGISTRY: dict[str, dict[str, Any]] = {
                         "required": True,
                         "source_strategy": SOURCE_LEGACY_ROOT_REFERENCE,
                         "source_files": [
-                            "canon_sources/ITALUS_HISTORICAL_CHARACTER_INTERACTION_MAP_180.txt",
                             "canon_sources/ITALUS_HISTORICAL_CHARACTER_INTERACTION_MAP_233.txt",
                         ],
                     },

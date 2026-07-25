@@ -6,7 +6,17 @@ from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, Field
 
 from app.projects.project_loader import InvalidProjectIdError, ProjectNotFoundError
-from app.services import project_service, canon_setup_service, canon_action_service, workspace_service, project_runtime_storage_service
+from app.services import (
+    project_service,
+    canon_setup_service,
+    canon_action_service,
+    workspace_service,
+    project_runtime_storage_service,
+    canon_packet_service,
+    canon_template_service,
+    canon_authoring_service,
+    canon_markdown_renderer_service,
+)
 
 
 router = APIRouter(tags=["Project"])
@@ -45,6 +55,11 @@ class LegacyProjectRequest(BaseModel):
     project_name: str | None = None
     engine_id: str | None = "italus"
     template_id: str | None = "historical"
+
+
+class CanonSectionDraftRequest(BaseModel):
+    answers: dict[str, Any] | None = Field(default_factory=dict)
+    records: dict[str, list[dict[str, Any]]] | None = Field(default_factory=dict)
 
 
 def _model_to_dict(model: BaseModel, *, exclude_unset: bool = False) -> dict[str, Any]:
@@ -130,6 +145,20 @@ def get_workspace_bootstrap(project_id: str):
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
+@router.get("/api/project/{project_id}/canon-packets/status")
+def get_canon_packet_status(project_id: str):
+    """Return read-only project-local canon/control packet status.
+
+    This route does not create packet files, generate content, call providers,
+    call prompt_builder, validate drafts, persist output, export files, or
+    unlock generation.
+    """
+    try:
+        return canon_packet_service.get_canon_packet_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
 
 @router.get("/api/project/{project_id}/runtime-storage/status")
 def get_runtime_storage_status(project_id: str):
@@ -149,12 +178,144 @@ def list_templates():
     return canon_setup_service.available_templates()
 
 
+@router.get("/api/templates/canon-questionnaires")
+def list_canon_questionnaire_templates():
+    """Return read-only canon-building questionnaire templates.
+
+    This route exposes schema metadata only. It does not save author answers,
+    create project canon files, generate knowledge packs, call providers,
+    call prompt_builder, write runtime memory, or unlock generation.
+    """
+    return {
+        "status": "ok",
+        "templates": canon_template_service.list_canon_questionnaire_templates(),
+    }
+
+
+@router.get("/api/templates/base/canon-questionnaire")
+def get_base_canon_questionnaire_template():
+    """Return the universal base canon questionnaire schema."""
+    return {
+        "status": "ok",
+        "template": canon_template_service.get_base_canon_questionnaire_template(),
+    }
+
+
+@router.get("/api/templates/{template_id}/canon-questionnaire")
+def get_canon_questionnaire_template(template_id: str):
+    """Return a read-only canon-building questionnaire for one template."""
+    return {
+        "status": "ok",
+        "template": canon_template_service.get_canon_questionnaire_template(template_id),
+    }
+
+
 @router.get("/api/project/{project_id}/canon/setup")
 def get_canon_setup(project_id: str):
     try:
         return canon_setup_service.get_canon_setup(project_id)
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/canon/authoring")
+def get_canon_authoring_status(project_id: str):
+    """Return project-local canon authoring workflow status.
+
+    This route does not generate content, render knowledge packs, call
+    providers, call prompt_builder, write runtime memory, or unlock generation.
+    """
+    try:
+        return canon_authoring_service.get_canon_authoring_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/canon/section/{section_id}")
+def get_canon_section(project_id: str, section_id: str):
+    """Return one canon questionnaire section and the saved project-local draft."""
+    try:
+        return canon_authoring_service.get_canon_section(project_id, section_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_authoring_service.CanonSectionNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/canon/section/{section_id}")
+def save_canon_section_draft(project_id: str, section_id: str, request: CanonSectionDraftRequest):
+    """Save project-local author canon draft data for one section.
+
+    This writes only project-local author canon files under data/projects and
+    does not write runtime memory or generated packs.
+    """
+    try:
+        return canon_authoring_service.save_canon_section_draft(
+            project_id,
+            section_id,
+            _model_to_dict(request),
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_authoring_service.CanonSectionNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/canon/section/{section_id}/complete")
+def mark_canon_section_complete(project_id: str, section_id: str):
+    """Mark one canon section complete when required fields are present."""
+    try:
+        return canon_authoring_service.mark_canon_section_complete(project_id, section_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_authoring_service.CanonSectionNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/canon/section/{section_id}/reopen")
+def reopen_canon_section(project_id: str, section_id: str):
+    """Reopen a completed canon section for further author edits."""
+    try:
+        return canon_authoring_service.reopen_canon_section(project_id, section_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_authoring_service.CanonSectionNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/canon/markdown")
+def get_canon_markdown_status(project_id: str):
+    """Return project-local canon Markdown rendering status.
+
+    This route does not generate knowledge packs, call providers, call
+    prompt_builder, write runtime memory, or unlock generation.
+    """
+    try:
+        return canon_markdown_renderer_service.get_canon_markdown_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/canon/markdown/render")
+def render_completed_canon_sources(project_id: str):
+    """Render completed author canon sections into project-local Markdown sources."""
+    try:
+        return canon_markdown_renderer_service.render_completed_canon_sources(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/canon/markdown/section/{section_id}")
+def render_canon_section_markdown(project_id: str, section_id: str):
+    """Render one completed author canon section into a project-local Markdown source."""
+    try:
+        return canon_markdown_renderer_service.render_section_markdown(project_id, section_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_markdown_renderer_service.CanonMarkdownSectionNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_markdown_renderer_service.CanonMarkdownSectionNotCompleteError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
 @router.post("/api/project/{project_id}/canon/initialize")

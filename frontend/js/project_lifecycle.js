@@ -11,6 +11,7 @@ and saved in place with PATCH /api/project/{id}.
     new: 'new-project-modal',
     existing: 'existing-project-modal',
     archived: 'archived-project-modal',
+    learnMore: 'learn-more-modal',
     canon: 'canon-setup-modal'
   };
 
@@ -455,6 +456,9 @@ and saved in place with PATCH /api/project/{id}.
       <div class="canon-group-list">
         ${groups.map(renderCanonGroup).join('')}
       </div>
+      <section class="canon-workbook-shell" id="canon-workbook-shell" aria-label="Canon Workbook">
+        <p class="setup-note">Canon Workbook status will load after template requirements.</p>
+      </section>
     `;
 
     if (confirmButton) {
@@ -462,6 +466,13 @@ and saved in place with PATCH /api/project/{id}.
       confirmButton.textContent = resumeTarget === 'genre_template'
         ? 'Confirm Genre Template'
         : 'Template Confirmed';
+    }
+
+    if (window.ItalusCanonAuthoring && typeof window.ItalusCanonAuthoring.renderCanonWorkbookShell === 'function') {
+      window.ItalusCanonAuthoring.renderCanonWorkbookShell({
+        projectId: state.activeProjectId || setup.project_id,
+        targetId: 'canon-workbook-shell'
+      });
     }
   }
 

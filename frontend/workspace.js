@@ -265,6 +265,7 @@
       ['Workspace Access', wizard.can_enter_workspace ? 'PASS' : 'BLOCKED', wizard.resume_target || 'workspace'],
       ['Canon Setup', summary.canon_setup_completed ? 'PASS' : 'BLOCKED', `${number(summary.approved_reference_count)} / ${number(summary.required_canon_count)} approved`],
       ['Runtime Ready', bootstrap.runtime_ready ? 'PASS' : 'LOCKED', 'Project-local generation runtime is not migrated'],
+      ['Control Packets', summary.canon_packet_missing_required_count ? 'BLOCKED' : 'PASS', `${number(summary.canon_packet_count)} tracked / ${number(summary.canon_packet_missing_required_count)} missing`],
       ['Generation', bootstrap.generation_enabled ? 'ENABLED' : 'DISABLED', 'Protected until runtime migration'],
       ['Validation', bootstrap.validation_enabled ? 'ENABLED' : 'DISABLED', 'Validation runtime is not wired'],
       ['Exports', bootstrap.exports_enabled ? 'ENABLED' : 'DISABLED', 'Output pipeline is not enabled']
@@ -283,6 +284,7 @@
             ${statCard('Canon Setup', summary.canon_setup_completed ? 'Complete' : 'Incomplete')}
             ${statCard('Approved Canon', `${number(summary.approved_reference_count)} / ${number(summary.required_canon_count)}`)}
             ${statCard('Runtime Packs', `${number(summary.runtime_pack_count)} approved`)}
+            ${statCard('Control Packets', `${number(summary.canon_packet_count)} tracked`)}
             ${statCard('Budget Status', budget.token_budget_status || '—')}
             ${statCard('Generation', bootstrap.generation_enabled ? 'Enabled' : 'Disabled')}
           </div>
@@ -422,17 +424,35 @@
 
   function renderRuntimePacks(title, approvedRefs, canonIds) {
     setHeading(title);
-    const rows = canonIds.map((canonId) => referenceRow(canonId, approvedRefs[canonId])).join('');
+    const bootstrap = state.bootstrap || {};
+    const packetStatus = bootstrap.canon_packet_status || {};
+    const packets = Array.isArray(packetStatus.packets) ? packetStatus.packets : [];
+    const packetRows = packets
+      .filter((packet) => packetMatchesCanonIds(packet.canon_id, canonIds))
+      .map(packetStatusRow)
+      .join('');
+    const referenceRows = canonIds.map((canonId) => referenceRow(canonId, approvedRefs[canonId])).join('');
+
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-navigation-detail-20260707">
-        <p class="placeholder">Runtime packs are approved reference artifacts for token control. They are visible but not injected into live generation here.</p>
+        <p class="placeholder">Runtime packs are approved reference artifacts and project-local control packet readiness records. They are visible but not injected into live generation here.</p>
         <div class="workspace-lock-grid">
-          ${lockCard('Runtime Pack Status', 'Approved Reference')}
+          ${lockCard('Runtime Pack Status', 'Read Only')}
+          ${lockCard('Control Packet Boundary', packetStatus.status || 'Unavailable')}
           ${lockCard('Prompt Injection', 'Disabled')}
           ${lockCard('Generation Runtime', 'Disabled')}
           ${lockCard('Provider Calls', 'Blocked')}
         </div>
-        ${table(['Pack ID', 'Approval Type', 'Role', 'Source Files'], rows)}
+
+        <section class="workspace-panel">
+          <h3>Approved Reference Canon</h3>
+          ${table(['Pack ID', 'Approval Type', 'Role', 'Source Files'], referenceRows)}
+        </section>
+
+        <section class="workspace-panel">
+          <h3>Project-local Control Packet Readiness</h3>
+          ${table(['Packet ID', 'Status', 'Required', 'Project-local Path', 'Description'], packetRows)}
+        </section>
       </div>
     `;
   }
@@ -1136,6 +1156,26 @@
     if (mainPanel) {
       mainPanel.innerHTML = `<p class="placeholder workspace-error">${escapeHtml(message)}</p>`;
     }
+  }
+
+  function packetMatchesCanonIds(canonId, canonIds) {
+    const normalized = String(canonId || '');
+    return canonIds.some((expectedId) => {
+      const expected = String(expectedId || '');
+      return normalized === expected || normalized.startsWith(`${expected}_`);
+    });
+  }
+
+  function packetStatusRow(packet) {
+    return `
+      <tr>
+        <td>${escapeHtml(packet.canon_id || '—')}</td>
+        <td>${escapeHtml(packet.status || '—')}</td>
+        <td>${packet.required ? 'Required' : 'Optional'}</td>
+        <td>${escapeHtml(packet.relative_path || '—')}</td>
+        <td>${escapeHtml(packet.description || '—')}</td>
+      </tr>
+    `;
   }
 
   function referenceRow(canonId, ref) {

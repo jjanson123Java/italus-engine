@@ -12,7 +12,7 @@ from typing import Any
 
 from app.projects import project_loader
 from app.projects.project_context import build_project_context
-from app.services import project_runtime_storage_service
+from app.services import canon_packet_service, project_runtime_storage_service
 from app.projects.project_manifest import (
     LIFECYCLE_ACTIVE,
     LIFECYCLE_ARCHIVED,
@@ -38,6 +38,7 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
     wizard_state = project_loader.load_wizard_state(project_id) or {}
     context = build_project_context(manifest)
     runtime_storage_status = project_runtime_storage_service.ensure_runtime_storage_for_context(context)
+    canon_packet_status = canon_packet_service.get_canon_packet_status_for_context(context, manifest.to_dict())
 
     can_enter_workspace = bool(wizard_state.get("can_enter_workspace"))
     if manifest.lifecycle_state not in {LIFECYCLE_READY_FOR_WORKSPACE, LIFECYCLE_ACTIVE} and not can_enter_workspace:
@@ -73,12 +74,15 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
         "approved_canon_refs": approved_refs,
         "project_context": _context_payload(context),
         "runtime_storage": runtime_storage_status,
+        "canon_packet_status": canon_packet_status,
         "read_only_data": _read_only_data_payload(),
         "runtime_readiness_gates": _runtime_readiness_gates_payload(runtime_storage_status),
         "summary": {
             "approved_reference_count": _count_status(canon_statuses, "REFERENCE_APPROVED"),
             "required_canon_count": len(wizard_state.get("required_canon_sets") or []),
             "runtime_pack_count": len(runtime_pack_refs),
+            "canon_packet_count": int(canon_packet_status.get("packet_count") or 0),
+            "canon_packet_missing_required_count": int(canon_packet_status.get("missing_required_count") or 0),
             "canon_setup_completed": bool(wizard_state.get("canon_setup_completed")),
             "blocking_requirements": list(wizard_state.get("blocking_requirements") or []),
         },

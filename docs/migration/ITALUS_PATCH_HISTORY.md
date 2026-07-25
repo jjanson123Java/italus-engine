@@ -229,3 +229,143 @@ Summary:
 - Preserved generation lock and protected runtime execution boundaries.
 - Confirmed the patch process includes Patch zip, Deploy script, Verify script, Docs script, Rollback script, and All artifacts bundle.
 
+
+### italus_project_local_control_pack_boundary_patch
+
+Status:
+
+``text
+DEPLOYED / VERIFIED
+``
+
+Summary:
+
+``text
+Added inert project-local canon/control packet service boundary in app/services/canon_packet_service.py.
+The patch reports expected project-local runtime/control pack readiness without generating packs, calling providers, calling prompt_builder.py, writing app/registry.py, or unlocking generation.
+``
+
+## ITALUS_CONTROL_PACK_STATUS_ROUTE_PATCH_DEPLOYED_VERIFIED
+
+Patch: italus_control_pack_status_route_patch
+
+Status: DEPLOYED / VERIFIED
+
+Summary:
+- Added a read-only API route for project-local canon/control packet status.
+- Route: GET /api/project/{project_id}/canon-packets/status
+- The route delegates to app/services/canon_packet_service.py.
+- Generation, provider execution, prompt_builder, registry writes, validation, export, and draft persistence remain locked.
+
+## italus_workspace_control_packet_bootstrap_patch
+
+Status: DEPLOYED / VERIFIED
+
+Marker: italus_workspace_control_packet_bootstrap_patch deployed verified
+
+Summary:
+- Added read-only canon_packet_status to workspace bootstrap payload.
+- Added compact canon packet counts to bootstrap summary.
+- Preserved generation, validation, export, provider, prompt_builder, and registry locks.
+
+## italus_workspace_control_packet_readiness_ui_patch
+
+Status: DEPLOYED / VERIFIED
+
+Marker: italus_workspace_control_packet_readiness_ui_patch deployed / verified
+
+- Added read-only workspace display of project-local control packet readiness.
+- Used existing workspace bootstrap canon_packet_status payload.
+- Did not wire generation, providers, prompt builder, registry writes, validation, export, or draft persistence.
+
+## italus_generation_control_status_service_patch
+
+Status: deployed / verified
+
+Scope:
+- Added app/services/generation_control_service.py as an inert read-only Generation Control Status Service.
+- No API route, workspace bootstrap wiring, frontend UI, provider calls, prompt builder calls, draft validation, approved persistence, validation unlock, or export unlock.
+
+Controls:
+- generation_enabled remains false.
+- provider_execution_enabled remains false.
+- prompt_builder_enabled remains false.
+- draft_validation_enabled remains false.
+- approved_persistence_enabled remains false.
+- export_enabled remains false.
+
+Marker: italus_generation_control_status_service_patch deployed / verified
+
+## italus_canon_template_questionnaire_service_patch
+
+Status: DEPLOYED / VERIFIED
+
+Summary:
+- Added `app/services/canon_template_service.py`.
+- Introduced a read-only canon-building questionnaire boundary for genre templates.
+- Added universal canon sections and expandable genre-specific questionnaire schemas.
+- Historical Epic / Historical Fantasy is guided by current Italus canon structures.
+- No author answer storage, frontend rendering, generation, providers, prompt builder, registry writes, runtime persistence, validation unlock, or export unlock were added.
+
+## italus_canon_questionnaire_api_route_patch - DEPLOYED / VERIFIED
+- Exposed read-only canon questionnaire template routes.
+- Added GET /api/templates/canon-questionnaires.
+- Added GET /api/templates/base/canon-questionnaire.
+- Added GET /api/templates/{template_id}/canon-questionnaire.
+- No author answers are saved.
+- No project canon files are created.
+- No generation, provider, prompt_builder, registry, validation, export, or runtime write behavior was introduced.
+
+## italus_project_canon_storage_service_patch - DEPLOYED / VERIFIED
+- Deployed and verified project-local author canon storage boundary.
+- Creates author_canon.json, template_snapshot.json, and canon_completion.json only when service is explicitly called.
+- Preserves generation, provider execution, prompt builder, registry writes, validation, export, and draft persistence locks.
+
+## italus_canon_authoring_workflow_service_patch - DEPLOYED / VERIFIED
+- Status: DEPLOYED / VERIFIED
+- Scope: Added inert backend canon authoring workflow service.
+- Primary file: app/services/canon_authoring_service.py
+- Behavior: section status loads, draft save works, incomplete required fields block completion, complete and reopen flows are supported.
+- Controls: no routes, no frontend, no Markdown rendering, no knowledge packet generation, no runtime writes, no provider calls, no prompt_builder calls, no registry writes, no generation unlock.
+
+## italus_canon_authoring_api_route_patch - DEPLOYED / VERIFIED
+- Exposed project-local canon authoring workflow routes.
+- Added section draft, complete, reopen, and authoring status API boundaries.
+- Route layer delegates to canon_authoring_service only.
+- No frontend, Markdown rendering, knowledge pack generation, provider calls, prompt builder calls, runtime writes, or generation unlocks were introduced.
+
+## italus_canon_workbook_frontend_shell_patch - DEPLOYED / VERIFIED
+- Added frontend Canon Workbook shell for read-only canon authoring status.
+- Added frontend/js/canon_authoring.js.
+- Updated frontend/index.html to load canon_authoring.js before project_lifecycle.js.
+- Updated project lifecycle canon setup rendering to include the Canon Workbook shell container.
+- No author answer saving, Markdown rendering, packet generation, provider execution, or generation unlock was introduced.
+
+PATCH: italus_canon_workbook_section_editor_patch
+Scope: frontend Canon Workbook section editor.
+Files: frontend/js/canon_authoring.js.
+Adds: open section, load section schema, save draft, mark complete, reopen section.
+Boundary: uses existing canon authoring API routes only.
+Still locked: generation, providers, prompt builder, runtime writes, Markdown rendering, validation/export.
+
+## italus_canon_markdown_renderer_service_patch
+- Adds app/services/canon_markdown_renderer_service.py as an inert project-local Markdown source renderer.
+- Renders completed author canon sections only into data/projects/<project_id>/canon/canon_sources/*.md.
+- Does not create knowledge packs, control packets, runtime memory, generated drafts, exports, providers, prompt builder calls, or registry writes.
+
+## italus_canon_markdown_renderer_api_route_patch - 2026-07-15
+- Added bounded Markdown renderer API routes in app/api/routes/project.py.
+- Exposed renderer status, render-all-completed, and render-single-section actions.
+- Writes remain limited to project-local canon_sources Markdown files through the renderer service.
+- No frontend, packet generation, runtime memory, provider, prompt_builder, registry, or generation unlock changes.
+
+## Patch: italus_canon_markdown_frontend_controls_patch
+- Added frontend Canon Workbook controls for Markdown renderer status and render actions.
+- Scope: frontend/js/canon_authoring.js only.
+- Backend, generation, providers, prompt builder, registry, runtime memory, validation, export, and packet generation remain locked.
+
+### italus_canon_workbook_field_layout_patch
+- Added Canon Workbook field layout styling.
+- Canon section labels now align above their inputs.
+- Long-form canon fields now use larger textarea presentation through existing markup hooks.
+- Scope limited to frontend/styles.css.
