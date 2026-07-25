@@ -382,3 +382,5 @@ Still locked: generation, providers, prompt builder, runtime writes, Markdown re
 - italus_canon_workbook_field_layout_patch
   - Adds CSS for project-local Canon Workbook field layout.
   - Preserves existing authoring, Markdown rendering, and generation lock behavior.
+
+- COMPLETED: italus_canon_validation_service_patch - backend canon validation service boundary.

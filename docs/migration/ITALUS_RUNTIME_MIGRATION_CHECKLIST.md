@@ -251,3 +251,5 @@ Still locked: generation, providers, prompt builder, runtime writes, Markdown re
 - [x] italus_canon_workbook_field_layout_patch
   - Field labels and controls render as vertical authoring blocks.
   - No backend, runtime, provider, or generation wiring changed.
+
+- [x] italus_canon_validation_service_patch - canon validation report can be written project-locally without unlocking generation.

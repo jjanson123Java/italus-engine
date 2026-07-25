@@ -290,3 +290,5 @@ Still locked: generation, providers, prompt builder, runtime writes, Markdown re
 - Textareas support paragraph-level canon entry.
 - Save Draft, Mark Complete, Reopen, and Render Section Markdown behavior remains unchanged.
 - Generation remains locked.
+
+- italus_canon_validation_service_patch: PASS when service compiles, smoke validation writes only canon_validation_report.json, and execution locks remain false.

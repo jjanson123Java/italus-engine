@@ -369,3 +369,8 @@ Still locked: generation, providers, prompt builder, runtime writes, Markdown re
 - Canon section labels now align above their inputs.
 - Long-form canon fields now use larger textarea presentation through existing markup hooks.
 - Scope limited to frontend/styles.css.
+
+## MORPHEUS PATCH RECORD: italus_canon_validation_service_patch
+- Added backend-only project-local canon validation service.
+- Added validation report boundary at data/projects/<project_id>/canon/canon_validation_report.json.
+- Preserved generation, provider, prompt-builder, runtime-write, and packet-generation locks.
