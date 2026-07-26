@@ -18,7 +18,7 @@ from app.templates.template_registry import list_templates, normalize_template_i
 
 
 CANON_TEMPLATE_SERVICE_MARKER = "project-canon-template-questionnaire-boundary-20260715"
-CANON_TEMPLATE_SERVICE_VERSION = "project_canon_authoring_schema_v1"
+CANON_TEMPLATE_SERVICE_VERSION = "project_canon_authoring_schema_v2_reduced_author_surface"
 
 FIELD_SHORT_TEXT = "short_text"
 FIELD_LONG_TEXT = "long_text"
@@ -174,6 +174,11 @@ def _merge_base_and_genre_schema(
     )
 
     sections_by_id = {section["section_id"]: section for section in schema["sections"]}
+
+    for section_id, overrides in (genre_schema.get("base_section_overrides") or {}).items():
+        if section_id in sections_by_id:
+            sections_by_id[section_id].update(deepcopy(overrides))
+
     for genre_section in genre_schema.get("sections", []):
         section_id = genre_section["section_id"]
         if section_id in sections_by_id:
@@ -277,16 +282,16 @@ def _record(
 _BASE_QUESTIONNAIRE: dict[str, Any] = {
     "template_id": "base",
     "genre": "base",
-    "label": "Base Canon Questionnaire",
-    "description": "Universal canon-building questionnaire shared by all genre templates.",
+    "label": "Core Author Canon",
+    "description": "Direct author-owned story truth shared by genre templates.",
     "version": CANON_TEMPLATE_SERVICE_VERSION,
     "sections": [
         {
             "section_id": "project_bible",
             "label": "Project Bible",
             "required": True,
-            "purpose": "Define the narrative contract before writing begins.",
-            "author_guidance": "Establish what the story promises to the reader and what boundaries it must respect.",
+            "purpose": "Define the narrative contract and project identity.",
+            "author_guidance": "Establish what the story promises to the reader.",
             "fields": [
                 _field("project_title", "Project title", FIELD_SHORT_TEXT),
                 _field("series_title", "Series title", FIELD_SHORT_TEXT, required=False),
@@ -302,10 +307,10 @@ _BASE_QUESTIONNAIRE: dict[str, Any] = {
         },
         {
             "section_id": "world_bible",
-            "label": "World / Setting Bible",
+            "label": "World & Setting",
             "required": True,
-            "purpose": "Establish the core rules, culture, and logic of the setting.",
-            "author_guidance": "Write the rules of the world before the story tries to bend them.",
+            "purpose": "Define the setting, world rules, geography, and locations.",
+            "author_guidance": "Locations are maintained here so setting facts have one authority.",
             "fields": [
                 _field("setting_summary", "Setting summary", FIELD_RICH_TEXT),
                 _field("time_period", "Time period / era", FIELD_SHORT_TEXT),
@@ -318,14 +323,32 @@ _BASE_QUESTIONNAIRE: dict[str, Any] = {
                 _field("forbidden_contradictions", "Forbidden contradictions", FIELD_RICH_TEXT),
                 _field("open_questions", "Open questions", FIELD_RICH_TEXT, required=False),
             ],
-            "records": [],
+            "records": [
+                _record(
+                    "locations",
+                    "Locations",
+                    [
+                        _field("name", "Name", FIELD_SHORT_TEXT),
+                        _field("type", "Type", FIELD_SHORT_TEXT),
+                        _field("region", "Region", FIELD_SHORT_TEXT, required=False),
+                        _field("description", "Description", FIELD_RICH_TEXT),
+                        _field("rules", "Location rules", FIELD_RICH_TEXT, required=False),
+                        _field("associated_characters", "Associated characters", FIELD_LONG_TEXT, required=False),
+                        _field("associated_events", "Associated events", FIELD_LONG_TEXT, required=False),
+                        _field("sensory_details", "Sensory details", FIELD_RICH_TEXT, required=False),
+                        _field("continuity_notes", "Continuity notes", FIELD_RICH_TEXT),
+                    ],
+                    required=False,
+                    min_items=0,
+                )
+            ],
         },
         {
             "section_id": "character_bible",
             "label": "Character Bible",
             "required": True,
-            "purpose": "Create stable character records for continuity and future story planning.",
-            "author_guidance": "Add one record for each major character before marking this section complete.",
+            "purpose": "Create stable character records for continuity and story planning.",
+            "author_guidance": "Add one record for each major character or recurring entity.",
             "fields": [],
             "records": [
                 _record(
@@ -351,10 +374,10 @@ _BASE_QUESTIONNAIRE: dict[str, Any] = {
         },
         {
             "section_id": "timeline_event_ledger",
-            "label": "Timeline / Event Ledger",
+            "label": "Timeline & Event Ledger",
             "required": True,
-            "purpose": "Control chronology and cause/effect.",
-            "author_guidance": "Use sequence labels when exact dates are not known.",
+            "purpose": "Control chronology, cause/effect, and immutable historical facts.",
+            "author_guidance": "Historical anchors are recorded as historical or hybrid events in this ledger.",
             "fields": [],
             "records": [
                 _record(
@@ -363,134 +386,22 @@ _BASE_QUESTIONNAIRE: dict[str, Any] = {
                     [
                         _field("event_id", "Event ID", FIELD_SHORT_TEXT),
                         _field("date_or_sequence", "Date or sequence", FIELD_SHORT_TEXT),
+                        _field("event_type", "Event type", FIELD_SELECT, options=["fictional", "historical", "hybrid"]),
+                        _field("historical_status", "Historical status", FIELD_SELECT, options=["flexible", "constrained", "immutable"]),
                         _field("book", "Book / installment", FIELD_SHORT_TEXT, required=False),
                         _field("location", "Location", FIELD_SHORT_TEXT, required=False),
                         _field("characters_present", "Characters present", FIELD_LONG_TEXT, required=False),
                         _field("event_summary", "Event summary", FIELD_RICH_TEXT),
                         _field("cause", "Cause", FIELD_RICH_TEXT, required=False),
                         _field("effect", "Effect", FIELD_RICH_TEXT, required=False),
+                        _field("fictional_interaction_allowed", "Fictional interaction allowed?", FIELD_BOOLEAN, required=False),
+                        _field("allowed_interaction_notes", "Allowed interaction notes", FIELD_RICH_TEXT, required=False),
+                        _field("must_not_change", "What must not change", FIELD_RICH_TEXT, required=False),
                         _field("continuity_constraints", "Continuity constraints", FIELD_RICH_TEXT),
                     ],
-                    help_text="Major events that must not drift during writing.",
+                    help_text="Fictional, historical, and hybrid events maintained in one chronology.",
                 )
             ],
-        },
-        {
-            "section_id": "location_bible",
-            "label": "Location Bible",
-            "required": True,
-            "purpose": "Define places and spatial consistency rules.",
-            "author_guidance": "Capture sensory details and rules that should remain stable.",
-            "fields": [],
-            "records": [
-                _record(
-                    "locations",
-                    "Locations",
-                    [
-                        _field("name", "Name", FIELD_SHORT_TEXT),
-                        _field("type", "Type", FIELD_SHORT_TEXT),
-                        _field("region", "Region", FIELD_SHORT_TEXT, required=False),
-                        _field("description", "Description", FIELD_RICH_TEXT),
-                        _field("rules", "Location rules", FIELD_RICH_TEXT, required=False),
-                        _field("associated_characters", "Associated characters", FIELD_LONG_TEXT, required=False),
-                        _field("associated_events", "Associated events", FIELD_LONG_TEXT, required=False),
-                        _field("sensory_details", "Sensory details", FIELD_RICH_TEXT, required=False),
-                        _field("continuity_notes", "Continuity notes", FIELD_RICH_TEXT),
-                    ],
-                )
-            ],
-        },
-        {
-            "section_id": "plot_structure_plan",
-            "label": "Plot / Structure Plan",
-            "required": True,
-            "purpose": "Define story architecture across books, chapters, or major movements.",
-            "author_guidance": "Describe the arc before scenes are generated.",
-            "fields": [
-                _field("series_arc", "Series arc", FIELD_RICH_TEXT, required=False),
-                _field("major_turning_points", "Major turning points", FIELD_RICH_TEXT),
-                _field("conflicts", "Conflicts", FIELD_RICH_TEXT),
-                _field("stakes", "Stakes", FIELD_RICH_TEXT),
-                _field("ending_state", "Ending state", FIELD_RICH_TEXT),
-                _field("unresolved_threads", "Unresolved threads", FIELD_RICH_TEXT, required=False),
-            ],
-            "records": [],
-        },
-        {
-            "section_id": "style_voice_guide",
-            "label": "Style / Voice Guide",
-            "required": True,
-            "purpose": "Control prose behavior and authorial voice.",
-            "author_guidance": "Define the sound of the book before drafting begins.",
-            "fields": [
-                _field("narrative_person", "Narrative person", FIELD_SELECT, options=["first", "second", "third_limited", "third_omniscient", "mixed"]),
-                _field("tense", "Tense", FIELD_SELECT, options=["past", "present", "mixed"]),
-                _field("pacing", "Pacing", FIELD_LONG_TEXT),
-                _field("dialogue_style", "Dialogue style", FIELD_RICH_TEXT),
-                _field("prose_density", "Prose density", FIELD_LONG_TEXT),
-                _field("emotional_register", "Emotional register", FIELD_RICH_TEXT),
-                _field("forbidden_phrases", "Forbidden phrases", FIELD_RICH_TEXT, required=False),
-                _field("preferred_motifs", "Preferred motifs", FIELD_RICH_TEXT, required=False),
-            ],
-            "records": [],
-        },
-        {
-            "section_id": "continuity_rules",
-            "label": "Continuity Rules",
-            "required": True,
-            "purpose": "Define what the system must never contradict.",
-            "author_guidance": "These rules become future validation and generation constraints.",
-            "fields": [
-                _field("hard_rules", "Hard rules", FIELD_RICH_TEXT),
-                _field("soft_rules", "Soft rules", FIELD_RICH_TEXT, required=False),
-                _field("forbidden_contradictions", "Forbidden contradictions", FIELD_RICH_TEXT),
-                _field("timeline_rules", "Timeline rules", FIELD_RICH_TEXT),
-                _field("character_rules", "Character rules", FIELD_RICH_TEXT),
-                _field("world_rules", "World rules", FIELD_RICH_TEXT),
-                _field("validation_notes", "Validation notes", FIELD_RICH_TEXT, required=False),
-            ],
-            "records": [],
-        },
-        {
-            "section_id": "book_plan",
-            "label": "Book Plan",
-            "required": True,
-            "purpose": "Map canon to long-form structure.",
-            "author_guidance": "Add one record per book, installment, or major unit.",
-            "fields": [],
-            "records": [
-                _record(
-                    "books",
-                    "Books",
-                    [
-                        _field("book_number", "Book number", FIELD_SHORT_TEXT),
-                        _field("title", "Title", FIELD_SHORT_TEXT, required=False),
-                        _field("time_span", "Time span", FIELD_SHORT_TEXT, required=False),
-                        _field("primary_arc", "Primary arc", FIELD_RICH_TEXT),
-                        _field("major_events", "Major events", FIELD_RICH_TEXT),
-                        _field("required_characters", "Required characters", FIELD_LONG_TEXT, required=False),
-                        _field("required_locations", "Required locations", FIELD_LONG_TEXT, required=False),
-                        _field("ending_state", "Ending state", FIELD_RICH_TEXT),
-                        _field("handoff_to_next_book", "Handoff to next book", FIELD_RICH_TEXT, required=False),
-                    ],
-                )
-            ],
-        },
-        {
-            "section_id": "generation_constraints",
-            "label": "Generation Constraints",
-            "required": True,
-            "purpose": "Define future generation boundaries without enabling generation.",
-            "author_guidance": "These answers will later constrain generation, but this service does not generate.",
-            "fields": [
-                _field("allowed_content", "Allowed content", FIELD_RICH_TEXT),
-                _field("disallowed_content", "Disallowed content", FIELD_RICH_TEXT),
-                _field("point_of_view_rules", "Point-of-view rules", FIELD_RICH_TEXT),
-                _field("chapter_length_rules", "Chapter length rules", FIELD_RICH_TEXT, required=False),
-                _field("scene_composition_rules", "Scene composition rules", FIELD_RICH_TEXT),
-                _field("approval_required_before_persistence", "Approval required before persistence", FIELD_BOOLEAN),
-            ],
-            "records": [],
         },
     ],
 }
@@ -500,13 +411,13 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
     "historical_epic": {
         "genre": "historical_epic",
         "label": "Historical Epic / Historical Fantasy",
-        "description": "Historically anchored fiction with strict timeline, figure-interaction, and continuity controls.",
+        "description": "Historically anchored fiction with explicit historical interaction controls.",
         "italus_guided": True,
         "sections": [
             {
                 "section_id": "world_bible",
-                "label": "Historical World / Setting Bible",
-                "author_guidance": "Guided by the Italus world bible: define era, geography, culture, historical boundaries, and fictional logic.",
+                "label": "Historical World & Setting",
+                "author_guidance": "Define era, geography, culture, historical boundaries, fictional logic, and project locations.",
                 "fields": [
                     _field("historical_period", "Historical period", FIELD_SHORT_TEXT),
                     _field("setting_summary", "Setting summary", FIELD_RICH_TEXT),
@@ -520,33 +431,15 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
                 ],
             },
             {
-                "section_id": "historical_anchors",
-                "label": "Historical Anchors",
-                "required": True,
-                "purpose": "Identify fixed real-world events and constraints that fiction must not break.",
-                "author_guidance": "Use this to prevent timeline drift before writing starts.",
-                "fields": [],
-                "records": [
-                    _record(
-                        "historical_anchors",
-                        "Historical Anchors",
-                        [
-                            _field("anchor_id", "Anchor ID", FIELD_SHORT_TEXT),
-                            _field("date_or_period", "Date or period", FIELD_SHORT_TEXT),
-                            _field("real_event", "Real event", FIELD_RICH_TEXT),
-                            _field("fictional_interaction_allowed", "Fictional interaction allowed?", FIELD_BOOLEAN),
-                            _field("allowed_interaction_notes", "Allowed interaction notes", FIELD_RICH_TEXT, required=False),
-                            _field("must_not_change", "What must not change", FIELD_RICH_TEXT),
-                        ],
-                    )
-                ],
+                "section_id": "timeline_event_ledger",
+                "label": "Timeline & Historical Event Ledger",
             },
             {
                 "section_id": "historical_interaction_map",
                 "label": "Historical Character Interaction Map",
                 "required": True,
                 "purpose": "Control how fictional characters may interact with real historical people or events.",
-                "author_guidance": "Guided by the Italus historical character interaction map.",
+                "author_guidance": "Record only relationships that require explicit historical interaction limits.",
                 "fields": [],
                 "records": [
                     _record(
@@ -564,81 +457,11 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
                     )
                 ],
             },
-            {
-                "section_id": "signal_symbol_lexicon",
-                "label": "Signal / Symbol Lexicon",
-                "required": True,
-                "purpose": "Define recurring signals, symbols, motifs, and nonverbal systems.",
-                "author_guidance": "Guided by the Italus appendix and signal lexicon.",
-                "fields": [],
-                "records": [
-                    _record(
-                        "signals",
-                        "Signals / Symbols",
-                        [
-                            _field("signal_name", "Signal or symbol", FIELD_SHORT_TEXT),
-                            _field("meaning", "Meaning", FIELD_RICH_TEXT),
-                            _field("usage_rules", "Usage rules", FIELD_RICH_TEXT),
-                            _field("emotional_register", "Emotional register", FIELD_LONG_TEXT, required=False),
-                            _field("continuity_constraints", "Continuity constraints", FIELD_RICH_TEXT),
-                        ],
-                    )
-                ],
-            },
-            {
-                "section_id": "drift_detection_rules",
-                "label": "Timeline Drift Detection Rules",
-                "required": True,
-                "purpose": "Define how chronology errors should be detected later.",
-                "author_guidance": "Guided by the Italus timeline drift detector.",
-                "fields": [
-                    _field("date_rules", "Date rules", FIELD_RICH_TEXT),
-                    _field("event_order_rules", "Event order rules", FIELD_RICH_TEXT),
-                    _field("character_availability_rules", "Character availability rules", FIELD_RICH_TEXT),
-                    _field("historical_impossibilities", "Historical impossibilities", FIELD_RICH_TEXT),
-                    _field("warning_vs_blocking_rules", "Warning vs blocking rules", FIELD_RICH_TEXT),
-                ],
-                "records": [],
-            },
-            {
-                "section_id": "scene_type_rules",
-                "label": "Scene Type Rules",
-                "required": True,
-                "purpose": "Define allowable scene categories and constraints.",
-                "author_guidance": "Guided by the Italus scene type manifest.",
-                "fields": [],
-                "records": [
-                    _record(
-                        "scene_types",
-                        "Scene Types",
-                        [
-                            _field("scene_type", "Scene type", FIELD_SHORT_TEXT),
-                            _field("purpose", "Purpose", FIELD_RICH_TEXT),
-                            _field("required_inputs", "Required inputs", FIELD_RICH_TEXT),
-                            _field("constraints", "Constraints", FIELD_RICH_TEXT),
-                        ],
-                    )
-                ],
-            },
-            {
-                "section_id": "storytelling_context",
-                "label": "Master Storytelling Context",
-                "required": True,
-                "purpose": "Define the long-form storytelling logic and voice of the project.",
-                "author_guidance": "Guided by the Italus master storytelling context.",
-                "fields": [
-                    _field("narrative_frame", "Narrative frame", FIELD_RICH_TEXT),
-                    _field("emotional_engine", "Emotional engine", FIELD_RICH_TEXT),
-                    _field("recurring_motifs", "Recurring motifs", FIELD_RICH_TEXT),
-                    _field("series_scale", "Series scale", FIELD_RICH_TEXT),
-                    _field("reader_experience_goal", "Reader experience goal", FIELD_RICH_TEXT),
-                ],
-                "records": [],
-            },
         ],
     },
     "fantasy_epic": {
         "genre": "fantasy_epic",
+        "base_section_overrides": {"world_bible": {"label": "Worldbuilding & Setting"}, "timeline_event_ledger": {"label": "Timeline & Age Ledger"}},
         "label": "Fantasy Epic",
         "description": "Epic fantasy canon with magic, culture, factions, mythology, and world-rule controls.",
         "sections": [
@@ -683,6 +506,7 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
     },
     "science_fiction": {
         "genre": "science_fiction",
+        "base_section_overrides": {"world_bible": {"label": "Universe, Technology & Setting"}, "timeline_event_ledger": {"label": "Timeline, Missions & Major Events"}},
         "label": "Science Fiction",
         "description": "Science-fiction canon with technology, science constraints, ships/planets, and faction logic.",
         "sections": [
@@ -727,6 +551,7 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
     },
     "mystery_thriller": {
         "genre": "mystery_thriller",
+        "base_section_overrides": {"world_bible": {"label": "Setting, Institutions & Social Context"}, "timeline_event_ledger": {"label": "Case Timeline & Event Ledger"}},
         "label": "Mystery / Thriller",
         "description": "Case-driven canon with clues, suspects, reveals, red herrings, and fair-play rules.",
         "sections": [
@@ -772,6 +597,7 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
     },
     "memoir": {
         "genre": "memoir",
+        "base_section_overrides": {"world_bible": {"label": "Life Context & Setting"}, "timeline_event_ledger": {"label": "Life Timeline"}},
         "label": "Memoir / Life Story",
         "description": "Life-story canon with chronology, people, factual certainty, privacy, and emotional truth.",
         "sections": [
@@ -816,6 +642,7 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
     },
     "custom": {
         "genre": "custom",
+        "base_section_overrides": {"world_bible": {"label": "World & Setting"}, "timeline_event_ledger": {"label": "Timeline & Event Ledger"}},
         "label": "Custom",
         "description": "Flexible canon questionnaire with minimum structure and expandable custom sections.",
         "sections": [

@@ -378,28 +378,6 @@ and saved in place with PATCH /api/project/{id}.
       };
     }
 
-    document.querySelectorAll('[data-canon-item-action="approve-reference"]').forEach((button) => {
-      button.onclick = async () => {
-        const canonId = button.dataset.canonId;
-        if (!canonId) return;
-        await runCanonAction(
-          projectId,
-          `/api/project/${encodeURIComponent(projectId)}/canon/${encodeURIComponent(canonId)}/approve-reference`,
-          'Reference approval failed'
-        );
-      };
-    });
-
-    document.querySelectorAll('[data-canon-action="approve-all-references"]').forEach((button) => {
-      button.onclick = async () => {
-        await runCanonAction(
-          projectId,
-          `/api/project/${encodeURIComponent(projectId)}/canon/approve-all-references`,
-          'Approve-all failed'
-        );
-      };
-    });
-
     document.querySelectorAll('[data-canon-action="complete-setup"]').forEach((button) => {
       button.onclick = async () => {
         await runCanonAction(
@@ -434,7 +412,18 @@ and saved in place with PATCH /api/project/{id}.
     const template = setup.template || {};
     const summary = setup.summary || {};
     const wizardState = setup.wizard_state || {};
-    const groups = Array.isArray(setup.canon_groups) ? setup.canon_groups : [];
+    const hiddenLegacyGroupIds = new Set([
+      'editable_canon',
+      'locked_rules',
+      'system_support_files',
+      'structured_indexes',
+      'runtime_knowledge_packs'
+    ]);
+    const groups = Array.isArray(setup.canon_groups)
+      ? setup.canon_groups.filter(
+          (group) => group && !hiddenLegacyGroupIds.has(group.group_id)
+        )
+      : [];
     const resumeTarget = (wizardState.resume_target || summary.resume_target || 'genre_template');
 
     target.innerHTML = `
@@ -447,10 +436,18 @@ and saved in place with PATCH /api/project/{id}.
           <div><dt>Resume Target</dt><dd>${escapeHtml(resumeTarget)}</dd></div>
         </dl>
         <p class="setup-note">${escapeHtml(template.description || '')}</p>
-        <p class="setup-note">Detected ${Number(summary.detected_items || 0)} canon items. Missing ${Number(summary.missing_items || 0)}. Generated pending ${Number(summary.generated_pending_items || 0)}.</p>
+        <p class="setup-note">
+          Author-facing canon sections: ${Number(summary.author_section_count || 0)} total.
+          Required: ${Number(summary.required_author_section_count || 0)}.
+          Needing attention: ${Number(summary.attention_required_section_count || 0)}.
+        </p>
+        ${Array.isArray(summary.attention_required_sections) && summary.attention_required_sections.length
+          ? `<p class="setup-note">Attention required: ${summary.attention_required_sections
+              .map((section) => escapeHtml(section.label || section.section_id || 'Canon section'))
+              .join(', ')}.</p>`
+          : '<p class="setup-note">All canon sections are complete with verified current Markdown sources.</p>'}
       </section>
       <section class="canon-action-toolbar" aria-label="Canon setup actions">
-        <button type="button" class="secondary-button" data-canon-action="approve-all-references" ${setup.read_only ? 'disabled' : ''}>Approve All References</button>
         <button type="button" class="primary-button" data-canon-action="complete-setup" ${setup.read_only ? 'disabled' : ''}>Complete Canon Setup</button>
       </section>
       <div class="canon-group-list">
@@ -494,7 +491,6 @@ and saved in place with PATCH /api/project/{id}.
 
   function renderCanonItem(item) {
     const files = Array.isArray(item.source_files) ? item.source_files : [];
-    const actions = renderCanonItemActions(item);
     return `
       <section class="canon-item-card" data-status="${escapeHtml(item.status || 'UNKNOWN')}" data-wizard-status="${escapeHtml(item.wizard_status || item.status || '')}">
         <div>
@@ -509,37 +505,9 @@ and saved in place with PATCH /api/project/{id}.
             </li>
           `).join('')}
         </ul>
-        ${actions}
       </section>
     `;
   }
-
-  function renderCanonItemActions(item) {
-    const canonId = item.canon_id || '';
-    const status = item.wizard_status || item.status || '';
-    const role = item.role || '';
-    const isRuntimePack = role === 'runtime_context_pack';
-    const approveLabel = isRuntimePack ? 'Approve Reference Pack' : 'Approve Reference Canon';
-
-    if (status === 'REFERENCE_DETECTED') {
-      return `
-        <div class="canon-item-actions">
-          <button type="button" class="secondary-button compact-button" data-canon-item-action="approve-reference" data-canon-id="${escapeHtml(canonId)}">${approveLabel}</button>
-        </div>
-      `;
-    }
-
-    if (status === 'REFERENCE_APPROVED') {
-      return `
-        <div class="canon-item-actions">
-          <span class="canon-action-status">${isRuntimePack ? 'Reference pack approved for prompt-size control.' : 'Reference canon approved.'}</span>
-        </div>
-      `;
-    }
-
-    return '';
-  }
-
 
   function startNewProjectMode() {
     const form = getNewProjectForm();

@@ -44,3 +44,12 @@ canon_sources/* - Copy.txt
 
 # Asset source bundles
 assets/*.zip
+
+# Patch-runner transient files
+*.bak
+patch_backups/
+tools/deploy_italus_*_patch.ps1
+tools/verify_italus_*_patch.ps1
+tools/rollback_italus_*_patch.ps1
+tools/docs_italus_*_patch.ps1
+desktop.ini

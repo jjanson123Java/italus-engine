@@ -292,3 +292,28 @@ Still locked: generation, providers, prompt builder, runtime writes, Markdown re
 - Generation remains locked.
 
 - italus_canon_validation_service_patch: PASS when service compiles, smoke validation writes only canon_validation_report.json, and execution locks remain false.
+
+PATCH RECORD: italus_canon_validation_api_routes_patch
+- Target: app/api/routes/project.py
+- Scope: Canon validation API status, full validation, and section validation routes.
+- Safety: No frontend, provider, prompt builder, registry, runtime, or packet generation changes.
+- Validation: Python compile, exact route checks, service delegation checks, and protected import guard.
+
+- italus_canon_validation_frontend_status_patch: adds Canon Workbook validation status and run controls; no generation unlock.
+
+PATCH RECORD: italus_canon_setup_ux_patch
+- Targets: frontend/js/canon_authoring.js and frontend/styles.css
+- Scope: Canon Setup workspace sizing, single scroll surface, visible validation progress, and active section reveal/focus.
+- Safety: Preserves existing canon authoring, Markdown, validation, storage, and generation lock behavior.
+- Validation: Node syntax check, exact UI markers, and protected execution marker guard.
+
+PATCH RECORD: italus_canon_setup_ux_correction_patch
+- Targets: frontend/js/canon_authoring.js and frontend/styles.css
+- Scope: hidden modal isolation, full-screen Canon Setup, readable validation progress, concise validation findings, and Save Draft return-to-section-list behavior.
+- Safety: Preserves existing project lifecycle, canon authoring, Markdown, validation, storage, and generation lock behavior.
+
+PATCH RECORD: italus_canon_packet_generation_service_patch
+- Target: app/services/canon_packet_generation_service.py
+- Scope: Generate reviewable project-local Markdown canon packets from validated rendered canon sources.
+- Gate: Packet generation is blocked until canon validation reports ready_for_packet_generation.
+- Safety: No prompt building, provider calls, registry writes, runtime writes, draft persistence, or generation unlock.

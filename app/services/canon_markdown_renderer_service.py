@@ -14,6 +14,9 @@ from __future__ import annotations
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
+import hashlib
+import json
+import re
 
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
@@ -52,6 +55,106 @@ def canon_sources_dir_for_context(context: ProjectContext, *, create: bool = Fal
     return path
 
 
+def canon_section_content_hash(stored_section: dict[str, Any]) -> str:
+    """Return a stable hash of author-owned section content.
+
+    Workflow-only fields are excluded so reopening or completing a section does
+    not make unchanged canon content stale.
+    """
+
+    content = {
+        "section_id": stored_section.get("section_id"),
+        "answers": stored_section.get("answers") or {},
+        "records": stored_section.get("records") or {},
+    }
+    canonical = json.dumps(
+        content,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def markdown_source_freshness(
+    path: Path,
+    *,
+    manifest: dict[str, Any],
+    schema: dict[str, Any],
+    section_schema: dict[str, Any],
+    stored_section: dict[str, Any],
+    section_status: str,
+) -> dict[str, Any]:
+    """Determine whether a Markdown file represents current section content."""
+
+    current_hash = canon_section_content_hash(stored_section)
+    if not path.exists() or not path.is_file():
+        return {
+            "exists": False,
+            "freshness_verified": True,
+            "content_matches": False,
+            "rendered_from_hash": "",
+            "current_content_hash": current_hash,
+            "verification_method": "missing_file",
+            "render_status": (
+                "ready_to_render"
+                if section_status == "complete"
+                else "not_rendered"
+            ),
+            "action_required": True,
+        }
+
+    markdown = path.read_text(encoding="utf-8")
+    hash_match = re.search(
+        r"^- Source Content SHA-256: `([0-9a-f]{64})`\s*$",
+        markdown,
+        re.MULTILINE,
+    )
+
+    if hash_match:
+        rendered_hash = hash_match.group(1)
+        content_matches = rendered_hash == current_hash
+        verification_method = "embedded_sha256"
+        freshness_verified = True
+    else:
+        rendered_hash = ""
+        rendered_at_match = re.search(
+            r"^- Rendered At: `([^`]*)`\s*$",
+            markdown,
+            re.MULTILINE,
+        )
+        rendered_at = rendered_at_match.group(1) if rendered_at_match else ""
+        expected_legacy = _render_markdown_document(
+            manifest=manifest,
+            schema=schema,
+            section_schema=section_schema,
+            stored_section=stored_section,
+            rendered_at=rendered_at,
+            source_content_hash=None,
+        )
+        content_matches = bool(rendered_at) and markdown == expected_legacy
+        verification_method = "legacy_exact_content"
+        freshness_verified = True
+
+    if section_status == "complete":
+        render_status = "current" if content_matches else "ready_to_render"
+    elif content_matches:
+        render_status = "review_in_progress"
+    else:
+        render_status = "update_required"
+
+    return {
+        "exists": True,
+        "freshness_verified": freshness_verified,
+        "content_matches": content_matches,
+        "rendered_from_hash": rendered_hash,
+        "current_content_hash": current_hash,
+        "verification_method": verification_method,
+        "render_status": render_status,
+        "action_required": render_status != "current",
+    }
+
+
 def get_canon_markdown_status(project_id: str) -> dict[str, Any]:
     """Return read-only status for rendered project-local canon Markdown sources."""
 
@@ -71,9 +174,25 @@ def get_canon_markdown_status_for_context(
     project_canon_service.ensure_author_canon_for_context(context, manifest, schema)
 
     completion = _load_completion_for_context(context)
+    author_canon = _load_author_canon_for_context(context)
     sources_dir = canon_sources_dir_for_context(context, create=False)
-    rendered_files = _existing_markdown_files(sources_dir, context.project_dir)
+    rendered_files = _classified_markdown_files(
+        schema,
+        completion,
+        author_canon,
+        sources_dir,
+        context.project_dir,
+        manifest,
+    )
     completed_sections = _completed_section_ids(schema, completion)
+    current_files = [
+        item for item in rendered_files
+        if item.get("render_status") == "current"
+        and item.get("freshness_verified") is True
+    ]
+    action_required_files = [
+        item for item in rendered_files if item.get("action_required") is True
+    ]
 
     return {
         "status": "ok",
@@ -85,8 +204,14 @@ def get_canon_markdown_status_for_context(
         "canon_sources_dir": _relative(sources_dir, context.project_dir),
         "completed_section_count": len(completed_sections),
         "rendered_file_count": len(rendered_files),
+        "current_rendered_file_count": len(current_files),
+        "stale_rendered_file_count": len(action_required_files),
+        "action_required_file_count": len(action_required_files),
         "completed_sections": completed_sections,
         "rendered_files": rendered_files,
+        "current_rendered_files": current_files,
+        "stale_rendered_files": action_required_files,
+        "action_required_files": action_required_files,
         "execution_locks": _execution_locks(),
     }
 
@@ -197,12 +322,15 @@ def render_section_markdown_for_context(
             f"Canon section is not complete and cannot be rendered: {canonical_section_id}"
         )
 
+    stored_section = _stored_section(author_canon, canonical_section_id)
+    source_content_hash = canon_section_content_hash(stored_section)
     markdown = _render_markdown_document(
         manifest=manifest,
         schema=schema,
         section_schema=section_schema,
-        stored_section=_stored_section(author_canon, canonical_section_id),
+        stored_section=stored_section,
         rendered_at=utc_now_iso(),
+        source_content_hash=source_content_hash,
     )
     output_dir = canon_sources_dir_for_context(context, create=True)
     filename = _section_filename(index, canonical_section_id)
@@ -219,11 +347,22 @@ def render_section_markdown_for_context(
         "section_id": canonical_section_id,
         "path": _relative(path, context.project_dir),
         "filename": filename,
+        "source_content_hash": source_content_hash,
+        "freshness_verified": True,
+        "render_status": "current",
+        "action_required": False,
         "execution_locks": _execution_locks(),
     }
 
 
 def _template_schema_for_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
+    project_id = str(manifest.get("project_id") or "").strip()
+    if project_id:
+        context = build_project_context(project_loader.load_manifest(project_id))
+        return project_canon_service.effective_template_schema_for_context(
+            context,
+            manifest,
+        )
     return canon_template_service.get_canon_questionnaire_template(
         manifest.get("template_id"),
         manifest.get("genre"),
@@ -291,6 +430,97 @@ def _existing_markdown_files(sources_dir: Path, project_dir: Path) -> list[dict[
     return files
 
 
+def _classified_markdown_files(
+    schema: dict[str, Any],
+    completion: dict[str, Any],
+    author_canon: dict[str, Any],
+    sources_dir: Path,
+    project_dir: Path,
+    manifest: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    """Classify stored Markdown through deterministic content verification."""
+
+    manifest = manifest or {}
+    existing = {
+        item["filename"]: item
+        for item in _existing_markdown_files(sources_dir, project_dir)
+    }
+    stored_sections = (
+        author_canon.get("sections")
+        if isinstance(author_canon.get("sections"), dict)
+        else {}
+    )
+    result: list[dict[str, Any]] = []
+    known_filenames: set[str] = set()
+
+    for index, section in enumerate(schema.get("sections", []), start=1):
+        section_id = str(section.get("section_id") or "").strip()
+        if not section_id:
+            continue
+
+        filename = _section_filename(index, section_id)
+        known_filenames.add(filename)
+        item = existing.get(filename)
+        if not item:
+            continue
+
+        completion_record = _completion_record(completion, section_id)
+        stored_section = (
+            stored_sections.get(section_id)
+            if isinstance(stored_sections, dict)
+            else {}
+        )
+        stored_section = (
+            stored_section
+            if isinstance(stored_section, dict)
+            else {"section_id": section_id, "answers": {}, "records": {}}
+        )
+        section_status = str(
+            completion_record.get("status")
+            or stored_section.get("status")
+            or "not_started"
+        )
+
+        freshness = markdown_source_freshness(
+            sources_dir / filename,
+            manifest=manifest,
+            schema=schema,
+            section_schema=section,
+            stored_section=stored_section,
+            section_status=section_status,
+        )
+
+        classified = dict(item)
+        classified.update(freshness)
+        classified.update(
+            {
+                "section_id": section_id,
+                "section_label": section.get("label") or section_id,
+                "section_status": section_status,
+            }
+        )
+        result.append(classified)
+
+    for filename, item in existing.items():
+        if filename in known_filenames:
+            continue
+        classified = dict(item)
+        classified.update(
+            {
+                "section_id": "",
+                "section_label": "Unmapped source",
+                "section_status": "unknown",
+                "freshness_verified": False,
+                "content_matches": False,
+                "render_status": "verification_required",
+                "action_required": True,
+                "verification_method": "unmapped_file",
+            }
+        )
+        result.append(classified)
+
+    return result
+
 def _render_markdown_document(
     *,
     manifest: dict[str, Any],
@@ -298,6 +528,7 @@ def _render_markdown_document(
     section_schema: dict[str, Any],
     stored_section: dict[str, Any],
     rendered_at: str,
+    source_content_hash: str | None,
 ) -> str:
     section_id = str(section_schema.get("section_id") or "")
     lines: list[str] = [
@@ -309,6 +540,11 @@ def _render_markdown_document(
         f"- Genre: `{_inline_code(schema.get('genre') or '')}`",
         f"- Section ID: `{_inline_code(section_id)}`",
         f"- Rendered At: `{_inline_code(rendered_at)}`",
+        *(
+            [f"- Source Content SHA-256: `{_inline_code(source_content_hash)}`"]
+            if source_content_hash
+            else []
+        ),
         f"- Source: `{CANON_MARKDOWN_RENDERER_SERVICE_MARKER}`",
         "",
     ]

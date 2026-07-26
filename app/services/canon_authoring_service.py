@@ -71,7 +71,11 @@ def get_canon_authoring_status_for_context(
         "completed_required_section_count": completed_required_count,
         "all_required_sections_complete": required_count > 0 and completed_required_count >= required_count,
         "sections": [
-            _section_summary(section, section_status.get(str(section.get("section_id") or ""), {}))
+            _section_summary(
+                section,
+                section_status.get(str(section.get("section_id") or ""), {}),
+                _stored_section(author_canon, str(section.get("section_id") or "")),
+            )
             for section in schema.get("sections", [])
             if section.get("section_id")
         ],
@@ -103,7 +107,13 @@ def get_canon_section_for_context(
     author_canon = _load_author_canon_for_context(context)
     completion = _load_completion_for_context(context)
     stored_section = _stored_section(author_canon, section_schema["section_id"])
-    completion_record = (completion.get("section_status") or {}).get(section_schema["section_id"], {})
+    completion_record = dict(
+        (completion.get("section_status") or {}).get(section_schema["section_id"], {})
+    )
+    completion_record["missing_required_fields"] = _missing_required_fields(
+        section_schema,
+        stored_section,
+    )
 
     return {
         "status": "ok",
@@ -330,6 +340,13 @@ def reopen_canon_section_for_context(
 
 
 def _template_schema_for_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
+    project_id = str(manifest.get("project_id") or "").strip()
+    if project_id:
+        context = build_project_context(project_loader.load_manifest(project_id))
+        return project_canon_service.effective_template_schema_for_context(
+            context,
+            manifest,
+        )
     return canon_template_service.get_canon_questionnaire_template(
         manifest.get("template_id"),
         manifest.get("genre"),
@@ -526,13 +543,19 @@ def _completion_summary(completion: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _section_summary(section: dict[str, Any], completion_record: dict[str, Any]) -> dict[str, Any]:
+def _section_summary(
+    section: dict[str, Any],
+    completion_record: dict[str, Any],
+    stored_section: dict[str, Any],
+) -> dict[str, Any]:
+    missing_required_fields = _missing_required_fields(section, stored_section)
+
     return {
         "section_id": section.get("section_id"),
         "label": section.get("label"),
         "required": bool(section.get("required")),
-        "status": completion_record.get("status", "not_started"),
-        "missing_required_fields": list(completion_record.get("missing_required_fields") or _required_field_ids(section)),
+        "status": completion_record.get("status", stored_section.get("status", "not_started")),
+        "missing_required_fields": missing_required_fields,
         "field_count": len(section.get("fields", [])),
         "record_count": len(section.get("records", [])),
     }

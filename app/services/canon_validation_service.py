@@ -17,7 +17,7 @@ from typing import Any
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
-from app.services import canon_template_service, project_canon_service
+from app.services import canon_markdown_renderer_service, canon_template_service, project_canon_service
 
 
 CANON_VALIDATION_SERVICE_MARKER = "project-canon-validation-boundary-20260725"
@@ -220,7 +220,7 @@ def _build_validation_report(
     _validate_storage_identity(context, schema, author_canon, completion, template_snapshot, issues, warnings)
 
     section_results = [
-        _section_validation(context, schema, author_canon, completion, section)
+        _section_validation(context, manifest, schema, author_canon, completion, section)
         for section in schema.get("sections", [])
         if section.get("section_id")
     ]
@@ -245,7 +245,12 @@ def _build_validation_report(
         if not result.get("complete")
     ]
     rendered_sources = [
-        result for result in section_results if result.get("markdown_file", {}).get("exists")
+        result
+        for result in section_results
+        if result.get("complete")
+        and result.get("markdown_file", {}).get("exists")
+        and result.get("markdown_file", {}).get("render_status") == "current"
+        and result.get("markdown_file", {}).get("freshness_verified") is True
     ]
     missing_rendered_sources = [
         {
@@ -254,7 +259,12 @@ def _build_validation_report(
             "expected_file": result.get("expected_markdown_file"),
         }
         for result in section_results
-        if result.get("complete") and not result.get("markdown_file", {}).get("exists")
+        if result.get("complete")
+        and (
+            not result.get("markdown_file", {}).get("exists")
+            or result.get("markdown_file", {}).get("render_status") != "current"
+            or result.get("markdown_file", {}).get("freshness_verified") is not True
+        )
     ]
 
     status = _status_from_findings(
@@ -291,6 +301,7 @@ def _build_validation_report(
 
 def _section_validation(
     context: ProjectContext,
+    manifest: dict[str, Any],
     schema: dict[str, Any],
     author_canon: dict[str, Any],
     completion: dict[str, Any],
@@ -303,7 +314,17 @@ def _section_validation(
     completion_status = str(section_record.get("status") or "not_started")
     complete = completion_status == "complete" and not missing_required_fields
     expected_markdown = _expected_markdown_file(schema, section_id)
-    markdown_status = _markdown_file_status(_canon_sources_dir_for_context(context) / expected_markdown, context.project_dir)
+    markdown_path = _canon_sources_dir_for_context(context) / expected_markdown
+    markdown_status = _markdown_file_status(markdown_path, context.project_dir)
+    freshness = canon_markdown_renderer_service.markdown_source_freshness(
+        markdown_path,
+        manifest=manifest,
+        schema=schema,
+        section_schema=section_schema,
+        stored_section=stored_section,
+        section_status=completion_status,
+    )
+    markdown_status.update(freshness)
 
     issues: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
@@ -340,6 +361,19 @@ def _section_validation(
                 severity="warning",
             )
         )
+    elif complete and markdown_status.get("render_status") != "current":
+        warnings.append(
+            _issue(
+                "outdated_rendered_markdown_source",
+                f"Completed section requires an updated Markdown render: {section_id}",
+                section_id=section_id,
+                details={
+                    "expected_file": expected_markdown,
+                    "verification_method": markdown_status.get("verification_method"),
+                },
+                severity="warning",
+            )
+        )
 
     if markdown_status["exists"] and markdown_status["size_bytes"] <= 0:
         issues.append(
@@ -366,14 +400,10 @@ def _section_validation(
 
 
 def _template_schema_for_context(context: ProjectContext, manifest: dict[str, Any]) -> dict[str, Any]:
-    template_snapshot_path = project_canon_service.template_snapshot_path_for_context(context)
-    snapshot = _load_json_if_present(template_snapshot_path, default={})
-    questionnaire = snapshot.get("questionnaire") if isinstance(snapshot.get("questionnaire"), dict) else None
-    if questionnaire:
-        return deepcopy(questionnaire)
-    return canon_template_service.get_canon_questionnaire_template(
-        manifest.get("template_id"),
-        manifest.get("genre"),
+    """Use the immutable project questionnaire snapshot when present."""
+    return project_canon_service.effective_template_schema_for_context(
+        context,
+        manifest,
     )
 
 

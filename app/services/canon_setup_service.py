@@ -18,6 +18,7 @@ from app.projects.project_manifest import (
     LIFECYCLE_DRAFT_SETUP,
     utc_now_iso,
 )
+from app.services import canon_validation_service, project_canon_service
 from app.templates.template_registry import (
     SOURCE_DERIVE_FROM_PROJECT_BOOKS,
     SOURCE_GENERATED_FROM_AUTHOR_CANON,
@@ -52,6 +53,25 @@ def get_canon_setup(project_id: str) -> dict[str, Any]:
         template=template,
         wizard_state=wizard_state,
     )
+    author_schema = project_canon_service.effective_template_schema_for_context(
+        context,
+        manifest.to_dict(),
+    )
+    author_sections = author_schema.get("sections") or []
+    validation_status = canon_validation_service.get_canon_validation_status_for_context(
+        context,
+        manifest.to_dict(),
+        author_schema,
+    )
+    attention_sections = [
+        section
+        for section in validation_status.get("sections", [])
+        if (
+            not section.get("complete")
+            or section.get("markdown_file", {}).get("render_status") != "current"
+            or section.get("markdown_file", {}).get("freshness_verified") is not True
+        )
+    ]
 
     return {
         "status": "ok",
@@ -69,7 +89,21 @@ def get_canon_setup(project_id: str) -> dict[str, Any]:
         },
         "project_context": _context_payload(context),
         "canon_groups": setup["canon_groups"],
-        "summary": setup["summary"],
+        "summary": {
+            **setup["summary"],
+            "author_section_count": len(author_sections),
+            "required_author_section_count": sum(
+                1 for section in author_sections if section.get("required")
+            ),
+            "attention_required_section_count": len(attention_sections),
+            "attention_required_sections": [
+                {
+                    "section_id": section.get("section_id"),
+                    "label": section.get("label") or section.get("section_id"),
+                }
+                for section in attention_sections
+            ],
+        },
         "wizard_state": wizard_state,
     }
 

@@ -1556,6 +1556,38 @@ form[data-canon-section-form] .wizard-actions {
   box-shadow: 0 0 0 2px rgba(214, 168, 95, 0.12);
 }
 
+#canon-setup-modal .canon-section-workflow-note {
+  margin: 18px 0 8px;
+}
+
+#canon-setup-modal .canon-section-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 6;
+  margin-top: 12px;
+  padding: 12px;
+  border-top: 1px solid rgba(214, 168, 95, 0.28);
+  background: rgba(3, 13, 12, 0.96);
+  box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(8px);
+}
+
+.canon-section-actions .canon-quick-add-button {
+  border-color: rgba(214, 168, 95, 0.72);
+  font-weight: 700;
+}
+
+
+@media (max-width: 760px) {
+  #canon-setup-modal .canon-section-actions {
+    justify-content: stretch;
+  }
+
+  #canon-setup-modal .canon-section-actions button {
+    flex: 1 1 100%;
+  }
+}
+
 #canon-setup-modal [data-canon-run-validation][aria-busy="true"] {
   cursor: wait;
   opacity: 1;
@@ -1593,4 +1625,13 @@ form[data-canon-section-form] .wizard-actions {
   #canon-setup-modal .canon-setup-state {
     padding-right: 4px;
   }
+}
+
+
+.canon-item-card[data-status="NEEDS RE-RENDER"] {
+  border-style: dashed;
+}
+
+.canon-item-card[data-status="CURRENT"] > span {
+  font-weight: 700;
 }

@@ -79,6 +79,32 @@ def canon_completion_path_for_context(context: ProjectContext) -> Path:
     return project_canon_dir_for_context(context) / "canon_completion.json"
 
 
+def effective_template_schema_for_context(
+    context: ProjectContext,
+    manifest: dict[str, Any],
+) -> dict[str, Any]:
+    """Return the immutable project snapshot when present.
+
+    Existing projects may contain project-specific modules that are not part of
+    the generic genre template. The snapshot is the schema authority after
+    project creation. New projects fall back to the active template service.
+    """
+
+    snapshot = _load_json_if_present(
+        template_snapshot_path_for_context(context),
+        default={},
+    )
+    questionnaire = (
+        snapshot.get("questionnaire")
+        if isinstance(snapshot.get("questionnaire"), dict)
+        else None
+    )
+    if questionnaire:
+        return deepcopy(questionnaire)
+
+    return _template_schema_for_manifest(manifest)
+
+
 def get_project_canon_status(project_id: str) -> dict[str, Any]:
     """Return read-only project-local author canon storage status."""
 
@@ -94,7 +120,7 @@ def get_project_canon_status_for_context(
 ) -> dict[str, Any]:
     """Return compact status for the author canon storage files."""
 
-    schema = template_schema or _template_schema_for_manifest(manifest)
+    schema = template_schema or effective_template_schema_for_context(context, manifest)
     paths = _paths_for_context(context)
     file_status = {
         key: _file_status(path, context.project_dir)
@@ -156,7 +182,7 @@ def ensure_author_canon_for_context(
     payloads derived from the selected questionnaire schema.
     """
 
-    schema = template_schema or _template_schema_for_manifest(manifest)
+    schema = template_schema or effective_template_schema_for_context(context, manifest)
     project_canon_dir_for_context(context, create=True)
     paths = _paths_for_context(context)
     created: list[str] = []
