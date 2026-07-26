@@ -21,6 +21,25 @@ and saved in place with PATCH /api/project/{id}.
     loadedProject: null
   };
 
+  const lifecycleLabels = {
+    DRAFT_SETUP: 'Draft Setup',
+    CANON_IN_PROGRESS: 'Canon Setup in Progress',
+    READY_FOR_WORKSPACE: 'Ready for Workspace',
+    ACTIVE: 'Active',
+    ARCHIVED: 'Archived'
+  };
+
+  function humanizeIdentifier(value, labels = {}) {
+    const raw = String(value || '').trim();
+    if (!raw) return '—';
+    if (labels[raw]) return labels[raw];
+    return raw
+      .replace(/[_-]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/\b\w/g, (character) => character.toUpperCase());
+  }
+
   function getModalLayer() {
     return document.getElementById(modalLayerId);
   }
@@ -252,11 +271,11 @@ and saved in place with PATCH /api/project/{id}.
         <h3>${escapeHtml(manifest.project_name || 'Untitled Project')}</h3>
         <dl>
           <div><dt>Project ID</dt><dd>${escapeHtml(projectId)}</dd></div>
-          <div><dt>Lifecycle</dt><dd>${escapeHtml(lifecycle)}</dd></div>
-          <div><dt>Genre</dt><dd>${escapeHtml(manifest.genre || '—')}</dd></div>
+          <div><dt>Lifecycle</dt><dd class="human-readable-value">${escapeHtml(humanizeIdentifier(lifecycle, lifecycleLabels))}</dd></div>
+          <div><dt>Genre</dt><dd class="human-readable-value">${escapeHtml(humanizeIdentifier(manifest.genre))}</dd></div>
           <div><dt>Budget</dt><dd>${escapeHtml(budget.token_budget_status || '—')}</dd></div>
         </dl>
-        <p class="setup-note">Resume: ${escapeHtml(resume.resume_target || 'project_metadata')}</p>
+        <p class="setup-note">Resume: ${escapeHtml(humanizeIdentifier(resume.resume_target || 'project_metadata'))}</p>
         <button type="button" class="primary-button project-card-action" ${actionAttr}="${escapeHtml(projectId)}">
           ${escapeHtml(buttonText)}
         </button>
@@ -442,9 +461,17 @@ and saved in place with PATCH /api/project/{id}.
           Needing attention: ${Number(summary.attention_required_section_count || 0)}.
         </p>
         ${Array.isArray(summary.attention_required_sections) && summary.attention_required_sections.length
-          ? `<p class="setup-note">Attention required: ${summary.attention_required_sections
-              .map((section) => escapeHtml(section.label || section.section_id || 'Canon section'))
-              .join(', ')}.</p>`
+          ? `<p class="setup-note attention-required-list">Attention required: ${summary.attention_required_sections
+              .map((section, index) => {
+                const label = escapeHtml(
+                  section.label || section.section_id || 'Canon section'
+                );
+                const colorClass = index % 2 === 0
+                  ? 'attention-section-label--light'
+                  : 'attention-section-label--gold';
+                return `<span class="attention-section-label ${colorClass}">${label}</span>`;
+              })
+              .join('<span class="attention-section-separator">, </span>')}.</p>`
           : '<p class="setup-note">All canon sections are complete with verified current Markdown sources.</p>'}
       </section>
       <section class="canon-action-toolbar" aria-label="Canon setup actions">

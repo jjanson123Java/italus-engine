@@ -12,7 +12,15 @@ from typing import Any
 
 from app.projects import project_loader
 from app.projects.project_context import build_project_context
-from app.services import canon_packet_service, project_runtime_storage_service
+from app.services import (
+    canon_authoring_service,
+    canon_markdown_renderer_service,
+    canon_packet_generation_service,
+    canon_packet_service,
+    book_plan_service,
+    book_knowledge_pack_service,
+    project_runtime_storage_service,
+)
 from app.projects.project_manifest import (
     LIFECYCLE_ACTIVE,
     LIFECYCLE_ARCHIVED,
@@ -39,6 +47,34 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
     context = build_project_context(manifest)
     runtime_storage_status = project_runtime_storage_service.ensure_runtime_storage_for_context(context)
     canon_packet_status = canon_packet_service.get_canon_packet_status_for_context(context, manifest.to_dict())
+    project_runtime_context_status = (
+        canon_packet_generation_service.get_project_runtime_context_status_for_context(
+            context,
+            manifest.to_dict(),
+        )
+    )
+    book_plan_status = book_plan_service.get_book_plan_status_for_context(
+        context,
+        manifest.to_dict(),
+    )
+    book_runtime_context_status = (
+        book_knowledge_pack_service.get_book_runtime_context_status_for_context(
+            context,
+            manifest.to_dict(),
+        )
+    )
+    author_canon_status = canon_authoring_service.get_canon_authoring_status_for_context(
+        context,
+        manifest.to_dict(),
+    )
+    canon_markdown_status = canon_markdown_renderer_service.get_canon_markdown_status_for_context(
+        context,
+        manifest.to_dict(),
+    )
+    author_summary = _workspace_author_summary(
+        author_canon_status,
+        canon_markdown_status,
+    )
 
     can_enter_workspace = bool(wizard_state.get("can_enter_workspace"))
     if manifest.lifecycle_state not in {LIFECYCLE_READY_FOR_WORKSPACE, LIFECYCLE_ACTIVE} and not can_enter_workspace:
@@ -75,21 +111,124 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
         "project_context": _context_payload(context),
         "runtime_storage": runtime_storage_status,
         "canon_packet_status": canon_packet_status,
+        "author_canon_status": author_canon_status,
+        "canon_markdown_status": canon_markdown_status,
+        "runtime_context": {
+            "project": {
+                **project_runtime_context_status,
+                "enabled": True,
+                "approval_status": "not_available",
+                "review_enabled": True,
+            },
+            "book_plan": {
+                **book_plan_status,
+                "enabled": not read_only,
+                "authoring_enabled": not read_only,
+                "approval_enabled": (
+                    not read_only
+                    and bool(book_plan_status.get("valid"))
+                ),
+                "review_enabled": True,
+                "message": (
+                    "Project-local Book Plan authoring and approval are available."
+                    if not read_only
+                    else "Archived projects expose the Book Plan as read-only."
+                ),
+            },
+            "books": {
+                **book_runtime_context_status,
+                "enabled": True,
+                "review_enabled": True,
+                "compile_enabled": (
+                    not read_only
+                    and bool(
+                        book_runtime_context_status.get("compiler_ready")
+                    )
+                ),
+                "message": (
+                    "Book Runtime Context review is available. Compilation "
+                    "requires a current approved Book Plan and an existing "
+                    "Project Runtime Context."
+                ),
+            },
+        },
         "read_only_data": _read_only_data_payload(),
         "runtime_readiness_gates": _runtime_readiness_gates_payload(runtime_storage_status),
         "summary": {
+            **author_summary,
+            "canon_packet_count": int(canon_packet_status.get("packet_count") or 0),
+            "canon_packet_missing_required_count": int(canon_packet_status.get("missing_required_count") or 0),
+            "blocking_requirements": list(wizard_state.get("blocking_requirements") or []),
+            # Legacy compatibility fields remain internal during migration.
             "approved_reference_count": _count_status(canon_statuses, "REFERENCE_APPROVED"),
             "required_canon_count": len(wizard_state.get("required_canon_sets") or []),
             "runtime_pack_count": len(runtime_pack_refs),
-            "canon_packet_count": int(canon_packet_status.get("packet_count") or 0),
-            "canon_packet_missing_required_count": int(canon_packet_status.get("missing_required_count") or 0),
             "canon_setup_completed": bool(wizard_state.get("canon_setup_completed")),
-            "blocking_requirements": list(wizard_state.get("blocking_requirements") or []),
         },
         "workspace_menu": _workspace_menu(manifest.lifecycle_state, read_only),
         "message": "Workspace bootstrap loaded. Generation runtime not yet migrated.",
     }
     return bootstrap
+
+
+
+
+def _workspace_author_summary(
+    author_status: dict[str, Any],
+    markdown_status: dict[str, Any],
+) -> dict[str, Any]:
+    """Return project-local author canon readiness for workspace presentation."""
+
+    markdown_by_section = {
+        str(item.get("section_id") or ""): item
+        for item in markdown_status.get("rendered_files") or []
+        if item.get("section_id")
+    }
+
+    attention_sections: list[dict[str, Any]] = []
+
+    for section in author_status.get("sections") or []:
+        section_id = str(section.get("section_id") or "")
+        if not section_id:
+            continue
+
+        markdown = markdown_by_section.get(section_id, {})
+        complete = (
+            str(section.get("status") or "") == "complete"
+            and not section.get("missing_required_fields")
+        )
+        markdown_current = (
+            markdown.get("render_status") == "current"
+            and markdown.get("freshness_verified") is True
+        )
+
+        if not complete or not markdown_current:
+            attention_sections.append(
+                {
+                    "section_id": section_id,
+                    "label": section.get("label") or section_id,
+                    "complete": complete,
+                    "markdown_current": markdown_current,
+                }
+            )
+
+    return {
+        "author_section_count": int(author_status.get("section_count") or 0),
+        "required_author_section_count": int(
+            author_status.get("required_section_count") or 0
+        ),
+        "completed_required_author_section_count": int(
+            author_status.get("completed_required_section_count") or 0
+        ),
+        "all_required_author_sections_complete": bool(
+            author_status.get("all_required_sections_complete")
+        ),
+        "current_markdown_source_count": int(
+            markdown_status.get("current_rendered_file_count") or 0
+        ),
+        "attention_required_section_count": len(attention_sections),
+        "attention_required_sections": attention_sections,
+    }
 
 
 
@@ -110,21 +249,36 @@ def _read_only_data_payload() -> dict[str, Any]:
     characters = _character_index(books, chapters, events, scenes)
     coverage_events = coverage_map.get("events") if isinstance(coverage_map, dict) else {}
 
+    book_index = {
+        str(item.get("book_id")): item
+        for item in books
+        if isinstance(item, dict) and item.get("book_id")
+    }
+    chapter_sample = _sample_records(
+        chapters,
+        ["chapter_id", "book_id", "chapter_number", "title", "event_name", "status"],
+        8,
+    )
+    for chapter in chapter_sample:
+        book = book_index.get(str(chapter.get("book_id"))) or {}
+        chapter["book_number"] = book.get("book_number")
+        chapter["book_title"] = book.get("title")
+
     return {
         "marker": "workspace-readonly-data-20260707",
         "source_mode": "legacy_root_read_only",
         "runtime_migration_status": "not_migrated",
         "books": {
             "count": len(books) if isinstance(books, list) else 0,
-            "sample": _sample_records(books, ["book_id", "book_number", "title", "status"], 8),
+            "sample": _sample_records(
+                books,
+                ["book_id", "book_number", "title", "status"],
+                len(books) if isinstance(books, list) else 0,
+            ),
         },
         "chapters": {
             "count": len(chapters) if isinstance(chapters, list) else 0,
-            "sample": _sample_records(
-                chapters,
-                ["chapter_id", "book_id", "chapter_number", "title", "event_name", "status"],
-                8,
-            ),
+            "sample": chapter_sample,
         },
         "events": {
             "count": len(events) if isinstance(events, list) else 0,
@@ -337,23 +491,26 @@ def _workspace_menu(lifecycle_state: str, read_only: bool) -> list[dict[str, Any
         },
         {
             "group_id": "canon",
-            "label": "Canon",
+            "label": "Canon & Runtime Context",
             "items": [
-                _enabled_item("canon_dashboard", "Canon Dashboard"),
-                _enabled_item("world_canon", "World Canon"),
-                _enabled_item("character_canon", "Character Canon"),
-                _enabled_item("story_flow", "Story Flow / Saga Canon"),
-                _enabled_item("timeline_backbone", "Timeline / Event Backbone"),
-                _enabled_item("continuity_rules", "Continuity Rules"),
-            ],
-        },
-        {
-            "group_id": "runtime_packs",
-            "label": "Runtime Packs",
-            "items": [
-                _enabled_item("core_pack", "Core Pack"),
-                _enabled_item("generation_pack", "Generation Pack"),
-                _enabled_item("book_packs", "Book Packs"),
+                _enabled_item("author_canon", "Author Canon"),
+                _enabled_item(
+                    "project_runtime_context",
+                    "Project Runtime Context",
+                ),
+                (
+                    _disabled_item(
+                        "book_plan",
+                        "Book Plan",
+                        "Archived projects expose the Book Plan as read-only.",
+                    )
+                    if read_only
+                    else _enabled_item("book_plan", "Book Plan")
+                ),
+                _enabled_item(
+                    "book_runtime_context",
+                    "Book Runtime Context",
+                ),
             ],
         },
         {

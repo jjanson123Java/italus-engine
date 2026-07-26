@@ -17,6 +17,9 @@ from app.services import (
     canon_authoring_service,
     canon_markdown_renderer_service,
     canon_validation_service,
+    canon_packet_generation_service,
+    book_plan_service,
+    book_knowledge_pack_service,
 )
 
 
@@ -61,6 +64,10 @@ class LegacyProjectRequest(BaseModel):
 class CanonSectionDraftRequest(BaseModel):
     answers: dict[str, Any] | None = Field(default_factory=dict)
     records: dict[str, list[dict[str, Any]]] | None = Field(default_factory=dict)
+
+
+class BookPlanDraftRequest(BaseModel):
+    books: list[dict[str, Any]] = Field(default_factory=list)
 
 
 def _model_to_dict(model: BaseModel, *, exclude_unset: bool = False) -> dict[str, Any]:
@@ -143,6 +150,167 @@ def get_workspace_bootstrap(project_id: str):
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     except workspace_service.WorkspaceAccessConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/book-plan/contract")
+def get_book_plan_contract():
+    """Return the stable project-local Book Plan data contract."""
+
+    return book_plan_service.get_book_plan_contract()
+
+
+@router.get("/api/project/{project_id}/book-plan/status")
+def get_book_plan_status(project_id: str):
+    """Return compact Book Plan persistence and validation state."""
+
+    try:
+        return book_plan_service.get_book_plan_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_plan_service.BookPlanContractError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/book-plan")
+def get_book_plan(project_id: str):
+    """Return the saved Book Plan or a non-persisted default document."""
+
+    try:
+        return book_plan_service.get_book_plan(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_plan_service.BookPlanContractError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.put("/api/project/{project_id}/book-plan")
+def save_book_plan_draft(
+    project_id: str,
+    request: BookPlanDraftRequest,
+):
+    """Persist project-local Book Plan draft data only."""
+
+    try:
+        return book_plan_service.save_book_plan_draft(
+            project_id,
+            _model_to_dict(request),
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_plan_service.BookPlanContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/book-plan/approve")
+def approve_book_plan(project_id: str):
+    """Approve the current complete Book Plan content hash."""
+
+    try:
+        return book_plan_service.approve_book_plan(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_plan_service.BookPlanContractError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/book-plan/revoke")
+def revoke_book_plan_approval(project_id: str):
+    """Revoke Book Plan approval without changing plan content."""
+
+    try:
+        return book_plan_service.revoke_book_plan_approval(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_plan_service.BookPlanContractError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/runtime-context/project/approve")
+def approve_project_runtime_context(project_id: str):
+    try:
+        return canon_packet_generation_service.approve_project_runtime_context(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_packet_generation_service.CanonPacketGenerationNotReadyError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/runtime-context/project/revoke")
+def revoke_project_runtime_context_approval(project_id: str):
+    try:
+        return canon_packet_generation_service.revoke_project_runtime_context_approval(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/runtime-context/books/status")
+def get_book_runtime_context_status(project_id: str):
+    """Return Book Runtime Context compiler readiness without writing files."""
+
+    try:
+        return book_knowledge_pack_service.get_book_runtime_context_status(
+            project_id
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_plan_service.BookPlanContractError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/runtime-context/books/generate")
+def compile_book_runtime_context(project_id: str):
+    """Compile one project-local runtime-context artifact per approved book.
+
+    This route does not construct prompts, call providers, write runtime
+    memory, persist generated prose, export drafts, or unlock generation.
+    """
+
+    try:
+        return book_knowledge_pack_service.compile_book_knowledge_packs(
+            project_id
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except (
+        book_plan_service.BookPlanContractError,
+        book_knowledge_pack_service.BookKnowledgePackNotReadyError,
+        book_knowledge_pack_service.BookKnowledgePackSourceMissingError,
+    ) as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/runtime-context/project/status")
+def get_project_runtime_context_status(project_id: str):
+    """Return project-level runtime-context readiness without writing files."""
+
+    try:
+        return canon_packet_generation_service.get_project_runtime_context_status(
+            project_id
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/runtime-context/project/generate")
+def generate_project_runtime_context(project_id: str):
+    """Generate only the project-level reviewable runtime-context artifact.
+
+    This route excludes book packs and does not call prompt construction,
+    providers, runtime memory, draft persistence, validation runtime, exports,
+    or generation unlock behavior.
+    """
+
+    try:
+        return canon_packet_generation_service.generate_project_runtime_context(
+            project_id
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except (
+        canon_packet_generation_service.CanonPacketGenerationNotReadyError,
+        canon_packet_generation_service.CanonPacketSourceMissingError,
+    ) as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 

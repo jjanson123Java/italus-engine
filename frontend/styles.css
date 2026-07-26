@@ -869,6 +869,22 @@ body.modal-open {
   color: rgba(214, 168, 95, 0.92);
 }
 
+.attention-section-label {
+  font-weight: 600;
+}
+
+.attention-section-label--light {
+  color: rgba(242, 234, 216, 0.96);
+}
+
+.attention-section-label--gold {
+  color: var(--gold);
+}
+
+.attention-section-separator {
+  color: rgba(214, 168, 95, 0.92);
+}
+
 .wizard-actions {
   display: flex;
   justify-content: flex-end;
@@ -1219,6 +1235,13 @@ body.modal-open {
   margin: 3px 0 0;
   overflow-wrap: anywhere;
   color: #fff7e8;
+}
+
+.project-card dd.human-readable-value {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .project-card-action {

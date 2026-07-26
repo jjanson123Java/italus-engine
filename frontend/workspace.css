@@ -256,6 +256,66 @@
   font-size: 18px;
 }
 
+.workspace-stat-card strong.human-readable-value,
+.workspace-definition-list dd.human-readable-value {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.workspace-definition-grid--compact {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+}
+
+.workspace-definition-grid--compact > div {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: baseline;
+  justify-content: start;
+  column-gap: 12px;
+  row-gap: 4px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(202, 152, 75, 0.16);
+}
+
+.workspace-definition-grid--compact dt,
+.workspace-definition-grid--compact dd {
+  margin: 0;
+}
+
+.workspace-definition-grid--compact dt {
+  color: #c69649;
+}
+
+.workspace-definition-grid--compact dd {
+  color: #f3e8d3;
+  text-align: left;
+}
+
+.workspace-technical-details {
+  margin-top: 14px;
+}
+
+.workspace-technical-details summary {
+  cursor: pointer;
+  color: #c69649;
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .workspace-definition-grid--compact > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .workspace-definition-grid--compact dd {
+    text-align: left;
+  }
+}
+
 .workspace-definition-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(180px, 1fr));
@@ -785,3 +845,84 @@
 }
 
 /* workspace-runtime-storage-auto-init-20260708: status-only Writing Memory panel after backend lifecycle preparation. */
+
+
+/* italus-book-plan-authoring-surface-v1 */
+.workspace-book-plan-authoring-v1 .book-plan-form {
+  display: grid;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.book-plan-card {
+  border: 1px solid rgba(245, 217, 155, 0.28);
+  border-radius: 14px;
+  padding: 1rem;
+  background: rgba(7, 14, 12, 0.92);
+}
+
+.book-plan-card > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.book-plan-card > header h3 {
+  margin: 0.2rem 0 0;
+  color: #f8ead1;
+}
+
+.book-plan-field-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.book-plan-field {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.book-plan-field > span {
+  color: #d7b765;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.book-plan-field input,
+.book-plan-field textarea {
+  width: 100%;
+  border: 1px solid rgba(245, 217, 155, 0.25);
+  border-radius: 10px;
+  padding: 0.7rem 0.75rem;
+  background: rgba(0, 0, 0, 0.22);
+  color: #f8ead1;
+  font: inherit;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+.book-plan-field input:focus,
+.book-plan-field textarea:focus {
+  outline: none;
+  border-color: rgba(245, 217, 155, 0.8);
+  box-shadow: 0 0 0 2px rgba(245, 217, 155, 0.12);
+}
+
+.book-plan-field input[readonly],
+.book-plan-field textarea[readonly],
+.book-plan-field textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.workspace-success-note {
+  border: 1px solid rgba(98, 186, 132, 0.45);
+  border-radius: 10px;
+  padding: 0.8rem;
+  background: rgba(98, 186, 132, 0.1);
+  color: #dff5e5;
+}

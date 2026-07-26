@@ -18,7 +18,11 @@ from app.projects.project_manifest import (
     LIFECYCLE_READY_FOR_WORKSPACE,
     utc_now_iso,
 )
-from app.services import canon_setup_service
+from app.services import (
+    canon_authoring_service,
+    canon_setup_service,
+    canon_validation_service,
+)
 
 
 REFERENCE_DETECTED = "REFERENCE_DETECTED"
@@ -141,30 +145,70 @@ def complete_canon_setup(project_id: str) -> dict[str, Any]:
     manifest = project_loader.load_manifest(project_id)
     _assert_can_edit_canon(manifest.lifecycle_state)
 
+    authoring_status = canon_authoring_service.get_canon_authoring_status(
+        project_id
+    )
+    if not authoring_status.get("all_required_sections_complete"):
+        completed = int(
+            authoring_status.get("completed_required_section_count") or 0
+        )
+        required = int(
+            authoring_status.get("required_section_count") or 0
+        )
+        incomplete_sections = [
+            str(section.get("section_id") or "")
+            for section in authoring_status.get("sections") or []
+            if section.get("required") and not section.get("complete")
+        ]
+        detail = ", ".join(
+            section_id
+            for section_id in incomplete_sections
+            if section_id
+        )
+        suffix = f": {detail}" if detail else ""
+        raise CanonActionConflictError(
+            "Canon setup cannot complete until all required author-facing "
+            f"sections are complete ({completed}/{required}){suffix}."
+        )
+
+    validation = canon_validation_service.get_canon_validation_status(
+        project_id
+    )
+    if not validation.get("ready_for_packet_generation"):
+        missing_sections = [
+            str(item.get("section_id") or "")
+            for item in validation.get("missing_required_sections") or []
+            if item.get("section_id")
+        ]
+        missing_sources = [
+            str(
+                item.get("section_id")
+                or item.get("expected_file")
+                or ""
+            )
+            for item in validation.get("missing_rendered_sources") or []
+            if (
+                item.get("section_id")
+                or item.get("expected_file")
+            )
+        ]
+        issue_codes = [
+            str(item.get("code") or "")
+            for item in validation.get("issues") or []
+            if item.get("code")
+        ]
+        blockers = _unique(
+            missing_sections + missing_sources + issue_codes
+        )
+        detail = ", ".join(blockers)
+        suffix = f": {detail}" if detail else ""
+        raise CanonActionConflictError(
+            "Canon setup cannot complete until required project-local "
+            f"canon and Markdown sources are current{suffix}."
+        )
+
     setup = canon_setup_service.get_canon_setup(project_id)
     wizard_state = dict(setup.get("wizard_state") or {})
-    statuses = dict(wizard_state.get("canon_set_statuses") or {})
-    blocking_items = []
-
-    for item in _iter_canon_items(setup):
-        if not item.get("required", True):
-            continue
-        canon_id = item["canon_id"]
-        current_status = statuses.get(canon_id) or item.get("wizard_status") or item.get("status")
-        if current_status not in ACCEPTED_COMPLETION_STATUSES:
-            blocking_items.append(
-                {
-                    "canon_id": canon_id,
-                    "label": item.get("label", canon_id),
-                    "status": current_status,
-                }
-            )
-
-    if blocking_items:
-        names = ", ".join(f"{item['canon_id']}={item['status']}" for item in blocking_items)
-        raise CanonActionConflictError(
-            f"Canon setup cannot complete until required canon items are approved: {names}"
-        )
 
     now = utc_now_iso()
     completed_steps = _unique(list(wizard_state.get("completed_steps") or []) + ["canon_groups", "canon_setup"])

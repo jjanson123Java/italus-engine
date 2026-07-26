@@ -6,7 +6,16 @@
   const state = {
     bootstrap: null,
     activeSection: 'dashboard',
-    activeTab: 'overview'
+    activeTab: 'overview',
+    projectRuntimeContext: null,
+    projectRuntimeContextLoading: false,
+    projectRuntimeContextApprovalLoading: false,
+    bookPlan: null,
+    bookPlanLoading: false,
+    bookPlanSaving: false,
+    bookPlanApprovalLoading: false,
+    bookRuntimeContext: null,
+    bookRuntimeContextLoading: false
   };
 
   const workspaceJsVersion = 'workspace-navigation-detail-20260707';
@@ -193,7 +202,6 @@
     const manifest = bootstrap.manifest || {};
     const budget = bootstrap.budget_plan || {};
     const wizard = bootstrap.wizard_state || {};
-    const approvedRefs = bootstrap.approved_canon_refs || {};
     const context = bootstrap.project_context || {};
     const summary = bootstrap.summary || {};
 
@@ -236,15 +244,10 @@
         detail: 'Character canon is approved as a reference. Editable character workspace is not enabled.',
         next: 'Add read-only character browsing from approved canon.'
       }),
-      canon_dashboard: () => renderCanonDashboard(wizard, approvedRefs, summary),
-      world_canon: () => renderCanonFiltered('World Canon', approvedRefs, ['world_bible']),
-      character_canon: () => renderCanonFiltered('Character Canon', approvedRefs, ['character_bible', 'historical_character_interaction_map']),
-      story_flow: () => renderCanonFiltered('Story Flow / Saga Canon', approvedRefs, ['master_storytelling_context', 'book_generation_engine']),
-      timeline_backbone: () => renderCanonFiltered('Timeline / Event Backbone', approvedRefs, ['events_manifest', 'timeline_drift_detector']),
-      continuity_rules: () => renderCanonFiltered('Continuity Rules', approvedRefs, ['continuity_prompt', 'timeline_drift_detector']),
-      core_pack: () => renderRuntimePacks('Core Pack', approvedRefs, ['core_knowledge_pack']),
-      generation_pack: () => renderRuntimePacks('Generation Pack', approvedRefs, ['generation_knowledge_pack']),
-      book_packs: () => renderRuntimePacks('Book Packs', approvedRefs, ['book_knowledge_packs']),
+      author_canon: () => renderAuthorCanon(bootstrap),
+      project_runtime_context: () => renderProjectRuntimeContext(bootstrap),
+      book_plan: () => renderBookPlan(bootstrap),
+      book_runtime_context: () => renderBookRuntimeContext(bootstrap),
       settings: () => renderSettings(manifest, context, bootstrap),
       provider_status: () => renderProviderStatusPanel(manifest, bootstrap),
       runtime_storage_preview: () => renderRuntimeStoragePreview(manifest, context, bootstrap),
@@ -261,11 +264,25 @@
     function renderDashboard(manifest, budget, wizard, bootstrap) {
     setHeading('Project Dashboard');
     const summary = bootstrap.summary || {};
+    const runtimeContext = bootstrap.runtime_context || {};
+    const projectContext = runtimeContext.project || {};
+    const bookPlan = runtimeContext.book_plan || {};
+    const bookContext = runtimeContext.books || {};
     const gates = [
-      ['Workspace Access', wizard.can_enter_workspace ? 'PASS' : 'BLOCKED', wizard.resume_target || 'workspace'],
-      ['Canon Setup', summary.canon_setup_completed ? 'PASS' : 'BLOCKED', `${number(summary.approved_reference_count)} / ${number(summary.required_canon_count)} approved`],
-      ['Runtime Ready', bootstrap.runtime_ready ? 'PASS' : 'LOCKED', 'Project-local generation runtime is not migrated'],
-      ['Control Packets', summary.canon_packet_missing_required_count ? 'BLOCKED' : 'PASS', `${number(summary.canon_packet_count)} tracked / ${number(summary.canon_packet_missing_required_count)} missing`],
+      ['Workspace Access', bootstrap.can_enter_workspace ? 'PASS' : 'BLOCKED', lifecycleLabel(manifest.lifecycle_state)],
+      [
+        'Author Canon',
+        summary.attention_required_section_count ? 'ATTENTION' : 'PASS',
+        `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)} required complete`
+      ],
+      [
+        'Canon Markdown',
+        summary.attention_required_section_count ? 'ATTENTION' : 'PASS',
+        `${number(summary.current_markdown_source_count)} current sources`
+      ],
+      ['Project Runtime Context', String(projectContext.status || 'not_generated').toUpperCase(), projectContext.message || 'Not generated'],
+      ['Book Plan', String(bookPlan.status || 'not_available').toUpperCase(), bookPlan.message || 'Not available'],
+      ['Book Runtime Context', String(bookContext.status || 'blocked').toUpperCase(), bookContext.message || 'Blocked'],
       ['Generation', bootstrap.generation_enabled ? 'ENABLED' : 'DISABLED', 'Protected until runtime migration'],
       ['Validation', bootstrap.validation_enabled ? 'ENABLED' : 'DISABLED', 'Validation runtime is not wired'],
       ['Exports', bootstrap.exports_enabled ? 'ENABLED' : 'DISABLED', 'Output pipeline is not enabled']
@@ -273,18 +290,18 @@
 
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-navigation-detail-20260707">
-        <p class="placeholder">Project setup is complete. This workspace is a read-only command surface until runtime migration is complete.</p>
+        <p class="placeholder">The workspace is available. Author canon is project-local; runtime context and generation remain locked.</p>
 
         <section class="workspace-panel">
           <h3>Project Readiness</h3>
           <div class="workspace-stat-grid">
             ${statCard('Project', manifest.project_name || 'Untitled Project')}
-            ${statCard('Lifecycle', manifest.lifecycle_state || 'UNKNOWN')}
-            ${statCard('Resume Target', wizard.resume_target || 'workspace')}
-            ${statCard('Canon Setup', summary.canon_setup_completed ? 'Complete' : 'Incomplete')}
-            ${statCard('Approved Canon', `${number(summary.approved_reference_count)} / ${number(summary.required_canon_count)}`)}
-            ${statCard('Runtime Packs', `${number(summary.runtime_pack_count)} approved`)}
-            ${statCard('Control Packets', `${number(summary.canon_packet_count)} tracked`)}
+            ${statCard('Lifecycle', lifecycleLabel(manifest.lifecycle_state), { humanReadable: true })}
+            ${statCard('Resume Target', labelFor(wizard.resume_target || 'workspace'), { humanReadable: true })}
+            ${statCard('Author Canon', `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)} complete`)}
+            ${statCard('Needs Attention', number(summary.attention_required_section_count))}
+            ${statCard('Current Markdown', number(summary.current_markdown_source_count))}
+            ${statCard('Project Runtime Context', String(projectContext.status || 'not_generated').replace(/_/g, ' '))}
             ${statCard('Budget Status', budget.token_budget_status || '—')}
             ${statCard('Generation', bootstrap.generation_enabled ? 'Enabled' : 'Disabled')}
           </div>
@@ -316,7 +333,7 @@
           ${definition('Estimated Tokens Total', number(budget.estimated_tokens_total))}
           ${definition('Estimated Generation Passes', number(budget.estimated_generation_passes_required))}
           ${definition('Workspace Gate', wizard && wizard.can_enter_workspace ? 'Open' : 'Blocked')}
-          ${definition('Canon References', summary ? `${number(summary.approved_reference_count)} / ${number(summary.required_canon_count)}` : '—')}
+          ${definition('Author Canon', summary ? `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)} required complete` : '—')}
         </dl>
         <div class="workspace-disabled-note">This is planning metadata only. Manuscript generation remains locked.</div>
       </div>
@@ -363,8 +380,8 @@
             ${definition('Runtime Migration', runtimeMigration)}
             ${definition('Visible Records', number(dataset.count))}
             ${definition('Project', manifest.project_name || 'Untitled Project')}
-            ${definition('Lifecycle', manifest.lifecycle_state || 'UNKNOWN')}
-            ${definition('Canon Gate', summary.canon_setup_completed ? 'Complete' : 'Incomplete')}
+            ${definition('Lifecycle', lifecycleLabel(manifest.lifecycle_state), { humanReadable: true })}
+            ${definition('Author Canon', summary.attention_required_section_count ? 'Attention required' : 'Current')}
             ${definition('Next Safe Step', detail.next)}
           </dl>
         </section>
@@ -376,85 +393,980 @@
     `;
   }
 
-  function renderCanonDashboard(wizard, approvedRefs, summary) {
-    setHeading('Canon Dashboard');
-    const statuses = wizard.canon_set_statuses || {};
-    const canonIds = Object.keys(statuses).sort();
-    const items = canonIds.map((canonId) => {
-      const ref = approvedRefs[canonId] || {};
-      const fileCount = Array.isArray(ref.source_files) ? ref.source_files.length : 0;
+  function renderAuthorCanon(bootstrap) {
+    setHeading('Author Canon');
+    const status = bootstrap.author_canon_status || {};
+    const markdownStatus = bootstrap.canon_markdown_status || {};
+    const summary = bootstrap.summary || {};
+    const markdownBySection = Object.fromEntries(
+      (markdownStatus.rendered_files || [])
+        .filter((item) => item && item.section_id)
+        .map((item) => [item.section_id, item])
+    );
+    const rows = (status.sections || []).map((section) => {
+      const markdown = markdownBySection[section.section_id] || {};
+      const complete = section.status === 'complete'
+        && !(section.missing_required_fields || []).length;
+      const markdownState = markdown.render_status || 'not_rendered';
       return `
         <tr>
-          <td>${escapeHtml(canonId)}</td>
-          <td>${statusBadge(statuses[canonId])}</td>
-          <td>${escapeHtml(ref.approval_type || '—')}</td>
-          <td>${escapeHtml(ref.role || '—')}</td>
-          <td>${number(fileCount)}</td>
+          <td>${escapeHtml(section.label || section.section_id || 'Canon section')}</td>
+          <td>${statusBadge(complete ? 'COMPLETE' : String(section.status || 'NOT_STARTED').toUpperCase())}</td>
+          <td>${statusBadge(String(markdownState).toUpperCase())}</td>
+          <td>${number((section.missing_required_fields || []).length)}</td>
         </tr>
       `;
     }).join('');
 
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-navigation-detail-20260707">
-        <p class="placeholder">Approved canon is read-only in the workspace phase. Canon mutation remains blocked.</p>
+        <p class="placeholder">
+          Project-local author canon is the workspace source of truth. Editing remains on the Project page.
+        </p>
+        <div class="workspace-stat-grid">
+          ${statCard('Author Sections', number(summary.author_section_count))}
+          ${statCard('Required Complete', `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)}`)}
+          ${statCard('Current Markdown', number(summary.current_markdown_source_count))}
+          ${statCard('Needs Attention', number(summary.attention_required_section_count))}
+        </div>
+        ${table(['Section', 'Author State', 'Markdown State', 'Missing Required Fields'], rows)}
+        <div class="workspace-disabled-note">
+          This workspace view is read-only. It does not mutate canon, render Markdown, or route prompts.
+        </div>
+      </div>
+    `;
+  }
+
+  function renderProjectRuntimeContext(bootstrap) {
+    setHeading('Project Runtime Context');
+
+    const bootstrapContext = (bootstrap.runtime_context || {}).project || {};
+    const projectContext = state.projectRuntimeContext || bootstrapContext;
+    const validation = projectContext.validation || {};
+    const targets = projectContext.targets || projectContext.generated_packets || [];
+    const locks = projectContext.execution_locks || {};
+    const validationReady = projectContext.validation_ready === true;
+    const artifactCurrent = projectContext.artifact_current === true;
+    const approvalStatus = String(projectContext.approval_status || 'not_ready');
+    const approvalFresh = projectContext.approval_fresh === true;
+    const loading = state.projectRuntimeContextLoading === true
+      || state.projectRuntimeContextApprovalLoading === true;
+    const readOnly = bootstrap.read_only === true;
+    const generateEnabled = validationReady && !loading && !readOnly;
+    const approveEnabled = artifactCurrent && !approvalFresh && !loading && !readOnly;
+    const revokeEnabled = ['approved', 'outdated'].includes(approvalStatus)
+      && !loading && !readOnly;
+    const targetRows = targets.map((target) => `
+      <tr>
+        <td>${escapeHtml(target.label || 'Project Runtime Context')}</td>
+        <td>${statusBadge(String(target.status || (target.exists ? 'generated' : 'missing')).toUpperCase())}</td>
+        <td><code>${escapeHtml(target.project_relative_path || target.relative_path || '—')}</code></td>
+        <td>${target.sha256 ? `<code>${escapeHtml(String(target.sha256).slice(0, 16))}…</code>` : '—'}</td>
+        <td>${target.source_set_sha256 ? `<code>${escapeHtml(String(target.source_set_sha256).slice(0, 16))}…</code>` : '—'}</td>
+      </tr>
+    `).join('');
+
+    mainPanel.innerHTML = `
+      <div class="workspace-content workspace-project-runtime-approval-v1">
+        <p class="placeholder">
+          Review the project-level runtime context boundary. Approval is bound
+          to the current artifact and current source-set SHA-256. Canon changes
+          make the artifact and approval outdated.
+        </p>
+        <div class="workspace-stat-grid">
+          ${statCard('Status', String(projectContext.status || 'not_generated').replace(/_/g, ' '))}
+          ${statCard('Validation', validationReady ? 'Ready' : 'Blocked')}
+          ${statCard('Artifact', artifactCurrent ? 'Current' : (projectContext.generated_count ? 'Outdated' : 'Missing'))}
+          ${statCard('Approval', approvalStatus.replace(/_/g, ' '))}
+          ${statCard('Freshness', approvalFresh ? 'current' : (approvalStatus === 'outdated' ? 'outdated' : 'not approved'))}
+        </div>
+        <section class="workspace-detail-card">
+          <h3>Canon readiness</h3>
+          <dl class="workspace-definition-grid workspace-definition-grid--compact">
+            ${definition('Required sections', `${number(validation.required_sections_complete)} / ${number(validation.required_sections_total)}`)}
+            ${definition('Rendered Markdown sources', number(validation.rendered_sources_total))}
+          </dl>
+          <details class="workspace-technical-details">
+            <summary>Technical details</summary>
+            <dl class="workspace-definition-grid workspace-definition-grid--compact">
+              ${definition('Source-set SHA-256', projectContext.source_set_sha256 ? `${String(projectContext.source_set_sha256).slice(0, 20)}…` : '—')}
+              ${definition('Approved artifact SHA-256', projectContext.approved_artifact_sha256 ? `${String(projectContext.approved_artifact_sha256).slice(0, 20)}…` : '—')}
+              ${definition('Approved source-set SHA-256', projectContext.approved_source_set_sha256 ? `${String(projectContext.approved_source_set_sha256).slice(0, 20)}…` : '—')}
+              ${definition('Approved at', projectContext.approved_at || '—')}
+            </dl>
+          </details>
+        </section>
+        <section class="workspace-detail-card">
+          <h3>Project-local artifact</h3>
+          ${table(['Artifact', 'State', 'Project path', 'SHA-256', 'Source-set SHA-256'], targetRows)}
+        </section>
+        <section class="workspace-detail-card">
+          <h3>Execution boundary</h3>
+          <div class="workspace-lock-grid">
+            ${lockCard('Approval', approvalFresh ? 'Current' : 'Blocked')}
+            ${lockCard('Prompt Builder', locks.prompt_builder_called ? 'Called' : 'Not called')}
+            ${lockCard('Provider', locks.provider_called ? 'Called' : 'Blocked')}
+            ${lockCard('Runtime Writes', locks.runtime_written ? 'Written' : 'Blocked')}
+            ${lockCard('Draft Persistence', locks.draft_persisted ? 'Written' : 'Blocked')}
+            ${lockCard('Generation Unlock', locks.generation_unlocked ? 'Unlocked' : 'Locked')}
+          </div>
+        </section>
+        <div class="workspace-action-row">
+          <button type="button" id="project-runtime-context-refresh" class="secondary-action" ${loading ? 'disabled' : ''}>${loading ? 'Working…' : 'Refresh Status'}</button>
+          <button type="button" id="project-runtime-context-generate" class="primary-action" ${generateEnabled ? '' : 'disabled'}>Generate Project Runtime Context</button>
+          <button type="button" id="project-runtime-context-approve" class="primary-action" ${approveEnabled ? '' : 'disabled'}>Approve Current Context</button>
+          <button type="button" id="project-runtime-context-revoke" class="secondary-action" ${revokeEnabled ? '' : 'disabled'}>Revoke Approval</button>
+        </div>
+        <div class="workspace-disabled-note">${escapeHtml(projectContext.message || 'Project Runtime Context status is unavailable.')}</div>
+      </div>
+    `;
+    document.getElementById('project-runtime-context-refresh')?.addEventListener('click', () => void loadProjectRuntimeContextStatus());
+    document.getElementById('project-runtime-context-generate')?.addEventListener('click', () => void generateProjectRuntimeContext());
+    document.getElementById('project-runtime-context-approve')?.addEventListener('click', () => void approveProjectRuntimeContext());
+    document.getElementById('project-runtime-context-revoke')?.addEventListener('click', () => void revokeProjectRuntimeContextApproval());
+    if (!state.projectRuntimeContext && !state.projectRuntimeContextLoading) void loadProjectRuntimeContextStatus();
+  }
+
+  async function loadProjectRuntimeContextStatus() {
+    if (!projectId || state.projectRuntimeContextLoading) return;
+
+    state.projectRuntimeContextLoading = true;
+    if (state.activeSection === 'project_runtime_context') {
+      renderProjectRuntimeContext(state.bootstrap);
+    }
+
+    try {
+      const status = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/runtime-context/project/status`
+      );
+      state.projectRuntimeContext = status;
+      setLog(`Project Runtime Context status: ${status.status || 'unknown'}.`);
+    } catch (error) {
+      state.projectRuntimeContext = {
+        status: 'error',
+        validation_ready: false,
+        message: `Unable to load Project Runtime Context status: ${error.message}`,
+        execution_locks: {
+          prompt_builder_called: false,
+          provider_called: false,
+          runtime_written: false,
+          draft_persisted: false,
+          generation_unlocked: false
+        }
+      };
+      setLog(state.projectRuntimeContext.message);
+    } finally {
+      state.projectRuntimeContextLoading = false;
+      if (state.activeSection === 'project_runtime_context') {
+        renderProjectRuntimeContext(state.bootstrap);
+      }
+      renderInspector(state.bootstrap);
+    }
+  }
+
+  async function generateProjectRuntimeContext() {
+    const status = state.projectRuntimeContext
+      || ((state.bootstrap.runtime_context || {}).project || {});
+
+    if (status.validation_ready !== true || state.projectRuntimeContextLoading) {
+      setLog('Project Runtime Context generation remains blocked by canon readiness.');
+      return;
+    }
+
+    state.projectRuntimeContextLoading = true;
+    renderProjectRuntimeContext(state.bootstrap);
+    setLog('Generating project-level Runtime Context…');
+
+    try {
+      const result = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/runtime-context/project/generate`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      state.projectRuntimeContext = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/runtime-context/project/status`
+      );
+      setLog('Project Runtime Context generated for author review and now requires approval. Generation remains locked.');
+    } catch (error) {
+      state.projectRuntimeContext = {
+        ...status,
+        status: 'error',
+        message: `Project Runtime Context generation failed: ${error.message}`
+      };
+      setLog(state.projectRuntimeContext.message);
+    } finally {
+      state.projectRuntimeContextLoading = false;
+      renderProjectRuntimeContext(state.bootstrap);
+      renderInspector(state.bootstrap);
+    }
+  }
+
+  async function approveProjectRuntimeContext() {
+    if (!projectId || state.projectRuntimeContextApprovalLoading) return;
+    state.projectRuntimeContextApprovalLoading = true;
+    renderProjectRuntimeContext(state.bootstrap);
+    try {
+      state.projectRuntimeContext = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/runtime-context/project/approve`,
+        { method: 'POST', headers: { Accept: 'application/json' } }
+      );
+      setLog('Project Runtime Context approved against current artifact and source hashes.');
+    } catch (error) {
+      setLog(`Project Runtime Context approval failed: ${error.message}`);
+    } finally {
+      state.projectRuntimeContextApprovalLoading = false;
+      renderProjectRuntimeContext(state.bootstrap);
+      renderInspector(state.bootstrap);
+    }
+  }
+
+  async function revokeProjectRuntimeContextApproval() {
+    if (!projectId || state.projectRuntimeContextApprovalLoading) return;
+    state.projectRuntimeContextApprovalLoading = true;
+    renderProjectRuntimeContext(state.bootstrap);
+    try {
+      state.projectRuntimeContext = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/runtime-context/project/revoke`,
+        { method: 'POST', headers: { Accept: 'application/json' } }
+      );
+      setLog('Project Runtime Context approval revoked.');
+    } catch (error) {
+      setLog(`Project Runtime Context approval revocation failed: ${error.message}`);
+    } finally {
+      state.projectRuntimeContextApprovalLoading = false;
+      renderProjectRuntimeContext(state.bootstrap);
+      renderInspector(state.bootstrap);
+    }
+  }
+
+  function renderBookPlan(bootstrap) {
+    setHeading('Book Plan');
+
+    const bootstrapPlan = (bootstrap.runtime_context || {}).book_plan || {};
+    const response = state.bookPlan;
+    const plan = response && response.plan
+      ? response.plan
+      : {
+          status: bootstrapPlan.status || 'not_started',
+          revision: bootstrapPlan.revision || 0,
+          content_hash: bootstrapPlan.content_hash || '',
+          book_count: bootstrapPlan.expected_book_count
+            || bootstrapPlan.planned_book_count
+            || (bootstrap.manifest || {}).book_count
+            || 0,
+          books: []
+        };
+    const validation = plan.validation || {
+      valid: bootstrapPlan.valid === true,
+      complete_book_count: bootstrapPlan.complete_book_count || 0,
+      expected_book_count: bootstrapPlan.expected_book_count || plan.book_count || 0,
+      issues: bootstrapPlan.issues || []
+    };
+    const loading = state.bookPlanLoading === true;
+    const saving = state.bookPlanSaving === true;
+    const approvalLoading = state.bookPlanApprovalLoading === true;
+    const approvalStatus = String(
+      plan.approval_status
+      || bootstrapPlan.approval_status
+      || 'not_ready'
+    );
+    const approvalFresh = plan.approval_fresh === true
+      || bootstrapPlan.approval_fresh === true;
+    const canApprove = validation.valid === true
+      && !readOnly
+      && !loading
+      && !saving
+      && !approvalLoading
+      && approvalStatus !== 'approved';
+    const canRevoke = !readOnly
+      && !loading
+      && !saving
+      && !approvalLoading
+      && (approvalStatus === 'approved' || approvalStatus === 'outdated');
+    const readOnly = bootstrap.read_only === true
+      || bootstrapPlan.authoring_enabled === false;
+    const expectedBookCount = Number(
+      validation.expected_book_count
+      || plan.book_count
+      || (bootstrap.manifest || {}).book_count
+      || 0
+    );
+    const books = normalizeBookPlanBooks(plan.books || [], expectedBookCount);
+    const issueRows = (validation.issues || []).map((issue) => `
+      <tr>
+        <td>${escapeHtml(issue.book_number ? `Book ${issue.book_number}` : 'Plan')}</td>
+        <td>${escapeHtml(issue.code || 'validation_issue')}</td>
+        <td>${escapeHtml(issue.message || 'Book Plan validation issue.')}</td>
+      </tr>
+    `).join('');
+
+    mainPanel.innerHTML = `
+      <div class="workspace-content workspace-book-plan-authoring-v1">
+        <p class="placeholder">
+          Define project-local boundaries for each book. Saving changes only
+          <code>book_plan.json</code>. Approval, book-pack compilation, prompt
+          routing, provider execution, runtime memory, and generation remain locked.
+        </p>
 
         <div class="workspace-stat-grid">
-          ${statCard('Approved References', `${number(summary && summary.approved_reference_count)} / ${number(summary && summary.required_canon_count)}`)}
-          ${statCard('Runtime Packs', `${number(summary && summary.runtime_pack_count)} approved`)}
-          ${statCard('Canon Editing', 'Disabled')}
-          ${statCard('Canon Mutation', 'Blocked')}
+          ${statCard('Status', String(plan.status || 'not_started').replace(/_/g, ' '))}
+          ${statCard('Complete Books', `${number(validation.complete_book_count)} / ${number(expectedBookCount)}`)}
+          ${statCard('Revision', number(plan.revision))}
+          ${statCard('Approval', approvalStatus.replace(/_/g, ' '))}
+          ${statCard('Freshness', approvalFresh ? 'current' : (
+            approvalStatus === 'outdated' ? 'outdated' : 'not approved'
+          ))}
         </div>
 
-        ${table(['Canon ID', 'Status', 'Approval Type', 'Role', 'Sources'], items)}
+        <section class="workspace-detail-card">
+          <h3>Plan identity</h3>
+          <dl class="workspace-definition-grid">
+            ${definition('Project path', (response && response.project_relative_path) || bootstrapPlan.project_relative_path || 'book_plan.json')}
+            ${definition('Schema', plan.schema_version || bootstrapPlan.schema_version || 'project_book_plan_v1')}
+            ${definition('Content hash', plan.content_hash ? `${String(plan.content_hash).slice(0, 20)}…` : 'Not saved')}
+            ${definition('Authoring', readOnly ? 'Read-only' : 'Enabled')}
+            ${definition('Approved revision', number(plan.approved_revision || 0))}
+            ${definition('Approved hash', plan.approved_content_hash
+              ? `${String(plan.approved_content_hash).slice(0, 20)}…`
+              : 'Not approved')}
+            ${definition('Approved at', plan.approved_at || 'Not approved')}
+          </dl>
+        </section>
+
+        <form id="book-plan-form" class="book-plan-form">
+          ${books.map((book) => renderBookPlanCard(book, expectedBookCount, readOnly)).join('')}
+        </form>
+
+        <section class="workspace-detail-card">
+          <h3>Validation</h3>
+          ${validation.valid
+            ? '<div class="workspace-success-note">All required Book Plan fields are complete.</div>'
+            : table(['Scope', 'Code', 'Issue'], issueRows)}
+        </section>
+
+        <section class="workspace-detail-card">
+          <h3>Execution boundary</h3>
+          <div class="workspace-lock-grid">
+            ${lockCard('Approval', approvalStatus.replace(/_/g, ' '))}
+            ${lockCard('Book Pack Compilation', 'Blocked')}
+            ${lockCard('Prompt Builder', 'Not called')}
+            ${lockCard('Provider Calls', 'Blocked')}
+            ${lockCard('Runtime Writes', 'Blocked')}
+            ${lockCard('Generation Unlock', 'Locked')}
+          </div>
+        </section>
+
+        <div class="workspace-action-row">
+          <button type="button" id="book-plan-refresh" class="secondary-action"
+            ${loading || saving ? 'disabled' : ''}>
+            ${loading ? 'Loading…' : 'Reload Plan'}
+          </button>
+          <button type="button" id="book-plan-save" class="primary-action"
+            ${readOnly || loading || saving || approvalLoading ? 'disabled' : ''}
+            aria-disabled="${readOnly || loading || saving || approvalLoading ? 'true' : 'false'}">
+            ${saving ? 'Saving…' : 'Save Book Plan Draft'}
+          </button>
+          <button type="button" id="book-plan-approve" class="primary-action"
+            ${canApprove ? '' : 'disabled'}
+            aria-disabled="${canApprove ? 'false' : 'true'}">
+            ${approvalLoading ? 'Updating…' : 'Approve Current Plan'}
+          </button>
+          <button type="button" id="book-plan-revoke" class="secondary-action"
+            ${canRevoke ? '' : 'disabled'}
+            aria-disabled="${canRevoke ? 'false' : 'true'}">
+            Revoke Approval
+          </button>
+        </div>
+
+        <div class="workspace-disabled-note">
+          ${escapeHtml(
+            bootstrapPlan.message
+            || (readOnly
+              ? 'This Book Plan is read-only.'
+              : 'Complete plans can be approved. Editing approved content makes approval outdated.')
+          )}
+        </div>
       </div>
+    `;
+
+    const refreshButton = document.getElementById('book-plan-refresh');
+    if (refreshButton) {
+      refreshButton.addEventListener('click', () => void loadBookPlan());
+    }
+
+    const saveButton = document.getElementById('book-plan-save');
+    if (saveButton) {
+      saveButton.addEventListener('click', () => void saveBookPlanDraft());
+    }
+
+    const approveButton = document.getElementById('book-plan-approve');
+    if (approveButton) {
+      approveButton.addEventListener('click', () => void approveBookPlan());
+    }
+
+    const revokeButton = document.getElementById('book-plan-revoke');
+    if (revokeButton) {
+      revokeButton.addEventListener('click', () => void revokeBookPlanApproval());
+    }
+
+    if (!state.bookPlan && !state.bookPlanLoading) {
+      void loadBookPlan();
+    }
+  }
+
+  function renderBookPlanCard(book, expectedBookCount, readOnly) {
+    const bookNumber = Number(book.book_number || 0);
+    const isFinalBook = bookNumber === expectedBookCount;
+    const readonlyAttribute = readOnly ? 'readonly' : '';
+    const disabledAttribute = readOnly ? 'disabled' : '';
+
+    return `
+      <article class="book-plan-card" data-book-card="${bookNumber}">
+        <header>
+          <div>
+            <span class="eyebrow">Book ${bookNumber}</span>
+            <h3>${escapeHtml(book.title || `Book ${bookNumber}`)}</h3>
+          </div>
+          ${statusBadge(bookPlanBookComplete(book, isFinalBook) ? 'COMPLETE' : 'DRAFT')}
+        </header>
+
+        <div class="book-plan-field-grid">
+          ${bookPlanInput(bookNumber, 'title', 'Title', book.title, true, readonlyAttribute)}
+          ${bookPlanInput(bookNumber, 'time_span', 'Time span', book.time_span, true, readonlyAttribute)}
+        </div>
+
+        ${bookPlanTextarea(bookNumber, 'primary_arc', 'Primary arc', book.primary_arc, true, readonlyAttribute)}
+        ${bookPlanTextarea(bookNumber, 'ending_state', 'Ending state', book.ending_state, true, readonlyAttribute)}
+        ${bookPlanTextarea(
+          bookNumber,
+          'handoff_to_next_book',
+          isFinalBook ? 'Series closing handoff (optional)' : 'Handoff to next book',
+          book.handoff_to_next_book,
+          !isFinalBook,
+          readonlyAttribute
+        )}
+
+        <div class="book-plan-field-grid">
+          ${bookPlanListField(bookNumber, 'major_events', 'Major events', book.major_events, disabledAttribute)}
+          ${bookPlanListField(bookNumber, 'required_characters', 'Required characters', book.required_characters, disabledAttribute)}
+          ${bookPlanListField(bookNumber, 'required_locations', 'Required locations', book.required_locations, disabledAttribute)}
+          ${bookPlanListField(bookNumber, 'allowed_reveals', 'Allowed reveals', book.allowed_reveals, disabledAttribute)}
+          ${bookPlanListField(bookNumber, 'forbidden_future_knowledge', 'Forbidden future knowledge', book.forbidden_future_knowledge, disabledAttribute)}
+        </div>
+
+        ${bookPlanTextarea(bookNumber, 'notes', 'Author notes', book.notes, false, readonlyAttribute)}
+      </article>
     `;
   }
 
-  function renderCanonFiltered(title, approvedRefs, canonIds) {
-    setHeading(title);
-    const rows = canonIds.map((canonId) => referenceRow(canonId, approvedRefs[canonId])).join('');
-    mainPanel.innerHTML = `
-      <div class="workspace-content workspace-navigation-detail-20260707">
-        <p class="placeholder">Reference-approved canon. Review/edit actions are not enabled in this patch.</p>
-        ${table(['Canon ID', 'Approval Type', 'Role', 'Source Files'], rows)}
-        <div class="workspace-disabled-note">This panel proves reference availability only. It does not mutate canon or route prompts.</div>
-      </div>
+  function bookPlanInput(bookNumber, field, label, value, required, readonlyAttribute) {
+    return `
+      <label class="book-plan-field">
+        <span>${escapeHtml(label)}${required ? ' *' : ''}</span>
+        <input type="text"
+          data-book-plan-field="${escapeHtml(field)}"
+          data-book-number="${bookNumber}"
+          value="${escapeHtml(value || '')}"
+          ${required ? 'required' : ''}
+          ${readonlyAttribute} />
+      </label>
     `;
   }
 
-  function renderRuntimePacks(title, approvedRefs, canonIds) {
-    setHeading(title);
-    const bootstrap = state.bootstrap || {};
-    const packetStatus = bootstrap.canon_packet_status || {};
-    const packets = Array.isArray(packetStatus.packets) ? packetStatus.packets : [];
-    const packetRows = packets
-      .filter((packet) => packetMatchesCanonIds(packet.canon_id, canonIds))
-      .map(packetStatusRow)
-      .join('');
-    const referenceRows = canonIds.map((canonId) => referenceRow(canonId, approvedRefs[canonId])).join('');
+  function bookPlanTextarea(bookNumber, field, label, value, required, readonlyAttribute) {
+    return `
+      <label class="book-plan-field">
+        <span>${escapeHtml(label)}${required ? ' *' : ''}</span>
+        <textarea rows="3"
+          data-book-plan-field="${escapeHtml(field)}"
+          data-book-number="${bookNumber}"
+          ${required ? 'required' : ''}
+          ${readonlyAttribute}>${escapeHtml(value || '')}</textarea>
+      </label>
+    `;
+  }
+
+  function bookPlanListField(bookNumber, field, label, values, disabledAttribute) {
+    return `
+      <label class="book-plan-field">
+        <span>${escapeHtml(label)}</span>
+        <textarea rows="4"
+          data-book-plan-list-field="${escapeHtml(field)}"
+          data-book-number="${bookNumber}"
+          placeholder="One item per line"
+          ${disabledAttribute}>${escapeHtml((values || []).join('\n'))}</textarea>
+      </label>
+    `;
+  }
+
+  function normalizeBookPlanBooks(books, expectedBookCount) {
+    const byNumber = new Map(
+      (books || []).map((book) => [Number(book.book_number), book])
+    );
+    const normalized = [];
+    for (let bookNumber = 1; bookNumber <= expectedBookCount; bookNumber += 1) {
+      normalized.push({
+        book_number: bookNumber,
+        title: '',
+        time_span: '',
+        primary_arc: '',
+        major_events: [],
+        required_characters: [],
+        required_locations: [],
+        ending_state: '',
+        handoff_to_next_book: '',
+        allowed_reveals: [],
+        forbidden_future_knowledge: [],
+        notes: '',
+        ...(byNumber.get(bookNumber) || {})
+      });
+    }
+    return normalized;
+  }
+
+  function bookPlanBookComplete(book, isFinalBook) {
+    return Boolean(
+      String(book.title || '').trim()
+      && String(book.time_span || '').trim()
+      && String(book.primary_arc || '').trim()
+      && String(book.ending_state || '').trim()
+      && (isFinalBook || String(book.handoff_to_next_book || '').trim())
+    );
+  }
+
+  function collectBookPlanPayload() {
+    const form = document.getElementById('book-plan-form');
+    if (!form) throw new Error('Book Plan form is not available.');
+
+    const bookNumbers = Array.from(
+      form.querySelectorAll('[data-book-number]')
+    )
+      .map((node) => Number(node.dataset.bookNumber))
+      .filter((value) => Number.isInteger(value) && value > 0);
+    const uniqueBookNumbers = Array.from(new Set(bookNumbers)).sort(
+      (left, right) => left - right
+    );
+
+    return {
+      books: uniqueBookNumbers.map((bookNumber) => {
+        const book = { book_number: bookNumber };
+
+        form.querySelectorAll(
+          `[data-book-plan-field][data-book-number="${bookNumber}"]`
+        ).forEach((node) => {
+          book[node.dataset.bookPlanField] = String(node.value || '').trim();
+        });
+
+        form.querySelectorAll(
+          `[data-book-plan-list-field][data-book-number="${bookNumber}"]`
+        ).forEach((node) => {
+          book[node.dataset.bookPlanListField] = String(node.value || '')
+            .split(/\r?\n/)
+            .map((item) => item.trim())
+            .filter(Boolean);
+        });
+
+        return book;
+      })
+    };
+  }
+
+  async function loadBookPlan() {
+    if (!projectId || state.bookPlanLoading || state.bookPlanSaving) return;
+
+    state.bookPlanLoading = true;
+    if (state.activeSection === 'book_plan') {
+      renderBookPlan(state.bootstrap);
+    }
+
+    try {
+      state.bookPlan = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/book-plan`
+      );
+      setLog(
+        `Book Plan loaded: ${state.bookPlan.plan.status || 'unknown'}, revision ${state.bookPlan.plan.revision || 0}.`
+      );
+    } catch (error) {
+      state.bookPlan = {
+        plan: {
+          status: 'error',
+          revision: 0,
+          books: [],
+          validation: {
+            valid: false,
+            issues: [{ code: 'load_failed', message: error.message }]
+          }
+        }
+      };
+      setLog(`Book Plan load failed: ${error.message}`);
+    } finally {
+      state.bookPlanLoading = false;
+      if (state.activeSection === 'book_plan') {
+        renderBookPlan(state.bootstrap);
+      }
+    }
+  }
+
+  async function saveBookPlanDraft() {
+    const bootstrapPlan = (state.bootstrap.runtime_context || {}).book_plan || {};
+    if (
+      state.bootstrap.read_only === true
+      || bootstrapPlan.authoring_enabled === false
+      || state.bookPlanSaving
+      || state.bookPlanLoading
+    ) {
+      setLog('Book Plan saving is not available in the current project state.');
+      return;
+    }
+
+    let payload;
+    try {
+      payload = collectBookPlanPayload();
+    } catch (error) {
+      setLog(`Book Plan save blocked: ${error.message}`);
+      return;
+    }
+
+    state.bookPlanSaving = true;
+    renderBookPlan(state.bootstrap);
+    setLog('Saving project-local Book Plan draft…');
+
+    try {
+      state.bookPlan = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/book-plan`,
+        {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        }
+      );
+      setLog(
+        `Book Plan saved at revision ${state.bookPlan.plan.revision}. Approval and book-pack compilation remain locked.`
+      );
+    } catch (error) {
+      setLog(`Book Plan save failed: ${error.message}`);
+    } finally {
+      state.bookPlanSaving = false;
+      renderBookPlan(state.bootstrap);
+      renderInspector(state.bootstrap);
+    }
+  }
+
+
+  async function approveBookPlan() {
+    if (
+      !projectId
+      || state.bookPlanApprovalLoading
+      || state.bookPlanLoading
+      || state.bookPlanSaving
+    ) return;
+
+    state.bookPlanApprovalLoading = true;
+    renderBookPlan(state.bootstrap);
+    setLog('Approving the current Book Plan content hash…');
+
+    try {
+      state.bookPlan = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/book-plan/approve`,
+        {
+          method: 'POST',
+          headers: { Accept: 'application/json' }
+        }
+      );
+      setLog(
+        `Book Plan approved at revision ${state.bookPlan.plan.approved_revision}. Downstream generation remains locked.`
+      );
+    } catch (error) {
+      setLog(`Book Plan approval failed: ${error.message}`);
+    } finally {
+      state.bookPlanApprovalLoading = false;
+      renderBookPlan(state.bootstrap);
+      renderInspector(state.bootstrap);
+    }
+  }
+
+  async function revokeBookPlanApproval() {
+    if (
+      !projectId
+      || state.bookPlanApprovalLoading
+      || state.bookPlanLoading
+      || state.bookPlanSaving
+    ) return;
+
+    state.bookPlanApprovalLoading = true;
+    renderBookPlan(state.bootstrap);
+    setLog('Revoking Book Plan approval…');
+
+    try {
+      state.bookPlan = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/book-plan/revoke`,
+        {
+          method: 'POST',
+          headers: { Accept: 'application/json' }
+        }
+      );
+      setLog('Book Plan approval revoked. Downstream generation remains locked.');
+    } catch (error) {
+      setLog(`Book Plan approval revocation failed: ${error.message}`);
+    } finally {
+      state.bookPlanApprovalLoading = false;
+      renderBookPlan(state.bootstrap);
+      renderInspector(state.bootstrap);
+    }
+  }
+
+  function renderBookRuntimeContext(bootstrap) {
+    setHeading('Book Runtime Context');
+
+    const bootstrapContext = (bootstrap.runtime_context || {}).books || {};
+    const bookContext = state.bookRuntimeContext || bootstrapContext;
+    const plan = bookContext.book_plan || {};
+    const projectContext = bookContext.project_runtime_context || {};
+    const targets = bookContext.targets || [];
+    const blockers = bookContext.blockers || [];
+    const locks = bookContext.execution_locks || {};
+    const loading = state.bookRuntimeContextLoading === true;
+    const readOnly = bootstrap.read_only === true;
+    const compilerReady = bookContext.compiler_ready === true;
+    const compileEnabled = compilerReady && !readOnly && !loading;
+
+    const targetRows = targets.map((target) => `
+      <tr>
+        <td>${escapeHtml(target.label || `Book ${target.book_number || '—'} Runtime Context`)}</td>
+        <td>${statusBadge(String(target.status || (target.exists ? 'current' : 'missing')).toUpperCase())}</td>
+        <td><code>${escapeHtml(target.project_relative_path || '—')}</code></td>
+        <td>${target.sha256
+          ? `<code>${escapeHtml(String(target.sha256).slice(0, 16))}…</code>`
+          : '—'}</td>
+        <td>${escapeHtml(String(target.source_book_plan_revision || '—'))}</td>
+      </tr>
+    `).join('');
+
+    const blockerRows = blockers.map((blocker) => `
+      <tr>
+        <td>${escapeHtml(blocker.code || 'blocked')}</td>
+        <td>${escapeHtml(blocker.message || 'Compilation is blocked.')}</td>
+      </tr>
+    `).join('');
 
     mainPanel.innerHTML = `
-      <div class="workspace-content workspace-navigation-detail-20260707">
-        <p class="placeholder">Runtime packs are approved reference artifacts and project-local control packet readiness records. They are visible but not injected into live generation here.</p>
-        <div class="workspace-lock-grid">
-          ${lockCard('Runtime Pack Status', 'Read Only')}
-          ${lockCard('Control Packet Boundary', packetStatus.status || 'Unavailable')}
-          ${lockCard('Prompt Injection', 'Disabled')}
-          ${lockCard('Generation Runtime', 'Disabled')}
-          ${lockCard('Provider Calls', 'Blocked')}
+      <div class="workspace-content workspace-book-runtime-context-review-v1">
+        <p class="placeholder">
+          Review one project-local runtime-context artifact per approved book.
+          Compilation is derived from the current approved Book Plan and the
+          current Project Runtime Context. Prompt, provider, runtime-memory,
+          draft, export, and generation boundaries remain locked.
+        </p>
+
+        <div class="workspace-stat-grid">
+          ${statCard('Status', String(bookContext.status || 'blocked').replace(/_/g, ' '))}
+          ${statCard('Compiler', compilerReady ? 'Ready' : 'Blocked')}
+          ${statCard('Current', `${number(bookContext.current_count)} / ${number(bookContext.target_count)}`)}
+          ${statCard('Missing', number(bookContext.missing_count))}
+          ${statCard('Outdated', number(bookContext.outdated_count))}
         </div>
 
-        <section class="workspace-panel">
-          <h3>Approved Reference Canon</h3>
-          ${table(['Pack ID', 'Approval Type', 'Role', 'Source Files'], referenceRows)}
+        <section class="workspace-detail-card">
+          <h3>Source readiness</h3>
+          <dl class="workspace-definition-grid workspace-definition-grid--compact">
+            ${definition('Book Plan status', labelFor(plan.status || 'not_started'))}
+            ${definition('Book Plan approval', labelFor(plan.approval_status || 'not_ready'))}
+            ${definition('Book Plan freshness', plan.approval_fresh === true ? 'Current' : 'Not Current')}
+            ${definition('Book Plan revision', number(plan.revision))}
+            ${definition('Project Runtime Context', projectContext.exists ? 'Present' : 'Missing')}
+          </dl>
+          <details class="workspace-technical-details">
+            <summary>Technical details</summary>
+            <dl class="workspace-definition-grid workspace-definition-grid--compact">
+              ${definition('Project Runtime Context SHA-256', projectContext.sha256
+                ? `${String(projectContext.sha256).slice(0, 20)}…`
+                : '—')}
+            </dl>
+          </details>
         </section>
 
-        <section class="workspace-panel">
-          <h3>Project-local Control Packet Readiness</h3>
-          ${table(['Packet ID', 'Status', 'Required', 'Project-local Path', 'Description'], packetRows)}
+        <section class="workspace-detail-card">
+          <h3>Book artifacts</h3>
+          ${table(
+            ['Artifact', 'State', 'Project path', 'SHA-256', 'Plan revision'],
+            targetRows
+          )}
         </section>
+
+        <section class="workspace-detail-card">
+          <h3>Compilation blockers</h3>
+          ${blockers.length
+            ? table(['Code', 'Reason'], blockerRows)
+            : '<div class="workspace-success-note">No compilation blockers.</div>'}
+        </section>
+
+        <section class="workspace-detail-card">
+          <h3>Execution boundary</h3>
+          <div class="workspace-lock-grid">
+            ${lockCard('Compilation', compilerReady ? 'Ready' : 'Blocked')}
+            ${lockCard('Prompt Builder', locks.prompt_builder_called ? 'Called' : 'Not called')}
+            ${lockCard('Provider', locks.provider_called ? 'Called' : 'Blocked')}
+            ${lockCard('Registry Writes', locks.registry_written ? 'Written' : 'Blocked')}
+            ${lockCard('Runtime Writes', locks.runtime_written ? 'Written' : 'Blocked')}
+            ${lockCard('Draft Persistence', locks.draft_persisted ? 'Written' : 'Blocked')}
+            ${lockCard('Generation Unlock', locks.generation_unlocked ? 'Unlocked' : 'Locked')}
+          </div>
+        </section>
+
+        <div class="workspace-action-row">
+          <button
+            type="button"
+            id="book-runtime-context-refresh"
+            class="secondary-action"
+            ${loading ? 'disabled' : ''}
+          >${loading ? 'Refreshing…' : 'Refresh Status'}</button>
+          <button
+            type="button"
+            id="book-runtime-context-generate"
+            class="primary-action"
+            ${compileEnabled ? '' : 'disabled'}
+            aria-disabled="${compileEnabled ? 'false' : 'true'}"
+          >${loading ? 'Working…' : 'Compile Book Runtime Context'}</button>
+        </div>
+
+        <div class="workspace-disabled-note">
+          ${escapeHtml(
+            bookContext.message
+            || 'Book Runtime Context status is unavailable.'
+          )}
+          ${readOnly ? ' Archived projects are read-only.' : ''}
+        </div>
       </div>
     `;
+
+    const refreshButton = document.getElementById(
+      'book-runtime-context-refresh'
+    );
+    if (refreshButton) {
+      refreshButton.addEventListener('click', () => {
+        void loadBookRuntimeContextStatus();
+      });
+    }
+
+    const generateButton = document.getElementById(
+      'book-runtime-context-generate'
+    );
+    if (generateButton) {
+      generateButton.addEventListener('click', () => {
+        void generateBookRuntimeContext();
+      });
+    }
+
+    if (!state.bookRuntimeContext && !state.bookRuntimeContextLoading) {
+      void loadBookRuntimeContextStatus();
+    }
+  }
+
+  async function loadBookRuntimeContextStatus() {
+    if (!projectId || state.bookRuntimeContextLoading) return;
+
+    state.bookRuntimeContextLoading = true;
+    if (state.activeSection === 'book_runtime_context') {
+      renderBookRuntimeContext(state.bootstrap);
+    }
+
+    try {
+      const status = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status`
+      );
+      state.bookRuntimeContext = status;
+      setLog(`Book Runtime Context status: ${status.status || 'unknown'}.`);
+    } catch (error) {
+      state.bookRuntimeContext = {
+        status: 'error',
+        compiler_ready: false,
+        target_count: 0,
+        current_count: 0,
+        missing_count: 0,
+        outdated_count: 0,
+        targets: [],
+        blockers: [{
+          code: 'status_load_failed',
+          message: error.message
+        }],
+        message: `Unable to load Book Runtime Context status: ${error.message}`,
+        execution_locks: {
+          book_runtime_context_compilation_enabled: false,
+          prompt_builder_called: false,
+          provider_called: false,
+          registry_written: false,
+          runtime_written: false,
+          draft_persisted: false,
+          generation_unlocked: false
+        }
+      };
+      setLog(state.bookRuntimeContext.message);
+    } finally {
+      state.bookRuntimeContextLoading = false;
+      if (state.activeSection === 'book_runtime_context') {
+        renderBookRuntimeContext(state.bootstrap);
+      }
+      renderInspector(state.bootstrap);
+    }
+  }
+
+  async function generateBookRuntimeContext() {
+    const status = state.bookRuntimeContext
+      || ((state.bootstrap.runtime_context || {}).books || {});
+
+    if (
+      status.compiler_ready !== true
+      || state.bootstrap.read_only === true
+      || state.bookRuntimeContextLoading
+    ) {
+      setLog(
+        'Book Runtime Context compilation remains blocked by source readiness.'
+      );
+      return;
+    }
+
+    state.bookRuntimeContextLoading = true;
+    renderBookRuntimeContext(state.bootstrap);
+    setLog('Compiling one Book Runtime Context artifact per approved book…');
+
+    try {
+      const result = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/runtime-context/books/generate`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      setLog(
+        `Compiled ${result.generated_count || 0} Book Runtime Context artifacts. Downstream generation remains locked.`
+      );
+      state.bookRuntimeContext = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status`
+      );
+    } catch (error) {
+      state.bookRuntimeContext = {
+        ...status,
+        status: 'error',
+        compiler_ready: false,
+        message: `Book Runtime Context compilation failed: ${error.message}`
+      };
+      setLog(state.bookRuntimeContext.message);
+    } finally {
+      state.bookRuntimeContextLoading = false;
+      renderBookRuntimeContext(state.bootstrap);
+      renderInspector(state.bootstrap);
+    }
   }
 
   function renderSettings(manifest, context, bootstrap) {
@@ -465,7 +1377,7 @@
         <dl class="workspace-definition-list">
           ${definition('Project ID', manifest.project_id)}
           ${definition('Template', manifest.template_id)}
-          ${definition('Genre', manifest.genre)}
+          ${definition('Genre', labelFor(manifest.genre), { humanReadable: true })}
           ${definition('Engine', manifest.engine_id)}
           ${definition('AI Provider', manifest.ai_provider)}
           ${definition('Project Code', context.project_code)}
@@ -875,9 +1787,9 @@
         <p class="placeholder">Project control is intentionally limited during workspace bootstrap.</p>
         <dl class="workspace-definition-list">
           ${definition('Project', manifest.project_name)}
-          ${definition('Lifecycle', manifest.lifecycle_state)}
+          ${definition('Lifecycle', lifecycleLabel(manifest.lifecycle_state), { humanReadable: true })}
           ${definition('Workspace Access', wizard && wizard.can_enter_workspace ? 'Open' : 'Blocked')}
-          ${definition('Resume Target', wizard && wizard.resume_target)}
+          ${definition('Resume Target', labelFor(wizard && wizard.resume_target), { humanReadable: true })}
         </dl>
         <div class="workspace-disabled-note">Archive controls will be wired after workspace bootstrap validation.</div>
       </div>
@@ -898,6 +1810,60 @@
   }
 
 
+  function friendlyNumericIdentifier(value, prefix) {
+    const raw = String(value || '').trim();
+    const pattern = new RegExp(`^${prefix}_(\\d+)$`, 'i');
+    const match = raw.match(pattern);
+
+    if (!match) {
+      return labelFor(raw || '—');
+    }
+
+    return `${labelFor(prefix)} ${Number(match[1])}`;
+  }
+
+  function friendlyChapterIdentifier(value) {
+    const raw = String(value || '').trim();
+    const match = raw.match(/^BOOK_(\d+)_CH_(\d+)$/i);
+
+    if (!match) {
+      return labelFor(raw || '—');
+    }
+
+    return `Book ${Number(match[1])}, Chapter ${Number(match[2])}`;
+  }
+
+  function chapterBookLabel(record) {
+    const numberValue = Number(record && record.book_number);
+    const idMatch = String(
+      (record && record.book_id) || ''
+    ).match(/BOOK_(\d+)/i);
+    const parsedNumber = idMatch ? Number(idMatch[1]) : 0;
+    const bookNumber = Number.isFinite(numberValue) && numberValue > 0
+      ? numberValue
+      : parsedNumber;
+    const title = String(
+      (record && record.book_title) || ''
+    ).trim();
+
+    if (bookNumber && title) {
+      return `Book ${bookNumber}: ${title}`;
+    }
+
+    if (bookNumber) {
+      return `Book ${bookNumber}`;
+    }
+
+    if (title) {
+      return title;
+    }
+
+    return friendlyNumericIdentifier(
+      record && record.book_id,
+      'BOOK'
+    );
+  }
+
   function readOnlySampleTable(title, sample) {
     if (!sample.length) {
       return `
@@ -906,6 +1872,45 @@
           <p class="placeholder">No records are available in the current read-only payload.</p>
         </section>
       `;
+    }
+
+    if (title === 'Books') {
+      const rows = sample.map((record) => {
+        const numberValue = Number(record.book_number);
+        const parsedNumber = Number(
+          (String(record.book_id || '').match(/BOOK_(\d+)/i) || [])[1]
+        );
+        const bookNumber = Number.isFinite(numberValue) && numberValue > 0
+          ? numberValue
+          : parsedNumber;
+        const titleValue = String(record.title || '').trim();
+        const bookLabel = bookNumber
+          ? `Book ${bookNumber}`
+          : friendlyNumericIdentifier(record.book_id, 'BOOK');
+
+        return `
+          <tr>
+            <td>${escapeHtml(bookLabel)}</td>
+            <td>${escapeHtml(titleValue || 'Untitled Book')}</td>
+            <td>${escapeHtml(labelFor(record.status || '—'))}</td>
+          </tr>
+        `;
+      }).join('');
+
+      return table(['Book', 'Title', 'Status'], rows);
+    }
+
+    if (title === 'Chapters') {
+      const rows = sample.map((record) => `
+        <tr>
+          <td>${escapeHtml(friendlyChapterIdentifier(record.chapter_id))}</td>
+          <td>${escapeHtml(chapterBookLabel(record))}</td>
+          <td>${escapeHtml(record.title || `Chapter ${number(record.chapter_number)}`)}</td>
+          <td>${escapeHtml(record.event_name || '—')}</td>
+          <td>${escapeHtml(labelFor(record.status || '—'))}</td>
+        </tr>
+      `).join('');
+      return table(['Chapter', 'Book', 'Title', 'Event', 'Status'], rows);
     }
 
     if (sample[0] && Object.prototype.hasOwnProperty.call(sample[0], 'name')) {
@@ -918,7 +1923,9 @@
       return table(['Name', 'Detected From'], rows);
     }
 
-    const fields = Object.keys(sample[0] || {});
+    const fields = Object.keys(sample[0] || {}).filter(
+      (field) => !['book_title', 'book_number'].includes(field)
+    );
     const rows = sample.map((record) => `
       <tr>
         ${fields.map((field) => `<td>${escapeHtml(formatCell(record[field]))}</td>`).join('')}
@@ -1124,14 +2131,22 @@
     const budget = bootstrap.budget_plan || {};
     const summary = bootstrap.summary || {};
 
-    setText('inspector-project-status', manifest.lifecycle_state || 'UNKNOWN');
+    setText('inspector-project-status', lifecycleLabel(manifest.lifecycle_state));
     setText(
       'inspector-canon-status',
-      summary.canon_setup_completed
-        ? `Complete · ${number(summary.approved_reference_count)} approved`
-        : 'Incomplete'
+      summary.attention_required_section_count
+        ? `${number(summary.attention_required_section_count)} section(s) need attention`
+        : `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)} required complete`
     );
-    setText('inspector-runtime-status', bootstrap.generation_enabled ? 'Enabled' : 'Generation disabled');
+    const projectRuntime = state.projectRuntimeContext
+      || (bootstrap.runtime_context || {}).project
+      || {};
+    setText(
+      'inspector-runtime-status',
+      bootstrap.generation_enabled
+        ? 'Generation enabled'
+        : `Project context: ${String(projectRuntime.status || 'not_generated').replace(/_/g, ' ')}`
+    );
     setText('inspector-budget-status', `${budget.token_budget_status || '—'} · ${number(budget.token_budget_per_generation)} per generation`);
     if (modeLabel) {
       modeLabel.textContent = `Mode: ${modeNames[legacyMode] || 'Workspace'}`;
@@ -1250,17 +2265,19 @@
     return result;
   }
 
-  function statCard(label, value) {
+  function statCard(label, value, options = {}) {
+    const valueClass = options.humanReadable ? ' class="human-readable-value"' : '';
     return `
       <article class="workspace-stat-card">
         <span>${escapeHtml(label)}</span>
-        <strong>${escapeHtml(value)}</strong>
+        <strong${valueClass}>${escapeHtml(value)}</strong>
       </article>
     `;
   }
 
-  function definition(label, value) {
-    return `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`;
+  function definition(label, value, options = {}) {
+    const valueClass = options.humanReadable ? ' class="human-readable-value"' : '';
+    return `<div><dt>${escapeHtml(label)}</dt><dd${valueClass}>${escapeHtml(value)}</dd></div>`;
   }
 
   function table(headers, rows) {
@@ -1279,6 +2296,19 @@
   function number(value) {
     const parsed = Number(value);
     return Number.isFinite(parsed) ? parsed.toLocaleString() : '—';
+  }
+
+  const lifecycleLabels = {
+    DRAFT_SETUP: 'Draft Setup',
+    CANON_IN_PROGRESS: 'Canon Setup in Progress',
+    READY_FOR_WORKSPACE: 'Ready for Workspace',
+    ACTIVE: 'Active',
+    ARCHIVED: 'Archived'
+  };
+
+  function lifecycleLabel(value) {
+    const raw = String(value || '').trim();
+    return lifecycleLabels[raw] || labelFor(raw || 'Unknown');
   }
 
   function labelFor(value) {
