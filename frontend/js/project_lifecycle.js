@@ -246,6 +246,13 @@ and saved in place with PATCH /api/project/{id}.
     target.querySelectorAll('[data-restore-project-id]').forEach((button) => {
       button.addEventListener('click', () => restoreArchivedProject(button.dataset.restoreProjectId));
     });
+
+    target.querySelectorAll('[data-delete-project-id]').forEach((button) => {
+      button.addEventListener('click', () => deleteIncompleteProject(
+        button.dataset.deleteProjectId,
+        button.dataset.deleteProjectName
+      ));
+    });
   }
 
   function renderProjectCard(project, options) {
@@ -265,10 +272,12 @@ and saved in place with PATCH /api/project/{id}.
           ? 'Open Canon Setup'
           : 'Resume Setup';
     const actionAttr = archived ? 'data-restore-project-id' : 'data-resume-project-id';
+    const deletable = !archived && (lifecycle === 'DRAFT_SETUP' || lifecycle === 'CANON_IN_PROGRESS');
+    const projectName = manifest.project_name || 'Untitled Project';
 
     return `
       <article class="project-card">
-        <h3>${escapeHtml(manifest.project_name || 'Untitled Project')}</h3>
+        <h3>${escapeHtml(projectName)}</h3>
         <dl>
           <div><dt>Project ID</dt><dd>${escapeHtml(projectId)}</dd></div>
           <div><dt>Lifecycle</dt><dd class="human-readable-value">${escapeHtml(humanizeIdentifier(lifecycle, lifecycleLabels))}</dd></div>
@@ -279,6 +288,16 @@ and saved in place with PATCH /api/project/{id}.
         <button type="button" class="primary-button project-card-action" ${actionAttr}="${escapeHtml(projectId)}">
           ${escapeHtml(buttonText)}
         </button>
+        ${deletable
+          ? `<button
+               type="button"
+               class="secondary-button project-card-action"
+               data-delete-project-id="${escapeHtml(projectId)}"
+               data-delete-project-name="${escapeHtml(projectName)}"
+             >
+               Delete Project
+             </button>`
+          : ''}
       </article>
     `;
   }
@@ -327,6 +346,42 @@ and saved in place with PATCH /api/project/{id}.
       await loadProjectList('archived', { silent: true });
     } catch (error) {
       if (target) appendMessage(target, `Restore failed: ${error.message}`, 'error');
+    }
+  }
+
+
+  async function deleteIncompleteProject(projectId, projectName) {
+    if (!projectId) return;
+
+    const displayName = String(projectName || projectId);
+    const confirmed = window.confirm(
+      `Delete "${displayName}"?\n\n`
+      + 'This permanently removes this unfinished project and all project-local setup, Canon, planning, and runtime files.\n\n'
+      + 'This cannot be undone.'
+    );
+
+    if (!confirmed) return;
+
+    const target = document.getElementById('existing-project-state');
+    try {
+      const result = await apiFetch(`/api/project/${encodeURIComponent(projectId)}`, {
+        method: 'DELETE'
+      });
+
+      if (state.activeProjectId === projectId) {
+        state.activeProjectId = null;
+        state.isEditMode = false;
+        state.loadedProject = null;
+      }
+
+      await loadProjectList('active', { silent: true });
+      renderPickerMessage(
+        'existing-project-state',
+        `Deleted unfinished project: ${result.project_name || displayName}.`,
+        'success'
+      );
+    } catch (error) {
+      if (target) appendMessage(target, `Delete failed: ${error.message}`, 'error');
     }
   }
 

@@ -195,6 +195,28 @@ def restore_project(project_id: str) -> dict[str, Any]:
     return get_project(project_id)
 
 
+def delete_project(project_id: str) -> dict[str, Any]:
+    """Permanently delete an unfinished project-local project tree."""
+
+    manifest = project_loader.load_manifest(project_id)
+    if manifest.lifecycle_state not in EDITABLE_LIFECYCLE_STATES:
+        raise ProjectStateConflictError(
+            "Only projects still in Draft Setup or Canon Setup in Progress can be deleted."
+        )
+
+    project_name = manifest.project_name
+    lifecycle_state = manifest.lifecycle_state
+    project_loader.delete_project_directory(project_id)
+
+    return {
+        "status": "deleted",
+        "project_id": project_id,
+        "project_name": project_name,
+        "lifecycle_state": lifecycle_state,
+        "deleted_storage": f"data/projects/{project_id}",
+    }
+
+
 def project_payload(
     manifest: ProjectManifest,
     *,

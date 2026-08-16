@@ -11,6 +11,7 @@ write runtime memory, or unlock generation.
 */
 (function () {
   const AUTHORING_ROUTE_SUFFIX = '/canon/authoring';
+  const TEMPLATE_MIGRATION_ROUTE_SUFFIX = '/canon/template-migration';
   const MARKDOWN_STATUS_ROUTE_SUFFIX = '/canon/markdown';
   const MARKDOWN_RENDER_ROUTE_SUFFIX = '/canon/markdown/render';
   const VALIDATION_STATUS_ROUTE_SUFFIX = '/canon/validation';
@@ -311,6 +312,75 @@ write runtime memory, or unlock generation.
     target.innerHTML = projectValidationSummaryHtml(validationStatus || {}, payload || {});
   }
 
+  function renderTemplateMigrationPanel(migration) {
+    if (!migration || typeof migration !== 'object') return '';
+
+    const currentVersion = migration.current_template_version || 'unknown';
+    const activeVersion = migration.active_template_version || 'unknown';
+    const reconciliation = Array.isArray(migration.reconciliation_required)
+      ? migration.reconciliation_required
+      : [];
+    const reconciliationCount = reconciliation.reduce(
+      (total, item) => total + Number(item && item.missing_count ? item.missing_count : 0),
+      0
+    );
+
+    if (migration.template_conflict) {
+      return `
+        <article class="canon-group-card" data-status="BLOCKED" data-canon-template-migration-panel>
+          <header>
+            <div>
+              <h3>Canon Template Upgrade</h3>
+              <p class="setup-note">The project snapshot template does not match the active project template.</p>
+            </div>
+            <span>BLOCKED</span>
+          </header>
+          <p class="canon-file-missing">Template migration is blocked until the template conflict is reconciled.</p>
+        </article>
+      `;
+    }
+
+    if (migration.migration_required) {
+      return `
+        <article class="canon-group-card" data-status="UPDATE_REQUIRED" data-canon-template-migration-panel>
+          <header>
+            <div>
+              <h3>Canon Template Upgrade</h3>
+              <p class="setup-note">Upgrade the project-local questionnaire before continuing Canon Workbook editing.</p>
+            </div>
+            <span>UPDATE REQUIRED</span>
+          </header>
+          <p class="setup-note">
+            ${escapeHtml(currentVersion)} → ${escapeHtml(activeVersion)}.
+            The upgrade changes schema/interface metadata only, preserves author-entered canon values,
+            and never guesses story meaning.
+          </p>
+          <button type="button" data-canon-migrate-template>Upgrade Canon Template</button>
+        </article>
+      `;
+    }
+
+    if (reconciliationCount > 0) {
+      return `
+        <article class="canon-group-card" data-status="CURRENT" data-canon-template-migration-panel>
+          <header>
+            <div>
+              <h3>Canon Template</h3>
+              <p class="setup-note">Project-local template is current.</p>
+            </div>
+            <span>CURRENT</span>
+          </header>
+          <p class="setup-note">
+            ${number(reconciliationCount)} optional author-owned planning value${reconciliationCount === 1 ? '' : 's'}
+            remain available for reconciliation. Italus did not infer them.
+          </p>
+        </article>
+      `;
+    }
+
+    return '';
+  }
+
   function renderAuthoringStatus(target, payload, selectedSectionHtml) {
     const state = TARGET_STATE.get(target.id || 'canon-workbook-shell') || {};
     const markdownStatus = state.lastMarkdownStatus || {};
@@ -326,12 +396,28 @@ write runtime memory, or unlock generation.
       ${state.flashMessage
         ? `<p class="setup-message ${escapeHtml(state.flashTone || 'success')}" data-canon-workbook-message>${escapeHtml(state.flashMessage)}</p>`
         : ''}
+      ${renderTemplateMigrationPanel(payload.template_migration)}
       <div class="canon-item-list" aria-label="Canon Workbook Sections" data-canon-section-list>
         ${sections.length ? sections.map(renderSectionCard).join('') : '<p class="setup-note">No canon questionnaire sections were returned.</p>'}
       </div>
       <section class="canon-group-card" data-canon-section-editor aria-label="Canon Section Editor" tabindex="-1">
         ${selectedSectionHtml || '<p class="setup-note">Open a section to edit project-local author canon answers.</p>'}
       </section>
+    `;
+  }
+
+  function fieldLabelHtml(field) {
+    const fieldId = field.field_id || '';
+    const label = field.label || fieldId || 'Field';
+    const required = Boolean(field.required);
+    const planningOptional = Boolean(field.planning_field) && !required;
+    const helpText = field.help_text || '';
+
+    return `
+      ${escapeHtml(label)}${required ? ' *' : ''}${planningOptional ? ' (Optional)' : ''}
+      ${planningOptional
+        ? `<span class="canon-info-tip" title="${escapeHtml(helpText)}" aria-label="${escapeHtml(helpText || `${label} is optional`)}" tabindex="0">ⓘ</span>`
+        : ''}
     `;
   }
 
@@ -347,7 +433,7 @@ write runtime memory, or unlock generation.
     if (type === 'boolean') {
       return `
         <label class="canon-field-row">
-          <span>${escapeHtml(label)}${required ? ' *' : ''}</span>
+          <span>${fieldLabelHtml(field)}</span>
           <input type="checkbox" data-canon-field-id="${escapeHtml(fieldId)}" ${value ? 'checked' : ''}>
         </label>
         ${help}
@@ -358,7 +444,7 @@ write runtime memory, or unlock generation.
       const options = Array.isArray(field.options) ? field.options : [];
       return `
         <label class="canon-field-row">
-          <span>${escapeHtml(label)}${required ? ' *' : ''}</span>
+          <span>${fieldLabelHtml(field)}</span>
           <select name="${escapeHtml(name)}" data-canon-field-id="${escapeHtml(fieldId)}">
             <option value="">Select...</option>
             ${options.map((option) => `
@@ -375,7 +461,7 @@ write runtime memory, or unlock generation.
       const options = Array.isArray(field.options) ? field.options : [];
       return `
         <label class="canon-field-row">
-          <span>${escapeHtml(label)}${required ? ' *' : ''}</span>
+          <span>${fieldLabelHtml(field)}</span>
           <select name="${escapeHtml(name)}" data-canon-field-id="${escapeHtml(fieldId)}" multiple>
             ${options.map((option) => `
               <option value="${escapeHtml(option)}" ${selected.includes(String(option)) ? 'selected' : ''}>${escapeHtml(option)}</option>
@@ -389,7 +475,7 @@ write runtime memory, or unlock generation.
     if (type === 'short_text') {
       return `
         <label class="canon-field-row">
-          <span>${escapeHtml(label)}${required ? ' *' : ''}</span>
+          <span>${fieldLabelHtml(field)}</span>
           <input type="text" name="${escapeHtml(name)}" data-canon-field-id="${escapeHtml(fieldId)}" value="${escapeHtml(value || '')}" placeholder="${escapeHtml(placeholder)}">
         </label>
         ${help}
@@ -407,34 +493,56 @@ write runtime memory, or unlock generation.
 
   function recordFieldInputHtml(recordId, index, field, value) {
     const fieldId = field.field_id || '';
-    const label = field.label || fieldId || 'Record field';
     const type = field.field_type || 'long_text';
-    const required = Boolean(field.required);
+    const help = field.help_text ? `<p class="setup-note">${escapeHtml(field.help_text)}</p>` : '';
     const dataAttrs = `data-canon-record-field-id="${escapeHtml(fieldId)}" data-canon-record-id="${escapeHtml(recordId)}" data-canon-record-index="${escapeHtml(index)}"`;
+
+    if (field.author_hidden) {
+      return `<input type="hidden" ${dataAttrs} value="${escapeHtml(value || '')}">`;
+    }
 
     if (type === 'boolean') {
       return `
         <label class="canon-field-row">
-          <span>${escapeHtml(label)}${required ? ' *' : ''}</span>
+          <span>${fieldLabelHtml(field)}</span>
           <input type="checkbox" ${dataAttrs} ${value ? 'checked' : ''}>
         </label>
+        ${help}
       `;
     }
 
-    if (type === 'short_text' || type === 'select') {
+    if (type === 'select') {
+      const options = Array.isArray(field.options) ? field.options : [];
       return `
         <label class="canon-field-row">
-          <span>${escapeHtml(label)}${required ? ' *' : ''}</span>
-          <input type="text" ${dataAttrs} value="${escapeHtml(value || '')}">
+          <span>${fieldLabelHtml(field)}</span>
+          <select ${dataAttrs}>
+            <option value="">Select...</option>
+            ${options.map((option) => `
+              <option value="${escapeHtml(option)}" ${String(value || '') === String(option) ? 'selected' : ''}>${escapeHtml(option)}</option>
+            `).join('')}
+          </select>
         </label>
+        ${help}
+      `;
+    }
+
+    if (type === 'short_text') {
+      return `
+        <label class="canon-field-row">
+          <span>${fieldLabelHtml(field)}</span>
+          <input type="text" ${dataAttrs} value="${escapeHtml(value || '')}" placeholder="${escapeHtml(field.placeholder || '')}">
+        </label>
+        ${help}
       `;
     }
 
     return `
       <label class="canon-field-row">
-        <span>${escapeHtml(label)}${required ? ' *' : ''}</span>
-        <textarea ${dataAttrs} rows="${type === 'rich_text' ? '6' : '3'}">${escapeHtml(value || '')}</textarea>
+        <span>${fieldLabelHtml(field)}</span>
+        <textarea ${dataAttrs} rows="${type === 'rich_text' ? '6' : '3'}" placeholder="${escapeHtml(field.placeholder || '')}">${escapeHtml(value || '')}</textarea>
       </label>
+      ${help}
     `;
   }
 
@@ -442,6 +550,9 @@ write runtime memory, or unlock generation.
     const recordId = record.record_id || '';
     const items = Array.isArray(storedItems) && storedItems.length ? storedItems : [{}];
     const fields = Array.isArray(record.fields) ? record.fields : [];
+    const hiddenFields = fields.filter((field) => Boolean(field.author_hidden));
+    const standardFields = fields.filter((field) => !field.author_hidden && !field.planning_field);
+    const planningFields = fields.filter((field) => !field.author_hidden && field.planning_field);
     const minItems = Number(record.min_items || 0);
     const help = record.help_text ? `<p class="setup-note">${escapeHtml(record.help_text)}</p>` : '';
 
@@ -452,12 +563,24 @@ write runtime memory, or unlock generation.
         <p class="setup-note">Minimum entries: ${number(minItems)}</p>
         <div data-canon-record-items="${escapeHtml(recordId)}">
           ${items.map((item, index) => `
-            <article class="canon-item-card" data-canon-record-item="${escapeHtml(recordId)}" data-canon-record-index="${escapeHtml(index)}">
+            <article class="canon-item-card" data-canon-record-item="${escapeHtml(recordId)}" data-canon-record-index="${escapeHtml(index)}" data-canon-record-internal-id="${escapeHtml(item && item.internal_id ? item.internal_id : '')}">
               <header>
                 <strong>${escapeHtml(record.label || 'Record')} ${number(index + 1)}</strong>
                 <button type="button" class="secondary" data-canon-remove-record="${escapeHtml(recordId)}" data-canon-record-index="${escapeHtml(index)}">Remove</button>
               </header>
-              ${fields.map((field) => recordFieldInputHtml(recordId, index, field, item ? item[field.field_id] : '')).join('')}
+              ${hiddenFields.map((field) => recordFieldInputHtml(recordId, index, field, item ? item[field.field_id] : '')).join('')}
+              ${standardFields.map((field) => recordFieldInputHtml(recordId, index, field, item ? item[field.field_id] : '')).join('')}
+              ${planningFields.length
+                ? `<details class="canon-planning-fields">
+                    <summary>Advanced / Planning</summary>
+                    <p class="canon-planning-instructions">Use the fields below to guide when and how this canon item can enter your story planning. Complete only the fields that apply to this item. Leave any field blank until you are ready to make that planning decision.</p>
+                    ${planningFields.map((field) => `
+                      <div class="canon-planning-field-block">
+                        ${recordFieldInputHtml(recordId, index, field, item ? item[field.field_id] : '')}
+                      </div>
+                    `).join('')}
+                  </details>`
+                : ''}
             </article>
           `).join('')}
         </div>
@@ -530,6 +653,10 @@ write runtime memory, or unlock generation.
     return apiGet(projectId, AUTHORING_ROUTE_SUFFIX);
   }
 
+  async function migrateCanonTemplate(projectId) {
+    return apiPost(projectId, TEMPLATE_MIGRATION_ROUTE_SUFFIX);
+  }
+
   async function loadCanonMarkdownStatus(projectId) {
     return apiGet(projectId, MARKDOWN_STATUS_ROUTE_SUFFIX);
   }
@@ -590,6 +717,17 @@ write runtime memory, or unlock generation.
       }
     });
 
+    form.querySelectorAll('[data-canon-record-item]').forEach((item) => {
+      const recordId = item.getAttribute('data-canon-record-item');
+      const index = Number(item.getAttribute('data-canon-record-index') || 0);
+      const internalId = item.getAttribute('data-canon-record-internal-id') || '';
+      if (!recordId || !Number.isFinite(index) || !internalId) return;
+
+      if (!records[recordId]) records[recordId] = [];
+      if (!records[recordId][index]) records[recordId][index] = {};
+      records[recordId][index].internal_id = internalId;
+    });
+
     form.querySelectorAll('[data-canon-record-field-id]').forEach((field) => {
       const recordId = field.getAttribute('data-canon-record-id');
       const fieldId = field.getAttribute('data-canon-record-field-id');
@@ -623,6 +761,7 @@ write runtime memory, or unlock generation.
     const clone = firstItem.cloneNode(true);
 
     clone.setAttribute('data-canon-record-index', String(nextIndex));
+    clone.setAttribute('data-canon-record-internal-id', '');
     clone.querySelectorAll('[data-canon-record-index]').forEach((node) => {
       node.setAttribute('data-canon-record-index', String(nextIndex));
     });
@@ -726,6 +865,7 @@ write runtime memory, or unlock generation.
     target.dataset.canonAuthoringBound = 'true';
 
     target.addEventListener('click', async (event) => {
+      const migrationButton = event.target.closest('[data-canon-migrate-template]');
       const openButton = event.target.closest('[data-canon-open-section]');
       const completeButton = event.target.closest('[data-canon-complete-section]');
       const reopenButton = event.target.closest('[data-canon-reopen-section]');
@@ -736,7 +876,30 @@ write runtime memory, or unlock generation.
       const state = TARGET_STATE.get(target.id || 'canon-workbook-shell') || {};
 
       try {
+        if (migrationButton) {
+          const result = await migrateCanonTemplate(state.projectId);
+          const migration = result.migration || {};
+          const reconciliationCount = Number(migration.reconciliation_required_count || 0);
+          state.selectedSectionId = null;
+          state.lastSection = null;
+          state.flashMessage = reconciliationCount
+            ? `Canon template upgraded. ${reconciliationCount} optional author-owned planning value${reconciliationCount === 1 ? '' : 's'} were left blank for reconciliation.`
+            : 'Canon template upgraded. Existing author canon values were preserved.';
+          state.flashTone = 'success';
+          await refreshWorkbook(target, state, null, null);
+          revealSectionList(target);
+          return;
+        }
+
         if (openButton) {
+          if (state.lastStatus
+              && state.lastStatus.template_migration
+              && state.lastStatus.template_migration.migration_required) {
+            state.flashMessage = 'Upgrade the project-local Canon Template before editing sections.';
+            state.flashTone = 'error';
+            await refreshWorkbook(target, state, null, null);
+            return;
+          }
           await openSection(target, state, openButton.getAttribute('data-canon-open-section'));
           return;
         }

@@ -18,7 +18,7 @@ from typing import Any
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
-from app.services import canon_template_service, project_canon_service
+from app.services import canon_record_identity_service, canon_template_service, project_canon_service
 
 
 CANON_AUTHORING_SERVICE_MARKER = "project-canon-authoring-workflow-boundary-20260715"
@@ -31,6 +31,9 @@ class CanonSectionNotFoundError(ValueError):
 
 class CanonSectionIncompleteError(ValueError):
     """Raised when a section cannot be marked complete."""
+
+
+CanonRecordIdentityConflictError = canon_record_identity_service.CanonRecordIdentityConflictError
 
 
 def get_canon_authoring_status(project_id: str) -> dict[str, Any]:
@@ -70,6 +73,10 @@ def get_canon_authoring_status_for_context(
         "required_section_count": required_count,
         "completed_required_section_count": completed_required_count,
         "all_required_sections_complete": required_count > 0 and completed_required_count >= required_count,
+        "template_migration": project_canon_service.get_template_snapshot_migration_status_for_context(
+            context,
+            manifest,
+        ),
         "sections": [
             _section_summary(
                 section,
@@ -163,11 +170,18 @@ def save_canon_section_draft_for_context(
 
     sections = dict(author_canon.get("sections") or {})
     incoming = payload or {}
+    cleaned_records = _clean_records(incoming.get("records"))
+    normalized_records = canon_record_identity_service.reconcile_section_record_identities(
+        context.project_id,
+        canonical_section_id,
+        author_canon,
+        cleaned_records,
+    )
     normalized_section = {
         "section_id": canonical_section_id,
         "status": "draft",
         "answers": _clean_mapping(incoming.get("answers")),
-        "records": _clean_records(incoming.get("records")),
+        "records": normalized_records,
         "updated_at": now,
     }
     sections[canonical_section_id] = normalized_section
@@ -198,6 +212,82 @@ def save_canon_section_draft_for_context(
         "missing_required_fields": missing,
         "section": deepcopy(normalized_section),
         "completion": _completion_summary(completion),
+        "execution_locks": _execution_locks(),
+    }
+
+
+def revalidate_canon_completion(project_id: str) -> dict[str, Any]:
+    """Revalidate Canon Setup completion against the current project template snapshot."""
+
+    manifest = project_loader.load_manifest(project_id)
+    context = build_project_context(manifest)
+    schema = _template_schema_for_manifest(manifest.to_dict())
+    return revalidate_canon_completion_for_context(
+        context,
+        manifest.to_dict(),
+        schema,
+    )
+
+
+def revalidate_canon_completion_for_context(
+    context: ProjectContext,
+    manifest: dict[str, Any],
+    template_schema: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Revalidate completion metadata without changing author-entered canon values."""
+
+    schema = template_schema or _template_schema_for_manifest(manifest)
+    project_canon_service.ensure_author_canon_for_context(context, manifest, schema)
+
+    author_canon = _load_author_canon_for_context(context)
+    completion = _load_completion_for_context(context)
+    previous_status = dict(completion.get("section_status") or {})
+    now = utc_now_iso()
+
+    for section_schema in schema.get("sections", []):
+        if not isinstance(section_schema, dict):
+            continue
+        section_id = str(section_schema.get("section_id") or "").strip()
+        if not section_id:
+            continue
+
+        stored = _stored_section(author_canon, section_id)
+        missing = _missing_required_fields(section_schema, stored)
+        prior = dict(previous_status.get(section_id) or {})
+        prior_status = str(prior.get("status") or stored.get("status") or "not_started")
+
+        if prior_status == "complete":
+            status = "complete" if not missing else "blocked"
+        elif prior_status == "blocked":
+            status = "draft" if not missing else "blocked"
+        elif prior_status in {"draft", "not_started"}:
+            status = prior_status
+        else:
+            status = "draft" if stored.get("status") == "draft" else "not_started"
+
+        completion = _set_completion_record(
+            completion,
+            section_schema,
+            status=status,
+            missing_required_fields=missing,
+            updated_at=now,
+        )
+
+    completion = _recalculate_completion(schema, completion)
+    _touch_metadata(completion, now)
+    project_loader.write_json(
+        project_canon_service.canon_completion_path_for_context(context),
+        completion,
+    )
+
+    return {
+        "status": "ok",
+        "service": CANON_AUTHORING_SERVICE_MARKER,
+        "project_id": context.project_id,
+        "template_version": schema.get("version"),
+        "completion": _completion_summary(completion),
+        "sections": deepcopy(completion.get("section_status") or {}),
+        "author_canon_modified": False,
         "execution_locks": _execution_locks(),
     }
 

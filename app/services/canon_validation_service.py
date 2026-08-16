@@ -17,7 +17,7 @@ from typing import Any
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
-from app.services import canon_markdown_renderer_service, canon_template_service, project_canon_service
+from app.services import canon_markdown_renderer_service, canon_record_identity_service, canon_template_service, project_canon_service
 
 
 CANON_VALIDATION_SERVICE_MARKER = "project-canon-validation-boundary-20260725"
@@ -88,6 +88,7 @@ def validate_project_canon_for_context(
     """Validate canon for an existing project context and write the report."""
 
     schema = template_schema or _template_schema_for_context(context, manifest)
+    project_canon_service.ensure_author_canon_for_context(context, manifest, schema)
     report = _build_validation_report(context, manifest, schema)
     _write_validation_report(context, report)
     report["report_written"] = True
@@ -433,6 +434,16 @@ def _validate_storage_identity(
                     severity="blocking",
                 )
             )
+
+    for finding in canon_record_identity_service.record_identity_findings(author_canon):
+        issues.append(
+            _issue(
+                finding["code"],
+                finding["message"],
+                details=finding.get("details") or {},
+                severity="blocking",
+            )
+        )
 
     snapshot_questionnaire = template_snapshot.get("questionnaire") if isinstance(template_snapshot.get("questionnaire"), dict) else {}
     snapshot_template_id = snapshot_questionnaire.get("template_id") or template_snapshot.get("template_id")

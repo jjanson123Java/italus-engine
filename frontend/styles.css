@@ -1417,12 +1417,64 @@ body.modal-open {
   min-width: 0;
 }
 
+
+.canon-planning-fields .canon-planning-instructions {
+  margin: 0.9rem 0 1.6rem;
+  padding: 0 0 1.15rem;
+  border-bottom: 1px solid rgba(214, 168, 95, 0.24);
+  color: rgba(242, 234, 216, 0.88);
+  line-height: 1.6;
+}
+
+.canon-planning-field-block {
+  padding: 0 0 1.35rem;
+}
+
+.canon-planning-field-block + .canon-planning-field-block {
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(226, 211, 181, 0.16);
+}
+
+.canon-planning-field-block .canon-field-row {
+  margin-bottom: 0.45rem;
+}
+
+.canon-planning-field-block > .setup-note {
+  margin: 0.45rem 0 0;
+  line-height: 1.55;
+}
+
 .canon-field-row > span {
   display: block;
   font-family: "Segoe UI", Arial, sans-serif;
   font-size: 0.84rem;
   letter-spacing: 0.02em;
   color: rgba(242, 234, 216, 0.92);
+}
+
+.canon-field-row .canon-info-tip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 0.45rem;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  background: rgba(214, 168, 95, 0.14);
+  color: var(--gold);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: help;
+  vertical-align: middle;
+}
+
+.canon-field-row .canon-info-tip:hover,
+.canon-field-row .canon-info-tip:focus-visible {
+  background: rgba(214, 168, 95, 0.28);
+  outline: 2px solid rgba(214, 168, 95, 0.45);
+  outline-offset: 2px;
 }
 
 .canon-field-row input[type="text"],

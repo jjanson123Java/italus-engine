@@ -8,6 +8,7 @@ migrate or modify the existing Italus flat runtime data files.
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -52,6 +53,25 @@ def project_dir(project_id: str, *, create: bool = False) -> Path:
         path.mkdir(parents=True, exist_ok=True)
 
     return path
+
+
+def delete_project_directory(project_id: str) -> None:
+    """Delete one validated project-local storage tree.
+
+    Lifecycle authorization belongs to project_service. This helper only owns
+    the filesystem boundary under data/projects/<project_id>.
+    """
+
+    path = project_dir(project_id)
+    manifest = path / "project_manifest.json"
+
+    if not path.exists() or not manifest.exists():
+        raise ProjectNotFoundError(f"Project manifest not found: {project_id}")
+
+    shutil.rmtree(path)
+
+    if path.exists():
+        raise OSError(f"Project directory could not be fully removed: {project_id}")
 
 
 def read_json(path: Path, default: Any | None = None) -> Any:

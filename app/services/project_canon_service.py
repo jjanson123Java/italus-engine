@@ -18,11 +18,20 @@ from typing import Any
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
-from app.services import canon_template_service
+from app.services import canon_record_identity_service, canon_template_service
 
 
 PROJECT_CANON_SERVICE_MARKER = "project-local-author-canon-storage-boundary-20260715"
 PROJECT_CANON_SCHEMA_VERSION = "project_author_canon_v1"
+TEMPLATE_SNAPSHOT_MIGRATION_MARKER = "project-template-snapshot-migration-v1"
+TEMPLATE_MIGRATION_REPORT_FILENAME = "template_migration_report.json"
+
+LEGACY_TECHNICAL_FIELD_IDS = {"event_id", "item_id", "clue_id"}
+NONUNIVERSAL_HISTORICAL_FIELD_IDS = {"event_type", "historical_status"}
+
+
+class TemplateSnapshotMigrationConflictError(ValueError):
+    """Raised when a project template snapshot cannot be upgraded safely."""
 
 
 def project_canon_dir(project_id: str, *, create: bool = False) -> Path:
@@ -79,6 +88,12 @@ def canon_completion_path_for_context(context: ProjectContext) -> Path:
     return project_canon_dir_for_context(context) / "canon_completion.json"
 
 
+def template_migration_report_path_for_context(context: ProjectContext) -> Path:
+    """Return the project-local template migration report path."""
+
+    return project_canon_dir_for_context(context) / TEMPLATE_MIGRATION_REPORT_FILENAME
+
+
 def effective_template_schema_for_context(
     context: ProjectContext,
     manifest: dict[str, Any],
@@ -103,6 +118,200 @@ def effective_template_schema_for_context(
         return deepcopy(questionnaire)
 
     return _template_schema_for_manifest(manifest)
+
+
+def get_template_snapshot_migration_status(project_id: str) -> dict[str, Any]:
+    """Return read-only template snapshot migration status for one project."""
+
+    manifest = project_loader.load_manifest(project_id)
+    context = build_project_context(manifest)
+    return get_template_snapshot_migration_status_for_context(context, manifest.to_dict())
+
+
+def get_template_snapshot_migration_status_for_context(
+    context: ProjectContext,
+    manifest: dict[str, Any],
+) -> dict[str, Any]:
+    """Compare the project-local snapshot with the currently active template."""
+
+    snapshot_path = template_snapshot_path_for_context(context)
+    snapshot = _load_json_if_present(snapshot_path, default={})
+    questionnaire = (
+        snapshot.get("questionnaire")
+        if isinstance(snapshot.get("questionnaire"), dict)
+        else {}
+    )
+    active = _template_schema_for_manifest(manifest)
+
+    current_template_id = str(
+        questionnaire.get("template_id")
+        or snapshot.get("template_id")
+        or ""
+    ).strip()
+    active_template_id = str(active.get("template_id") or "").strip()
+    current_version = str(questionnaire.get("version") or "").strip()
+    active_version = str(active.get("version") or "").strip()
+    template_conflict = bool(
+        current_template_id
+        and active_template_id
+        and current_template_id != active_template_id
+    )
+
+    report = _load_json_if_present(
+        template_migration_report_path_for_context(context),
+        default={},
+    )
+    reconciliation = (
+        report.get("reconciliation_required")
+        if isinstance(report.get("reconciliation_required"), list)
+        else []
+    )
+
+    return {
+        "status": "conflict" if template_conflict else "ok",
+        "service": TEMPLATE_SNAPSHOT_MIGRATION_MARKER,
+        "project_id": context.project_id,
+        "snapshot_exists": snapshot_path.exists(),
+        "current_template_id": current_template_id or None,
+        "active_template_id": active_template_id or None,
+        "current_template_version": current_version or None,
+        "active_template_version": active_version or None,
+        "migration_required": bool(
+            snapshot_path.exists()
+            and not template_conflict
+            and current_version != active_version
+        ),
+        "can_migrate": bool(snapshot_path.exists() and not template_conflict),
+        "template_conflict": template_conflict,
+        "reconciliation_required": deepcopy(reconciliation),
+        "execution_locks": _execution_locks(),
+    }
+
+
+def migrate_template_snapshot(project_id: str) -> dict[str, Any]:
+    """Upgrade the project-local template snapshot without changing author story values."""
+
+    manifest = project_loader.load_manifest(project_id)
+    context = build_project_context(manifest)
+    return migrate_template_snapshot_for_context(context, manifest.to_dict())
+
+
+def migrate_template_snapshot_for_context(
+    context: ProjectContext,
+    manifest: dict[str, Any],
+) -> dict[str, Any]:
+    """Upgrade a snapshot to the active schema through deterministic schema-only merging."""
+
+    project_canon_dir_for_context(context, create=True)
+    paths = _paths_for_context(context)
+    if not paths["template_snapshot"].exists():
+        raise TemplateSnapshotMigrationConflictError(
+            "Project template snapshot is missing. Initialize Canon Setup before migration."
+        )
+
+    snapshot = _load_json_if_present(paths["template_snapshot"], default={})
+    current = (
+        snapshot.get("questionnaire")
+        if isinstance(snapshot.get("questionnaire"), dict)
+        else {}
+    )
+    if not current:
+        raise TemplateSnapshotMigrationConflictError(
+            "Project template snapshot does not contain a questionnaire schema."
+        )
+
+    active = _template_schema_for_manifest(manifest)
+    current_template_id = str(
+        current.get("template_id") or snapshot.get("template_id") or ""
+    ).strip()
+    active_template_id = str(active.get("template_id") or "").strip()
+    if current_template_id and active_template_id and current_template_id != active_template_id:
+        raise TemplateSnapshotMigrationConflictError(
+            "Project template snapshot does not match the manifest template."
+        )
+
+    current_version = str(current.get("version") or "").strip()
+    active_version = str(active.get("version") or "").strip()
+    if current_version == active_version:
+        status = get_template_snapshot_migration_status_for_context(context, manifest)
+        status["migrated"] = False
+        status["message"] = "Project template snapshot is already current."
+        return status
+
+    author_canon = _load_json_if_present(paths["author_canon"], default={})
+    migrated_questionnaire = _merge_questionnaire_for_migration(
+        current=current,
+        active=active,
+        active_template_id=active_template_id,
+    )
+    reconciliation = _migration_reconciliation_summary(
+        active=active,
+        author_canon=author_canon,
+    )
+
+    archive_path = _template_snapshot_archive_path(
+        context,
+        current_version=current_version or "unknown",
+        active_version=active_version or "unknown",
+    )
+    archive_path.parent.mkdir(parents=True, exist_ok=True)
+    if not archive_path.exists():
+        project_loader.write_json(archive_path, snapshot)
+
+    now = utc_now_iso()
+    migrated_snapshot = deepcopy(snapshot)
+    migrated_snapshot["template_id"] = active.get("template_id") or snapshot.get("template_id")
+    migrated_snapshot["genre"] = active.get("genre") or snapshot.get("genre")
+    migrated_snapshot["questionnaire"] = migrated_questionnaire
+    metadata = dict(migrated_snapshot.get("metadata") or {})
+    metadata.setdefault("created_at", now)
+    metadata["updated_at"] = now
+    metadata["template_migration"] = {
+        "marker": TEMPLATE_SNAPSHOT_MIGRATION_MARKER,
+        "from_template_version": current_version or None,
+        "to_template_version": active_version or None,
+        "migrated_at": now,
+        "archive_path": _relative(archive_path, context.project_dir),
+    }
+    migrated_snapshot["metadata"] = metadata
+    migrated_snapshot["execution_locks"] = _execution_locks()
+
+    report = {
+        "migration_marker": TEMPLATE_SNAPSHOT_MIGRATION_MARKER,
+        "project_id": context.project_id,
+        "template_id": active_template_id,
+        "from_template_version": current_version or None,
+        "to_template_version": active_version or None,
+        "migrated_at": now,
+        "archive_path": _relative(archive_path, context.project_dir),
+        "author_canon_modified": False,
+        "reconciliation_required": reconciliation,
+        "reconciliation_required_count": sum(
+            int(item.get("missing_count") or 0)
+            for item in reconciliation
+        ),
+        "execution_locks": _execution_locks(),
+    }
+
+    project_loader.write_json(paths["template_snapshot"], migrated_snapshot)
+    project_loader.write_json(
+        template_migration_report_path_for_context(context),
+        report,
+    )
+
+    return {
+        "status": "ok",
+        "service": TEMPLATE_SNAPSHOT_MIGRATION_MARKER,
+        "project_id": context.project_id,
+        "migrated": True,
+        "from_template_version": current_version or None,
+        "to_template_version": active_version or None,
+        "archive_path": report["archive_path"],
+        "author_canon_modified": False,
+        "reconciliation_required": deepcopy(reconciliation),
+        "reconciliation_required_count": report["reconciliation_required_count"],
+        "execution_locks": _execution_locks(),
+    }
 
 
 def get_project_canon_status(project_id: str) -> dict[str, Any]:
@@ -171,6 +380,38 @@ def ensure_author_canon(project_id: str) -> dict[str, Any]:
     return ensure_author_canon_for_context(context, manifest.to_dict())
 
 
+def backfill_existing_canon_record_identities(project_id: str) -> dict[str, Any]:
+    """Backfill hidden record identities in an existing author_canon.json only.
+
+    No missing Canon files are created by this migration helper.
+    """
+
+    context = build_project_context(project_loader.load_manifest(project_id))
+    path = author_canon_path_for_context(context)
+    if not path.exists():
+        return {
+            "service": canon_record_identity_service.CANON_RECORD_IDENTITY_SERVICE_MARKER,
+            "identity_version": canon_record_identity_service.CANON_RECORD_IDENTITY_VERSION,
+            "identity_field": canon_record_identity_service.INTERNAL_ID_FIELD,
+            "changed": False,
+            "record_count": 0,
+            "unique_identity_count": 0,
+            "assigned_count": 0,
+            "assignments": [],
+            "author_canon_exists": False,
+        }
+
+    author_canon = project_loader.read_json(path, default={})
+    normalized, report = canon_record_identity_service.backfill_author_canon_record_identities(
+        context.project_id,
+        author_canon if isinstance(author_canon, dict) else {},
+    )
+    if report["changed"]:
+        project_loader.write_json(path, normalized)
+    report["author_canon_exists"] = True
+    return report
+
+
 def ensure_author_canon_for_context(
     context: ProjectContext,
     manifest: dict[str, Any],
@@ -194,6 +435,14 @@ def ensure_author_canon_for_context(
         )
         created.append("author_canon.json")
 
+    author_canon = _load_json_if_present(paths["author_canon"], default={})
+    author_canon, identity_report = canon_record_identity_service.backfill_author_canon_record_identities(
+        context.project_id,
+        author_canon,
+    )
+    if identity_report["changed"]:
+        project_loader.write_json(paths["author_canon"], author_canon)
+
     if not paths["template_snapshot"].exists():
         project_loader.write_json(
             paths["template_snapshot"],
@@ -210,6 +459,7 @@ def ensure_author_canon_for_context(
 
     status = get_project_canon_status_for_context(context, manifest, schema)
     status["created"] = created
+    status["record_identity"] = identity_report
     return status
 
 
@@ -346,6 +596,317 @@ def build_default_canon_completion(
         },
         "execution_locks": _execution_locks(),
     }
+
+
+def _merge_questionnaire_for_migration(
+    *,
+    current: dict[str, Any],
+    active: dict[str, Any],
+    active_template_id: str,
+) -> dict[str, Any]:
+    """Merge the active interface into a project snapshot without dropping project-specific schema."""
+
+    merged = deepcopy(current)
+    for key, value in active.items():
+        if key == "sections":
+            continue
+        merged[key] = deepcopy(value)
+
+    current_sections = {
+        str(section.get("section_id") or ""): section
+        for section in current.get("sections", [])
+        if isinstance(section, dict) and section.get("section_id")
+    }
+    active_sections = [
+        section
+        for section in active.get("sections", [])
+        if isinstance(section, dict) and section.get("section_id")
+    ]
+
+    merged_sections: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for active_section in active_sections:
+        section_id = str(active_section.get("section_id"))
+        current_section = current_sections.get(section_id)
+        if current_section:
+            merged_sections.append(
+                _merge_section_schema_for_migration(
+                    current_section=current_section,
+                    active_section=active_section,
+                    active_template_id=active_template_id,
+                )
+            )
+        else:
+            merged_sections.append(
+                _existing_project_safe_schema(deepcopy(active_section))
+            )
+        seen.add(section_id)
+
+    for current_section in current.get("sections", []):
+        if not isinstance(current_section, dict):
+            continue
+        section_id = str(current_section.get("section_id") or "")
+        if section_id and section_id not in seen:
+            merged_sections.append(deepcopy(current_section))
+
+    merged["sections"] = merged_sections
+    _refresh_questionnaire_completion_metadata(merged)
+    return merged
+
+
+def _merge_section_schema_for_migration(
+    *,
+    current_section: dict[str, Any],
+    active_section: dict[str, Any],
+    active_template_id: str,
+) -> dict[str, Any]:
+    merged = deepcopy(current_section)
+    for key, value in active_section.items():
+        if key in {"fields", "records"}:
+            continue
+        merged[key] = deepcopy(value)
+
+    merged["fields"] = _merge_field_schemas_for_migration(
+        current_fields=current_section.get("fields", []),
+        active_fields=active_section.get("fields", []),
+        active_template_id=active_template_id,
+        section_id=str(active_section.get("section_id") or ""),
+        record_id=None,
+    )
+
+    current_records = {
+        str(record.get("record_id") or ""): record
+        for record in current_section.get("records", [])
+        if isinstance(record, dict) and record.get("record_id")
+    }
+    merged_records: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for active_record in active_section.get("records", []):
+        if not isinstance(active_record, dict) or not active_record.get("record_id"):
+            continue
+        record_id = str(active_record.get("record_id"))
+        current_record = current_records.get(record_id)
+        if current_record:
+            merged_record = deepcopy(current_record)
+            for key, value in active_record.items():
+                if key == "fields":
+                    continue
+                merged_record[key] = deepcopy(value)
+            merged_record["fields"] = _merge_field_schemas_for_migration(
+                current_fields=current_record.get("fields", []),
+                active_fields=active_record.get("fields", []),
+                active_template_id=active_template_id,
+                section_id=str(active_section.get("section_id") or ""),
+                record_id=record_id,
+            )
+        else:
+            merged_record = _existing_project_safe_schema(deepcopy(active_record))
+        merged_records.append(merged_record)
+        seen.add(record_id)
+
+    for current_record in current_section.get("records", []):
+        if not isinstance(current_record, dict):
+            continue
+        record_id = str(current_record.get("record_id") or "")
+        if record_id and record_id not in seen:
+            merged_records.append(deepcopy(current_record))
+
+    merged["records"] = merged_records
+    return merged
+
+
+def _merge_field_schemas_for_migration(
+    *,
+    current_fields: Any,
+    active_fields: Any,
+    active_template_id: str,
+    section_id: str,
+    record_id: str | None,
+) -> list[dict[str, Any]]:
+    current_list = [field for field in current_fields if isinstance(field, dict)]
+    active_list = [field for field in active_fields if isinstance(field, dict)]
+    current_by_id = {
+        str(field.get("field_id") or ""): field
+        for field in current_list
+        if field.get("field_id")
+    }
+    active_ids: set[str] = set()
+    merged: list[dict[str, Any]] = []
+
+    for active_field in active_list:
+        field_id = str(active_field.get("field_id") or "")
+        if not field_id:
+            continue
+        field = deepcopy(active_field)
+        if field.get("migration_existing_optional"):
+            field["required"] = False
+        merged.append(field)
+        active_ids.add(field_id)
+
+    for current_field in current_list:
+        field_id = str(current_field.get("field_id") or "")
+        if not field_id or field_id in active_ids:
+            continue
+        field = deepcopy(current_field)
+
+        hide_legacy_historical = (
+            active_template_id != "historical_epic"
+            and section_id == "timeline_event_ledger"
+            and record_id == "events"
+            and field_id in NONUNIVERSAL_HISTORICAL_FIELD_IDS
+        )
+        if field_id in LEGACY_TECHNICAL_FIELD_IDS or hide_legacy_historical:
+            field["required"] = False
+            field["author_hidden"] = True
+            field["legacy_compatibility"] = True
+
+        merged.append(field)
+
+    return merged
+
+
+def _existing_project_safe_schema(value: Any) -> Any:
+    """Downgrade only explicitly marked new fields that must not invalidate existing Canon Setup."""
+
+    if isinstance(value, list):
+        return [_existing_project_safe_schema(item) for item in value]
+    if not isinstance(value, dict):
+        return deepcopy(value)
+
+    result = {
+        key: _existing_project_safe_schema(item)
+        for key, item in value.items()
+    }
+    if result.get("migration_existing_optional"):
+        result["required"] = False
+    return result
+
+
+def _refresh_questionnaire_completion_metadata(schema: dict[str, Any]) -> None:
+    required_sections = 0
+    required_fields = 0
+    repeatable_records = 0
+    for section in schema.get("sections", []):
+        if not isinstance(section, dict):
+            continue
+        if section.get("required"):
+            required_sections += 1
+        for field in section.get("fields", []):
+            if isinstance(field, dict) and field.get("required"):
+                required_fields += 1
+        for record in section.get("records", []):
+            if not isinstance(record, dict):
+                continue
+            repeatable_records += 1
+            for field in record.get("fields", []):
+                if isinstance(field, dict) and field.get("required"):
+                    required_fields += 1
+
+    schema["completion_model"] = {
+        "section_count": len(schema.get("sections", [])),
+        "required_section_count": required_sections,
+        "required_field_count": required_fields,
+        "repeatable_record_count": repeatable_records,
+        "completion_rule": "all_required_sections_complete_and_required_fields_answered",
+    }
+
+
+def _migration_reconciliation_summary(
+    *,
+    active: dict[str, Any],
+    author_canon: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Report new semantic fields that cannot be safely inferred from existing author content."""
+
+    stored_sections = (
+        author_canon.get("sections")
+        if isinstance(author_canon.get("sections"), dict)
+        else {}
+    )
+    result: list[dict[str, Any]] = []
+
+    for section in active.get("sections", []):
+        if not isinstance(section, dict):
+            continue
+        section_id = str(section.get("section_id") or "")
+        stored_section = (
+            stored_sections.get(section_id)
+            if isinstance(stored_sections, dict)
+            else {}
+        )
+        stored_records = (
+            stored_section.get("records")
+            if isinstance(stored_section, dict)
+            and isinstance(stored_section.get("records"), dict)
+            else {}
+        )
+
+        for record in section.get("records", []):
+            if not isinstance(record, dict):
+                continue
+            record_id = str(record.get("record_id") or "")
+            rows = (
+                stored_records.get(record_id)
+                if isinstance(stored_records, dict)
+                else []
+            )
+            rows = rows if isinstance(rows, list) else []
+            for field in record.get("fields", []):
+                if not isinstance(field, dict) or not field.get("migration_reconciliation"):
+                    continue
+                field_id = str(field.get("field_id") or "")
+                missing_count = sum(
+                    1
+                    for row in rows
+                    if isinstance(row, dict) and _is_blank_value(row.get(field_id))
+                )
+                if missing_count:
+                    result.append(
+                        {
+                            "section_id": section_id,
+                            "record_id": record_id,
+                            "field_id": field_id,
+                            "field_label": field.get("label") or field_id,
+                            "missing_count": missing_count,
+                            "blocking": False,
+                            "reason": "Author-owned semantic value cannot be inferred safely.",
+                        }
+                    )
+
+    return result
+
+
+def _is_blank_value(value: Any) -> bool:
+    if value is None:
+        return True
+    if isinstance(value, str):
+        return not value.strip()
+    if isinstance(value, (list, tuple, set, dict)):
+        return len(value) == 0
+    return False
+
+
+def _template_snapshot_archive_path(
+    context: ProjectContext,
+    *,
+    current_version: str,
+    active_version: str,
+) -> Path:
+    source = _safe_filename_fragment(current_version)
+    target = _safe_filename_fragment(active_version)
+    return (
+        project_canon_dir_for_context(context, create=True)
+        / "archive"
+        / f"template_snapshot_{source}_before_{target}.json"
+    )
+
+
+def _safe_filename_fragment(value: str) -> str:
+    cleaned = "".join(
+        character if character.isalnum() or character in {"-", "_"} else "_"
+        for character in str(value or "")
+    )
+    return cleaned.strip("_") or "unknown"
 
 
 def _template_schema_for_manifest(manifest: dict[str, Any]) -> dict[str, Any]:

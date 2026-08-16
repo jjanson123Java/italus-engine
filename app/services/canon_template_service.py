@@ -18,7 +18,7 @@ from app.templates.template_registry import list_templates, normalize_template_i
 
 
 CANON_TEMPLATE_SERVICE_MARKER = "project-canon-template-questionnaire-boundary-20260715"
-CANON_TEMPLATE_SERVICE_VERSION = "project_canon_authoring_schema_v2_reduced_author_surface"
+CANON_TEMPLATE_SERVICE_VERSION = "project_canon_authoring_schema_v3_planning_interface"
 
 FIELD_SHORT_TEXT = "short_text"
 FIELD_LONG_TEXT = "long_text"
@@ -27,6 +27,33 @@ FIELD_SELECT = "select"
 FIELD_MULTI_SELECT = "multi_select"
 FIELD_BOOLEAN = "boolean"
 FIELD_RECORD_LIST = "record_list"
+
+STORY_CODE_HELP = (
+    "Give this item a short code or nickname that is easy for you to recognize while planning, such as "
+    "FIRST-CONTACT or JAX-M003. Use one if it helps you organize your story. Leave it blank if you do not need one."
+)
+AVAILABLE_FROM_HELP = (
+    "Choose the earliest book where this character, location, event, or other canon item should normally become "
+    "available. For example, choosing Book 3 keeps it out of normal planning for Books 1 and 2. Leave it blank if "
+    "it can be used from the beginning or you do not want to set a restriction."
+)
+NARRATIVE_TYPE_HELP = (
+    "Choose the role this event plays in the story, such as a mission, reveal, milestone, clue, escalation, or "
+    "consequence. This can make events easier to organize and plan. Leave it blank if you have not decided yet."
+)
+NARRATIVE_TYPE_OPTIONS = [
+    "mission",
+    "reveal",
+    "saga_event",
+    "historical_event",
+    "milestone",
+    "clue",
+    "relationship_change",
+    "escalation",
+    "transition",
+    "consequence",
+    "other",
+]
 
 
 def list_canon_questionnaire_templates() -> list[dict[str, Any]]:
@@ -186,6 +213,8 @@ def _merge_base_and_genre_schema(
         else:
             schema["sections"].append(deepcopy(genre_section))
 
+    _apply_template_specific_record_fields(schema, resolved_id)
+
     schema["authoring_model"] = {
         "author_input": "structured_fields_plus_rich_text",
         "primary_storage": "project_local_json",
@@ -196,6 +225,44 @@ def _merge_base_and_genre_schema(
     }
     schema["execution_locks"] = _execution_locks()
     return schema
+
+
+def _apply_template_specific_record_fields(schema: dict[str, Any], resolved_id: str) -> None:
+    """Apply genre-specific record fields without duplicating shared record schemas."""
+
+    if resolved_id != "historical_epic":
+        return
+
+    for section in schema.get("sections", []):
+        if section.get("section_id") != "timeline_event_ledger":
+            continue
+        for record in section.get("records", []):
+            if record.get("record_id") != "events":
+                continue
+
+            fields = list(record.get("fields") or [])
+            insert_at = next(
+                (index + 1 for index, field in enumerate(fields) if field.get("field_id") == "narrative_type"),
+                1,
+            )
+            fields[insert_at:insert_at] = [
+                _field(
+                    "event_type",
+                    "Historical / Reality Classification",
+                    FIELD_SELECT,
+                    options=["fictional", "historical", "hybrid"],
+                    help_text="Classifies this event's relationship to real historical fact.",
+                ),
+                _field(
+                    "historical_status",
+                    "Historical Constraint",
+                    FIELD_SELECT,
+                    options=["flexible", "constrained", "immutable"],
+                    help_text="Defines how strictly the historical event must be preserved.",
+                ),
+            ]
+            record["fields"] = fields
+            return
 
 
 def _with_completion_metadata(schema: dict[str, Any]) -> dict[str, Any]:
@@ -245,6 +312,10 @@ def _field(
     help_text: str = "",
     placeholder: str = "",
     options: list[str] | None = None,
+    planning_field: bool = False,
+    author_hidden: bool = False,
+    migration_reconciliation: bool = False,
+    migration_existing_optional: bool = False,
 ) -> dict[str, Any]:
     payload: dict[str, Any] = {
         "field_id": field_id,
@@ -256,6 +327,14 @@ def _field(
     }
     if options:
         payload["options"] = list(options)
+    if planning_field:
+        payload["planning_field"] = True
+    if author_hidden:
+        payload["author_hidden"] = True
+    if migration_reconciliation:
+        payload["migration_reconciliation"] = True
+    if migration_existing_optional:
+        payload["migration_existing_optional"] = True
     return payload
 
 
@@ -329,6 +408,15 @@ _BASE_QUESTIONNAIRE: dict[str, Any] = {
                     "Locations",
                     [
                         _field("name", "Name", FIELD_SHORT_TEXT),
+                        _field(
+                            "available_from_book",
+                            "Available From",
+                            FIELD_SHORT_TEXT,
+                            required=False,
+                            planning_field=True,
+                            help_text=AVAILABLE_FROM_HELP,
+                            placeholder="Book number (for example, 3)",
+                        ),
                         _field("type", "Type", FIELD_SHORT_TEXT),
                         _field("region", "Region", FIELD_SHORT_TEXT, required=False),
                         _field("description", "Description", FIELD_RICH_TEXT),
@@ -357,6 +445,15 @@ _BASE_QUESTIONNAIRE: dict[str, Any] = {
                     [
                         _field("name", "Name", FIELD_SHORT_TEXT),
                         _field("aliases", "Aliases", FIELD_LONG_TEXT, required=False),
+                        _field(
+                            "available_from_book",
+                            "Available From",
+                            FIELD_SHORT_TEXT,
+                            required=False,
+                            planning_field=True,
+                            help_text=AVAILABLE_FROM_HELP,
+                            placeholder="Book number (for example, 3)",
+                        ),
                         _field("role", "Narrative role", FIELD_SHORT_TEXT),
                         _field("status", "Status", FIELD_SELECT, options=["active", "dead", "missing", "unknown", "historical", "fictional"]),
                         _field("age_or_lifespan", "Age or lifespan", FIELD_SHORT_TEXT, required=False),
@@ -384,10 +481,34 @@ _BASE_QUESTIONNAIRE: dict[str, Any] = {
                     "events",
                     "Events",
                     [
-                        _field("event_id", "Event ID", FIELD_SHORT_TEXT),
                         _field("date_or_sequence", "Date or sequence", FIELD_SHORT_TEXT),
-                        _field("event_type", "Event type", FIELD_SELECT, options=["fictional", "historical", "hybrid"]),
-                        _field("historical_status", "Historical status", FIELD_SELECT, options=["flexible", "constrained", "immutable"]),
+                        _field(
+                            "story_code",
+                            "Story Code",
+                            FIELD_SHORT_TEXT,
+                            required=False,
+                            planning_field=True,
+                            help_text=STORY_CODE_HELP,
+                        ),
+                        _field(
+                            "narrative_type",
+                            "Narrative Type",
+                            FIELD_SELECT,
+                            required=False,
+                            planning_field=True,
+                            help_text=NARRATIVE_TYPE_HELP,
+                            options=NARRATIVE_TYPE_OPTIONS,
+                            migration_reconciliation=True,
+                        ),
+                        _field(
+                            "available_from_book",
+                            "Available From",
+                            FIELD_SHORT_TEXT,
+                            required=False,
+                            planning_field=True,
+                            help_text=AVAILABLE_FROM_HELP,
+                            placeholder="Book number (for example, 3)",
+                        ),
                         _field("book", "Book / installment", FIELD_SHORT_TEXT, required=False),
                         _field("location", "Location", FIELD_SHORT_TEXT, required=False),
                         _field("characters_present", "Characters present", FIELD_LONG_TEXT, required=False),
@@ -493,6 +614,15 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
                         "Groups / Species / Factions",
                         [
                             _field("name", "Name", FIELD_SHORT_TEXT),
+                            _field(
+                                "available_from_book",
+                                "Available From",
+                                FIELD_SHORT_TEXT,
+                                required=False,
+                                planning_field=True,
+                                help_text=AVAILABLE_FROM_HELP,
+                                placeholder="Book number (for example, 3)",
+                            ),
                             _field("type", "Type", FIELD_SHORT_TEXT),
                             _field("origin", "Origin", FIELD_RICH_TEXT),
                             _field("beliefs", "Beliefs", FIELD_RICH_TEXT),
@@ -539,6 +669,15 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
                         "Ships / Planets / Factions",
                         [
                             _field("name", "Name", FIELD_SHORT_TEXT),
+                            _field(
+                                "available_from_book",
+                                "Available From",
+                                FIELD_SHORT_TEXT,
+                                required=False,
+                                planning_field=True,
+                                help_text=AVAILABLE_FROM_HELP,
+                                placeholder="Book number (for example, 3)",
+                            ),
                             _field("type", "Type", FIELD_SELECT, options=["ship", "planet", "station", "faction", "species", "organization"]),
                             _field("description", "Description", FIELD_RICH_TEXT),
                             _field("capabilities", "Capabilities", FIELD_RICH_TEXT),
@@ -583,8 +722,31 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
                         "clues",
                         "Clues / Red Herrings / Reveals",
                         [
-                            _field("item_id", "Item ID", FIELD_SHORT_TEXT),
-                            _field("type", "Type", FIELD_SELECT, options=["clue", "red_herring", "reveal", "withheld_information"]),
+                            _field(
+                                "label",
+                                "Name / Label",
+                                FIELD_SHORT_TEXT,
+                                migration_reconciliation=True,
+                                migration_existing_optional=True,
+                            ),
+                            _field(
+                                "story_code",
+                                "Story Code",
+                                FIELD_SHORT_TEXT,
+                                required=False,
+                                planning_field=True,
+                                help_text=STORY_CODE_HELP,
+                            ),
+                            _field(
+                                "available_from_book",
+                                "Available From",
+                                FIELD_SHORT_TEXT,
+                                required=False,
+                                planning_field=True,
+                                help_text=AVAILABLE_FROM_HELP,
+                                placeholder="Book number (for example, 3)",
+                            ),
+                            _field("type", "Type", FIELD_SELECT, options=["clue", "red_herring", "reveal", "withheld_information", "other"]),
                             _field("appears_when", "Appears when", FIELD_SHORT_TEXT),
                             _field("meaning", "Meaning", FIELD_RICH_TEXT),
                             _field("reader_interpretation", "Reader interpretation", FIELD_RICH_TEXT, required=False),
@@ -614,6 +776,15 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
                         "Life Events",
                         [
                             _field("date_or_period", "Date or period", FIELD_SHORT_TEXT),
+                            _field(
+                                "available_from_book",
+                                "Available From",
+                                FIELD_SHORT_TEXT,
+                                required=False,
+                                planning_field=True,
+                                help_text=AVAILABLE_FROM_HELP,
+                                placeholder="Book number (for example, 3)",
+                            ),
                             _field("event_summary", "Event summary", FIELD_RICH_TEXT),
                             _field("people_involved", "People involved", FIELD_LONG_TEXT, required=False),
                             _field("location", "Location", FIELD_SHORT_TEXT, required=False),

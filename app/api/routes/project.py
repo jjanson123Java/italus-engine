@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 from app.projects.project_loader import InvalidProjectIdError, ProjectNotFoundError
 from app.services import (
     project_service,
+    project_canon_service,
     canon_setup_service,
     canon_action_service,
     workspace_service,
@@ -123,6 +124,17 @@ def get_project(project_id: str):
         return project_service.get_project(project_id)
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.delete("/api/project/{project_id}")
+def delete_project(project_id: str):
+    """Permanently delete an unfinished project and its project-local files."""
+    try:
+        return project_service.delete_project(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except project_service.ProjectStateConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
 @router.post("/api/project/{project_id}/archive")
@@ -387,6 +399,36 @@ def get_canon_setup(project_id: str):
         raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
+@router.get("/api/project/{project_id}/canon/template-migration")
+def get_canon_template_migration_status(project_id: str):
+    """Return read-only project template snapshot migration status."""
+    try:
+        return project_canon_service.get_template_snapshot_migration_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/canon/template-migration")
+def migrate_canon_template_snapshot(project_id: str):
+    """Upgrade the project-local template snapshot without inventing or rewriting story truth."""
+    try:
+        migration = project_canon_service.migrate_template_snapshot(project_id)
+        completion = canon_authoring_service.revalidate_canon_completion(project_id)
+        validation = canon_validation_service.validate_project_canon(project_id)
+        return {
+            "status": "ok",
+            "project_id": project_id,
+            "migration": migration,
+            "completion": completion,
+            "validation": validation,
+            "execution_locks": migration.get("execution_locks", {}),
+        }
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except project_canon_service.TemplateSnapshotMigrationConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
 @router.get("/api/project/{project_id}/canon/authoring")
 def get_canon_authoring_status(project_id: str):
     """Return project-local canon authoring workflow status.
@@ -428,6 +470,8 @@ def save_canon_section_draft(project_id: str, section_id: str, request: CanonSec
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     except canon_authoring_service.CanonSectionNotFoundError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_authoring_service.CanonRecordIdentityConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
 @router.post("/api/project/{project_id}/canon/section/{section_id}/complete")

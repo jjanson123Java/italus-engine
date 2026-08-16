@@ -21,7 +21,7 @@ import re
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
-from app.services import canon_template_service, project_canon_service
+from app.services import canon_record_identity_service, canon_template_service, project_canon_service
 
 
 CANON_MARKDOWN_RENDERER_SERVICE_MARKER = "project-canon-markdown-renderer-boundary-20260715"
@@ -65,7 +65,9 @@ def canon_section_content_hash(stored_section: dict[str, Any]) -> str:
     content = {
         "section_id": stored_section.get("section_id"),
         "answers": stored_section.get("answers") or {},
-        "records": stored_section.get("records") or {},
+        "records": canon_record_identity_service.strip_record_identity_metadata(
+            stored_section.get("records") or {}
+        ),
     }
     canonical = json.dumps(
         content,
@@ -111,10 +113,33 @@ def markdown_source_freshness(
         re.MULTILINE,
     )
 
+    schema_version = str(schema.get("version") or "").strip()
+    requires_schema_version = schema_version == canon_template_service.CANON_TEMPLATE_SERVICE_VERSION
+    schema_version_match = re.search(
+        r"^- Template Schema Version: `([^`]*)`\s*$",
+        markdown,
+        re.MULTILINE,
+    )
+
     if hash_match:
         rendered_hash = hash_match.group(1)
-        content_matches = rendered_hash == current_hash
-        verification_method = "embedded_sha256"
+        rendered_schema_version = (
+            schema_version_match.group(1).strip()
+            if schema_version_match
+            else ""
+        )
+        content_matches = (
+            rendered_hash == current_hash
+            and (
+                not requires_schema_version
+                or rendered_schema_version == schema_version
+            )
+        )
+        verification_method = (
+            "embedded_sha256_and_template_version"
+            if requires_schema_version
+            else "embedded_sha256"
+        )
         freshness_verified = True
     else:
         rendered_hash = ""
@@ -537,6 +562,7 @@ def _render_markdown_document(
         f"- Project: {_markdown_text(manifest.get('project_name') or manifest.get('project_id') or '')}",
         f"- Project ID: `{_inline_code(manifest.get('project_id') or '')}`",
         f"- Template: `{_inline_code(schema.get('template_id') or '')}`",
+        f"- Template Schema Version: `{_inline_code(schema.get('version') or '')}`",
         f"- Genre: `{_inline_code(schema.get('genre') or '')}`",
         f"- Section ID: `{_inline_code(section_id)}`",
         f"- Rendered At: `{_inline_code(rendered_at)}`",
@@ -562,6 +588,8 @@ def _render_markdown_document(
     fields = section_schema.get("fields") if isinstance(section_schema.get("fields"), list) else []
     if fields:
         for field in fields:
+            if field.get("author_hidden"):
+                continue
             field_id = str(field.get("field_id") or "").strip()
             if not field_id:
                 continue
@@ -629,6 +657,7 @@ def _render_record_group(record_schema: dict[str, Any], stored_records: dict[str
     field_labels = {
         str(field.get("field_id") or ""): _clean_scalar(field.get("label")) or str(field.get("field_id") or "")
         for field in field_schemas
+        if not field.get("author_hidden")
     }
 
     for index, row in enumerate(rows, start=1):
