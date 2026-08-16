@@ -6,7 +6,6 @@
   const state = {
     bootstrap: null,
     activeSection: 'dashboard',
-    activeTab: 'overview',
     projectRuntimeContext: null,
     projectRuntimeContextLoading: false,
     projectRuntimeContextApprovalLoading: false,
@@ -18,7 +17,7 @@
     bookRuntimeContextLoading: false
   };
 
-  const workspaceJsVersion = 'workspace-navigation-detail-20260707';
+  const workspaceJsVersion = 'workspace-ux-stabilization-20260816';
   console.info(`[ITALUS] ${workspaceJsVersion} loaded`);
   const gatePanelNavigationVersion = 'workspace-gate-panel-navigation-v2-20260708';
   console.info(`[ITALUS] ${gatePanelNavigationVersion} loaded`);
@@ -43,7 +42,6 @@
 
   async function init() {
     bindSidebar();
-    bindTabs();
     bindTopMenu();
     bindRuntimeGateNavigation();
 
@@ -61,7 +59,6 @@
       const bootstrap = await apiFetch(`/api/project/${encodeURIComponent(id)}/workspace/bootstrap`);
       state.bootstrap = bootstrap;
       state.activeSection = 'dashboard';
-      state.activeTab = 'overview';
 
       renderInspector(bootstrap);
       applyMenuState(bootstrap);
@@ -104,17 +101,6 @@
 
       renderSection(sectionId);
       setLog(`Opened ${button.textContent.trim() || labelFor(sectionId)}.`);
-    });
-  }
-
-  function bindTabs() {
-    document.querySelectorAll('[data-workspace-tab]').forEach((button) => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('[data-workspace-tab]').forEach((item) => item.classList.remove('active'));
-        button.classList.add('active');
-        state.activeTab = button.dataset.workspaceTab || 'overview';
-        renderSection(state.activeSection);
-      });
     });
   }
 
