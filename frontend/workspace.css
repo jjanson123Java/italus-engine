@@ -926,3 +926,197 @@
   background: rgba(98, 186, 132, 0.1);
   color: #dff5e5;
 }
+
+
+/* Patch 19 — Unified Planner / Canon for This Book surface */
+.book-canon-toolbar {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) minmax(220px, 1fr) auto auto;
+  gap: 0.75rem;
+  align-items: end;
+  margin: 1rem 0;
+}
+.book-canon-toolbar label {
+  display: grid;
+  gap: 0.35rem;
+  color: #d7b765;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.book-canon-toolbar input,
+.book-canon-toolbar select {
+  width: 100%;
+  border: 1px solid rgba(245, 217, 155, 0.25);
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  background: rgba(0, 0, 0, 0.22);
+  color: #f8ead1;
+  font: inherit;
+}
+.book-canon-category {
+  border: 1px solid rgba(245, 217, 155, 0.2);
+  border-radius: 12px;
+  padding: 0.8rem;
+  margin: 0.8rem 0;
+}
+.book-canon-category > summary {
+  cursor: pointer;
+  color: #f2c56b;
+  font-weight: 700;
+}
+.book-canon-record-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.book-canon-record-actions button {
+  border: 1px solid rgba(245, 217, 155, 0.35);
+  border-radius: 8px;
+  padding: 0.4rem 0.65rem;
+  background: rgba(48, 101, 60, 0.5);
+  color: #f8ead1;
+  cursor: pointer;
+}
+.book-canon-record-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+@media (max-width: 900px) {
+  .book-canon-toolbar { grid-template-columns: 1fr; }
+}
+
+
+/* Patch 22 — Lightweight Chapter Planner + Event Board */
+.workspace-chapter-planner-v1 .chapter-planner-toolbar {
+  display: grid;
+  grid-template-columns: minmax(120px, 170px) minmax(120px, 170px) 1fr auto;
+  gap: 0.75rem;
+  align-items: end;
+  margin: 1rem 0;
+}
+.workspace-chapter-planner-v1 .chapter-planner-toolbar label,
+.workspace-chapter-planner-v1 .chapter-planner-field {
+  display: grid;
+  gap: 0.35rem;
+  color: #d7b765;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.workspace-chapter-planner-v1 input,
+.workspace-chapter-planner-v1 select,
+.workspace-chapter-planner-v1 textarea {
+  width: 100%;
+  border: 1px solid rgba(245, 217, 155, 0.25);
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  background: rgba(0, 0, 0, 0.22);
+  color: #f8ead1;
+  font: inherit;
+}
+.workspace-chapter-planner-v1 textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+.chapter-planner-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.chapter-planner-card {
+  border: 1px solid rgba(245, 217, 155, 0.24);
+  border-radius: 12px;
+  padding: 0.9rem;
+  background: rgba(7, 14, 12, 0.92);
+}
+.chapter-planner-card h3 {
+  margin-top: 0;
+  color: #f8ead1;
+}
+.chapter-planner-list {
+  display: grid;
+  gap: 0.55rem;
+  max-height: 360px;
+  overflow: auto;
+}
+.chapter-planner-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid rgba(245, 217, 155, 0.1);
+}
+.chapter-planner-row:last-child {
+  border-bottom: 0;
+}
+.chapter-planner-row small {
+  display: block;
+  color: rgba(248, 234, 209, 0.65);
+}
+.chapter-planner-event-position {
+  min-width: 130px;
+}
+.chapter-planner-actions {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.chapter-planner-actions button {
+  border: 1px solid rgba(245, 217, 155, 0.35);
+  border-radius: 8px;
+  padding: 0.55rem 0.8rem;
+  background: rgba(48, 101, 60, 0.5);
+  color: #f8ead1;
+  cursor: pointer;
+}
+.chapter-planner-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.chapter-planner-status {
+  border: 1px solid rgba(245, 217, 155, 0.18);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+  margin: 0.75rem 0;
+  color: rgba(248, 234, 209, 0.82);
+}
+@media (max-width: 980px) {
+  .workspace-chapter-planner-v1 .chapter-planner-toolbar,
+  .chapter-planner-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Patch 24 — Story Control Registry inside Chapter Planner */
+.story-control-registry-card {
+  margin-top: 1rem;
+}
+.story-control-form {
+  border-left: 1px solid rgba(245, 217, 155, 0.14);
+  padding-left: 1rem;
+}
+.story-control-form h4,
+.story-control-registry-card h4 {
+  color: #d7b765;
+  margin-top: 0;
+}
+.story-control-registry-card button {
+  border: 1px solid rgba(245, 217, 155, 0.35);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  background: rgba(48, 101, 60, 0.5);
+  color: #f8ead1;
+  cursor: pointer;
+}
+.story-control-registry-card button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+@media (max-width: 980px) {
+  .story-control-form {
+    border-left: 0;
+    padding-left: 0;
+  }
+}

@@ -17,7 +17,7 @@ from typing import Any
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
-from app.services import canon_markdown_renderer_service, canon_record_identity_service, canon_template_service, project_canon_service
+from app.services import canon_markdown_renderer_service, canon_record_identity_service, canon_reference_service, canon_template_service, project_canon_service
 
 
 CANON_VALIDATION_SERVICE_MARKER = "project-canon-validation-boundary-20260725"
@@ -219,6 +219,15 @@ def _build_validation_report(
     )
 
     _validate_storage_identity(context, schema, author_canon, completion, template_snapshot, issues, warnings)
+
+    for finding in canon_reference_service.reference_validation_findings(author_canon, schema):
+        severity = str(finding.get("severity") or "warning")
+        normalized_finding = deepcopy(finding)
+        normalized_finding["severity"] = "blocking" if severity == "error" else "warning"
+        if severity == "error":
+            issues.append(normalized_finding)
+        else:
+            warnings.append(normalized_finding)
 
     section_results = [
         _section_validation(context, manifest, schema, author_canon, completion, section)

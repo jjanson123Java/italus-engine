@@ -16,11 +16,17 @@ from app.services import (
     canon_packet_service,
     canon_template_service,
     canon_authoring_service,
+    canon_reference_service,
+    canon_index_service,
+    story_eligibility_service,
+    book_scope_service,
     canon_markdown_renderer_service,
     canon_validation_service,
     canon_packet_generation_service,
     book_plan_service,
     book_knowledge_pack_service,
+    chapter_plan_service,
+    story_control_service,
 )
 
 
@@ -69,6 +75,71 @@ class CanonSectionDraftRequest(BaseModel):
 
 class BookPlanDraftRequest(BaseModel):
     books: list[dict[str, Any]] = Field(default_factory=list)
+
+
+class StoryEligibilityCandidateRef(BaseModel):
+    record_id: str = Field(min_length=1)
+    record_type: str | None = None
+    label: str | None = None
+
+
+class StoryEligibilityRequest(BaseModel):
+    book_number: int = Field(ge=1)
+    chapter_number: int | None = Field(default=None, ge=1)
+    candidate_ref: StoryEligibilityCandidateRef
+    requested_use: str = Field(default="book_selection")
+    selected: bool = False
+
+
+class BookScopeSelectionRequest(BaseModel):
+    record_id: str = Field(min_length=1)
+    record_type: str | None = None
+    source_class: str = Field(default="master_canon")
+    usage_mode: str = Field(default="direct")
+
+
+class BookScopeDraftRequest(BaseModel):
+    selections: list[BookScopeSelectionRequest] = Field(default_factory=list)
+    constraints: dict[str, Any] = Field(default_factory=dict)
+
+
+class BookScopeAmendmentRequest(BaseModel):
+    chapter_number: int = Field(ge=1)
+    action: str = Field(min_length=1)
+    record_id: str = Field(min_length=1)
+    source_class: str = Field(default="master_canon")
+    usage_mode: str = Field(default="direct")
+
+
+class ChapterPlanDraftRequest(BaseModel):
+    selected_canon_refs: list[dict[str, Any]] = Field(default_factory=list)
+    assigned_event_refs: list[dict[str, Any]] = Field(default_factory=list)
+    event_placements: list[dict[str, Any]] = Field(default_factory=list)
+    generation_kickoff: str = Field(default="")
+    pov: list[dict[str, Any]] = Field(default_factory=list)
+    chapter_objective: str = Field(default="")
+    restrictions: list[str] = Field(default_factory=list)
+    story_control_refs: list[str] = Field(default_factory=list)
+    advanced_sequence: list[Any] = Field(default_factory=list)
+
+
+class StoryControlDraftRequest(BaseModel):
+    control_id: str | None = None
+    book_number: int = Field(ge=1)
+    chapter_number: int = Field(ge=1)
+    control_type: str = Field(min_length=1)
+    subject_ref: dict[str, Any] | None = None
+    instruction: str = Field(default="")
+    certainty: str = Field(default="supported_evidence")
+    presentation: str = Field(default="other")
+    narrative_weight: str = Field(default="brief_clue")
+    who_learns: list[str] = Field(default_factory=list)
+    effective_point: str = Field(default="current_unit")
+    knowledge_ceiling: str = Field(default="inherit")
+    allowed_interpretations: list[str] = Field(default_factory=list)
+    forbidden_assertions: list[str] = Field(default_factory=list)
+    persistence: str = Field(default="chapter_local")
+    notes: str = Field(default="")
 
 
 def _model_to_dict(model: BaseModel, *, exclude_unset: bool = False) -> dict[str, Any]:
@@ -184,6 +255,28 @@ def get_book_plan_status(project_id: str):
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
+@router.get("/api/project/{project_id}/book-plan/migration")
+def get_book_plan_migration_status(project_id: str):
+    """Return stable-reference migration status for the project Book Plan."""
+    try:
+        return book_plan_service.get_book_plan_migration_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_plan_service.BookPlanContractError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/book-plan/migrate-references")
+def migrate_book_plan_references(project_id: str):
+    """Explicitly migrate legacy label references to stable Canon IDs."""
+    try:
+        return book_plan_service.migrate_book_plan_references(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_plan_service.BookPlanContractError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
 @router.get("/api/project/{project_id}/book-plan")
 def get_book_plan(project_id: str):
     """Return the saved Book Plan or a non-persisted default document."""
@@ -289,6 +382,103 @@ def compile_book_runtime_context(project_id: str):
         book_knowledge_pack_service.BookKnowledgePackNotReadyError,
         book_knowledge_pack_service.BookKnowledgePackSourceMissingError,
     ) as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/chapter-plan/contract")
+def get_chapter_plan_contract():
+    """Return the lightweight Chapter Plan/Event Board contract."""
+    return chapter_plan_service.get_chapter_plan_contract()
+
+
+@router.get("/api/project/{project_id}/chapter-plan/status")
+def get_chapter_plan_status(project_id: str):
+    """Return compact Chapter Plan status without creating planning state."""
+    try:
+        return chapter_plan_service.get_chapter_plan_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except chapter_plan_service.ChapterPlanError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/chapter-plan")
+def get_chapter_plan(project_id: str):
+    """Return saved Chapter Plan or non-persisted defaults."""
+    try:
+        return chapter_plan_service.get_chapter_plan(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except chapter_plan_service.ChapterPlanError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/chapter-plan/{book_number}/{chapter_number}")
+def get_chapter_plan_chapter(
+    project_id: str,
+    book_number: int,
+    chapter_number: int,
+):
+    """Return one Chapter Planner record by book/chapter position."""
+    try:
+        return chapter_plan_service.get_chapter(
+            project_id,
+            book_number=book_number,
+            chapter_number=chapter_number,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except chapter_plan_service.ChapterPlanContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except chapter_plan_service.ChapterPlanError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.put("/api/project/{project_id}/chapter-plan/{book_number}/{chapter_number}")
+def save_chapter_plan_chapter(
+    project_id: str,
+    book_number: int,
+    chapter_number: int,
+    request: ChapterPlanDraftRequest,
+):
+    """Persist one lightweight Chapter Plan draft."""
+    try:
+        return chapter_plan_service.save_chapter_draft(
+            project_id,
+            book_number=book_number,
+            chapter_number=chapter_number,
+            payload=_model_to_dict(request),
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except chapter_plan_service.ChapterPlanContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except chapter_plan_service.ChapterPlanStateConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/chapter-plan/{book_number}/{chapter_number}/event-candidates")
+def get_chapter_event_candidates(
+    project_id: str,
+    book_number: int,
+    chapter_number: int,
+    anchor_event_id: str = Query(default=""),
+    query: str = Query(default=""),
+):
+    """Return deterministic event candidates/relationships for the Event Board."""
+    try:
+        return chapter_plan_service.get_event_candidates(
+            project_id,
+            book_number=book_number,
+            chapter_number=chapter_number,
+            anchor_event_id=anchor_event_id,
+            query=query,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except chapter_plan_service.ChapterPlanContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except chapter_plan_service.ChapterPlanError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
@@ -429,6 +619,260 @@ def migrate_canon_template_snapshot(project_id: str):
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
+@router.get("/api/project/{project_id}/canon/index")
+def get_canon_index_status(project_id: str):
+    """Return project-local derived Canon Index freshness/status."""
+    try:
+        return canon_index_service.get_index_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_index_service.CanonIndexError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/canon/index/rebuild")
+def rebuild_canon_index(project_id: str):
+    """Rebuild project-local derived Canon Index from current Author Canon."""
+    try:
+        return canon_index_service.rebuild_index(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except canon_index_service.CanonIndexError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/story-eligibility")
+def get_story_eligibility_status(project_id: str):
+    """Return Story Eligibility source/readiness status without mutating state."""
+    try:
+        return story_eligibility_service.get_story_eligibility_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except story_eligibility_service.StoryEligibilityError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/story-eligibility/evaluate")
+def evaluate_story_eligibility(project_id: str, request: StoryEligibilityRequest):
+    """Evaluate one stable Canon record under explicit current story constraints."""
+    try:
+        return story_eligibility_service.evaluate_story_eligibility(
+            project_id,
+            book_number=request.book_number,
+            chapter_number=request.chapter_number,
+            candidate_ref=_model_to_dict(request.candidate_ref),
+            requested_use=request.requested_use,
+            selected=request.selected,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except (story_eligibility_service.StoryEligibilityError, ValueError) as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/book-scope/contract")
+def get_book_scope_contract():
+    """Return the project-local Book Scope backend contract."""
+    return book_scope_service.get_book_scope_contract()
+
+
+@router.get("/api/project/{project_id}/book-scope/status")
+def get_book_scope_status(project_id: str):
+    """Return compact per-book Book Scope lifecycle/freshness state."""
+    try:
+        return book_scope_service.get_book_scope_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_scope_service.BookScopeError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/book-scope/catalog")
+def get_book_scope_catalog(
+    project_id: str,
+    book_number: int = Query(ge=1),
+    include_future: bool = Query(default=False),
+    query: str = Query(default=""),
+    record_type: str | None = Query(default=None),
+):
+    """Return categorized Canon choices with current Story Eligibility states."""
+    try:
+        return book_scope_service.get_book_scope_catalog(
+            project_id,
+            book_number=book_number,
+            include_future=include_future,
+            query=query,
+            record_type=record_type,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_scope_service.BookScopeContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except book_scope_service.BookScopeError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/book-scope")
+def get_book_scope(project_id: str):
+    """Return the saved Book Scope or non-persisted defaults for all books."""
+    try:
+        return book_scope_service.get_book_scope(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_scope_service.BookScopeError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.put("/api/project/{project_id}/book-scope/{book_number}")
+def save_book_scope_draft(
+    project_id: str,
+    book_number: int,
+    request: BookScopeDraftRequest,
+):
+    """Persist one Book Scope draft using stable Canon record references."""
+    try:
+        return book_scope_service.save_book_scope_draft(
+            project_id,
+            book_number=book_number,
+            payload=_model_to_dict(request),
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_scope_service.BookScopeContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except book_scope_service.BookScopeStateConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/book-scope/{book_number}/approve")
+def approve_book_scope(project_id: str, book_number: int):
+    """Approve one current, valid Book Scope revision and source snapshot."""
+    try:
+        return book_scope_service.approve_book_scope(
+            project_id,
+            book_number=book_number,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_scope_service.BookScopeError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/book-scope/{book_number}/revoke")
+def revoke_book_scope_approval(project_id: str, book_number: int):
+    """Revoke one Book Scope approval without changing selections."""
+    try:
+        return book_scope_service.revoke_book_scope_approval(
+            project_id,
+            book_number=book_number,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_scope_service.BookScopeError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/book-scope/{book_number}/effective")
+def get_effective_book_scope(
+    project_id: str,
+    book_number: int,
+    chapter_number: int = Query(ge=1),
+):
+    """Return Book Canon selections effective at one chapter boundary."""
+    try:
+        return book_scope_service.effective_book_scope_selections(
+            project_id,
+            book_number=book_number,
+            chapter_number=chapter_number,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_scope_service.BookScopeContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except book_scope_service.BookScopeError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/book-scope/{book_number}/amend")
+def amend_book_scope(
+    project_id: str,
+    book_number: int,
+    request: BookScopeAmendmentRequest,
+):
+    """Apply one audited prospective Add/Remove to Canon for This Book."""
+    payload = _model_to_dict(request)
+    try:
+        return book_scope_service.amend_book_scope(
+            project_id,
+            book_number=book_number,
+            chapter_number=int(payload["chapter_number"]),
+            action=str(payload["action"]),
+            record_id=str(payload["record_id"]),
+            source_class=str(payload.get("source_class") or "master_canon"),
+            usage_mode=str(payload.get("usage_mode") or "direct"),
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_scope_service.BookScopeContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except book_scope_service.BookScopeStateConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/story-controls/contract")
+def get_story_control_contract():
+    """Return the Story Control Registry authoring contract."""
+    return story_control_service.get_story_control_contract()
+
+
+@router.get("/api/project/{project_id}/story-controls/status")
+def get_story_control_status(project_id: str):
+    try:
+        return story_control_service.get_story_control_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except story_control_service.StoryControlError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/story-controls")
+def get_story_controls(
+    project_id: str,
+    book_number: int | None = Query(default=None, ge=1),
+    chapter_number: int | None = Query(default=None, ge=1),
+):
+    try:
+        return story_control_service.get_story_controls(
+            project_id,
+            book_number=book_number,
+            chapter_number=chapter_number,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except story_control_service.StoryControlContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except story_control_service.StoryControlError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/story-controls")
+def save_story_control(
+    project_id: str,
+    request: StoryControlDraftRequest,
+):
+    try:
+        return story_control_service.save_story_control(
+            project_id,
+            _model_to_dict(request),
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except story_control_service.StoryControlContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except story_control_service.StoryControlStateConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
 @router.get("/api/project/{project_id}/canon/authoring")
 def get_canon_authoring_status(project_id: str):
     """Return project-local canon authoring workflow status.
@@ -470,7 +914,10 @@ def save_canon_section_draft(project_id: str, section_id: str, request: CanonSec
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     except canon_authoring_service.CanonSectionNotFoundError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
-    except canon_authoring_service.CanonRecordIdentityConflictError as exc:
+    except (
+        canon_authoring_service.CanonRecordIdentityConflictError,
+        canon_reference_service.CanonReferenceConflictError,
+    ) as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 

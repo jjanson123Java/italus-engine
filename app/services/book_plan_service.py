@@ -24,11 +24,24 @@ from typing import Any
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
+from app.services import book_scope_service, canon_index_service
 
 
-BOOK_PLAN_SERVICE_MARKER = "project-book-plan-approval-freshness-20260726"
-BOOK_PLAN_SCHEMA_VERSION = "project_book_plan_v1"
+BOOK_PLAN_SERVICE_MARKER = "project-book-plan-stable-ref-consistency-20260816"
+BOOK_PLAN_SCHEMA_VERSION = "project_book_plan_v2_stable_refs"
+LEGACY_BOOK_PLAN_SCHEMA_VERSION = "project_book_plan_v1"
 BOOK_PLAN_FILENAME = "book_plan.json"
+BOOK_PLAN_MIGRATION_REPORT_FILENAME = "book_plan_reference_migration_report.json"
+
+BOOK_REFERENCE_FIELDS = {
+    "major_events": "events",
+    "required_characters": "characters",
+    "required_locations": "locations",
+}
+BOOK_TEXT_LIST_FIELDS = (
+    "allowed_reveals",
+    "forbidden_future_knowledge",
+)
 
 STATUS_NOT_STARTED = "not_started"
 STATUS_DRAFT = "draft"
@@ -56,6 +69,10 @@ BOOK_LIST_FIELDS = (
 
 class BookPlanContractError(ValueError):
     """Raised when a Book Plan payload violates the data contract."""
+
+
+class BookPlanReferenceConflictError(BookPlanContractError):
+    """Raised when an author-facing label cannot resolve to one stable Canon ID."""
 
 
 def get_book_plan_contract() -> dict[str, Any]:
@@ -89,9 +106,9 @@ def get_book_plan_contract() -> dict[str, Any]:
             "title": {"type": "string", "required": True},
             "time_span": {"type": "string", "required": True},
             "primary_arc": {"type": "string", "required": True},
-            "major_events": {"type": "array[string]", "required": False},
-            "required_characters": {"type": "array[string]", "required": False},
-            "required_locations": {"type": "array[string]", "required": False},
+            "major_events": {"type": "array[record_ref]", "required": False},
+            "required_characters": {"type": "array[record_ref]", "required": False},
+            "required_locations": {"type": "array[record_ref]", "required": False},
             "ending_state": {"type": "string", "required": True},
             "handoff_to_next_book": {
                 "type": "string",
@@ -103,6 +120,21 @@ def get_book_plan_contract() -> dict[str, Any]:
                 "required": False,
             },
             "notes": {"type": "string", "required": False},
+        },
+        "reference_contract": {
+            "identity": "record_id",
+            "author_input": "exact label or alias may be resolved only when unique",
+            "unresolved_legacy": "preserved explicitly; never guessed",
+            "book_scope_consistency": (
+                "major_events, required_characters, and required_locations "
+                "must be selected in the approved current Book Scope for that book"
+            ),
+        },
+        "migration_contract": {
+            "from_schema": LEGACY_BOOK_PLAN_SCHEMA_VERSION,
+            "to_schema": BOOK_PLAN_SCHEMA_VERSION,
+            "report_filename": BOOK_PLAN_MIGRATION_REPORT_FILENAME,
+            "author_truth_invented": False,
         },
         "revision_contract": {
             "revision": "increments only when stable plan content changes",
@@ -144,15 +176,39 @@ def get_book_plan_for_context(
     """Return a normalized plan without writing when the file is absent."""
 
     path = _book_plan_path(context)
+    migration_required = False
+    migration_summary: dict[str, Any] = {
+        "required": False,
+        "source_schema_version": "",
+        "resolved_count": 0,
+        "unresolved_count": 0,
+    }
     if path.exists():
         stored = project_loader.read_json(path)
-        plan = _normalize_existing_document(context, manifest, stored)
+        source_schema = str(stored.get("schema_version") or LEGACY_BOOK_PLAN_SCHEMA_VERSION)
+        migration_required = source_schema != BOOK_PLAN_SCHEMA_VERSION
+        stats = {"resolved_count": 0, "unresolved_count": 0, "unresolved": []}
+        plan = _normalize_existing_document(
+            context,
+            manifest,
+            stored,
+            migration_stats=stats,
+        )
+        migration_summary = {
+            "required": migration_required,
+            "source_schema_version": source_schema,
+            **stats,
+        }
         exists = True
     else:
         plan = _default_document(context, manifest)
         exists = False
 
-    validation = _validate_plan(plan, int(manifest.get("book_count") or 0))
+    validation = _validate_plan(
+        context,
+        plan,
+        int(manifest.get("book_count") or 0),
+    )
     plan["status"] = _status_for(validation, exists)
     plan["approval_status"] = _approval_status(plan, validation)
     plan["approval_fresh"] = (
@@ -168,6 +224,8 @@ def get_book_plan_for_context(
         "exists": exists,
         "project_relative_path": _relative(path, context.project_dir),
         "plan": plan,
+        "migration_required": migration_required,
+        "migration": migration_summary,
         "execution_locks": _execution_locks(),
     }
 
@@ -212,9 +270,11 @@ def get_book_plan_status_for_context(
             plan.get("approved_content_hash") or ""
         ),
         "approved_at": str(plan.get("approved_at") or ""),
-        "approval_enabled": bool(validation["valid"]),
-        "authoring_enabled": False,
+        "approval_enabled": bool(validation["valid"] and not result["migration_required"]),
+        "authoring_enabled": True,
         "book_runtime_context_enabled": False,
+        "migration_required": bool(result["migration_required"]),
+        "migration": deepcopy(result["migration"]),
         "issues": deepcopy(validation["issues"]),
         "execution_locks": _execution_locks(),
     }
@@ -257,7 +317,12 @@ def save_book_plan_draft_for_context(
     if not isinstance(incoming_books, list):
         raise BookPlanContractError("books must be an array.")
 
-    normalized_books = _normalize_books(incoming_books, expected_book_count)
+    normalized_books = _normalize_books(
+        context,
+        incoming_books,
+        expected_book_count,
+        strict_new=True,
+    )
     path = _book_plan_path(context)
     existing = (
         _normalize_existing_document(
@@ -298,7 +363,7 @@ def save_book_plan_draft_for_context(
         candidate["revision"] += 1
     candidate["content_hash"] = content_hash
 
-    validation = _validate_plan(candidate, expected_book_count)
+    validation = _validate_plan(context, candidate, expected_book_count)
     candidate["status"] = _status_for(validation, True)
     candidate["approval_status"] = _approval_status(
         candidate,
@@ -348,12 +413,18 @@ def approve_book_plan_for_context(
             "Book Plan must be saved before approval."
         )
 
+    stored = project_loader.read_json(path)
+    if str(stored.get("schema_version") or LEGACY_BOOK_PLAN_SCHEMA_VERSION) != BOOK_PLAN_SCHEMA_VERSION:
+        raise BookPlanContractError(
+            "Book Plan stable-reference migration must be completed before approval."
+        )
     plan = _normalize_existing_document(
         context,
         manifest,
-        project_loader.read_json(path),
+        stored,
     )
     validation = _validate_plan(
+        context,
         plan,
         int(manifest.get("book_count") or 0),
     )
@@ -418,6 +489,7 @@ def revoke_book_plan_approval_for_context(
         project_loader.read_json(path),
     )
     validation = _validate_plan(
+        context,
         plan,
         int(manifest.get("book_count") or 0),
     )
@@ -444,6 +516,117 @@ def revoke_book_plan_approval_for_context(
         },
         "execution_locks": _execution_locks(),
     }
+
+
+def migrate_book_plan_references(project_id: str) -> dict[str, Any]:
+    """Explicitly migrate a stored v1 Book Plan to stable reference-backed v2."""
+
+    manifest = project_loader.load_manifest(project_id)
+    context = build_project_context(manifest)
+    path = _book_plan_path(context)
+    if not path.exists():
+        return {
+            "status": "not_required",
+            "service": BOOK_PLAN_SERVICE_MARKER,
+            "schema_version": BOOK_PLAN_SCHEMA_VERSION,
+            "project_id": context.project_id,
+            "reason": "Book Plan has not been created.",
+        }
+
+    stored = project_loader.read_json(path)
+    source_schema = str(
+        stored.get("schema_version") or LEGACY_BOOK_PLAN_SCHEMA_VERSION
+    )
+    if source_schema == BOOK_PLAN_SCHEMA_VERSION:
+        return {
+            "status": "not_required",
+            "service": BOOK_PLAN_SERVICE_MARKER,
+            "schema_version": BOOK_PLAN_SCHEMA_VERSION,
+            "project_id": context.project_id,
+            "reason": "Book Plan already uses stable references.",
+        }
+    if source_schema != LEGACY_BOOK_PLAN_SCHEMA_VERSION:
+        raise BookPlanContractError(
+            f"Unsupported Book Plan schema for migration: {source_schema}."
+        )
+
+    stats: dict[str, Any] = {
+        "resolved_count": 0,
+        "unresolved_count": 0,
+        "unresolved": [],
+    }
+    migrated = _normalize_existing_document(
+        context,
+        manifest.to_dict(),
+        stored,
+        migration_stats=stats,
+    )
+    old_hash = str(stored.get("content_hash") or "")
+    migrated_hash = _content_hash(migrated)
+    if migrated_hash != old_hash:
+        migrated["revision"] = int(stored.get("revision") or 0) + 1
+    migrated["content_hash"] = migrated_hash
+    migrated["updated_at"] = utc_now_iso()
+
+    archive_dir = context.project_dir / "archive"
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    archive_path = archive_dir / "book_plan_before_stable_refs_v1.json"
+    if not archive_path.exists():
+        _write_json_atomic(archive_path, stored)
+
+    _write_json_atomic(path, _stored_document(migrated))
+    report = {
+        "status": "migrated",
+        "service": BOOK_PLAN_SERVICE_MARKER,
+        "from_schema_version": source_schema,
+        "to_schema_version": BOOK_PLAN_SCHEMA_VERSION,
+        "project_id": context.project_id,
+        "resolved_count": int(stats["resolved_count"]),
+        "unresolved_count": int(stats["unresolved_count"]),
+        "unresolved": deepcopy(stats["unresolved"]),
+        "author_truth_invented": False,
+        "archive_path": _relative(archive_path, context.project_dir),
+        "book_plan_revision": int(migrated.get("revision") or 0),
+        "book_plan_content_hash": migrated_hash,
+        "approval_preserved_as_provenance": bool(
+            stored.get("approved_content_hash")
+        ),
+        "approval_fresh": False,
+    }
+    _write_json_atomic(
+        context.project_dir / BOOK_PLAN_MIGRATION_REPORT_FILENAME,
+        report,
+    )
+    return report
+
+
+def get_book_plan_migration_status(project_id: str) -> dict[str, Any]:
+    manifest = project_loader.load_manifest(project_id)
+    context = build_project_context(manifest)
+    path = _book_plan_path(context)
+    if not path.exists():
+        return {
+            "status": "not_required",
+            "project_id": context.project_id,
+            "migration_required": False,
+            "current_schema_version": "",
+            "target_schema_version": BOOK_PLAN_SCHEMA_VERSION,
+        }
+    stored = project_loader.read_json(path)
+    current = str(
+        stored.get("schema_version") or LEGACY_BOOK_PLAN_SCHEMA_VERSION
+    )
+    return {
+        "status": "migration_required"
+        if current != BOOK_PLAN_SCHEMA_VERSION
+        else "current",
+        "project_id": context.project_id,
+        "migration_required": current != BOOK_PLAN_SCHEMA_VERSION,
+        "current_schema_version": current,
+        "target_schema_version": BOOK_PLAN_SCHEMA_VERSION,
+    }
+
+
 
 def _default_document(
     context: ProjectContext,
@@ -478,6 +661,8 @@ def _normalize_existing_document(
     context: ProjectContext,
     manifest: dict[str, Any],
     stored: Any,
+    *,
+    migration_stats: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     if not isinstance(stored, dict):
         raise BookPlanContractError(
@@ -485,9 +670,14 @@ def _normalize_existing_document(
         )
 
     expected_book_count = int(manifest.get("book_count") or 0)
+    source_schema = str(stored.get("schema_version") or LEGACY_BOOK_PLAN_SCHEMA_VERSION)
     normalized_books = _normalize_books(
+        context,
         stored.get("books") or [],
         expected_book_count,
+        strict_new=False,
+        legacy_mode=source_schema != BOOK_PLAN_SCHEMA_VERSION,
+        migration_stats=migration_stats,
     )
     document = {
         "schema_version": BOOK_PLAN_SCHEMA_VERSION,
@@ -521,8 +711,13 @@ def _normalize_existing_document(
 
 
 def _normalize_books(
+    context: ProjectContext,
     books: list[Any],
     expected_book_count: int,
+    *,
+    strict_new: bool,
+    legacy_mode: bool = False,
+    migration_stats: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     by_number: dict[int, dict[str, Any]] = {}
 
@@ -555,7 +750,17 @@ def _normalize_books(
             raw.get("handoff_to_next_book")
         )
         normalized["notes"] = _clean_text(raw.get("notes"))
-        for field in BOOK_LIST_FIELDS:
+        for field, group_id in BOOK_REFERENCE_FIELDS.items():
+            normalized[field] = _normalize_reference_list(
+                context,
+                raw.get(field),
+                field=field,
+                record_group_id=group_id,
+                strict_new=strict_new,
+                legacy_mode=legacy_mode,
+                migration_stats=migration_stats,
+            )
+        for field in BOOK_TEXT_LIST_FIELDS:
             normalized[field] = _clean_string_list(raw.get(field))
         by_number[book_number] = normalized
 
@@ -566,6 +771,7 @@ def _normalize_books(
 
 
 def _validate_plan(
+    context: ProjectContext,
     plan: dict[str, Any],
     expected_book_count: int,
 ) -> dict[str, Any]:
@@ -613,11 +819,19 @@ def _validate_plan(
                 }
             )
 
+        reference_issues = _validate_book_references(
+            context,
+            book,
+            book_number=book_number,
+        )
+        issues.extend(reference_issues)
+
         per_book.append(
             {
                 "book_number": book_number,
-                "complete": complete,
+                "complete": complete and not reference_issues,
                 "missing_fields": missing,
+                "reference_issue_count": len(reference_issues),
             }
         )
 
@@ -625,6 +839,7 @@ def _validate_plan(
         expected_book_count > 0
         and len(books) == expected_book_count
         and complete_count == expected_book_count
+        and not issues
     )
     return {
         "valid": valid,
@@ -719,6 +934,243 @@ def _clean_string_list(value: Any) -> list[str]:
         if text and text not in cleaned:
             cleaned.append(text)
     return cleaned
+
+
+
+def _normalize_reference_list(
+    context: ProjectContext,
+    value: Any,
+    *,
+    field: str,
+    record_group_id: str,
+    strict_new: bool,
+    legacy_mode: bool,
+    migration_stats: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
+    if value is None:
+        return []
+    if not isinstance(value, list):
+        raise BookPlanContractError(f"{field} must be an array.")
+
+    normalized: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for item in value:
+        ref = _normalize_reference_value(
+            context,
+            item,
+            field=field,
+            record_group_id=record_group_id,
+            strict_new=strict_new,
+            legacy_mode=legacy_mode,
+            migration_stats=migration_stats,
+        )
+        identity = str(ref.get("record_id") or "")
+        if not identity:
+            identity = "legacy:" + str(ref.get("legacy_label") or "").casefold()
+        if identity and identity not in seen:
+            normalized.append(ref)
+            seen.add(identity)
+    return normalized
+
+
+def _normalize_reference_value(
+    context: ProjectContext,
+    value: Any,
+    *,
+    field: str,
+    record_group_id: str,
+    strict_new: bool,
+    legacy_mode: bool,
+    migration_stats: dict[str, Any] | None,
+) -> dict[str, Any]:
+    if isinstance(value, dict):
+        record_id = _clean_text(value.get("record_id"))
+        if record_id:
+            found = canon_index_service.get_record_by_id(
+                context.project_id,
+                record_id,
+            )
+            record = found.get("record") if found.get("status") == "found" else None
+            if not record:
+                if strict_new:
+                    raise BookPlanReferenceConflictError(
+                        f"{field} references unknown Canon ID {record_id}."
+                    )
+                return {
+                    "record_id": record_id,
+                    "record_type": _clean_text(value.get("record_type")),
+                    "label": _clean_text(value.get("label")),
+                    "resolution_status": "missing",
+                }
+            if str(record.get("record_group_id") or "") != record_group_id:
+                raise BookPlanReferenceConflictError(
+                    f"{field} reference {record_id} is not a {record_group_id} record."
+                )
+            return {
+                "record_id": record_id,
+                "record_type": str(record.get("record_type") or ""),
+                "label": str(record.get("display_label") or record_id),
+                "resolution_status": "resolved",
+            }
+
+        legacy_label = _clean_text(
+            value.get("legacy_label") or value.get("label")
+        )
+        if legacy_label and not strict_new:
+            return {
+                "legacy_label": legacy_label,
+                "record_type": _clean_text(value.get("record_type")),
+                "resolution_status": "unresolved",
+            }
+        value = legacy_label
+
+    label = _clean_text(value)
+    if not label:
+        raise BookPlanReferenceConflictError(
+            f"{field} contains an empty Canon reference."
+        )
+
+    resolution = canon_index_service.resolve_record_key(
+        context.project_id,
+        label,
+        record_group_id=record_group_id,
+    )
+    candidates = list(resolution.get("candidates") or [])
+    if resolution.get("status") == "unique" and len(candidates) == 1:
+        record = candidates[0]
+        if migration_stats is not None and legacy_mode:
+            migration_stats["resolved_count"] = (
+                int(migration_stats.get("resolved_count") or 0) + 1
+            )
+        return {
+            "record_id": str(record.get("internal_id") or ""),
+            "record_type": str(record.get("record_type") or ""),
+            "label": str(record.get("display_label") or label),
+            "resolution_status": "resolved",
+        }
+
+    if strict_new:
+        raise BookPlanReferenceConflictError(
+            f"{field} value {label!r} is {resolution.get('status')}; "
+            "select one exact Canon record."
+        )
+
+    if migration_stats is not None and legacy_mode:
+        migration_stats["unresolved_count"] = (
+            int(migration_stats.get("unresolved_count") or 0) + 1
+        )
+        migration_stats.setdefault("unresolved", []).append(
+            {
+                "field": field,
+                "legacy_label": label,
+                "resolution_status": str(resolution.get("status") or "missing"),
+                "candidate_ids": [
+                    str(candidate.get("internal_id") or "")
+                    for candidate in candidates
+                ],
+            }
+        )
+    return {
+        "legacy_label": label,
+        "record_type": "",
+        "resolution_status": str(resolution.get("status") or "missing"),
+    }
+
+
+def _validate_book_references(
+    context: ProjectContext,
+    book: dict[str, Any],
+    *,
+    book_number: int,
+) -> list[dict[str, Any]]:
+    issues: list[dict[str, Any]] = []
+    referenced_ids: list[tuple[str, str]] = []
+
+    for field in BOOK_REFERENCE_FIELDS:
+        for ref in book.get(field) or []:
+            record_id = _clean_text(ref.get("record_id")) if isinstance(ref, dict) else ""
+            if not record_id:
+                issues.append(
+                    {
+                        "code": "unresolved_book_plan_reference",
+                        "book_number": book_number,
+                        "field": field,
+                        "legacy_label": (
+                            _clean_text(ref.get("legacy_label"))
+                            if isinstance(ref, dict)
+                            else _clean_text(ref)
+                        ),
+                        "message": (
+                            f"Book {book_number} {field} contains an unresolved "
+                            "legacy Canon reference."
+                        ),
+                    }
+                )
+                continue
+            referenced_ids.append((field, record_id))
+
+    if not referenced_ids:
+        return issues
+
+    scope = book_scope_service.get_book_scope_for_context(
+        context,
+        project_loader.load_manifest(context.project_id).to_dict(),
+    )
+    scope_book = next(
+        (
+            item
+            for item in scope["document"]["books"]
+            if int(item.get("book_number") or 0) == book_number
+        ),
+        None,
+    )
+    if not scope_book:
+        issues.append(
+            {
+                "code": "book_scope_missing",
+                "book_number": book_number,
+                "message": f"Book {book_number} has no Book Scope state.",
+            }
+        )
+        return issues
+
+    approved = (
+        scope_book.get("approval_status") == book_scope_service.APPROVAL_APPROVED
+        and scope_book.get("approval_fresh") is True
+    )
+    selected_ids = {
+        str(item.get("record_id") or "")
+        for item in scope_book.get("selections") or []
+        if item.get("record_id")
+    }
+    if not approved:
+        issues.append(
+            {
+                "code": "book_scope_not_approved",
+                "book_number": book_number,
+                "message": (
+                    f"Book {book_number} Book Scope must be approved and current "
+                    "before reference-backed Book Plan requirements are valid."
+                ),
+            }
+        )
+
+    for field, record_id in referenced_ids:
+        if record_id not in selected_ids:
+            issues.append(
+                {
+                    "code": "book_scope_dependency_conflict",
+                    "book_number": book_number,
+                    "field": field,
+                    "record_id": record_id,
+                    "message": (
+                        f"Book {book_number} {field} references {record_id}, "
+                        "which is not selected in Canon for This Book."
+                    ),
+                }
+            )
+    return issues
+
 
 
 def _book_plan_path(context: ProjectContext) -> Path:

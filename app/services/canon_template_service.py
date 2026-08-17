@@ -18,7 +18,7 @@ from app.templates.template_registry import list_templates, normalize_template_i
 
 
 CANON_TEMPLATE_SERVICE_MARKER = "project-canon-template-questionnaire-boundary-20260715"
-CANON_TEMPLATE_SERVICE_VERSION = "project_canon_authoring_schema_v3_planning_interface"
+CANON_TEMPLATE_SERVICE_VERSION = "project_canon_authoring_schema_v4_reference_hardening"
 
 FIELD_SHORT_TEXT = "short_text"
 FIELD_LONG_TEXT = "long_text"
@@ -27,6 +27,8 @@ FIELD_SELECT = "select"
 FIELD_MULTI_SELECT = "multi_select"
 FIELD_BOOLEAN = "boolean"
 FIELD_RECORD_LIST = "record_list"
+FIELD_RECORD_REF = "record_ref"
+FIELD_RECORD_REF_LIST = "record_ref_list"
 
 STORY_CODE_HELP = (
     "Give this item a short code or nickname that is easy for you to recognize while planning, such as "
@@ -316,6 +318,7 @@ def _field(
     author_hidden: bool = False,
     migration_reconciliation: bool = False,
     migration_existing_optional: bool = False,
+    reference_targets: list[str] | None = None,
 ) -> dict[str, Any]:
     payload: dict[str, Any] = {
         "field_id": field_id,
@@ -335,6 +338,8 @@ def _field(
         payload["migration_reconciliation"] = True
     if migration_existing_optional:
         payload["migration_existing_optional"] = True
+    if reference_targets:
+        payload["reference_targets"] = list(reference_targets)
     return payload
 
 
@@ -421,8 +426,22 @@ _BASE_QUESTIONNAIRE: dict[str, Any] = {
                         _field("region", "Region", FIELD_SHORT_TEXT, required=False),
                         _field("description", "Description", FIELD_RICH_TEXT),
                         _field("rules", "Location rules", FIELD_RICH_TEXT, required=False),
-                        _field("associated_characters", "Associated characters", FIELD_LONG_TEXT, required=False),
-                        _field("associated_events", "Associated events", FIELD_LONG_TEXT, required=False),
+                        _field(
+                            "associated_characters",
+                            "Associated characters",
+                            FIELD_RECORD_REF_LIST,
+                            required=False,
+                            reference_targets=["characters"],
+                            help_text="Select the Canon characters directly associated with this location.",
+                        ),
+                        _field(
+                            "associated_events",
+                            "Associated events",
+                            FIELD_RECORD_REF_LIST,
+                            required=False,
+                            reference_targets=["events"],
+                            help_text="Select the Canon events directly associated with this location.",
+                        ),
                         _field("sensory_details", "Sensory details", FIELD_RICH_TEXT, required=False),
                         _field("continuity_notes", "Continuity notes", FIELD_RICH_TEXT),
                     ],
@@ -511,7 +530,14 @@ _BASE_QUESTIONNAIRE: dict[str, Any] = {
                         ),
                         _field("book", "Book / installment", FIELD_SHORT_TEXT, required=False),
                         _field("location", "Location", FIELD_SHORT_TEXT, required=False),
-                        _field("characters_present", "Characters present", FIELD_LONG_TEXT, required=False),
+                        _field(
+                            "characters_present",
+                            "Characters present",
+                            FIELD_RECORD_REF_LIST,
+                            required=False,
+                            reference_targets=["characters"],
+                            help_text="Select the Canon characters present for this event.",
+                        ),
                         _field("event_summary", "Event summary", FIELD_RICH_TEXT),
                         _field("cause", "Cause", FIELD_RICH_TEXT, required=False),
                         _field("effect", "Effect", FIELD_RICH_TEXT, required=False),
@@ -567,7 +593,13 @@ _GENRE_QUESTIONNAIRES: dict[str, dict[str, Any]] = {
                         "interactions",
                         "Allowed Historical Interactions",
                         [
-                            _field("fictional_character", "Fictional character", FIELD_SHORT_TEXT),
+                            _field(
+                                "fictional_character",
+                                "Fictional character(s)",
+                                FIELD_RECORD_REF_LIST,
+                                reference_targets=["characters"],
+                                help_text="Select the Canon fictional character or characters governed by this historical interaction.",
+                            ),
                             _field("historical_figure", "Historical figure", FIELD_SHORT_TEXT),
                             _field("date_or_period", "Date or period", FIELD_SHORT_TEXT),
                             _field("interaction_type", "Interaction type", FIELD_SHORT_TEXT),

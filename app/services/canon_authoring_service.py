@@ -18,7 +18,7 @@ from typing import Any
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
-from app.services import canon_record_identity_service, canon_template_service, project_canon_service
+from app.services import canon_record_identity_service, canon_reference_service, canon_template_service, project_canon_service
 
 
 CANON_AUTHORING_SERVICE_MARKER = "project-canon-authoring-workflow-boundary-20260715"
@@ -34,6 +34,7 @@ class CanonSectionIncompleteError(ValueError):
 
 
 CanonRecordIdentityConflictError = canon_record_identity_service.CanonRecordIdentityConflictError
+CanonReferenceConflictError = canon_reference_service.CanonReferenceConflictError
 
 
 def get_canon_authoring_status(project_id: str) -> dict[str, Any]:
@@ -133,6 +134,7 @@ def get_canon_section_for_context(
             "data": deepcopy(stored_section),
             "completion": deepcopy(completion_record),
         },
+        "reference_catalog": canon_reference_service.build_reference_catalog(author_canon, schema),
         "execution_locks": _execution_locks(),
     }
 
@@ -176,6 +178,13 @@ def save_canon_section_draft_for_context(
         canonical_section_id,
         author_canon,
         cleaned_records,
+    )
+    normalized_records = canon_reference_service.normalize_section_references_for_save(
+        section_id=canonical_section_id,
+        section_schema=section_schema,
+        submitted_records=normalized_records,
+        author_canon=author_canon,
+        schema=schema,
     )
     normalized_section = {
         "section_id": canonical_section_id,

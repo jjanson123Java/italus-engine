@@ -21,7 +21,7 @@ import re
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
-from app.services import canon_record_identity_service, canon_template_service, project_canon_service
+from app.services import canon_record_identity_service, canon_reference_service, canon_template_service, project_canon_service
 
 
 CANON_MARKDOWN_RENDERER_SERVICE_MARKER = "project-canon-markdown-renderer-boundary-20260715"
@@ -154,6 +154,7 @@ def markdown_source_freshness(
             schema=schema,
             section_schema=section_schema,
             stored_section=stored_section,
+            reference_catalog={},
             rendered_at=rendered_at,
             source_content_hash=None,
         )
@@ -262,6 +263,7 @@ def render_completed_canon_sources_for_context(
 
     author_canon = _load_author_canon_for_context(context)
     completion = _load_completion_for_context(context)
+    reference_catalog = canon_reference_service.build_reference_catalog(author_canon, schema)
     output_dir = canon_sources_dir_for_context(context, create=True)
 
     rendered_files: list[dict[str, Any]] = []
@@ -288,7 +290,9 @@ def render_completed_canon_sources_for_context(
             schema=schema,
             section_schema=section_schema,
             stored_section=stored_section,
+            reference_catalog=reference_catalog,
             rendered_at=utc_now_iso(),
+            source_content_hash=None,
         )
         filename = _section_filename(index, section_id)
         path = output_dir / filename
@@ -349,11 +353,13 @@ def render_section_markdown_for_context(
 
     stored_section = _stored_section(author_canon, canonical_section_id)
     source_content_hash = canon_section_content_hash(stored_section)
+    reference_catalog = canon_reference_service.build_reference_catalog(author_canon, schema)
     markdown = _render_markdown_document(
         manifest=manifest,
         schema=schema,
         section_schema=section_schema,
         stored_section=stored_section,
+        reference_catalog=reference_catalog,
         rendered_at=utc_now_iso(),
         source_content_hash=source_content_hash,
     )
@@ -552,6 +558,7 @@ def _render_markdown_document(
     schema: dict[str, Any],
     section_schema: dict[str, Any],
     stored_section: dict[str, Any],
+    reference_catalog: dict[str, list[dict[str, str]]],
     rendered_at: str,
     source_content_hash: str | None,
 ) -> str:
@@ -604,7 +611,7 @@ def _render_markdown_document(
         lines.extend(["## Records", ""])
         stored_records = stored_section.get("records") if isinstance(stored_section.get("records"), dict) else {}
         for record_schema in records:
-            lines.extend(_render_record_group(record_schema, stored_records))
+            lines.extend(_render_record_group(record_schema, stored_records, reference_catalog))
     else:
         lines.extend(["## Records", "", "No record groups defined for this section.", ""])
 
@@ -641,7 +648,11 @@ def _render_field(label: str, value: Any) -> list[str]:
     return lines
 
 
-def _render_record_group(record_schema: dict[str, Any], stored_records: dict[str, Any]) -> list[str]:
+def _render_record_group(
+    record_schema: dict[str, Any],
+    stored_records: dict[str, Any],
+    reference_catalog: dict[str, list[dict[str, str]]],
+) -> list[str]:
     record_id = str(record_schema.get("record_id") or "").strip()
     label = _clean_scalar(record_schema.get("label")) or record_id or "Record Group"
     rows = stored_records.get(record_id) if isinstance(stored_records, dict) else []
@@ -654,10 +665,10 @@ def _render_record_group(record_schema: dict[str, Any], stored_records: dict[str
         return lines
 
     field_schemas = record_schema.get("fields") if isinstance(record_schema.get("fields"), list) else []
-    field_labels = {
-        str(field.get("field_id") or ""): _clean_scalar(field.get("label")) or str(field.get("field_id") or "")
+    visible_fields = {
+        str(field.get("field_id") or ""): field
         for field in field_schemas
-        if not field.get("author_hidden")
+        if not field.get("author_hidden") and field.get("field_id")
     }
 
     for index, row in enumerate(rows, start=1):
@@ -665,12 +676,17 @@ def _render_record_group(record_schema: dict[str, Any], stored_records: dict[str
         if not isinstance(row, dict):
             lines.extend([_markdown_text(_clean_scalar(row)), ""])
             continue
-        for field_id, field_label in field_labels.items():
-            if not field_id:
-                continue
-            lines.extend(_render_record_field(field_label, row.get(field_id)))
+        for field_id, field_schema in visible_fields.items():
+            field_label = _clean_scalar(field_schema.get("label")) or field_id
+            value = row.get(field_id)
+            if field_schema.get("field_type") in canon_reference_service.REFERENCE_FIELD_TYPES:
+                value = canon_reference_service.resolve_reference_display(
+                    value,
+                    field_schema=field_schema,
+                    catalog=reference_catalog,
+                )
+            lines.extend(_render_record_field(field_label, value))
     return lines
-
 
 def _render_record_field(label: str, value: Any) -> list[str]:
     if _is_blank(value):

@@ -311,6 +311,15 @@ and saved in place with PATCH /api/project/{id}.
       const lifecycle = manifest.lifecycle_state;
 
       if (lifecycle === 'READY_FOR_WORKSPACE' || lifecycle === 'ACTIVE') {
+        const migration = await apiFetch(
+          `/api/project/${encodeURIComponent(projectId)}/canon/template-migration`
+        );
+        if (migration.migration_required || migration.persistence_conflict) {
+          enterEditMode(project);
+          await openCanonSetup(projectId);
+          return;
+        }
+
         window.location.href = `/workspace?project_id=${encodeURIComponent(projectId)}`;
         return;
       }

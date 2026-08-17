@@ -19,6 +19,9 @@ from app.services import (
     canon_packet_service,
     book_plan_service,
     book_knowledge_pack_service,
+    book_scope_service,
+    chapter_plan_service,
+    story_control_service,
     project_runtime_storage_service,
 )
 from app.projects.project_manifest import (
@@ -63,6 +66,9 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
             manifest.to_dict(),
         )
     )
+    book_scope_status = book_scope_service.get_book_scope_status(project_id)
+    chapter_plan_status = chapter_plan_service.get_chapter_plan_status(project_id)
+    story_control_status = story_control_service.get_story_control_status(project_id)
     author_canon_status = canon_authoring_service.get_canon_authoring_status_for_context(
         context,
         manifest.to_dict(),
@@ -120,6 +126,17 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
                 "approval_status": "not_available",
                 "review_enabled": True,
             },
+            "book_scope": {
+                **book_scope_status,
+                "enabled": True,
+                "authoring_enabled": not read_only,
+                "review_enabled": True,
+                "message": (
+                    "Canon for This Book is available in the Planner."
+                    if not read_only
+                    else "Archived projects expose Canon for This Book as read-only."
+                ),
+            },
             "book_plan": {
                 **book_plan_status,
                 "enabled": not read_only,
@@ -135,6 +152,28 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
                     else "Archived projects expose the Book Plan as read-only."
                 ),
             },
+            "chapter_plan": {
+                **chapter_plan_status,
+                "enabled": not read_only,
+                "authoring_enabled": not read_only,
+                "review_enabled": True,
+                "message": (
+                    "Lightweight Chapter Planner and Event Board are available."
+                    if not read_only
+                    else "Archived projects expose Chapter Plans as read-only."
+                ),
+            },
+            "story_controls": {
+                **story_control_status,
+                "enabled": not read_only,
+                "authoring_enabled": not read_only,
+                "review_enabled": True,
+                "message": (
+                    "Story Controls are available inside Chapter Planner."
+                    if not read_only
+                    else "Archived projects expose Story Controls as read-only."
+                ),
+            },
             "books": {
                 **book_runtime_context_status,
                 "enabled": True,
@@ -146,9 +185,8 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
                     )
                 ),
                 "message": (
-                    "Book Runtime Context review is available. Compilation "
-                    "requires a current approved Book Plan and an existing "
-                    "Project Runtime Context."
+                    "Book Runtime Context v2 review is available. Compilation "
+                    "requires current approved Book Canon and Book Plan state."
                 ),
             },
         },
@@ -500,12 +538,30 @@ def _workspace_menu(lifecycle_state: str, read_only: bool) -> list[dict[str, Any
                 ),
                 (
                     _disabled_item(
+                        "book_canon",
+                        "Canon for This Book",
+                        "Archived projects expose Canon for This Book as read-only.",
+                    )
+                    if read_only
+                    else _enabled_item("book_canon", "Canon for This Book")
+                ),
+                (
+                    _disabled_item(
                         "book_plan",
                         "Book Plan",
                         "Archived projects expose the Book Plan as read-only.",
                     )
                     if read_only
                     else _enabled_item("book_plan", "Book Plan")
+                ),
+                (
+                    _disabled_item(
+                        "chapter_planner",
+                        "Chapter Planner",
+                        "Archived projects expose Chapter Plans as read-only.",
+                    )
+                    if read_only
+                    else _enabled_item("chapter_planner", "Chapter Planner")
                 ),
                 _enabled_item(
                     "book_runtime_context",

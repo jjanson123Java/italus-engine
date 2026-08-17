@@ -340,6 +340,29 @@ write runtime memory, or unlock generation.
       `;
     }
 
+    if (migration.persistence_conflict) {
+      const persistence = migration.persistence || {};
+      return `
+        <article class="canon-group-card" data-status="BLOCKED" data-canon-template-migration-panel>
+          <header>
+            <div>
+              <h3>Canon Template Persistence Error</h3>
+              <p class="canon-file-missing">The template version appears current, but required Patch 15 migration artifacts are missing or invalid.</p>
+            </div>
+            <span>BLOCKED</span>
+          </header>
+          <p class="setup-note">
+            Persistence verification failed. Do not continue Canon editing or begin the next migration patch.
+          </p>
+          <p class="setup-note">
+            Snapshot: ${persistence.snapshot_verified ? 'verified' : 'missing / invalid'} ·
+            Migration report: ${persistence.template_report_verified ? 'verified' : 'missing / invalid'} ·
+            Reference report: ${persistence.reference_report_verified ? 'verified' : 'missing / invalid'}
+          </p>
+        </article>
+      `;
+    }
+
     if (migration.migration_required) {
       return `
         <article class="canon-group-card" data-status="UPDATE_REQUIRED" data-canon-template-migration-panel>
@@ -352,8 +375,8 @@ write runtime memory, or unlock generation.
           </header>
           <p class="setup-note">
             ${escapeHtml(currentVersion)} → ${escapeHtml(activeVersion)}.
-            The upgrade changes schema/interface metadata only, preserves author-entered canon values,
-            and never guesses story meaning.
+            The upgrade preserves author-owned story meaning, converts only exact deterministic relationships
+            to stable Canon references, and reports anything that cannot be resolved safely.
           </p>
           <button type="button" data-canon-migrate-template>Upgrade Canon Template</button>
         </article>
@@ -366,12 +389,12 @@ write runtime memory, or unlock generation.
           <header>
             <div>
               <h3>Canon Template</h3>
-              <p class="setup-note">Project-local template is current.</p>
+              <p class="setup-note">Project-local template is current and persisted migration state is verified.</p>
             </div>
             <span>CURRENT</span>
           </header>
           <p class="setup-note">
-            ${number(reconciliationCount)} optional author-owned planning value${reconciliationCount === 1 ? '' : 's'}
+            ${number(reconciliationCount)} author-owned value${reconciliationCount === 1 ? '' : 's'}
             remain available for reconciliation. Italus did not infer them.
           </p>
         </article>
@@ -491,7 +514,42 @@ write runtime memory, or unlock generation.
     `;
   }
 
-  function recordFieldInputHtml(recordId, index, field, value) {
+  function referenceOptionsForField(field, referenceCatalog) {
+    const targets = Array.isArray(field.reference_targets) ? field.reference_targets : [];
+    const catalog = referenceCatalog && typeof referenceCatalog === 'object' ? referenceCatalog : {};
+    const seen = new Set();
+    const options = [];
+
+    targets.forEach((target) => {
+      const rows = Array.isArray(catalog[target]) ? catalog[target] : [];
+      rows.forEach((row) => {
+        const recordId = String((row && row.record_id) || '').trim();
+        if (!recordId || seen.has(recordId)) return;
+        seen.add(recordId);
+        options.push({
+          record_id: recordId,
+          label: String((row && row.label) || 'Canon record')
+        });
+      });
+    });
+
+    return options;
+  }
+
+  function legacyReferenceWarningHtml(values) {
+    const legacy = (Array.isArray(values) ? values : [values])
+      .map((value) => String(value || '').trim())
+      .filter(Boolean);
+    if (!legacy.length) return '';
+    return `
+      <p class="canon-file-missing">
+        Unresolved legacy relationship: ${legacy.map(escapeHtml).join(', ')}.
+        Select the intended Canon record when you are ready to reconcile it.
+      </p>
+    `;
+  }
+
+  function recordFieldInputHtml(recordId, index, field, value, referenceCatalog) {
     const fieldId = field.field_id || '';
     const type = field.field_type || 'long_text';
     const help = field.help_text ? `<p class="setup-note">${escapeHtml(field.help_text)}</p>` : '';
@@ -499,6 +557,56 @@ write runtime memory, or unlock generation.
 
     if (field.author_hidden) {
       return `<input type="hidden" ${dataAttrs} value="${escapeHtml(value || '')}">`;
+    }
+
+    if (type === 'record_ref') {
+      const options = referenceOptionsForField(field, referenceCatalog);
+      const current = String(value || '').trim();
+      const knownIds = new Set(options.map((option) => option.record_id));
+      const legacyValues = current && !knownIds.has(current) ? [current] : [];
+
+      return `
+        <label class="canon-field-row">
+          <span>${fieldLabelHtml(field)}</span>
+          <select ${dataAttrs} data-canon-reference-selector>
+            <option value="">Select Canon record...</option>
+            ${legacyValues.map((legacy) => `
+              <option value="${escapeHtml(legacy)}" selected>Unresolved legacy: ${escapeHtml(legacy)}</option>
+            `).join('')}
+            ${options.map((option) => `
+              <option value="${escapeHtml(option.record_id)}" ${current === option.record_id ? 'selected' : ''}>${escapeHtml(option.label)}</option>
+            `).join('')}
+          </select>
+        </label>
+        ${legacyReferenceWarningHtml(legacyValues)}
+        ${help}
+      `;
+    }
+
+    if (type === 'record_ref_list') {
+      const options = referenceOptionsForField(field, referenceCatalog);
+      const selected = (Array.isArray(value) ? value : (value ? [value] : []))
+        .map((item) => String(item || '').trim())
+        .filter(Boolean);
+      const knownIds = new Set(options.map((option) => option.record_id));
+      const legacyValues = selected.filter((item) => !knownIds.has(item));
+      const size = Math.max(3, Math.min(8, options.length + legacyValues.length || 3));
+
+      return `
+        <label class="canon-field-row">
+          <span>${fieldLabelHtml(field)}</span>
+          <select ${dataAttrs} data-canon-reference-selector multiple size="${size}">
+            ${legacyValues.map((legacy) => `
+              <option value="${escapeHtml(legacy)}" selected>Unresolved legacy: ${escapeHtml(legacy)}</option>
+            `).join('')}
+            ${options.map((option) => `
+              <option value="${escapeHtml(option.record_id)}" ${selected.includes(option.record_id) ? 'selected' : ''}>${escapeHtml(option.label)}</option>
+            `).join('')}
+          </select>
+        </label>
+        ${legacyReferenceWarningHtml(legacyValues)}
+        ${help}
+      `;
     }
 
     if (type === 'boolean') {
@@ -546,7 +654,7 @@ write runtime memory, or unlock generation.
     `;
   }
 
-  function renderRecordGroup(record, storedItems) {
+  function renderRecordGroup(record, storedItems, referenceCatalog) {
     const recordId = record.record_id || '';
     const items = Array.isArray(storedItems) && storedItems.length ? storedItems : [{}];
     const fields = Array.isArray(record.fields) ? record.fields : [];
@@ -568,15 +676,15 @@ write runtime memory, or unlock generation.
                 <strong>${escapeHtml(record.label || 'Record')} ${number(index + 1)}</strong>
                 <button type="button" class="secondary" data-canon-remove-record="${escapeHtml(recordId)}" data-canon-record-index="${escapeHtml(index)}">Remove</button>
               </header>
-              ${hiddenFields.map((field) => recordFieldInputHtml(recordId, index, field, item ? item[field.field_id] : '')).join('')}
-              ${standardFields.map((field) => recordFieldInputHtml(recordId, index, field, item ? item[field.field_id] : '')).join('')}
+              ${hiddenFields.map((field) => recordFieldInputHtml(recordId, index, field, item ? item[field.field_id] : '', referenceCatalog)).join('')}
+              ${standardFields.map((field) => recordFieldInputHtml(recordId, index, field, item ? item[field.field_id] : '', referenceCatalog)).join('')}
               ${planningFields.length
                 ? `<details class="canon-planning-fields">
                     <summary>Advanced / Planning</summary>
                     <p class="canon-planning-instructions">Use the fields below to guide when and how this canon item can enter your story planning. Complete only the fields that apply to this item. Leave any field blank until you are ready to make that planning decision.</p>
                     ${planningFields.map((field) => `
                       <div class="canon-planning-field-block">
-                        ${recordFieldInputHtml(recordId, index, field, item ? item[field.field_id] : '')}
+                        ${recordFieldInputHtml(recordId, index, field, item ? item[field.field_id] : '', referenceCatalog)}
                       </div>
                     `).join('')}
                   </details>`
@@ -615,6 +723,9 @@ write runtime memory, or unlock generation.
     const records = data.records && typeof data.records === 'object' ? data.records : {};
     const fields = Array.isArray(schema.fields) ? schema.fields : [];
     const recordGroups = Array.isArray(schema.records) ? schema.records : [];
+    const referenceCatalog = payload.reference_catalog && typeof payload.reference_catalog === 'object'
+      ? payload.reference_catalog
+      : {};
     const missing = Array.isArray(completion.missing_required_fields) ? completion.missing_required_fields : [];
     const status = normalizeStatus(completion.status || data.status);
 
@@ -632,7 +743,7 @@ write runtime memory, or unlock generation.
       <form data-canon-section-form="${escapeHtml(schema.section_id || '')}">
         <input type="hidden" data-canon-current-section value="${escapeHtml(schema.section_id || '')}">
         ${fields.map((field) => fieldInputHtml(field, answers[field.field_id])).join('')}
-        ${recordGroups.map((record) => renderRecordGroup(record, records[record.record_id])).join('')}
+        ${recordGroups.map((record) => renderRecordGroup(record, records[record.record_id], referenceCatalog)).join('')}
         <p class="setup-note canon-section-workflow-note">
           Save Draft keeps the section editable. Mark Complete approves it. Render Section Markdown creates the derived validation source.
         </p>
@@ -739,6 +850,8 @@ write runtime memory, or unlock generation.
 
       if (field instanceof HTMLInputElement && field.type === 'checkbox') {
         records[recordId][index][fieldId] = field.checked;
+      } else if (field instanceof HTMLSelectElement && field.multiple) {
+        records[recordId][index][fieldId] = Array.from(field.selectedOptions).map((option) => option.value);
       } else {
         records[recordId][index][fieldId] = field.value || '';
       }
@@ -768,6 +881,10 @@ write runtime memory, or unlock generation.
     clone.querySelectorAll('input, textarea, select').forEach((field) => {
       if (field instanceof HTMLInputElement && field.type === 'checkbox') {
         field.checked = false;
+      } else if (field instanceof HTMLSelectElement && field.multiple) {
+        Array.from(field.options).forEach((option) => {
+          option.selected = false;
+        });
       } else {
         field.value = '';
       }
@@ -879,6 +996,9 @@ write runtime memory, or unlock generation.
         if (migrationButton) {
           const result = await migrateCanonTemplate(state.projectId);
           const migration = result.migration || {};
+          if (migration.persistence_verified !== true) {
+            throw new Error('Canon template migration did not verify persisted project state.');
+          }
           const reconciliationCount = Number(migration.reconciliation_required_count || 0);
           state.selectedSectionId = null;
           state.lastSection = null;
