@@ -21,6 +21,7 @@ from copy import deepcopy
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import time
 from typing import Any
@@ -67,6 +68,28 @@ EVENT_RELATIONSHIP_TYPES = frozenset(
         "alternate_perspective",
         "caused_by",
         "consequence_of",
+        "occurs_during",
+        "immediately_after",
+        "discusses",
+        "reaction_to",
+        "hears_report_of",
+        "remembers",
+    }
+)
+
+CHAPTER_EVENT_ROLE_VALUES = frozenset(
+    {
+        "opening",
+        "historical_anchor",
+        "setup",
+        "escalation",
+        "reaction",
+        "discussion",
+        "investigation",
+        "reveal",
+        "consequence",
+        "transition",
+        "closing_beat",
     }
 )
 
@@ -124,6 +147,7 @@ def get_chapter_plan_contract() -> dict[str, Any]:
         },
         "placement_positions": sorted(PLACEMENT_POSITIONS),
         "event_relationship_types": sorted(EVENT_RELATIONSHIP_TYPES),
+        "chapter_event_role_values": sorted(CHAPTER_EVENT_ROLE_VALUES),
         "dependencies": {
             "book_scope": "selected references must be in Canon for This Book",
             "book_plan": "revision/hash snapshotted; approval is a readiness gate",
@@ -236,27 +260,62 @@ def get_chapter(
     book_number: int,
     chapter_number: int,
 ) -> dict[str, Any]:
-    result = get_chapter_plan(project_id)
-    manifest = project_loader.load_manifest(project_id).to_dict()
+    """Return one decorated chapter without decorating every chapter in the project."""
+
+    manifest_obj = project_loader.load_manifest(project_id)
+    context = build_project_context(manifest_obj)
+    return get_chapter_for_context(
+        context,
+        manifest_obj.to_dict(),
+        book_number=book_number,
+        chapter_number=chapter_number,
+    )
+
+
+def get_chapter_for_context(
+    context: ProjectContext,
+    manifest: dict[str, Any],
+    *,
+    book_number: int,
+    chapter_number: int,
+) -> dict[str, Any]:
+    """Request-scoped single-chapter read used by Planner and Pack services.
+
+    The older get_chapter() path called get_chapter_plan(), which decorated every
+    chapter before returning one chapter. That multiplied Book Scope / Book Plan
+    dependency checks by the whole project size. This path normalizes the stored
+    document once and decorates only the requested chapter.
+    """
+
     _validate_position(manifest, book_number, chapter_number)
-    book = _book_by_number(result["document"]["books"], book_number)
+    path = chapter_plan_path_for_context(context)
+    exists = path.exists()
+    if exists:
+        stored = project_loader.read_json(path)
+        document = _normalize_existing_document(context, manifest, stored)
+    else:
+        document = _default_document(context, manifest)
+
+    book = _book_by_number(document["books"], book_number)
     chapter = _chapter_by_number(book["chapters"], chapter_number)
     if chapter is None:
-        chapter = _decorate_chapter(
-            build_project_context(project_loader.load_manifest(project_id)),
-            manifest,
-            book_number=book_number,
-            chapter=_empty_chapter(book_number, chapter_number),
-            exists=result["exists"],
-        )
+        chapter = _empty_chapter(book_number, chapter_number)
+
+    decorated = _decorate_chapter(
+        context,
+        manifest,
+        book_number=book_number,
+        chapter=chapter,
+        exists=exists,
+    )
     return {
         "status": "ok",
         "service": CHAPTER_PLAN_SERVICE_MARKER,
         "schema_version": CHAPTER_PLAN_SCHEMA_VERSION,
-        "project_id": project_id,
+        "project_id": context.project_id,
         "book_number": book_number,
         "chapter_number": chapter_number,
-        "chapter": chapter,
+        "chapter": decorated,
         "execution_locks": _execution_locks(),
     }
 
@@ -437,9 +496,22 @@ def get_event_candidates(
     context = build_project_context(manifest_obj)
     _validate_position(manifest, book_number, chapter_number)
 
+    index_status = canon_index_service.ensure_current_index(project_id)
+    eligibility_rows = canon_index_service.list_records_current(
+        project_id,
+        limit=10000,
+    )["results"]
+    eligibility_context = story_eligibility_service.prepare_story_eligibility_context(
+        context,
+        index_status=index_status,
+        indexed_records=eligibility_rows,
+    )
+
     scope = book_scope_service.get_book_scope_for_context(
         context,
         manifest,
+        index_status=index_status,
+        eligibility_context=eligibility_context,
     )
     scope_book = _book_by_number(scope["document"]["books"], book_number)
     selected_ids = {
@@ -448,9 +520,20 @@ def get_event_candidates(
         if str(item.get("record_id") or "")
     }
 
-    plan_result = get_chapter_plan_for_context(context, manifest)
-    book = _book_by_number(plan_result["document"]["books"], book_number)
+    # Event-board loading only needs this chapter's persisted assignment refs.
+    # Avoid decorating every chapter in the manuscript, which would repeat
+    # dependency/index checks hundreds of times.
+    plan_path = chapter_plan_path_for_context(context)
+    if plan_path.exists():
+        plan_document = _normalize_existing_document(
+            context, manifest, project_loader.read_json(plan_path)
+        )
+    else:
+        plan_document = _default_document(context, manifest)
+    book = _book_by_number(plan_document["books"], book_number)
     chapter = _chapter_by_number(book["chapters"], chapter_number)
+    if chapter is None:
+        chapter = _empty_chapter(book_number, chapter_number)
     assigned_ids = {
         str(item.get("record_id") or "")
         for item in (chapter or {}).get("assigned_event_refs") or []
@@ -491,10 +574,10 @@ def get_event_candidates(
                 }
             )
 
-    rows = canon_index_service.list_records(
-        project_id,
-        record_types=["event"],
-    )["results"]
+    rows = [
+        row for row in eligibility_rows
+        if str(row.get("record_type") or "") == "event"
+    ]
     q = _normalize_search(query)
     candidates = []
     for row in rows:
@@ -512,8 +595,8 @@ def get_event_candidates(
         ):
             continue
         selected = record_id in selected_ids
-        decision = story_eligibility_service.evaluate_story_eligibility(
-            project_id,
+        decision = story_eligibility_service.evaluate_story_eligibility_for_context(
+            context,
             book_number=book_number,
             chapter_number=chapter_number,
             candidate_ref={
@@ -523,6 +606,8 @@ def get_event_candidates(
             },
             requested_use="event_placement",
             selected=selected,
+            prepared_context=eligibility_context,
+            indexed_record=row,
         )
         candidates.append(
             {
@@ -531,6 +616,8 @@ def get_event_candidates(
                 "record_group_id": str(row.get("record_group_id") or ""),
                 "label": str(row.get("display_label") or ""),
                 "summary": str(row.get("summary") or ""),
+                "date_or_sequence": str(row.get("date_or_sequence") or ""),
+                "story_code": str(row.get("story_code") or ""),
                 "in_book_scope": selected,
                 "assigned_to_chapter": record_id in assigned_ids,
                 "eligibility": decision,
@@ -547,14 +634,7 @@ def get_event_candidates(
             }
         )
 
-    candidates.sort(
-        key=lambda item: (
-            0 if item["assigned_to_chapter"] else 1,
-            0 if item["in_book_scope"] else 1,
-            item["label"].casefold(),
-            item["record_id"],
-        )
-    )
+    candidates.sort(key=_event_candidate_sort_key)
     return {
         "status": "ok",
         "service": CHAPTER_PLAN_SERVICE_MARKER,
@@ -568,6 +648,32 @@ def get_event_candidates(
         "candidates": candidates,
         "execution_locks": _execution_locks(),
     }
+
+
+def _event_candidate_sort_key(item: dict[str, Any]) -> tuple[Any, ...]:
+    status = str((item.get("eligibility") or {}).get("status") or "UNKNOWN")
+    status_rank = {
+        story_eligibility_service.STATUS_ACTIVE: 0,
+        story_eligibility_service.STATUS_AVAILABLE_TO_ADD: 0,
+        story_eligibility_service.STATUS_FUTURE: 2,
+        story_eligibility_service.STATUS_RESTRICTED: 3,
+        story_eligibility_service.STATUS_CANON_INCOMPLETE: 4,
+    }.get(status, 5)
+    date_text = str(item.get("date_or_sequence") or "")
+    match = re.search(r"(?<!\d)(\d{3,4})(?!\d)", date_text)
+    year = int(match.group(1)) if match else 999999
+    story_code = str(item.get("story_code") or "")
+    code_match = re.search(r"(\d+)$", story_code)
+    code_order = int(code_match.group(1)) if code_match else 999999
+    return (
+        0 if item.get("assigned_to_chapter") else 1,
+        0 if item.get("in_book_scope") else 1,
+        status_rank,
+        year,
+        code_order,
+        str(item.get("label") or "").casefold(),
+        str(item.get("record_id") or ""),
+    )
 
 
 def _default_document(
@@ -893,9 +999,24 @@ def _dependency_snapshot(
     book_number: int,
     chapter_number: int,
 ) -> dict[str, Any]:
+    # Prepare Canon/eligibility state once for this chapter dependency snapshot.
+    # Book Scope, effective scope, and Book Plan validation reuse the same
+    # decorated scope instead of independently rechecking the project.
+    index_status = canon_index_service.ensure_current_index(context.project_id)
+    indexed_rows = canon_index_service.list_records_current(
+        context.project_id,
+        limit=10000,
+    ).get("results") or []
+    eligibility_context = story_eligibility_service.prepare_story_eligibility_context(
+        context,
+        index_status=index_status,
+        indexed_records=indexed_rows,
+    )
     scope_result = book_scope_service.get_book_scope_for_context(
         context,
         manifest,
+        index_status=index_status,
+        eligibility_context=eligibility_context,
     )
     scope_book = _book_by_number(scope_result["document"]["books"], book_number)
     effective_scope = book_scope_service.effective_book_scope_selections_for_context(
@@ -903,11 +1024,17 @@ def _dependency_snapshot(
         manifest,
         book_number=book_number,
         chapter_number=chapter_number,
+        scope_result=scope_result,
     )
     scope_ids = list(effective_scope.get("selection_ids") or [])
 
-    plan_result = book_plan_service.get_book_plan_for_context(context, manifest)
+    plan_result = book_plan_service.get_book_plan_for_context(
+        context,
+        manifest,
+        scope_result=scope_result,
+    )
     plan = plan_result["plan"]
+    book_plan_workflow = book_plan_service.get_book_workflow(plan, book_number)
 
     return {
         "book_scope_revision": int(
@@ -929,9 +1056,9 @@ def _dependency_snapshot(
             scope_book.get("freshness", {}).get("reconciliation_required")
         ),
         "scope_selection_ids": scope_ids,
-        "book_plan_revision": int(plan.get("revision") or 0),
-        "book_plan_hash": str(plan.get("content_hash") or ""),
-        "book_plan_approved": bool(plan.get("approval_fresh")),
+        "book_plan_revision": int(book_plan_workflow.get("revision") or 0),
+        "book_plan_hash": str(book_plan_workflow.get("content_hash") or ""),
+        "book_plan_approved": bool(book_plan_workflow.get("approval_fresh")),
         "continuity_revision": "",
     }
 
@@ -1084,12 +1211,21 @@ def _normalize_event_placements(
                 required_group="events",
             )
 
+        chapter_role = str(item.get("chapter_role") or "").strip().lower()
+        if chapter_role and chapter_role not in CHAPTER_EVENT_ROLE_VALUES:
+            raise ChapterPlanContractError(
+                f"Unsupported chapter event role: {chapter_role}."
+            )
+        objective = _clean_text(item.get("objective"))
+
         placements.append(
             {
                 "event_ref": event_ref,
                 "position": position,
                 "relationship_to_anchor": relationship,
                 "anchor_event_ref": anchor_ref,
+                "chapter_role": chapter_role,
+                "objective": objective,
                 "ordinal": ordinal,
             }
         )
@@ -1158,6 +1294,8 @@ def _content_hash(chapter: dict[str, Any]) -> str:
                 "anchor_event_id": str(
                     (item.get("anchor_event_ref") or {}).get("record_id") or ""
                 ),
+                "chapter_role": str(item.get("chapter_role") or ""),
+                "objective": str(item.get("objective") or ""),
                 "ordinal": int(item.get("ordinal") or 0),
             }
             for item in chapter.get("event_placements") or []

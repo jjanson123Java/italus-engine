@@ -72,6 +72,38 @@ _TEMPLATE_REGISTRY: dict[str, dict[str, Any]] = {
         "project_storage_mode": "hybrid_seed_reference",
         "legacy_seed_profile": "italus_historical_epic",
         "project_code": "ITALUS",
+        "planner_sorting": {
+            "default": {
+                "within_group": "alphabetical",
+                "field": "display_label",
+                "direction": "asc",
+                "missing": "last",
+            },
+            "characters": {
+                "within_group": "alphabetical",
+                "field": "display_label",
+                "direction": "asc",
+                "missing": "last",
+            },
+            "events": {
+                "within_group": "chronology",
+                "field": "date_or_sequence",
+                "direction": "asc",
+                "missing": "last",
+            },
+            "locations": {
+                "within_group": "alphabetical",
+                "field": "display_label",
+                "direction": "asc",
+                "missing": "last",
+            },
+            "interactions": {
+                "within_group": "chronology",
+                "field": "date_or_period",
+                "direction": "asc",
+                "missing": "last",
+            },
+        },
         "canon_groups": [
             {
                 "group_id": "editable_canon",

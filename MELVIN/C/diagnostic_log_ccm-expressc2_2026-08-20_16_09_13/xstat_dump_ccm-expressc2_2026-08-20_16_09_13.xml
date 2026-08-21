@@ -1,0 +1,3343 @@
+<?xml version="1.0"?><Status xmlns="http://www.tandberg.no/XML/CUIL/1.0" product="TANDBERG VCS" version="X14.3.2">
+  <SystemUnit item="1">
+    <Product item="1">TANDBERG VCS</Product>
+    <Uptime item="1">44802733</Uptime>
+    <SystemTime item="1">2026-08-20 16:07:45</SystemTime>
+    <TimeZone item="1">EST</TimeZone>
+    <LocalTime item="1">2026-08-20 11:07:45</LocalTime>
+    <Software item="1">
+      <Version item="1">X14.3.2</Version>
+      <Build item="1">oak_v14.3.2_rc_1</Build>
+      <Name item="1">s42700</Name>
+      <ReleaseDate item="1">2023-10-26</ReleaseDate>
+      <ExpresswaySelect item="1">False</ExpresswaySelect>
+      <Configuration item="1">
+        <NonTraversalCalls item="1">750</NonTraversalCalls>
+        <TraversalCalls item="1">150</TraversalCalls>
+        <Registrations item="1">3750</Registrations>
+        <TPRoom item="1">0</TPRoom>
+        <UserDevice item="1">0</UserDevice>
+        <Expressway item="1">False</Expressway>
+        <Encryption item="1">True</Encryption>
+        <Interworking item="1">True</Interworking>
+        <FindMe item="1">True</FindMe>
+        <DeviceProvisioning item="1">True</DeviceProvisioning>
+        <DualNetworkInterfaces item="1">False</DualNetworkInterfaces>
+        <AdvancedAccountSecurity item="1">False</AdvancedAccountSecurity>
+        <StarterPack item="1">False</StarterPack>
+        <EnhancedOCSCollaboration item="1">False</EnhancedOCSCollaboration>
+        <ExpresswaySeries item="1">True</ExpresswaySeries>
+      </Configuration>
+    </Software>
+    <Hardware item="1">
+      <Version item="1">VMware</Version>
+      <SerialNumber item="1">05AACCB4</SerialNumber>
+    </Hardware>
+  </SystemUnit>
+  <Ethernet item="1">
+    <MacAddress item="1">00:50:56:BF:ED:B6</MacAddress>
+    <Speed item="1">10000full</Speed>
+    <IPv4 item="1">
+      <Address item="1">172.18.6.35</Address>
+      <SubnetMask item="1">255.255.255.0</SubnetMask>
+    </IPv4>
+  </Ethernet>
+  <Ethernet item="2">
+    <MacAddress item="1">00:50:56:BF:22:B8</MacAddress>
+    <Speed item="1">10000full</Speed>
+    <IPv4 item="1">
+      <Address item="1">192.168.0.100</Address>
+      <SubnetMask item="1">255.255.255.0</SubnetMask>
+    </IPv4>
+  </Ethernet>
+  <Ethernet item="3">
+    <MacAddress item="1">00:50:56:BF:39:1D</MacAddress>
+    <Speed item="1">10000full</Speed>
+    <IPv4 item="1">
+      <Address item="1">192.168.0.100</Address>
+      <SubnetMask item="1">255.255.255.0</SubnetMask>
+    </IPv4>
+  </Ethernet>
+  <IP item="1">
+    <Protocol item="1">IPv4</Protocol>
+    <IPv4 item="1">
+      <Gateway item="1">172.18.6.1</Gateway>
+    </IPv4>
+  <DNS item="1"><Domain item="1"><Name item="1">phhealthcare.org</Name></Domain><Server item="1"><Address item="1">10.10.20.150</Address></Server><Server item="2"><Address item="1">10.10.20.209</Address></Server><Server item="3"><Address item="1" /></Server><Server item="4"><Address item="1" /></Server><Server item="5"><Address item="1" /></Server></DNS></IP>
+  <ExternalManager item="1">
+    <Status item="1" valueSpaceRef="/ValueSpace/NO_ID[@item='1']">Inactive</Status>
+  </ExternalManager>
+  <Feedback item="1">
+    <Status item="1" valueSpaceRef="/ValueSpace/NO_ID[@item='1']">Off</Status>
+  </Feedback>
+  <Feedback item="2">
+    <Status item="1" valueSpaceRef="/ValueSpace/NO_ID[@item='1']">Off</Status>
+  </Feedback>
+  <Feedback item="3">
+    <Status item="1" valueSpaceRef="/ValueSpace/NO_ID[@item='1']">Off</Status>
+  </Feedback>
+  <ResourceUsage item="1">
+    <Calls item="1">
+      <Traversal item="1">
+        <Current item="1">0</Current>
+        <Max item="1">0</Max>
+        <Total item="1">0</Total>
+        <MaxCyclic item="1">0</MaxCyclic>
+      </Traversal>
+      <NonTraversal item="1">
+        <Current item="1">0</Current>
+        <Max item="1">0</Max>
+        <Total item="1">0</Total>
+        <MaxCyclic item="1">0</MaxCyclic>
+      </NonTraversal>
+      <CollaborationEdge item="1">
+        <Current item="1">0</Current>
+        <Max item="1">3</Max>
+        <Total item="1">368</Total>
+        <MaxCyclic item="1">2</MaxCyclic>
+      </CollaborationEdge>
+      <Cloud item="1">
+        <Current item="1">0</Current>
+        <Max item="1">0</Max>
+        <Total item="1">0</Total>
+        <MaxCyclic item="1">0</MaxCyclic>
+      </Cloud>
+      <MicrosoftContent item="1">
+        <Current item="1">0</Current>
+        <Max item="1">0</Max>
+        <Total item="1">0</Total>
+        <MaxCyclic item="1">0</MaxCyclic>
+      </MicrosoftContent>
+      <MicrosoftIMP item="1">
+        <Current item="1">0</Current>
+        <Max item="1">0</Max>
+        <Total item="1">0</Total>
+        <MaxCyclic item="1">0</MaxCyclic>
+      </MicrosoftIMP>
+      <Emergency item="1">
+        <Current item="1">0</Current>
+        <Max item="1">0</Max>
+      </Emergency>
+    </Calls>
+    <Registrations item="1">
+      <Current item="1">0</Current>
+      <Max item="1">0</Max>
+      <Total item="1">0</Total>
+      <MaxCyclic item="1">0</MaxCyclic>
+    </Registrations>
+    <TPRoom item="1">
+      <Current item="1">0</Current>
+      <Max item="1">0</Max>
+      <Total item="1">0</Total>
+      <MaxCyclic item="1">0</MaxCyclic>
+    </TPRoom>
+    <UserDevice item="1">
+      <Current item="1">0</Current>
+      <Max item="1">0</Max>
+      <Total item="1">0</Total>
+      <MaxCyclic item="1">0</MaxCyclic>
+    </UserDevice>
+    <TURN item="1">
+      <Relays item="1">
+        <Current item="1">0</Current>
+        <Max item="1">0</Max>
+        <Total item="1">0</Total>
+        <MaxCyclic item="1">0</MaxCyclic>
+      </Relays>
+      <Ports item="1">
+        <Count item="1">1</Count>
+      </Ports>
+      <Port item="1">
+        <Port item="1">3478</Port>
+        <Count item="1">0</Count>
+        <UDP item="1">0</UDP>
+        <TCP item="1">0</TCP>
+      </Port>
+      <ProtocolMode item="1">Both</ProtocolMode>
+    </TURN>
+    <Zones item="1">
+      <CollaborationEdge item="1">
+        <Registrations item="1">
+          <Current item="1">0</Current>
+          <Max item="1">6</Max>
+        </Registrations>
+      </CollaborationEdge>
+    </Zones>
+    <Proxy item="1">
+      <Registrations item="1">
+        <Current item="1">0</Current>
+        <Max item="1">0</Max>
+      </Registrations>
+    </Proxy>
+    <Business2Business item="1">
+      <Sessions item="1">
+        <Current item="1">0</Current>
+        <Max item="1">0</Max>
+      </Sessions>
+    </Business2Business>
+  </ResourceUsage>
+  <Calls item="1" />
+  <Zones item="1">
+    <DefaultZone item="1">
+      <Name item="1">DefaultZone</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </DefaultZone>
+    <LocalZone item="1">
+      <DefaultSubZone item="1">
+        <Name item="1">DefaultSubZone</Name>
+        <Bandwidth item="1">
+          <LocalUsage item="1">0</LocalUsage>
+          <ClusterUsage item="1">0</ClusterUsage>
+        </Bandwidth>
+      </DefaultSubZone>
+      <TraversalSubZone item="1">
+        <Name item="1">TraversalSubZone</Name>
+        <Bandwidth item="1">
+          <LocalUsage item="1">0</LocalUsage>
+          <ClusterUsage item="1">0</ClusterUsage>
+        </Bandwidth>
+      </TraversalSubZone>
+      <ClusterSubZone item="1">
+        <Name item="1">ClusterSubZone</Name>
+        <Bandwidth item="1">
+          <LocalUsage item="1">0</LocalUsage>
+          <ClusterUsage item="1">0</ClusterUsage>
+        </Bandwidth>
+      </ClusterSubZone>
+    </LocalZone>
+    <Searches item="1">
+      <Current item="1">0</Current>
+      <CurrentDirected item="1">0</CurrentDirected>
+      <Total item="1">19069</Total>
+      <Dropped item="1">0</Dropped>
+      <MaxSubSearchExceeded item="1">0</MaxSubSearchExceeded>
+      <MaxTargetsExceeded item="1">0</MaxTargetsExceeded>
+    </Searches>
+    <Zone item="1">
+      <Name item="1">CEtcp-172.18.6.10</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+      <Status item="1">Active</Status>
+      <Type item="1">Neighbor</Type>
+      <Neighbor item="1">
+        <Peer item="1">
+          <SIP item="1">
+            <Status item="1">Active</Status>
+            <Address item="1">172.18.6.10</Address>
+            <Apparent item="1">172.18.6.10:5060</Apparent>
+            <Port item="1">5060</Port>
+            <LastStatusChange item="1">2025-03-19 21:55:34</LastStatusChange>
+            <ResourceUsage item="1">
+              <ResourceUsageValid item="1">False</ResourceUsageValid>
+              <TraversalCallsAvailable item="1">0</TraversalCallsAvailable>
+              <NonTraversalCallsAvailable item="1">0</NonTraversalCallsAvailable>
+              <RegistrationsAvailable item="1">0</RegistrationsAvailable>
+              <TURNRelaysAvailable item="1">0</TURNRelaysAvailable>
+              <TURN item="1">
+                <Ports item="1">
+                  <Count item="1">0</Count>
+                </Ports>
+              </TURN>
+            </ResourceUsage>
+          </SIP>
+        </Peer>
+      </Neighbor>
+    </Zone>
+    <Zone item="2">
+      <Name item="1">CEtcp-ccm-elk.drmc.org</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+      <Status item="1">Active</Status>
+      <Type item="1">Neighbor</Type>
+      <Neighbor item="1">
+        <Peer item="1">
+          <SIP item="1">
+            <Status item="1">Active</Status>
+            <Address item="1">172.30.1.100</Address>
+            <Apparent item="1">172.30.1.100:5060</Apparent>
+            <Port item="1">5060</Port>
+            <LastStatusChange item="1">2025-03-19 21:55:33</LastStatusChange>
+            <ResourceUsage item="1">
+              <ResourceUsageValid item="1">False</ResourceUsageValid>
+              <TraversalCallsAvailable item="1">0</TraversalCallsAvailable>
+              <NonTraversalCallsAvailable item="1">0</NonTraversalCallsAvailable>
+              <RegistrationsAvailable item="1">0</RegistrationsAvailable>
+              <TURNRelaysAvailable item="1">0</TURNRelaysAvailable>
+              <TURN item="1">
+                <Ports item="1">
+                  <Count item="1">0</Count>
+                </Ports>
+              </TURN>
+            </ResourceUsage>
+          </SIP>
+        </Peer>
+      </Neighbor>
+    </Zone>
+    <Zone item="3">
+      <Name item="1">CEtcp-CCM-Clfd.drmc.org</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+      <Status item="1">Active</Status>
+      <Type item="1">Neighbor</Type>
+      <Neighbor item="1">
+        <Peer item="1">
+          <SIP item="1">
+            <Status item="1">Active</Status>
+            <Address item="1">172.26.100.35</Address>
+            <Apparent item="1">172.26.100.35:5060</Apparent>
+            <Port item="1">5060</Port>
+            <LastStatusChange item="1">2025-03-19 21:55:33</LastStatusChange>
+            <ResourceUsage item="1">
+              <ResourceUsageValid item="1">False</ResourceUsageValid>
+              <TraversalCallsAvailable item="1">0</TraversalCallsAvailable>
+              <NonTraversalCallsAvailable item="1">0</NonTraversalCallsAvailable>
+              <RegistrationsAvailable item="1">0</RegistrationsAvailable>
+              <TURNRelaysAvailable item="1">0</TURNRelaysAvailable>
+              <TURN item="1">
+                <Ports item="1">
+                  <Count item="1">0</Count>
+                </Ports>
+              </TURN>
+            </ResourceUsage>
+          </SIP>
+        </Peer>
+      </Neighbor>
+    </Zone>
+    <Zone item="4">
+      <Name item="1">CEtcp-ccm-brk.drmc.org</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+      <Status item="1">Active</Status>
+      <Type item="1">Neighbor</Type>
+      <Neighbor item="1">
+        <Peer item="1">
+          <SIP item="1">
+            <Status item="1">Active</Status>
+            <Address item="1">172.25.0.25</Address>
+            <Apparent item="1">172.25.0.25:5060</Apparent>
+            <Port item="1">5060</Port>
+            <LastStatusChange item="1">2025-03-19 21:55:33</LastStatusChange>
+            <ResourceUsage item="1">
+              <ResourceUsageValid item="1">False</ResourceUsageValid>
+              <TraversalCallsAvailable item="1">0</TraversalCallsAvailable>
+              <NonTraversalCallsAvailable item="1">0</NonTraversalCallsAvailable>
+              <RegistrationsAvailable item="1">0</RegistrationsAvailable>
+              <TURNRelaysAvailable item="1">0</TURNRelaysAvailable>
+              <TURN item="1">
+                <Ports item="1">
+                  <Count item="1">0</Count>
+                </Ports>
+              </TURN>
+            </ResourceUsage>
+          </SIP>
+        </Peer>
+      </Neighbor>
+    </Zone>
+    <Zone item="5">
+      <Name item="1">CEtcp-CCM-DuBois.drmc.org</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+      <Status item="1">Active</Status>
+      <Type item="1">Neighbor</Type>
+      <Neighbor item="1">
+        <Peer item="1">
+          <SIP item="1">
+            <Status item="1">Active</Status>
+            <Address item="1">172.18.6.30</Address>
+            <Apparent item="1">172.18.6.30:5060</Apparent>
+            <Port item="1">5060</Port>
+            <LastStatusChange item="1">2025-03-19 21:55:33</LastStatusChange>
+            <ResourceUsage item="1">
+              <ResourceUsageValid item="1">False</ResourceUsageValid>
+              <TraversalCallsAvailable item="1">0</TraversalCallsAvailable>
+              <NonTraversalCallsAvailable item="1">0</NonTraversalCallsAvailable>
+              <RegistrationsAvailable item="1">0</RegistrationsAvailable>
+              <TURNRelaysAvailable item="1">0</TURNRelaysAvailable>
+              <TURN item="1">
+                <Ports item="1">
+                  <Count item="1">0</Count>
+                </Ports>
+              </TURN>
+            </ResourceUsage>
+          </SIP>
+        </Peer>
+      </Neighbor>
+    </Zone>
+    <Zone item="6">
+      <Name item="1">Traversal Zone</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+      <Status item="1">Active</Status>
+      <Type item="1">TraversalClient</Type>
+      <TraversalClient item="1">
+        <Peer item="1">
+          <SIP item="1">
+            <Status item="1">Active</Status>
+            <Address item="1">206.199.12.43</Address>
+            <Apparent item="1">192.168.50.12:25247</Apparent>
+            <Port item="1">7001</Port>
+            <LastStatusChange item="1">2025-09-17 13:22:36</LastStatusChange>
+            <ResourceUsage item="1">
+              <ResourceUsageValid item="1">True</ResourceUsageValid>
+              <TraversalCallsAvailable item="1">300</TraversalCallsAvailable>
+              <NonTraversalCallsAvailable item="1">1500</NonTraversalCallsAvailable>
+              <RegistrationsAvailable item="1">3750</RegistrationsAvailable>
+              <TURNRelaysAvailable item="1">1800</TURNRelaysAvailable>
+              <TURN item="1">
+                <Ports item="1">
+                  <Count item="1">0</Count>
+                </Ports>
+              </TURN>
+              <ProtocolMode item="1">Both</ProtocolMode>
+            </ResourceUsage>
+            <EdgeStatus item="1">ACTIVE</EdgeStatus>
+            <Server item="1">TANDBERG/4145 (X14.3.2)</Server>
+            <PeerZoneId item="1">1</PeerZoneId>
+            <FQDN item="1">ccm-expresse2.phhealthcare.org</FQDN>
+            <PeerExternalTcpPort item="1">5060</PeerExternalTcpPort>
+            <PeerExternalTlsPort item="1">5061</PeerExternalTlsPort>
+          </SIP>
+        </Peer>
+      </TraversalClient>
+    </Zone>
+  </Zones>
+  <Alternates item="1" />
+  <Links item="1">
+    <Link item="1">
+      <Name item="1">DefaultSZtoTraversalSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="2">
+      <Name item="1">DefaultSZtoDefaultZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="3">
+      <Name item="1">DefaultSZtoClusterSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="4">
+      <Name item="1">TraversalSZtoDefaultZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="5">
+      <Name item="1">Zone001ToDefaultSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="6">
+      <Name item="1">Zone001ToTraversalSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="7">
+      <Name item="1">Zone002ToDefaultSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="8">
+      <Name item="1">Zone002ToTraversalSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="9">
+      <Name item="1">Zone003ToDefaultSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="10">
+      <Name item="1">Zone003ToTraversalSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="11">
+      <Name item="1">Zone004ToDefaultSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="12">
+      <Name item="1">Zone004ToTraversalSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="13">
+      <Name item="1">Zone005ToDefaultSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="14">
+      <Name item="1">Zone005ToTraversalSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+    <Link item="15">
+      <Name item="1">Zone006ToTraversalSZ</Name>
+      <Bandwidth item="1">
+        <LocalUsage item="1">0</LocalUsage>
+        <ClusterUsage item="1">0</ClusterUsage>
+      </Bandwidth>
+    </Link>
+  </Links>
+  <Pipes item="1" />
+  <Registrations item="1" />
+  <SIP item="1">
+    <Ethernet item="1">
+      <IPv4 item="1">
+        <UDP item="1">
+          <Status item="1">Inactive</Status>
+        </UDP>
+        <TCP item="1">
+          <Status item="1">Active</Status>
+          <Address item="1">172.18.6.35:5060</Address>
+        </TCP>
+        <TLS item="1">
+          <Status item="1">Active</Status>
+          <Address item="1">172.18.6.35:5061</Address>
+        </TLS>
+        <MTLS item="1">
+          <Status item="1">Inactive</Status>
+        </MTLS>
+      </IPv4>
+      <IPv6 item="1">
+        <UDP item="1">
+          <Status item="1">Inactive</Status>
+        </UDP>
+        <TCP item="1">
+          <Status item="1">Inactive</Status>
+        </TCP>
+        <TLS item="1">
+          <Status item="1">Inactive</Status>
+        </TLS>
+        <MTLS item="1">
+          <Status item="1">Inactive</Status>
+        </MTLS>
+      </IPv6>
+    </Ethernet>
+    <Ethernet item="2">
+      <IPv4 item="1">
+        <UDP item="1">
+          <Status item="1">Inactive</Status>
+        </UDP>
+        <TCP item="1">
+          <Status item="1">Inactive</Status>
+        </TCP>
+        <TLS item="1">
+          <Status item="1">Inactive</Status>
+        </TLS>
+        <MTLS item="1">
+          <Status item="1">Inactive</Status>
+        </MTLS>
+      </IPv4>
+      <IPv6 item="1">
+        <UDP item="1">
+          <Status item="1">Inactive</Status>
+        </UDP>
+        <TCP item="1">
+          <Status item="1">Inactive</Status>
+        </TCP>
+        <TLS item="1">
+          <Status item="1">Inactive</Status>
+        </TLS>
+        <MTLS item="1">
+          <Status item="1">Inactive</Status>
+        </MTLS>
+      </IPv6>
+    </Ethernet>
+    <Transport item="1">
+      <Server item="29107">
+        <Socket item="1">
+          <Type item="1">SERV_TCP</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">94643</Local>
+            <Global item="1">0</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">0</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">0</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">127.0.0.1:22210</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">2004</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">False</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Server item="29106">
+        <Socket item="1">
+          <Type item="1">SERV_UDP</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">160178</Local>
+            <Global item="1">1</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">20000</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">60000</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">127.0.0.1:5060</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">1</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">False</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Server item="29105">
+        <Socket item="1">
+          <Type item="1">SERV_TCP</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">225713</Local>
+            <Global item="1">2</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">0</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">0</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">127.0.0.1:5060</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">1</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">False</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Server item="29104">
+        <Socket item="1">
+          <Type item="1">SERV_TLS</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">291248</Local>
+            <Global item="1">3</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">0</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">0</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">127.0.0.1:5061</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">1</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">True</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Server item="29103">
+        <Socket item="1">
+          <Type item="1">SERV_MTLS</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">356783</Local>
+            <Global item="1">4</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">0</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">0</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">127.0.0.1:5062</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">1</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">True</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Server item="29102">
+        <Socket item="1">
+          <Type item="1">SERV_UDP</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">422318</Local>
+            <Global item="1">5</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">20000</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">60000</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">[::1]:5060</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">1</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">False</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Server item="29101">
+        <Socket item="1">
+          <Type item="1">SERV_TCP</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">487853</Local>
+            <Global item="1">6</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">0</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">0</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">[::1]:5060</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">1</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">False</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Server item="29100">
+        <Socket item="1">
+          <Type item="1">SERV_TLS</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">553388</Local>
+            <Global item="1">7</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">0</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">0</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">[::1]:5061</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">1</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">True</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Server item="29099">
+        <Socket item="1">
+          <Type item="1">SERV_MTLS</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">618923</Local>
+            <Global item="1">8</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">0</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">0</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">[::1]:5062</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">1</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">True</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Server item="29098">
+        <Socket item="1">
+          <Type item="1">SERV_TCP</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">684458</Local>
+            <Global item="1">9</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">0</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">0</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">172.18.6.35:5060</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">2</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">False</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Server item="29097">
+        <Socket item="1">
+          <Type item="1">SERV_TLS</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">749993</Local>
+            <Global item="1">10</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">0</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">0</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">172.18.6.35:5061</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1" />
+        </Remote>
+        <Network item="1">
+          <Number item="1">2</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">20</In>
+        </Close>
+        <Secure item="1">True</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">0</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Server>
+      <Client item="16999">
+        <Socket item="1">
+          <Type item="1">TLS_OUTG</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">86393447</Local>
+            <Global item="1">1317</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">5120</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">60000</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">172.18.6.35:25247</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1">206.199.12.43:7001</Address>
+        </Remote>
+        <Network item="1">
+          <Number item="1">2</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1">ccm-expresse2.phhealthcare.org</Name>
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1">TLS_AES_256_GCM_SHA384</Name>
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">185305315</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">1990</In>
+        </Close>
+        <Secure item="1">True</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">True</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">1</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Client>
+      <Client item="16994">
+        <Socket item="1">
+          <Type item="1">TCP_OUTG</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">354566754</Local>
+            <Global item="1">5409</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">5120</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">60000</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">127.0.0.1:27701</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1">127.0.0.1:22210</Address>
+        </Remote>
+        <Network item="1">
+          <Number item="1">1</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">185240086</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">1340</In>
+        </Close>
+        <Secure item="1">False</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">1</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Client>
+      <Client item="16996">
+        <Socket item="1">
+          <Type item="1">TCP_INCO</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">354632292</Local>
+            <Global item="1">5410</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">5120</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">60000</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">127.0.0.1:22210</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1">127.0.0.1:27701</Address>
+        </Remote>
+        <Network item="1">
+          <Number item="1">2004</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">185240086</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">1340</In>
+        </Close>
+        <Secure item="1">False</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">1</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1">AgAAAAAAAAAADwAAAFbCAAB/AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAGw1AAB/AAABAAAAAAAAAAAAAAAAAAAAADiAYOO5hL+1+gw=</Token>
+        </Flow>
+      </Client>
+      <Client item="16995">
+        <Socket item="1">
+          <Type item="1">TLS_OUTG</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">354828899</Local>
+            <Global item="1">5413</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">5120</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">60000</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">172.18.6.35:27703</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1">172.18.6.35:5071</Address>
+        </Remote>
+        <Network item="1">
+          <Number item="1">2</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1">TLS_AES_256_GCM_SHA384</Name>
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">185240111</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">1340</In>
+        </Close>
+        <Secure item="1">True</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">3</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Client>
+      <Client item="16998">
+        <Socket item="1">
+          <Type item="1">TLS_INCO</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">354894438</Local>
+            <Global item="1">5414</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">5120</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">60000</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">172.18.6.35:5061</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1">172.18.6.35:31511</Address>
+        </Remote>
+        <Network item="1">
+          <Number item="1">2</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1">TLS_AES_256_GCM_SHA384</Name>
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">185240108</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">1340</In>
+        </Close>
+        <Secure item="1">True</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">1</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1">AwAAAAAAAAAADwAAABPFAACsEgYjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAHsXAACsEgYjAAAAAAAAAAAAAAAAAAAAAA6JTyrT59TbNR0=</Token>
+        </Flow>
+      </Client>
+      <Client item="16992">
+        <Socket item="1">
+          <Type item="1">TCP_OUTG</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">354959968</Local>
+            <Global item="1">5415</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">5120</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">60000</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">172.18.6.35:27704</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1">172.18.6.10:5060</Address>
+        </Remote>
+        <Network item="1">
+          <Number item="1">2</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">185273345</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">1670</In>
+        </Close>
+        <Secure item="1">False</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">1</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1" />
+        </Flow>
+      </Client>
+      <Client item="16993">
+        <Socket item="1">
+          <Type item="1">TCP_INCO</Type>
+          <State item="1">INUSE</State>
+          <ID item="1">
+            <Local item="1">355156577</Local>
+            <Global item="1">5418</Global>
+          </ID>
+          <Buffer item="1">
+            <Input item="1">
+              <Length item="1">5120</Length>
+            </Input>
+            <Output item="1">
+              <Length item="1">60000</Length>
+            </Output>
+          </Buffer>
+          <Packet item="1">
+            <Received item="1">0</Received>
+          </Packet>
+        </Socket>
+        <Local item="1">
+          <Address item="1">172.18.6.35:5060</Address>
+        </Local>
+        <Remote item="1">
+          <Address item="1">172.18.6.30:39787</Address>
+        </Remote>
+        <Network item="1">
+          <Number item="1">2</Number>
+        </Network>
+        <Certificate item="1">
+          <Subject item="1">
+            <Name item="1" />
+          </Subject>
+        </Certificate>
+        <TLS item="1">
+          <Cipher item="1">
+            <Name item="1" />
+          </Cipher>
+        </TLS>
+        <Last item="1">
+          <Packet item="1">
+            <Received item="1">185240111</Received>
+          </Packet>
+        </Last>
+        <Close item="1">
+          <In item="1">1340</In>
+        </Close>
+        <Secure item="1">False</Secure>
+        <X509 item="1">
+          <Certificate item="1">
+            <Verified item="1">False</Verified>
+          </Certificate>
+        </X509>
+        <Queue item="1">
+          <Max item="1">
+            <Size item="1">1</Size>
+          </Max>
+          <Add item="1">
+            <Failures item="1">0</Failures>
+          </Add>
+        </Queue>
+        <Flow item="1">
+          <Token item="1">AgAAAAAAAAAADwAAABPEAACsEgYjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAJtrAACsEgYeAAAAAAAAAAAAAAAAAAAAAETIqtd8IZpHRRk=</Token>
+        </Flow>
+      </Client>
+    </Transport>
+  </SIP>
+  <H323 item="1">
+    <Registration item="1">
+      <Status item="1">Inactive</Status>
+    </Registration>
+    <CallSignaling item="1">
+      <Status item="1">Inactive</Status>
+    </CallSignaling>
+    <Assent item="1">
+      <CallSignaling item="1">
+        <Status item="1">Inactive</Status>
+      </CallSignaling>
+    </Assent>
+    <H46018 item="1">
+      <CallSignaling item="1">
+        <Status item="1">Inactive</Status>
+      </CallSignaling>
+    </H46018>
+  </H323>
+  <Applications item="1">
+    <Presence item="1">
+      <UserAgent item="1">
+        <Status item="1">Inactive</Status>
+        <Presentity item="1">
+          <Count item="1">0</Count>
+        </Presentity>
+      </UserAgent>
+      <Server item="1">
+        <Subscriptions item="1">
+          <Count item="1">0</Count>
+          <Max item="1">0</Max>
+          <Expired item="1">0</Expired>
+          <Subscribers item="1">
+            <Count item="1">0</Count>
+            <Max item="1">0</Max>
+          </Subscribers>
+        </Subscriptions>
+        <Status item="1">Inactive</Status>
+        <Presentities item="1">
+          <Count item="1">0</Count>
+          <Max item="1">0</Max>
+        </Presentities>
+        <Publications item="1">
+          <Presentities item="1">
+            <Count item="1">0</Count>
+            <Max item="1">0</Max>
+          </Presentities>
+        </Publications>
+      </Server>
+    </Presence>
+    <ConferenceFactory item="1">
+      <Status item="1">Inactive</Status>
+      <NextAlias item="1" />
+    </ConferenceFactory>
+    <External item="1">
+      <Status item="1">
+        <ClusterStatus item="1">
+          <ClusterState item="1">Disabled</ClusterState>
+        </ClusterStatus>
+      </Status>
+      <LastUpdate item="1">
+        <Time item="1">Time not set</Time>
+        <SecondsSinceLastRefresh item="1">1787242065</SecondsSinceLastRefresh>
+      </LastUpdate>
+    </External>
+  </Applications>
+  <FindMeManager item="1" />
+  <TURN item="1">
+    <Server item="1">
+      <Status item="1">Inactive</Status>
+      <MediaForwardingFrameworks item="1">1</MediaForwardingFrameworks>
+    </Server>
+  </TURN>
+  <Loggers item="1">
+    <Logger item="1">
+      <Module item="1">administrator</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="2">
+      <Module item="1">administrator.log</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="3">
+      <Module item="1">administrator.stunmsg_event_utils</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="4">
+      <Module item="1">config</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="5">
+      <Module item="1">config.log</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="6">
+      <Module item="1">developer</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="7">
+      <Module item="1">developer.abstraction</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="8">
+      <Module item="1">developer.addresschooser</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="9">
+      <Module item="1">developer.alarmmanager</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="10">
+      <Module item="1">developer.alternates.config</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="11">
+      <Module item="1">developer.apache2</Module>
+      <TraceLevel item="1">Warn</TraceLevel>
+    </Logger>
+    <Logger item="12">
+      <Module item="1">developer.application</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="13">
+      <Module item="1">developer.applicationmanager.sip2sipapplication</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="14">
+      <Module item="1">developer.auth</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="15">
+      <Module item="1">developer.auth.digest.cache</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="16">
+      <Module item="1">developer.auth.digest.limitedcache</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="17">
+      <Module item="1">developer.auth.digestauth</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="18">
+      <Module item="1">developer.auth.noncemanager.ntlmauthmanager</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="19">
+      <Module item="1">developer.auth.noncemanager.sip</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="20">
+      <Module item="1">developer.auth.noncemanager.stun</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="21">
+      <Module item="1">developer.auth.ntlm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="22">
+      <Module item="1">developer.authentication.oauth</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="23">
+      <Module item="1">developer.bandwidth.bandwidthmgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="24">
+      <Module item="1">developer.bandwidth.infosharingprotocol</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="25">
+      <Module item="1">developer.bfcplogmanager</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="26">
+      <Module item="1">developer.call</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="27">
+      <Module item="1">developer.call.callcounter</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="28">
+      <Module item="1">developer.callserialnumber</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="29">
+      <Module item="1">developer.cdbconfigmgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="30">
+      <Module item="1">developer.cdbstatussync</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="31">
+      <Module item="1">developer.cdbstatussync.callhistoryconverter</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="32">
+      <Module item="1">developer.cdbstatussync.callstatusconverter</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="33">
+      <Module item="1">developer.cdbstatussync.event</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="34">
+      <Module item="1">developer.cdbstatussync.event.httpresponseeventdispatcher</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="35">
+      <Module item="1">developer.cdbstatussync.queue</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="36">
+      <Module item="1">developer.cdbstatussync.queue.cdbeventqueueeventdispatcher</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="37">
+      <Module item="1">developer.cdbstatussync.registrationhistoryconverter</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="38">
+      <Module item="1">developer.cdbstatussync.registrationstatusconverter</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="39">
+      <Module item="1">developer.certificate.verifier</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="40">
+      <Module item="1">developer.cipher.configmonitor</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="41">
+      <Module item="1">developer.clientedge.conn</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="42">
+      <Module item="1">developer.clouddomaindb</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="43">
+      <Module item="1">developer.cluster.config</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="44">
+      <Module item="1">developer.clusterpeerstatus</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="45">
+      <Module item="1">developer.cnfigsys</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="46">
+      <Module item="1">developer.commandmanager</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="47">
+      <Module item="1">developer.commandmanager.sipservicecheck</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="48">
+      <Module item="1">developer.config.validator</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="49">
+      <Module item="1">developer.cryptokeys</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="50">
+      <Module item="1">developer.cuil</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="51">
+      <Module item="1">developer.curlservice.fsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="52">
+      <Module item="1">developer.curlservice.fsm.impl</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="53">
+      <Module item="1">developer.dbusmgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="54">
+      <Module item="1">developer.dns.uriresolver</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="55">
+      <Module item="1">developer.domaindb</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="56">
+      <Module item="1">developer.edgeconfigprovisioning</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="57">
+      <Module item="1">developer.edgeconfigprovisioning.cache</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="58">
+      <Module item="1">developer.edgeconfigprovisioning.edgesettings</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="59">
+      <Module item="1">developer.edgeconfigprovisioning.samlmanager</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="60">
+      <Module item="1">developer.edgeconfigprovisioning.samlverifier</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="61">
+      <Module item="1">developer.edgeconfigprovisioning.server</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="62">
+      <Module item="1">developer.edgeconfigprovisioning.server.sso</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="63">
+      <Module item="1">developer.edgeconfigprovisioning.tokenmanager</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="64">
+      <Module item="1">developer.edgeconfigprovisioning.twisted</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="65">
+      <Module item="1">developer.edgeconfigprovisioning.ucnodes</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="66">
+      <Module item="1">developer.edgeconfigprovisioning.uds</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="67">
+      <Module item="1">developer.edgeconfigprovisioning.utils</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="68">
+      <Module item="1">developer.edgeconfigprovisioning.vcsxmlclient</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="69">
+      <Module item="1">developer.edgemanager</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="70">
+      <Module item="1">developer.edgemanager.cmsdata</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="71">
+      <Module item="1">developer.edgemanager.conn</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="72">
+      <Module item="1">developer.edgemanager.domaindata</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="73">
+      <Module item="1">developer.edgemanager.s2sdata</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="74">
+      <Module item="1">developer.edgemanager.startupcheck</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="75">
+      <Module item="1">developer.edgemanager.xcpdata</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="76">
+      <Module item="1">developer.extappstatus</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="77">
+      <Module item="1">developer.externalmanager</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="78">
+      <Module item="1">developer.fips.configmonitor</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="79">
+      <Module item="1">developer.framework.applicationobjectcontroller</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="80">
+      <Module item="1">developer.framework.fdmonitor</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="81">
+      <Module item="1">developer.framework.interfacebroker</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="82">
+      <Module item="1">developer.framework.serviceobjectcontroller</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="83">
+      <Module item="1">developer.framework.threadeddispatcher</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="84">
+      <Module item="1">developer.fsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="85">
+      <Module item="1">developer.fsm.assentclient</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="86">
+      <Module item="1">developer.fsm.assentserver</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="87">
+      <Module item="1">developer.fsm.audiomodule</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="88">
+      <Module item="1">developer.fsm.bluereader</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="89">
+      <Module item="1">developer.fsm.cfg</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="90">
+      <Module item="1">developer.fsm.com</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="91">
+      <Module item="1">developer.fsm.cuilfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="92">
+      <Module item="1">developer.fsm.curlservicefsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="93">
+      <Module item="1">developer.fsm.diffieh</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="94">
+      <Module item="1">developer.fsm.distpar</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="95">
+      <Module item="1">developer.fsm.dns</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="96">
+      <Module item="1">developer.fsm.dnsresponsemgrfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="97">
+      <Module item="1">developer.fsm.dport</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="98">
+      <Module item="1">developer.fsm.extappstatus</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="99">
+      <Module item="1">developer.fsm.externalclient</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="100">
+      <Module item="1">developer.fsm.extmng</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="101">
+      <Module item="1">developer.fsm.fal</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="102">
+      <Module item="1">developer.fsm.fsm_timer</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="103">
+      <Module item="1">developer.fsm.fsmsys_fsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="104">
+      <Module item="1">developer.fsm.fsmwatchdog</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="105">
+      <Module item="1">developer.fsm.fsmwrapper</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="106">
+      <Module item="1">developer.fsm.gkh245route</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="107">
+      <Module item="1">developer.fsm.gkq931route</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="108">
+      <Module item="1">developer.fsm.gkras</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="109">
+      <Module item="1">developer.fsm.gktest</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="110">
+      <Module item="1">developer.fsm.h110ctrl</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="111">
+      <Module item="1">developer.fsm.h245leg</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="112">
+      <Module item="1">developer.fsm.h245server</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="113">
+      <Module item="1">developer.fsm.h323connectionmgrfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="114">
+      <Module item="1">developer.fsm.h323legfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="115">
+      <Module item="1">developer.fsm.h323msgdsp</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="116">
+      <Module item="1">developer.fsm.h323sys</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="117">
+      <Module item="1">developer.fsm.h460client</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="118">
+      <Module item="1">developer.fsm.httpfeed</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="119">
+      <Module item="1">developer.fsm.httpfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="120">
+      <Module item="1">developer.fsm.iir</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="121">
+      <Module item="1">developer.fsm.internalclient</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="122">
+      <Module item="1">developer.fsm.l1chip</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="123">
+      <Module item="1">developer.fsm.lcdreader</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="124">
+      <Module item="1">developer.fsm.lincfg</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="125">
+      <Module item="1">developer.fsm.logger</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="126">
+      <Module item="1">developer.fsm.makedebugstr_func</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="127">
+      <Module item="1">developer.fsm.mcaspmsg</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="128">
+      <Module item="1">developer.fsm.mcaspraw</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="129">
+      <Module item="1">developer.fsm.mediahalfsfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="130">
+      <Module item="1">developer.fsm.mediasessiontestfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="131">
+      <Module item="1">developer.fsm.mrmgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="132">
+      <Module item="1">developer.fsm.mrtest</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="133">
+      <Module item="1">developer.fsm.mrtomsfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="134">
+      <Module item="1">developer.fsm.msmgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="135">
+      <Module item="1">developer.fsm.normbufcleanup</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="136">
+      <Module item="1">developer.fsm.oakcommandhandler</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="137">
+      <Module item="1">developer.fsm.oaktestfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="138">
+      <Module item="1">developer.fsm.operlog</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="139">
+      <Module item="1">developer.fsm.par</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="140">
+      <Module item="1">developer.fsm.pci_if</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="141">
+      <Module item="1">developer.fsm.pool_spec</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="142">
+      <Module item="1">developer.fsm.prichip</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="143">
+      <Module item="1">developer.fsm.pridchan</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="144">
+      <Module item="1">developer.fsm.q931leg</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="145">
+      <Module item="1">developer.fsm.q931server</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="146">
+      <Module item="1">developer.fsm.q_cp</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="147">
+      <Module item="1">developer.fsm.rs366ll</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="148">
+      <Module item="1">developer.fsm.sgim</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="149">
+      <Module item="1">developer.fsm.shmem_arm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="150">
+      <Module item="1">developer.fsm.shmem_dsp</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="151">
+      <Module item="1">developer.fsm.singlesocket</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="152">
+      <Module item="1">developer.fsm.sipproxylegfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="153">
+      <Module item="1">developer.fsm.sipproxymsgdspfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="154">
+      <Module item="1">developer.fsm.sipserviceserverfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="155">
+      <Module item="1">developer.fsm.siptrans</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="156">
+      <Module item="1">developer.fsm.siptrav</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="157">
+      <Module item="1">developer.fsm.siptravtest</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="158">
+      <Module item="1">developer.fsm.siptrlay</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="159">
+      <Module item="1">developer.fsm.siptrnsp</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="160">
+      <Module item="1">developer.fsm.socketpair</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="161">
+      <Module item="1">developer.fsm.sockhandler</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="162">
+      <Module item="1">developer.fsm.sourcealiasrewriterfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="163">
+      <Module item="1">developer.fsm.system</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="164">
+      <Module item="1">developer.fsm.telnet</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="165">
+      <Module item="1">developer.fsm.test_spec</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="166">
+      <Module item="1">developer.fsm.timerlist</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="167">
+      <Module item="1">developer.fsm.transitlocationnodefsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="168">
+      <Module item="1">developer.fsm.traversalclientfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="169">
+      <Module item="1">developer.fsm.turnsrv</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="170">
+      <Module item="1">developer.fsm.turntestclient</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="171">
+      <Module item="1">developer.fsm.uhpi_dsp</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="172">
+      <Module item="1">developer.fsm.uhpi_host</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="173">
+      <Module item="1">developer.fsm.v35ll</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="174">
+      <Module item="1">developer.fsm.vidses</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="175">
+      <Module item="1">developer.fsm.web</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="176">
+      <Module item="1">developer.fsm.winbindservicefsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="177">
+      <Module item="1">developer.fsm.xacli</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="178">
+      <Module item="1">developer.gkh323stack</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="179">
+      <Module item="1">developer.h323.connectionmgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="180">
+      <Module item="1">developer.h323.lib.retrans</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="181">
+      <Module item="1">developer.h323.listener</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="182">
+      <Module item="1">developer.h323.locationresponsemgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="183">
+      <Module item="1">developer.h323.msgdsp</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="184">
+      <Module item="1">developer.h323.traversal.traversalclient</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="185">
+      <Module item="1">developer.httpclientcurl.httpconnectionpool</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="186">
+      <Module item="1">developer.httpclientcurl.httprequest</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="187">
+      <Module item="1">developer.httpclientcurl.httpresponsenoop</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="188">
+      <Module item="1">developer.iwf</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="189">
+      <Module item="1">developer.license</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="190">
+      <Module item="1">developer.mediarouting.core</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="191">
+      <Module item="1">developer.mediarouting.manager</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="192">
+      <Module item="1">developer.mediasessionmgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="193">
+      <Module item="1">developer.mediasessiontestfsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="194">
+      <Module item="1">developer.networkinterfaceconfig</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="195">
+      <Module item="1">developer.nomodule</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="196">
+      <Module item="1">developer.oak.calls.responsecode</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="197">
+      <Module item="1">developer.objectcontroller</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="198">
+      <Module item="1">developer.pattern.domain</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="199">
+      <Module item="1">developer.pattern_matching</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="200">
+      <Module item="1">developer.platform</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="201">
+      <Module item="1">developer.policy</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="202">
+      <Module item="1">developer.policymgr.policyservice.connectionmgr.local</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="203">
+      <Module item="1">developer.presence</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="204">
+      <Module item="1">developer.presence.pua</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="205">
+      <Module item="1">developer.qos.configmonitor</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="206">
+      <Module item="1">developer.registration.h323</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="207">
+      <Module item="1">developer.registration.h323.h323alternateaddresschooser</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="208">
+      <Module item="1">developer.registration.h323.regdb</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="209">
+      <Module item="1">developer.registration.registrationmgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="210">
+      <Module item="1">developer.registration.sip</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="211">
+      <Module item="1">developer.registration.sip.regdb</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="212">
+      <Module item="1">developer.replication</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="213">
+      <Module item="1">developer.rshell</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="214">
+      <Module item="1">developer.samba_conf_writer</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="215">
+      <Module item="1">developer.search</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="216">
+      <Module item="1">developer.search.cloudmatching</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="217">
+      <Module item="1">developer.search.progress</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="218">
+      <Module item="1">developer.search.transitlocationnode</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="219">
+      <Module item="1">developer.serveredge.conn</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="220">
+      <Module item="1">developer.sip.cancel</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="221">
+      <Module item="1">developer.sip.config</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="222">
+      <Module item="1">developer.sip.configmonitor</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="223">
+      <Module item="1">developer.sip.flowtoken</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="224">
+      <Module item="1">developer.sip.identity</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="225">
+      <Module item="1">developer.sip.leg</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="226">
+      <Module item="1">developer.sip.leg.adjacency</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="227">
+      <Module item="1">developer.sip.leg.collabedgeutils</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="228">
+      <Module item="1">developer.sip.legfactory</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="229">
+      <Module item="1">developer.sip.msgdisp</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="230">
+      <Module item="1">developer.sip.opdb</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="231">
+      <Module item="1">developer.sip.partialdecoder</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="232">
+      <Module item="1">developer.sip.ping</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="233">
+      <Module item="1">developer.sip.procdb</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="234">
+      <Module item="1">developer.sip.sdp.encryption</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="235">
+      <Module item="1">developer.sip.services</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="236">
+      <Module item="1">developer.sip.transaction</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="237">
+      <Module item="1">developer.sip.transport</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="238">
+      <Module item="1">developer.sip.transportmsg</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="239">
+      <Module item="1">developer.sip.traversal.binding</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="240">
+      <Module item="1">developer.sip.traversal.cfg</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="241">
+      <Module item="1">developer.sip.traversal.errs</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="242">
+      <Module item="1">developer.sip.traversal.general</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="243">
+      <Module item="1">developer.sip.traversal.resp</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="244">
+      <Module item="1">developer.sip.traversal.timer</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="245">
+      <Module item="1">developer.sipassentparsing</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="246">
+      <Module item="1">developer.sipmsg</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="247">
+      <Module item="1">developer.sipmsg.rfc1123date</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="248">
+      <Module item="1">developer.sipproxysipmessageutils</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="249">
+      <Module item="1">developer.sipservice</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="250">
+      <Module item="1">developer.sipservice.common.packet</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="251">
+      <Module item="1">developer.sipservice.common.remoteauthzonefactory</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="252">
+      <Module item="1">developer.sipservice.proxy.manager</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="253">
+      <Module item="1">developer.sipservice.proxy.proxy</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="254">
+      <Module item="1">developer.sipservice.proxy.requestrouter</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="255">
+      <Module item="1">developer.sipservice.proxy.transport</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="256">
+      <Module item="1">developer.sipservice.server</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="257">
+      <Module item="1">developer.sipservice.server.bearerauthrequesthandler</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="258">
+      <Module item="1">developer.sipservice.server.digeststatusrequesthandler</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="259">
+      <Module item="1">developer.sipservice.server.dsprocessor</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="260">
+      <Module item="1">developer.sipservice.server.fsm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="261">
+      <Module item="1">developer.sipservice.server.fsm.impl</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="262">
+      <Module item="1">developer.sipservice.server.ntlmstatusresponder</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="263">
+      <Module item="1">developer.sipservice.server.payloadhandler</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="264">
+      <Module item="1">developer.sipservice.server.serviceresponsehandler</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="265">
+      <Module item="1">developer.sipservice.sipservicesync</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="266">
+      <Module item="1">developer.sipservice.stats</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="267">
+      <Module item="1">developer.sipservice.status</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="268">
+      <Module item="1">developer.sockhandler</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="269">
+      <Module item="1">developer.sourcealiasdeterminator</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="270">
+      <Module item="1">developer.ssl</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="271">
+      <Module item="1">developer.statusmgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="272">
+      <Module item="1">developer.statusmgr.history</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="273">
+      <Module item="1">developer.statusmgr.live</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="274">
+      <Module item="1">developer.stderr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="275">
+      <Module item="1">developer.stdout</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="276">
+      <Module item="1">developer.stun</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="277">
+      <Module item="1">developer.sysadm</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="278">
+      <Module item="1">developer.sysadm.cdbrestapiaccess</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="279">
+      <Module item="1">developer.sysadm.exportcontrollimit</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="280">
+      <Module item="1">developer.sysadm.mediaportmonitor</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="281">
+      <Module item="1">developer.sysadm.resourceusage</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="282">
+      <Module item="1">developer.sysadm.resourceusagecyclicreset</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="283">
+      <Module item="1">developer.sysadm.serviceselectmonitor</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="284">
+      <Module item="1">developer.sysadm.smartlicense.monitor</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="285">
+      <Module item="1">developer.sysadm.smartlicense.nomacd</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="286">
+      <Module item="1">developer.systemresources</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="287">
+      <Module item="1">developer.ttlog.monitor</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="288">
+      <Module item="1">developer.userpolicy.sourcealiasrewriter</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="289">
+      <Module item="1">developer.userpolicy.userpolicy</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="290">
+      <Module item="1">developer.webserv</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="291">
+      <Module item="1">developer.winbindservice.fsm.impl</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="292">
+      <Module item="1">developer.xcp</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="293">
+      <Module item="1">developer.xcp.cm</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="294">
+      <Module item="1">developer.xcp.federation</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="295">
+      <Module item="1">developer.xcp.jabber</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="296">
+      <Module item="1">developer.xmlappl</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="297">
+      <Module item="1">developer.zone.activepeerchooser</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="298">
+      <Module item="1">developer.zone.dnszone</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="299">
+      <Module item="1">developer.zone.enumzone</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="300">
+      <Module item="1">developer.zone.local</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="301">
+      <Module item="1">developer.zone.neighbourzone</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="302">
+      <Module item="1">developer.zone.traversalclientzone</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="303">
+      <Module item="1">developer.zone.traversalserverzone</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="304">
+      <Module item="1">developer.zone.zonemgr</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="305">
+      <Module item="1">hybridservices</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="306">
+      <Module item="1">mediastats</Module>
+      <TraceLevel item="1">Info</TraceLevel>
+    </Logger>
+    <Logger item="307">
+      <Module item="1">network</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="308">
+      <Module item="1">network.cpl</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="309">
+      <Module item="1">network.dns</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="310">
+      <Module item="1">network.h323</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="311">
+      <Module item="1">network.http</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="312">
+      <Module item="1">network.ldap</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="313">
+      <Module item="1">network.mediarouting</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="314">
+      <Module item="1">network.rpcnetlogon</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="315">
+      <Module item="1">network.search</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="316">
+      <Module item="1">network.sip</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="317">
+      <Module item="1">network.sourcealiasrewriting</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="318">
+      <Module item="1">network.stun</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="319">
+      <Module item="1">network.tcp</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+    <Logger item="320">
+      <Module item="1">network.unknown</Module>
+      <TraceLevel item="1">Debug</TraceLevel>
+    </Logger>
+  </Loggers>
+  <Policy item="1" />
+  <CollaborationEdge item="1"><HTTPAllowListAuto item="1"><Ruleset item="1"><Protocol item="1">https</Protocol><Port item="1">443</Port><Type item="1">cucm</Type><Addresses item="1"><Address item="1">172.18.6.10</Address><Address item="2">172.18.6.30</Address><Address item="3">172.25.0.25</Address><Address item="4">172.26.100.35</Address><Address item="5">172.30.1.100</Address><Address item="6">ccm-brk.drmc.org</Address><Address item="7">ccm-clfd.drmc.org</Address><Address item="8">ccm-dubois.drmc.org</Address><Address item="9">ccm-elk.drmc.org</Address><Address item="10">ccm-pub.drmc.org</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/ccmcip/authenticate.jsp</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="2"><Text item="1">/ccmcip/xmldirectoryinput.jsp</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="3"><Text item="1">/ccmcip/xmldirectorylist.jsp</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="4"><Text item="1">/ccmpd/login.do</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="5"><Text item="1">/ccmpd/pdCheckLogin.do</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="6"><Text item="1">/cucm-uds/clusterUser</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="7"><Text item="1">/cucm-uds/private/user/</Text><Match item="1">prefix</Match><Methods item="1">GET</Methods></Path><Path item="8"><Text item="1">/cucm-uds/servers</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="9"><Text item="1">/cucm-uds/users</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="10"><Text item="1">/cucm-uds/version</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="11"><Text item="1">/cucm-uds/xps/</Text><Match item="1">prefix</Match><Methods item="1">GET</Methods></Path><Path item="12"><Text item="1">/emapp/EMAppServlet</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="13"><Text item="1">/emapp/jsp/initservices.jsp</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="14"><Text item="1">/headset/</Text><Match item="1">prefix</Match><Methods item="1">GET</Methods></Path><Path item="15"><Text item="1">/ssosp/user/whoami</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="16"><Text item="1">/ssosp/ws/public/singleSignOn</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="17"><Text item="1">/changecredential/ChangeCredentialServlet</Text><Match item="1">exact</Match><Methods item="1">GET,POST</Methods></Path><Path item="18"><Text item="1">/cucm-uds/user/</Text><Match item="1">prefix</Match><Methods item="1">GET,PUT,DELETE</Methods></Path><Path item="19"><Text item="1">/cucm-uds/private/users</Text><Match item="1">exact</Match><Methods item="1">OPTIONS,POST</Methods></Path><Path item="20"><Text item="1">/ccmcip/Personalization</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="21"><Text item="1">/emservice/EMServiceServlet</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path></Paths></Ruleset><Ruleset item="2"><Protocol item="1">https</Protocol><Port item="1">8443</Port><Type item="1">cucm</Type><Addresses item="1"><Address item="1">172.18.6.10</Address><Address item="2">172.18.6.30</Address><Address item="3">172.25.0.25</Address><Address item="4">172.26.100.35</Address><Address item="5">172.30.1.100</Address><Address item="6">ccm-brk.drmc.org</Address><Address item="7">ccm-clfd.drmc.org</Address><Address item="8">ccm-dubois.drmc.org</Address><Address item="9">ccm-elk.drmc.org</Address><Address item="10">ccm-pub.drmc.org</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/ccmcip/authenticate.jsp</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="2"><Text item="1">/ccmcip/xmldirectoryinput.jsp</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="3"><Text item="1">/ccmcip/xmldirectorylist.jsp</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="4"><Text item="1">/ccmpd/login.do</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="5"><Text item="1">/ccmpd/pdCheckLogin.do</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="6"><Text item="1">/cucm-uds/clusterUser</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="7"><Text item="1">/cucm-uds/private/user/</Text><Match item="1">prefix</Match><Methods item="1">GET</Methods></Path><Path item="8"><Text item="1">/cucm-uds/servers</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="9"><Text item="1">/cucm-uds/users</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="10"><Text item="1">/cucm-uds/version</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="11"><Text item="1">/cucm-uds/xps/</Text><Match item="1">prefix</Match><Methods item="1">GET</Methods></Path><Path item="12"><Text item="1">/emapp/EMAppServlet</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="13"><Text item="1">/emapp/jsp/initservices.jsp</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="14"><Text item="1">/ssosp/user/whoami</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="15"><Text item="1">/ssosp/ws/public/singleSignOn</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="16"><Text item="1">/ucmservices/v1/supportedServices</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="17"><Text item="1">/changecredential/ChangeCredentialServlet</Text><Match item="1">exact</Match><Methods item="1">GET,POST</Methods></Path><Path item="18"><Text item="1">/cucm-uds/user/</Text><Match item="1">prefix</Match><Methods item="1">GET,PUT,DELETE</Methods></Path><Path item="19"><Text item="1">/cucm-uds/private/users</Text><Match item="1">exact</Match><Methods item="1">OPTIONS,POST</Methods></Path><Path item="20"><Text item="1">/ccmcip/Personalization</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="21"><Text item="1">/devicemanagement/v1/clientAutoProv/createDevice</Text><Match item="1">prefix</Match><Methods item="1">POST</Methods></Path><Path item="22"><Text item="1">/emservice/EMServiceServlet</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path></Paths></Ruleset><Ruleset item="3"><Protocol item="1">https</Protocol><Port item="1">9444</Port><Type item="1">cucm</Type><Addresses item="1"><Address item="1">172.18.6.10</Address><Address item="2">172.18.6.30</Address><Address item="3">172.25.0.25</Address><Address item="4">172.26.100.35</Address><Address item="5">172.30.1.100</Address><Address item="6">ccm-brk.drmc.org</Address><Address item="7">ccm-clfd.drmc.org</Address><Address item="8">ccm-dubois.drmc.org</Address><Address item="9">ccm-elk.drmc.org</Address><Address item="10">ccm-pub.drmc.org</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/headset/</Text><Match item="1">prefix</Match><Methods item="1">GET</Methods></Path><Path item="2"><Text item="1">/headset/cc/v1/event</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="3"><Text item="1">/headset/inventory</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path></Paths></Ruleset><Ruleset item="4"><Protocol item="1">https</Protocol><Port item="1">6971</Port><Type item="1">cucm</Type><Addresses item="1"><Address item="1">172.18.6.10</Address><Address item="2">172.18.6.30</Address><Address item="3">172.25.0.25</Address><Address item="4">172.26.100.35</Address><Address item="5">172.30.1.100</Address><Address item="6">ccm-brk.drmc.org</Address><Address item="7">ccm-clfd.drmc.org</Address><Address item="8">ccm-dubois.drmc.org</Address><Address item="9">ccm-elk.drmc.org</Address><Address item="10">ccm-pub.drmc.org</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/</Text><Match item="1">prefix</Match><Methods item="1">GET</Methods></Path></Paths></Ruleset><Ruleset item="5"><Protocol item="1">https</Protocol><Port item="1">6972</Port><Type item="1">cucm</Type><Addresses item="1"><Address item="1">172.18.6.10</Address><Address item="2">172.18.6.30</Address><Address item="3">172.25.0.25</Address><Address item="4">172.26.100.35</Address><Address item="5">172.30.1.100</Address><Address item="6">ccm-brk.drmc.org</Address><Address item="7">ccm-clfd.drmc.org</Address><Address item="8">ccm-dubois.drmc.org</Address><Address item="9">ccm-elk.drmc.org</Address><Address item="10">ccm-pub.drmc.org</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/</Text><Match item="1">prefix</Match><Methods item="1">GET</Methods></Path></Paths></Ruleset><Ruleset item="6"><Protocol item="1">http</Protocol><Port item="1">8080</Port><Type item="1">cucm</Type><Addresses item="1"><Address item="1">172.18.6.10</Address><Address item="2">172.18.6.30</Address><Address item="3">172.25.0.25</Address><Address item="4">172.26.100.35</Address><Address item="5">172.30.1.100</Address><Address item="6">ccm-brk.drmc.org</Address><Address item="7">ccm-clfd.drmc.org</Address><Address item="8">ccm-dubois.drmc.org</Address><Address item="9">ccm-elk.drmc.org</Address><Address item="10">ccm-pub.drmc.org</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/emapp/EMAppServlet</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="2"><Text item="1">/emapp/jsp/initservices.jsp</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="3"><Text item="1">/changecredential/ChangeCredentialServlet</Text><Match item="1">exact</Match><Methods item="1">GET,POST</Methods></Path><Path item="4"><Text item="1">/emservice/EMServiceServlet</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path></Paths></Ruleset><Ruleset item="7"><Protocol item="1">http</Protocol><Port item="1">6970</Port><Type item="1">cucm</Type><Addresses item="1"><Address item="1">172.18.6.10</Address><Address item="2">172.18.6.30</Address><Address item="3">172.25.0.25</Address><Address item="4">172.26.100.35</Address><Address item="5">172.30.1.100</Address><Address item="6">ccm-brk.drmc.org</Address><Address item="7">ccm-clfd.drmc.org</Address><Address item="8">ccm-dubois.drmc.org</Address><Address item="9">ccm-elk.drmc.org</Address><Address item="10">ccm-pub.drmc.org</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/</Text><Match item="1">prefix</Match><Methods item="1">GET</Methods></Path></Paths></Ruleset><Ruleset item="8"><Protocol item="1">https</Protocol><Port item="1">8443</Port><Type item="1">cup</Type><Addresses item="1"><Address item="1">10.10.20.16</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/EPASSoap/service/v105</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="2"><Text item="1">/EPASSoap/service/v80</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path></Paths></Ruleset><Ruleset item="9"><Protocol item="1">https</Protocol><Port item="1">7336</Port><Type item="1">cup</Type><Addresses item="1"><Address item="1">10.10.20.16</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/files</Text><Match item="1">exact</Match><Methods item="1">GET,POST</Methods></Path><Path item="2"><Text item="1">/files/</Text><Match item="1">prefix</Match><Methods item="1">GET,POST</Methods></Path></Paths></Ruleset><Ruleset item="10"><Protocol item="1">https</Protocol><Port item="1">443</Port><Type item="1">ucxn</Type><Addresses item="1"><Address item="1">172.18.6.15</Address><Address item="2">172.18.6.16</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/ssosp/user/whoami</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="2"><Text item="1">/ssosp/ws/public/singleSignOn</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="3"><Text item="1">/vmrest/directory/addressable</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="4"><Text item="1">/vmrest/user</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="5"><Text item="1">/vmrest/version</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="6"><Text item="1">/vmrest/mailbox</Text><Match item="1">prefix</Match><Methods item="1">GET,POST</Methods></Path><Path item="7"><Text item="1">/vmrest/sslconnectioncheck</Text><Match item="1">exact</Match><Methods item="1">GET,POST</Methods></Path><Path item="8"><Text item="1">/vmrest/messages/</Text><Match item="1">prefix</Match><Methods item="1">GET,POST,PUT,DELETE</Methods></Path><Path item="9"><Text item="1">/vmrest/user/</Text><Match item="1">prefix</Match><Methods item="1">GET,PUT</Methods></Path><Path item="10"><Text item="1">/VMWS/VMWS.dll</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="11"><Text item="1">/vmrest/messages</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="12"><Text item="1">/vmws/services/</Text><Match item="1">prefix</Match><Methods item="1">POST</Methods></Path></Paths></Ruleset><Ruleset item="11"><Protocol item="1">https</Protocol><Port item="1">8443</Port><Type item="1">ucxn</Type><Addresses item="1"><Address item="1">172.18.6.15</Address><Address item="2">172.18.6.16</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/ssosp/user/whoami</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="2"><Text item="1">/ssosp/ws/public/singleSignOn</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="3"><Text item="1">/vmrest/directory/addressable</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="4"><Text item="1">/vmrest/user</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="5"><Text item="1">/vmrest/version</Text><Match item="1">exact</Match><Methods item="1">GET</Methods></Path><Path item="6"><Text item="1">/vmrest/mailbox</Text><Match item="1">prefix</Match><Methods item="1">GET,POST</Methods></Path><Path item="7"><Text item="1">/vmrest/sslconnectioncheck</Text><Match item="1">exact</Match><Methods item="1">GET,POST</Methods></Path><Path item="8"><Text item="1">/vmrest/messages/</Text><Match item="1">prefix</Match><Methods item="1">GET,POST,PUT,DELETE</Methods></Path><Path item="9"><Text item="1">/vmrest/user/</Text><Match item="1">prefix</Match><Methods item="1">GET,PUT</Methods></Path><Path item="10"><Text item="1">/vmrest/messages</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path></Paths></Ruleset><Ruleset item="12"><Protocol item="1">https</Protocol><Port item="1">7443</Port><Type item="1">ucxn</Type><Addresses item="1"><Address item="1">172.18.6.15</Address><Address item="2">172.18.6.16</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/vmevents/cometd/connect</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="2"><Text item="1">/vmevents/cometd/handshake</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="3"><Text item="1">/vmevents/cometd/subscribe</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path></Paths></Ruleset><Ruleset item="13"><Protocol item="1">http</Protocol><Port item="1">80</Port><Type item="1">ucxn</Type><Addresses item="1"><Address item="1">172.18.6.15</Address><Address item="2">172.18.6.16</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/VMWS/VMWS.dll</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="2"><Text item="1">/vmws/services/</Text><Match item="1">prefix</Match><Methods item="1">POST</Methods></Path></Paths></Ruleset><Ruleset item="14"><Protocol item="1">http</Protocol><Port item="1">7080</Port><Type item="1">ucxn</Type><Addresses item="1"><Address item="1">172.18.6.15</Address><Address item="2">172.18.6.16</Address></Addresses><Paths item="1"><Path item="1"><Text item="1">/vmevents/cometd/connect</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="2"><Text item="1">/vmevents/cometd/handshake</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path><Path item="3"><Text item="1">/vmevents/cometd/subscribe</Text><Match item="1">exact</Match><Methods item="1">POST</Methods></Path></Paths></Ruleset></HTTPAllowListAuto><HTTPAllowListManual item="1"><DefaultMethods item="1"><Method item="1">GET</Method><Method item="2">HEAD</Method><Method item="3">POST</Method></DefaultMethods></HTTPAllowListManual><HTTPAllowListTests item="1" /><CMSs item="1" /><CUCM item="1"><Cluster item="1"><Publisher item="1"><PublisherAddress item="1">ccm-clfd.drmc.org</PublisherAddress><CUCMnode item="1"><Host item="1">172.18.6.10</Host><Role item="1">publisher</Role><Version item="1">14.0.1</Version><UcAddress item="1"><Host item="1">172.18.6.10</Host><Type item="1">cucm</Type><Address item="1">172.18.6.10</Address><FQDN item="1">172.18.6.10</FQDN><TLS item="1">ccm-pub.drmc.org</TLS></UcAddress></CUCMnode><CallManager item="1"><CUCMserver item="1"><Name item="1">172.18.6.10</Name><Role item="1">publisher</Role><CMname item="1">ccm-pub</CMname><Address item="1">172.18.6.10</Address><Port item="1">8443</Port><Version item="1">14.0.1</Version><Deployment item="1">1</Deployment></CUCMserver></CallManager></Publisher><UDS item="1"><CUCMnode item="1"><Host item="1">172.18.6.10</Host><Role item="1">publisher</Role><Version item="1">14.0.1</Version><UcAddress item="1"><Host item="1">172.18.6.10</Host><Type item="1">cucm</Type><Address item="1">172.18.6.10</Address><FQDN item="1">172.18.6.10</FQDN><TLS item="1">ccm-pub.drmc.org</TLS></UcAddress></CUCMnode><CUCMnode item="2"><Host item="1">ccm-dubois.drmc.org</Host><Role item="1">subscriber</Role><Version item="1">14.0.1</Version><UcAddress item="1"><Host item="1">ccm-dubois.drmc.org</Host><Type item="1">cucm</Type><Address item="1">172.18.6.30</Address><FQDN item="1">172.18.6.30</FQDN><TLS item="1">ccm-dubois.drmc.org</TLS></UcAddress></CUCMnode><CUCMnode item="3"><Host item="1">ccm-brk.drmc.org</Host><Role item="1">subscriber</Role><Version item="1">14.0.1</Version><UcAddress item="1"><Host item="1">ccm-brk.drmc.org</Host><Type item="1">cucm</Type><Address item="1">172.25.0.25</Address><FQDN item="1">172.25.0.25</FQDN><TLS item="1">ccm-brk.drmc.org</TLS></UcAddress></CUCMnode><CUCMnode item="4"><Host item="1">ccm-clfd.drmc.org</Host><Role item="1">subscriber</Role><Version item="1">14.0.1</Version><UcAddress item="1"><Host item="1">ccm-clfd.drmc.org</Host><Type item="1">cucm</Type><Address item="1">172.26.100.35</Address><FQDN item="1">172.26.100.35</FQDN><TLS item="1">ccm-clfd.drmc.org</TLS></UcAddress></CUCMnode><CUCMnode item="5"><Host item="1">ccm-elk.drmc.org</Host><Role item="1">subscriber</Role><Version item="1">14.0.1</Version><UcAddress item="1"><Host item="1">ccm-elk.drmc.org</Host><Type item="1">cucm</Type><Address item="1">172.30.1.100</Address><FQDN item="1">172.30.1.100</FQDN><TLS item="1">ccm-elk.drmc.org</TLS></UcAddress></CUCMnode></UDS><TFTP item="1"><TFTPnode item="1"><Host item="1">172.18.6.10</Host><Role item="1">publisher</Role><Priority item="1">15</Priority><Mode item="1">On</Mode><UcAddress item="1"><Host item="1">172.18.6.10</Host><Type item="1">cucm</Type><Address item="1">172.18.6.10</Address><FQDN item="1">172.18.6.10</FQDN><TLS item="1">ccm-pub.drmc.org</TLS></UcAddress></TFTPnode><TFTPnode item="2"><Host item="1">ccm-brk.drmc.org</Host><Role item="1">subscriber</Role><Priority item="1">25</Priority><Mode item="1">On</Mode><UcAddress item="1"><Host item="1">ccm-brk.drmc.org</Host><Type item="1">cucm</Type><Address item="1">172.25.0.25</Address><FQDN item="1">172.25.0.25</FQDN><TLS item="1">ccm-brk.drmc.org</TLS></UcAddress></TFTPnode><TFTPnode item="3"><Host item="1">ccm-elk.drmc.org</Host><Role item="1">subscriber</Role><Priority item="1">25</Priority><Mode item="1">On</Mode><UcAddress item="1"><Host item="1">ccm-elk.drmc.org</Host><Type item="1">cucm</Type><Address item="1">172.30.1.100</Address><FQDN item="1">172.30.1.100</FQDN><TLS item="1">ccm-elk.drmc.org</TLS></UcAddress></TFTPnode><TFTPnode item="4"><Host item="1">ccm-dubois.drmc.org</Host><Role item="1">subscriber</Role><Priority item="1">25</Priority><Mode item="1">On</Mode><UcAddress item="1"><Host item="1">ccm-dubois.drmc.org</Host><Type item="1">cucm</Type><Address item="1">172.18.6.30</Address><FQDN item="1">172.18.6.30</FQDN><TLS item="1">ccm-dubois.drmc.org</TLS></UcAddress></TFTPnode><TFTPnode item="5"><Host item="1">ccm-clfd.drmc.org</Host><Role item="1">subscriber</Role><Priority item="1">25</Priority><Mode item="1">On</Mode><UcAddress item="1"><Host item="1">ccm-clfd.drmc.org</Host><Type item="1">cucm</Type><Address item="1">172.26.100.35</Address><FQDN item="1">172.26.100.35</FQDN><TLS item="1">ccm-clfd.drmc.org</TLS></UcAddress></TFTPnode></TFTP><CUCM item="1"><CUCMserver item="1"><Name item="1">172.18.6.10</Name><Role item="1">publisher</Role><CMname item="1">ccm-pub</CMname><Address item="1">172.18.6.10</Address><Port item="1">8443</Port><Version item="1">14.0.1</Version><Deployment item="1">1</Deployment></CUCMserver><CUCMserver item="2"><Name item="1">ccm-brk.drmc.org</Name><Role item="1">subscriber</Role><CMname item="1">ccm-brk.drmc.org</CMname><Address item="1">172.25.0.25</Address><Port item="1">8443</Port><Version item="1">14.0.1</Version><Deployment item="1">1</Deployment></CUCMserver><CUCMserver item="3"><Name item="1">ccm-elk.drmc.org</Name><Role item="1">subscriber</Role><CMname item="1">ccm-elk.drmc.org</CMname><Address item="1">172.30.1.100</Address><Port item="1">8443</Port><Version item="1">14.0.1</Version><Deployment item="1">1</Deployment></CUCMserver><CUCMserver item="4"><Name item="1">ccm-dubois.drmc.org</Name><Role item="1">subscriber</Role><CMname item="1">ccm-dubois.drmc.org</CMname><Address item="1">172.18.6.30</Address><Port item="1">8443</Port><Version item="1">14.0.1</Version><Deployment item="1">1</Deployment></CUCMserver><CUCMserver item="5"><Name item="1">ccm-clfd.drmc.org</Name><Role item="1">subscriber</Role><CMname item="1">ccm-clfd.drmc.org</CMname><Address item="1">172.26.100.35</Address><Port item="1">8443</Port><Version item="1">14.0.1</Version><Deployment item="1">1</Deployment></CUCMserver></CUCM></Cluster></CUCM><CUCMs item="1"><CUCM item="1"><Publisher item="1">CCM-Clfd.drmc.org</Publisher><TLSVerify item="1">Off</TLSVerify><Node item="1"><Host item="1">10.10.20.16</Host><Version item="1">14.0.1</Version><Role item="1">Publisher (IMP)</Role></Node><Node item="2"><Host item="1">172.18.6.10</Host><Version item="1">14.0.1</Version><Role item="1">Publisher</Role></Node><Node item="3"><Host item="1">ccm-brk.drmc.org</Host><Version item="1">14.0.1</Version><Role item="1">Subscriber</Role></Node><Node item="4"><Host item="1">ccm-elk.drmc.org</Host><Version item="1">14.0.1</Version><Role item="1">Subscriber</Role></Node><Node item="5"><Host item="1">CCM-DuBois.drmc.org</Host><Version item="1">14.0.1</Version><Role item="1">Subscriber</Role></Node><Node item="6"><Host item="1">CCM-Clfd.drmc.org</Host><Version item="1">14.0.1</Version><Role item="1">Subscriber</Role></Node></CUCM></CUCMs><Domains item="1"><Domain item="1"><Name item="1">phhealthcare.org</Name><RemoteAddress item="1">206.199.12.43:7001</RemoteAddress><ZoneId item="1">6</ZoneId><SIP item="1">True</SIP><XMPP item="1">True</XMPP></Domain></Domains><Tunnels item="1"><Tunnel item="1"><Ident item="1">12cd6dc4-82de-5c97-bbff-0fdaea83663f</Ident><Enabled item="1">True</Enabled><Reason item="1" /><BindAddress item="1">localhost</BindAddress><Port item="1">0</Port><Host item="1">localhost</Host><HostPort item="1">8443</HostPort><Domain item="1">phhealthcare.org</Domain><Hostname item="1">ccm-expresse2.phhealthcare.org</Hostname><AllocPort item="1">31129</AllocPort><LastUpdate item="1">1787225371</LastUpdate></Tunnel></Tunnels><Portforwarding item="1"><Mesh item="1"><Status item="1">Active</Status></Mesh><Server item="1"><Status item="1">Inactive</Status></Server></Portforwarding><Authentication item="1"><LegacyCred item="1">True</LegacyCred><LegacySSO item="1">False</LegacySSO><OAuthLocal item="1">True</OAuthLocal><OAuthSSO item="1">False</OAuthSSO><InternalCheck item="1">False</InternalCheck><AllowEmbeddedSafari item="1">False</AllowEmbeddedSafari><AllowRedirectUri item="1">False</AllowRedirectUri><AllowOnboardingOverMRA item="1">True</AllowOnboardingOverMRA><EdgeConfigServer item="1"><OAuthCounters item="1"><UCClient item="1"><Totals item="1"><Sent item="1">351</Sent><Completed item="1">351</Completed><TimedOut item="1">0</TimedOut><Failed item="1">0</Failed><MaxOutstanding item="1">5</MaxOutstanding></Totals><Servers item="1"><Server item="1"><Address item="1">ccm-pub.drmc.org</Address><Sent item="1">68</Sent><Completed item="1">68</Completed><TimedOut item="1">0</TimedOut><Failed item="1">0</Failed><MaxOutstanding item="1">1</MaxOutstanding></Server><Server item="2"><Address item="1">ccm-clfd.drmc.org</Address><Sent item="1">82</Sent><Completed item="1">82</Completed><TimedOut item="1">0</TimedOut><Failed item="1">0</Failed><MaxOutstanding item="1">1</MaxOutstanding></Server><Server item="3"><Address item="1">ccm-elk.drmc.org</Address><Sent item="1">60</Sent><Completed item="1">60</Completed><TimedOut item="1">0</TimedOut><Failed item="1">0</Failed><MaxOutstanding item="1">1</MaxOutstanding></Server><Server item="4"><Address item="1">ccm-dubois.drmc.org</Address><Sent item="1">81</Sent><Completed item="1">81</Completed><TimedOut item="1">0</TimedOut><Failed item="1">0</Failed><MaxOutstanding item="1">1</MaxOutstanding></Server><Server item="5"><Address item="1">ccm-brk.drmc.org</Address><Sent item="1">60</Sent><Completed item="1">60</Completed><TimedOut item="1">0</TimedOut><Failed item="1">0</Failed><MaxOutstanding item="1">1</MaxOutstanding></Server></Servers></UCClient><Requests item="1"><ClientRequests item="1">329</ClientRequests><HomeCucmNotFound item="1">7</HomeCucmNotFound></Requests><Responses item="1"><ClientResponses item="1">328</ClientResponses><ClientResponse200 item="1">314</ClientResponse200><ClientResponse302 item="1">14</ClientResponse302></Responses><GetEdgeSso item="1" /><Authorize item="1" /><Fedlet item="1" /><ProxyAuthorization item="1"><UCM item="1"><Requests item="1">16</Requests><Successful item="1">319</Successful><Failed item="1">2</Failed></UCM><UCxN item="1" /><LocalAuthentication item="1"><Requests item="1">23</Requests></LocalAuthentication></ProxyAuthorization><AccessToken item="1"><Requests item="1">14</Requests><Successful item="1">14</Successful></AccessToken><AccessCode item="1"><Requests item="1">14</Requests><Successful item="1">14</Successful></AccessCode><TokenRefresh item="1"><Requests item="1">292</Requests><Successful item="1">291</Successful></TokenRefresh><Provisioning item="1"><ProvisioningReqs item="1">652</ProvisioningReqs></Provisioning></OAuthCounters></EdgeConfigServer></Authentication><UCnodes item="1"><Cluster item="1"><Name item="1">CCM-Clfd.drmc.org</Name><Node item="1"><Name item="1">10.10.20.16</Name><Version item="1">14.0.1</Version><FullVersion item="1">14.0.1.13900(155)</FullVersion><Address item="1">10.10.20.16</Address></Node><Node item="2"><Name item="1">172.18.6.10</Name><Version item="1">14.0.1</Version><FullVersion item="1">14.0.1.13900(155)</FullVersion><Address item="1">172.18.6.10</Address><Address item="2">ccm-pub.drmc.org</Address></Node><Node item="3"><Name item="1">ccm-brk.drmc.org</Name><Version item="1">14.0.1</Version><FullVersion item="1">14.0.1.13900(155)</FullVersion><Address item="1">172.25.0.25</Address><Address item="2">ccm-brk.drmc.org</Address></Node><Node item="4"><Name item="1">ccm-elk.drmc.org</Name><Version item="1">14.0.1</Version><FullVersion item="1">14.0.1.13900(155)</FullVersion><Address item="1">172.30.1.100</Address><Address item="2">ccm-elk.drmc.org</Address></Node><Node item="5"><Name item="1">CCM-DuBois.drmc.org</Name><Version item="1">14.0.1</Version><FullVersion item="1">14.0.1.13900(155)</FullVersion><Address item="1">ccm-dubois.drmc.org</Address><Address item="2">172.18.6.30</Address></Node><Node item="6"><Name item="1">CCM-Clfd.drmc.org</Name><Version item="1">14.0.1</Version><FullVersion item="1">14.0.1.13900(155)</FullVersion><Address item="1">ccm-clfd.drmc.org</Address><Address item="2">172.26.100.35</Address></Node></Cluster><Cluster item="2"><Name item="1">unity-pub.drmc.org</Name><Node item="1"><Name item="1">172.18.6.16</Name><Version item="1">None</Version><FullVersion item="1">None</FullVersion><Address item="1">172.18.6.16</Address></Node><Node item="2"><Name item="1">172.18.6.15</Name><Version item="1">None</Version><FullVersion item="1">None</FullVersion><Address item="1">172.18.6.15</Address></Node></Cluster></UCnodes><UCxNs item="1"><UCxN item="1"><Publisher item="1">unity-pub.drmc.org</Publisher><TLSVerify item="1">Off</TLSVerify><Node item="1"><Host item="1">172.18.6.15</Host><Version item="1">14.0.1</Version></Node><Node item="2"><Host item="1">172.18.6.16</Host><Version item="1">14.0.1</Version></Node></UCxN></UCxNs><UDS item="1"><Deployment id="1" item="1"><Server item="1"><Host item="1">172.18.6.10</Host><Name item="1">172.18.6.10</Name><Address item="1">172.18.6.10</Address><Cluster item="1">CCM-Clfd.drmc.org</Cluster><Version item="1">14.0.1</Version></Server><Server item="2"><Host item="1">CCM-Clfd.drmc.org</Host><Name item="1">CCM-Clfd.drmc.org</Name><Address item="1">172.26.100.35</Address><Cluster item="1">CCM-Clfd.drmc.org</Cluster><Version item="1">14.0.1</Version></Server><Server item="3"><Host item="1">ccm-brk.drmc.org</Host><Name item="1">ccm-brk.drmc.org</Name><Address item="1">172.25.0.25</Address><Cluster item="1">CCM-Clfd.drmc.org</Cluster><Version item="1">14.0.1</Version></Server><Server item="4"><Host item="1">ccm-elk.drmc.org</Host><Name item="1">ccm-elk.drmc.org</Name><Address item="1">172.30.1.100</Address><Cluster item="1">CCM-Clfd.drmc.org</Cluster><Version item="1">14.0.1</Version></Server><Server item="5"><Host item="1">CCM-DuBois.drmc.org</Host><Name item="1">CCM-DuBois.drmc.org</Name><Address item="1">172.18.6.30</Address><Cluster item="1">CCM-Clfd.drmc.org</Cluster><Version item="1">14.0.1</Version></Server></Deployment></UDS><CUPs item="1"><CUP item="1"><Publisher item="1">tst-roam-03.drmc.org</Publisher><TLSVerify item="1">Off</TLSVerify><Node item="1"><Host item="1">10.10.20.16</Host><Version item="1">14.0.1</Version><Type item="1">cup</Type><Realm item="1">10-10-20-16</Realm></Node></CUP></CUPs></CollaborationEdge>
+  <Cloud item="1" />
+  <MicrosoftContent item="1" />
+  <MicrosoftIMP item="1" />
+  <SipServiceDomains item="1">
+    <Domain item="1">
+      <DisplayName item="1"> .sip-service. </DisplayName>
+      <Failures item="1">
+        <AuthenticationFailure item="1">False</AuthenticationFailure>
+        <ConfigurationFailure item="1">False</ConfigurationFailure>
+      </Failures>
+      <Messages item="1">
+        <Sent item="1">0</Sent>
+        <LastSentTime item="1">Time not set</LastSentTime>
+        <Received item="1">2533</Received>
+        <LastReceivedTime item="1">2026-08-20 15:56:44</LastReceivedTime>
+      </Messages>
+      <Errors item="1">
+        <SIPErrors item="1">0</SIPErrors>
+        <LastSIPError item="1">0</LastSIPError>
+        <LastSIPErrorTime item="1">Time not set</LastSIPErrorTime>
+        <SIPProxyErrors item="1">0</SIPProxyErrors>
+        <LastSIPProxyError item="1" />
+        <LastSIPProxyErrorTime item="1">Time not set</LastSIPProxyErrorTime>
+        <ServiceErrors item="1">0</ServiceErrors>
+        <LastServiceErrorTime item="1">Time not set</LastServiceErrorTime>
+      </Errors>
+      <BasicPing item="1">
+        <Sent item="1">0</Sent>
+        <Received item="1">0</Received>
+      </BasicPing>
+      <Digest item="1">
+        <PingSent item="1">0</PingSent>
+        <PingReceived item="1">0</PingReceived>
+        <AuthSent item="1">0</AuthSent>
+        <AuthReceived item="1">0</AuthReceived>
+        <AuthFailures item="1">0</AuthFailures>
+      </Digest>
+      <NTLM item="1">
+        <PingSent item="1">0</PingSent>
+        <PingReceived item="1">0</PingReceived>
+        <AuthSent item="1">0</AuthSent>
+        <AuthReceived item="1">0</AuthReceived>
+        <AuthFailures item="1">0</AuthFailures>
+      </NTLM>
+    </Domain>
+    <Domain item="2">
+      <DisplayName item="1"> .unknown. </DisplayName>
+      <Failures item="1">
+        <AuthenticationFailure item="1">False</AuthenticationFailure>
+        <ConfigurationFailure item="1">False</ConfigurationFailure>
+      </Failures>
+      <Messages item="1">
+        <Sent item="1">0</Sent>
+        <LastSentTime item="1">Time not set</LastSentTime>
+        <Received item="1">0</Received>
+        <LastReceivedTime item="1">Time not set</LastReceivedTime>
+      </Messages>
+      <Errors item="1">
+        <SIPErrors item="1">0</SIPErrors>
+        <LastSIPError item="1">0</LastSIPError>
+        <LastSIPErrorTime item="1">Time not set</LastSIPErrorTime>
+        <SIPProxyErrors item="1">0</SIPProxyErrors>
+        <LastSIPProxyError item="1" />
+        <LastSIPProxyErrorTime item="1">Time not set</LastSIPProxyErrorTime>
+        <ServiceErrors item="1">0</ServiceErrors>
+        <LastServiceErrorTime item="1">Time not set</LastServiceErrorTime>
+      </Errors>
+      <BasicPing item="1">
+        <Sent item="1">0</Sent>
+        <Received item="1">0</Received>
+      </BasicPing>
+      <Digest item="1">
+        <PingSent item="1">0</PingSent>
+        <PingReceived item="1">0</PingReceived>
+        <AuthSent item="1">0</AuthSent>
+        <AuthReceived item="1">0</AuthReceived>
+        <AuthFailures item="1">0</AuthFailures>
+      </Digest>
+      <NTLM item="1">
+        <PingSent item="1">0</PingSent>
+        <PingReceived item="1">0</PingReceived>
+        <AuthSent item="1">0</AuthSent>
+        <AuthReceived item="1">0</AuthReceived>
+        <AuthFailures item="1">0</AuthFailures>
+      </NTLM>
+    </Domain>
+  </SipServiceDomains>
+  <SipServiceZones item="1">
+    <Zone item="1">
+      <DisplayName item="1"> .sip-service. </DisplayName>
+      <Failures item="1">
+        <AuthenticationFailure item="1">False</AuthenticationFailure>
+        <ConfigurationFailure item="1">False</ConfigurationFailure>
+      </Failures>
+      <Messages item="1">
+        <Sent item="1">2533</Sent>
+        <LastSentTime item="1">2026-08-20 15:56:44</LastSentTime>
+        <Received item="1">2533</Received>
+        <LastReceivedTime item="1">2026-08-20 15:56:44</LastReceivedTime>
+      </Messages>
+      <Errors item="1">
+        <SIPErrors item="1">0</SIPErrors>
+        <LastSIPError item="1">0</LastSIPError>
+        <LastSIPErrorTime item="1">Time not set</LastSIPErrorTime>
+        <SIPProxyErrors item="1">0</SIPProxyErrors>
+        <LastSIPProxyError item="1" />
+        <LastSIPProxyErrorTime item="1">Time not set</LastSIPProxyErrorTime>
+        <ServiceErrors item="1">0</ServiceErrors>
+        <LastServiceErrorTime item="1">Time not set</LastServiceErrorTime>
+      </Errors>
+      <BasicPing item="1">
+        <Sent item="1">0</Sent>
+        <Received item="1">0</Received>
+      </BasicPing>
+      <Digest item="1">
+        <PingSent item="1">0</PingSent>
+        <PingReceived item="1">0</PingReceived>
+        <AuthSent item="1">0</AuthSent>
+        <AuthReceived item="1">0</AuthReceived>
+        <AuthFailures item="1">0</AuthFailures>
+      </Digest>
+      <NTLM item="1">
+        <PingSent item="1">0</PingSent>
+        <PingReceived item="1">0</PingReceived>
+        <AuthSent item="1">0</AuthSent>
+        <AuthReceived item="1">0</AuthReceived>
+        <AuthFailures item="1">0</AuthFailures>
+      </NTLM>
+    </Zone>
+    <Zone item="2">
+      <DisplayName item="1"> .unknown. </DisplayName>
+      <Failures item="1">
+        <AuthenticationFailure item="1">False</AuthenticationFailure>
+        <ConfigurationFailure item="1">False</ConfigurationFailure>
+      </Failures>
+      <Messages item="1">
+        <Sent item="1">0</Sent>
+        <LastSentTime item="1">Time not set</LastSentTime>
+        <Received item="1">0</Received>
+        <LastReceivedTime item="1">Time not set</LastReceivedTime>
+      </Messages>
+      <Errors item="1">
+        <SIPErrors item="1">0</SIPErrors>
+        <LastSIPError item="1">0</LastSIPError>
+        <LastSIPErrorTime item="1">Time not set</LastSIPErrorTime>
+        <SIPProxyErrors item="1">0</SIPProxyErrors>
+        <LastSIPProxyError item="1" />
+        <LastSIPProxyErrorTime item="1">Time not set</LastSIPProxyErrorTime>
+        <ServiceErrors item="1">0</ServiceErrors>
+        <LastServiceErrorTime item="1">Time not set</LastServiceErrorTime>
+      </Errors>
+      <BasicPing item="1">
+        <Sent item="1">0</Sent>
+        <Received item="1">0</Received>
+      </BasicPing>
+      <Digest item="1">
+        <PingSent item="1">0</PingSent>
+        <PingReceived item="1">0</PingReceived>
+        <AuthSent item="1">0</AuthSent>
+        <AuthReceived item="1">0</AuthReceived>
+        <AuthFailures item="1">0</AuthFailures>
+      </Digest>
+      <NTLM item="1">
+        <PingSent item="1">0</PingSent>
+        <PingReceived item="1">0</PingReceived>
+        <AuthSent item="1">0</AuthSent>
+        <AuthReceived item="1">0</AuthReceived>
+        <AuthFailures item="1">0</AuthFailures>
+      </NTLM>
+    </Zone>
+    <Zone item="3">
+      <DisplayName item="1">Traversal Zone</DisplayName>
+      <Failures item="1">
+        <AuthenticationFailure item="1">False</AuthenticationFailure>
+        <ConfigurationFailure item="1">False</ConfigurationFailure>
+      </Failures>
+      <Messages item="1">
+        <Sent item="1">2533</Sent>
+        <LastSentTime item="1">2026-08-20 15:56:44</LastSentTime>
+        <Received item="1">2533</Received>
+        <LastReceivedTime item="1">2026-08-20 15:56:44</LastReceivedTime>
+      </Messages>
+      <Errors item="1">
+        <SIPErrors item="1">0</SIPErrors>
+        <LastSIPError item="1">0</LastSIPError>
+        <LastSIPErrorTime item="1">Time not set</LastSIPErrorTime>
+        <SIPProxyErrors item="1">0</SIPProxyErrors>
+        <LastSIPProxyError item="1" />
+        <LastSIPProxyErrorTime item="1">Time not set</LastSIPProxyErrorTime>
+        <ServiceErrors item="1">0</ServiceErrors>
+        <LastServiceErrorTime item="1">Time not set</LastServiceErrorTime>
+      </Errors>
+      <BasicPing item="1">
+        <Sent item="1">0</Sent>
+        <Received item="1">0</Received>
+      </BasicPing>
+      <Digest item="1">
+        <PingSent item="1">0</PingSent>
+        <PingReceived item="1">0</PingReceived>
+        <AuthSent item="1">0</AuthSent>
+        <AuthReceived item="1">0</AuthReceived>
+        <AuthFailures item="1">0</AuthFailures>
+      </Digest>
+      <NTLM item="1">
+        <PingSent item="1">0</PingSent>
+        <PingReceived item="1">0</PingReceived>
+        <AuthSent item="1">0</AuthSent>
+        <AuthReceived item="1">0</AuthReceived>
+        <AuthFailures item="1">0</AuthFailures>
+      </NTLM>
+    </Zone>
+  </SipServiceZones>
+  <PortUsage item="1">
+    <Media item="1">
+      <Range item="1">
+        <Start item="1">36000</Start>
+        <End item="1">47999</End>
+      </Range>
+      <Free item="1">12000</Free>
+      <Used item="1">0</Used>
+    </Media>
+  </PortUsage>
+<B2BUACalls item="1" /><Cafe item="1"><c_mgmt item="1"><installed item="1">True</installed><enabled item="1">True</enabled><running item="1">True</running><additional item="1"><connectors item="1" /></additional></c_mgmt><connectors item="1" /></Cafe><CDR item="1"><Service item="1">off</Service></CDR><Certification item="1"><Mode item="1">diagnostic</Mode></Certification><SystemMetrics item="1"><Mode item="1">off</Mode><Interval item="1">60</Interval><Server item="1" /><Port item="1">25826</Port></SystemMetrics><EdgeConfigProvisioning item="1"><Status item="1">Active</Status><RequestCount item="1">653</RequestCount><TotalTokenCount item="1">0</TotalTokenCount><ValidTokenCount item="1">0</ValidTokenCount><ClusterPeerCount item="1">1</ClusterPeerCount><EdgePeerCount item="1">1</EdgePeerCount></EdgeConfigProvisioning><IntrusionProtection item="1"><Service item="1"><State item="1">Down</State><ActiveCategories item="1">0</ActiveCategories></Service></IntrusionProtection><Fips item="1"><Mode item="1">off</Mode></Fips><HSM item="1"><Active item="1" /></HSM><HTTPProxy item="1"><Status item="1">Active</Status><ServerPorts item="1"><ServerPort item="1"><Port item="1">8443</Port><TLS item="1">Disabled</TLS><Status item="1">Active</Status></ServerPort></ServerPorts><Stats item="1"><CurrentClientConnection item="1">8449</CurrentClientConnection><CurrentServerConnection item="1">7</CurrentServerConnection><TotalClientConnection item="1">17432</TotalClientConnection><TotalServerConnection item="1">9443</TotalServerConnection><CompletedRequests item="1">17443</CompletedRequests><GetRequests item="1">8653</GetRequests><PostRequests item="1">8522</PostRequests><Response1XXCount item="1">0</Response1XXCount><Response2XXCount item="1">17236</Response2XXCount><Response3XXCount item="1">14</Response3XXCount><Response4XXCount item="1">187</Response4XXCount><Response5XXCount item="1">6</Response5XXCount></Stats></HTTPProxy><Mediastatistics item="1"><Logging item="1">off</Logging></Mediastatistics><Options item="1" /><RateLimits item="1"><Mode item="1">on</Mode><LastUpdateTime item="1">1688052348</LastUpdateTime><RateLimitsTraffic item="1"><Category item="1"><Name item="1">edge</Name><Description item="1">DOS protection enforce</Description><Mode item="1">enforce</Mode><Order item="1">25</Order><ConnectFlood item="1">0</ConnectFlood><ConnectOK item="1">0</ConnectOK><TrafficFlood item="1">0</TrafficFlood><TrafficOK item="1">0</TrafficOK><LastViewed item="1">1787241072</LastViewed><LastCleared item="1">0</LastCleared><Connections item="1"><Classification item="1">CFG_1</Classification><Device item="1">lan1,lan2,lan3,lan4</Device><Source item="1" /><Protocol item="1">tcp</Protocol><Ports item="1">8443</Ports><Type item="1">srcport</Type></Connections></Category><Category item="2"><Name item="1">management</Name><Description item="1">DOS protection monitor</Description><Mode item="1">monitor</Mode><Order item="1">32</Order><ConnectFlood item="1">0</ConnectFlood><ConnectOK item="1">122312</ConnectOK><TrafficFlood item="1">0</TrafficFlood><TrafficOK item="1">0</TrafficOK><LastViewed item="1">1787241072</LastViewed><LastCleared item="1">0</LastCleared><Connections item="1"><Classification item="1">FIXED</Classification><Device item="1">lan1,lan2,lan3,lan4</Device><Source item="1" /><Protocol item="1">tcp</Protocol><Ports item="1">22,80</Ports><Type item="1">dstport</Type></Connections><Connections item="2"><Classification item="1">FIXED</Classification><Device item="1">lan1,lan2,lan3,lan4</Device><Source item="1" /><Protocol item="1">udp</Protocol><Ports item="1">161</Ports><Type item="1">dstport</Type></Connections><Connections item="3"><Classification item="1">CFG_1</Classification><Device item="1">lan1,lan2,lan3,lan4</Device><Source item="1" /><Protocol item="1">tcp</Protocol><Ports item="1">443</Ports><Type item="1">dstport</Type></Connections></Category><Category item="3"><Name item="1">sip</Name><Description item="1">DOS protection enforce</Description><Mode item="1">enforce</Mode><Order item="1">23</Order><ConnectFlood item="1">0</ConnectFlood><ConnectOK item="1">1582</ConnectOK><TrafficFlood item="1">0</TrafficFlood><TrafficOK item="1">0</TrafficOK><LastViewed item="1">1787241072</LastViewed><LastCleared item="1">0</LastCleared><Connections item="1"><Classification item="1">CFG_1</Classification><Device item="1">lan1,lan2,lan3,lan4</Device><Source item="1" /><Protocol item="1">udp</Protocol><Ports item="1">5060</Ports><Type item="1">dstport</Type></Connections><Connections item="2"><Classification item="1">CFG_2</Classification><Device item="1">lan1,lan2,lan3,lan4</Device><Source item="1" /><Protocol item="1">tcp</Protocol><Ports item="1">5060,5061,5062</Ports><Type item="1">dstport</Type></Connections></Category></RateLimitsTraffic></RateLimits><Warnings item="1"><Warning item="56"><ID item="1">38c9ca26-fd25-4bac-b5e7-83b1052fd131</ID><Reason item="1">Verbose log levels configured - One or more modules of the Network Log or Support Log are set to a level of Debug or Trace</Reason><State item="1">Acknowledged</State></Warning><Warning item="189"><ID item="1">9cd08a04-af8c-11df-8045-6361fdf14697</ID><Reason item="1">Application failed - An unexpected software error was detected in smartlicenseget[26149]: signal SIGABRT, Aborted</Reason><State item="1">Unacknowledged</State></Warning></Warnings><XMPP item="1"><system-status item="1"><jabberd item="1"><status item="1">Active</status></jabberd></system-status><R2R item="1"><host type="cup" item="1">10.10.20.16</host><status item="1">Inactive</status><reason item="1">Connection attempt to the remote host at 10.10.20.16 timed out.</reason></R2R><R2R item="2"><host type="extend" item="1">206.199.12.43</host><status item="1">Active</status><id item="1">jabberd-port-2</id></R2R></XMPP></Status>

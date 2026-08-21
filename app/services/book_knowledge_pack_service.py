@@ -59,40 +59,41 @@ class BookKnowledgePackSourceMissingError(RuntimeError):
     """Raised when a required project-local source artifact is unavailable."""
 
 
-def get_book_runtime_context_status(project_id: str) -> dict[str, Any]:
+def get_book_runtime_context_status(project_id: str, *, book_number: int | None = None) -> dict[str, Any]:
     manifest = project_loader.load_manifest(project_id)
     context = build_project_context(manifest)
     return get_book_runtime_context_status_for_context(
         context,
         manifest.to_dict(),
+        book_number=book_number,
     )
 
 
 def get_book_runtime_context_status_for_context(
     context: ProjectContext,
     manifest: dict[str, Any],
+    *,
+    book_number: int | None = None,
 ) -> dict[str, Any]:
-    plan_result = book_plan_service.get_book_plan_for_context(
-        context,
-        manifest,
-    )
-    plan = plan_result["plan"]
-    validation = plan["validation"]
-    plan_current = bool(
-        not plan_result.get("migration_required")
-        and plan.get("schema_version")
-        == book_plan_service.BOOK_PLAN_SCHEMA_VERSION
-        and validation.get("valid")
-        and plan.get("approval_status") == book_plan_service.APPROVAL_APPROVED
-        and plan.get("approval_fresh") is True
-        and bool(plan.get("approved_content_hash"))
-        and plan.get("approved_content_hash") == plan.get("content_hash")
-    )
+    """Return per-book Book Knowledge Pack readiness/currentness.
 
-    scope_result = book_scope_service.get_book_scope_for_context(
-        context,
-        manifest,
-    )
+    Patch 31 aligns Book Runtime Context compilation with the per-book approval
+    contract introduced by Patch 30F. A completed/approved Book N may compile
+    independently; incomplete later books do not block it.
+    """
+    plan_result = book_plan_service.get_book_plan_for_context(context, manifest)
+    plan = plan_result["plan"]
+    validation = plan.get("validation") or {}
+    validation_by_book = {
+        int(item.get("book_number") or 0): item
+        for item in validation.get("books") or []
+    }
+    workflow_by_book = {
+        int(item.get("book_number") or 0): item
+        for item in plan.get("book_workflow") or []
+    }
+
+    scope_result = book_scope_service.get_book_scope_for_context(context, manifest)
     scope_books = {
         int(book.get("book_number") or 0): book
         for book in scope_result["document"]["books"]
@@ -106,114 +107,114 @@ def get_book_runtime_context_status_for_context(
     author_exists = author_path.exists()
     author_hash = _sha256_file(author_path) if author_exists else ""
 
-    targets: list[dict[str, Any]] = []
-    blockers: list[dict[str, Any]] = []
-
+    global_blockers: list[dict[str, Any]] = []
     if plan_result.get("migration_required"):
-        blockers.append(
-            {
-                "code": "book_plan_reference_migration_required",
-                "message": "Book Plan stable-reference migration must be completed.",
-            }
-        )
-    if not validation.get("valid"):
-        blockers.append(
-            {
-                "code": "book_plan_incomplete_or_inconsistent",
-                "message": (
-                    "Book Plan must be complete and consistent with approved Book Canon."
-                ),
-            }
-        )
-    if not plan_current:
-        blockers.append(
-            {
-                "code": "book_plan_not_approved",
-                "message": "Book Plan approval must be current before compilation.",
-            }
-        )
+        global_blockers.append({
+            "code": "book_plan_reference_migration_required",
+            "message": "Book Plan stable-reference migration must be completed.",
+        })
     if not author_exists:
-        blockers.append(
-            {
-                "code": "author_canon_missing",
-                "message": "Project-local Author Canon is required for Book Runtime Context v2.",
-            }
-        )
+        global_blockers.append({
+            "code": "author_canon_missing",
+            "message": "Project-local Author Canon is required for Book Knowledge Pack compilation.",
+        })
     if not index_current:
-        blockers.append(
-            {
-                "code": "canon_index_not_current",
-                "message": "Canon Index must be current before compilation.",
-            }
-        )
+        global_blockers.append({
+            "code": "canon_index_not_current",
+            "message": "Canon Index must be current before Book Knowledge Pack compilation.",
+        })
+
+    requested = int(book_number or 0)
+    if requested < 0:
+        requested = 0
+    targets: list[dict[str, Any]] = []
+    blockers: list[dict[str, Any]] = list(global_blockers)
 
     for book in plan.get("books") or []:
-        book_number = int(book.get("book_number") or 0)
-        scope_book = scope_books.get(book_number)
+        number = int(book.get("book_number") or 0)
+        if requested and number != requested:
+            continue
+        scope_book = scope_books.get(number) or {}
+        workflow = workflow_by_book.get(number) or {}
+        book_validation = validation_by_book.get(number) or {}
+
+        target_blockers: list[dict[str, Any]] = []
+        if book_validation.get("complete") is not True:
+            target_blockers.append({
+                "code": "book_plan_not_complete",
+                "book_number": number,
+                "message": f"Book {number} Plan must be complete before its Book Knowledge Pack can compile.",
+            })
+        plan_approved = bool(
+            workflow.get("approval_status") == book_plan_service.APPROVAL_APPROVED
+            and workflow.get("approval_fresh") is True
+            and workflow.get("approved_content_hash")
+            and workflow.get("approved_content_hash") == workflow.get("content_hash")
+        )
+        if not plan_approved:
+            target_blockers.append({
+                "code": "book_plan_not_approved",
+                "book_number": number,
+                "message": f"Book {number} Plan approval must be current before its Book Knowledge Pack can compile.",
+            })
         scope_current = bool(
             scope_book
-            and scope_book.get("approval_status")
-            == book_scope_service.APPROVAL_APPROVED
+            and scope_book.get("approval_status") == book_scope_service.APPROVAL_APPROVED
             and scope_book.get("approval_fresh") is True
             and (scope_book.get("freshness") or {}).get("fresh") is True
             and (scope_book.get("validation") or {}).get("valid") is True
         )
         if not scope_current:
-            blockers.append(
-                {
-                    "code": "book_scope_not_approved",
-                    "book_number": book_number,
-                    "message": (
-                        f"Book {book_number} Canon for This Book must be approved and current."
-                    ),
-                }
-            )
-        targets.append(
-            _target_status(
-                context=context,
-                book=book,
-                plan=plan,
-                scope_book=scope_book or {},
-                author_hash=author_hash,
-                index_revision=index_revision,
-            )
+            target_blockers.append({
+                "code": "book_scope_not_approved",
+                "book_number": number,
+                "message": f"Book {number} Book Canon must be approved and current before its Book Knowledge Pack can compile.",
+            })
+
+        target_ready = bool(
+            not global_blockers
+            and book_validation.get("complete") is True
+            and plan_approved
+            and scope_current
         )
+        target = _target_status(
+            context=context,
+            book=book,
+            workflow=workflow,
+            scope_book=scope_book,
+            author_hash=author_hash,
+            index_revision=index_revision,
+            compiler_ready=target_ready,
+            blockers=target_blockers,
+        )
+        targets.append(target)
+        blockers.extend(target_blockers)
 
     expected_count = int(manifest.get("book_count") or 0)
-    compiler_ready = bool(
-        plan_current
-        and author_exists
-        and index_current
-        and expected_count > 0
-        and len(targets) == expected_count
-        and not blockers
-    )
+    ready_count = sum(1 for target in targets if target.get("compiler_ready") is True)
+    current_count = sum(1 for target in targets if target["status"] == STATUS_CURRENT)
+    missing_count = sum(1 for target in targets if target["status"] == STATUS_MISSING)
+    outdated_count = sum(1 for target in targets if target["status"] == STATUS_OUTDATED)
+    compiler_ready = ready_count > 0
 
-    current_count = sum(
-        1 for target in targets if target["status"] == STATUS_CURRENT
-    )
-    missing_count = sum(
-        1 for target in targets if target["status"] == STATUS_MISSING
-    )
-    outdated_count = sum(
-        1 for target in targets if target["status"] == STATUS_OUTDATED
-    )
+    if targets and ready_count > 0 and current_count == ready_count:
+        overall_status = STATUS_CURRENT
+    elif compiler_ready:
+        overall_status = STATUS_READY
+    else:
+        overall_status = STATUS_BLOCKED
 
     return {
-        "status": (
-            STATUS_CURRENT
-            if compiler_ready and current_count == len(targets)
-            else STATUS_READY
-            if compiler_ready
-            else STATUS_BLOCKED
-        ),
+        "status": overall_status,
         "scope": BOOK_RUNTIME_CONTEXT_SCOPE,
         "service": BOOK_KNOWLEDGE_PACK_SERVICE_MARKER,
         "schema_version": BOOK_KNOWLEDGE_PACK_SCHEMA_VERSION,
         "project_id": context.project_id,
         "template_id": context.template_id,
         "genre": context.genre,
+        "requested_book_number": requested or None,
         "compiler_ready": compiler_ready,
+        "ready_count": ready_count,
         "book_runtime_context_generation_enabled": compiler_ready,
         "generation_enabled": False,
         "provider_execution_enabled": False,
@@ -230,17 +231,15 @@ def get_book_runtime_context_status_for_context(
             "approval_fresh": bool(plan.get("approval_fresh")),
             "revision": int(plan.get("revision") or 0),
             "content_hash": str(plan.get("content_hash") or ""),
-            "approved_content_hash": str(plan.get("approved_content_hash") or ""),
             "valid": bool(validation.get("valid")),
+            "complete_book_count": int(validation.get("complete_book_count") or 0),
         },
         "book_scope": {
             "schema_version": scope_result.get("schema_version"),
             "exists": bool(scope_result.get("exists")),
             "approved_current_count": sum(
-                1
-                for scope_book in scope_books.values()
-                if scope_book.get("approval_status")
-                == book_scope_service.APPROVAL_APPROVED
+                1 for scope_book in scope_books.values()
+                if scope_book.get("approval_status") == book_scope_service.APPROVAL_APPROVED
                 and scope_book.get("approval_fresh") is True
                 and (scope_book.get("freshness") or {}).get("fresh") is True
             ),
@@ -258,39 +257,77 @@ def get_book_runtime_context_status_for_context(
         "blockers": blockers,
         "execution_locks": _execution_locks(),
         "message": (
-            "Book Runtime Context v2 is ready to compile."
+            f"{ready_count} Book Knowledge Pack target(s) are ready/current for compilation."
             if compiler_ready
-            else "Book Runtime Context v2 compilation is blocked."
+            else "No Book Knowledge Pack target is currently ready to compile."
         ),
     }
 
 
-def compile_book_knowledge_packs(project_id: str) -> dict[str, Any]:
+def compile_book_knowledge_packs(
+    project_id: str,
+    *,
+    book_number: int | None = None,
+) -> dict[str, Any]:
     manifest = project_loader.load_manifest(project_id)
     context = build_project_context(manifest)
     return compile_book_knowledge_packs_for_context(
         context,
         manifest.to_dict(),
+        book_number=book_number,
     )
 
 
 def compile_book_knowledge_packs_for_context(
     context: ProjectContext,
     manifest: dict[str, Any],
+    *,
+    book_number: int | None = None,
 ) -> dict[str, Any]:
-    status = get_book_runtime_context_status_for_context(context, manifest)
-    if not status["compiler_ready"]:
+    status = get_book_runtime_context_status_for_context(
+        context,
+        manifest,
+        book_number=book_number,
+    )
+    ready_targets = [
+        item for item in status.get("targets") or []
+        if item.get("compiler_ready") is True
+        and item.get("status") != STATUS_CURRENT
+    ]
+    if not ready_targets:
+        already_current = [
+            item for item in status.get("targets") or []
+            if item.get("compiler_ready") is True and item.get("status") == STATUS_CURRENT
+        ]
+        if already_current:
+            return {
+                "status": "current",
+                "scope": BOOK_RUNTIME_CONTEXT_SCOPE,
+                "service": BOOK_KNOWLEDGE_PACK_SERVICE_MARKER,
+                "schema_version": BOOK_KNOWLEDGE_PACK_SCHEMA_VERSION,
+                "project_id": context.project_id,
+                "generated_at": utc_now_iso(),
+                "generated_count": 0,
+                "targets": already_current,
+                "execution_locks": _execution_locks(),
+                "message": "Requested Book Knowledge Pack target(s) are already current.",
+            }
         messages = [
             str(item.get("message") or "")
             for item in status.get("blockers") or []
             if item.get("message")
         ]
         raise BookKnowledgePackNotReadyError(
-            " ".join(messages) or "Book Runtime Context v2 is not ready."
+            " ".join(messages) or "No Book Knowledge Pack target is ready."
         )
 
+    ready_numbers = {int(item.get("book_number") or 0) for item in ready_targets}
     plan_result = book_plan_service.get_book_plan_for_context(context, manifest)
     plan = plan_result["plan"]
+    workflow_by_book = {
+        int(item.get("book_number") or 0): item
+        for item in plan.get("book_workflow") or []
+    }
     scope_result = book_scope_service.get_book_scope_for_context(context, manifest)
     scope_books = {
         int(book.get("book_number") or 0): book
@@ -299,9 +336,7 @@ def compile_book_knowledge_packs_for_context(
 
     author_path = _author_canon_path(context)
     if not author_path.exists():
-        raise BookKnowledgePackSourceMissingError(
-            "Project-local Author Canon is missing."
-        )
+        raise BookKnowledgePackSourceMissingError("Project-local Author Canon is missing.")
     author_canon = project_loader.read_json(author_path)
     author_hash = _sha256_file(author_path)
 
@@ -309,39 +344,32 @@ def compile_book_knowledge_packs_for_context(
     index_revision = str(index_status.get("index_content_hash") or "")
     if index_status.get("index_state") != "current" or not index_revision:
         raise BookKnowledgePackNotReadyError(
-            "Canon Index must be current before Book Runtime Context v2 compilation."
+            "Canon Index must be current before Book Knowledge Pack compilation."
         )
 
     records_by_id = _author_record_map(author_canon)
     all_record_ids = set(records_by_id)
     global_rules = _global_required_rules(author_canon)
-    full_context_tokens, full_context_basis = _full_context_token_estimate(
-        context,
-        author_canon,
-    )
-
+    full_context_tokens, full_context_basis = _full_context_token_estimate(context, author_canon)
     generated_at = utc_now_iso()
     generated: list[dict[str, Any]] = []
 
     for book in plan.get("books") or []:
-        book_number = int(book.get("book_number") or 0)
-        scope_book = scope_books.get(book_number) or {}
+        book_number_value = int(book.get("book_number") or 0)
+        if book_number_value not in ready_numbers:
+            continue
+        scope_book = scope_books.get(book_number_value) or {}
+        workflow = workflow_by_book.get(book_number_value) or {}
         selected_ids = [
             str(item.get("record_id") or "")
             for item in scope_book.get("selections") or []
             if item.get("record_id")
         ]
         selected_set = set(selected_ids)
-
-        missing_source_ids = [
-            record_id
-            for record_id in selected_ids
-            if record_id not in records_by_id
-        ]
+        missing_source_ids = [record_id for record_id in selected_ids if record_id not in records_by_id]
         if missing_source_ids:
             raise BookKnowledgePackSourceMissingError(
-                "Book Scope contains Canon IDs missing from Author Canon: "
-                + ", ".join(missing_source_ids)
+                "Book Scope contains Canon IDs missing from Author Canon: " + ", ".join(missing_source_ids)
             )
 
         bounded_records = [
@@ -352,9 +380,13 @@ def compile_book_knowledge_packs_for_context(
             )
             for record_id in selected_ids
         ]
+        if len(bounded_records) != len(selected_ids):
+            raise BookKnowledgePackSourceMissingError(
+                f"Book {book_number_value} selected Canon inclusion count does not match Book Scope."
+            )
 
         dependency_set = _dependency_set(
-            plan=plan,
+            workflow=workflow,
             scope_book=scope_book,
             author_hash=author_hash,
             index_revision=index_revision,
@@ -367,17 +399,19 @@ def compile_book_knowledge_packs_for_context(
             global_rules=global_rules,
             bounded_records=bounded_records,
         )
+        for selected_id in selected_ids:
+            if f"`{selected_id}`" not in body:
+                raise BookKnowledgePackSourceMissingError(
+                    f"Book {book_number_value} selected Canon record {selected_id} was not rendered into the Book Knowledge Pack."
+                )
+
         book_tokens = _estimate_tokens(body)
         token_reduction = max(0, full_context_tokens - book_tokens)
-        reduction_pct = (
-            round((token_reduction / full_context_tokens) * 100.0, 2)
-            if full_context_tokens > 0
-            else 0.0
-        )
+        reduction_pct = round((token_reduction / full_context_tokens) * 100.0, 2) if full_context_tokens > 0 else 0.0
         content = _render_book_runtime_context(
             context=context,
             book=book,
-            plan=plan,
+            workflow=workflow,
             scope_book=scope_book,
             author_hash=author_hash,
             index_revision=index_revision,
@@ -391,34 +425,31 @@ def compile_book_knowledge_packs_for_context(
             reduction_pct=reduction_pct,
         )
 
-        target_path = _book_runtime_context_path(context, book_number)
+        target_path = _book_runtime_context_path(context, book_number_value)
         _write_text_atomic(target_path, content)
-
-        generated.append(
-            {
-                "book_number": book_number,
-                "label": f"Book {book_number:02d} Runtime Context v2",
-                "project_relative_path": _relative(
-                    target_path,
-                    context.project_dir,
-                ),
-                "sha256": _sha256_file(target_path),
-                "size_bytes": target_path.stat().st_size,
-                "status": STATUS_CURRENT,
-                "selected_record_count": len(selected_ids),
-                "source_book_plan_revision": int(plan.get("revision") or 0),
-                "source_book_plan_sha256": str(plan.get("content_hash") or ""),
-                "source_book_scope_revision": int(scope_book.get("revision") or 0),
-                "source_book_scope_sha256": str(scope_book.get("content_hash") or ""),
-                "source_author_canon_sha256": author_hash,
-                "source_canon_index_revision": index_revision,
-                "dependency_set_sha256": dependency_set,
-                "estimated_tokens": book_tokens,
-                "full_context_estimated_tokens": full_context_tokens,
-                "estimated_token_reduction": token_reduction,
-                "estimated_token_reduction_percent": reduction_pct,
-            }
-        )
+        generated.append({
+            "book_number": book_number_value,
+            "label": f"Book {book_number_value:02d} Knowledge Pack",
+            "project_relative_path": _relative(target_path, context.project_dir),
+            "sha256": _sha256_file(target_path),
+            "size_bytes": target_path.stat().st_size,
+            "status": STATUS_CURRENT,
+            "selected_record_count": len(selected_ids),
+            "major_event_count": len(book.get("major_events") or []),
+            "required_character_count": len(book.get("required_characters") or []),
+            "required_location_count": len(book.get("required_locations") or []),
+            "source_book_plan_revision": int(workflow.get("revision") or 0),
+            "source_book_plan_sha256": str(workflow.get("content_hash") or ""),
+            "source_book_scope_revision": int(scope_book.get("revision") or 0),
+            "source_book_scope_sha256": str(scope_book.get("content_hash") or ""),
+            "source_author_canon_sha256": author_hash,
+            "source_canon_index_revision": index_revision,
+            "dependency_set_sha256": dependency_set,
+            "estimated_tokens": book_tokens,
+            "full_context_estimated_tokens": full_context_tokens,
+            "estimated_token_reduction": token_reduction,
+            "estimated_token_reduction_percent": reduction_pct,
+        })
 
     return {
         "status": "compiled",
@@ -431,8 +462,8 @@ def compile_book_knowledge_packs_for_context(
         "targets": generated,
         "execution_locks": _execution_locks(),
         "message": (
-            "Book Runtime Context v2 artifacts compiled from bounded Book Canon. "
-            "Prompt, provider, continuity, and generation boundaries remain locked."
+            "Book Knowledge Pack artifact(s) compiled from selected Book Canon and the approved per-book Plan. "
+            "Required/Major fields remain separate usage obligations; they do not control Canon inclusion."
         ),
     }
 
@@ -441,53 +472,47 @@ def _target_status(
     *,
     context: ProjectContext,
     book: dict[str, Any],
-    plan: dict[str, Any],
+    workflow: dict[str, Any],
     scope_book: dict[str, Any],
     author_hash: str,
     index_revision: str,
+    compiler_ready: bool,
+    blockers: list[dict[str, Any]],
 ) -> dict[str, Any]:
     book_number = int(book.get("book_number") or 0)
     path = _book_runtime_context_path(context, book_number)
     exists = path.exists()
     metadata = _read_compiler_metadata(path) if exists else {}
     dependency_set = _dependency_set(
-        plan=plan,
+        workflow=workflow,
         scope_book=scope_book,
         author_hash=author_hash,
         index_revision=index_revision,
     )
-
     current = bool(
-        exists
+        compiler_ready
+        and exists
         and metadata.get("schema_version") == BOOK_KNOWLEDGE_PACK_SCHEMA_VERSION
         and metadata.get("book_number") == str(book_number)
-        and metadata.get("book_plan_revision")
-        == str(int(plan.get("revision") or 0))
-        and metadata.get("book_plan_sha256")
-        == str(plan.get("content_hash") or "")
-        and metadata.get("book_scope_revision")
-        == str(int(scope_book.get("revision") or 0))
-        and metadata.get("book_scope_sha256")
-        == str(scope_book.get("content_hash") or "")
+        and metadata.get("book_plan_revision") == str(int(workflow.get("revision") or 0))
+        and metadata.get("book_plan_sha256") == str(workflow.get("content_hash") or "")
+        and metadata.get("book_scope_revision") == str(int(scope_book.get("revision") or 0))
+        and metadata.get("book_scope_sha256") == str(scope_book.get("content_hash") or "")
         and metadata.get("author_canon_sha256") == author_hash
         and metadata.get("canon_index_revision") == index_revision
         and metadata.get("dependency_set_sha256") == dependency_set
         and bool(author_hash)
         and bool(index_revision)
     )
-
+    selected_count = len(scope_book.get("selections") or [])
     return {
         "book_number": book_number,
-        "label": f"Book {book_number:02d} Runtime Context v2",
+        "label": f"Book {book_number:02d} Knowledge Pack",
         "project_relative_path": _relative(path, context.project_dir),
         "exists": exists,
-        "status": (
-            STATUS_CURRENT
-            if current
-            else STATUS_OUTDATED
-            if exists
-            else STATUS_MISSING
-        ),
+        "status": STATUS_CURRENT if current else STATUS_OUTDATED if exists else STATUS_MISSING,
+        "compiler_ready": bool(compiler_ready),
+        "blockers": blockers,
         "sha256": _sha256_file(path) if exists else "",
         "size_bytes": path.stat().st_size if exists else 0,
         "source_book_plan_revision": metadata.get("book_plan_revision", ""),
@@ -497,37 +522,28 @@ def _target_status(
         "source_author_canon_sha256": metadata.get("author_canon_sha256", ""),
         "source_canon_index_revision": metadata.get("canon_index_revision", ""),
         "dependency_set_sha256": metadata.get("dependency_set_sha256", ""),
-        "selected_record_count": _safe_int(
-            metadata.get("selected_record_count")
-        ),
+        "selected_record_count": _safe_int(metadata.get("selected_record_count")) if exists else selected_count,
         "estimated_tokens": _safe_int(metadata.get("estimated_tokens")),
-        "full_context_estimated_tokens": _safe_int(
-            metadata.get("full_context_estimated_tokens")
-        ),
+        "full_context_estimated_tokens": _safe_int(metadata.get("full_context_estimated_tokens")),
     }
 
 
 def _dependency_set(
     *,
-    plan: dict[str, Any],
+    workflow: dict[str, Any],
     scope_book: dict[str, Any],
     author_hash: str,
     index_revision: str,
 ) -> str:
     payload = {
-        "book_plan_revision": int(plan.get("revision") or 0),
-        "book_plan_sha256": str(plan.get("content_hash") or ""),
+        "book_plan_revision": int(workflow.get("revision") or 0),
+        "book_plan_sha256": str(workflow.get("content_hash") or ""),
         "book_scope_revision": int(scope_book.get("revision") or 0),
         "book_scope_sha256": str(scope_book.get("content_hash") or ""),
         "author_canon_sha256": author_hash,
         "canon_index_revision": index_revision,
     }
-    encoded = json.dumps(
-        payload,
-        sort_keys=True,
-        separators=(",", ":"),
-        ensure_ascii=False,
-    ).encode("utf-8")
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
 
 
@@ -679,11 +695,17 @@ def _render_book_body(
             "### Forbidden Future Knowledge",
             *_text_markdown_list(book.get("forbidden_future_knowledge")),
             "",
+            "## Book Canon Inclusion Contract",
+            "",
+            "- Every record selected in Book Canon is included in this Book Knowledge Pack.",
+            "- Major Events, Required Characters, and Required Locations are stronger usage obligations only.",
+            "- A selected Canon record does not need to be marked Required/Major to be included here.",
+            "",
             "## Selected Book Canon",
             "",
             (
                 f"Selected records: {len(scope_book.get('selections') or [])}. "
-                "Only these addressable records are rendered below."
+                "All selected addressable records are rendered below."
             ),
             "",
         ]
@@ -731,7 +753,7 @@ def _render_book_runtime_context(
     *,
     context: ProjectContext,
     book: dict[str, Any],
-    plan: dict[str, Any],
+    workflow: dict[str, Any],
     scope_book: dict[str, Any],
     author_hash: str,
     index_revision: str,
@@ -760,8 +782,8 @@ def _render_book_runtime_context(
         f"- Project ID: `{context.project_id}`",
         f"- Book Number: `{book_number}`",
         f"- Generated At: {generated_at}",
-        f"- Book Plan Revision: `{int(plan.get('revision') or 0)}`",
-        f"- Book Plan SHA-256: `{plan.get('content_hash') or ''}`",
+        f"- Book Plan Revision: `{int(workflow.get('revision') or 0)}`",
+        f"- Book Plan SHA-256: `{workflow.get('content_hash') or ''}`",
         f"- Book Scope Revision: `{int(scope_book.get('revision') or 0)}`",
         f"- Book Scope SHA-256: `{scope_book.get('content_hash') or ''}`",
         f"- Author Canon SHA-256: `{author_hash}`",
@@ -963,4 +985,69 @@ def _execution_locks() -> dict[str, bool]:
         "draft_persisted": False,
         "approved_continuity_written": False,
         "generation_unlocked": False,
+    }
+
+
+# Patch 31B: fast per-book readiness used by Chapter Planner guidance.  Actual
+# compilation still executes the full Book Knowledge Pack validator/compiler.
+def get_book_runtime_context_readiness_fast(project_id: str, *, book_number: int) -> dict[str, Any]:
+    manifest_obj = project_loader.load_manifest(project_id)
+    context = build_project_context(manifest_obj)
+    book_number = int(book_number)
+    if book_number < 1 or book_number > max(1, int(manifest_obj.book_count or 1)):
+        raise ValueError("book_number is outside the project book range")
+
+    plan_path = context.project_dir / book_plan_service.BOOK_PLAN_FILENAME
+    scope_path = book_scope_service.book_scope_path_for_context(context)
+    plan_doc = project_loader.read_json(plan_path) if plan_path.exists() else {}
+    scope_doc = project_loader.read_json(scope_path) if scope_path.exists() else {}
+    book = next((item for item in plan_doc.get("books") or [] if int(item.get("book_number") or 0) == book_number), None) or {"book_number": book_number}
+    workflow = next((item for item in plan_doc.get("book_workflow") or [] if int(item.get("book_number") or 0) == book_number), None) or {"book_number": book_number}
+    scope_book = next((item for item in scope_doc.get("books") or [] if int(item.get("book_number") or 0) == book_number), None) or {"book_number": book_number}
+
+    blockers: list[dict[str, Any]] = []
+    plan_approved = bool(
+        workflow.get("approval_status") == book_plan_service.APPROVAL_APPROVED
+        and workflow.get("approval_fresh") is True
+        and workflow.get("approved_content_hash")
+        and workflow.get("approved_content_hash") == workflow.get("content_hash")
+    )
+    if not plan_approved:
+        blockers.append({"code": "book_plan_not_approved", "book_number": book_number,
+                         "message": f"Book {book_number} Plan approval must be current before its Book Knowledge Pack can compile."})
+
+    index_status = canon_index_service.ensure_current_index(project_id)
+    author_path = _author_canon_path(context)
+    author_hash = _sha256_file(author_path) if author_path.exists() else ""
+    index_revision = str(index_status.get("index_content_hash") or "")
+    scope_approved = bool(
+        scope_book.get("approval_status") == book_scope_service.APPROVAL_APPROVED
+        and scope_book.get("approved_content_hash")
+        and scope_book.get("approved_content_hash") == scope_book.get("content_hash")
+        and scope_book.get("approved_source_canon_hash") == str(index_status.get("source_author_canon_hash") or index_status.get("source_canon_hash") or scope_book.get("approved_source_canon_hash") or "")
+        and scope_book.get("approved_source_index_revision") == index_revision
+    )
+    # Older current indexes may not surface source_author_canon_hash.  In that
+    # case content/index approval equality remains the fast UI precheck; full
+    # compilation performs authoritative reconciliation.
+    if not scope_approved:
+        scope_approved = bool(
+            scope_book.get("approval_status") == book_scope_service.APPROVAL_APPROVED
+            and scope_book.get("approved_content_hash") == scope_book.get("content_hash")
+            and scope_book.get("approved_source_index_revision") == index_revision
+        )
+    if not scope_approved:
+        blockers.append({"code": "book_scope_not_approved", "book_number": book_number,
+                         "message": f"Book {book_number} Book Canon must be approved and current before its Book Knowledge Pack can compile."})
+    compiler_ready = not blockers and bool(author_hash) and bool(index_revision)
+    target = _target_status(
+        context=context, book=book, workflow=workflow, scope_book=scope_book,
+        author_hash=author_hash, index_revision=index_revision,
+        compiler_ready=compiler_ready, blockers=blockers,
+    )
+    return {
+        "status": target["status"], "scope": BOOK_RUNTIME_CONTEXT_SCOPE, "project_id": project_id,
+        "requested_book_number": book_number, "compiler_ready": compiler_ready,
+        "ready_count": 1 if compiler_ready else 0, "targets": [target], "blockers": blockers,
+        "generation_enabled": False, "provider_execution_enabled": False,
     }

@@ -27,7 +27,7 @@ from app.services import canon_record_identity_service, canon_reference_service
 
 
 CANON_INDEX_SERVICE_MARKER = "project-canon-index-boundary-20260816"
-CANON_INDEX_SCHEMA_VERSION = "canon_index_v1"
+CANON_INDEX_SCHEMA_VERSION = "canon_index_v3"
 CANON_INDEX_FILENAME = "canon_index.sqlite3"
 
 INTERNAL_ID_FIELD = canon_record_identity_service.INTERNAL_ID_FIELD
@@ -272,10 +272,12 @@ def get_record_by_id(project_id: str, internal_id: str) -> dict[str, Any]:
                 source_hash,
                 summary,
                 available_from_book,
+                date_or_sequence,
                 story_code,
                 narrative_type,
                 story_phase,
-                escalation_metadata_json
+                escalation_metadata_json,
+                planner_sort_metadata_json
             FROM canon_entities
             WHERE internal_id = ?
             """,
@@ -286,7 +288,7 @@ def get_record_by_id(project_id: str, internal_id: str) -> dict[str, Any]:
         "status": "found" if row is not None else "missing",
         "service": CANON_INDEX_SERVICE_MARKER,
         "project_id": project_id,
-        "record": dict(row) if row is not None else None,
+        "record": _decorate_index_row(dict(row)) if row is not None else None,
     }
 
 
@@ -332,10 +334,12 @@ def list_records(
             source_hash,
             summary,
             available_from_book,
+            date_or_sequence,
             story_code,
             narrative_type,
             story_phase,
-            escalation_metadata_json
+            escalation_metadata_json,
+            planner_sort_metadata_json
         FROM canon_entities
         {type_clause}
         ORDER BY record_group_id, normalized_label, internal_id
@@ -364,7 +368,76 @@ def list_records(
 
     for row in entity_rows:
         row["aliases"] = aliases_by_id.get(str(row["internal_id"]), [])
+        _decorate_index_row(row)
 
+    return {
+        "status": "ok",
+        "service": CANON_INDEX_SERVICE_MARKER,
+        "project_id": project_id,
+        "record_types": type_values,
+        "result_count": len(entity_rows),
+        "results": entity_rows,
+    }
+
+
+def list_records_current(
+    project_id: str,
+    *,
+    record_types: Iterable[str] | None = None,
+    limit: int = 5000,
+) -> dict[str, Any]:
+    """Return rows from an already-current Canon Index without rechecking freshness.
+
+    Bulk planner callers must call ensure_current_index() once before using this
+    helper. It intentionally performs retrieval only.
+    """
+
+    index_path = canon_index_path(project_id)
+    if not index_path.exists():
+        raise CanonIndexError("Canon Index is not available; call ensure_current_index first.")
+    safe_limit = max(1, min(int(limit or 5000), 10000))
+    type_values = sorted(
+        {str(value).strip() for value in (record_types or []) if str(value).strip()}
+    )
+    type_clause = ""
+    params: list[Any] = []
+    if type_values:
+        placeholders = ", ".join("?" for _ in type_values)
+        type_clause = f"WHERE record_type IN ({placeholders})"
+        params.extend(type_values)
+    sql = f"""
+        SELECT
+            internal_id, record_type, record_group_id, display_label,
+            source_section_id, source_revision, source_hash, summary,
+            available_from_book, date_or_sequence, story_code, narrative_type,
+            story_phase, escalation_metadata_json, planner_sort_metadata_json
+        FROM canon_entities
+        {type_clause}
+        ORDER BY record_group_id, normalized_label, internal_id
+        LIMIT ?
+    """
+    params.append(safe_limit)
+    with closing(sqlite3.connect(index_path)) as conn:
+        conn.row_factory = sqlite3.Row
+        entity_rows = [dict(row) for row in conn.execute(sql, params).fetchall()]
+        ids = [row["internal_id"] for row in entity_rows]
+        aliases_by_id: dict[str, list[str]] = {record_id: [] for record_id in ids}
+        if ids:
+            placeholders = ", ".join("?" for _ in ids)
+            alias_rows = conn.execute(
+                f"""
+                SELECT internal_id, alias
+                FROM canon_aliases
+                WHERE internal_id IN ({placeholders})
+                ORDER BY internal_id, normalized_alias, alias
+                """,
+                ids,
+            ).fetchall()
+            for row in alias_rows:
+                aliases_by_id[str(row["internal_id"])].append(str(row["alias"]))
+    for row in entity_rows:
+        row["aliases"] = aliases_by_id.get(str(row["internal_id"]), [])
+        _decorate_index_row(row)
     return {
         "status": "ok",
         "service": CANON_INDEX_SERVICE_MARKER,
@@ -790,6 +863,7 @@ def _build_index_rows(
                     "summary": summary,
                     "normalized_summary": _normalize_search_text(summary),
                     "available_from_book": _clean_scalar(row.get("available_from_book")),
+                    "date_or_sequence": _clean_scalar(row.get("date_or_sequence")),
                     "story_code": _clean_scalar(row.get("story_code")),
                     "narrative_type": _clean_scalar(row.get("narrative_type")),
                     "story_phase": _clean_scalar(row.get("story_phase")),
@@ -797,6 +871,9 @@ def _build_index_rows(
                         row.get("escalation_metadata")
                         if isinstance(row.get("escalation_metadata"), (dict, list))
                         else {}
+                    ),
+                    "planner_sort_metadata_json": _stable_json_string(
+                        _planner_sort_metadata(row)
                     ),
                 }
                 entities.append(entity)
@@ -914,10 +991,12 @@ def _create_schema(conn: sqlite3.Connection) -> None:
             summary TEXT NOT NULL,
             normalized_summary TEXT NOT NULL,
             available_from_book TEXT NOT NULL,
+            date_or_sequence TEXT NOT NULL,
             story_code TEXT NOT NULL,
             narrative_type TEXT NOT NULL,
             story_phase TEXT NOT NULL,
-            escalation_metadata_json TEXT NOT NULL
+            escalation_metadata_json TEXT NOT NULL,
+            planner_sort_metadata_json TEXT NOT NULL
         );
 
         CREATE INDEX idx_canon_entities_normalized_label
@@ -1004,13 +1083,13 @@ def _insert_rows(
         INSERT INTO canon_entities (
             internal_id, record_type, record_group_id, display_label,
             normalized_label, source_section_id, source_revision, source_hash,
-            summary, normalized_summary, available_from_book, story_code,
-            narrative_type, story_phase, escalation_metadata_json
+            summary, normalized_summary, available_from_book, date_or_sequence, story_code,
+            narrative_type, story_phase, escalation_metadata_json, planner_sort_metadata_json
         ) VALUES (
             :internal_id, :record_type, :record_group_id, :display_label,
             :normalized_label, :source_section_id, :source_revision, :source_hash,
-            :summary, :normalized_summary, :available_from_book, :story_code,
-            :narrative_type, :story_phase, :escalation_metadata_json
+            :summary, :normalized_summary, :available_from_book, :date_or_sequence, :story_code,
+            :narrative_type, :story_phase, :escalation_metadata_json, :planner_sort_metadata_json
         )
         """,
         rows["entities"],
@@ -1213,6 +1292,39 @@ def _parse_alias_field(value: Any) -> list[str]:
             if cleaned:
                 parts.append(cleaned)
     return parts
+
+
+def _planner_sort_metadata(row: dict[str, Any]) -> dict[str, str]:
+    """Preserve scalar Canon fields needed by genre/template planner policies.
+
+    The Canon Index remains derived state. Storing scalar sort metadata keeps
+    future genre sort policies data-driven without adding one SQL column or one
+    Book Scope code branch for every genre-specific field.
+    """
+
+    metadata: dict[str, str] = {}
+    for key, value in row.items():
+        if key == INTERNAL_ID_FIELD or isinstance(value, (dict, list)) or value is None:
+            continue
+        cleaned = _clean_scalar(value)
+        if cleaned:
+            metadata[str(key)] = cleaned
+    return metadata
+
+
+def _decorate_index_row(row: dict[str, Any]) -> dict[str, Any]:
+    raw = row.get("planner_sort_metadata_json")
+    metadata: dict[str, Any] = {}
+    if isinstance(raw, str) and raw.strip():
+        try:
+            parsed = json.loads(raw)
+            if isinstance(parsed, dict):
+                metadata = parsed
+        except json.JSONDecodeError:
+            metadata = {}
+    row["planner_sort_metadata"] = metadata
+    row.pop("planner_sort_metadata_json", None)
+    return row
 
 
 def _clean_scalar(value: Any) -> str:

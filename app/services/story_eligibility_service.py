@@ -30,6 +30,8 @@ APPROVED_CONTINUITY_SCHEMA_VERSION = "approved_continuity_v1"
 
 UNLOCK_REQUIREMENTS_FILENAME = "unlock_requirements.json"
 APPROVED_CONTINUITY_FILENAME = "approved_continuity.json"
+PROGRESSION_OVERRIDE_SCHEMA_VERSION = "progression_overrides_v1"
+PROGRESSION_OVERRIDE_FILENAME = "progression_overrides.json"
 
 STATUS_ACTIVE = "ACTIVE"
 STATUS_AVAILABLE_TO_ADD = "AVAILABLE_TO_ADD"
@@ -116,6 +118,30 @@ def get_story_eligibility_status(project_id: str) -> dict[str, Any]:
     }
 
 
+def prepare_story_eligibility_context(
+    context: ProjectContext,
+    *,
+    index_status: dict[str, Any],
+    indexed_records: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Prepare immutable inputs once for bulk Planner eligibility evaluation."""
+
+    records_by_id = {
+        str(row.get("internal_id") or ""): dict(row)
+        for row in indexed_records
+        if str(row.get("internal_id") or "")
+    }
+    return {
+        "project_id": context.project_id,
+        "index_status": dict(index_status or {}),
+        "records_by_id": records_by_id,
+        "known_record_ids": set(records_by_id),
+        "unlock_state": _load_unlock_requirements(context),
+        "override_state": _load_progression_overrides(context),
+        "continuity_state": _load_approved_continuity(context),
+    }
+
+
 def evaluate_story_eligibility(
     project_id: str,
     *,
@@ -147,6 +173,8 @@ def evaluate_story_eligibility_for_context(
     requested_use: str,
     chapter_number: int | None = None,
     selected: bool = False,
+    prepared_context: dict[str, Any] | None = None,
+    indexed_record: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Deterministic evaluator shared by future Scope/Planner/Chapter callers."""
 
@@ -184,42 +212,40 @@ def evaluate_story_eligibility_for_context(
             author_message="The Canon reference is missing its stable record ID.",
         )
 
-    try:
-        index_status = canon_index_service.ensure_current_index(context.project_id)
-    except canon_index_service.CanonIndexError as exc:
-        return _decision(
-            context,
-            status=STATUS_STRUCTURAL_ERROR,
-            available=False,
-            selected=selected,
-            candidate={"record_id": record_id},
-            requested_use=use,
-            book_number=book_number,
-            chapter_number=chapter_number,
-            reason_codes=["canon_index_unavailable"],
-            allowed_actions=["repair_canon_structure"],
-            author_message="The Canon Index is not available for deterministic eligibility evaluation.",
-            diagnostics={"canon_index_error": str(exc)},
-        )
+    if prepared_context is not None:
+        if str(prepared_context.get("project_id") or "") != context.project_id:
+            raise StoryEligibilityError("Prepared eligibility context belongs to another project.")
+        index_status = dict(prepared_context.get("index_status") or {})
+    else:
+        try:
+            index_status = canon_index_service.ensure_current_index(context.project_id)
+        except canon_index_service.CanonIndexError as exc:
+            return _decision(
+                context, status=STATUS_STRUCTURAL_ERROR, available=False, selected=selected,
+                candidate={"record_id": record_id}, requested_use=use, book_number=book_number,
+                chapter_number=chapter_number, reason_codes=["canon_index_unavailable"],
+                allowed_actions=["repair_canon_structure"],
+                author_message="The Canon Index is not available for deterministic eligibility evaluation.",
+                diagnostics={"canon_index_error": str(exc)},
+            )
 
-    indexed = canon_index_service.get_record_by_id(context.project_id, record_id)
-    if indexed.get("status") != "found":
+    record = dict(indexed_record or {})
+    if not record and prepared_context is not None:
+        record = dict((prepared_context.get("records_by_id") or {}).get(record_id) or {})
+    if not record:
+        indexed = canon_index_service.get_record_by_id(context.project_id, record_id)
+        if indexed.get("status") == "found":
+            record = dict(indexed["record"])
+    if not record:
         return _decision(
-            context,
-            status=STATUS_STRUCTURAL_ERROR,
-            available=False,
-            selected=selected,
-            candidate={"record_id": record_id},
-            requested_use=use,
-            book_number=book_number,
-            chapter_number=chapter_number,
-            reason_codes=["unknown_record_id"],
+            context, status=STATUS_STRUCTURAL_ERROR, available=False, selected=selected,
+            candidate={"record_id": record_id}, requested_use=use, book_number=book_number,
+            chapter_number=chapter_number, reason_codes=["unknown_record_id"],
             allowed_actions=["repair_canon_structure"],
             author_message="The referenced Canon record does not exist in the current Canon Index.",
             source_index_hash=str(index_status.get("index_content_hash") or ""),
         )
 
-    record = dict(indexed["record"])
     supplied_type = str((candidate_ref or {}).get("record_type") or "").strip()
     indexed_type = str(record.get("record_type") or "").strip()
     if supplied_type and indexed_type and supplied_type != indexed_type:
@@ -238,7 +264,9 @@ def evaluate_story_eligibility_for_context(
             source_index_hash=str(index_status.get("index_content_hash") or ""),
         )
 
-    unlock_state = _load_unlock_requirements(context)
+    unlock_state = (prepared_context or {}).get("unlock_state") if prepared_context is not None else None
+    if unlock_state is None:
+        unlock_state = _load_unlock_requirements(context)
     if unlock_state["error"]:
         return _decision(
             context,
@@ -278,7 +306,10 @@ def evaluate_story_eligibility_for_context(
     normalized_rule = rule_result["rule"]
     requirements = normalized_rule["requirements"]
     if requirements:
-        validation = _validate_requirement_references(context.project_id, requirements)
+        validation = _validate_requirement_references(
+            context.project_id, requirements,
+            known_record_ids=(prepared_context or {}).get("known_record_ids") if prepared_context is not None else None,
+        )
         if validation["broken"]:
             return _decision(
                 context,
@@ -299,30 +330,70 @@ def evaluate_story_eligibility_for_context(
                 source_index_hash=str(index_status.get("index_content_hash") or ""),
             )
 
-    earliest_book = normalized_rule["available_from_book"]
-    if earliest_book is not None and book_number < earliest_book:
+    override_state = (prepared_context or {}).get("override_state") if prepared_context is not None else None
+    if override_state is None:
+        override_state = _load_progression_overrides(context)
+    if override_state["error"]:
         return _decision(
             context,
-            status=STATUS_FUTURE,
+            status=STATUS_CANON_INCOMPLETE,
             available=False,
             selected=selected,
             candidate=_candidate_payload(record),
             requested_use=use,
             book_number=book_number,
             chapter_number=chapter_number,
-            reason_codes=["available_from_future_book"],
-            allowed_actions=[
-                "review_availability",
-                "request_explicit_override",
-                "revise_progression",
-            ],
-            author_message=f"Available from Book {earliest_book}; current position is Book {book_number}.",
-            available_from_book=earliest_book,
-            requirements=normalized_rule["requirements"],
+            reason_codes=["progression_overrides_invalid"],
+            allowed_actions=["repair_structured_rules"],
+            author_message="Stored progression override audit state is invalid.",
+            diagnostics={"progression_override_error": override_state["error"]},
+            requirements=requirements,
             requirement_policy=normalized_rule["requirement_policy"],
             override_history=normalized_rule["override_history"],
             source_index_hash=str(index_status.get("index_content_hash") or ""),
         )
+
+    external_history = [
+        dict(item)
+        for item in override_state["overrides"]
+        if str((item.get("target_ref") or {}).get("record_id") or "") == record_id
+    ]
+    combined_override_history = list(normalized_rule["override_history"]) + external_history
+    position_override = _matching_progression_override(
+        override_state["overrides"],
+        record_id=record_id,
+        book_number=book_number,
+        chapter_number=chapter_number,
+        requested_use=use,
+    )
+    override_used = False
+
+    earliest_book = normalized_rule["available_from_book"]
+    if earliest_book is not None and book_number < earliest_book:
+        if position_override is None:
+            return _decision(
+                context,
+                status=STATUS_FUTURE,
+                available=False,
+                selected=selected,
+                candidate=_candidate_payload(record),
+                requested_use=use,
+                book_number=book_number,
+                chapter_number=chapter_number,
+                reason_codes=["available_from_future_book"],
+                allowed_actions=[
+                    "review_availability",
+                    "request_explicit_override",
+                    "revise_progression",
+                ],
+                author_message=f"Available from Book {earliest_book}; current position is Book {book_number}.",
+                available_from_book=earliest_book,
+                requirements=normalized_rule["requirements"],
+                requirement_policy=normalized_rule["requirement_policy"],
+                override_history=combined_override_history,
+                source_index_hash=str(index_status.get("index_content_hash") or ""),
+            )
+        override_used = True
 
     protected_reveal = normalized_rule["protected_reveal"]
     availability_mode = normalized_rule["availability_mode"]
@@ -343,7 +414,7 @@ def evaluate_story_eligibility_for_context(
             available_from_book=earliest_book,
             requirements=requirements,
             requirement_policy=normalized_rule["requirement_policy"],
-            override_history=normalized_rule["override_history"],
+            override_history=combined_override_history,
             source_index_hash=str(index_status.get("index_content_hash") or ""),
         )
 
@@ -353,8 +424,11 @@ def evaluate_story_eligibility_for_context(
         or (protected_reveal and use == "reveal")
     )
 
+    continuation: dict[str, Any] = {}
     if continuity_required:
-        continuity_state = _load_approved_continuity(context)
+        continuity_state = (prepared_context or {}).get("continuity_state") if prepared_context is not None else None
+        if continuity_state is None:
+            continuity_state = _load_approved_continuity(context)
         if continuity_state["error"]:
             return _decision(
                 context,
@@ -372,74 +446,100 @@ def evaluate_story_eligibility_for_context(
                 available_from_book=earliest_book,
                 requirements=requirements,
                 requirement_policy=normalized_rule["requirement_policy"],
-                override_history=normalized_rule["override_history"],
+                override_history=combined_override_history,
                 source_index_hash=str(index_status.get("index_content_hash") or ""),
             )
+
         if not continuity_state["present"]:
-            return _decision(
-                context,
-                status=STATUS_CANON_INCOMPLETE,
-                available=False,
-                selected=selected,
-                candidate=_candidate_payload(record),
-                requested_use=use,
-                book_number=book_number,
-                chapter_number=chapter_number,
-                reason_codes=["approved_continuity_missing"],
-                allowed_actions=["establish_approved_continuity"],
-                author_message="Approved Continuity is required before these Unlock Requirements can be evaluated.",
-                available_from_book=earliest_book,
-                requirements=requirements,
-                requirement_policy=normalized_rule["requirement_policy"],
-                override_history=normalized_rule["override_history"],
-                source_index_hash=str(index_status.get("index_content_hash") or ""),
-            )
-
-        evaluation = _evaluate_requirements(
-            requirements,
-            normalized_rule["requirement_policy"],
-            continuity_state["established"],
-            book_number=book_number,
-            chapter_number=chapter_number,
-        )
-        if requirements and not evaluation["satisfied"]:
-            reason_codes = ["unlock_requirements_unmet"]
-            if protected_reveal and use == "reveal":
-                reason_codes.append("protected_reveal_locked")
-            return _decision(
-                context,
-                status=STATUS_RESTRICTED,
-                available=False,
-                selected=selected,
-                candidate=_candidate_payload(record),
-                requested_use=use,
-                book_number=book_number,
-                chapter_number=chapter_number,
-                reason_codes=reason_codes,
-                allowed_actions=[
-                    "review_missing_requirements",
-                    "request_explicit_override",
-                    "revise_progression",
+            if position_override is None:
+                return _decision(
+                    context,
+                    status=STATUS_CANON_INCOMPLETE,
+                    available=False,
+                    selected=selected,
+                    candidate=_candidate_payload(record),
+                    requested_use=use,
+                    book_number=book_number,
+                    chapter_number=chapter_number,
+                    reason_codes=["approved_continuity_missing"],
+                    allowed_actions=[
+                        "establish_approved_continuity",
+                        "request_explicit_override",
+                    ],
+                    author_message="Approved Continuity is required before these Unlock Requirements can be evaluated.",
+                    available_from_book=earliest_book,
+                    requirements=requirements,
+                    requirement_policy=normalized_rule["requirement_policy"],
+                    override_history=combined_override_history,
+                    source_index_hash=str(index_status.get("index_content_hash") or ""),
+                )
+            override_used = True
+            evaluation = {
+                "satisfied": False,
+                "completed": [],
+                "missing": [
+                    {
+                        "type": str(item.get("type") or ""),
+                        "target_ref": str(item.get("target_ref") or ""),
+                        "label": str(item.get("label") or ""),
+                        "state": "NOT_ESTABLISHED",
+                    }
+                    for item in requirements
                 ],
-                author_message=_missing_requirements_message(evaluation["missing"]),
-                missing_prerequisites=evaluation["missing"],
-                completed_prerequisites=evaluation["completed"],
-                available_from_book=earliest_book,
-                requirements=requirements,
-                requirement_policy=normalized_rule["requirement_policy"],
-                override_history=normalized_rule["override_history"],
-                source_index_hash=str(index_status.get("index_content_hash") or ""),
-                source_continuity_revision=continuity_state["revision"],
-                source_continuity_hash=continuity_state["content_hash"],
+            }
+            continuation = {
+                "completed_prerequisites": [],
+                "missing_prerequisites": evaluation["missing"],
+                "source_continuity_revision": "",
+                "source_continuity_hash": "",
+            }
+        else:
+            evaluation = _evaluate_requirements(
+                requirements,
+                normalized_rule["requirement_policy"],
+                continuity_state["established"],
+                book_number=book_number,
+                chapter_number=chapter_number,
             )
+            if requirements and not evaluation["satisfied"]:
+                if position_override is None:
+                    reason_codes = ["unlock_requirements_unmet"]
+                    if protected_reveal and use == "reveal":
+                        reason_codes.append("protected_reveal_locked")
+                    return _decision(
+                        context,
+                        status=STATUS_RESTRICTED,
+                        available=False,
+                        selected=selected,
+                        candidate=_candidate_payload(record),
+                        requested_use=use,
+                        book_number=book_number,
+                        chapter_number=chapter_number,
+                        reason_codes=reason_codes,
+                        allowed_actions=[
+                            "review_missing_requirements",
+                            "request_explicit_override",
+                            "revise_progression",
+                        ],
+                        author_message=_missing_requirements_message(evaluation["missing"]),
+                        missing_prerequisites=evaluation["missing"],
+                        completed_prerequisites=evaluation["completed"],
+                        available_from_book=earliest_book,
+                        requirements=requirements,
+                        requirement_policy=normalized_rule["requirement_policy"],
+                        override_history=combined_override_history,
+                        source_index_hash=str(index_status.get("index_content_hash") or ""),
+                        source_continuity_revision=continuity_state["revision"],
+                        source_continuity_hash=continuity_state["content_hash"],
+                    )
+                override_used = True
 
-        continuation = {
-            "completed_prerequisites": evaluation["completed"],
-            "source_continuity_revision": continuity_state["revision"],
-            "source_continuity_hash": continuity_state["content_hash"],
-        }
-    else:
-        continuation = {}
+            continuation = {
+                "completed_prerequisites": evaluation["completed"],
+                "missing_prerequisites": evaluation["missing"],
+                "source_continuity_revision": continuity_state["revision"],
+                "source_continuity_hash": continuity_state["content_hash"],
+            }
 
     status = STATUS_ACTIVE if selected else STATUS_AVAILABLE_TO_ADD
     return _decision(
@@ -451,17 +551,21 @@ def evaluate_story_eligibility_for_context(
         requested_use=use,
         book_number=book_number,
         chapter_number=chapter_number,
-        reason_codes=[],
+        reason_codes=["explicit_progression_override"] if override_used else [],
         allowed_actions=["continue"] if selected else [_available_action(use)],
         author_message=(
-            "Active at the current story position."
+            "Author-authorized early use is active at this planning position."
+            if override_used
+            else "Active at the current story position."
             if selected
             else "Available under the current explicit story constraints."
         ),
         available_from_book=earliest_book,
         requirements=requirements,
         requirement_policy=normalized_rule["requirement_policy"],
-        override_history=normalized_rule["override_history"],
+        override_history=combined_override_history,
+        override_applied=override_used,
+        override_record=position_override if override_used else None,
         source_index_hash=str(index_status.get("index_content_hash") or ""),
         **continuation,
     )
@@ -504,6 +608,206 @@ def _load_unlock_requirements(context: ProjectContext) -> dict[str, Any]:
         "content_hash": _json_hash(payload),
         "error": "",
     }
+
+
+def _load_progression_overrides(context: ProjectContext) -> dict[str, Any]:
+    path = context.project_dir / PROGRESSION_OVERRIDE_FILENAME
+    if not path.exists():
+        return {"present": False, "overrides": [], "revision": 0, "content_hash": "", "error": ""}
+    try:
+        payload = project_loader.read_json(path)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        return {"present": True, "overrides": [], "revision": 0, "content_hash": "", "error": str(exc)}
+    if not isinstance(payload, dict):
+        return {"present": True, "overrides": [], "revision": 0, "content_hash": "", "error": "root must be an object"}
+    if payload.get("schema_version") != PROGRESSION_OVERRIDE_SCHEMA_VERSION:
+        return {
+            "present": True,
+            "overrides": [],
+            "revision": 0,
+            "content_hash": "",
+            "error": f"schema_version must be {PROGRESSION_OVERRIDE_SCHEMA_VERSION}",
+        }
+    if str(payload.get("project_id") or "") != context.project_id:
+        return {
+            "present": True,
+            "overrides": [],
+            "revision": 0,
+            "content_hash": "",
+            "error": "project_id does not match current project",
+        }
+    overrides = payload.get("overrides")
+    if not isinstance(overrides, list):
+        return {"present": True, "overrides": [], "revision": 0, "content_hash": "", "error": "overrides must be a list"}
+    for index, item in enumerate(overrides):
+        if not isinstance(item, dict):
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}] must be an object",
+            }
+        target = item.get("target_ref")
+        position = item.get("current_position")
+        if not isinstance(target, dict) or not str(target.get("record_id") or "").strip():
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}].target_ref.record_id is required",
+            }
+        if not isinstance(position, dict):
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}].current_position is required",
+            }
+        try:
+            if int(position.get("book_number") or 0) < 1 or int(position.get("chapter_number") or 0) < 1:
+                raise ValueError
+        except (TypeError, ValueError):
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}] has invalid current_position",
+            }
+        if str(item.get("requested_use") or "") not in SUPPORTED_REQUESTED_USES:
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}].requested_use is unsupported",
+            }
+        if not str(item.get("override_id") or "").strip():
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}].override_id is required",
+            }
+        if str(item.get("override_type") or "") != "one_time":
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}].override_type must be one_time",
+            }
+        if str(item.get("author_action") or "") != "authorize_early_use":
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}].author_action must be authorize_early_use",
+            }
+        if item.get("active") not in (True, False):
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}].active must be boolean",
+            }
+        if item.get("establishes_continuity") is not False:
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}].establishes_continuity must be false",
+            }
+        if not str(item.get("source_chapter_plan_hash") or "").strip():
+            return {
+                "present": True,
+                "overrides": [],
+                "revision": 0,
+                "content_hash": "",
+                "error": f"overrides[{index}].source_chapter_plan_hash is required",
+            }
+    expected_hash = _progression_override_document_hash(payload)
+    supplied_hash = str(payload.get("content_hash") or "")
+    if not supplied_hash:
+        return {
+            "present": True,
+            "overrides": [],
+            "revision": 0,
+            "content_hash": "",
+            "error": "content_hash is required for persisted progression overrides",
+        }
+    if supplied_hash != expected_hash:
+        return {
+            "present": True,
+            "overrides": [],
+            "revision": 0,
+            "content_hash": "",
+            "error": "content_hash does not match progression override content",
+        }
+    try:
+        revision = int(payload.get("revision") or 0)
+    except (TypeError, ValueError):
+        revision = -1
+    if revision < 0:
+        return {
+            "present": True,
+            "overrides": [],
+            "revision": 0,
+            "content_hash": "",
+            "error": "revision must be a non-negative integer",
+        }
+    return {
+        "present": True,
+        "overrides": [dict(item) for item in overrides],
+        "revision": revision,
+        "content_hash": expected_hash,
+        "error": "",
+    }
+
+
+def _matching_progression_override(
+    overrides: list[dict[str, Any]],
+    *,
+    record_id: str,
+    book_number: int,
+    chapter_number: int | None,
+    requested_use: str,
+) -> dict[str, Any] | None:
+    if chapter_number is None:
+        return None
+    matches = [
+        item
+        for item in overrides
+        if item.get("active") is True
+        and str((item.get("target_ref") or {}).get("record_id") or "") == record_id
+        and int((item.get("current_position") or {}).get("book_number") or 0) == book_number
+        and int((item.get("current_position") or {}).get("chapter_number") or 0) == chapter_number
+        and str(item.get("requested_use") or "") == requested_use
+    ]
+    if not matches:
+        return None
+    return dict(matches[-1])
+
+
+def _progression_override_document_hash(payload: dict[str, Any]) -> str:
+    normalized = dict(payload)
+    normalized.pop("content_hash", None)
+    normalized.pop("updated_at", None)
+    return hashlib.sha256(
+        json.dumps(
+            normalized,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+    ).hexdigest()
 
 
 def _load_approved_continuity(context: ProjectContext) -> dict[str, Any]:
@@ -721,17 +1025,22 @@ def _normalize_rule(record: dict[str, Any], rule: dict[str, Any]) -> dict[str, A
     }
 
 
-def _validate_requirement_references(project_id: str, requirements: list[dict[str, Any]]) -> dict[str, Any]:
+def _validate_requirement_references(
+    project_id: str,
+    requirements: list[dict[str, Any]],
+    *,
+    known_record_ids: set[str] | None = None,
+) -> dict[str, Any]:
     broken: list[dict[str, Any]] = []
     for requirement in requirements:
-        resolved = canon_index_service.get_record_by_id(project_id, requirement["target_ref"])
-        if resolved.get("status") != "found":
-            broken.append(
-                {
-                    **requirement,
-                    "state": "BROKEN_REFERENCE",
-                }
-            )
+        target_ref = str(requirement.get("target_ref") or "")
+        if known_record_ids is not None:
+            found = target_ref in known_record_ids
+        else:
+            resolved = canon_index_service.get_record_by_id(project_id, target_ref)
+            found = resolved.get("status") == "found"
+        if not found:
+            broken.append({**requirement, "state": "BROKEN_REFERENCE"})
     return {"broken": broken}
 
 
@@ -815,6 +1124,8 @@ def _decision(
     requirements: list[dict[str, Any]] | None = None,
     requirement_policy: str = "ALL",
     override_history: list[dict[str, Any]] | None = None,
+    override_applied: bool = False,
+    override_record: dict[str, Any] | None = None,
     source_index_hash: str = "",
     source_continuity_revision: str = "",
     source_continuity_hash: str = "",
@@ -843,7 +1154,8 @@ def _decision(
         "allowed_actions": list(allowed_actions),
         "author_message": author_message,
         "override_history": list(override_history or []),
-        "override_applied": False,
+        "override_applied": bool(override_applied),
+        "override_record": dict(override_record or {}),
         "source_index_hash": source_index_hash,
         "source_continuity_revision": source_continuity_revision,
         "source_continuity_hash": source_continuity_hash,

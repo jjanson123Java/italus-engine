@@ -23,6 +23,7 @@ from app.services import (
     chapter_plan_service,
     story_control_service,
     project_runtime_storage_service,
+    authorship_provenance_service,
 )
 from app.projects.project_manifest import (
     LIFECYCLE_ACTIVE,
@@ -49,6 +50,7 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
     wizard_state = project_loader.load_wizard_state(project_id) or {}
     context = build_project_context(manifest)
     runtime_storage_status = project_runtime_storage_service.ensure_runtime_storage_for_context(context)
+    provenance_status = authorship_provenance_service.ensure_provenance_storage_for_context(context)
     canon_packet_status = canon_packet_service.get_canon_packet_status_for_context(context, manifest.to_dict())
     project_runtime_context_status = (
         canon_packet_generation_service.get_project_runtime_context_status_for_context(
@@ -56,19 +58,32 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
             manifest.to_dict(),
         )
     )
-    book_plan_status = book_plan_service.get_book_plan_status_for_context(
-        context,
-        manifest.to_dict(),
-    )
-    book_runtime_context_status = (
-        book_knowledge_pack_service.get_book_runtime_context_status_for_context(
-            context,
-            manifest.to_dict(),
-        )
-    )
-    book_scope_status = book_scope_service.get_book_scope_status(project_id)
-    chapter_plan_status = chapter_plan_service.get_chapter_plan_status(project_id)
-    story_control_status = story_control_service.get_story_control_status(project_id)
+    # Workspace shell bootstrap must remain lightweight. Detailed Book/Chapter
+    # planning and runtime status is loaded lazily by each authoring surface.
+    # Do not reconcile all Book Scopes/Plans/Runtime Contexts merely to render
+    # the Dashboard. This avoids hundreds of repeated Canon Index freshness
+    # checks on every hard refresh.
+    book_plan_status = {
+        "status": "available", "valid": False, "lazy_detail": True,
+        "message": "Open Book Planner to load current per-book planning status.",
+    }
+    book_runtime_context_status = {
+        "status": "available", "compiler_ready": False, "lazy_detail": True,
+        "current_count": 0, "target_count": int(manifest.book_count or 0),
+        "message": "Open Book Knowledge Packs to load current compilation status.",
+    }
+    book_scope_status = {
+        "status": "available", "lazy_detail": True,
+        "message": "Canon for This Book status loads with Book Planner.",
+    }
+    chapter_plan_status = {
+        "status": "available", "lazy_detail": True,
+        "message": "Chapter Plan status loads when Chapter Planner opens.",
+    }
+    story_control_status = {
+        "status": "available", "lazy_detail": True,
+        "message": "Story Controls load with Chapter Planner.",
+    }
     author_canon_status = canon_authoring_service.get_canon_authoring_status_for_context(
         context,
         manifest.to_dict(),
@@ -141,10 +156,7 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
                 **book_plan_status,
                 "enabled": not read_only,
                 "authoring_enabled": not read_only,
-                "approval_enabled": (
-                    not read_only
-                    and bool(book_plan_status.get("valid"))
-                ),
+                "approval_enabled": not read_only,
                 "review_enabled": True,
                 "message": (
                     "Project-local Book Plan authoring and approval are available."
@@ -174,6 +186,19 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
                     else "Archived projects expose Story Controls as read-only."
                 ),
             },
+            "provenance": {
+                **provenance_status,
+                "enabled": True,
+                "origin_capture_enabled": bool(
+                    provenance_status.get("provenance_capture_ready")
+                ),
+                "scoring_enabled": False,
+                "ledger_enabled": False,
+                "message": (
+                    "Authorship provenance storage and lineage foundation are ready. "
+                    "Scoring, provider wiring, and ledger generation remain locked."
+                ),
+            },
             "books": {
                 **book_runtime_context_status,
                 "enabled": True,
@@ -190,7 +215,7 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
                 ),
             },
         },
-        "read_only_data": _read_only_data_payload(),
+        "read_only_data": _read_only_data_payload(context),
         "runtime_readiness_gates": _runtime_readiness_gates_payload(runtime_storage_status),
         "summary": {
             **author_summary,
@@ -270,22 +295,35 @@ def _workspace_author_summary(
 
 
 
-def _read_only_data_payload() -> dict[str, Any]:
-    """Load legacy root data for read-only workspace browsing.
 
-    This exposes existing JSON artifacts without calling generation, validation,
-    prompt construction, provider runners, or project runtime migration.
+def _read_only_data_payload(context) -> dict[str, Any]:
+    """Load project-local read-only workspace browsing data.
+
+    Workspace Library must never fall back to root legacy runtime artifacts.
+    Books/chapters/scenes come from this project's runtime storage. Events and
+    characters come from this project's finalized Author Canon.
     """
 
-    books = _read_legacy_json("books.json", [])
-    chapters = _read_legacy_json("chapters.json", [])
-    events = _read_legacy_json("event_index.json", [])
-    scenes = _read_legacy_json("scenes.json", [])
-    coverage_map = _read_legacy_json("coverage_map.json", {})
-    continuity_digests = _read_legacy_json("chapter_continuity_digests.json", {})
+    runtime_dir = context.runtime_data_dir
+    books = _read_project_json(runtime_dir / "books.json", [])
+    chapters = _read_project_json(runtime_dir / "chapters.json", [])
+    scenes = _read_project_json(runtime_dir / "scenes.json", [])
+    coverage_map = _read_project_json(runtime_dir / "coverage_map.json", {})
+    continuity_digests = _read_project_json(runtime_dir / "chapter_continuity_digests.json", [])
 
-    characters = _character_index(books, chapters, events, scenes)
-    coverage_events = coverage_map.get("events") if isinstance(coverage_map, dict) else {}
+    author_canon = _read_project_json(context.project_dir / "canon" / "author_canon.json", {})
+    sections = author_canon.get("sections") if isinstance(author_canon, dict) else {}
+    sections = sections if isinstance(sections, dict) else {}
+    event_section = sections.get("timeline_event_ledger") if isinstance(sections, dict) else {}
+    character_section = sections.get("character_bible") if isinstance(sections, dict) else {}
+    event_records = (event_section or {}).get("records") if isinstance(event_section, dict) else {}
+    character_records = (character_section or {}).get("records") if isinstance(character_section, dict) else {}
+    events = (event_records or {}).get("events") if isinstance(event_records, dict) else []
+    characters = (character_records or {}).get("characters") if isinstance(character_records, dict) else []
+    if not isinstance(events, list):
+        events = []
+    if not isinstance(characters, list):
+        characters = []
 
     book_index = {
         str(item.get("book_id")): item
@@ -302,10 +340,12 @@ def _read_only_data_payload() -> dict[str, Any]:
         chapter["book_number"] = book.get("book_number")
         chapter["book_title"] = book.get("title")
 
+    coverage_events = coverage_map.get("events") if isinstance(coverage_map, dict) else {}
+
     return {
-        "marker": "workspace-readonly-data-20260707",
-        "source_mode": "legacy_root_read_only",
-        "runtime_migration_status": "not_migrated",
+        "marker": "workspace-project-local-library-20260818",
+        "source_mode": "project_local",
+        "runtime_migration_status": "project_local",
         "books": {
             "count": len(books) if isinstance(books, list) else 0,
             "sample": _sample_records(
@@ -319,10 +359,10 @@ def _read_only_data_payload() -> dict[str, Any]:
             "sample": chapter_sample,
         },
         "events": {
-            "count": len(events) if isinstance(events, list) else 0,
+            "count": len(events),
             "sample": _sample_records(
                 events,
-                ["event_id", "year_label", "event_name", "book_id", "region"],
+                ["internal_id", "story_code", "date_or_sequence", "event_summary", "book", "location"],
                 8,
             ),
         },
@@ -336,16 +376,27 @@ def _read_only_data_payload() -> dict[str, Any]:
         },
         "characters": {
             "count": len(characters),
-            "sample": characters[:12],
+            "sample": _sample_records(
+                characters,
+                ["internal_id", "name", "role", "status", "available_from_book", "first_appearance"],
+                12,
+            ),
         },
         "continuity": {
-            "digest_count": len(continuity_digests) if isinstance(continuity_digests, dict) else 0,
+            "digest_count": len(continuity_digests) if isinstance(continuity_digests, (dict, list)) else 0,
         },
         "coverage": {
             "event_count": len(coverage_events) if isinstance(coverage_events, dict) else 0,
             "sample": _coverage_sample(coverage_events, 6),
         },
     }
+
+
+def _read_project_json(path, default: Any) -> Any:
+    try:
+        return project_loader.read_json(path, default=default)
+    except Exception:
+        return default
 
 
 def _runtime_readiness_gates_payload(runtime_storage_status: dict[str, Any] | None = None) -> list[dict[str, str]]:
@@ -548,11 +599,11 @@ def _workspace_menu(lifecycle_state: str, read_only: bool) -> list[dict[str, Any
                 (
                     _disabled_item(
                         "book_plan",
-                        "Book Plan",
-                        "Archived projects expose the Book Plan as read-only.",
+                        "Book Planner",
+                        "Archived projects expose the Book Planner as read-only.",
                     )
                     if read_only
-                    else _enabled_item("book_plan", "Book Plan")
+                    else _enabled_item("book_plan", "Book Planner")
                 ),
                 (
                     _disabled_item(

@@ -17,6 +17,7 @@ from copy import deepcopy
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import time
 from typing import Any
@@ -28,7 +29,8 @@ from app.services import book_scope_service, canon_index_service
 
 
 BOOK_PLAN_SERVICE_MARKER = "project-book-plan-stable-ref-consistency-20260816"
-BOOK_PLAN_SCHEMA_VERSION = "project_book_plan_v2_stable_refs"
+BOOK_PLAN_SCHEMA_VERSION = "project_book_plan_v3_per_book_approval"
+PREVIOUS_BOOK_PLAN_SCHEMA_VERSION = "project_book_plan_v2_stable_refs"
 LEGACY_BOOK_PLAN_SCHEMA_VERSION = "project_book_plan_v1"
 BOOK_PLAN_FILENAME = "book_plan.json"
 BOOK_PLAN_MIGRATION_REPORT_FILENAME = "book_plan_reference_migration_report.json"
@@ -152,10 +154,10 @@ def get_book_plan_contract() -> dict[str, Any]:
             ],
         },
         "approval_contract": {
-            "approval_basis": "current normalized Book Plan content_hash",
-            "fresh_when": "approved_content_hash equals content_hash",
-            "invalidation": "any stable content change makes approval outdated",
-            "approval_required": "plan validation must be complete",
+            "approval_basis": "current normalized per-book content_hash",
+            "fresh_when": "per-book approved_content_hash equals per-book content_hash and Book Scope remains approved/current",
+            "invalidation": "stable content change invalidates only the changed book approval",
+            "approval_required": "the selected book must be complete/valid and its Book Scope approved/current",
         },
         "execution_locks": _execution_locks(),
     }
@@ -172,6 +174,8 @@ def get_book_plan(project_id: str) -> dict[str, Any]:
 def get_book_plan_for_context(
     context: ProjectContext,
     manifest: dict[str, Any],
+    *,
+    scope_result: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Return a normalized plan without writing when the file is absent."""
 
@@ -186,7 +190,7 @@ def get_book_plan_for_context(
     if path.exists():
         stored = project_loader.read_json(path)
         source_schema = str(stored.get("schema_version") or LEGACY_BOOK_PLAN_SCHEMA_VERSION)
-        migration_required = source_schema != BOOK_PLAN_SCHEMA_VERSION
+        migration_required = source_schema not in {BOOK_PLAN_SCHEMA_VERSION, PREVIOUS_BOOK_PLAN_SCHEMA_VERSION}
         stats = {"resolved_count": 0, "unresolved_count": 0, "unresolved": []}
         plan = _normalize_existing_document(
             context,
@@ -208,11 +212,15 @@ def get_book_plan_for_context(
         context,
         plan,
         int(manifest.get("book_count") or 0),
+        scope_result=scope_result,
+        manifest=manifest,
     )
+    _decorate_book_workflow(plan, validation)
     plan["status"] = _status_for(validation, exists)
-    plan["approval_status"] = _approval_status(plan, validation)
-    plan["approval_fresh"] = (
-        plan["approval_status"] == APPROVAL_APPROVED
+    plan["approval_status"] = _aggregate_approval_status(plan)
+    plan["approval_fresh"] = bool(
+        plan.get("book_workflow")
+        and all(item.get("approval_fresh") is True for item in plan["book_workflow"])
     )
     plan["validation"] = validation
 
@@ -356,6 +364,7 @@ def save_book_plan_draft_for_context(
         "created_at": str(existing.get("created_at") or now),
         "updated_at": now,
         "books": normalized_books,
+        "book_workflow": _merge_book_workflow(existing, normalized_books),
     }
 
     content_hash = _content_hash(candidate)
@@ -364,14 +373,14 @@ def save_book_plan_draft_for_context(
     candidate["content_hash"] = content_hash
 
     validation = _validate_plan(context, candidate, expected_book_count)
+    _decorate_book_workflow(candidate, validation)
     candidate["status"] = _status_for(validation, True)
-    candidate["approval_status"] = _approval_status(
-        candidate,
-        validation,
+    candidate["approval_status"] = _aggregate_approval_status(candidate)
+    candidate["approval_fresh"] = bool(
+        candidate.get("book_workflow")
+        and all(item.get("approval_fresh") is True for item in candidate["book_workflow"])
     )
-    candidate["approval_fresh"] = (
-        candidate["approval_status"] == APPROVAL_APPROVED
-    )
+    _sync_legacy_aggregate_approval_fields(candidate)
 
     _write_json_atomic(path, _stored_document(candidate))
 
@@ -390,59 +399,73 @@ def save_book_plan_draft_for_context(
 
 
 
-def approve_book_plan(project_id: str) -> dict[str, Any]:
-    """Approve the current complete Book Plan content hash."""
+def approve_book_plan(project_id: str, book_number: int) -> dict[str, Any]:
+    """Approve one current, complete Book Plan entry."""
 
     manifest = project_loader.load_manifest(project_id)
     context = build_project_context(manifest)
     return approve_book_plan_for_context(
         context,
         manifest.to_dict(),
+        book_number=book_number,
     )
 
 
 def approve_book_plan_for_context(
     context: ProjectContext,
     manifest: dict[str, Any],
+    *,
+    book_number: int,
 ) -> dict[str, Any]:
-    """Persist approval provenance without compiling runtime context."""
+    """Persist per-book approval provenance without compiling runtime context."""
 
     path = _book_plan_path(context)
     if not path.exists():
+        raise BookPlanContractError("Book Plan must be saved before approval.")
+
+    expected_book_count = int(manifest.get("book_count") or 0)
+    if book_number < 1 or book_number > expected_book_count:
         raise BookPlanContractError(
-            "Book Plan must be saved before approval."
+            f"book_number {book_number} is outside 1..{expected_book_count}."
         )
 
     stored = project_loader.read_json(path)
-    if str(stored.get("schema_version") or LEGACY_BOOK_PLAN_SCHEMA_VERSION) != BOOK_PLAN_SCHEMA_VERSION:
+    source_schema = str(stored.get("schema_version") or LEGACY_BOOK_PLAN_SCHEMA_VERSION)
+    if source_schema not in {BOOK_PLAN_SCHEMA_VERSION, PREVIOUS_BOOK_PLAN_SCHEMA_VERSION}:
         raise BookPlanContractError(
             "Book Plan stable-reference migration must be completed before approval."
         )
-    plan = _normalize_existing_document(
-        context,
-        manifest,
-        stored,
-    )
-    validation = _validate_plan(
-        context,
-        plan,
-        int(manifest.get("book_count") or 0),
-    )
-    if not validation["valid"]:
+
+    plan = _normalize_existing_document(context, manifest, stored)
+    validation = _validate_plan(context, plan, expected_book_count)
+    _decorate_book_workflow(plan, validation)
+    book_validation = _book_validation(validation, book_number)
+    if not book_validation or not book_validation.get("complete"):
         raise BookPlanContractError(
-            "Book Plan must be complete before approval."
+            f"Book {book_number} Plan must be complete and valid before approval."
+        )
+    if book_validation.get("book_scope_approved") is not True:
+        raise BookPlanContractError(
+            f"Book {book_number} Book Scope must be approved and current before Book Plan approval."
         )
 
+    workflow = get_book_workflow(plan, book_number)
     now = utc_now_iso()
+    workflow["approval_status"] = APPROVAL_APPROVED
+    workflow["approval_fresh"] = True
+    workflow["approved_revision"] = int(workflow.get("revision") or 0)
+    workflow["approved_content_hash"] = str(workflow.get("content_hash") or "")
+    workflow["approved_at"] = now
+
+    plan["schema_version"] = BOOK_PLAN_SCHEMA_VERSION
     plan["status"] = _status_for(validation, True)
-    plan["approval_status"] = APPROVAL_APPROVED
-    plan["approval_fresh"] = True
-    plan["approved_revision"] = int(plan.get("revision") or 0)
-    plan["approved_content_hash"] = str(
-        plan.get("content_hash") or ""
+    plan["approval_status"] = _aggregate_approval_status(plan)
+    plan["approval_fresh"] = bool(
+        plan.get("book_workflow")
+        and all(item.get("approval_fresh") is True for item in plan["book_workflow"])
     )
-    plan["approved_at"] = now
     plan["updated_at"] = now
+    _sync_legacy_aggregate_approval_fields(plan)
 
     _write_json_atomic(path, _stored_document(plan))
 
@@ -451,57 +474,71 @@ def approve_book_plan_for_context(
         "service": BOOK_PLAN_SERVICE_MARKER,
         "schema_version": BOOK_PLAN_SCHEMA_VERSION,
         "project_id": context.project_id,
+        "book_number": book_number,
         "project_relative_path": _relative(path, context.project_dir),
-        "plan": {
-            **plan,
-            "validation": validation,
-        },
+        "plan": {**plan, "validation": validation},
+        "book_approval": deepcopy(workflow),
         "execution_locks": _execution_locks(),
     }
 
 
-def revoke_book_plan_approval(project_id: str) -> dict[str, Any]:
-    """Revoke approval while preserving the current plan content."""
+def revoke_book_plan_approval(project_id: str, book_number: int) -> dict[str, Any]:
+    """Revoke one Book Plan approval while preserving plan content."""
 
     manifest = project_loader.load_manifest(project_id)
     context = build_project_context(manifest)
     return revoke_book_plan_approval_for_context(
         context,
         manifest.to_dict(),
+        book_number=book_number,
     )
 
 
 def revoke_book_plan_approval_for_context(
     context: ProjectContext,
     manifest: dict[str, Any],
+    *,
+    book_number: int,
 ) -> dict[str, Any]:
-    """Clear approval provenance without changing stable plan content."""
-
     path = _book_plan_path(context)
     if not path.exists():
         raise BookPlanContractError(
             "Book Plan must be saved before approval can be revoked."
         )
 
-    plan = _normalize_existing_document(
-        context,
-        manifest,
-        project_loader.read_json(path),
-    )
-    validation = _validate_plan(
-        context,
-        plan,
-        int(manifest.get("book_count") or 0),
-    )
-    now = utc_now_iso()
-    plan["status"] = _status_for(validation, True)
-    plan["approved_revision"] = 0
-    plan["approved_content_hash"] = ""
-    plan["approved_at"] = ""
-    plan["approval_status"] = _approval_status(plan, validation)
-    plan["approval_fresh"] = False
-    plan["updated_at"] = now
+    expected_book_count = int(manifest.get("book_count") or 0)
+    if book_number < 1 or book_number > expected_book_count:
+        raise BookPlanContractError(
+            f"book_number {book_number} is outside 1..{expected_book_count}."
+        )
 
+    plan = _normalize_existing_document(
+        context, manifest, project_loader.read_json(path)
+    )
+    validation = _validate_plan(context, plan, expected_book_count)
+    _decorate_book_workflow(plan, validation)
+    workflow = get_book_workflow(plan, book_number)
+    now = utc_now_iso()
+    workflow["approved_revision"] = 0
+    workflow["approved_content_hash"] = ""
+    workflow["approved_at"] = ""
+    workflow["approval_fresh"] = False
+    workflow["approval_status"] = (
+        APPROVAL_REQUIRED
+        if (_book_validation(validation, book_number) or {}).get("complete")
+        and (_book_validation(validation, book_number) or {}).get("book_scope_approved") is True
+        else APPROVAL_NOT_READY
+    )
+
+    plan["schema_version"] = BOOK_PLAN_SCHEMA_VERSION
+    plan["status"] = _status_for(validation, True)
+    plan["approval_status"] = _aggregate_approval_status(plan)
+    plan["approval_fresh"] = bool(
+        plan.get("book_workflow")
+        and all(item.get("approval_fresh") is True for item in plan["book_workflow"])
+    )
+    plan["updated_at"] = now
+    _sync_legacy_aggregate_approval_fields(plan)
     _write_json_atomic(path, _stored_document(plan))
 
     return {
@@ -509,11 +546,10 @@ def revoke_book_plan_approval_for_context(
         "service": BOOK_PLAN_SERVICE_MARKER,
         "schema_version": BOOK_PLAN_SCHEMA_VERSION,
         "project_id": context.project_id,
+        "book_number": book_number,
         "project_relative_path": _relative(path, context.project_dir),
-        "plan": {
-            **plan,
-            "validation": validation,
-        },
+        "plan": {**plan, "validation": validation},
+        "book_approval": deepcopy(workflow),
         "execution_locks": _execution_locks(),
     }
 
@@ -545,7 +581,7 @@ def migrate_book_plan_references(project_id: str) -> dict[str, Any]:
             "project_id": context.project_id,
             "reason": "Book Plan already uses stable references.",
         }
-    if source_schema != LEGACY_BOOK_PLAN_SCHEMA_VERSION:
+    if source_schema not in {LEGACY_BOOK_PLAN_SCHEMA_VERSION, PREVIOUS_BOOK_PLAN_SCHEMA_VERSION}:
         raise BookPlanContractError(
             f"Unsupported Book Plan schema for migration: {source_schema}."
         )
@@ -616,12 +652,12 @@ def get_book_plan_migration_status(project_id: str) -> dict[str, Any]:
     current = str(
         stored.get("schema_version") or LEGACY_BOOK_PLAN_SCHEMA_VERSION
     )
+    compatible_upgrade = current == PREVIOUS_BOOK_PLAN_SCHEMA_VERSION
     return {
-        "status": "migration_required"
-        if current != BOOK_PLAN_SCHEMA_VERSION
-        else "current",
+        "status": "compatible_upgrade" if compatible_upgrade else ("migration_required" if current != BOOK_PLAN_SCHEMA_VERSION else "current"),
         "project_id": context.project_id,
-        "migration_required": current != BOOK_PLAN_SCHEMA_VERSION,
+        "migration_required": current not in {BOOK_PLAN_SCHEMA_VERSION, PREVIOUS_BOOK_PLAN_SCHEMA_VERSION},
+        "compatible_upgrade": compatible_upgrade,
         "current_schema_version": current,
         "target_schema_version": BOOK_PLAN_SCHEMA_VERSION,
     }
@@ -654,6 +690,10 @@ def _default_document(
             _empty_book(book_number)
             for book_number in range(1, book_count + 1)
         ],
+        "book_workflow": [
+            _empty_book_workflow(book_number, _book_content_hash(_empty_book(book_number)))
+            for book_number in range(1, book_count + 1)
+        ],
     }
 
 
@@ -676,8 +716,13 @@ def _normalize_existing_document(
         stored.get("books") or [],
         expected_book_count,
         strict_new=False,
-        legacy_mode=source_schema != BOOK_PLAN_SCHEMA_VERSION,
+        legacy_mode=source_schema == LEGACY_BOOK_PLAN_SCHEMA_VERSION,
         migration_stats=migration_stats,
+    )
+    normalized_workflow = _normalize_book_workflow(
+        stored,
+        normalized_books,
+        source_schema=source_schema,
     )
     document = {
         "schema_version": BOOK_PLAN_SCHEMA_VERSION,
@@ -703,6 +748,7 @@ def _normalize_existing_document(
         "created_at": str(stored.get("created_at") or ""),
         "updated_at": str(stored.get("updated_at") or ""),
         "books": normalized_books,
+        "book_workflow": normalized_workflow,
     }
     calculated = _content_hash(document)
     if not document["content_hash"]:
@@ -774,6 +820,9 @@ def _validate_plan(
     context: ProjectContext,
     plan: dict[str, Any],
     expected_book_count: int,
+    *,
+    scope_result: dict[str, Any] | None = None,
+    manifest: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     books = list(plan.get("books") or [])
     issues: list[dict[str, Any]] = []
@@ -789,6 +838,16 @@ def _validate_plan(
                 ),
             }
         )
+
+    if scope_result is None:
+        scope_result = book_scope_service.get_book_scope_for_context(
+            context,
+            manifest or project_loader.load_manifest(context.project_id).to_dict(),
+        )
+    scope_by_book = {
+        int(item.get("book_number") or 0): item
+        for item in (scope_result.get("document") or {}).get("books", [])
+    }
 
     per_book: list[dict[str, Any]] = []
     for book in books:
@@ -819,19 +878,35 @@ def _validate_plan(
                 }
             )
 
+        scope_book = scope_by_book.get(book_number)
         reference_issues = _validate_book_references(
             context,
             book,
             book_number=book_number,
+            scope_book=scope_book,
+        )
+        time_span_issues = _validate_time_span_against_scope(
+            context,
+            book,
+            book_number=book_number,
+            scope_book=scope_book,
         )
         issues.extend(reference_issues)
+        issues.extend(time_span_issues)
 
+        scope_approved = bool(
+            scope_book
+            and scope_book.get("approval_status") == book_scope_service.APPROVAL_APPROVED
+            and scope_book.get("approval_fresh") is True
+        )
         per_book.append(
             {
                 "book_number": book_number,
-                "complete": complete and not reference_issues,
+                "complete": complete and not reference_issues and not time_span_issues,
                 "missing_fields": missing,
                 "reference_issue_count": len(reference_issues),
+                "time_span_issue_count": len(time_span_issues),
+                "book_scope_approved": scope_approved,
             }
         )
 
@@ -861,6 +936,174 @@ def _status_for(
         return STATUS_COMPLETE
     return STATUS_DRAFT
 
+
+
+def _book_content_hash(book: dict[str, Any]) -> str:
+    payload = {
+        key: value
+        for key, value in book.items()
+        if key in {
+            "book_number", "title", "time_span", "primary_arc", "major_events",
+            "required_characters", "required_locations", "ending_state",
+            "handoff_to_next_book", "allowed_reveals",
+            "forbidden_future_knowledge", "notes",
+        }
+    }
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _book_has_content(book: dict[str, Any]) -> bool:
+    for key, value in book.items():
+        if key == "book_number":
+            continue
+        if isinstance(value, list) and value:
+            return True
+        if isinstance(value, str) and value.strip():
+            return True
+    return False
+
+
+def _empty_book_workflow(book_number: int, content_hash: str) -> dict[str, Any]:
+    return {
+        "book_number": book_number,
+        "revision": 0,
+        "content_hash": content_hash,
+        "approval_status": APPROVAL_NOT_READY,
+        "approval_fresh": False,
+        "approved_revision": 0,
+        "approved_content_hash": "",
+        "approved_at": "",
+    }
+
+
+def _normalize_book_workflow(
+    stored: dict[str, Any],
+    books: list[dict[str, Any]],
+    *,
+    source_schema: str,
+) -> list[dict[str, Any]]:
+    raw_by_number = {
+        int(item.get("book_number") or 0): item
+        for item in (stored.get("book_workflow") or [])
+        if isinstance(item, dict) and int(item.get("book_number") or 0) > 0
+    }
+    legacy_globally_approved = bool(
+        source_schema == PREVIOUS_BOOK_PLAN_SCHEMA_VERSION
+        and stored.get("approval_status") == APPROVAL_APPROVED
+        and stored.get("approved_content_hash")
+        and stored.get("approved_content_hash") == stored.get("content_hash")
+    )
+    result = []
+    for book in books:
+        number = int(book.get("book_number") or 0)
+        current_hash = _book_content_hash(book)
+        raw = raw_by_number.get(number) or {}
+        revision = int(raw.get("revision") or (1 if _book_has_content(book) else 0))
+        approved_hash = str(raw.get("approved_content_hash") or "")
+        approved_revision = int(raw.get("approved_revision") or 0)
+        approved_at = str(raw.get("approved_at") or "")
+        if legacy_globally_approved and not approved_hash:
+            approved_hash = current_hash
+            approved_revision = revision
+            approved_at = str(stored.get("approved_at") or "")
+        result.append({
+            "book_number": number,
+            "revision": revision,
+            "content_hash": current_hash,
+            "approval_status": str(raw.get("approval_status") or APPROVAL_NOT_READY),
+            "approval_fresh": False,
+            "approved_revision": approved_revision,
+            "approved_content_hash": approved_hash,
+            "approved_at": approved_at,
+        })
+    return result
+
+
+def _merge_book_workflow(existing: dict[str, Any], books: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    existing_by_number = {
+        int(item.get("book_number") or 0): item
+        for item in (existing.get("book_workflow") or [])
+        if isinstance(item, dict)
+    }
+    result = []
+    for book in books:
+        number = int(book.get("book_number") or 0)
+        current_hash = _book_content_hash(book)
+        prior = deepcopy(existing_by_number.get(number) or _empty_book_workflow(number, current_hash))
+        prior_hash = str(prior.get("content_hash") or "")
+        revision = int(prior.get("revision") or 0)
+        if prior_hash != current_hash:
+            revision += 1
+        prior["book_number"] = number
+        prior["revision"] = revision
+        prior["content_hash"] = current_hash
+        prior.setdefault("approved_revision", 0)
+        prior.setdefault("approved_content_hash", "")
+        prior.setdefault("approved_at", "")
+        result.append(prior)
+    return result
+
+
+def _book_validation(validation: dict[str, Any], book_number: int) -> dict[str, Any] | None:
+    return next(
+        (item for item in validation.get("books") or [] if int(item.get("book_number") or 0) == int(book_number)),
+        None,
+    )
+
+
+def get_book_workflow(plan: dict[str, Any], book_number: int) -> dict[str, Any]:
+    workflow = next(
+        (item for item in plan.get("book_workflow") or [] if int(item.get("book_number") or 0) == int(book_number)),
+        None,
+    )
+    if workflow is None:
+        raise BookPlanContractError(f"Book {book_number} has no Book Plan workflow state.")
+    return workflow
+
+
+def _decorate_book_workflow(plan: dict[str, Any], validation: dict[str, Any]) -> None:
+    for workflow in plan.get("book_workflow") or []:
+        number = int(workflow.get("book_number") or 0)
+        book_validation = _book_validation(validation, number) or {}
+        complete = bool(book_validation.get("complete"))
+        scope_approved = book_validation.get("book_scope_approved") is True
+        current_hash = str(workflow.get("content_hash") or "")
+        approved_hash = str(workflow.get("approved_content_hash") or "")
+        hash_fresh = bool(approved_hash and current_hash and approved_hash == current_hash)
+        approval_fresh = bool(hash_fresh and complete and scope_approved)
+        workflow["approval_fresh"] = approval_fresh
+        if approved_hash:
+            workflow["approval_status"] = APPROVAL_APPROVED if approval_fresh else APPROVAL_OUTDATED
+        elif complete and scope_approved:
+            workflow["approval_status"] = APPROVAL_REQUIRED
+        else:
+            workflow["approval_status"] = APPROVAL_NOT_READY
+
+
+def _aggregate_approval_status(plan: dict[str, Any]) -> str:
+    workflow = list(plan.get("book_workflow") or [])
+    if workflow and all(item.get("approval_fresh") is True for item in workflow):
+        return APPROVAL_APPROVED
+    if any(item.get("approval_status") == APPROVAL_OUTDATED for item in workflow):
+        return APPROVAL_OUTDATED
+    if workflow and all(item.get("approval_status") in {APPROVAL_APPROVED, APPROVAL_REQUIRED} for item in workflow):
+        return APPROVAL_REQUIRED
+    return APPROVAL_NOT_READY
+
+
+def _sync_legacy_aggregate_approval_fields(plan: dict[str, Any]) -> None:
+    if plan.get("approval_fresh") is True:
+        plan["approved_revision"] = int(plan.get("revision") or 0)
+        plan["approved_content_hash"] = str(plan.get("content_hash") or "")
+        plan["approved_at"] = max(
+            (str(item.get("approved_at") or "") for item in plan.get("book_workflow") or []),
+            default="",
+        )
+    else:
+        plan["approved_revision"] = 0
+        plan["approved_content_hash"] = ""
+        plan["approved_at"] = ""
 
 
 def _approval_status(
@@ -1082,6 +1325,7 @@ def _validate_book_references(
     book: dict[str, Any],
     *,
     book_number: int,
+    scope_book: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     issues: list[dict[str, Any]] = []
     referenced_ids: list[tuple[str, str]] = []
@@ -1112,18 +1356,19 @@ def _validate_book_references(
     if not referenced_ids:
         return issues
 
-    scope = book_scope_service.get_book_scope_for_context(
-        context,
-        project_loader.load_manifest(context.project_id).to_dict(),
-    )
-    scope_book = next(
-        (
-            item
-            for item in scope["document"]["books"]
-            if int(item.get("book_number") or 0) == book_number
-        ),
-        None,
-    )
+    if scope_book is None:
+        scope = book_scope_service.get_book_scope_for_context(
+            context,
+            project_loader.load_manifest(context.project_id).to_dict(),
+        )
+        scope_book = next(
+            (
+                item
+                for item in scope["document"]["books"]
+                if int(item.get("book_number") or 0) == book_number
+            ),
+            None,
+        )
     if not scope_book:
         issues.append(
             {
@@ -1171,6 +1416,73 @@ def _validate_book_references(
             )
     return issues
 
+
+
+def _parse_time_span_years(value: Any) -> tuple[int, int] | None:
+    """Parse an explicit author-entered year/range without restricting free-form genres."""
+
+    years = [int(match) for match in re.findall(r"(?<!\d)(\d{3,4})(?!\d)", _clean_text(value))]
+    if not years:
+        return None
+    if len(years) == 1:
+        return years[0], years[0]
+    return min(years), max(years)
+
+
+def _record_years(value: Any) -> list[int]:
+    return [int(match) for match in re.findall(r"(?<!\d)(\d{3,4})(?!\d)", _clean_text(value))]
+
+
+def _validate_time_span_against_scope(
+    context: ProjectContext,
+    book: dict[str, Any],
+    *,
+    book_number: int,
+    scope_book: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
+    """Validate explicit date ranges against dated events selected into Book Canon.
+
+    Free-form time-span text remains legal for genres without parseable dates. When
+    the author supplies a recognizable year or year range, selected dated Canon
+    events must fall inside that range.
+    """
+
+    parsed = _parse_time_span_years(book.get("time_span"))
+    if parsed is None or not scope_book:
+        return []
+
+    start_year, end_year = parsed
+    issues: list[dict[str, Any]] = []
+    for selection in scope_book.get("selections") or []:
+        if str(selection.get("record_type") or "").lower() != "event":
+            continue
+        record_id = _clean_text(selection.get("record_id"))
+        if not record_id:
+            continue
+        found = canon_index_service.get_record_by_id(context.project_id, record_id)
+        record = found.get("record") if found.get("status") == "found" else None
+        if not record:
+            continue
+        years = _record_years(record.get("date_or_sequence"))
+        if not years:
+            continue
+        outside = [year for year in years if year < start_year or year > end_year]
+        if not outside:
+            continue
+        issues.append(
+            {
+                "code": "time_span_canon_conflict",
+                "book_number": book_number,
+                "field": "time_span",
+                "record_id": record_id,
+                "event_date_or_sequence": str(record.get("date_or_sequence") or ""),
+                "message": (
+                    f"Book {book_number} Time Span {book.get('time_span')!r} excludes "
+                    f"selected Canon event {record.get('display_label') or record_id}."
+                ),
+            }
+        )
+    return issues
 
 
 def _book_plan_path(context: ProjectContext) -> Path:

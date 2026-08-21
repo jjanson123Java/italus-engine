@@ -596,11 +596,26 @@ def _alias_values(value: Any) -> list[str]:
 
 
 def _display_label(group_id: str, row: dict[str, Any], index: int) -> str:
+    if group_id in {"events", "life_events"}:
+        summary = " ".join(str(row.get("event_summary") or "").split())
+        date = " ".join(str(row.get("date_or_sequence") or "").split())
+        if summary:
+            label = f"{date} — {summary}" if date else summary
+            return label[:120] if len(label) <= 120 else label[:117].rstrip() + "..."
+    if group_id == "interactions":
+        historical = " ".join(str(row.get("historical_figure") or "").split())
+        interaction = " ".join(str(row.get("interaction_type") or "").split())
+        date = " ".join(str(row.get("date_or_period") or "").split())
+        parts = [part for part in (date, historical, interaction) if part]
+        if parts:
+            label = " — ".join(parts)
+            return label[:120] if len(label) <= 120 else label[:117].rstrip() + "..."
+
     candidates = {
         "characters": ["name", "aliases"],
         "locations": ["name", "region"],
-        "events": ["story_code", "date_or_sequence", "event_summary"],
-        "life_events": ["story_code", "date_or_sequence", "event_summary"],
+        "events": ["date_or_sequence", "story_code"],
+        "life_events": ["date_or_sequence", "story_code"],
     }.get(group_id, ["name", "label", "title", "story_code", "code"])
     for field_id in candidates:
         value = row.get(field_id)

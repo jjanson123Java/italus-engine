@@ -25,8 +25,14 @@ from app.services import (
     canon_packet_generation_service,
     book_plan_service,
     book_knowledge_pack_service,
+    chapter_knowledge_pack_service,
     chapter_plan_service,
     story_control_service,
+    progression_override_service,
+    planner_query_service,
+    authorship_provenance_service,
+    generation_control_service,
+    planner_reveal_catalog_service,
 )
 
 
@@ -121,6 +127,32 @@ class ChapterPlanDraftRequest(BaseModel):
     restrictions: list[str] = Field(default_factory=list)
     story_control_refs: list[str] = Field(default_factory=list)
     advanced_sequence: list[Any] = Field(default_factory=list)
+
+
+class ChapterKnowledgePackCompileRequest(BaseModel):
+    prior_ending_context: str = Field(default="", max_length=8000)
+
+
+class ProgressionOverrideRequest(BaseModel):
+    book_number: int = Field(ge=1)
+    chapter_number: int = Field(ge=1)
+    target_ref: str = Field(min_length=1)
+    requested_use: str = Field(default="chapter_selection")
+    reason: str = Field(default="", max_length=1000)
+
+
+class PlannerQueryRequest(BaseModel):
+    action: str = Field(min_length=1)
+    book_number: int = Field(ge=1)
+    chapter_number: int = Field(ge=1)
+    query: str = Field(default="")
+    record_types: list[str] = Field(default_factory=list)
+    include_future: bool = Field(default=False)
+    anchor_event_id: str = Field(default="")
+    limit: int = Field(default=80, ge=1, le=200)
+    author_query: str = Field(default="", max_length=4000)
+    minimal_context: dict[str, Any] = Field(default_factory=dict)
+    allowed_search_domains: list[str] = Field(default_factory=list)
 
 
 class StoryControlDraftRequest(BaseModel):
@@ -308,11 +340,14 @@ def save_book_plan_draft(
 
 
 @router.post("/api/project/{project_id}/book-plan/approve")
-def approve_book_plan(project_id: str):
-    """Approve the current complete Book Plan content hash."""
+def approve_book_plan(
+    project_id: str,
+    book_number: int = Query(..., ge=1),
+):
+    """Approve one complete/current Book Plan entry."""
 
     try:
-        return book_plan_service.approve_book_plan(project_id)
+        return book_plan_service.approve_book_plan(project_id, book_number)
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     except book_plan_service.BookPlanContractError as exc:
@@ -320,11 +355,14 @@ def approve_book_plan(project_id: str):
 
 
 @router.post("/api/project/{project_id}/book-plan/revoke")
-def revoke_book_plan_approval(project_id: str):
-    """Revoke Book Plan approval without changing plan content."""
+def revoke_book_plan_approval(
+    project_id: str,
+    book_number: int = Query(..., ge=1),
+):
+    """Revoke one Book Plan approval without changing plan content."""
 
     try:
-        return book_plan_service.revoke_book_plan_approval(project_id)
+        return book_plan_service.revoke_book_plan_approval(project_id, book_number)
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     except book_plan_service.BookPlanContractError as exc:
@@ -350,12 +388,16 @@ def revoke_project_runtime_context_approval(project_id: str):
 
 
 @router.get("/api/project/{project_id}/runtime-context/books/status")
-def get_book_runtime_context_status(project_id: str):
-    """Return Book Runtime Context compiler readiness without writing files."""
+def get_book_runtime_context_status(
+    project_id: str,
+    book_number: int | None = Query(default=None, ge=1),
+):
+    """Return per-book Book Knowledge Pack readiness without writing files."""
 
     try:
         return book_knowledge_pack_service.get_book_runtime_context_status(
-            project_id
+            project_id,
+            book_number=book_number,
         )
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
@@ -364,16 +406,21 @@ def get_book_runtime_context_status(project_id: str):
 
 
 @router.post("/api/project/{project_id}/runtime-context/books/generate")
-def compile_book_runtime_context(project_id: str):
-    """Compile one project-local runtime-context artifact per approved book.
+def compile_book_runtime_context(
+    project_id: str,
+    book_number: int | None = Query(default=None, ge=1),
+):
+    """Compile ready/current Book Knowledge Pack targets only.
 
-    This route does not construct prompts, call providers, write runtime
-    memory, persist generated prose, export drafts, or unlock generation.
+    A completed approved book may compile independently of later incomplete
+    books. This route does not construct prompts, call providers, write
+    continuity, persist generated prose, or unlock generation.
     """
 
     try:
         return book_knowledge_pack_service.compile_book_knowledge_packs(
-            project_id
+            project_id,
+            book_number=book_number,
         )
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
@@ -382,6 +429,102 @@ def compile_book_runtime_context(project_id: str):
         book_knowledge_pack_service.BookKnowledgePackNotReadyError,
         book_knowledge_pack_service.BookKnowledgePackSourceMissingError,
     ) as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get(
+    "/api/project/{project_id}/chapter-knowledge-pack/{book_number}/{chapter_number}/status"
+)
+def get_chapter_knowledge_pack_status(
+    project_id: str,
+    book_number: int,
+    chapter_number: int,
+):
+    """Return bounded Chapter Knowledge Pack readiness without writing derived files."""
+    try:
+        return chapter_knowledge_pack_service.get_chapter_knowledge_pack_status(
+            project_id,
+            book_number=book_number,
+            chapter_number=chapter_number,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except (
+        chapter_plan_service.ChapterPlanError,
+        story_control_service.StoryControlError,
+        progression_override_service.ProgressionOverrideError,
+        chapter_knowledge_pack_service.ChapterKnowledgePackError,
+    ) as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post(
+    "/api/project/{project_id}/chapter-knowledge-pack/{book_number}/{chapter_number}/generate"
+)
+def compile_chapter_knowledge_pack(
+    project_id: str,
+    book_number: int,
+    chapter_number: int,
+    request: ChapterKnowledgePackCompileRequest,
+):
+    """Compile a bounded Chapter Knowledge Pack; generation/provider execution remains locked."""
+    try:
+        return chapter_knowledge_pack_service.compile_chapter_knowledge_pack(
+            project_id,
+            book_number=book_number,
+            chapter_number=chapter_number,
+            prior_ending_context=request.prior_ending_context,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except (
+        chapter_plan_service.ChapterPlanError,
+        story_control_service.StoryControlError,
+        progression_override_service.ProgressionOverrideError,
+        chapter_knowledge_pack_service.ChapterKnowledgePackError,
+    ) as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/progression-overrides")
+def get_progression_overrides(
+    project_id: str,
+    target_ref: str = Query(default=""),
+):
+    """Return auditable one-time progression overrides; no Canon/continuity mutation."""
+    try:
+        return progression_override_service.get_progression_overrides(
+            project_id,
+            target_ref=target_ref or None,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except progression_override_service.ProgressionOverrideError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/progression-overrides/authorize")
+def authorize_progression_override(
+    project_id: str,
+    request: ProgressionOverrideRequest,
+):
+    """Authorize explicit position-specific early use without establishing continuity."""
+    try:
+        return progression_override_service.authorize_early_use(
+            project_id,
+            book_number=request.book_number,
+            chapter_number=request.chapter_number,
+            target_ref=request.target_ref,
+            requested_use=request.requested_use,
+            reason=request.reason,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except progression_override_service.ProgressionOverrideContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except progression_override_service.ProgressionOverrideConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except progression_override_service.ProgressionOverrideError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
@@ -480,6 +623,123 @@ def get_chapter_event_candidates(
         raise HTTPException(status_code=422, detail=str(exc)) from exc
     except chapter_plan_service.ChapterPlanError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/planner-reveal-catalog")
+def get_planner_reveal_catalog(
+    project_id: str,
+    book_number: int | None = Query(default=None, ge=1),
+):
+    """Return project-local author-facing mystery/reveal planning threads."""
+    try:
+        return planner_reveal_catalog_service.get_reveal_catalog(
+            project_id,
+            book_number=book_number,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+
+@router.get("/api/project/planner-query/contract")
+def get_planner_query_contract():
+    """Return the deterministic Planner Query boundary contract."""
+    return planner_query_service.get_planner_query_contract()
+
+
+@router.post("/api/project/{project_id}/planner-query")
+def run_planner_query(project_id: str, request: PlannerQueryRequest):
+    """Run deterministic discovery or the bounded local Planner Intent Model."""
+    try:
+        return planner_query_service.execute_planner_query(
+            project_id,
+            action=request.action,
+            book_number=request.book_number,
+            chapter_number=request.chapter_number,
+            query=request.query,
+            record_types=request.record_types,
+            include_future=request.include_future,
+            anchor_event_id=request.anchor_event_id,
+            limit=request.limit,
+            author_query=request.author_query,
+            minimal_context=request.minimal_context,
+            allowed_search_domains=request.allowed_search_domains,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except planner_query_service.PlannerQueryContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except planner_query_service.PlannerQueryError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/provenance/contract")
+def get_authorship_provenance_contract():
+    """Return the Patch-28 provenance actor/event/storage contract."""
+    return authorship_provenance_service.get_provenance_contract()
+
+
+@router.post("/api/project/{project_id}/provenance/initialize")
+def initialize_authorship_provenance(project_id: str):
+    """Ensure project-local provenance storage; no provider/review execution."""
+    try:
+        return authorship_provenance_service.ensure_provenance_storage(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except authorship_provenance_service.AuthorshipProvenanceError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/provenance/status")
+def get_authorship_provenance_status(project_id: str):
+    """Return provenance storage/lineage readiness without creating evidence."""
+    try:
+        return authorship_provenance_service.get_provenance_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except authorship_provenance_service.AuthorshipProvenanceError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get(
+    "/api/project/{project_id}/provenance/chapter/{book_number}/{chapter_number}/status"
+)
+def get_chapter_authorship_provenance_status(
+    project_id: str,
+    book_number: int,
+    chapter_number: int,
+):
+    """Return the non-scoring chapter provenance status shell."""
+    try:
+        return authorship_provenance_service.get_chapter_provenance_status(
+            project_id,
+            book_number=book_number,
+            chapter_number=chapter_number,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except authorship_provenance_service.AuthorshipProvenanceContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except authorship_provenance_service.AuthorshipProvenanceError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/generation-readiness")
+def get_generation_readiness(
+    project_id: str,
+    book_number: int = Query(..., ge=1),
+    chapter_number: int = Query(..., ge=1),
+):
+    """Return the authoritative Patch-29 generation readiness gate status."""
+
+    try:
+        return generation_control_service.get_generation_control_status(
+            project_id,
+            book_number=book_number,
+            chapter_number=chapter_number,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @router.get("/api/project/{project_id}/runtime-context/project/status")
@@ -793,6 +1053,36 @@ def get_effective_book_scope(
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
+@router.get("/api/project/{project_id}/book-scope/{book_number}/chapter-snapshot")
+def get_book_scope_chapter_snapshot(
+    project_id: str,
+    book_number: int,
+    chapter_number: int = Query(ge=1),
+):
+    """Return a lightweight read-only Book Scope snapshot for Chapter Planner."""
+    try:
+        return book_scope_service.get_chapter_scope_snapshot(
+            project_id, book_number=book_number, chapter_number=chapter_number
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except book_scope_service.BookScopeError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.get("/api/project/{project_id}/runtime-context/books/{book_number}/readiness-fast")
+def get_book_runtime_context_readiness_fast(project_id: str, book_number: int):
+    """Return fast per-book readiness for Chapter Planner guidance."""
+    try:
+        return book_knowledge_pack_service.get_book_runtime_context_readiness_fast(
+            project_id, book_number=book_number
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except (ValueError, book_knowledge_pack_service.BookKnowledgePackNotReadyError) as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
 @router.post("/api/project/{project_id}/book-scope/{book_number}/amend")
 def amend_book_scope(
     project_id: str,
@@ -864,6 +1154,24 @@ def save_story_control(
         return story_control_service.save_story_control(
             project_id,
             _model_to_dict(request),
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except story_control_service.StoryControlContractError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except story_control_service.StoryControlStateConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.delete("/api/project/{project_id}/story-controls/{control_id}")
+def delete_story_control(
+    project_id: str,
+    control_id: str,
+):
+    try:
+        return story_control_service.delete_story_control(
+            project_id,
+            control_id,
         )
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc

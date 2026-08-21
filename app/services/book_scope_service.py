@@ -17,6 +17,7 @@ from copy import deepcopy
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import time
 from typing import Any
@@ -25,7 +26,7 @@ from uuid import uuid4
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
-from app.services import canon_index_service, story_eligibility_service
+from app.services import canon_index_service, planner_sort_policy_service, story_eligibility_service
 
 
 BOOK_SCOPE_SERVICE_MARKER = "project-book-scope-backend-20260816"
@@ -144,9 +145,12 @@ def get_book_scope(project_id: str) -> dict[str, Any]:
 def get_book_scope_for_context(
     context: ProjectContext,
     manifest: dict[str, Any],
+    *,
+    index_status: dict[str, Any] | None = None,
+    eligibility_context: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     expected_book_count = _book_count(manifest)
-    index_status = canon_index_service.ensure_current_index(context.project_id)
+    index_status = dict(index_status or canon_index_service.ensure_current_index(context.project_id))
     path = book_scope_path_for_context(context)
     exists = path.exists()
 
@@ -171,6 +175,7 @@ def get_book_scope_for_context(
             book,
             index_status=index_status,
             exists=exists,
+            eligibility_context=eligibility_context,
         )
         for book in document["books"]
     ]
@@ -241,22 +246,33 @@ def get_book_scope_catalog(
     manifest_dict = manifest.to_dict()
     book_number = _validate_book_number(book_number, _book_count(manifest_dict))
 
-    scope = get_book_scope_for_context(context, manifest_dict)
+    index_status = canon_index_service.ensure_current_index(project_id)
+    eligibility_rows = canon_index_service.list_records_current(project_id, limit=10000)["results"]
+    eligibility_context = story_eligibility_service.prepare_story_eligibility_context(
+        context, index_status=index_status, indexed_records=eligibility_rows
+    )
+    scope = get_book_scope_for_context(
+        context, manifest_dict, index_status=index_status, eligibility_context=eligibility_context
+    )
     scope_book = _book_by_number(scope["document"]["books"], book_number)
     selected_ids = {
         str(item.get("record_id") or "")
         for item in scope_book.get("selections") or []
     }
-
-    listed = canon_index_service.list_records(
-        project_id,
-        record_types=[record_type] if record_type else None,
-        limit=5000,
-    )
+    listed = {
+        "results": [
+            row for row in eligibility_rows
+            if not record_type or str(row.get("record_type") or "") == str(record_type)
+        ]
+    }
     needle = _search_text(query)
     categories: dict[str, dict[str, Any]] = {}
     status_counts: dict[str, int] = {}
     hidden_counts: dict[str, int] = {}
+    relevance_context = _planner_relevance_context(
+        context,
+        book_number=book_number,
+    )
 
     for record in listed["results"]:
         if needle and not _record_matches(record, needle):
@@ -264,8 +280,25 @@ def get_book_scope_catalog(
 
         record_id = str(record.get("internal_id") or "")
         selected = record_id in selected_ids
-        decision = story_eligibility_service.evaluate_story_eligibility(
-            project_id,
+
+        # Normal author browsing hides unquestionably future records. Avoid an
+        # expensive Story Eligibility call for those hidden rows while keeping
+        # Story Eligibility authoritative for every row that is displayed or
+        # selected. This keeps a 500+ record Canon responsive in Book Plan.
+        available_from_book = _positive_int(record.get("available_from_book"))
+        if (
+            not selected
+            and not include_future
+            and available_from_book is not None
+            and available_from_book > book_number
+        ):
+            decision_status = story_eligibility_service.STATUS_FUTURE
+            status_counts[decision_status] = status_counts.get(decision_status, 0) + 1
+            hidden_counts[decision_status] = hidden_counts.get(decision_status, 0) + 1
+            continue
+
+        decision = story_eligibility_service.evaluate_story_eligibility_for_context(
+            context,
             book_number=book_number,
             candidate_ref={
                 "record_id": record_id,
@@ -274,6 +307,8 @@ def get_book_scope_catalog(
             },
             requested_use="book_selection",
             selected=selected,
+            prepared_context=eligibility_context,
+            indexed_record=record,
         )
         decision_status = str(decision.get("status") or "")
         status_counts[decision_status] = status_counts.get(decision_status, 0) + 1
@@ -316,26 +351,57 @@ def get_book_scope_catalog(
                 "label": str(record.get("display_label") or ""),
                 "aliases": list(record.get("aliases") or []),
                 "story_code": str(record.get("story_code") or ""),
+                "date_or_sequence": str(record.get("date_or_sequence") or ""),
+                "available_from_book": str(record.get("available_from_book") or ""),
                 "narrative_type": str(record.get("narrative_type") or ""),
                 "summary": str(record.get("summary") or ""),
+                "planner_sort_metadata": dict(record.get("planner_sort_metadata") or {}),
                 "selected": selected,
+                "recommended_for_book": (
+                    record_id in relevance_context["recommended_ids"]
+                    and decision_status
+                    in {
+                        story_eligibility_service.STATUS_ACTIVE,
+                        story_eligibility_service.STATUS_AVAILABLE_TO_ADD,
+                    }
+                ),
+                "recommendation_reasons": list(relevance_context["reasons_by_id"].get(record_id) or []),
                 "source_class": "master_canon",
                 "eligibility": decision,
             }
         )
 
     ordered_categories = []
-    for key in sorted(categories):
+    category_rank = {"characters": 0, "events": 1, "locations": 2, "interactions": 3}
+    template_id = str(manifest_dict.get("template_id") or "")
+    genre = str(manifest_dict.get("genre") or "")
+    for key in sorted(categories, key=lambda value: (category_rank.get(value, 9), value)):
         category = categories[key]
+        sort_policy = planner_sort_policy_service.resolve_sort_policy(
+            template_id=template_id,
+            genre=genre,
+            category_key=category["category_key"],
+        )
+        category["sort_policy"] = sort_policy
         category["items"].sort(
-            key=lambda item: (
-                str(item["label"]).casefold(),
-                str(item["record_id"]),
-            )
+            key=lambda item: _catalog_sort_key(item, sort_policy=sort_policy)
         )
         category["total"] = len(category["items"])
         category["selected_count"] = sum(
             1 for item in category["items"] if item["selected"]
+        )
+        category["recommended_count"] = sum(
+            1 for item in category["items"]
+            if item.get("recommended_for_book") and not item.get("selected")
+        )
+        category["available_count"] = sum(
+            1 for item in category["items"]
+            if not item.get("selected")
+            and str((item.get("eligibility") or {}).get("status") or "")
+            in {
+                story_eligibility_service.STATUS_ACTIVE,
+                story_eligibility_service.STATUS_AVAILABLE_TO_ADD,
+            }
         )
         ordered_categories.append(category)
 
@@ -350,6 +416,11 @@ def get_book_scope_catalog(
         "record_type": record_type or "",
         "include_future": bool(include_future),
         "selected_count": len(selected_ids),
+        "recommended_count": sum(
+            int(category.get("recommended_count") or 0)
+            for category in ordered_categories
+        ),
+        "visible_count": sum(int(category.get("total") or 0) for category in ordered_categories),
         "status_counts": dict(sorted(status_counts.items())),
         "hidden_status_counts": dict(sorted(hidden_counts.items())),
         "categories": ordered_categories,
@@ -357,6 +428,181 @@ def get_book_scope_catalog(
         "source_index_revision": _source_index_revision(index_status),
         "execution_locks": _execution_locks(),
     }
+
+
+def _positive_int(value: Any) -> int | None:
+    text = str(value or "").strip()
+    if not text.isdigit():
+        return None
+    parsed = int(text)
+    return parsed if parsed > 0 else None
+
+
+
+def _planner_relevance_context(
+    context: ProjectContext,
+    *,
+    book_number: int,
+) -> dict[str, Any]:
+    """Derive Book-Planner recommendation metadata without mutating Canon.
+
+    Recommendation is intentionally separate from Story Eligibility. It means
+    "strongly associated with this book", not "legal to use". The derivation
+    uses only existing Author Canon fields/relationships and is generic across
+    templates that expose the same record-group contracts.
+    """
+
+    path = context.project_dir / "canon" / "author_canon.json"
+    if not path.exists():
+        return {"recommended_ids": set(), "reasons_by_id": {}}
+    author_canon = project_loader.read_json(path)
+    sections = author_canon.get("sections") if isinstance(author_canon, dict) else {}
+    if not isinstance(sections, dict):
+        sections = {}
+
+    groups: dict[str, list[dict[str, Any]]] = {
+        "events": [],
+        "characters": [],
+        "locations": [],
+        "interactions": [],
+    }
+    for section in sections.values():
+        if not isinstance(section, dict):
+            continue
+        records = section.get("records")
+        if not isinstance(records, dict):
+            continue
+        for group_id in groups:
+            rows = records.get(group_id)
+            if isinstance(rows, list):
+                groups[group_id].extend(row for row in rows if isinstance(row, dict))
+
+    recommended_ids: set[str] = set()
+    reasons_by_id: dict[str, list[str]] = {}
+
+    def recommend(record_id: Any, reason: str) -> None:
+        record_id_text = str(record_id or "").strip()
+        if not record_id_text:
+            return
+        recommended_ids.add(record_id_text)
+        reasons = reasons_by_id.setdefault(record_id_text, [])
+        if reason not in reasons:
+            reasons.append(reason)
+
+    recommended_event_ids: set[str] = set()
+    event_years: list[int] = []
+    event_character_ids: set[str] = set()
+    for row in groups["events"]:
+        if _book_number_from_value(row.get("book")) != book_number:
+            continue
+        record_id = str(row.get("internal_id") or "")
+        if not record_id:
+            continue
+        recommended_event_ids.add(record_id)
+        recommend(record_id, "explicit_event_book_assignment")
+        year = _first_year(row.get("date_or_sequence"))
+        if year is not None:
+            event_years.append(year)
+        for ref in _ref_values(row.get("characters_present")):
+            event_character_ids.add(ref)
+
+    recommended_character_ids: set[str] = set()
+    for row in groups["characters"]:
+        record_id = str(row.get("internal_id") or "")
+        if not record_id:
+            continue
+        introduced_here = _positive_int(row.get("available_from_book")) == book_number
+        first_appearance_here = _book_number_from_value(row.get("first_appearance")) == book_number
+        event_participant = record_id in event_character_ids
+        if event_participant or introduced_here or first_appearance_here:
+            recommended_character_ids.add(record_id)
+            if event_participant:
+                recommend(record_id, "participates_in_recommended_event")
+            if introduced_here or first_appearance_here:
+                recommend(record_id, "introduced_in_book")
+
+    for row in groups["locations"]:
+        record_id = str(row.get("internal_id") or "")
+        if not record_id:
+            continue
+        event_link = bool(set(_ref_values(row.get("associated_events"))) & recommended_event_ids)
+        character_link = bool(set(_ref_values(row.get("associated_characters"))) & recommended_character_ids)
+        introduced_here = _positive_int(row.get("available_from_book")) == book_number
+        if event_link or (introduced_here and character_link):
+            if event_link:
+                recommend(record_id, "associated_with_recommended_event")
+            if introduced_here and character_link:
+                recommend(record_id, "introduced_with_recommended_character")
+
+    if event_years and recommended_character_ids:
+        first_year = min(event_years)
+        last_year = max(event_years)
+        for row in groups["interactions"]:
+            record_id = str(row.get("internal_id") or "")
+            if not record_id:
+                continue
+            year = _first_year(row.get("date_or_period"))
+            if year is None or year < first_year or year > last_year:
+                continue
+            fictional_refs = set(_ref_values(row.get("fictional_character")))
+            if fictional_refs & recommended_character_ids:
+                recommend(record_id, "interaction_chronology_and_character_match")
+
+    return {
+        "recommended_ids": recommended_ids,
+        "reasons_by_id": reasons_by_id,
+        "recommended_event_ids": recommended_event_ids,
+        "recommended_character_ids": recommended_character_ids,
+        "event_year_range": (
+            [min(event_years), max(event_years)] if event_years else []
+        ),
+    }
+
+
+def _ref_values(value: Any) -> list[str]:
+    values = value if isinstance(value, list) else [value]
+    return [str(item).strip() for item in values if str(item or "").strip()]
+
+
+def _book_number_from_value(value: Any) -> int | None:
+    match = re.search(r"\bBook\s+(\d+)\b", str(value or ""), flags=re.IGNORECASE)
+    if match:
+        return int(match.group(1))
+    text = str(value or "").strip()
+    if text.isdigit():
+        parsed = int(text)
+        return parsed if parsed > 0 else None
+    return None
+
+
+def _first_year(value: Any) -> int | None:
+    match = re.search(r"(?<!\d)(\d{3,4})(?!\d)", str(value or ""))
+    if not match:
+        return None
+    return int(match.group(1))
+
+
+def _catalog_sort_key(
+    item: dict[str, Any],
+    *,
+    sort_policy: dict[str, Any],
+) -> tuple[Any, ...]:
+    eligibility = item.get("eligibility") or {}
+    status = str(eligibility.get("status") or "UNKNOWN")
+    status_rank = {
+        story_eligibility_service.STATUS_ACTIVE: 0,
+        story_eligibility_service.STATUS_AVAILABLE_TO_ADD: 0,
+        story_eligibility_service.STATUS_FUTURE: 2,
+        story_eligibility_service.STATUS_RESTRICTED: 3,
+        story_eligibility_service.STATUS_CANON_INCOMPLETE: 4,
+    }.get(status, 5)
+    selected_rank = 0 if bool(item.get("selected")) else 1
+    recommended_rank = 0 if bool(item.get("recommended_for_book")) else 1
+    within_group = planner_sort_policy_service.within_group_sort_key(
+        sort_policy,
+        item,
+    )
+    return (selected_rank, recommended_rank, status_rank, *within_group)
 
 
 def save_book_scope_draft(
@@ -388,6 +634,10 @@ def save_book_scope_draft_for_context(
     expected_book_count = _book_count(manifest)
     book_number = _validate_book_number(book_number, expected_book_count)
     index_status = canon_index_service.ensure_current_index(context.project_id)
+    eligibility_rows = canon_index_service.list_records_current(context.project_id, limit=10000)["results"]
+    eligibility_context = story_eligibility_service.prepare_story_eligibility_context(
+        context, index_status=index_status, indexed_records=eligibility_rows
+    )
 
     incoming_selections = payload.get("selections", [])
     if not isinstance(incoming_selections, list):
@@ -402,6 +652,7 @@ def save_book_scope_draft_for_context(
         context,
         book_number=book_number,
         selections=incoming_selections,
+        eligibility_context=eligibility_context,
     )
 
     path = book_scope_path_for_context(context)
@@ -464,7 +715,9 @@ def save_book_scope_draft_for_context(
         "schema_version": BOOK_SCOPE_SCHEMA_VERSION,
         "project_id": context.project_id,
         "book_number": book_number,
-        "book_scope": get_book_scope_for_context(context, manifest),
+        "book_scope": get_book_scope_for_context(
+            context, manifest, index_status=index_status, eligibility_context=eligibility_context
+        ),
         "execution_locks": _execution_locks(),
     }
 
@@ -724,6 +977,7 @@ def effective_book_scope_selections_for_context(
     *,
     book_number: int,
     chapter_number: int,
+    scope_result: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     book_number = _validate_book_number(book_number, _book_count(manifest))
     chapters_per_book = max(1, int(manifest.get("chapters_per_book") or 1))
@@ -733,7 +987,7 @@ def effective_book_scope_selections_for_context(
             f"chapter_number must be between 1 and {chapters_per_book}."
         )
 
-    result = get_book_scope_for_context(context, manifest)
+    result = scope_result or get_book_scope_for_context(context, manifest)
     book = _book_by_number(result["document"]["books"], book_number)
     effective = {
         str(item.get("record_id") or ""): deepcopy(item)
@@ -1131,6 +1385,7 @@ def _normalize_submitted_selections(
     *,
     book_number: int,
     selections: list[Any],
+    eligibility_context: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     normalized: list[dict[str, Any]] = []
     seen: set[str] = set()
@@ -1170,15 +1425,11 @@ def _normalize_submitted_selections(
                 f"Unsupported usage_mode for {record_id}: {usage_mode}."
             )
 
-        indexed = canon_index_service.get_record_by_id(
-            context.project_id,
-            record_id,
-        )
-        if indexed.get("status") != "found":
+        record = dict(((eligibility_context or {}).get("records_by_id") or {}).get(record_id) or {})
+        if not record:
             raise BookScopeContractError(
                 f"Book Scope selection does not resolve in Canon Index: {record_id}."
             )
-        record = dict(indexed["record"])
 
         supplied_type = str(item.get("record_type") or "").strip()
         current_type = str(record.get("record_type") or "").strip()
@@ -1187,8 +1438,8 @@ def _normalize_submitted_selections(
                 f"Book Scope record_type mismatch for {record_id}."
             )
 
-        decision = story_eligibility_service.evaluate_story_eligibility(
-            context.project_id,
+        decision = story_eligibility_service.evaluate_story_eligibility_for_context(
+            context,
             book_number=book_number,
             candidate_ref={
                 "record_id": record_id,
@@ -1197,6 +1448,8 @@ def _normalize_submitted_selections(
             },
             requested_use="book_selection",
             selected=True,
+            prepared_context=eligibility_context,
+            indexed_record=record,
         )
         if decision.get("status") != story_eligibility_service.STATUS_ACTIVE:
             raise BookScopeContractError(
@@ -1226,11 +1479,13 @@ def _decorate_book(
     *,
     index_status: dict[str, Any],
     exists: bool,
+    eligibility_context: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     reconciliation = _reconcile_book(
         context,
         book,
         index_status=index_status,
+        eligibility_context=eligibility_context,
     )
     selections = list(book.get("selections") or [])
     calculated_hash = _content_hash_for_book(book)
@@ -1312,6 +1567,7 @@ def _reconcile_book(
     book: dict[str, Any],
     *,
     index_status: dict[str, Any],
+    eligibility_context: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     issues: list[dict[str, Any]] = []
     changes: list[dict[str, Any]] = []
@@ -1325,11 +1581,12 @@ def _reconcile_book(
 
     for selection in book.get("selections") or []:
         record_id = str(selection.get("record_id") or "")
-        indexed = canon_index_service.get_record_by_id(
-            context.project_id,
-            record_id,
-        )
-        if indexed.get("status") != "found":
+        record = dict(((eligibility_context or {}).get("records_by_id") or {}).get(record_id) or {})
+        if not record:
+            indexed = canon_index_service.get_record_by_id(context.project_id, record_id)
+            if indexed.get("status") == "found":
+                record = dict(indexed["record"])
+        if not record:
             hard_conflict = True
             issues.append(
                 {
@@ -1340,7 +1597,6 @@ def _reconcile_book(
             )
             continue
 
-        record = dict(indexed["record"])
         current_type = str(record.get("record_type") or "")
         if (
             str(selection.get("record_type") or "")
@@ -1379,8 +1635,8 @@ def _reconcile_book(
                 }
             )
 
-        decision = story_eligibility_service.evaluate_story_eligibility(
-            context.project_id,
+        decision = story_eligibility_service.evaluate_story_eligibility_for_context(
+            context,
             book_number=int(book.get("book_number") or 0),
             candidate_ref={
                 "record_id": record_id,
@@ -1389,6 +1645,8 @@ def _reconcile_book(
             },
             requested_use="book_selection",
             selected=True,
+            prepared_context=eligibility_context,
+            indexed_record=record,
         )
         if decision.get("status") != story_eligibility_service.STATUS_ACTIVE:
             hard_conflict = True
@@ -1598,4 +1856,74 @@ def _execution_locks() -> dict[str, bool]:
         "provider_execution_enabled": False,
         "prompt_builder_enabled": False,
         "planner_model_enabled": False,
+    }
+
+
+# Patch 31B: lightweight Chapter Planner scope snapshot.  This is a read-only
+# presentation helper; compile/save boundaries still perform full fail-closed
+# reconciliation and Story Eligibility validation.
+def get_chapter_scope_snapshot(project_id: str, *, book_number: int, chapter_number: int) -> dict[str, Any]:
+    manifest_obj = project_loader.load_manifest(project_id)
+    context = build_project_context(manifest_obj)
+    manifest = manifest_obj.to_dict()
+    book_number = _validate_book_number(book_number, _book_count(manifest))
+    chapters_per_book = max(1, int(manifest.get("chapters_per_book") or 1))
+    if chapter_number < 1 or chapter_number > chapters_per_book:
+        raise BookScopeContractError(f"chapter_number must be between 1 and {chapters_per_book}.")
+
+    path = book_scope_path_for_context(context)
+    if not path.exists():
+        return {
+            "status": "ok", "book_number": book_number, "chapter_number": chapter_number,
+            "book": {"book_number": book_number, "approval_status": "not_approved", "approval_fresh": False, "selections": []},
+            "effective": {"selection_ids": [], "selections": [], "effective_approval_fresh": False},
+        }
+    document = project_loader.read_json(path)
+    raw_book = next((item for item in document.get("books") or [] if int(item.get("book_number") or 0) == book_number), None) or {}
+    index_status = canon_index_service.ensure_current_index(project_id)
+    current_canon_hash = _source_canon_hash(index_status)
+    current_index_revision = _source_index_revision(index_status)
+    approval_fresh = bool(
+        raw_book.get("approval_status") == APPROVAL_APPROVED
+        and raw_book.get("approved_content_hash")
+        and raw_book.get("approved_content_hash") == raw_book.get("content_hash")
+        and raw_book.get("approved_source_canon_hash") == current_canon_hash
+        and raw_book.get("approved_source_index_revision") == current_index_revision
+    )
+    effective = {
+        str(item.get("record_id") or ""): deepcopy(item)
+        for item in raw_book.get("selections") or []
+        if str(item.get("record_id") or "")
+    }
+    for amendment in reversed(list(raw_book.get("amendments") or [])):
+        if not isinstance(amendment, dict):
+            continue
+        effective_from = int(((amendment.get("effective_from") or {}).get("chapter_number") or 1))
+        if effective_from <= chapter_number:
+            continue
+        record = amendment.get("record") or {}
+        record_id = str(record.get("record_id") or "")
+        if not record_id:
+            continue
+        if str(amendment.get("action") or "") == "add":
+            effective.pop(record_id, None)
+        elif str(amendment.get("action") or "") == "remove":
+            effective[record_id] = deepcopy(record)
+    selections = sorted(effective.values(), key=lambda item: str(item.get("record_id") or ""))
+    return {
+        "status": "ok", "service": BOOK_SCOPE_SERVICE_MARKER, "schema_version": BOOK_SCOPE_SCHEMA_VERSION,
+        "project_id": project_id, "book_number": book_number, "chapter_number": chapter_number,
+        "book": {
+            "book_number": book_number,
+            "approval_status": raw_book.get("approval_status") or "not_approved",
+            "approval_fresh": approval_fresh,
+            "revision": int(raw_book.get("revision") or 0),
+            "content_hash": str(raw_book.get("content_hash") or ""),
+            "selections": deepcopy(raw_book.get("selections") or []),
+        },
+        "effective": {
+            "selection_ids": [str(item.get("record_id") or "") for item in selections],
+            "selections": selections,
+            "effective_approval_fresh": approval_fresh,
+        },
     }

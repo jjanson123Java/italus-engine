@@ -448,6 +448,122 @@ def save_story_control_for_context(
     }
 
 
+def delete_story_control(
+    project_id: str,
+    control_id: str,
+) -> dict[str, Any]:
+    manifest_obj = project_loader.load_manifest(project_id)
+    context = build_project_context(manifest_obj)
+    return delete_story_control_for_context(
+        context,
+        manifest_obj.to_dict(),
+        control_id=control_id,
+    )
+
+
+def delete_story_control_for_context(
+    context: ProjectContext,
+    manifest: dict[str, Any],
+    *,
+    control_id: str,
+) -> dict[str, Any]:
+    normalized_id = str(control_id or "").strip()
+    if not normalized_id:
+        raise StoryControlContractError("control_id is required.")
+
+    path = story_controls_path_for_context(context)
+    if not path.exists():
+        raise StoryControlContractError(
+            "Story Control Registry does not exist for this project."
+        )
+
+    document = _normalize_document(
+        context,
+        manifest,
+        project_loader.read_json(path),
+    )
+    existing = next(
+        (
+            item
+            for item in document["controls"]
+            if str(item.get("control_id") or "") == normalized_id
+        ),
+        None,
+    )
+    if existing is None:
+        raise StoryControlContractError(
+            "control_id does not exist in the current Story Control Registry."
+        )
+    if str(existing.get("status") or "PLANNED") != "PLANNED":
+        raise StoryControlStateConflictError(
+            "Only PLANNED Story Controls may be deleted before generation migration."
+        )
+
+    references = _saved_chapter_plan_references(context, normalized_id)
+    if references:
+        locations = ", ".join(
+            f"Book {item['book_number']} Chapter {item['chapter_number']}"
+            for item in references
+        )
+        raise StoryControlStateConflictError(
+            "Story Control is still referenced by a saved Chapter Plan. "
+            f"Detach it and save the Chapter Plan before deleting it: {locations}."
+        )
+
+    document["controls"] = [
+        item
+        for item in document["controls"]
+        if str(item.get("control_id") or "") != normalized_id
+    ]
+    document["revision"] = int(document.get("revision") or 0) + 1
+    document["content_hash"] = _content_hash(document["controls"])
+    document["updated_at"] = utc_now_iso()
+    _write_json_atomic(path, _stored_document(document))
+
+    return {
+        "status": "deleted",
+        "service": STORY_CONTROL_SERVICE_MARKER,
+        "schema_version": STORY_CONTROL_SCHEMA_VERSION,
+        "project_id": context.project_id,
+        "control_id": normalized_id,
+        "registry_revision": int(document["revision"]),
+        "registry_content_hash": str(document["content_hash"]),
+        "execution_locks": _execution_locks(),
+    }
+
+
+def _saved_chapter_plan_references(
+    context: ProjectContext,
+    control_id: str,
+) -> list[dict[str, int]]:
+    path = context.project_dir / "chapter_plan.json"
+    if not path.exists():
+        return []
+
+    stored = project_loader.read_json(path)
+    references: list[dict[str, int]] = []
+    for book in stored.get("books") or []:
+        if not isinstance(book, dict):
+            continue
+        book_number = int(book.get("book_number") or 0)
+        for chapter in book.get("chapters") or []:
+            if not isinstance(chapter, dict):
+                continue
+            refs = {
+                str(value or "").strip()
+                for value in chapter.get("story_control_refs") or []
+                if str(value or "").strip()
+            }
+            if control_id in refs:
+                references.append(
+                    {
+                        "book_number": book_number,
+                        "chapter_number": int(chapter.get("chapter_number") or 0),
+                    }
+                )
+    return references
+
+
 def validate_story_control_refs(
     project_id: str,
     *,
