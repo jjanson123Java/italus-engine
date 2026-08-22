@@ -6,7 +6,7 @@
   <title>Narrative Studio Workspace</title>
 
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="workspace.css?v=20260821-patch44" />
+  <link rel="stylesheet" href="workspace.css?v=20260822-library-phase2b" />
 </head>
 
 <body class="workspace-body">
@@ -24,7 +24,54 @@
         <a href="#engine" data-top-menu="engine">Engine</a>
         <a href="#generate" data-top-menu="generate" class="disabled-link" aria-disabled="true">Generate</a>
         <a href="#validation" data-top-menu="validation" class="disabled-link" aria-disabled="true">Validation</a>
-        <a href="#view" data-top-menu="view">View</a>
+        <div class="workspace-nav-menu workspace-view-menu">
+          <a href="#view" data-top-menu="view" id="workspace-view-trigger"
+             aria-haspopup="true" aria-expanded="false" aria-controls="workspace-view-menu-panel">View</a>
+          <div class="workspace-view-menu-panel" id="workspace-view-menu-panel" role="menu" hidden>
+            <div class="workspace-view-menu-heading">Planner Views</div>
+
+            <div class="workspace-view-submenu" data-view-submenu="book_plan">
+              <button type="button" class="workspace-view-submenu-trigger"
+                      data-view-submenu-trigger="book_plan" aria-expanded="false">
+                <span>Book Planner</span><span aria-hidden="true">›</span>
+              </button>
+              <div class="workspace-view-submenu-options" data-view-submenu-options="book_plan" role="group"
+                   aria-label="Book Planner view" hidden>
+                <button type="button" data-planner-view-target="book_plan" data-planner-view-mode="default" aria-pressed="true">Default</button>
+                <button type="button" data-planner-view-target="book_plan" data-planner-view-mode="collapse">Collapse All</button>
+                <button type="button" data-planner-view-target="book_plan" data-planner-view-mode="expand">Expand All</button>
+              </div>
+            </div>
+
+            <div class="workspace-view-submenu" data-view-submenu="chapter_planner">
+              <button type="button" class="workspace-view-submenu-trigger"
+                      data-view-submenu-trigger="chapter_planner" aria-expanded="false">
+                <span>Chapter Planner</span><span aria-hidden="true">›</span>
+              </button>
+              <div class="workspace-view-submenu-options" data-view-submenu-options="chapter_planner" role="group"
+                   aria-label="Chapter Planner view" hidden>
+                <button type="button" data-planner-view-target="chapter_planner" data-planner-view-mode="default" aria-pressed="true">Default</button>
+                <button type="button" data-planner-view-target="chapter_planner" data-planner-view-mode="collapse">Collapse All</button>
+                <button type="button" data-planner-view-target="chapter_planner" data-planner-view-mode="expand">Expand All</button>
+              </div>
+            </div>
+
+            <div class="workspace-view-submenu" data-view-submenu="library">
+              <button type="button" class="workspace-view-submenu-trigger"
+                      data-view-submenu-trigger="library" aria-expanded="false">
+                <span>Library</span><span aria-hidden="true">›</span>
+              </button>
+              <div class="workspace-view-submenu-options" data-view-submenu-options="library" role="group"
+                   aria-label="Library view" hidden>
+                <button type="button" data-planner-view-target="library" data-planner-view-mode="default" aria-pressed="true">Default</button>
+                <button type="button" data-planner-view-target="library" data-planner-view-mode="collapse">Collapse All</button>
+                <button type="button" data-planner-view-target="library" data-planner-view-mode="expand">Expand All</button>
+              </div>
+            </div>
+
+            <div class="workspace-view-future-slot" data-view-future-slot aria-hidden="true"></div>
+          </div>
+        </div>
         <a href="#settings" data-top-menu="settings">Settings</a>
         <a href="/help">Help</a>
       </nav>
@@ -53,13 +100,12 @@
           <button type="button" data-workspace-section="chapter_planner">Chapter Planner</button>
         </section>
 
-        <section>
+        <section id="workspace-library-section">
           <h3>Library</h3>
           <button type="button" data-workspace-section="books">Books</button>
           <button type="button" data-workspace-section="chapters">Chapters</button>
-          <button type="button" data-workspace-section="events">Events</button>
           <button type="button" data-workspace-section="scenes">Scenes</button>
-          <button type="button" data-workspace-section="characters">Characters</button>
+          <div id="workspace-library-canon-menu"></div>
         </section>
 
         <section>
@@ -106,6 +152,6 @@
 
   </div>
 
-  <script src="workspace.js?v=20260821-patch45"></script>
+  <script src="workspace.js?v=20260822-library-phase3-rebased"></script>
 </body>
 </html>

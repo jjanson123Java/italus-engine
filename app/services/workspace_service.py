@@ -215,7 +215,6 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
                 ),
             },
         },
-        "read_only_data": _read_only_data_payload(context),
         "runtime_readiness_gates": _runtime_readiness_gates_payload(runtime_storage_status),
         "summary": {
             **author_summary,
@@ -233,6 +232,317 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
     }
     return bootstrap
 
+
+
+
+
+def get_workspace_library(project_id: str) -> dict[str, Any]:
+    """Return the lazy, read-only author Library projection for one project.
+
+    This boundary reads existing project state only. It does not mutate Canon,
+    Book Plan, Chapter Plan, Budget Plan, runtime manuscript state, approvals,
+    or generated knowledge packs.
+    """
+
+    manifest_obj = project_loader.load_manifest(project_id)
+    manifest = manifest_obj.to_dict()
+    budget_plan = project_loader.load_budget_plan(project_id) or {}
+    context = build_project_context(manifest_obj)
+    return _author_library_payload(context, manifest, budget_plan)
+
+
+def _author_library_payload(
+    context,
+    manifest: dict[str, Any],
+    budget_plan: dict[str, Any],
+) -> dict[str, Any]:
+    project_dir = context.project_dir
+    runtime_dir = context.runtime_data_dir
+
+    template_snapshot = _read_project_json(project_dir / "canon" / "template_snapshot.json", {})
+    author_canon = _read_project_json(project_dir / "canon" / "author_canon.json", {})
+    book_plan = _read_project_json(project_dir / "book_plan.json", {})
+    chapter_plan = _read_project_json(project_dir / "chapter_plan.json", {})
+    runtime_books = _read_project_json(runtime_dir / "books.json", [])
+    runtime_chapters = _read_project_json(runtime_dir / "chapters.json", [])
+    runtime_scenes = _read_project_json(runtime_dir / "scenes.json", [])
+
+    questionnaire = template_snapshot.get("questionnaire") if isinstance(template_snapshot, dict) else {}
+    questionnaire = questionnaire if isinstance(questionnaire, dict) else {}
+    template_sections = questionnaire.get("sections")
+    template_sections = template_sections if isinstance(template_sections, list) else []
+
+    canon_sections = author_canon.get("sections") if isinstance(author_canon, dict) else {}
+    canon_sections = canon_sections if isinstance(canon_sections, dict) else {}
+
+    canon_collections: list[dict[str, Any]] = []
+    canon_references: list[dict[str, Any]] = []
+    governing_sections: list[dict[str, str]] = []
+
+    for section_schema in template_sections:
+        if not isinstance(section_schema, dict):
+            continue
+        section_id = str(section_schema.get("section_id") or "").strip()
+        if not section_id:
+            continue
+        section_label = str(section_schema.get("label") or section_id).strip()
+        purpose = str(section_schema.get("purpose") or "").strip()
+        guidance = str(section_schema.get("author_guidance") or "").strip()
+        section_state = canon_sections.get(section_id) if isinstance(canon_sections, dict) else {}
+        section_state = section_state if isinstance(section_state, dict) else {}
+        records_state = section_state.get("records")
+        records_state = records_state if isinstance(records_state, dict) else {}
+        answers_state = section_state.get("answers")
+        answers_state = answers_state if isinstance(answers_state, dict) else {}
+
+        if section_id != "project_bible":
+            governing_sections.append(
+                {
+                    "section_id": section_id,
+                    "label": section_label,
+                    "purpose": purpose,
+                }
+            )
+
+        record_definitions = section_schema.get("records")
+        record_definitions = record_definitions if isinstance(record_definitions, list) else []
+        for record_schema in record_definitions:
+            if not isinstance(record_schema, dict):
+                continue
+            record_id = str(record_schema.get("record_id") or "").strip()
+            if not record_id:
+                continue
+            records = records_state.get(record_id)
+            records = records if isinstance(records, list) else []
+            fields = record_schema.get("fields")
+            fields = fields if isinstance(fields, list) else []
+            canon_collections.append(
+                {
+                    "key": f"canon_collection__{section_id}__{record_id}",
+                    "section_id": section_id,
+                    "record_id": record_id,
+                    "label": str(record_schema.get("label") or section_label or record_id),
+                    "section_label": section_label,
+                    "purpose": purpose,
+                    "author_guidance": guidance,
+                    "count": len(records),
+                    "fields": [
+                        {
+                            "field_id": str(field.get("field_id") or ""),
+                            "label": str(field.get("label") or field.get("field_id") or ""),
+                            "field_type": str(field.get("field_type") or ""),
+                            "author_hidden": bool(field.get("author_hidden")),
+                        }
+                        for field in fields
+                        if isinstance(field, dict) and field.get("field_id")
+                    ],
+                    "records": records,
+                }
+            )
+
+        visible_fields = [
+            field
+            for field in (section_schema.get("fields") or [])
+            if isinstance(field, dict)
+            and field.get("field_id")
+            and not field.get("author_hidden")
+        ]
+        if visible_fields or answers_state:
+            canon_references.append(
+                {
+                    "key": f"canon_reference__{section_id}",
+                    "section_id": section_id,
+                    "label": section_label,
+                    "purpose": purpose,
+                    "author_guidance": guidance,
+                    "fields": [
+                        {
+                            "field_id": str(field.get("field_id") or ""),
+                            "label": str(field.get("label") or field.get("field_id") or ""),
+                            "field_type": str(field.get("field_type") or ""),
+                        }
+                        for field in visible_fields
+                    ],
+                    "answers": answers_state,
+                }
+            )
+
+    book_plan_books = book_plan.get("books") if isinstance(book_plan, dict) else []
+    book_plan_books = book_plan_books if isinstance(book_plan_books, list) else []
+    book_workflow = book_plan.get("book_workflow") if isinstance(book_plan, dict) else []
+    book_workflow = book_workflow if isinstance(book_workflow, list) else []
+    workflow_by_number = {
+        int(item.get("book_number")): item
+        for item in book_workflow
+        if isinstance(item, dict) and str(item.get("book_number") or "").isdigit()
+    }
+
+    chapter_plan_books = chapter_plan.get("books") if isinstance(chapter_plan, dict) else []
+    chapter_plan_books = chapter_plan_books if isinstance(chapter_plan_books, list) else []
+    chapters_by_book: dict[int, list[dict[str, Any]]] = {}
+    flat_chapters: list[dict[str, Any]] = []
+    for book_entry in chapter_plan_books:
+        if not isinstance(book_entry, dict):
+            continue
+        try:
+            book_number = int(book_entry.get("book_number") or 0)
+        except (TypeError, ValueError):
+            continue
+        chapters = book_entry.get("chapters")
+        chapters = chapters if isinstance(chapters, list) else []
+        clean_chapters = [item for item in chapters if isinstance(item, dict)]
+        chapters_by_book[book_number] = clean_chapters
+        flat_chapters.extend(clean_chapters)
+
+    runtime_chapter_records = runtime_chapters if isinstance(runtime_chapters, list) else []
+    runtime_scene_records = runtime_scenes if isinstance(runtime_scenes, list) else []
+    runtime_book_records = runtime_books if isinstance(runtime_books, list) else []
+
+    expected_books = int(manifest.get("book_count") or len(book_plan_books) or 1)
+    chapters_per_book = int(manifest.get("chapters_per_book") or 0)
+    plan_by_number = {
+        int(item.get("book_number")): item
+        for item in book_plan_books
+        if isinstance(item, dict) and str(item.get("book_number") or "").isdigit()
+    }
+    runtime_book_by_number = {
+        int(item.get("book_number")): item
+        for item in runtime_book_records
+        if isinstance(item, dict) and str(item.get("book_number") or "").isdigit()
+    }
+
+    book_items: list[dict[str, Any]] = []
+    for book_number in range(1, expected_books + 1):
+        plan = plan_by_number.get(book_number, {})
+        workflow = workflow_by_number.get(book_number, {})
+        runtime_book = runtime_book_by_number.get(book_number, {})
+        planned_chapters = chapters_by_book.get(book_number, [])
+        planned_count = len(planned_chapters)
+        chapter_numbers = [
+            int(item.get("chapter_number"))
+            for item in planned_chapters
+            if str(item.get("chapter_number") or "").isdigit()
+        ]
+        active_chapter = max(chapter_numbers) if chapter_numbers else None
+        planning_percent = (
+            min(100.0, (planned_count / chapters_per_book) * 100.0)
+            if chapters_per_book > 0
+            else 0.0
+        )
+        book_items.append(
+            {
+                "book_number": book_number,
+                "title": str(plan.get("title") or runtime_book.get("title") or f"Book {book_number}"),
+                "time_span": str(plan.get("time_span") or ""),
+                "planning_status": str(plan.get("status") or workflow.get("approval_status") or "not_planned"),
+                "approval_status": str(workflow.get("approval_status") or "not_ready"),
+                "approval_fresh": bool(workflow.get("approval_fresh")),
+                "planned_chapters": planned_count,
+                "target_chapters": chapters_per_book,
+                "active_chapter": active_chapter,
+                "planning_percent": round(planning_percent, 1),
+                "estimated_tokens": int(budget_plan.get("estimated_tokens_per_book") or 0),
+                "actual_token_usage_available": False,
+            }
+        )
+
+    chapter_items: list[dict[str, Any]] = []
+    for item in flat_chapters:
+        try:
+            book_number = int(item.get("book_number") or 0)
+            chapter_number = int(item.get("chapter_number") or 0)
+        except (TypeError, ValueError):
+            continue
+        assigned_events = item.get("assigned_event_refs")
+        selected_canon = item.get("selected_canon_refs")
+        chapter_items.append(
+            {
+                "book_number": book_number,
+                "chapter_number": chapter_number,
+                "title": str(item.get("title") or f"Chapter {chapter_number}"),
+                "status": str(item.get("status") or "planned"),
+                "revision": int(item.get("revision") or 0),
+                "event_count": len(assigned_events) if isinstance(assigned_events, list) else 0,
+                "canon_count": len(selected_canon) if isinstance(selected_canon, list) else 0,
+                "kickoff": str(item.get("generation_kickoff") or ""),
+            }
+        )
+
+    scene_types: list[str] = []
+    if str(manifest.get("genre") or "") == "historical_epic":
+        scene_manifest = _read_project_json(
+            project_loader.PROJECT_ROOT / "canon_manifests" / "scene_types_manifest.json",
+            {},
+        )
+        candidate_types = scene_manifest.get("scene_types") if isinstance(scene_manifest, dict) else []
+        if isinstance(candidate_types, list):
+            scene_types = [str(item) for item in candidate_types if str(item).strip()]
+
+    navigation = [
+        {"key": "books", "label": "Books", "kind": "universal"},
+        {"key": "chapters", "label": "Chapters", "kind": "universal"},
+        {"key": "scenes", "label": "Scenes", "kind": "universal"},
+    ]
+    navigation.extend(
+        {
+            "key": item["key"],
+            "label": item["label"],
+            "kind": "canon_collection",
+            "count": item["count"],
+        }
+        for item in canon_collections
+    )
+    navigation.extend(
+        {
+            "key": item["key"],
+            "label": item["label"],
+            "kind": "canon_reference",
+        }
+        for item in canon_references
+        if item.get("section_id") not in {"project_bible"}
+    )
+
+    return {
+        "schema_version": "workspace_author_library_v1",
+        "project_id": str(manifest.get("project_id") or ""),
+        "project_name": str(manifest.get("project_name") or "Untitled Project"),
+        "template_id": str(manifest.get("template_id") or author_canon.get("template_id") or ""),
+        "genre": str(manifest.get("genre") or author_canon.get("genre") or ""),
+        "read_only": True,
+        "navigation": navigation,
+        "universal": {
+            "books": {
+                "expected_count": expected_books,
+                "planned_count": sum(1 for item in book_items if item["planned_chapters"] or item["approval_status"] != "not_ready"),
+                "chapters_per_book": chapters_per_book,
+                "items": book_items,
+            },
+            "chapters": {
+                "expected_count": expected_books * chapters_per_book,
+                "planned_count": len(chapter_items),
+                "items": chapter_items,
+            },
+            "scenes": {
+                "count": len(runtime_scene_records),
+                "items": runtime_scene_records,
+                "planning_context": {
+                    "scene_types": scene_types,
+                    "governing_canon_sections": governing_sections,
+                },
+            },
+        },
+        "canon": {
+            "collections": canon_collections,
+            "references": canon_references,
+        },
+        "budget": {
+            "token_budget_total": int(budget_plan.get("token_budget_total") or 0),
+            "estimated_tokens_per_book": int(budget_plan.get("estimated_tokens_per_book") or 0),
+            "estimated_tokens_per_chapter": int(budget_plan.get("estimated_tokens_per_chapter") or 0),
+            "actual_usage_available": False,
+            "remaining_tokens": None,
+        },
+    }
 
 
 
@@ -294,102 +604,6 @@ def _workspace_author_summary(
     }
 
 
-
-
-def _read_only_data_payload(context) -> dict[str, Any]:
-    """Load project-local read-only workspace browsing data.
-
-    Workspace Library must never fall back to root legacy runtime artifacts.
-    Books/chapters/scenes come from this project's runtime storage. Events and
-    characters come from this project's finalized Author Canon.
-    """
-
-    runtime_dir = context.runtime_data_dir
-    books = _read_project_json(runtime_dir / "books.json", [])
-    chapters = _read_project_json(runtime_dir / "chapters.json", [])
-    scenes = _read_project_json(runtime_dir / "scenes.json", [])
-    coverage_map = _read_project_json(runtime_dir / "coverage_map.json", {})
-    continuity_digests = _read_project_json(runtime_dir / "chapter_continuity_digests.json", [])
-
-    author_canon = _read_project_json(context.project_dir / "canon" / "author_canon.json", {})
-    sections = author_canon.get("sections") if isinstance(author_canon, dict) else {}
-    sections = sections if isinstance(sections, dict) else {}
-    event_section = sections.get("timeline_event_ledger") if isinstance(sections, dict) else {}
-    character_section = sections.get("character_bible") if isinstance(sections, dict) else {}
-    event_records = (event_section or {}).get("records") if isinstance(event_section, dict) else {}
-    character_records = (character_section or {}).get("records") if isinstance(character_section, dict) else {}
-    events = (event_records or {}).get("events") if isinstance(event_records, dict) else []
-    characters = (character_records or {}).get("characters") if isinstance(character_records, dict) else []
-    if not isinstance(events, list):
-        events = []
-    if not isinstance(characters, list):
-        characters = []
-
-    book_index = {
-        str(item.get("book_id")): item
-        for item in books
-        if isinstance(item, dict) and item.get("book_id")
-    }
-    chapter_sample = _sample_records(
-        chapters,
-        ["chapter_id", "book_id", "chapter_number", "title", "event_name", "status"],
-        8,
-    )
-    for chapter in chapter_sample:
-        book = book_index.get(str(chapter.get("book_id"))) or {}
-        chapter["book_number"] = book.get("book_number")
-        chapter["book_title"] = book.get("title")
-
-    coverage_events = coverage_map.get("events") if isinstance(coverage_map, dict) else {}
-
-    return {
-        "marker": "workspace-project-local-library-20260818",
-        "source_mode": "project_local",
-        "runtime_migration_status": "project_local",
-        "books": {
-            "count": len(books) if isinstance(books, list) else 0,
-            "sample": _sample_records(
-                books,
-                ["book_id", "book_number", "title", "status"],
-                len(books) if isinstance(books, list) else 0,
-            ),
-        },
-        "chapters": {
-            "count": len(chapters) if isinstance(chapters, list) else 0,
-            "sample": chapter_sample,
-        },
-        "events": {
-            "count": len(events),
-            "sample": _sample_records(
-                events,
-                ["internal_id", "story_code", "date_or_sequence", "event_summary", "book", "location"],
-                8,
-            ),
-        },
-        "scenes": {
-            "count": len(scenes) if isinstance(scenes, list) else 0,
-            "sample": _sample_records(
-                scenes,
-                ["scene_id", "book_id", "chapter_id", "title", "event_name", "status"],
-                8,
-            ),
-        },
-        "characters": {
-            "count": len(characters),
-            "sample": _sample_records(
-                characters,
-                ["internal_id", "name", "role", "status", "available_from_book", "first_appearance"],
-                12,
-            ),
-        },
-        "continuity": {
-            "digest_count": len(continuity_digests) if isinstance(continuity_digests, (dict, list)) else 0,
-        },
-        "coverage": {
-            "event_count": len(coverage_events) if isinstance(coverage_events, dict) else 0,
-            "sample": _coverage_sample(coverage_events, 6),
-        },
-    }
 
 
 def _read_project_json(path, default: Any) -> Any:

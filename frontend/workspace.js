@@ -56,7 +56,10 @@
     chapterPlanDraftDirty: false,
     chapterPlannerDraftVersion: 0,
     chapterKnowledgePackRequestToken: 0,
-    chapterEventSequenceDefaultAppliedKey: ''
+    chapterEventSequenceDefaultAppliedKey: '',
+    plannerViewModes: { book_plan: 'default', chapter_planner: 'default', library: 'default' },
+    authorLibrary: null,
+    authorLibraryLoading: false
   };
 
   const workspaceJsVersion = 'workspace-book-plan-flattened-canon-timespan-20260818';
@@ -156,6 +159,7 @@
         const menu = link.dataset.topMenu;
         if (link.classList.contains('disabled-link')) {
           event.preventDefault();
+          closeWorkspaceViewMenu();
           setLog(`${labelFor(menu)} is visible but disabled until project-scoped runtime migration is complete.`);
           return;
         }
@@ -164,11 +168,153 @@
           event.preventDefault();
         }
 
+        if (menu === 'view') {
+          toggleWorkspaceViewMenu();
+          return;
+        }
+
+        closeWorkspaceViewMenu();
         if (menu === 'project') renderSection('dashboard');
         if (menu === 'engine') renderSection('settings');
         if (menu === 'settings') renderSection('settings');
-        if (menu === 'view') setLog('Author workspace uses the full available width; project status remains available from Dashboard and runtime views.');
       });
+    });
+
+    document.querySelectorAll('[data-view-submenu-trigger]').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const target = String(button.dataset.viewSubmenuTrigger || '');
+        toggleWorkspaceViewSubmenu(target);
+      });
+    });
+
+    document.querySelectorAll('[data-planner-view-target][data-planner-view-mode]').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const target = String(button.dataset.plannerViewTarget || '');
+        const mode = String(button.dataset.plannerViewMode || 'default');
+        if (!['book_plan', 'chapter_planner', 'library'].includes(target)) return;
+        if (!['default', 'collapse', 'expand'].includes(mode)) return;
+
+        state.plannerViewModes[target] = mode;
+        updatePlannerViewMenuSelection(target);
+        applyPlannerViewMode(target, mode === 'default');
+
+        const plannerLabel = target === 'book_plan' ? 'Book Planner' : (target === 'chapter_planner' ? 'Chapter Planner' : 'Library');
+        const modeLabel = mode === 'collapse' ? 'Collapse All' : (mode === 'expand' ? 'Expand All' : 'Default');
+        setLog(`${plannerLabel} view set to ${modeLabel}.`);
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      const menu = document.querySelector('.workspace-view-menu');
+      if (menu && !menu.contains(event.target)) closeWorkspaceViewMenu();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeWorkspaceViewMenu();
+    });
+
+    updatePlannerViewMenuSelection('book_plan');
+    updatePlannerViewMenuSelection('chapter_planner');
+    updatePlannerViewMenuSelection('library');
+  }
+
+  function toggleWorkspaceViewMenu() {
+    const trigger = document.getElementById('workspace-view-trigger');
+    const panel = document.getElementById('workspace-view-menu-panel');
+    if (!trigger || !panel) return;
+
+    const willOpen = panel.hidden === true;
+    panel.hidden = !willOpen;
+    trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+
+    if (!willOpen) {
+      closeWorkspaceViewSubmenus();
+    } else {
+      setLog('View controls are available for Book Planner, Chapter Planner, and Library.');
+    }
+  }
+
+  function closeWorkspaceViewMenu() {
+    const trigger = document.getElementById('workspace-view-trigger');
+    const panel = document.getElementById('workspace-view-menu-panel');
+    if (!panel || panel.hidden) return;
+    panel.hidden = true;
+    trigger?.setAttribute('aria-expanded', 'false');
+    closeWorkspaceViewSubmenus();
+  }
+
+  function closeWorkspaceViewSubmenus(exceptTarget = '') {
+    document.querySelectorAll('[data-view-submenu-trigger]').forEach((button) => {
+      const target = String(button.dataset.viewSubmenuTrigger || '');
+      if (target === exceptTarget) return;
+      button.setAttribute('aria-expanded', 'false');
+      const options = document.querySelector(`[data-view-submenu-options="${CSS.escape(target)}"]`);
+      if (options) options.hidden = true;
+    });
+  }
+
+  function toggleWorkspaceViewSubmenu(target) {
+    const button = document.querySelector(`[data-view-submenu-trigger="${CSS.escape(target)}"]`);
+    const options = document.querySelector(`[data-view-submenu-options="${CSS.escape(target)}"]`);
+    if (!button || !options) return;
+
+    const willOpen = options.hidden === true;
+    closeWorkspaceViewSubmenus(target);
+    options.hidden = !willOpen;
+    button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+  }
+
+  function updatePlannerViewMenuSelection(target) {
+    const mode = String((state.plannerViewModes || {})[target] || 'default');
+    document.querySelectorAll(`[data-planner-view-target="${CSS.escape(target)}"]`).forEach((button) => {
+      const selected = String(button.dataset.plannerViewMode || '') === mode;
+      button.classList.toggle('active', selected);
+      button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+    });
+  }
+
+  function plannerDisclosureNodes(target) {
+    if (!mainPanel) return [];
+    if (target === 'book_plan') {
+      return Array.from(mainPanel.querySelectorAll([
+        '.planner-book-plan-unified details.planner-book-canon-embedded',
+        '.planner-book-plan-unified details.planner-selected-summary',
+        '.planner-book-plan-unified details.book-canon-category'
+      ].join(', ')));
+    }
+    if (target === 'chapter_planner') {
+      return Array.from(mainPanel.querySelectorAll('details.chapter-planner-card'));
+    }
+    if (target === 'library') {
+      return Array.from(mainPanel.querySelectorAll('details.library-author-section'));
+    }
+    return [];
+  }
+
+  function applyPlannerViewMode(target, restoreDefault = false) {
+    const nodes = plannerDisclosureNodes(target);
+    if (!nodes.length) return;
+
+    nodes.forEach((node) => {
+      if (!Object.prototype.hasOwnProperty.call(node.dataset, 'viewDefaultOpen')) {
+        node.dataset.viewDefaultOpen = node.open === true ? 'true' : 'false';
+      }
+    });
+
+    const mode = String((state.plannerViewModes || {})[target] || 'default');
+    nodes.forEach((node) => {
+      if (mode === 'collapse') {
+        node.open = false;
+      } else if (mode === 'expand') {
+        node.open = true;
+      } else if (restoreDefault) {
+        node.open = node.dataset.viewDefaultOpen === 'true';
+      }
     });
   }
 
@@ -444,41 +590,11 @@
       dashboard: () => renderDashboard(manifest, budget, wizard, bootstrap),
       manuscript_plan: () => renderManuscriptPlan(manifest, budget, wizard, summary),
       budget_plan: () => renderBudgetPlan(budget, manifest),
-      books: () => renderLibraryDetail('Books', manifest, bootstrap, {
-        key: 'books',
-        status: 'Planned',
-        source: 'books_manifest',
-        detail: `Books planned: ${number(manifest.book_count)}. This is a read-only planning view until project-scoped book records are wired.`,
-        next: 'Load approved book manifest into project-local workspace browsing.'
-      }),
-      chapters: () => renderLibraryDetail('Chapters', manifest, bootstrap, {
-        key: 'chapters',
-        status: 'Planned',
-        source: 'project manifest',
-        detail: `${number(manifest.book_count)} book(s) × ${number(manifest.chapters_per_book)} chapters are planned.`,
-        next: 'Wire chapter browsing after project-local manuscript storage is defined.'
-      }),
-      events: () => renderLibraryDetail('Events', manifest, bootstrap, {
-        key: 'events',
-        status: 'Reference only',
-        source: 'events_manifest',
-        detail: 'Events remain approved reference data. Runtime event selection is not active.',
-        next: 'Expose event index read-only before runtime event routing.'
-      }),
-      scenes: () => renderLibraryDetail('Scenes', manifest, bootstrap, {
-        key: 'scenes',
-        status: 'Locked',
-        source: 'project runtime',
-        detail: 'Scene records are not project-scoped yet. Generation and scene saving remain disabled.',
-        next: 'Migrate scene persistence behind a project-context-aware service.'
-      }),
-      characters: () => renderLibraryDetail('Characters', manifest, bootstrap, {
-        key: 'characters',
-        status: 'Reference only',
-        source: 'character canon',
-        detail: 'Character canon is approved as a reference. Editable character workspace is not enabled.',
-        next: 'Add read-only character browsing from approved canon.'
-      }),
+      books: () => { void renderAuthorLibrary('books', bootstrap); },
+      chapters: () => { void renderAuthorLibrary('chapters', bootstrap); },
+      scenes: () => { void renderAuthorLibrary('scenes', bootstrap); },
+      events: () => { void renderAuthorLibraryByRecordId('events', bootstrap); },
+      characters: () => { void renderAuthorLibraryByRecordId('characters', bootstrap); },
       author_canon: () => renderAuthorCanon(bootstrap),
       project_runtime_context: () => renderProjectRuntimeContext(bootstrap),
       book_canon: () => { state.activeSection = 'book_plan'; renderBookPlan(bootstrap); },
@@ -498,6 +614,11 @@
       validation: () => renderValidationReadinessPanel(manifest, context, bootstrap),
       output: () => renderExportReadinessPanel(manifest, context, bootstrap)
     };
+
+    if (state.activeSection.startsWith('library__')) {
+      void renderAuthorLibrary(state.activeSection.slice('library__'.length), bootstrap);
+      return;
+    }
 
     const renderer = viewMap[state.activeSection] || viewMap.dashboard;
     renderer();
@@ -601,38 +722,379 @@
     `;
   }
 
-  function renderLibraryDetail(title, manifest, bootstrap, detail) {
-    setHeading(title);
-    const summary = bootstrap.summary || {};
-    const readOnlyData = bootstrap.read_only_data || {};
-    const dataset = readOnlyData[detail.key] || {};
-    const sample = Array.isArray(dataset.sample) ? dataset.sample : [];
-    const sourceMode = readOnlyData.source_mode || 'not available';
-    const runtimeMigration = readOnlyData.runtime_migration_status || 'not migrated';
+  async function ensureAuthorLibrary() {
+    if (state.authorLibrary) return state.authorLibrary;
+    if (state.authorLibraryLoading) {
+      while (state.authorLibraryLoading) {
+        await new Promise((resolve) => window.setTimeout(resolve, 25));
+      }
+      return state.authorLibrary;
+    }
 
-    mainPanel.innerHTML = `
-      <div class="workspace-content workspace-navigation-detail-20260707 workspace-readonly-data-20260707">
-        <p class="placeholder">${escapeHtml(detail.detail)}</p>
-        <section class="workspace-panel">
-          <h3>${escapeHtml(title)} Read-Only Data</h3>
-          <dl class="workspace-definition-list">
-            ${definition('Status', detail.status)}
-            ${definition('Source', detail.source)}
-            ${definition('Source Mode', sourceMode)}
-            ${definition('Runtime Migration', runtimeMigration)}
-            ${definition('Visible Records', number(dataset.count))}
-            ${definition('Project', manifest.project_name || 'Untitled Project')}
-            ${definition('Lifecycle', lifecycleLabel(manifest.lifecycle_state), { humanReadable: true })}
-            ${definition('Author Canon', summary.attention_required_section_count ? 'Attention required' : 'Current')}
-            ${definition('Next Safe Step', detail.next)}
-          </dl>
-        </section>
-        ${readOnlySampleTable(title, sample)}
-        <div class="workspace-disabled-note">
-          Read-only data is loaded for inspection only. Creation, mutation, generation, validation, and output remain blocked.
+    state.authorLibraryLoading = true;
+    try {
+      const payload = await apiFetch(`/api/project/${encodeURIComponent(projectId)}/workspace/library`);
+      state.authorLibrary = payload;
+      syncAuthorLibrarySidebar(payload);
+      return payload;
+    } finally {
+      state.authorLibraryLoading = false;
+    }
+  }
+
+  function syncAuthorLibrarySidebar(library) {
+    const container = document.getElementById('workspace-library-canon-menu');
+    if (!container || !library) return;
+    const navigation = Array.isArray(library.navigation) ? library.navigation : [];
+    const dynamic = navigation.filter((item) => item && !['books', 'chapters', 'scenes'].includes(String(item.key || '')));
+    container.innerHTML = dynamic.map((item) => {
+      const key = String(item.key || '');
+      const label = String(item.label || key || 'Library');
+      const count = Number.isFinite(Number(item.count)) ? ` <span class="library-menu-count">${number(item.count)}</span>` : '';
+      return `<button type="button" data-workspace-section="library__${escapeHtml(key)}" data-workspace-enabled="true">${escapeHtml(label)}${count}</button>`;
+    }).join('');
+  }
+
+  async function renderAuthorLibraryByRecordId(recordId, bootstrap) {
+    const library = await ensureAuthorLibrary();
+    const collection = ((library || {}).canon || {}).collections || [];
+    const match = collection.find((item) => String(item.record_id || '') === String(recordId || ''));
+    if (!match) {
+      renderAuthorLibraryEmpty(labelFor(recordId), 'This Canon collection is not defined by the active project template.');
+      return;
+    }
+    await renderAuthorLibrary(String(match.key || ''), bootstrap);
+  }
+
+  async function renderAuthorLibrary(key, bootstrap) {
+    setHeading('Library');
+    mainPanel.innerHTML = `<div class="workspace-content"><p class="placeholder">Loading author Library…</p></div>`;
+    let library;
+    try {
+      library = await ensureAuthorLibrary();
+    } catch (error) {
+      renderError(`Library failed to load: ${error.message}`);
+      return;
+    }
+
+    if (!library || state.activeSection === 'dashboard') return;
+
+    if (key === 'books') {
+      renderAuthorLibraryBooks(library);
+    } else if (key === 'chapters') {
+      renderAuthorLibraryChapters(library);
+    } else if (key === 'scenes') {
+      renderAuthorLibraryScenes(library);
+    } else if (String(key).startsWith('canon_collection__')) {
+      renderAuthorLibraryCollection(library, key);
+    } else if (String(key).startsWith('canon_reference__')) {
+      renderAuthorLibraryReference(library, key);
+    } else {
+      renderAuthorLibraryEmpty('Library', 'This Library view is not available for the active project template.');
+    }
+    applyPlannerViewMode('library');
+  }
+
+  function librarySection(title, subtitle, body) {
+    return `
+      <details class="library-author-section" open data-view-default-open="true">
+        <summary><span class="library-disclosure-chevron" aria-hidden="true"></span><span>${escapeHtml(title)}</span></summary>
+        <div class="library-author-section-body">
+          ${subtitle ? `<p class="placeholder">${escapeHtml(subtitle)}</p>` : ''}
+          ${body}
         </div>
+      </details>
+    `;
+  }
+
+  function libraryProgress(value, label) {
+    const numeric = Math.max(0, Math.min(100, Number(value) || 0));
+    return `
+      <div class="library-progress" role="progressbar" aria-label="${escapeHtml(label)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${numeric}">
+        <span style="width:${numeric}%"></span>
       </div>
     `;
+  }
+
+  function bookPlanApprovalStatusLabel(status) {
+    const normalized = String(status || 'not_ready').trim().toLowerCase();
+    const labels = {
+      not_ready: 'PLAN NOT READY',
+      approval_required: 'PLAN APPROVAL REQUIRED',
+      approved: 'PLAN APPROVED',
+      outdated: 'PLAN OUTDATED'
+    };
+    return labels[normalized] || `PLAN ${String(status || 'not_ready').replace(/_/g, ' ').toUpperCase()}`;
+  }
+
+  function renderAuthorLibraryBooks(library) {
+    setHeading('Library — Books');
+    const books = (((library || {}).universal || {}).books || {});
+    const items = Array.isArray(books.items) ? books.items : [];
+    const planned = Number(books.planned_count || 0);
+    const expected = Number(books.expected_count || 0);
+    const summary = `
+      <div class="workspace-stat-grid library-stat-grid">
+        ${statCard('Books', `${planned} / ${expected}`)}
+        ${statCard('Target Chapters / Book', number(books.chapters_per_book))}
+        ${statCard('Genre', labelFor(library.genre || '—'))}
+        ${statCard('Token Usage', ((library.budget || {}).actual_usage_available ? 'Tracked' : 'Not yet tracked'))}
+      </div>
+    `;
+    const cards = items.map((book) => {
+      const pct = Number(book.planning_percent || 0);
+      const active = book.active_chapter ? `Chapter ${number(book.active_chapter)}` : 'Not yet planned';
+      const tokens = Number(book.estimated_tokens || 0);
+      return `
+        <article class="library-card">
+          <header><div><span class="library-kicker">Book ${number(book.book_number)}</span><h4>${escapeHtml(book.title || `Book ${number(book.book_number)}`)}</h4></div>${statusBadge(bookPlanApprovalStatusLabel(book.approval_status))}</header>
+          ${book.time_span ? `<p class="library-muted">${escapeHtml(book.time_span)}</p>` : ''}
+          <div class="library-card-grid">
+            <div><strong>Planning Progress</strong><span>${number(book.planned_chapters)} / ${number(book.target_chapters)} chapters</span></div>
+            <div><strong>Latest Planned Chapter</strong><span>${escapeHtml(active)}</span></div>
+          </div>
+          ${libraryProgress(pct, `Book ${number(book.book_number)} planning progress`)}
+          <p class="library-progress-label">${pct.toFixed(1)}% planning coverage</p>
+          <div class="library-card-grid">
+            <div><strong>Estimated Book Tokens</strong><span>${tokens ? number(tokens) : 'Not configured'}</span></div>
+            <div><strong>Remaining Tokens</strong><span>${book.actual_token_usage_available ? 'Available' : 'Tracking not yet available'}</span></div>
+          </div>
+        </article>
+      `;
+    }).join('') || `<p class="placeholder">No Book Plan entries exist yet.</p>`;
+
+    mainPanel.innerHTML = `<div class="workspace-content library-author-view">
+      ${librarySection('Series Progress', 'A planning view of the current series. Draft completion is intentionally separate from planning progress.', summary)}
+      ${librarySection('Books', 'Book titles, planning coverage, approval state, and configured budget estimates.', `<div class="library-card-list">${cards}</div>`)}
+    </div>`;
+  }
+
+  function chapterPlanningStatusLabel(status) {
+    const normalized = String(status || 'draft').trim().toLowerCase();
+    const labels = {
+      draft: 'PLANNING DRAFT',
+      complete: 'PLANNING COMPLETE',
+      outdated: 'PLANNING OUTDATED',
+      reconciliation_required: 'PLANNING RECONCILIATION REQUIRED'
+    };
+    return labels[normalized] || `PLANNING ${String(status || 'draft').replace(/_/g, ' ').toUpperCase()}`;
+  }
+
+  function renderAuthorLibraryChapters(library) {
+    setHeading('Library — Chapters');
+    const chapters = (((library || {}).universal || {}).chapters || {});
+    const books = (((library || {}).universal || {}).books || {});
+    const items = Array.isArray(chapters.items) ? chapters.items : [];
+    const bookItems = Array.isArray(books.items) ? books.items : [];
+    const bookTitleByNumber = new Map(
+      bookItems.map((book) => [Number(book.book_number || 0), String(book.title || '').trim()])
+    );
+    const expected = Number(chapters.expected_count || 0);
+    const planned = Number(chapters.planned_count || 0);
+    const pct = expected > 0 ? Math.min(100, (planned / expected) * 100) : 0;
+    const overview = `
+      <div class="workspace-stat-grid library-stat-grid">
+        ${statCard('Planned Chapters', `${planned} / ${expected}`)}
+        ${statCard('Planning Coverage', `${pct.toFixed(1)}%`)}
+      </div>
+      ${libraryProgress(pct, 'Overall chapter planning coverage')}
+    `;
+    const cards = items.map((chapter) => {
+      const bookNumber = Number(chapter.book_number || 0);
+      const bookTitle = bookTitleByNumber.get(bookNumber) || '';
+      const bookLabel = bookTitle ? `Book ${number(bookNumber)} — ${bookTitle}` : `Book ${number(bookNumber)}`;
+      return `
+        <article class="library-card compact library-chapter-card">
+          <header>
+            <div>
+              <span class="library-chapter-book-context">${escapeHtml(bookLabel)}</span>
+              <h4>${escapeHtml(chapter.title || `Chapter ${number(chapter.chapter_number)}`)}</h4>
+            </div>
+            <div class="library-card-status">${statusBadge(chapterPlanningStatusLabel(chapter.status))}</div>
+          </header>
+          <div class="library-card-grid">
+            <div><strong>Selected Canon</strong><span>${number(chapter.canon_count)}</span></div>
+            <div><strong>Assigned Events</strong><span>${number(chapter.event_count)}</span></div>
+            <div><strong>Revision</strong><span>${number(chapter.revision)}</span></div>
+          </div>
+          ${chapter.kickoff ? `<p class="library-excerpt"><strong>Kickoff:</strong> ${escapeHtml(chapter.kickoff)}</p>` : ''}
+        </article>
+      `;
+    }).join('') || `<p class="placeholder">No Chapter Plans have been saved yet.</p>`;
+    mainPanel.innerHTML = `<div class="workspace-content library-author-view">
+      ${librarySection('Chapter Planning Progress', 'Planning coverage reflects saved Chapter Plans, not manuscript completion.', overview)}
+      ${librarySection('Chapters', 'Saved Chapter Plans across the series.', `<div class="library-card-list">${cards}</div>`)}
+    </div>`;
+  }
+
+  function renderAuthorLibraryScenes(library) {
+    setHeading('Library — Scenes');
+    const scenes = (((library || {}).universal || {}).scenes || {});
+    const context = scenes.planning_context || {};
+    const types = Array.isArray(context.scene_types) ? context.scene_types : [];
+    const governing = Array.isArray(context.governing_canon_sections) ? context.governing_canon_sections : [];
+    const contextBody = `
+      <div class="workspace-stat-grid library-stat-grid">
+        ${statCard('Genre', labelFor(library.genre || '—'))}
+        ${statCard('Scene Types', types.length ? number(types.length) : 'Template governed')}
+        ${statCard('Canon Sections', number(governing.length))}
+      </div>
+      ${types.length ? `<div class="library-chip-list">${types.map((item) => `<span>${escapeHtml(labelFor(item))}</span>`).join('')}</div>` : ''}
+      <div class="library-reference-list">
+        ${governing.map((item) => `<article><strong>${escapeHtml(item.label || item.section_id)}</strong>${item.purpose ? `<span>${escapeHtml(item.purpose)}</span>` : ''}</article>`).join('')}
+      </div>
+    `;
+    const sceneItems = Array.isArray(scenes.items) ? scenes.items : [];
+    const sceneBody = sceneItems.length
+      ? `<div class="library-card-list">${sceneItems.map((scene) => `
+          <article class="library-card compact">
+            <header><div><span class="library-kicker">${escapeHtml(scene.chapter_id || scene.book_id || 'Scene')}</span><h4>${escapeHtml(scene.title || scene.scene_id || 'Untitled Scene')}</h4></div>${statusBadge(String(scene.status || 'saved').toUpperCase())}</header>
+            ${scene.event_name ? `<p class="library-muted">${escapeHtml(scene.event_name)}</p>` : ''}
+          </article>`).join('')}</div>`
+      : `<div class="library-empty-state"><strong>No manuscript scenes have been created yet.</strong><span>Your current Canon and Chapter Plans remain available as scene-planning context.</span></div>`;
+    mainPanel.innerHTML = `<div class="workspace-content library-author-view">
+      ${librarySection('Scene Planning Context', 'Genre-aware Canon and optional scene vocabulary that govern scene construction.', contextBody)}
+      ${librarySection('Manuscript Scenes', 'Persisted manuscript scene records appear here when they exist.', sceneBody)}
+    </div>`;
+  }
+
+  function libraryRecordHeading(record) {
+    return String(
+      record.name || record.title || record.label || record.event_summary ||
+      record.story_code || record.internal_id || record.item_id || 'Canon Record'
+    );
+  }
+
+  function libraryVisibleRecordFields(collection, record) {
+    const schemaFields = Array.isArray(collection.fields) ? collection.fields : [];
+    const hidden = new Set(schemaFields.filter((field) => field.author_hidden).map((field) => String(field.field_id || '')));
+    const preferred = schemaFields.map((field) => String(field.field_id || '')).filter(Boolean);
+    const keys = preferred.length ? preferred : Object.keys(record || {});
+    return keys.filter((key) => !hidden.has(key) && !['internal_id', 'record_id', 'item_id', 'source_record_hash'].includes(key));
+  }
+
+  function libraryInlineRichText(value) {
+    return escapeHtml(String(value || '')).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  }
+
+  function libraryFormattedText(value) {
+    if (value === undefined || value === null || value === '') {
+      return '<span class="library-readable-empty">—</span>';
+    }
+
+    if (Array.isArray(value)) {
+      if (!value.length) return '<span class="library-readable-empty">—</span>';
+      return `<div class="library-readable-text"><ul>${value.map((item) => `<li>${libraryInlineRichText(formatCell(item))}</li>`).join('')}</ul></div>`;
+    }
+
+    if (value && typeof value === 'object') {
+      return `<div class="library-readable-text"><p>${libraryInlineRichText(formatCell(value))}</p></div>`;
+    }
+
+    const text = String(value).replace(/\r\n/g, '\n').trim();
+    if (!text) return '<span class="library-readable-empty">—</span>';
+
+    const lines = text.split('\n');
+    const blocks = [];
+    let listItems = [];
+
+    const flushList = () => {
+      if (!listItems.length) return;
+      blocks.push(`<ul>${listItems.join('')}</ul>`);
+      listItems = [];
+    };
+
+    lines.forEach((rawLine) => {
+      const line = rawLine.trim();
+
+      if (!line) {
+        flushList();
+        return;
+      }
+
+      const headingMatch = line.match(/^#{2,4}\s+(.+)$/);
+      if (headingMatch) {
+        flushList();
+        blocks.push(`<h5>${libraryInlineRichText(headingMatch[1])}</h5>`);
+        return;
+      }
+
+      const bulletMatch = line.match(/^[-•]\s+(.+)$/);
+      if (bulletMatch) {
+        listItems.push(`<li>${libraryInlineRichText(bulletMatch[1])}</li>`);
+        return;
+      }
+
+      flushList();
+      blocks.push(`<p>${libraryInlineRichText(line)}</p>`);
+    });
+
+    flushList();
+
+    return `<div class="library-readable-text">${blocks.join('')}</div>`;
+  }
+
+  function renderAuthorLibraryCollection(library, key) {
+    const collections = (((library || {}).canon || {}).collections || []);
+    const collection = collections.find((item) => String(item.key || '') === String(key || ''));
+    if (!collection) {
+      renderAuthorLibraryEmpty('Canon Library', 'This collection is not available for the active project.');
+      return;
+    }
+    setHeading(`Library — ${collection.label}`);
+    const records = Array.isArray(collection.records) ? collection.records : [];
+    const overview = `
+      <div class="workspace-stat-grid library-stat-grid">
+        ${statCard('Records', number(collection.count))}
+        ${statCard('Canon Section', collection.section_label || collection.label)}
+      </div>
+      ${collection.author_guidance ? `<p class="library-guidance">${escapeHtml(collection.author_guidance)}</p>` : ''}
+    `;
+    const cards = records.map((record) => {
+      const fields = libraryVisibleRecordFields(collection, record).filter((key) => {
+        const value = record[key];
+        return value !== undefined && value !== null && value !== '';
+      });
+      return `<article class="library-card compact">
+        <header><div><span class="library-kicker">${escapeHtml(collection.label)}</span><h4>${escapeHtml(libraryRecordHeading(record))}</h4></div></header>
+        <dl class="library-record-fields">
+          ${fields.map((field) => `<div><dt>${escapeHtml(labelFor(field))}</dt><dd>${libraryFormattedText(record[field])}</dd></div>`).join('')}
+        </dl>
+      </article>`;
+    }).join('') || `<p class="placeholder">No ${escapeHtml(collection.label)} records have been added yet.</p>`;
+    mainPanel.innerHTML = `<div class="workspace-content library-author-view">
+      ${librarySection(`${collection.label} Overview`, collection.purpose || 'Author Canon collection.', overview)}
+      ${librarySection(collection.label, `Author Canon records from ${collection.section_label || collection.label}.`, `<div class="library-card-list">${cards}</div>`)}
+    </div>`;
+  }
+
+  function renderAuthorLibraryReference(library, key) {
+    const references = (((library || {}).canon || {}).references || []);
+    const reference = references.find((item) => String(item.key || '') === String(key || ''));
+    if (!reference) {
+      renderAuthorLibraryEmpty('Canon Reference', 'This reference section is not available for the active project.');
+      return;
+    }
+    setHeading(`Library — ${reference.label}`);
+    const answers = reference.answers && typeof reference.answers === 'object' ? reference.answers : {};
+    const fields = Array.isArray(reference.fields) ? reference.fields : [];
+    const body = fields.map((field) => {
+      const value = answers[field.field_id];
+      if (value === undefined || value === null || value === '') return '';
+      return `<article class="library-reference-card"><strong>${escapeHtml(field.label || labelFor(field.field_id))}</strong>${libraryFormattedText(value)}</article>`;
+    }).join('') || `<p class="placeholder">No authored values have been saved in this Canon reference section yet.</p>`;
+    mainPanel.innerHTML = `<div class="workspace-content library-author-view">
+      ${librarySection(`${reference.label} Overview`, reference.purpose || 'Genre-specific Canon guidance.', reference.author_guidance ? `<div class="library-guidance">${libraryFormattedText(reference.author_guidance)}</div>` : '')}
+      ${librarySection(reference.label, 'Read-only author Canon reference.', `<div class="library-reference-grid">${body}</div>`)}
+    </div>`;
+  }
+
+  function renderAuthorLibraryEmpty(title, message) {
+    setHeading(`Library — ${title}`);
+    mainPanel.innerHTML = `<div class="workspace-content library-author-view">
+      ${librarySection(title, '', `<div class="library-empty-state"><strong>${escapeHtml(message)}</strong></div>`)}
+    </div>`;
+    applyPlannerViewMode('library');
   }
 
   function renderAuthorCanon(bootstrap) {
@@ -1259,7 +1721,11 @@
     const anchorTop = currentAnchor ? currentAnchor.getBoundingClientRect().top : null;
 
     renderChapterPlanner(state.bootstrap);
-    restoreChapterPlannerDisclosureState(disclosureState);
+    if (String((state.plannerViewModes || {}).chapter_planner || 'default') === 'default') {
+      restoreChapterPlannerDisclosureState(disclosureState);
+    } else {
+      applyPlannerViewMode('chapter_planner');
+    }
 
     if (anchorTop !== null && Number.isFinite(anchorTop)) {
       const nextAnchor = document.getElementById(anchorId);
@@ -1659,23 +2125,8 @@
       const anchorId = String(((placement.anchor_event_ref || {}).record_id) || '');
       const objective = String(placement.objective || '');
       const technical = [item.date_or_sequence, item.story_code].filter(Boolean).join(' · ');
-      return `
-        <article class="chapter-event-card ${assigned ? 'is-selected' : ''}" data-chapter-event-row="${escapeHtml(recordId)}">
-          <input type="checkbox" data-chapter-event-ref="${escapeHtml(recordId)}" ${assigned ? 'checked' : ''} hidden />
-          <div class="chapter-event-card-head">
-            <div>
-              <strong>${escapeHtml(item.label || item.summary || recordId)}</strong>
-              <small>${escapeHtml(technical || 'Canon event')}</small>
-            </div>
-            <div class="chapter-row-actions">
-              <label class="book-canon-batch-check" title="Mark for batch action"><input type="checkbox" data-chapter-event-batch-ref="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''} /></label>
-              ${assigned
-                ? `<button type="button" class="secondary-action compact-action" data-event-return="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''}>Return</button>`
-                : `<button type="button" class="primary-action compact-action" data-event-add="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''}>Add to Chapter</button>`}
-            </div>
-          </div>
-          <p>${escapeHtml(item.summary || 'No event summary available.')}</p>
-          <div class="chapter-event-controls" ${assigned ? '' : 'hidden'}>
+      const assignedControls = assigned
+        ? `<div class="chapter-event-controls">
             <label>Role
               <select data-chapter-event-role="${escapeHtml(recordId)}">
                 <option value="">Choose role</option>
@@ -1711,7 +2162,25 @@
               <button type="button" data-event-move="up" data-record-id="${escapeHtml(recordId)}">↑ Earlier</button>
               <button type="button" data-event-move="down" data-record-id="${escapeHtml(recordId)}">↓ Later</button>
             </div>
+          </div>`
+        : '';
+      return `
+        <article class="chapter-event-card ${assigned ? 'is-selected' : ''}" data-chapter-event-row="${escapeHtml(recordId)}">
+          <input type="checkbox" data-chapter-event-ref="${escapeHtml(recordId)}" ${assigned ? 'checked' : ''} hidden />
+          <div class="chapter-event-card-head">
+            <div>
+              <strong>${escapeHtml(item.label || item.summary || recordId)}</strong>
+              <small>${escapeHtml(technical || 'Canon event')}</small>
+            </div>
+            <div class="chapter-row-actions">
+              <label class="book-canon-batch-check" title="Mark for batch action"><input type="checkbox" data-chapter-event-batch-ref="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''} /></label>
+              ${assigned
+                ? `<button type="button" class="secondary-action compact-action" data-event-return="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''}>Return</button>`
+                : `<button type="button" class="primary-action compact-action" data-event-add="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''}>Add to Chapter</button>`}
+            </div>
           </div>
+          <p>${escapeHtml(item.summary || 'No event summary available.')}</p>
+          ${assignedControls}
         </article>`;
     };
 
@@ -1885,6 +2354,7 @@
             ? `<button type="button"
                 data-progression-override="${escapeHtml(item.record_id || '')}"
                 data-progression-requested-use="${escapeHtml(item.requested_use || 'chapter_selection')}"
+                title="Authorizes one-time use of this Canon target at the current book/chapter position. It does not change Canon, revise the original progression boundary, or establish continuity."
                 ${readOnly || loading || knowledgePackBusy ? 'disabled' : ''}>
                 Authorize Early Use
               </button>`
@@ -2313,9 +2783,14 @@
                     ? '<div class="workspace-warning-note chapter-pack-next-step"><strong>Next: Compile Chapter Knowledge Pack.</strong> This rebuilds the chapter pack from the saved Chapter Plan. Canon or events that you returned and saved will not be carried into the rebuilt pack.</div>'
                     : '<div class="workspace-disabled-note chapter-pack-next-step"><strong>Chapter Knowledge Pack cannot be compiled yet.</strong> Follow the planning message above, then return here.</div>'}
           <div class="workspace-action-row compact-action-row knowledge-pack-workflow-actions">
-            <button type="button" id="chapter-open-book-plan" class="secondary-action compact-action" ${bookPlanApprovalBlocker ? '' : 'disabled'}>Open Book ${number(state.chapterPlanBookNumber)} Plan</button>
-            <button type="button" id="chapter-compile-book-knowledge" class="primary-action compact-action" ${readOnly || loading || knowledgePackBusy || bookKnowledgeCompileBusy || !bookKnowledgeCompileAllowed ? 'disabled' : ''}>${bookKnowledgeCompileBusy ? 'Updating Book Knowledge Pack…' : bookKnowledgeIsCurrent ? `Book ${number(state.chapterPlanBookNumber)} Knowledge Pack — Up to Date` : `Update Book ${number(state.chapterPlanBookNumber)} Knowledge Pack`}</button>
-            <button type="button" id="chapter-open-book-knowledge" class="secondary-action compact-action">View Book Knowledge Pack</button>
+            <button type="button" id="chapter-open-book-plan" class="secondary-action compact-action"
+              title="Opens Book ${number(state.chapterPlanBookNumber)} Plan for review. Navigation only; no saved Book or Chapter data is changed."
+              ${bookPlanApprovalBlocker ? '' : 'disabled'}>Open Book ${number(state.chapterPlanBookNumber)} Plan</button>
+            <button type="button" id="chapter-compile-book-knowledge" class="primary-action compact-action"
+              title="Updates Book ${number(state.chapterPlanBookNumber)} Knowledge Pack from the currently approved Book Canon and Book Plan. Existing Book Knowledge Pack files may be rebuilt; Chapter Plan content is not changed."
+              ${readOnly || loading || knowledgePackBusy || bookKnowledgeCompileBusy || !bookKnowledgeCompileAllowed ? 'disabled' : ''}>${bookKnowledgeCompileBusy ? 'Updating Book Knowledge Pack…' : bookKnowledgeIsCurrent ? `Book ${number(state.chapterPlanBookNumber)} Knowledge Pack — Up to Date` : `Update Book ${number(state.chapterPlanBookNumber)} Knowledge Pack`}</button>
+            <button type="button" id="chapter-open-book-knowledge" class="secondary-action compact-action"
+              title="Opens the Book Knowledge Pack view. Navigation only; no saved Book or Chapter data is changed.">View Book Knowledge Pack</button>
           </div>
 
           <div class="chapter-planner-list">
@@ -2345,6 +2820,7 @@
 
           <div class="chapter-planner-actions">
             <button type="button" id="chapter-knowledge-pack-compile"
+              title="Rebuilds the Chapter Knowledge Pack from the current saved Chapter Plan and current Book Knowledge Pack. Existing Chapter Knowledge Pack files are replaced; it does not generate prose or write Approved Continuity."
               ${readOnly || loading || knowledgePackBusy || chapterKnowledgePack.compiler_ready !== true || knowledgePackFile.current === true ? 'disabled' : ''}>
               ${knowledgePackBusy
                 ? 'Compiling…'
@@ -2588,6 +3064,8 @@
       node.addEventListener(node.tagName === 'TEXTAREA' || node.tagName === 'INPUT' ? 'input' : 'change', () => markChapterPlannerDraftDirty());
       if (node.tagName === 'SELECT' || node.type === 'checkbox') node.addEventListener('change', () => markChapterPlannerDraftDirty());
     });
+
+    applyPlannerViewMode('chapter_planner');
 
     if (!state.chapterPlan && !state.chapterPlanLoading) {
       void loadChapterPlanner();
@@ -3319,11 +3797,12 @@
             </details>
           </div>
           <div class="book-canon-row-actions">
-            <label class="book-canon-batch-check" title="Select this row for a batch action">
+            <label class="book-canon-batch-check" title="Select this Canon row for a batch action">
               <input type="checkbox" data-book-canon-select="1" data-category-key="${escapeHtml(categoryKey)}"
                 data-record-id="${escapeHtml(recordId)}" data-selected="${selected ? 'true' : 'false'}"
                 data-addable="${addable ? 'true' : 'false'}" data-recommended="${recommended ? 'true' : 'false'}"
                 ${disabled ? 'disabled' : ''} />
+              <span>Select</span>
             </label>
             <button type="button" class="${selected ? 'secondary-action' : 'primary-action'} compact-action book-canon-row-action-button"
               data-book-canon-action="${selected ? 'remove' : 'add'}" data-record-id="${escapeHtml(recordId)}" ${disabled ? 'disabled' : ''}>${action}</button>
@@ -3334,7 +3813,7 @@
       const selectedInCategory = (category.items || []).filter((item) => selectedIds.has(String(item.record_id || '')) || item.selected === true).length;
       const recommendedInCategory = Number(category.recommended_count || 0);
       const availableInCategory = Number(category.available_count || 0);
-      return `<details class="book-canon-category" ${category.selected_count ? 'open' : ''}>
+      return `<details class="book-canon-category">
         <summary><strong>${escapeHtml(labelFor(categoryKey || 'Canon'))}</strong><span>${number(category.total || (category.items || []).length)} shown · ${number(selectedInCategory)} selected · ${number(recommendedInCategory)} recommended</span></summary>
         <div class="book-canon-category-actions" data-category-actions="${escapeHtml(categoryKey)}">
           <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="select_recommended" data-category-key="${escapeHtml(categoryKey)}" ${!mutationEnabled || !recommendedInCategory ? 'disabled' : ''}>Select All Recommended</button>
@@ -3357,8 +3836,9 @@
         <small>${escapeHtml(labelFor(item.record_type || 'Canon'))}</small>
       </div>
       <div class="book-canon-row-actions">
-        <label class="book-canon-batch-check" title="Select this row for a batch return">
+        <label class="book-canon-batch-check" title="Select this Canon row for a batch return">
           <input type="checkbox" data-book-canon-selected-summary="1" data-record-id="${escapeHtml(item.record_id || '')}" ${mutationEnabled ? '' : 'disabled'} />
+          <span>Select</span>
         </label>
         <button type="button" class="secondary-action compact-action book-canon-row-action-button"
           data-book-canon-action="remove" data-record-id="${escapeHtml(item.record_id || '')}" ${mutationEnabled ? '' : 'disabled'}>Return</button>
@@ -3377,7 +3857,10 @@
         ${errorMarkup}
         <div class="book-canon-toolbar compact-planner-toolbar">
           <label class="book-canon-filter"><span>Filter visible Canon (optional)</span><input id="book-plan-canon-query" type="search" value="${escapeHtml(state.bookScopeQuery || '')}" placeholder="Filter by name, alias, summary, or date" /></label>
-          <label class="planner-toggle"><input id="book-plan-canon-show-future" type="checkbox" ${state.bookScopeIncludeFuture ? 'checked' : ''}/> Show Future</label>
+          <label class="planner-toggle book-canon-future-toggle" title="Include future Canon records in the visible browser">
+            <input id="book-plan-canon-show-future" type="checkbox" ${state.bookScopeIncludeFuture ? 'checked' : ''}/>
+            <span>Show Future Canon</span>
+          </label>
           <button type="button" id="book-plan-canon-refresh" class="secondary-action" ${loading ? 'disabled' : ''}>${loading ? 'Loading…' : 'Refresh'}</button>
         </div>
         <details class="planner-selected-summary" ${selectedIds.size ? 'open' : ''}><summary><strong>Selected for Book ${bookNumber}</strong><span>${number(selectedIds.size)} records</span></summary><div class="planner-selected-summary-actions">
@@ -3494,7 +3977,9 @@
       <p class="placeholder">Plan one book at a time. Choose Canon for This Book, then define the book’s story intent. Approved planning feeds the Book Knowledge Pack used by Chapter Planner.</p>
       <div class="workspace-stat-grid">${statCard('Status', String(plan.status || 'not_started').replace(/_/g, ' '))}${statCard('Complete Books', `${number(validation.complete_book_count)} / ${number(expectedBookCount)}`)}${statCard('Revision', number(plan.revision))}${statCard(`Book ${bookNumber} Approval`, approvalStatus.replace(/_/g, ' '))}${statCard('Freshness', approvalFresh ? 'current' : (approvalStatus === 'outdated' ? 'outdated' : 'not approved'))}</div>
 
-      <section class="workspace-detail-card planner-book-selector"><label><span>Book</span><select id="book-plan-book-number">${Array.from({length: expectedBookCount}, (_, index) => index + 1).map((value) => `<option value="${value}" ${value === state.bookPlanBookNumber ? 'selected' : ''}>Book ${value}</option>`).join('')}</select></label></section>
+      <section class="workspace-detail-card planner-book-selector">
+        <select id="book-plan-book-number" aria-label="Choose book to configure">${Array.from({length: expectedBookCount}, (_, index) => index + 1).map((value) => `<option value="${value}" ${value === state.bookPlanBookNumber ? 'selected' : ''}>Book ${value}</option>`).join('')}</select>
+      </section>
 
       ${renderEmbeddedBookCanon(bootstrap, state.bookPlanBookNumber, scopeBook, catalog)}
 
@@ -3502,7 +3987,20 @@
 
       <section class="workspace-detail-card"><h3>Book ${bookNumber} check</h3>${bookValidation.complete && scopeApproved ? '<div class="workspace-success-note">Book ' + bookNumber + ' is complete and Canon for This Book is approved/current.</div>' : (issueRows ? table(['Area','Code','Issue'], issueRows) : '<div class="workspace-disabled-note">Complete the Book Plan and approve Canon for This Book before approving the book.</div>')}</section>
       <section class="workspace-detail-card"><h3>Planning readiness</h3><div class="workspace-lock-grid">${lockCard('Canon for This Book', String(scopeBook.approval_status || 'not_ready').replace(/_/g,' '))}${lockCard(`Book ${bookNumber} Plan Approval`, approvalStatus.replace(/_/g,' '))}${lockCard('Book Knowledge Pack', approvalFresh && scopeApproved ? 'Planning approved' : 'Waiting for approvals')}${lockCard('Generation','Locked')}</div></section>
-      <div class="workspace-action-row"><button type="button" id="book-plan-refresh" class="secondary-action" ${loading || saving ? 'disabled' : ''}>${loading ? 'Loading…' : 'Reload Plan'}</button><button type="button" id="book-plan-save" class="primary-action" ${readOnly || loading || saving || approvalLoading ? 'disabled' : ''}>${saving ? 'Saving…' : 'Save Book Plan'}</button><button type="button" id="book-plan-approve" class="primary-action" ${canApprove ? '' : 'disabled'}>${approvalLoading ? 'Updating…' : `Approve Book ${bookNumber} Plan`}</button><button type="button" id="book-plan-revoke" class="secondary-action" ${canRevoke ? '' : 'disabled'}>${`Revoke Book ${bookNumber} Approval`}</button></div>
+      <div class="workspace-action-row">
+        <button type="button" id="book-plan-refresh" class="secondary-action"
+          title="Reloads the saved Book Plan and Canon state from project storage. Unsaved on-screen Book Plan edits are discarded; saved approvals and Knowledge Packs are not changed."
+          ${loading || saving ? 'disabled' : ''}>${loading ? 'Loading…' : 'Reload Plan'}</button>
+        <button type="button" id="book-plan-save" class="primary-action"
+          title="Saves the current Book Plan fields to project storage. If Book ${bookNumber} content changed, its existing Plan approval becomes outdated and its Book Knowledge Pack may need rebuilding."
+          ${readOnly || loading || saving || approvalLoading ? 'disabled' : ''}>${saving ? 'Saving…' : 'Save Book Plan'}</button>
+        <button type="button" id="book-plan-approve" class="primary-action"
+          title="Approves the current saved Book ${bookNumber} Plan revision. This makes the Plan eligible for Book Knowledge Pack readiness; it does not compile a pack or generate prose."
+          ${canApprove ? '' : 'disabled'}>${approvalLoading ? 'Updating…' : `Approve Book ${bookNumber} Plan`}</button>
+        <button type="button" id="book-plan-revoke" class="secondary-action"
+          title="Revokes Book ${bookNumber} Plan approval without changing Plan content. Book Knowledge Pack and generation readiness can become blocked until the Plan is approved again."
+          ${canRevoke ? '' : 'disabled'}>${`Revoke Book ${bookNumber} Approval`}</button>
+      </div>
     </div>`;
 
     document.getElementById('book-plan-book-number')?.addEventListener('change', (event) => {
@@ -3522,6 +4020,8 @@
     document.getElementById('book-plan-save')?.addEventListener('click', () => void saveBookPlanDraft());
     document.getElementById('book-plan-approve')?.addEventListener('click', () => void approveBookPlan());
     document.getElementById('book-plan-revoke')?.addEventListener('click', () => void revokeBookPlanApproval());
+
+    applyPlannerViewMode('book_plan');
 
     if (!state.bookPlan && !state.bookPlanLoading) void loadBookPlan();
     else if (!state.bookScopeCatalog && !state.bookScopeLoading) void loadBookScopeCatalog();
@@ -3589,10 +4089,16 @@
   function bookPlanTimeSpanField(bookNumber, value, suggestion, readonlyAttribute) {
     const suggested = String((suggestion || {}).value || '');
     const effective = String(value || '').trim() || suggested;
+    const suggestionUnavailable = !suggested;
     return `<label class="book-plan-field book-plan-time-span-field">
       <span>Time span *</span>
       <input type="text" data-book-plan-field="time_span" data-book-number="${bookNumber}" value="${escapeHtml(effective)}" required ${readonlyAttribute} />
-      ${suggested ? `<small>Suggested from selected dated Book Canon events: <strong>${escapeHtml(suggested)}</strong>. You may edit this value.</small><button type="button" class="secondary-action compact-action" id="book-plan-use-time-suggestion" ${readonlyAttribute ? 'disabled' : ''}>Use Canon Suggestion</button>` : '<small>No dated Book Canon is selected yet. Enter the time span manually or select dated events above.</small>'}
+      ${suggested
+        ? `<small>Suggested from selected dated Book Canon events: <strong>${escapeHtml(suggested)}</strong>. You may edit this value.</small>`
+        : '<small><strong>Use Canon Suggestion activates after at least one dated Event is selected in Canon for This Book.</strong> Typing a Time span manually does not activate this button; manual entry is already valid.</small>'}
+      <button type="button" class="secondary-action compact-action" id="book-plan-use-time-suggestion"
+        ${readonlyAttribute || suggestionUnavailable ? 'disabled' : ''}
+        ${suggestionUnavailable ? 'title="Select at least one dated Event in Canon for This Book to activate this suggestion."' : 'title="Apply the dated Canon range to Time span."'}>Use Canon Suggestion</button>
     </label>`;
   }
 
@@ -4587,77 +5093,6 @@
       record && record.book_id,
       'BOOK'
     );
-  }
-
-  function readOnlySampleTable(title, sample) {
-    if (!sample.length) {
-      return `
-        <section class="workspace-panel">
-          <h3>${escapeHtml(title)} Sample</h3>
-          <p class="placeholder">No records are available in the current read-only payload.</p>
-        </section>
-      `;
-    }
-
-    if (title === 'Books') {
-      const rows = sample.map((record) => {
-        const numberValue = Number(record.book_number);
-        const parsedNumber = Number(
-          (String(record.book_id || '').match(/BOOK_(\d+)/i) || [])[1]
-        );
-        const bookNumber = Number.isFinite(numberValue) && numberValue > 0
-          ? numberValue
-          : parsedNumber;
-        const titleValue = String(record.title || '').trim();
-        const bookLabel = bookNumber
-          ? `Book ${bookNumber}`
-          : friendlyNumericIdentifier(record.book_id, 'BOOK');
-
-        return `
-          <tr>
-            <td>${escapeHtml(bookLabel)}</td>
-            <td>${escapeHtml(titleValue || 'Untitled Book')}</td>
-            <td>${escapeHtml(labelFor(record.status || '—'))}</td>
-          </tr>
-        `;
-      }).join('');
-
-      return table(['Book', 'Title', 'Status'], rows);
-    }
-
-    if (title === 'Chapters') {
-      const rows = sample.map((record) => `
-        <tr>
-          <td>${escapeHtml(friendlyChapterIdentifier(record.chapter_id))}</td>
-          <td>${escapeHtml(chapterBookLabel(record))}</td>
-          <td>${escapeHtml(record.title || `Chapter ${number(record.chapter_number)}`)}</td>
-          <td>${escapeHtml(record.event_name || '—')}</td>
-          <td>${escapeHtml(labelFor(record.status || '—'))}</td>
-        </tr>
-      `).join('');
-      return table(['Chapter', 'Book', 'Title', 'Event', 'Status'], rows);
-    }
-
-    if (sample[0] && Object.prototype.hasOwnProperty.call(sample[0], 'name')) {
-      const rows = sample.map((item) => `
-        <tr>
-          <td>${escapeHtml(item.name || '—')}</td>
-          <td>${escapeHtml(Array.isArray(item.sources) ? item.sources.join(', ') : '—')}</td>
-        </tr>
-      `).join('');
-      return table(['Name', 'Detected From'], rows);
-    }
-
-    const fields = Object.keys(sample[0] || {}).filter(
-      (field) => !['book_title', 'book_number'].includes(field)
-    );
-    const rows = sample.map((record) => `
-      <tr>
-        ${fields.map((field) => `<td>${escapeHtml(formatCell(record[field]))}</td>`).join('')}
-      </tr>
-    `).join('');
-
-    return table(fields.map(labelFor), rows);
   }
 
   function formatCell(value) {

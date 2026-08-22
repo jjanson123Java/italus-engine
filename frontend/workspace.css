@@ -1330,13 +1330,61 @@
 }
 
 /* Unified Book Plan + embedded Book Canon — 2026-08-18 */
+/* Patch 47 — Book selector visual emphasis */
 .planner-book-plan-unified .planner-book-selector {
-  display: flex;
-  align-items: end;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: minmax(180px, 240px);
+  align-items: start;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
 }
-.planner-book-plan-unified .planner-book-selector label {
-  min-width: 180px;
+
+.planner-book-plan-unified .planner-book-selector-label {
+  min-width: 0;
+  color: #d7b765;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.planner-book-plan-unified .planner-book-selector select {
+  width: 100%;
+  min-height: 46px;
+  border: 2px solid #d7b765;
+  border-radius: 11px;
+  padding: 0.7rem 2.2rem 0.7rem 0.85rem;
+  background:
+    linear-gradient(180deg, rgba(18, 16, 12, 0.94), rgba(0, 0, 0, 0.82));
+  color: #d7b765;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.18),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.12),
+    inset 0 1px 0 rgba(255, 239, 190, 0.08),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+}
+
+.planner-book-plan-unified .planner-book-selector select:hover {
+  border-color: #efd486;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.26),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.16),
+    0 0 18px rgba(215, 183, 101, 0.14),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+.planner-book-plan-unified .planner-book-selector select:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.9);
+  outline-offset: 3px;
+}
+
+.planner-book-plan-unified .planner-book-selector select option {
+  background: #12100c;
+  color: #d7b765;
+  font-weight: 700;
 }
 .planner-book-canon-embedded > summary,
 .planner-selected-summary > summary,
@@ -1381,7 +1429,7 @@
 }
 @media (max-width: 980px) {
   .planner-book-plan-unified .planner-book-selector {
-    display: block;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1644,3 +1692,780 @@
   border-radius: 4px;
 }
 
+/* Patch 48 — Book selector label removal + Canon suggestion emphasis */
+.planner-book-plan-unified .planner-book-selector {
+  gap: 0;
+}
+
+.book-plan-time-span-field > small {
+  margin-top: 0.45rem;
+  font: inherit;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  opacity: 0.9;
+}
+
+.book-plan-time-span-field > small strong {
+  color: #d7b765;
+  font-weight: 700;
+}
+
+#book-plan-use-time-suggestion {
+  width: fit-content;
+  min-width: 230px;
+  min-height: 50px;
+  margin-top: 0.6rem;
+  padding: 0.78rem 1.15rem;
+  border: 2px solid #d7b765;
+  border-radius: 11px;
+  background:
+    linear-gradient(180deg, rgba(18, 16, 12, 0.94), rgba(0, 0, 0, 0.82));
+  color: #d7b765;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.18),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.12),
+    inset 0 1px 0 rgba(255, 239, 190, 0.08),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+}
+
+#book-plan-use-time-suggestion:hover:not(:disabled) {
+  border-color: #efd486;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.26),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.16),
+    0 0 18px rgba(215, 183, 101, 0.14),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+#book-plan-use-time-suggestion:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.9);
+  outline-offset: 3px;
+}
+
+#book-plan-use-time-suggestion:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+
+
+/* Patch 49 — Book Planner spacing, Canon disclosure affordance, and persistent suggestion action */
+.planner-book-plan-unified .planner-book-selector {
+  margin-top: 1.35rem;
+}
+
+/* Use one explicit disclosure triangle for Book Planner Canon sections. */
+.planner-book-plan-unified .planner-book-canon-embedded > summary,
+.planner-book-plan-unified .planner-selected-summary > summary,
+.planner-book-plan-unified .book-canon-category > summary {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.55rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.planner-book-plan-unified .planner-book-canon-embedded > summary::-webkit-details-marker,
+.planner-book-plan-unified .planner-selected-summary > summary::-webkit-details-marker,
+.planner-book-plan-unified .book-canon-category > summary::-webkit-details-marker {
+  display: none;
+}
+
+.planner-book-plan-unified .planner-book-canon-embedded > summary::before,
+.planner-book-plan-unified .planner-selected-summary > summary::before,
+.planner-book-plan-unified .book-canon-category > summary::before {
+  content: "▶";
+  flex: 0 0 auto;
+  color: #f2c56b;
+  font-size: 0.8rem;
+  line-height: 1;
+  transform: rotate(0deg);
+  transform-origin: center;
+  transition: transform 120ms ease;
+}
+
+.planner-book-plan-unified .planner-book-canon-embedded[open] > summary::before,
+.planner-book-plan-unified .planner-selected-summary[open] > summary::before,
+.planner-book-plan-unified .book-canon-category[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.planner-book-plan-unified .planner-book-canon-embedded > summary > strong,
+.planner-book-plan-unified .planner-selected-summary > summary > strong,
+.planner-book-plan-unified .book-canon-category > summary > strong {
+  color: #f2c56b;
+  font-weight: 700;
+}
+
+.planner-book-plan-unified .planner-book-canon-embedded > summary > span,
+.planner-book-plan-unified .planner-selected-summary > summary > span,
+.planner-book-plan-unified .book-canon-category > summary > span {
+  margin-left: auto;
+}
+
+.planner-book-plan-unified .planner-book-canon-embedded > summary:focus-visible,
+.planner-book-plan-unified .planner-selected-summary > summary:focus-visible,
+.planner-book-plan-unified .book-canon-category > summary:focus-visible {
+  outline: 1px solid rgba(242, 197, 107, 0.72);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Batch checkboxes are controls, not decoration: make their purpose visible. */
+.planner-book-plan-unified .book-canon-batch-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  color: rgba(248, 234, 209, 0.82);
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+/* Keep the Canon suggestion action present on every book, but visibly unavailable until a dated range exists. */
+#book-plan-use-time-suggestion:disabled {
+  border-color: rgba(215, 183, 101, 0.48);
+  color: rgba(215, 183, 101, 0.62);
+  background: linear-gradient(180deg, rgba(18, 16, 12, 0.74), rgba(0, 0, 0, 0.62));
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.08),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.06);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+
+/* Patch 50 — Book Canon Future toggle clarity + Canon suggestion activation guidance */
+.planner-book-plan-unified .book-canon-toolbar label.planner-toggle.book-canon-future-toggle {
+  display: inline-flex;
+  grid-template-columns: none;
+  align-items: center;
+  align-self: end;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(215, 183, 101, 0.52);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.24);
+  color: #d7b765;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.planner-book-plan-unified .book-canon-toolbar label.planner-toggle.book-canon-future-toggle input[type="checkbox"] {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0;
+  flex: 0 0 auto;
+  accent-color: #d7b765;
+  cursor: pointer;
+}
+
+.planner-book-plan-unified .book-canon-toolbar label.planner-toggle.book-canon-future-toggle:focus-within {
+  outline: 2px solid rgba(239, 212, 134, 0.72);
+  outline-offset: 2px;
+}
+
+.book-plan-time-span-field > small strong {
+  color: #d7b765;
+  font-weight: 700;
+}
+
+/* Patch 51 — Book Planner button family consistency */
+/*
+ * Gold planner controls use the same visual language as the Book selector
+ * and Use Canon Suggestion. Canon row/batch actions remain a separate
+ * green action family.
+ */
+.planner-book-plan-unified #book-plan-canon-refresh,
+.planner-book-plan-unified #book-plan-canon-retry,
+.planner-book-plan-unified #book-plan-canon-approve,
+.planner-book-plan-unified #book-plan-canon-revoke,
+.planner-book-plan-unified #book-plan-refresh,
+.planner-book-plan-unified #book-plan-save,
+.planner-book-plan-unified #book-plan-approve,
+.planner-book-plan-unified #book-plan-revoke {
+  width: auto;
+  min-height: 46px;
+  padding: 0.7rem 1rem;
+  border: 2px solid #d7b765;
+  border-radius: 11px;
+  background:
+    linear-gradient(180deg, rgba(18, 16, 12, 0.94), rgba(0, 0, 0, 0.82));
+  color: #d7b765;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.18),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.12),
+    inset 0 1px 0 rgba(255, 239, 190, 0.08),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+}
+
+.planner-book-plan-unified #book-plan-canon-refresh:hover:not(:disabled),
+.planner-book-plan-unified #book-plan-canon-retry:hover:not(:disabled),
+.planner-book-plan-unified #book-plan-canon-approve:hover:not(:disabled),
+.planner-book-plan-unified #book-plan-canon-revoke:hover:not(:disabled),
+.planner-book-plan-unified #book-plan-refresh:hover:not(:disabled),
+.planner-book-plan-unified #book-plan-save:hover:not(:disabled),
+.planner-book-plan-unified #book-plan-approve:hover:not(:disabled),
+.planner-book-plan-unified #book-plan-revoke:hover:not(:disabled) {
+  border-color: #efd486;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.26),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.16),
+    0 0 18px rgba(215, 183, 101, 0.14),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+.planner-book-plan-unified #book-plan-canon-refresh:focus-visible,
+.planner-book-plan-unified #book-plan-canon-retry:focus-visible,
+.planner-book-plan-unified #book-plan-canon-approve:focus-visible,
+.planner-book-plan-unified #book-plan-canon-revoke:focus-visible,
+.planner-book-plan-unified #book-plan-refresh:focus-visible,
+.planner-book-plan-unified #book-plan-save:focus-visible,
+.planner-book-plan-unified #book-plan-approve:focus-visible,
+.planner-book-plan-unified #book-plan-revoke:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.9);
+  outline-offset: 3px;
+}
+
+.planner-book-plan-unified #book-plan-canon-refresh:disabled,
+.planner-book-plan-unified #book-plan-canon-retry:disabled,
+.planner-book-plan-unified #book-plan-canon-approve:disabled,
+.planner-book-plan-unified #book-plan-canon-revoke:disabled,
+.planner-book-plan-unified #book-plan-refresh:disabled,
+.planner-book-plan-unified #book-plan-save:disabled,
+.planner-book-plan-unified #book-plan-approve:disabled,
+.planner-book-plan-unified #book-plan-revoke:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Canon batch-selection actions deliberately match the existing Add to Book button. */
+.planner-book-canon-embedded .book-canon-category-actions > button,
+.planner-book-canon-embedded .book-canon-category-actions > button.secondary-action,
+.planner-book-canon-embedded .planner-selected-summary-actions > button,
+.planner-book-canon-embedded .planner-selected-summary-actions > button.secondary-action {
+  width: auto !important;
+  min-width: 0;
+  border: 1px solid rgba(245, 217, 155, 0.42);
+  border-radius: 7px;
+  background: rgba(48, 101, 60, 0.58);
+  color: #f8ead1;
+  cursor: pointer;
+}
+
+.planner-book-canon-embedded .book-canon-category-actions > button:disabled,
+.planner-book-canon-embedded .planner-selected-summary-actions > button:disabled {
+  opacity: 0.46;
+  cursor: not-allowed;
+}
+
+/* Patch 52 — Chapter Planner Canon controls + Chapter Knowledge Pack button cohesion */
+/*
+ * Canon selection/sequencing actions use the same green/gold-border family as
+ * Book Planner's Add to Book controls. Chapter Knowledge Pack actions use the
+ * gold/dark planner-control family used by the Book selector.
+ */
+.workspace-chapter-planner-v1 [data-chapter-canon-batch-action],
+.workspace-chapter-planner-v1 [data-chapter-canon-add],
+.workspace-chapter-planner-v1 [data-chapter-canon-return],
+.workspace-chapter-planner-v1 [data-chapter-event-batch-action],
+.workspace-chapter-planner-v1 [data-event-add],
+.workspace-chapter-planner-v1 [data-event-return],
+.workspace-chapter-planner-v1 [data-event-move] {
+  width: auto !important;
+  min-width: 0;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid rgba(245, 217, 155, 0.42);
+  border-radius: 7px;
+  background: rgba(48, 101, 60, 0.58);
+  color: #f8ead1;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.workspace-chapter-planner-v1 [data-chapter-canon-batch-action]:hover:not(:disabled),
+.workspace-chapter-planner-v1 [data-chapter-canon-add]:hover:not(:disabled),
+.workspace-chapter-planner-v1 [data-chapter-canon-return]:hover:not(:disabled),
+.workspace-chapter-planner-v1 [data-chapter-event-batch-action]:hover:not(:disabled),
+.workspace-chapter-planner-v1 [data-event-add]:hover:not(:disabled),
+.workspace-chapter-planner-v1 [data-event-return]:hover:not(:disabled),
+.workspace-chapter-planner-v1 [data-event-move]:hover:not(:disabled) {
+  border-color: rgba(245, 217, 155, 0.62);
+  background: rgba(58, 119, 71, 0.68);
+}
+
+.workspace-chapter-planner-v1 [data-chapter-canon-batch-action]:focus-visible,
+.workspace-chapter-planner-v1 [data-chapter-canon-add]:focus-visible,
+.workspace-chapter-planner-v1 [data-chapter-canon-return]:focus-visible,
+.workspace-chapter-planner-v1 [data-chapter-event-batch-action]:focus-visible,
+.workspace-chapter-planner-v1 [data-event-add]:focus-visible,
+.workspace-chapter-planner-v1 [data-event-return]:focus-visible,
+.workspace-chapter-planner-v1 [data-event-move]:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.82);
+  outline-offset: 2px;
+}
+
+.workspace-chapter-planner-v1 [data-chapter-canon-batch-action]:disabled,
+.workspace-chapter-planner-v1 [data-chapter-canon-add]:disabled,
+.workspace-chapter-planner-v1 [data-chapter-canon-return]:disabled,
+.workspace-chapter-planner-v1 [data-chapter-event-batch-action]:disabled,
+.workspace-chapter-planner-v1 [data-event-add]:disabled,
+.workspace-chapter-planner-v1 [data-event-return]:disabled,
+.workspace-chapter-planner-v1 [data-event-move]:disabled {
+  opacity: 0.46;
+  cursor: not-allowed;
+}
+
+/* Chapter Knowledge Pack actions deliberately match the Book selector family. */
+.workspace-chapter-planner-v1 .chapter-knowledge-pack-card button {
+  width: auto;
+  min-height: 46px;
+  padding: 0.7rem 1rem;
+  border: 2px solid #d7b765;
+  border-radius: 11px;
+  background:
+    linear-gradient(180deg, rgba(18, 16, 12, 0.94), rgba(0, 0, 0, 0.82));
+  color: #d7b765;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.18),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.12),
+    inset 0 1px 0 rgba(255, 239, 190, 0.08),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+}
+
+.workspace-chapter-planner-v1 .chapter-knowledge-pack-card button:hover:not(:disabled) {
+  border-color: #efd486;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.26),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.16),
+    0 0 18px rgba(215, 183, 101, 0.14),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+.workspace-chapter-planner-v1 .chapter-knowledge-pack-card button:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.9);
+  outline-offset: 3px;
+}
+
+.workspace-chapter-planner-v1 .chapter-knowledge-pack-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Patch 53 — Chapter Planner Related Events / Find More Canon action cohesion */
+/*
+ * These are Canon discovery/amendment actions, so they deliberately use the
+ * same green/gold-border action family as Chapter/Book Canon controls.
+ * Scope is limited to the two disclosure sections below.
+ */
+.workspace-chapter-planner-v1 #chapter-related-directions-section button,
+.workspace-chapter-planner-v1 #chapter-find-more-canon-section button {
+  width: auto !important;
+  min-width: 0;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid rgba(245, 217, 155, 0.42);
+  border-radius: 7px;
+  background: rgba(48, 101, 60, 0.58);
+  color: #f8ead1;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.workspace-chapter-planner-v1 #chapter-related-directions-section button:hover:not(:disabled),
+.workspace-chapter-planner-v1 #chapter-find-more-canon-section button:hover:not(:disabled) {
+  border-color: rgba(245, 217, 155, 0.62);
+  background: rgba(58, 119, 71, 0.68);
+}
+
+.workspace-chapter-planner-v1 #chapter-related-directions-section button:focus-visible,
+.workspace-chapter-planner-v1 #chapter-find-more-canon-section button:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.82);
+  outline-offset: 2px;
+}
+
+.workspace-chapter-planner-v1 #chapter-related-directions-section button:disabled,
+.workspace-chapter-planner-v1 #chapter-find-more-canon-section button:disabled {
+  opacity: 0.46;
+  cursor: not-allowed;
+}
+
+
+
+/* Patch 55 — extensible View menu and planner disclosure controls */
+.workspace-nav-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.workspace-view-menu-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  z-index: 80;
+  width: 272px;
+  padding: 10px;
+  background: rgba(6, 18, 13, 0.98);
+  border: 1px solid rgba(214, 163, 74, 0.55);
+  border-radius: 12px;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.workspace-view-menu-panel[hidden],
+.workspace-view-submenu-options[hidden] {
+  display: none;
+}
+
+.workspace-view-menu-heading {
+  padding: 7px 9px 9px;
+  color: #d8ad5d;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.workspace-view-submenu + .workspace-view-submenu {
+  margin-top: 7px;
+}
+
+.workspace-view-submenu-trigger,
+.workspace-view-submenu-options button {
+  width: 100%;
+  border: 1px solid rgba(205, 156, 80, 0.24);
+  border-radius: 8px;
+  background: rgba(18, 54, 34, 0.78);
+  color: #f0e1c9;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.workspace-view-submenu-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  padding: 9px 11px;
+  font-weight: 700;
+}
+
+.workspace-view-submenu-trigger:hover,
+.workspace-view-submenu-trigger[aria-expanded="true"] {
+  border-color: rgba(242, 197, 107, 0.72);
+  background: rgba(37, 91, 55, 0.88);
+  color: #f2c56b;
+}
+
+.workspace-view-submenu-options {
+  display: grid;
+  gap: 5px;
+  padding: 6px 0 0 14px;
+}
+
+.workspace-view-submenu-options button {
+  min-height: 36px;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.workspace-view-submenu-options button:hover,
+.workspace-view-submenu-options button.active,
+.workspace-view-submenu-options button[aria-pressed="true"] {
+  border-color: rgba(242, 197, 107, 0.78);
+  background: rgba(48, 101, 60, 0.9);
+  color: #f2c56b;
+}
+
+.workspace-view-submenu-trigger:focus-visible,
+.workspace-view-submenu-options button:focus-visible,
+#workspace-view-trigger:focus-visible {
+  outline: 2px solid rgba(242, 197, 107, 0.9);
+  outline-offset: 2px;
+}
+
+.workspace-view-future-slot {
+  min-height: 14px;
+  margin-top: 10px;
+  border-top: 1px solid rgba(202, 152, 75, 0.16);
+}
+
+@media (max-width: 780px) {
+  .workspace-view-menu-panel {
+    right: -110px;
+    width: min(272px, calc(100vw - 28px));
+  }
+}
+
+
+/* Library Phase 2 — author-facing Library + shared disclosures */
+.library-author-view {
+  display: grid;
+  gap: 1rem;
+}
+
+.library-author-section {
+  border: 1px solid rgba(215, 183, 101, 0.34);
+  border-radius: 11px;
+  background: linear-gradient(180deg, rgba(18, 16, 12, 0.80), rgba(0, 0, 0, 0.60));
+  overflow: clip;
+}
+
+.library-author-section > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 48px;
+  padding: 0.85rem 1rem;
+  color: #d7b765;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.library-author-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+.library-disclosure-chevron::before {
+  content: "▶";
+  display: inline-block;
+  color: #d7b765;
+  font-size: 0.82rem;
+  transform-origin: 50% 50%;
+}
+
+.library-author-section[open] > summary .library-disclosure-chevron::before {
+  content: "▼";
+}
+
+.library-author-section-body {
+  padding: 0 1rem 1rem;
+}
+
+.library-card-list,
+.library-reference-grid,
+.library-reference-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.library-card,
+.library-reference-card,
+.library-reference-list article {
+  border: 1px solid rgba(245, 217, 155, 0.24);
+  border-radius: 9px;
+  background: rgba(9, 15, 11, 0.72);
+  padding: 0.9rem 1rem;
+}
+
+.library-card header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.library-card h4 {
+  margin: 0.15rem 0 0;
+}
+
+.library-kicker,
+.library-muted,
+.library-progress-label {
+  opacity: 0.78;
+  font-size: 0.86rem;
+}
+
+.library-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.library-card-grid > div,
+.library-record-fields > div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.library-card-grid span,
+.library-record-fields dd {
+  opacity: 0.86;
+}
+
+.library-progress {
+  height: 10px;
+  margin-top: 0.8rem;
+  border: 1px solid rgba(215, 183, 101, 0.32);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.52);
+  overflow: hidden;
+}
+
+.library-progress > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(48, 101, 60, 0.95), rgba(215, 183, 101, 0.88));
+}
+
+.library-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.library-chip-list span,
+.library-menu-count {
+  border: 1px solid rgba(245, 217, 155, 0.32);
+  border-radius: 999px;
+  padding: 0.18rem 0.48rem;
+  background: rgba(48, 101, 60, 0.38);
+}
+
+.library-reference-list {
+  margin-top: 0.85rem;
+}
+
+.library-reference-list article {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.library-record-fields {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0.75rem 0 0;
+}
+
+.library-record-fields dt {
+  color: #d7b765;
+  font-weight: 700;
+}
+
+.library-record-fields dd {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.library-guidance,
+.library-excerpt {
+  white-space: pre-wrap;
+}
+
+.library-empty-state {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  border: 1px dashed rgba(215, 183, 101, 0.35);
+  border-radius: 9px;
+}
+
+#workspace-library-canon-menu {
+  display: contents;
+}
+
+@media (max-width: 720px) {
+  .library-card header {
+    display: grid;
+  }
+}
+
+
+/* Library Phase 2A — readable Canon text + chapter context */
+.library-readable-text {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.55rem;
+  line-height: 1.55;
+}
+
+.library-readable-text p {
+  margin: 0;
+  max-width: 92ch;
+}
+
+.library-readable-text h5 {
+  margin: 0.65rem 0 0.05rem;
+  color: #d7b765;
+  font-size: 0.96rem;
+  line-height: 1.35;
+}
+
+.library-readable-text ul {
+  display: grid;
+  gap: 0.42rem;
+  margin: 0.05rem 0 0.2rem;
+  padding-left: 1.35rem;
+}
+
+.library-readable-text li {
+  padding-left: 0.15rem;
+}
+
+.library-readable-text li::marker {
+  color: #d7b765;
+}
+
+.library-readable-text strong {
+  color: #f8ead1;
+  font-weight: 700;
+}
+
+.library-readable-empty {
+  opacity: 0.7;
+}
+
+.library-record-fields dd > .library-readable-text {
+  margin-top: 0;
+}
+
+.library-chapter-card header {
+  align-items: center;
+}
+
+.library-chapter-card .library-kicker {
+  display: block;
+  margin-bottom: 0.22rem;
+  line-height: 1.35;
+}
+
+.library-card-status {
+  flex: 0 0 auto;
+  align-self: flex-start;
+}
+
+
+/* Library Phase 2B — chapter Book context + complete Canon record presentation */
+.library-chapter-card .library-chapter-book-context {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #d7b765;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+  opacity: 1;
+}

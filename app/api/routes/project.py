@@ -268,6 +268,18 @@ def get_workspace_bootstrap(project_id: str):
         raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
+@router.get("/api/project/{project_id}/workspace/library")
+def get_workspace_library(project_id: str):
+    """Return the lazy, read-only author Library projection."""
+
+    try:
+        return workspace_service.get_workspace_library(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except workspace_service.WorkspaceAccessConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
 @router.get("/api/project/book-plan/contract")
 def get_book_plan_contract():
     """Return the stable project-local Book Plan data contract."""
