@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Narrative Studio Workspace</title>
+  <title>Italus Author Workspace</title>
 
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="workspace.css?v=20260823-prose-rulebook-advanced-pov-v1" />
+  <link rel="stylesheet" href="workspace.css?v=20260824-author-workspace-final-ux-sweep-v1" />
 </head>
 
 <body class="workspace-body">
@@ -21,9 +21,12 @@
       <nav aria-label="Workspace commands">
         <a href="/" data-top-menu="file">Home</a>
         <a href="#project" data-top-menu="project">Dashboard</a>
-        <a href="#engine" data-top-menu="engine">Engine</a>
-        <a href="#generate" data-top-menu="generate" class="disabled-link" aria-disabled="true">Generate</a>
-        <a href="#validation" data-top-menu="validation" class="disabled-link" aria-disabled="true">Validation</a>
+        <a href="#engine" data-top-menu="engine" class="disabled-link" aria-disabled="true"
+           title="Generation activity, token usage, and generation cost will appear here when AI generation is enabled.">Engine</a>
+        <a href="#generate" data-top-menu="generate" class="disabled-link" aria-disabled="true"
+           title="Generation will become available when Italus can prepare the chapter’s current knowledge, connect to the selected writing engine, and safely return a draft for review.">Generate</a>
+        <a href="#validation" data-top-menu="validation" class="disabled-link" aria-disabled="true"
+           title="Validation will become available when generated chapters can be checked against the project’s Canon, Book Knowledge, and Chapter Knowledge.">Validation</a>
         <div class="workspace-nav-menu workspace-view-menu">
           <a href="#view" data-top-menu="view" id="workspace-view-trigger"
              aria-haspopup="true" aria-expanded="false" aria-controls="workspace-view-menu-panel">View</a>
@@ -131,12 +134,12 @@
             <p class="eyebrow">Author Workspace</p>
             <h1 id="workspace-heading">Project Dashboard</h1>
           </div>
-          <span id="workspace-mode">Mode: Workspace</span>
+          <span id="workspace-mode">Active Project</span>
         </div>
 
         <div class="editor-surface" id="workspace-main-panel">
           <p class="placeholder">
-            Loading project workspace. Generation remains disabled until runtime migration is complete.
+            Opening your project workspace. Writing generation is not available yet.
           </p>
         </div>
       </section>
@@ -146,12 +149,12 @@
     </main>
 
     <footer class="runtime-console panel">
-      <h2>Runtime Console</h2>
-      <p id="runtime-log">Workspace loading.</p>
+      <h2>Workspace Activity</h2>
+      <p id="runtime-log">Opening project workspace.</p>
     </footer>
 
   </div>
 
-  <script src="workspace.js?v=20260823-prose-rulebook-advanced-pov-v1"></script>
+  <script src="workspace.js?v=20260824-author-workspace-final-ux-sweep-v1"></script>
 </body>
 </html>

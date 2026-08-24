@@ -64,7 +64,7 @@
     authorLibraryLoading: false
   };
 
-  const workspaceJsVersion = 'workspace-book-plan-flattened-canon-timespan-20260818';
+  const workspaceJsVersion = 'workspace-author-workspace-final-ux-sweep-v1-20260824';
   console.info(`[ITALUS] ${workspaceJsVersion} loaded`);
   const plannerIntentVersion = 'workspace-planner-intent-model-v1-20260817';
   console.info(`[ITALUS] ${plannerIntentVersion} loaded`);
@@ -106,7 +106,7 @@
   }
 
   async function loadWorkspace(id) {
-    setLog(`Loading workspace bootstrap for ${id}…`);
+    setLog(`Opening ${id}…`);
     try {
       const bootstrap = await apiFetch(`/api/project/${encodeURIComponent(id)}/workspace/bootstrap`);
       state.bootstrap = bootstrap;
@@ -124,10 +124,10 @@
         })
         .catch((error) => setLog(`Library navigation unavailable: ${error.message}`));
 
-      setLog(`Workspace bootstrap loaded for ${id}. Generation runtime disabled.`);
+      setLog(`Project workspace ready for ${id}. Writing generation is not available yet.`);
     } catch (error) {
-      renderError(`Workspace bootstrap failed: ${error.message}`);
-      setLog(`Workspace bootstrap failed for ${id}: ${error.message}`);
+      renderError(`Project workspace failed to open: ${error.message}`);
+      setLog(`Project workspace could not open for ${id}: ${error.message}`);
     }
   }
 
@@ -172,7 +172,12 @@
         if (link.classList.contains('disabled-link')) {
           event.preventDefault();
           closeWorkspaceViewMenu();
-          setLog(`${labelFor(menu)} is visible but disabled until project-scoped runtime migration is complete.`);
+          const futureMenuMessages = {
+            engine: 'Engine will show generation activity, token usage, and generation cost when AI generation is enabled.',
+            generate: 'Generation will become available when Italus can prepare the chapter’s current knowledge, connect to the selected writing engine, and safely return a draft for review.',
+            validation: 'Validation will become available when generated chapters can be checked against the project’s Canon, Book Knowledge, and Chapter Knowledge.'
+          };
+          setLog(futureMenuMessages[menu] || `${labelFor(menu)} is not available yet.`);
           return;
         }
 
@@ -187,7 +192,6 @@
 
         closeWorkspaceViewMenu();
         if (menu === 'project') renderSection('dashboard');
-        if (menu === 'engine') renderSection('settings');
         if (menu === 'settings') renderSection('settings');
       });
     });
@@ -344,7 +348,7 @@
       const targetLabel = trigger.dataset.runtimeGateTargetLabel || labelFor(targetSection);
 
       renderSection(targetSection);
-      setLog(`${gateLabel}: opened ${targetLabel} as a read-only migration panel. No runtime action was executed.`);
+      setLog(`${gateLabel}: opened ${targetLabel} for review. No project data was changed.`);
     });
   }
 
@@ -486,7 +490,7 @@
             `Return all chapter selections? This will return ${selectedCanonRows.length} Canon selection(s) ` +
             `and ${sequencedEventRows.length} sequenced event(s) from this chapter. ` +
             'This changes only the on-screen Chapter Plan draft until you press Save Chapter Plan. ' +
-            'The existing Chapter Knowledge Pack files remain unchanged until you compile the pack again.'
+            'Existing Chapter Knowledge remains unchanged until you prepare it again.'
           );
           if (!confirmed) return;
 
@@ -564,14 +568,23 @@
       button.classList.toggle('workspace-disabled', !enabled);
       button.setAttribute('aria-disabled', enabled ? 'false' : 'true');
 
-      // Keep disabled items clickable so the Runtime Console can explain why.
+      // Keep disabled items clickable so Workspace Activity can explain why.
       // Avoid assigning to button.disabled; the reported browser error was:
       // "TypeError: Cannot assign to read only property" from workspace.js.
       button.removeAttribute('disabled');
 
-      if (item.disabled_reason) {
-        button.dataset.disabledReason = item.disabled_reason;
-        button.title = item.disabled_reason;
+      if (!enabled) {
+        const authorDisabledReasons = {
+          memory_continuity: 'Continuity will become available when accepted manuscript chapters can be carried forward as established story history.',
+          validation: 'Validation will become available when generated chapters can be checked against the project’s Canon, Book Knowledge, and Chapter Knowledge.',
+          output: 'Export will become available after manuscript generation and author review are enabled.',
+          archive: 'This archived project is read-only.'
+        };
+        const reason = authorDisabledReasons[button.dataset.workspaceSection]
+          || item.disabled_reason
+          || 'This workspace function is not available yet.';
+        button.dataset.disabledReason = reason;
+        button.title = reason;
       } else {
         delete button.dataset.disabledReason;
         button.removeAttribute('title');
@@ -631,7 +644,7 @@
       provider_status: () => renderProviderStatusPanel(manifest, bootstrap),
       runtime_storage_preview: () => renderRuntimeStoragePreview(manifest, context, bootstrap),
       archive: () => renderArchiveView(manifest, wizard),
-      memory_continuity: () => renderDisabled('Memory / Continuity', 'Continuity memory is not yet project-scoped.'),
+      memory_continuity: () => renderDisabled('Continuity', 'Continuity will become available when accepted manuscript chapters can be carried forward as established story history.'),
       validation: () => renderValidationReadinessPanel(manifest, context, bootstrap),
       output: () => renderExportReadinessPanel(manifest, context, bootstrap)
     };
@@ -685,15 +698,15 @@
     const projectContextStatus = String(projectContext.status || 'not generated').replace(/_/g, ' ');
     let projectContextSummary = `${projectContextStatus} — project-wide Canon knowledge status.`;
     if (projectContext.artifact_current === true && projectContext.approval_fresh === true) {
-      projectContextSummary = 'Current and approved — project-wide Canon context is ready for downstream Book Knowledge.';
+      projectContextSummary = 'Current and approved — Project Context matches the project’s Canon and is ready to prepare Book Knowledge.';
     } else if (projectContext.artifact_current === true && String(projectContext.approval_status || '') === 'approval_required') {
-      projectContextSummary = 'Current — project-wide Canon context is compiled and waiting for author approval.';
+      projectContextSummary = 'Current — Project Context matches the project’s Canon and is ready for your approval.';
     } else if (String(projectContext.status || '') === 'outdated') {
-      projectContextSummary = 'Outdated — Canon changed after this Project Context was compiled; update and approve it.';
+      projectContextSummary = 'Needs update — Canon changed after this Project Context was created. Update it, then approve the new version.';
     } else if (String(projectContext.status || '') === 'missing') {
-      projectContextSummary = 'Not generated — create the project-wide Canon context before relying on downstream knowledge.';
+      projectContextSummary = 'Ready to create — create Project Context after the required Canon is ready.';
     } else if (String(projectContext.status || '') === 'blocked') {
-      projectContextSummary = 'Blocked — required Canon or rendered source material needs attention first.';
+      projectContextSummary = 'Waiting on Canon — complete the required Canon before Project Context can be prepared.';
     }
 
     const plannedBooks = libraryBooks
@@ -747,14 +760,14 @@
       : bookKnowledgeStatusError
         ? 'Book Knowledge status could not be refreshed. Open Book Knowledge and retry the status check.'
         : bookKnowledgeStatusFresh
-          ? `${number(bookContext.current_count)} current Book Knowledge pack(s) across ${number(bookContext.target_count || manifest.book_count)} books. ${actionableBookKnowledgeTargets.length ? `${number(actionableBookKnowledgeTargets.length)} pack(s) need compilation or recompilation and are ready now.` : 'No Book Knowledge pack currently needs compilation.'} These are compiled per-book Canon + Book Plan context, not completed manuscripts.`
-          : `Per-book compiled Canon + Book Plan context for ${number(manifest.book_count)} books. Currentness has not been checked in this Dashboard session yet.`;
+          ? `${number(bookContext.current_count)} of ${number(bookContext.target_count || manifest.book_count)} books have current Book Knowledge. ${actionableBookKnowledgeTargets.length ? `${number(actionableBookKnowledgeTargets.length)} book(s) are ready to update now.` : 'No Book Knowledge currently needs updating.'} Book Knowledge combines the approved Canon and Book Plan for each book. It prepares that book for Chapter Planner and, once generation is enabled, for writing; it is not manuscript prose.`
+          : `Book Knowledge combines the approved Canon and Book Plan for each book. It prepares each book for Chapter Planner and, once generation is enabled, for writing; it is not manuscript prose. Current status has not been checked in this Dashboard session yet.`;
 
     if (number(summary.attention_required_section_count) > 0) {
       attention.push(`${number(summary.attention_required_section_count)} Canon section(s) need author attention.`);
     }
     if (projectContext.artifact_current === false || String(projectContext.approval_status || '') === 'outdated') {
-      attention.push('Project Context needs to be updated before downstream knowledge remains current.');
+      attention.push('Project Context needs to be updated so Book Knowledge can stay current.');
     }
 
     if (libraryLoaded) {
@@ -796,13 +809,13 @@
       const actionableOther = actionableBookKnowledgeTargets.length - actionableMissing.length - actionableOutdated.length;
 
       if (actionableMissing.length) {
-        attention.push(`${number(actionableMissing.length)} Book Knowledge pack(s) are ready to compile.`);
+        attention.push(`${number(actionableMissing.length)} book(s) are ready for Book Knowledge to be prepared.`);
       }
       if (actionableOutdated.length) {
-        attention.push(`${number(actionableOutdated.length)} Book Knowledge pack(s) are outdated and ready to recompile.`);
+        attention.push(`${number(actionableOutdated.length)} book(s) have Book Knowledge that is ready to update.`);
       }
       if (actionableOther > 0) {
-        attention.push(`${number(actionableOther)} Book Knowledge pack(s) are ready for compilation.`);
+        attention.push(`${number(actionableOther)} book(s) are ready for a Book Knowledge update.`);
       }
     }
 
@@ -842,7 +855,7 @@
               <div><strong>Latest Planned Book</strong><span>${escapeHtml(latestBookDisplay)}</span></div>
               <div><strong>Latest Planned Chapter</strong><span>${escapeHtml(latestChapterSummary)}</span></div>
               <div><strong>Planning Coverage</strong><span>${escapeHtml(planningCoverageSummary)}</span></div>
-              <div><strong>Author-Accepted Chapters</strong><span>Not tracked until manuscript acceptance becomes authoritative.</span></div>
+              <div><strong>Author-Accepted Chapters</strong><span>Available after chapter review and acceptance are enabled.</span></div>
             </div>
           </article>
         </section>
@@ -884,19 +897,19 @@
     setHeading('Manuscript Plan');
     mainPanel.innerHTML = `
       <div class="workspace-content">
-        <p class="placeholder">Read-only manuscript plan from the project manifest and budget plan.</p>
+        <p class="placeholder">
+          Your current manuscript size and structure from Project Setup. These targets guide Book Planner and
+          Chapter Planner as you build the series.
+        </p>
         <dl class="workspace-definition-list">
           ${definition('Books', number(manifest.book_count))}
           ${definition('Chapters per Book', number(manifest.chapters_per_book))}
           ${definition('Target Words per Chapter', number(manifest.target_words_per_chapter))}
           ${definition('Target Words per Book', number(manifest.target_words_per_book))}
           ${definition('Target Total Words', number(manifest.target_total_words))}
-          ${definition('Estimated Tokens Total', number(budget.estimated_tokens_total))}
-          ${definition('Estimated Generation Passes', number(budget.estimated_generation_passes_required))}
-          ${definition('Workspace Gate', wizard && wizard.can_enter_workspace ? 'Open' : 'Blocked')}
-          ${definition('Author Canon', summary ? `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)} required complete` : '—')}
+          ${definition('Author Canon', summary ? `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)} required sections complete` : '—')}
         </dl>
-        <div class="workspace-disabled-note">This is planning metadata only. Manuscript generation remains locked.</div>
+        <div class="workspace-disabled-note">Manuscript generation is not available yet. Your planning work can continue normally.</div>
       </div>
     `;
   }
@@ -905,17 +918,26 @@
     setHeading('Budget Plan');
     mainPanel.innerHTML = `
       <div class="workspace-content">
-        <p class="placeholder">Budget planning is read-only in workspace bootstrap.</p>
+        <p class="placeholder">
+          Your current AI-writing budget estimate from Project Setup. Actual token use and generation cost will
+          appear here when writing-engine tracking is enabled.
+        </p>
         <dl class="workspace-definition-list">
-          ${definition('Token Budget Total', number(budget.token_budget_total))}
-          ${definition('Token Budget per Generation', number(budget.token_budget_per_generation))}
-          ${definition('Token Multiplier', budget.token_multiplier || '—')}
+          ${definition('Planned Token Budget', number(budget.token_budget_total))}
           ${definition('Estimated Tokens per Chapter', number(budget.estimated_tokens_per_chapter))}
-          ${definition('Estimated Tokens Total', number(budget.estimated_tokens_total))}
-          ${definition('Budget Status', budget.token_budget_status || '—')}
+          ${definition('Estimated Project Tokens', number(budget.estimated_tokens_total))}
+          ${definition('Estimated Generation Passes', number(budget.estimated_generation_passes_required))}
+          ${definition('Budget Status', labelFor(budget.token_budget_status || '—'), { humanReadable: true })}
           ${definition('Project Target Words', number(manifest && manifest.target_total_words))}
         </dl>
-        <div class="workspace-disabled-note">Budget information is read-only. It does not trigger provider calls.</div>
+        <details class="workspace-technical-details">
+          <summary>Technical Details</summary>
+          <dl class="workspace-definition-list compact">
+            ${definition('Token Budget per Generation', number(budget.token_budget_per_generation))}
+            ${definition('Token Multiplier', budget.token_multiplier || '—')}
+          </dl>
+        </details>
+        <div class="workspace-disabled-note">Actual usage and pricing will be added when AI generation tracking is enabled.</div>
       </div>
     `;
   }
@@ -1054,8 +1076,8 @@
           ${libraryProgress(pct, `Book ${number(book.book_number)} planning progress`)}
           <p class="library-progress-label">${pct.toFixed(1)}% planning coverage</p>
           <div class="library-card-grid">
-            <div><strong>Estimated Book Tokens</strong><span>${tokens ? number(tokens) : 'Not configured'}</span></div>
-            <div><strong>Remaining Tokens</strong><span>${book.actual_token_usage_available ? 'Available' : 'Tracking not yet available'}</span></div>
+            <div><strong>Estimated Token Usage</strong><span>${tokens ? number(tokens) : 'Not configured'}</span></div>
+            <div><strong>Actual Token Usage</strong><span>${book.actual_token_usage_available ? 'Available' : 'Tracking not yet available'}</span></div>
           </div>
         </article>
       `;
@@ -1113,7 +1135,7 @@
           <div class="library-card-grid">
             <div><strong>Selected Canon</strong><span>${number(chapter.canon_count)}</span></div>
             <div><strong>Assigned Events</strong><span>${number(chapter.event_count)}</span></div>
-            <div><strong>Revision</strong><span>${number(chapter.revision)}</span></div>
+            <div><strong>Saved Version</strong><span>${number(chapter.revision)}</span></div>
           </div>
           ${chapter.kickoff ? `<p class="library-excerpt"><strong>Kickoff:</strong> ${escapeHtml(chapter.kickoff)}</p>` : ''}
         </article>
@@ -1152,7 +1174,7 @@
       : `<div class="library-empty-state"><strong>No manuscript scenes have been created yet.</strong><span>Your current Canon and Chapter Plans remain available as scene-planning context.</span></div>`;
     mainPanel.innerHTML = `<div class="workspace-content library-author-view">
       ${librarySection('Scene Planning Context', 'Genre-aware Canon and optional scene vocabulary that govern scene construction.', contextBody)}
-      ${librarySection('Manuscript Scenes', 'Persisted manuscript scene records appear here when they exist.', sceneBody)}
+      ${librarySection('Manuscript Scenes', 'Saved manuscript scenes will appear here as they are created.', sceneBody)}
     </div>`;
   }
 
@@ -1283,7 +1305,7 @@
     }).join('') || `<p class="placeholder">No authored values have been saved in this Canon reference section yet.</p>`;
     mainPanel.innerHTML = `<div class="workspace-content library-author-view">
       ${librarySection(`${reference.label} Overview`, reference.purpose || 'Genre-specific Canon guidance.', reference.author_guidance ? `<div class="library-guidance">${libraryFormattedText(reference.author_guidance)}</div>` : '')}
-      ${librarySection(reference.label, 'Read-only author Canon reference.', `<div class="library-reference-grid">${body}</div>`)}
+      ${librarySection(reference.label, 'Review-only Canon reference for this project.', `<div class="library-reference-grid">${body}</div>`)}
     </div>`;
   }
 
@@ -1323,17 +1345,18 @@
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-navigation-detail-20260707">
         <p class="placeholder">
-          Project-local author canon is the workspace source of truth. Editing remains on the Project page.
+          Author Canon contains the story facts, world rules, characters, history, and other foundations you
+          established for this project. Review the current Canon here. To make changes, return to Project Setup.
         </p>
         <div class="workspace-stat-grid">
-          ${statCard('Author Sections', number(summary.author_section_count))}
-          ${statCard('Required Complete', `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)}`)}
-          ${statCard('Current Markdown', number(summary.current_markdown_source_count))}
+          ${statCard('Canon Sections', number(summary.author_section_count))}
+          ${statCard('Required Sections Complete', `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)}`)}
+          ${statCard('Reference Pages Current', number(summary.current_markdown_source_count))}
           ${statCard('Needs Attention', number(summary.attention_required_section_count))}
         </div>
-        ${table(['Section', 'Author State', 'Markdown State', 'Missing Required Fields'], rows)}
+        ${table(['Section', 'Completion', 'Reference Status', 'Missing Required Answers'], rows)}
         <div class="workspace-disabled-note">
-          This workspace view is read-only. It does not mutate canon, render Markdown, or route prompts.
+          This page is for review. Use Project Setup when you need to change Canon.
         </div>
       </div>
     `;
@@ -1395,10 +1418,20 @@
         : 'Create Project Context';
 
     const generateTitle = artifactCurrent
-      ? 'Project Context already matches the current Canon, so no rebuild is needed. Rebuilding is disabled to avoid creating a new artifact and unnecessary reapproval.'
+      ? 'Project Context already matches the current Canon, so no update is needed. The button is disabled to avoid creating another version and requiring approval again.'
       : artifactExists
-        ? 'Rebuilds Project Context from the project’s current Canon because the saved context no longer matches it. This does not change Canon or generate prose. Approve the rebuilt version before downstream knowledge uses it.'
-        : 'Creates Project Context from the project’s current Canon. This does not change Canon or generate prose. Approve the new Project Context before downstream knowledge uses it.';
+        ? 'Updates Project Context from the project’s current Canon because Canon has changed. This does not change Canon or generate prose. Approve the updated version before Book Knowledge uses it.'
+        : 'Creates Project Context from the project’s current Canon. This does not change Canon or generate prose. Approve it before Book Knowledge is prepared.';
+
+    const projectContextAuthorMessage = !validationReady
+      ? 'Complete the required Canon before Project Context can be prepared.'
+      : !artifactExists
+        ? 'Project Context is ready to create from the current Canon.'
+        : !artifactCurrent
+          ? 'Canon has changed. Update Project Context, then approve the new version.'
+          : !approvalFresh
+            ? 'Project Context matches the current Canon and is ready for your approval.'
+            : 'Project Context is current and approved. No action is needed unless Canon changes.';
 
     const targetRows = targets.map((target) => `
       <tr>
@@ -1428,8 +1461,8 @@
               <strong>Canon Readiness</strong>
               <span>${validationReady ? 'Ready' : 'Needs Attention'}</span>
               <small>${validationReady
-                ? 'Required Canon is complete enough to build Project Context.'
-                : 'Complete required Canon and current Canon Markdown before Project Context can be created or updated.'}</small>
+                ? 'Required Canon is complete enough to prepare Project Context.'
+                : 'Complete the required Canon and refresh its reference pages before Project Context can be created or updated.'}</small>
             </div>
             <div>
               <strong>Context Status</strong>
@@ -1459,7 +1492,7 @@
               <small>${needsUpdate
                 ? 'Canon has changed since this Project Context was built.'
                 : artifactCurrent
-                  ? 'No Canon changes require a Project Context rebuild.'
+                  ? 'No Canon changes require a Project Context update.'
                   : !artifactExists
                     ? 'Create Project Context first; there is no older context to update.'
                     : 'No update is available until Canon is ready.'}</small>
@@ -1481,7 +1514,7 @@
             ${revokeEnabled ? '' : 'disabled'}>Revoke Approval</button>
         </div>
 
-        <div class="workspace-disabled-note">${escapeHtml(projectContext.message || 'Project Context status is unavailable.')}</div>
+        <div class="workspace-disabled-note">${escapeHtml(projectContextAuthorMessage)}</div>
 
         <details class="workspace-technical-details">
           <summary>Technical Details</summary>
@@ -1495,6 +1528,7 @@
                 ${definition('Approved artifact SHA-256', projectContext.approved_artifact_sha256 ? `${String(projectContext.approved_artifact_sha256).slice(0, 20)}…` : '—')}
                 ${definition('Approved source-set SHA-256', projectContext.approved_source_set_sha256 ? `${String(projectContext.approved_source_set_sha256).slice(0, 20)}…` : '—')}
                 ${definition('Approved at', projectContext.approved_at || '—')}
+                ${definition('Service message', projectContext.message || '—')}
               </dl>
             </section>
             <section class="workspace-detail-card">
@@ -1536,12 +1570,12 @@
         `/api/project/${encodeURIComponent(projectId)}/runtime-context/project/status`
       );
       state.projectRuntimeContext = status;
-      setLog(`Project Runtime Context status: ${status.status || 'unknown'}.`);
+      setLog(`Project Context status refreshed: ${labelFor(status.status || 'unknown')}.`);
     } catch (error) {
       state.projectRuntimeContext = {
         status: 'error',
         validation_ready: false,
-        message: `Unable to load Project Runtime Context status: ${error.message}`,
+        message: `Unable to load Project Context status: ${error.message}`,
         execution_locks: {
           prompt_builder_called: false,
           provider_called: false,
@@ -1564,13 +1598,13 @@
       || ((state.bootstrap.runtime_context || {}).project || {});
 
     if (status.validation_ready !== true || state.projectRuntimeContextLoading) {
-      setLog('Project Runtime Context generation remains blocked by canon readiness.');
+      setLog('Project Context cannot be created or updated until the required Canon is ready.');
       return;
     }
 
     state.projectRuntimeContextLoading = true;
     renderProjectRuntimeContext(state.bootstrap);
-    setLog('Generating project-level Runtime Context…');
+    setLog('Updating Project Context from the current Canon…');
 
     try {
       const result = await apiFetch(
@@ -1586,12 +1620,12 @@
       state.projectRuntimeContext = await apiFetch(
         `/api/project/${encodeURIComponent(projectId)}/runtime-context/project/status`
       );
-      setLog('Project Runtime Context generated for author review and now requires approval. Generation remains locked.');
+      setLog('Project Context updated. Review the current version and approve it when ready.');
     } catch (error) {
       state.projectRuntimeContext = {
         ...status,
         status: 'error',
-        message: `Project Runtime Context generation failed: ${error.message}`
+        message: `Project Context update failed: ${error.message}`
       };
       setLog(state.projectRuntimeContext.message);
     } finally {
@@ -1609,9 +1643,9 @@
         `/api/project/${encodeURIComponent(projectId)}/runtime-context/project/approve`,
         { method: 'POST', headers: { Accept: 'application/json' } }
       );
-      setLog('Project Runtime Context approved against current artifact and source hashes.');
+      setLog('Project Context approved.');
     } catch (error) {
-      setLog(`Project Runtime Context approval failed: ${error.message}`);
+      setLog(`Project Context approval failed: ${error.message}`);
     } finally {
       state.projectRuntimeContextApprovalLoading = false;
       renderProjectRuntimeContext(state.bootstrap);
@@ -1627,9 +1661,9 @@
         `/api/project/${encodeURIComponent(projectId)}/runtime-context/project/revoke`,
         { method: 'POST', headers: { Accept: 'application/json' } }
       );
-      setLog('Project Runtime Context approval revoked.');
+      setLog('Project Context approval revoked.');
     } catch (error) {
-      setLog(`Project Runtime Context approval revocation failed: ${error.message}`);
+      setLog(`Project Context approval revocation failed: ${error.message}`);
     } finally {
       state.projectRuntimeContextApprovalLoading = false;
       renderProjectRuntimeContext(state.bootstrap);
@@ -1713,7 +1747,9 @@
             </div>
             <button type="button" class="${selected ? 'secondary-action' : 'primary-action'} compact-action"
               data-book-canon-action="${selected ? 'remove' : 'add'}"
-              data-record-id="${escapeHtml(recordId)}" ${disabled ? 'disabled' : ''}>${action}</button>
+              data-record-id="${escapeHtml(recordId)}"
+              title="${selected ? 'Returns this Canon item from this book’s planning scope. Master Canon is unchanged, and book approval may need to be renewed.' : 'Adds this Canon item to this book’s planning scope. Master Canon is unchanged, and book approval may need to be renewed.'}"
+              ${disabled ? 'disabled' : ''}>${action}</button>
           </div>`;
       }).join('');
       return `
@@ -1729,7 +1765,7 @@
     `).join('');
 
     const errorMarkup = state.bookScopeError
-      ? `<div class="workspace-error-note"><strong>Canon browser could not load.</strong> ${escapeHtml(state.bookScopeError)} <button type="button" id="book-canon-retry">Retry</button></div>`
+      ? `<div class="workspace-error-note"><strong>Canon browser could not load.</strong> ${escapeHtml(state.bookScopeError)} <button type="button" id="book-canon-retry" title="Tries to load Canon for This Book again. No Canon selections are changed.">Retry</button></div>`
       : '';
 
     mainPanel.innerHTML = `
@@ -1750,13 +1786,13 @@
           <label>Book<select id="book-canon-book">${Array.from({ length: bookCount }, (_, index) => index + 1).map((bookNumber) => `<option value="${bookNumber}" ${bookNumber === selectedBookNumber ? 'selected' : ''}>Book ${bookNumber}</option>`).join('')}</select></label>
           <label class="book-canon-filter">Filter visible Canon (optional)<input id="book-canon-query" type="search" value="${escapeHtml(state.bookScopeQuery || '')}" placeholder="Type a name, event meaning, place, date, or ID" /></label>
           <label class="planner-toggle"><input id="book-canon-show-future" type="checkbox" ${state.bookScopeIncludeFuture ? 'checked' : ''} /> Show future Canon</label>
-          <button type="button" id="book-canon-refresh" class="secondary-action" ${loading ? 'disabled' : ''}>${loading ? 'Loading…' : 'Refresh'}</button>
+          <button type="button" id="book-canon-refresh" class="secondary-action" title="Reloads Canon for This Book and its current availability. It does not add, return, or approve Canon." ${loading ? 'disabled' : ''}>${loading ? 'Loading…' : 'Refresh'}</button>
         </div>
 
         <details class="workspace-detail-card planner-selected-summary" ${selectedIds.size ? 'open' : ''}>
           <summary><strong>Selected for Book ${selectedBookNumber}</strong><span>${number(selectedIds.size)} records</span></summary>
           <div class="planner-selected-summary-body">
-            ${(scopeBook.selections || []).map((item) => `<div class="chapter-planner-row planner-choice-row is-selected"><span>${statusBadge('SELECTED')}</span><div><strong>${escapeHtml(item.label || item.record_id || '')}</strong><small>${escapeHtml(labelFor(item.record_type || 'Canon'))}</small></div><button type="button" class="secondary-action compact-action" data-book-canon-action="remove" data-record-id="${escapeHtml(item.record_id || '')}" ${mutationEnabled ? '' : 'disabled'}>Return</button></div>`).join('') || '<div class="workspace-disabled-note">No Canon selected for this book yet.</div>'}
+            ${(scopeBook.selections || []).map((item) => `<div class="chapter-planner-row planner-choice-row is-selected"><span>${statusBadge('SELECTED')}</span><div><strong>${escapeHtml(item.label || item.record_id || '')}</strong><small>${escapeHtml(labelFor(item.record_type || 'Canon'))}</small></div><button type="button" class="secondary-action compact-action" data-book-canon-action="remove" data-record-id="${escapeHtml(item.record_id || '')}" title="Returns this Canon item from the book’s planning scope. Master Canon is unchanged; book approval may need to be renewed." ${mutationEnabled ? '' : 'disabled'}>Return</button></div>`).join('') || '<div class="workspace-disabled-note">No Canon selected for this book yet.</div>'}
           </div>
         </details>
 
@@ -1768,9 +1804,9 @@
         <section class="workspace-detail-card"><h3>Canon for This Book check</h3>${(scopeBook.validation || {}).valid === false ? (issueRows ? table(['Code', 'Issue'], issueRows) : '<div class="workspace-disabled-note">Select at least one Canon record before approval.</div>') : '<div class="workspace-success-note">Current Canon for This Book selections are valid.</div>'}</section>
 
         <div class="workspace-action-row">
-          <button type="button" id="book-canon-approve" class="primary-action" ${readOnly || loading || approved || !(scopeBook.validation || {}).valid ? 'disabled' : ''}>Approve Canon for This Book</button>
-          <button type="button" id="book-canon-revoke" class="secondary-action" ${readOnly || loading || !['approved','outdated'].includes(approvalStatus) ? 'disabled' : ''}>Revoke Approval</button>
-          <button type="button" id="book-canon-open-plan" class="secondary-action" ${selectedIds.size ? '' : 'disabled'}>Continue to Book Plan</button>
+          <button type="button" id="book-canon-approve" class="primary-action" title="Approves the current Canon selection for this book. Master Canon is unchanged; this approval allows the Book Plan and Book Knowledge workflow to use the selection." ${readOnly || loading || approved || !(scopeBook.validation || {}).valid ? 'disabled' : ''}>Approve Canon for This Book</button>
+          <button type="button" id="book-canon-revoke" class="secondary-action" title="Removes approval from Canon for This Book without changing the selected Canon or Master Canon. Approval will be required again before Book Knowledge can be prepared." ${readOnly || loading || !['approved','outdated'].includes(approvalStatus) ? 'disabled' : ''}>Revoke Approval</button>
+          <button type="button" id="book-canon-open-plan" class="secondary-action" title="Opens Book Planner for this book. Opening the planner does not change Canon or the saved Book Plan." ${selectedIds.size ? '' : 'disabled'}>Continue to Book Plan</button>
         </div>
         <div class="workspace-disabled-note">Add/Return updates Canon for This Book. Approve it when the selection is ready; later chapter-level additions or removals are handled from Chapter Planner.</div>
       </div>`;
@@ -1809,7 +1845,7 @@
     } catch (error) {
       state.bookScopeCatalog = { categories: [], status_counts: {}, hidden_status_counts: {} };
       state.bookScopeError = error.message || String(error);
-      setLog(`Book Canon load failed: ${state.bookScopeError}`);
+      setLog(`Canon for This Book could not load: ${state.bookScopeError}`);
     } finally {
       state.bookScopeLoading = false;
       renderBookScopeAwarePlanner();
@@ -1829,11 +1865,11 @@
       state.bookScopeError = '';
       state.bookScopeCatalog = await apiFetch(`/api/project/${encodeURIComponent(projectId)}/book-scope/catalog?${params.toString()}`);
       const visible = (state.bookScopeCatalog.categories || []).reduce((sum, category) => sum + Number(category.total || (category.items || []).length || 0), 0);
-      setLog(`Book Canon catalog loaded: ${visible} visible records.`);
+      setLog(`Canon for This Book refreshed: ${visible} visible item(s).`);
     } catch (error) {
       state.bookScopeCatalog = { categories: [], status_counts: {}, hidden_status_counts: {} };
       state.bookScopeError = error.message || String(error);
-      setLog(`Book Canon catalog failed: ${state.bookScopeError}`);
+      setLog(`Canon for This Book could not refresh: ${state.bookScopeError}`);
     } finally {
       if (!keepLoading) {
         state.bookScopeLoading = false;
@@ -1879,7 +1915,7 @@
     const priorIds = existing.map((item) => String(item.record_id || '')).sort().join('|');
     const nextIds = selections.map((item) => String(item.record_id || '')).sort().join('|');
     if (priorIds === nextIds) {
-      setLog('No Book Canon selections changed.');
+      setLog('No Canon for This Book selections changed.');
       return;
     }
 
@@ -1905,7 +1941,7 @@
       }
       setLog(`${ids.length} Canon record${ids.length === 1 ? '' : 's'} ${action === 'remove' ? 'returned from' : 'added to'} Book ${state.bookScopeBookNumber}.`);
     } catch (error) {
-      setLog(`Book Canon ${action} failed: ${error.message}`);
+      setLog(`Canon for This Book update failed: ${error.message}`);
     } finally {
       state.bookScopeSaving = false;
       renderBookScopeAwarePlanner();
@@ -1946,7 +1982,7 @@
       await refreshBookPlanAfterScopeChange();
       setLog(`Book ${state.bookScopeBookNumber} Canon approved.`);
     } catch (error) {
-      setLog(`Book Canon approval failed: ${error.message}`);
+      setLog(`Canon for This Book approval failed: ${error.message}`);
     } finally {
       state.bookScopeSaving = false;
       renderBookScopeAwarePlanner();
@@ -1966,7 +2002,7 @@
       await refreshBookPlanAfterScopeChange();
       setLog(`Book ${state.bookScopeBookNumber} Canon approval revoked.`);
     } catch (error) {
-      setLog(`Book Canon approval revoke failed: ${error.message}`);
+      setLog(`Canon for This Book approval could not be revoked: ${error.message}`);
     } finally {
       state.bookScopeSaving = false;
       renderBookScopeAwarePlanner();
@@ -2129,12 +2165,12 @@
 
     const snapshot = (state.chapterKnowledgePack || {}).recovery_snapshot || {};
     if (snapshot.available !== true) {
-      setLog('No previous compiled Chapter Knowledge Pack selections are available for recovery.');
+      setLog('No previous Chapter Knowledge selections are available to recover.');
       return;
     }
 
     const confirmed = window.confirm(
-      'Recover the Canon and event selections from the previous compiled Chapter Knowledge Pack? ' +
+      'Recover the Canon and event selections from the previous prepared Chapter Knowledge? ' +
       'Your current kickoff, objective, restrictions, and Story Controls will be preserved. ' +
       'Nothing is saved until you press Save Chapter Plan.'
     );
@@ -2211,9 +2247,9 @@
 
     const skipped = skippedCanon + skippedEvents;
     setLog(
-      `Recovered ${recoveredCanon} Canon selection(s) and ${recoveredEvents} event(s) from the previous compiled Chapter Knowledge Pack.` +
-      (skipped ? ` ${skipped} previous item(s) were skipped because they are not available in the current Book Canon.` : '') +
-      ' Review the recovered chapter, then Save Chapter Plan. Recompile the Chapter Knowledge Pack afterward.'
+      `Recovered ${recoveredCanon} Canon selection(s) and ${recoveredEvents} event(s) from previous Chapter Knowledge.` +
+      (skipped ? ` ${skipped} previous item(s) were skipped because they are not available in the current Canon for This Book.` : '') +
+      ' Review the recovered chapter, then Save Chapter Plan. Prepare Chapter Knowledge afterward.'
     );
   }
 
@@ -2262,11 +2298,11 @@
     modal.innerHTML = `
       <div class="workspace-modal-card" role="dialog" aria-modal="true" aria-labelledby="chapter-save-required-title">
         <h3 id="chapter-save-required-title">Save this Chapter Plan first</h3>
-        <p>You have unsaved chapter changes. Save the Chapter Plan so the next Knowledge Pack is compiled from the selections, event order, kickoff, objectives, restrictions, and Story Controls currently on screen.</p>
-        <p><strong>Next step after saving:</strong> ${escapeHtml(nextActionLabel || 'continue with Knowledge Pack compilation')}.</p>
+        <p>You have unsaved chapter changes. Save the Chapter Plan so Chapter Knowledge can be prepared from the selections, event order, kickoff, objectives, restrictions, and Story Controls currently on screen.</p>
+        <p><strong>Next step after saving:</strong> ${escapeHtml(nextActionLabel || 'continue with Chapter Knowledge preparation')}.</p>
         <div class="workspace-action-row">
-          <button type="button" class="primary-action" id="chapter-modal-save">Save Chapter Plan</button>
-          <button type="button" class="secondary-action" id="chapter-modal-cancel">Keep Editing</button>
+          <button type="button" class="primary-action" id="chapter-modal-save" title="Saves the current Chapter Plan before you continue to Chapter Knowledge preparation.">Save Chapter Plan</button>
+          <button type="button" class="secondary-action" id="chapter-modal-cancel" title="Closes this message and returns to the unsaved Chapter Plan without changing anything.">Keep Editing</button>
         </div>
       </div>`;
     document.body.appendChild(modal);
@@ -2384,9 +2420,9 @@
       : knowledgePackFile.current === true
         ? 'Current'
         : knowledgePackFile.exists === true
-          ? 'Needs Recompile'
+          ? 'Needs Update'
           : chapterKnowledgePack.compiler_ready === true
-            ? 'Ready to Compile'
+            ? 'Ready to Prepare'
             : labelFor(knowledgePackStatus || 'Blocked');
     const knowledgePackBusy = state.chapterKnowledgePackLoading === true;
     const bookKnowledgeCompileBusy = state.chapterBookKnowledgeCompileLoading === true;
@@ -2420,13 +2456,13 @@
             <small>${escapeHtml(item.summary || labelFor(item.record_group_id || item.record_type || 'Canon'))}</small>
             <div class="chapter-canon-choice-flags">
               <label class="book-canon-batch-check chapter-batch-row-selector" title="${isSelected ? 'Select this row for Return Selected' : 'Select this row for Add Selected'}"><input type="checkbox" data-chapter-canon-batch-ref="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''} /><span>Select</span></label>
-              ${isCharacter ? `<label class="chapter-pov-choice" data-chapter-pov-wrap="${escapeHtml(recordId)}" ${isSelected ? '' : 'hidden'} title="${povCharacterSelectionDisabled ? 'Choose an Advanced POV type that uses character interior access first.' : 'Authorize this selected character for the active POV contract.'}"><input type="checkbox" data-chapter-pov-ref="${escapeHtml(recordId)}" ${isPov ? 'checked' : ''} ${readOnly || loading || povCharacterSelectionDisabled ? 'disabled' : ''} /><span>POV</span></label>` : ''}
+              ${isCharacter ? `<label class="chapter-pov-choice" data-chapter-pov-wrap="${escapeHtml(recordId)}" ${isSelected ? '' : 'hidden'} title="${povCharacterSelectionDisabled ? 'Choose a POV type that allows character interior access first.' : 'Uses this selected character for interior point of view under the chosen POV type. Other selected characters can still speak, act, and interact.'}"><input type="checkbox" data-chapter-pov-ref="${escapeHtml(recordId)}" ${isPov ? 'checked' : ''} ${readOnly || loading || povCharacterSelectionDisabled ? 'disabled' : ''} /><span>POV</span></label>` : ''}
             </div>
           </div>
           <div class="chapter-row-actions">
             ${isSelected
-              ? `<button type="button" class="secondary-action compact-action book-canon-row-action-button" data-chapter-canon-return="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''}>Return</button>`
-              : `<button type="button" class="primary-action compact-action book-canon-row-action-button" data-chapter-canon-add="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''}>Add to Chapter</button>`}
+              ? `<button type="button" class="secondary-action compact-action book-canon-row-action-button" data-chapter-canon-return="${escapeHtml(recordId)}" title="Returns this Canon item from the current chapter only. It remains in Canon for This Book and Master Canon. Save the Chapter Plan to keep the change." ${readOnly || loading ? 'disabled' : ''}>Return</button>`
+              : `<button type="button" class="primary-action compact-action book-canon-row-action-button" data-chapter-canon-add="${escapeHtml(recordId)}" title="Adds this Canon item to the current chapter. It does not change Master Canon or remove the item from later chapters. Save the Chapter Plan to keep the change." ${readOnly || loading ? 'disabled' : ''}>Add to Chapter</button>`}
           </div>
         </article>
       `;
@@ -2515,8 +2551,8 @@
               <textarea rows="2" data-chapter-event-objective="${escapeHtml(recordId)}" placeholder="What must this beat accomplish?">${escapeHtml(objective)}</textarea>
             </label>
             <div class="planner-sequence-actions">
-              <button type="button" data-event-move="up" data-record-id="${escapeHtml(recordId)}">↑ Earlier</button>
-              <button type="button" data-event-move="down" data-record-id="${escapeHtml(recordId)}">↓ Later</button>
+              <button type="button" data-event-move="up" data-record-id="${escapeHtml(recordId)}" title="Moves this event earlier in the chapter’s planned event sequence. Save the Chapter Plan to keep the new order.">↑ Earlier</button>
+              <button type="button" data-event-move="down" data-record-id="${escapeHtml(recordId)}" title="Moves this event later in the chapter’s planned event sequence. Save the Chapter Plan to keep the new order.">↓ Later</button>
             </div>
           </div>`
         : '';
@@ -2531,8 +2567,8 @@
             <div class="chapter-row-actions">
               <label class="book-canon-batch-check" title="Mark for batch action"><input type="checkbox" data-chapter-event-batch-ref="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''} /></label>
               ${assigned
-                ? `<button type="button" class="secondary-action compact-action" data-event-return="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''}>Return</button>`
-                : `<button type="button" class="primary-action compact-action" data-event-add="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''}>Add to Chapter</button>`}
+                ? `<button type="button" class="secondary-action compact-action" data-event-return="${escapeHtml(recordId)}" title="Returns this event from the current chapter only. It remains available to later chapters and books. Save the Chapter Plan to keep the change." ${readOnly || loading ? 'disabled' : ''}>Return</button>`
+                : `<button type="button" class="primary-action compact-action" data-event-add="${escapeHtml(recordId)}" title="Adds this event to the current chapter’s event sequence. It remains available to later chapters and books. Save the Chapter Plan to keep the change." ${readOnly || loading ? 'disabled' : ''}>Add to Chapter</button>`}
             </div>
           </div>
           <p>${escapeHtml(item.summary || 'No event summary available.')}</p>
@@ -2564,16 +2600,17 @@
       );
     const recoveryNotice = recoveryCanBeOffered
       ? `<div id="chapter-recovery-note" class="workspace-warning-note chapter-recovery-note">
-          <strong>Previous compiled chapter selections are available.</strong>
+          <strong>Previous Chapter Knowledge selections are available.</strong>
           The current saved Chapter Plan contains no selected Canon or sequenced events, while the previous
-          compiled Chapter Knowledge Pack (from Chapter Plan revision
+          prepared Chapter Knowledge (from saved Chapter Plan version
           ${escapeHtml(number(recoverySnapshot.source_chapter_plan_revision || 0))}) contains
           ${escapeHtml(number(recoverySnapshot.selected_canon_count || 0))} Canon selection(s) and
           ${escapeHtml(number(recoverySnapshot.assigned_event_count || 0))} event(s).
-          That compiled pack is outdated and is not the current Chapter Plan.
+          That Chapter Knowledge is outdated and is not the current Chapter Plan.
           <div class="workspace-action-row compact-action-row">
             <button type="button" id="chapter-recover-previous-pack" class="secondary-action compact-action"
-              ${readOnly || loading ? 'disabled' : ''}>Recover Previous Compiled Selections</button>
+              title="Restores Canon and event selections from previously prepared Chapter Knowledge into the on-screen Chapter Plan. Review and save the Chapter Plan to keep them."
+              ${readOnly || loading ? 'disabled' : ''}>Recover Previous Selections</button>
           </div>
         </div>`
       : '';
@@ -2607,16 +2644,16 @@
           <span>${statusBadge(status)}</span>
           <div>
             <strong>${escapeHtml(item.label || item.display_name || recordId)}</strong>
-            <small>${escapeHtml(relationships || item.narrative_type || 'Canon-supported related event')}</small>
+            <small>${escapeHtml(relationships || item.narrative_type || 'Related Canon event')}</small>
             ${message && !['ACTIVE', 'AVAILABLE_TO_ADD'].includes(status)
               ? `<small>${escapeHtml(message)}</small>`
               : ''}
           </div>
           ${canUseInChapter
-            ? `<button type="button" data-planner-direction-select="${escapeHtml(recordId)}"
+            ? `<button type="button" data-planner-direction-select="${escapeHtml(recordId)}" title="Adds this suggested event to the current chapter’s Event Board. Save the Chapter Plan to keep it."
                 ${readOnly || loading ? 'disabled' : ''}>Select in Event Board</button>`
             : canAddToBook
-              ? `<button type="button" data-planner-direction-add-book="${escapeHtml(recordId)}"
+              ? `<button type="button" data-planner-direction-add-book="${escapeHtml(recordId)}" title="Adds this Canon event to Canon for This Book so it can be planned into this or another chapter. Master Canon is unchanged."
                   ${readOnly || loading ? 'disabled' : ''}>Add to Book</button>`
               : '<span></span>'}
         </div>
@@ -2643,13 +2680,13 @@
           <span>${statusBadge(status)}</span>
           <div>
             <strong>${escapeHtml(item.label || item.display_name || recordId)}</strong>
-            <small>${escapeHtml(matched || item.summary || 'Canon Index candidate')}</small>
+            <small>${escapeHtml(matched || item.summary || 'Canon suggestion')}</small>
           </div>
           ${canUseInChapter
-            ? `<button type="button" data-planner-intent-select="${escapeHtml(recordId)}"
+            ? `<button type="button" data-planner-intent-select="${escapeHtml(recordId)}" title="Adds this Canon suggestion to the current chapter. Save the Chapter Plan to keep it."
                 ${readOnly || loading ? 'disabled' : ''}>Select for Chapter</button>`
             : canAddToBook
-              ? `<button type="button" data-planner-intent-add-book="${escapeHtml(recordId)}"
+              ? `<button type="button" data-planner-intent-add-book="${escapeHtml(recordId)}" title="Adds this Canon suggestion to Canon for This Book so it can be used in chapter planning. Master Canon is unchanged."
                   ${readOnly || loading ? 'disabled' : ''}>Add to Book</button>`
               : '<span></span>'}
         </div>
@@ -2676,14 +2713,14 @@
     const knowledgePackBlockerRows = knowledgePackBlockers.map((item) => {
       const code = String(item.code || '');
       const authorMessages = {
-        book_runtime_context_not_current: `Book ${state.chapterPlanBookNumber}'s Book Knowledge Pack must be compiled and current before this Chapter Knowledge Pack can be built.`,
-        chapter_plan_not_complete: 'Save this Chapter Plan first so its selections, sequence, kickoff, objectives, restrictions, and controls are current.',
-        chapter_plan_invalid: 'Resolve the Chapter Plan items marked as invalid before compiling.',
+        book_runtime_context_not_current: `Book ${state.chapterPlanBookNumber} Knowledge must be current before Chapter Knowledge can be prepared.`,
+        chapter_plan_not_complete: 'Save this Chapter Plan first so its selections, event order, kickoff, objectives, restrictions, and Story Controls are current.',
+        chapter_plan_invalid: 'Resolve the Chapter Plan items marked as invalid before preparing Chapter Knowledge.',
         chapter_plan_outdated: 'The Book Plan or Book Canon changed after this chapter was saved. Save the Chapter Plan again after reviewing it.',
-        chapter_plan_dependencies_not_ready: 'One or more approved Book-level planning dependencies are not current yet.',
-        story_controls_invalid: 'Resolve the Story Control issue shown above before compiling.'
+        chapter_plan_dependencies_not_ready: 'One or more required Book-level planning items are not current yet.',
+        story_controls_invalid: 'Resolve the Story Control issue shown above before preparing Chapter Knowledge.'
       };
-      return `<li>${escapeHtml(authorMessages[code] || item.message || code || 'Knowledge Pack blocker')}</li>`;
+      return `<li>${escapeHtml(authorMessages[code] || item.message || code || 'Chapter Knowledge needs attention')}</li>`;
     }).join('');
 
     const knowledgePackUnlockRows = knowledgePackUnlockEvaluations.map((item) => {
@@ -2710,7 +2747,7 @@
             ? `<button type="button"
                 data-progression-override="${escapeHtml(item.record_id || '')}"
                 data-progression-requested-use="${escapeHtml(item.requested_use || 'chapter_selection')}"
-                title="Authorizes one-time use of this Canon target at the current book/chapter position. It does not change Canon, revise the original progression boundary, or establish continuity."
+                title="Allows this Canon item to appear early in this chapter as a one-time exception. It does not change the item’s normal story timing or Master Canon."
                 ${readOnly || loading || knowledgePackBusy ? 'disabled' : ''}>
                 Authorize Early Use
               </button>`
@@ -2731,11 +2768,11 @@
           ${statCard('Book', String(state.chapterPlanBookNumber))}
           ${statCard('Chapter', String(state.chapterPlanChapterNumber))}
           ${statCard('Lifecycle', labelFor(chapter.lifecycle_state || chapter.status || 'draft'))}
-          ${statCard('Revision', number(chapter.revision || 0))}
+          ${statCard('Saved Version', number(chapter.revision || 0))}
           ${statCard('Generation', 'Locked')}
         </div>
 
-        ${bookScopeApproved ? '' : `<div class="workspace-error-note planner-gate-note"><strong>Canon for Book ${state.chapterPlanBookNumber} is not approved yet.</strong> Choose and approve Canon for This Book in Book Planner before building the chapter. <button type="button" id="chapter-open-book-canon" class="primary-action compact-action">Open Book Planner</button></div>`}
+        ${bookScopeApproved ? '' : `<div class="workspace-error-note planner-gate-note"><strong>Canon for Book ${state.chapterPlanBookNumber} is not approved yet.</strong> Choose and approve Canon for This Book in Book Planner before building the chapter. <button type="button" id="chapter-open-book-canon" class="primary-action compact-action" title="Opens Book Planner so you can choose and approve Canon for this book. No Chapter Plan changes are made by opening it.">Open Book Planner</button></div>`}
 
         <div class="chapter-planner-toolbar">
           <label>
@@ -2768,6 +2805,7 @@
             </select>
           </label>
           <button type="button" id="chapter-plan-refresh" class="secondary-action"
+            title="Reloads the saved Chapter Plan and current planning choices. Unsaved changes currently on screen are discarded."
             ${loading ? 'disabled' : ''}>${loading ? 'Loading…' : 'Refresh'}</button>
         </div>
 
@@ -2777,8 +2815,8 @@
             <span id="chapter-selected-summary-count">${number(selectedIds.size)} Canon · ${number(assignedEventIds.size)} sequenced events</span>
           </summary>
           <div class="chapter-batch-toolbar">
-            <button type="button" class="secondary-action compact-action" data-chapter-canon-batch-action="return_selected" ${readOnly || loading ? 'disabled' : ''}>Return Selected</button>
-            <button type="button" class="secondary-action compact-action" data-chapter-canon-batch-action="return_all" ${readOnly || loading ? 'disabled' : ''}>Return All</button>
+            <button type="button" class="secondary-action compact-action" data-chapter-canon-batch-action="return_selected" title="Returns the checked Canon from this chapter only. It remains available to the book. Save the Chapter Plan to keep the change." ${readOnly || loading ? 'disabled' : ''}>Return Selected</button>
+            <button type="button" class="secondary-action compact-action" data-chapter-canon-batch-action="return_all" title="Returns all selected character and location Canon from this chapter only. It remains available to the book. Save the Chapter Plan to keep the change." ${readOnly || loading ? 'disabled' : ''}>Return All</button>
           </div>
           <div id="chapter-selected-summary-body" class="planner-selected-summary-body">
             ${selectedCanonRows || '<div class="workspace-disabled-note">Nothing selected for this chapter yet.</div>'}
@@ -2818,8 +2856,7 @@
         <div id="chapter-unsaved-reminder" class="workspace-warning-note" ${chapterDraftDirty ? '' : 'hidden'}>
           <strong>Unsaved Chapter Plan changes.</strong>
           Save Chapter Plan to persist the current chapter selections and event order.
-          The existing Chapter Knowledge Pack files are not updated by Save; compile the Chapter Knowledge Pack
-          afterward to replace the derived pack.
+          Saving the Chapter Plan does not update Chapter Knowledge. Prepare Chapter Knowledge afterward so it reflects the saved plan.
         </div>
 
         <details id="chapter-available-canon-section" class="chapter-planner-card planner-selected-summary" open>
@@ -2829,7 +2866,7 @@
           </summary>
           <p class="placeholder">Choose deliberate chapter participants/settings. Mark several rows, then Add Selected, or use the per-item Add to Chapter button. Adding Canon here removes it only from this chapter's available list; it remains available to later chapters and books.</p>
           <div class="chapter-batch-toolbar">
-            <button type="button" class="primary-action compact-action" data-chapter-canon-batch-action="add_selected" ${readOnly || loading ? 'disabled' : ''}>Add Selected</button>
+            <button type="button" class="primary-action compact-action" data-chapter-canon-batch-action="add_selected" title="Adds the checked characters and locations to this chapter. Save the Chapter Plan to keep the change." ${readOnly || loading ? 'disabled' : ''}>Add Selected</button>
           </div>
           <div id="chapter-available-canon-list" class="chapter-planner-list">
             ${availableCanonRows || '<div class="workspace-disabled-note">No additional characters or locations are available from the approved Book Canon.</div>'}
@@ -2852,7 +2889,7 @@
               placeholder="Filter by event meaning, date, or identifier" />
           </label>
           <div class="chapter-batch-toolbar">
-            <button type="button" class="primary-action compact-action" data-chapter-event-batch-action="add_selected" ${readOnly || loading ? 'disabled' : ''}>Add Selected</button>
+            <button type="button" class="primary-action compact-action" data-chapter-event-batch-action="add_selected" title="Adds the checked events to this chapter’s event sequence. Save the Chapter Plan to keep the change." ${readOnly || loading ? 'disabled' : ''}>Add Selected</button>
           </div>
           <div id="chapter-event-available-list" class="chapter-event-sequence-list">
             ${availableEventRows || '<div class="workspace-disabled-note">No additional Book Canon events are available for this chapter.</div>'}
@@ -2863,9 +2900,9 @@
           <summary>
             <strong>Chapter Event Sequence</strong>
           </summary>
-          <p class="placeholder">The order below is authoritative planning order for the Chapter Knowledge Pack. Use Earlier/Later to arrange the narrative beats.</p>
+          <p class="placeholder">This is the event order Italus will use when preparing Chapter Knowledge. Use Earlier/Later to arrange the chapter’s narrative beats.</p>
           <div class="chapter-batch-toolbar">
-            <button type="button" class="secondary-action compact-action" data-chapter-event-batch-action="return_selected" ${readOnly || loading ? 'disabled' : ''}>Return Selected</button>
+            <button type="button" class="secondary-action compact-action" data-chapter-event-batch-action="return_selected" title="Returns the checked events from this chapter only. They remain available to later chapters and books. Save the Chapter Plan to keep the change." ${readOnly || loading ? 'disabled' : ''}>Return Selected</button>
           </div>
           <div id="chapter-event-sequence-list" class="chapter-event-sequence-list">
             ${eventSequenceRows || '<div class="workspace-disabled-note" id="chapter-event-sequence-empty">No events sequenced yet.</div>'}
@@ -2882,7 +2919,7 @@
             to evaluate. Suggestions are optional; you decide whether any belong in this chapter.
           </p>
           <div class="chapter-batch-toolbar">
-            <button type="button" id="chapter-plan-directions-load" class="secondary-action compact-action" ${readOnly || loading || directionsBusy ? 'disabled' : ''}>${directionsBusy ? 'Looking…' : 'Load Possible Directions'}</button>
+            <button type="button" id="chapter-plan-directions-load" class="secondary-action compact-action" title="Looks for Canon-supported events related to the selected event anchor or the events already planned in this chapter. Suggestions are not added automatically." ${readOnly || loading || directionsBusy ? 'disabled' : ''}>${directionsBusy ? 'Looking…' : 'Load Possible Directions'}</button>
           </div>
           <div class="chapter-planner-list">
             ${directionRows || (state.chapterPlanDirectionsQueried
@@ -2938,8 +2975,9 @@
                 placeholder="Find more Canon" />
             </label>
             <div class="chapter-batch-toolbar">
-              <button type="button" id="chapter-plan-amend-load" class="secondary-action compact-action" ${readOnly || loading || !bookScopeApproved ? 'disabled' : ''}>Search Wider Canon</button>
+              <button type="button" id="chapter-plan-amend-load" class="secondary-action compact-action" title="Searches the wider project Canon for items not already selected for this book. Searching does not add or remove Canon." ${readOnly || loading || !bookScopeApproved ? 'disabled' : ''}>Search Wider Canon</button>
               <button type="button" id="chapter-plan-amend-reset" class="secondary-action compact-action"
+                title="Clears the wider Canon search and its results. It does not change Canon for This Book or the Chapter Plan."
                 ${readOnly || loading || (!state.chapterPlanAmendQueried && !String(state.chapterPlanAmendQuery || '').trim()) ? 'disabled' : ''}>Reset Search</button>
             </div>
           </div>
@@ -2956,12 +2994,14 @@
                 ? `<button type="button"
                     data-chapter-book-amend="${action}"
                     data-record-id="${escapeHtml(recordId)}"
+                    title="${selected ? 'Removes this item from Canon for This Book. Master Canon is unchanged; the book’s Canon approval must be reviewed again.' : 'Adds this item to Canon for This Book. Master Canon is unchanged; the book’s Canon approval must be reviewed again.'}"
                     ${readOnly || loading || !bookScopeApproved ? 'disabled' : ''}>
                     ${selected ? 'Remove from Book' : 'Add to Book'}
                   </button>`
                 : canOverride
                   ? `<button type="button"
                       data-progression-override-add-book="${escapeHtml(recordId)}"
+                      title="Allows this item to be used earlier than its normal story timing and adds it to Canon for This Book as a one-time exception. Master Canon is unchanged."
                       ${readOnly || loading || knowledgePackBusy || !bookScopeApproved ? 'disabled' : ''}>
                       Authorize & Add to Book
                     </button>`
@@ -2994,10 +3034,12 @@
               ${state.chapterPlanIntentLoading ? 'disabled' : ''}>${escapeHtml(state.chapterPlanIntentQuery || '')}</textarea>
             <div class="chapter-batch-toolbar">
               <button type="button" id="chapter-plan-intent-run" class="secondary-action compact-action"
+                title="Interprets your story need and suggests matching Canon. Nothing is added to the chapter or book until you choose a suggestion."
                 ${state.chapterPlanIntentLoading ? 'disabled' : ''}>
                 ${state.chapterPlanIntentLoading ? 'Interpreting…' : 'Interpret & Find Canon'}
               </button>
               <button type="button" id="chapter-plan-intent-reset" class="secondary-action compact-action"
+                title="Clears the Planner request and its suggestions. It does not change the Chapter Plan or Canon."
                 ${state.chapterPlanIntentLoading || (!String(state.chapterPlanIntentQuery || '').trim() && !state.chapterPlanIntentResult) ? 'disabled' : ''}>
                 Reset Planner Request
               </button>
@@ -3005,16 +3047,16 @@
           </div>
 
           ${intentStatus === 'model_unavailable'
-            ? `<div class="workspace-disabled-note">${escapeHtml(intentResult.message || 'Local Planner Intent Model is not configured or unavailable. Deterministic Planner actions remain available.')}</div>`
+            ? `<div class="workspace-disabled-note">${escapeHtml(intentResult.message || 'Planner suggestions are temporarily unavailable. Search Wider Canon remains available.')}</div>`
             : ''}
           ${intentStatus === 'invalid_model_output' || intentStatus === 'model_error'
-            ? `<div class="workspace-disabled-note">${escapeHtml(intentResult.message || 'Planner intent interpretation failed safely.')}</div>`
+            ? `<div class="workspace-disabled-note">${escapeHtml(intentResult.message || 'The Planner could not interpret this request. Try rewording it or use Search Wider Canon.')}</div>`
             : ''}
           ${intentStatus === 'clarification_required'
             ? `<div class="workspace-disabled-note"><strong>Clarification required.</strong><ul>${intentAmbiguities}</ul></div>`
             : ''}
           ${intentStatus === 'ok'
-            ? `<div class="chapter-planner-list">${intentRows || '<div class="workspace-disabled-note">No Canon Index candidates matched the interpreted intent.</div>'}</div>`
+            ? `<div class="chapter-planner-list">${intentRows || '<div class="workspace-disabled-note">No Canon suggestions matched this request.</div>'}</div>`
             : ''}
 
         </details>
@@ -3040,6 +3082,7 @@
                   <small><strong>Next permitted reveal:</strong> ${escapeHtml(thread.next_reveal || '')}</small>
                   ${thread.forbidden_early_disclosure ? `<small><strong>Do not reveal early:</strong> ${escapeHtml(thread.forbidden_early_disclosure)}</small>` : ''}
                   <button type="button" class="secondary-action" data-reveal-use="${escapeHtml(thread.reveal_id || '')}"
+                    title="Loads this permitted reveal into the Story Control form for this chapter. Review the fields, then save the Story Control to keep it."
                     ${readOnly || loading || state.storyControlSaving ? 'disabled' : ''}>Use This Reveal in Chapter</button>
                 </article>`).join('') || '<div class="workspace-disabled-note">No project reveal threads are scheduled for this book.</div>'}
             </div>
@@ -3071,7 +3114,7 @@
                       <button type="button" class="secondary-action compact-action"
                         data-story-control-delete="${escapeHtml(controlId)}"
                         ${readOnly || loading || state.storyControlSaving || checked ? 'disabled' : ''}
-                        title="${checked ? 'Uncheck this Story Control and Save Chapter Plan before deleting it.' : 'Delete this PLANNED Story Control from the registry.'}">
+                        title="${checked ? 'This Story Control is used by the current Chapter Plan. Uncheck it and save the Chapter Plan before deleting it.' : 'Deletes this unused Story Control from the project. It does not change Master Canon or manuscript prose.'}">
                         ${checked ? 'Detach & Save First' : 'Delete'}
                       </button>
                     </div>
@@ -3130,6 +3173,7 @@
               </label>
               <div class="chapter-planner-actions">
                 <button type="button" id="story-control-save"
+                  title="Saves this Story Control to the project so it can be selected for the Chapter Plan. It does not change Master Canon or generate prose."
                   ${readOnly || loading || state.storyControlSaving ? 'disabled' : ''}>
                   ${state.storyControlSaving ? 'Saving…' : 'Save Story Control'}
                 </button>
@@ -3139,81 +3183,83 @@
         </details>
 
         <details id="chapter-knowledge-pack-section" class="chapter-planner-card chapter-knowledge-pack-card" open>
-          <summary><strong>Chapter Knowledge Pack</strong></summary>
+          <summary><strong>Chapter Knowledge</strong></summary>
           <p class="placeholder">
             <strong>Chapter workflow:</strong>
-            <strong class="chapter-workflow-emphasis">Plan the chapter → Save Chapter Plan → Compile Chapter Knowledge Pack.</strong>
-            The Book ${number(state.chapterPlanBookNumber)} Knowledge Pack is the shared book foundation used by every chapter in this book.
-            Normal chapter edits do not require rebuilding it. Italus will ask you to update the Book Knowledge Pack only when the approved
-            Canon for This Book or the Book Plan changes. When you compile this Chapter Knowledge Pack again, it is rebuilt from the current
-            saved Chapter Plan, so Canon or events you returned from this chapter are removed from the rebuilt chapter pack.
+            <strong class="chapter-workflow-emphasis">Plan the chapter → Save Chapter Plan → Prepare Chapter Knowledge.</strong>
+            Book ${number(state.chapterPlanBookNumber)} Knowledge is the shared writing foundation for every chapter in this book.
+            Normal chapter edits do not require updating it. Italus will ask you to update Book Knowledge only when the approved
+            Canon for This Book or the Book Plan changes. Preparing Chapter Knowledge again uses the current saved Chapter Plan,
+            so Canon or events you returned and saved are left out of the refreshed Chapter Knowledge.
           </p>
 
           <div class="workspace-stat-grid">
-            ${statCard('Pack Status', knowledgePackDisplayStatus)}
-            ${statCard('Mode', labelFor(chapterKnowledgePack.mode || (state.chapterPlanChapterNumber === 1 ? 'chapter_1' : 'continuity_driven')))}
-            ${statCard('Compiler', chapterKnowledgePack.compiler_ready === true ? 'Ready' : 'Blocked')}
+            ${statCard('Knowledge Status', knowledgePackDisplayStatus)}
+            ${statCard('Writing Context', labelFor(chapterKnowledgePack.mode || (state.chapterPlanChapterNumber === 1 ? 'chapter_1' : 'continuity_driven')))}
+            ${statCard('Preparation', chapterKnowledgePack.compiler_ready === true ? 'Ready' : 'Blocked')}
             ${statCard('Generation', 'Locked')}
           </div>
 
           ${knowledgePackStatusPending
-            ? '<div class="workspace-disabled-note chapter-pack-next-step"><strong>Checking Chapter Knowledge Pack status…</strong> Italus is confirming whether this chapter pack is current, needs recompilation, or has not been compiled yet.</div>'
+            ? '<div class="workspace-disabled-note chapter-pack-next-step"><strong>Checking Chapter Knowledge…</strong> Italus is confirming whether it is current, needs updating, or has not been prepared yet.</div>'
             : chapterDraftDirty
-              ? '<div class="workspace-warning-note chapter-pack-next-step"><strong>Next: Save Chapter Plan.</strong> Your current selections and instructions are still only on screen. Save them first; then compile the Chapter Knowledge Pack.</div>'
+              ? '<div class="workspace-warning-note chapter-pack-next-step"><strong>Next: Save Chapter Plan.</strong> Your current selections and instructions are still only on screen. Save them first; then prepare Chapter Knowledge.</div>'
               : bookKnowledgeOnlyBlocker
-              ? `<div class="workspace-warning-note chapter-pack-next-step"><strong>Book ${number(state.chapterPlanBookNumber)} needs its shared Knowledge Pack updated first.</strong> This happens when Book-level Canon or the Book Plan changed. Click <strong>Update Book ${number(state.chapterPlanBookNumber)} Knowledge Pack</strong> once, then compile the Chapter Knowledge Pack.</div>`
+              ? `<div class="workspace-warning-note chapter-pack-next-step"><strong>Book ${number(state.chapterPlanBookNumber)} Knowledge needs to be updated first.</strong> This happens when Canon for This Book or the Book Plan changed. Click <strong>Update Book ${number(state.chapterPlanBookNumber)} Knowledge</strong> once, then prepare Chapter Knowledge.</div>`
               : knowledgePackBlockerRows
-                ? `<div class="workspace-disabled-note"><strong>This chapter is not ready to compile yet.</strong><ul>${knowledgePackBlockerRows}</ul>${bookPlanApprovalBlocker ? `<p><strong>Book ${number(state.chapterPlanBookNumber)} Plan changed after its last approval.</strong> Review and approve the Book Plan before updating its Knowledge Pack.</p>` : ''}</div>`
+                ? `<div class="workspace-disabled-note"><strong>This chapter is not ready to prepare yet.</strong><ul>${knowledgePackBlockerRows}</ul>${bookPlanApprovalBlocker ? `<p><strong>Book ${number(state.chapterPlanBookNumber)} Plan changed after its last approval.</strong> Review and approve the Book Plan before updating Book Knowledge.</p>` : ''}</div>`
                 : knowledgePackFile.current === true
-                  ? '<div class="workspace-success-note chapter-pack-next-step"><strong>Chapter Knowledge Pack is up to date.</strong> No action is needed unless you change and save this Chapter Plan or Italus reports that the Book Knowledge Pack needs updating.</div>'
+                  ? '<div class="workspace-success-note chapter-pack-next-step"><strong>Chapter Knowledge is up to date.</strong> No action is needed unless you change and save this Chapter Plan or Italus reports that Book Knowledge needs updating.</div>'
                   : chapterKnowledgePack.compiler_ready === true
-                    ? '<div class="workspace-warning-note chapter-pack-next-step"><strong>Next: Compile Chapter Knowledge Pack.</strong> This rebuilds the chapter pack from the saved Chapter Plan. Canon or events that you returned and saved will not be carried into the rebuilt pack.</div>'
-                    : '<div class="workspace-disabled-note chapter-pack-next-step"><strong>Chapter Knowledge Pack cannot be compiled yet.</strong> Follow the planning message above, then return here.</div>'}
+                    ? '<div class="workspace-warning-note chapter-pack-next-step"><strong>Next: Prepare Chapter Knowledge.</strong> Italus will rebuild it from the saved Chapter Plan. Canon or events that you returned and saved will not be carried into the refreshed Chapter Knowledge.</div>'
+                    : '<div class="workspace-disabled-note chapter-pack-next-step"><strong>Chapter Knowledge cannot be prepared yet.</strong> Follow the planning message above, then return here.</div>'}
           <div class="workspace-action-row compact-action-row knowledge-pack-workflow-actions">
             <button type="button" id="chapter-open-book-plan" class="secondary-action compact-action"
-              title="Opens Book ${number(state.chapterPlanBookNumber)} Plan for review. Navigation only; no saved Book or Chapter data is changed."
+              title="Opens Book ${number(state.chapterPlanBookNumber)} Plan for review. Opening it does not change saved Book or Chapter planning."
               ${bookPlanApprovalBlocker ? '' : 'disabled'}>Open Book ${number(state.chapterPlanBookNumber)} Plan</button>
             <button type="button" id="chapter-compile-book-knowledge" class="primary-action compact-action"
-              title="Updates Book ${number(state.chapterPlanBookNumber)} Knowledge Pack from the currently approved Book Canon and Book Plan. Existing Book Knowledge Pack files may be rebuilt; Chapter Plan content is not changed."
-              ${readOnly || loading || knowledgePackBusy || bookKnowledgeCompileBusy || !bookKnowledgeCompileAllowed ? 'disabled' : ''}>${bookKnowledgeCompileBusy ? 'Updating Book Knowledge Pack…' : bookKnowledgeIsCurrent ? `Book ${number(state.chapterPlanBookNumber)} Knowledge Pack — Up to Date` : `Update Book ${number(state.chapterPlanBookNumber)} Knowledge Pack`}</button>
+              title="Updates Book ${number(state.chapterPlanBookNumber)} Knowledge from the currently approved Canon for This Book and Book Plan. The Chapter Plan is not changed and no prose is generated."
+              ${readOnly || loading || knowledgePackBusy || bookKnowledgeCompileBusy || !bookKnowledgeCompileAllowed ? 'disabled' : ''}>${bookKnowledgeCompileBusy ? 'Updating Book Knowledge…' : bookKnowledgeIsCurrent ? `Book ${number(state.chapterPlanBookNumber)} Knowledge — Up to Date` : `Update Book ${number(state.chapterPlanBookNumber)} Knowledge`}</button>
             <button type="button" id="chapter-open-book-knowledge" class="secondary-action compact-action"
-              title="Opens the Book Knowledge Pack view. Navigation only; no saved Book or Chapter data is changed.">View Book Knowledge Pack</button>
+              title="Opens Book Knowledge for review. Opening it does not change saved Book or Chapter planning.">View Book Knowledge</button>
           </div>
 
           <div class="chapter-planner-list">
-            ${knowledgePackUnlockRows || '<div class="workspace-disabled-note">No selected Canon targets require an Unlock evaluation.</div>'}
+            ${knowledgePackUnlockRows || '<div class="workspace-disabled-note">No selected Canon items need an early-use decision.</div>'}
           </div>
 
           ${state.chapterPlanChapterNumber > 1
             ? `<label class="chapter-planner-field">
-                Optional bounded previous-chapter ending context
+                Optional previous-chapter ending context
                 <textarea id="chapter-knowledge-pack-prior-ending"
                   ${readOnly || loading || knowledgePackBusy ? 'disabled' : ''}
                   maxlength="8000"
-                  placeholder="Optional local ending excerpt/context only; all prior prose is not resent.">${escapeHtml(state.chapterPriorEndingContext || '')}</textarea>
+                  placeholder="Optional ending excerpt or reminder from the previous chapter.">${escapeHtml(state.chapterPriorEndingContext || '')}</textarea>
               </label>`
             : ''}
 
           ${(knowledgePackTokens.chapter_knowledge_pack_estimated_tokens || 0) > 0
             ? `<div class="workspace-disabled-note">
-                Estimated tokens — Chapter Pack:
-                ${escapeHtml(number(knowledgePackTokens.chapter_knowledge_pack_estimated_tokens || 0))};
-                Book Runtime Context:
-                ${escapeHtml(number(knowledgePackTokens.book_runtime_context_estimated_tokens || 0))};
-                Full Project Runtime Context:
-                ${escapeHtml(number(knowledgePackTokens.full_project_runtime_context_estimated_tokens || 0))}.
+                <strong>Estimated Knowledge Size</strong> — Chapter Knowledge:
+                ${escapeHtml(number(knowledgePackTokens.chapter_knowledge_pack_estimated_tokens || 0))} tokens;
+                Book Knowledge:
+                ${escapeHtml(number(knowledgePackTokens.book_runtime_context_estimated_tokens || 0))} tokens;
+                Full Project Reference:
+                ${escapeHtml(number(knowledgePackTokens.full_project_runtime_context_estimated_tokens || 0))} tokens.
               </div>`
             : ''}
 
           <div class="chapter-planner-actions">
             <button type="button" id="chapter-knowledge-pack-compile"
-              title="Rebuilds the Chapter Knowledge Pack from the current saved Chapter Plan and current Book Knowledge Pack. Existing Chapter Knowledge Pack files are replaced; it does not generate prose or write Approved Continuity."
+              title="Prepares Chapter Knowledge from the current saved Chapter Plan and current Book Knowledge. It does not generate prose or mark story events as accepted continuity."
               ${readOnly || loading || knowledgePackBusy || chapterKnowledgePack.compiler_ready !== true || knowledgePackFile.current === true ? 'disabled' : ''}>
               ${knowledgePackBusy
-                ? 'Compiling…'
+                ? 'Preparing…'
                 : knowledgePackFile.current === true
-                  ? 'Chapter Knowledge Pack — Up to Date'
-                  : 'Compile Chapter Knowledge Pack'}
+                  ? 'Chapter Knowledge — Up to Date'
+                  : knowledgePackFile.exists === true
+                    ? 'Update Chapter Knowledge'
+                    : 'Prepare Chapter Knowledge'}
             </button>
           </div>
         </details>
@@ -3223,19 +3269,19 @@
             ? `<strong>Reconciliation required.</strong><ul>${issues}</ul>`
             : (chapter.freshness || {}).fresh === false
               ? '<strong>Outdated:</strong> Canon for This Book or the Book Plan changed after this chapter draft was saved.'
-              : 'Chapter Plan references are structurally valid against the current planning state.'}
+              : 'Chapter Plan is current and ready for the next planning step.'}
         </div>
 
         <div class="chapter-planner-actions">
           <button type="button" id="chapter-plan-save"
+            title="Saves this chapter’s current Canon selections, event order, POV, instructions, restrictions, and Story Control choices. It does not prepare Chapter Knowledge or generate prose."
             ${readOnly || loading ? 'disabled' : ''}>${state.chapterPlanSaving ? 'Saving…' : 'Save Chapter Plan'}</button>
           ${state.chapterPlanSavedNotice ? `<span class="chapter-save-confirmation">✓ ${escapeHtml(state.chapterPlanSavedNotice)}</span>` : ''}
         </div>
 
         <div class="workspace-disabled-note">
-          Chapter planning controls what this chapter must use and accomplish. Knowledge Pack compilation
-          prepares that approved planning context for later generation; it does not generate prose or write
-          Approved Continuity.
+          Chapter planning controls what this chapter must use and accomplish. Preparing Chapter Knowledge
+          readies the saved plan for later writing. It does not generate prose or mark story events as accepted continuity.
         </div>
       </div>
     `;
@@ -3315,7 +3361,7 @@
       state.chapterPlanAmendQueried = false;
       renderChapterPlannerPreservingUi('chapter-find-more-canon-section');
       document.getElementById('chapter-plan-amend-query')?.focus();
-      setLog('Wider Canon search reset.');
+      setLog('Wider Canon search cleared. No Canon was changed.');
     });
     document.getElementById('chapter-plan-amend-query')?.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
@@ -3367,7 +3413,7 @@
       state.chapterPlanIntentResult = null;
       renderChapterPlannerPreservingUi('chapter-find-more-canon-section');
       document.getElementById('chapter-plan-intent-query')?.focus();
-      setLog('Planner Canon request reset.');
+      setLog('Planner request cleared. No Canon or Chapter Plan data was changed.');
     });
     mainPanel.querySelectorAll('[data-planner-intent-add-book]').forEach((button) => {
       button.addEventListener('click', () => {
@@ -3405,7 +3451,7 @@
         if (presentation) presentation.value = String(thread.default_presentation || 'foreshadowing');
         if (weight) weight.value = String(thread.default_weight || 'brief_clue');
         if (subject && thread.subject_record_id) subject.value = String(thread.subject_record_id);
-        setLog(`Reveal thread loaded: ${thread.title || id}. Review the Story Control fields, then save it.`);
+        setLog(`Reveal loaded: ${thread.title || id}. Review the Story Control fields, then save it.`);
       });
     });
     document.getElementById('story-control-save')?.addEventListener('click', () => void saveStoryControl());
@@ -3418,7 +3464,7 @@
       const priorEnding = document.getElementById('chapter-knowledge-pack-prior-ending');
       state.chapterPriorEndingContext = String(priorEnding?.value || state.chapterPriorEndingContext || '');
       if (state.chapterPlanDraftDirty) {
-        showChapterSaveRequiredModal('compile the Chapter Knowledge Pack');
+        showChapterSaveRequiredModal('prepare Chapter Knowledge');
         return;
       }
       void compileChapterKnowledgePack();
@@ -3439,7 +3485,7 @@
     });
     document.getElementById('chapter-compile-book-knowledge')?.addEventListener('click', () => {
       if (state.chapterPlanDraftDirty) {
-        showChapterSaveRequiredModal(`compile Book ${Number(state.chapterPlanBookNumber || 1)} Knowledge Pack`);
+        showChapterSaveRequiredModal(`update Book ${Number(state.chapterPlanBookNumber || 1)} Knowledge`);
         return;
       }
       void compileCurrentBookKnowledgePackFromChapter();
@@ -3569,7 +3615,7 @@
         blockers: [{ code: 'status_load_failed', message: error.message }],
         unlock_evaluations: []
       };
-      setLog(`Chapter Knowledge Pack status failed: ${error.message}`);
+      setLog(`Chapter Knowledge status could not be checked: ${error.message}`);
     } finally {
       if (!keepLoading && state.activeSection === 'chapter_planner' && requestToken === state.chapterKnowledgePackRequestToken) {
         const disclosureState = captureChapterPlannerDisclosureState();
@@ -3603,8 +3649,8 @@
         }
       );
       setLog(
-        `Book ${bookNumber} Knowledge Pack ${Number(result.generated_count || 0) > 0 ? 'compiled' : 'is already current'}. ` +
-        'Refreshing Chapter Knowledge Pack readiness…'
+        `Book ${bookNumber} Knowledge ${Number(result.generated_count || 0) > 0 ? 'updated' : 'is already current'}. ` +
+        'Checking Chapter Knowledge readiness…'
       );
       const refreshedBookStatus = await apiFetch(
         `/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status?book_number=${encodeURIComponent(bookNumber)}`
@@ -3614,7 +3660,7 @@
       state.chapterKnowledgePack = null;
       await loadChapterKnowledgePackStatus(true);
     } catch (error) {
-      setLog(`Book ${bookNumber} Knowledge Pack compilation failed: ${error.message}`);
+      setLog(`Book ${bookNumber} Knowledge update failed: ${error.message}`);
       state.chapterKnowledgePack = null;
       await loadChapterKnowledgePackStatus(true);
     } finally {
@@ -3643,15 +3689,15 @@
         }
       );
       setLog(
-        `Chapter Knowledge Pack compiled for Book ${state.chapterPlanBookNumber}, ` +
-        `Chapter ${state.chapterPlanChapterNumber}. Generation remains locked.`
+        `Chapter Knowledge prepared for Book ${state.chapterPlanBookNumber}, ` +
+        `Chapter ${state.chapterPlanChapterNumber}. Writing generation is not available yet.`
       );
       await loadChapterKnowledgePackStatus(true);
       if ((result.token_accounting || {}).chapter_knowledge_pack_estimated_tokens) {
         state.chapterKnowledgePack.token_accounting = result.token_accounting;
       }
     } catch (error) {
-      setLog(`Chapter Knowledge Pack compile blocked: ${error.message}`);
+      setLog(`Chapter Knowledge could not be prepared: ${error.message}`);
       await loadChapterKnowledgePackStatus(true);
     } finally {
       state.chapterKnowledgePackLoading = false;
@@ -3691,7 +3737,7 @@
       setLog(
         status === 'already_authorized'
           ? 'One-time early-use authorization was already active for this position.'
-          : 'One-time early use authorized. Continuity remains unestablished until a later accepted-continuity commit.'
+          : 'One-time early use allowed. This does not make the item part of accepted story continuity.'
       );
       await loadChapterKnowledgePackStatus(true);
       if (addToBookAfter) {
@@ -3700,7 +3746,7 @@
         return;
       }
     } catch (error) {
-      setLog(`Progression override blocked: ${error.message}`);
+      setLog(`Early-use authorization could not be applied: ${error.message}`);
       await loadChapterKnowledgePackStatus(true);
     } finally {
       state.chapterKnowledgePackLoading = false;
@@ -3852,15 +3898,15 @@
       );
       const status = String((state.chapterPlanIntentResult || {}).status || 'unknown');
       if (status === 'ok') {
-        setLog(`Planner intent query returned ${Number(state.chapterPlanIntentResult.result_count || 0)} Canon Index candidate(s).`);
+        setLog(`Planner found ${Number(state.chapterPlanIntentResult.result_count || 0)} Canon suggestion(s).`);
       } else if (status === 'clarification_required') {
-        setLog('Planner intent query requires clarification before retrieval.');
+        setLog('The Planner needs a little more detail before it can suggest Canon.');
       } else {
-        setLog(`Planner intent query stopped safely: ${state.chapterPlanIntentResult.message || status}.`);
+        setLog(`The Planner could not complete this request: ${state.chapterPlanIntentResult.message || status}.`);
       }
     } catch (error) {
       state.chapterPlanIntentResult = { status: 'model_error', results: [], message: error.message };
-      setLog(`Planner intent query failed: ${error.message}`);
+      setLog(`Planner request failed: ${error.message}`);
     } finally {
       state.chapterPlanIntentLoading = false;
       if (state.activeSection === 'chapter_planner') renderChapterPlannerPreservingUi('chapter-find-more-canon-section');
@@ -3895,12 +3941,12 @@
       state.chapterPlanAmendCatalog = null;
       state.chapterKnowledgePack = null;
       setLog(
-        `${action === 'remove' ? 'Removed from' : 'Added to'} Book ${state.chapterPlanBookNumber} ` +
-        `effective Chapter ${state.chapterPlanChapterNumber}. Re-approve Book Canon before another amendment.`
+        `${action === 'remove' ? 'Removed from' : 'Added to'} Canon for Book ${state.chapterPlanBookNumber} ` +
+        `starting with Chapter ${state.chapterPlanChapterNumber}. Review and re-approve Canon for This Book before another change.`
       );
       await loadChapterPlannerAfterAmendment();
     } catch (error) {
-      setLog(`Book Canon amendment blocked: ${error.message}`);
+      setLog(`Canon for This Book could not be changed: ${error.message}`);
     } finally {
       state.chapterPlanSaving = false;
       if (state.activeSection === 'chapter_planner') renderChapterPlanner(state.bootstrap);
@@ -4004,7 +4050,7 @@
     const control = ((state.storyControls || {}).controls || [])
       .find((item) => String(item.control_id || '') === String(controlId));
     if (!control) {
-      setLog('Story Control no longer exists in the current registry.');
+      setLog('This Story Control no longer exists in the project.');
       return;
     }
 
@@ -4019,9 +4065,8 @@
 
     const confirmed = window.confirm(
       `Delete this PLANNED Story Control?\n\n${String(control.instruction || labelFor(control.control_type || 'Story Control'))}\n\n` +
-      'This removes the Story Control from the project registry. It does not erase Canon or manuscript prose. ' +
-      'Because the control must already be detached from every saved Chapter Plan, compile any Chapter Knowledge Pack that is now outdated before generation. ' +
-      'After that rebuild, this Story Control will no longer be included as an instruction in the Chapter Knowledge Pack sent to the LLM. ' +
+      'This deletes the unused Story Control from the project. It does not erase Master Canon or manuscript prose. ' +
+      'If Chapter Knowledge was prepared while this control was still attached to a saved Chapter Plan, update that Chapter Knowledge before writing. ' +
       'Italus will block deletion if any saved Chapter Plan still references this control.'
     );
     if (!confirmed) return;
@@ -4036,9 +4081,9 @@
       state.storyControls = await apiFetch(
         `/api/project/${encodeURIComponent(projectId)}/story-controls?book_number=${state.chapterPlanBookNumber}&chapter_number=${state.chapterPlanChapterNumber}`
       );
-      setLog('Story Control deleted from the project registry.');
+      setLog('Story Control deleted from the project.');
     } catch (error) {
-      setLog(`Story Control delete blocked: ${error.message}`);
+      setLog(`Story Control could not be deleted: ${error.message}`);
     } finally {
       state.storyControlSaving = false;
       if (state.activeSection === 'chapter_planner') {
@@ -4229,7 +4274,8 @@
               <span>Select</span>
             </label>
             <button type="button" class="${selected ? 'secondary-action' : 'primary-action'} compact-action book-canon-row-action-button"
-              data-book-canon-action="${selected ? 'remove' : 'add'}" data-record-id="${escapeHtml(recordId)}" ${disabled ? 'disabled' : ''}>${action}</button>
+              data-book-canon-action="${selected ? 'remove' : 'add'}" data-record-id="${escapeHtml(recordId)}"
+              title="${selected ? 'Returns this Canon item from this book’s planning scope. Master Canon is unchanged; book approval may need to be renewed.' : 'Adds this Canon item to this book’s planning scope. Master Canon is unchanged.'}" ${disabled ? 'disabled' : ''}>${action}</button>
           </div>
         </div>`;
       }).join('');
@@ -4240,11 +4286,11 @@
       return `<details class="book-canon-category">
         <summary><strong>${escapeHtml(labelFor(categoryKey || 'Canon'))}</strong><span>${number(category.total || (category.items || []).length)} shown · ${number(selectedInCategory)} selected · ${number(recommendedInCategory)} recommended</span></summary>
         <div class="book-canon-category-actions" data-category-actions="${escapeHtml(categoryKey)}">
-          <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="select_recommended" data-category-key="${escapeHtml(categoryKey)}" ${!mutationEnabled || !recommendedInCategory ? 'disabled' : ''}>Select All Recommended</button>
-          ${allowSelectAllAvailable ? `<button type="button" class="secondary-action compact-action" data-book-canon-batch-action="select_available" data-category-key="${escapeHtml(categoryKey)}" ${!mutationEnabled || !availableInCategory ? 'disabled' : ''}>Select All Available</button>` : ''}
-          <button type="button" class="primary-action compact-action" data-book-canon-batch-action="add_selected" data-category-key="${escapeHtml(categoryKey)}" ${!mutationEnabled ? 'disabled' : ''}>Add Selected</button>
-          <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="return_selected" data-category-key="${escapeHtml(categoryKey)}" ${!mutationEnabled || !selectedInCategory ? 'disabled' : ''}>Return Selected</button>
-          <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="return_all" data-category-key="${escapeHtml(categoryKey)}" ${!mutationEnabled || !selectedInCategory ? 'disabled' : ''}>Return All</button>
+          <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="select_recommended" data-category-key="${escapeHtml(categoryKey)}" title="Checks all recommended Canon currently shown in this category. Nothing is added until you press Add Selected." ${!mutationEnabled || !recommendedInCategory ? 'disabled' : ''}>Select All Recommended</button>
+          ${allowSelectAllAvailable ? `<button type="button" class="secondary-action compact-action" data-book-canon-batch-action="select_available" data-category-key="${escapeHtml(categoryKey)}" title="Checks all currently available Canon shown in this category. Nothing is added until you press Add Selected." ${!mutationEnabled || !availableInCategory ? 'disabled' : ''}>Select All Available</button>` : ''}
+          <button type="button" class="primary-action compact-action" data-book-canon-batch-action="add_selected" data-category-key="${escapeHtml(categoryKey)}" title="Adds the checked Canon to this book. Master Canon is unchanged; an existing approval may need to be renewed." ${!mutationEnabled ? 'disabled' : ''}>Add Selected</button>
+          <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="return_selected" data-category-key="${escapeHtml(categoryKey)}" title="Returns the checked selected Canon from this book. Master Canon is unchanged; an existing approval may need to be renewed." ${!mutationEnabled || !selectedInCategory ? 'disabled' : ''}>Return Selected</button>
+          <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="return_all" data-category-key="${escapeHtml(categoryKey)}" title="Returns every selected Canon item in this category from the book. Master Canon is unchanged; book approval may need to be renewed." ${!mutationEnabled || !selectedInCategory ? 'disabled' : ''}>Return All</button>
           ${categoryKey === 'interactions' ? '<small>Historical/genre interactions intentionally omit Select All Available; choose Recommended or specific interactions.</small>' : ''}
         </div>
         <div class="book-canon-browser-list">${rows || '<div class="workspace-disabled-note">No records in this category.</div>'}</div>
@@ -4265,12 +4311,12 @@
           <span>Select</span>
         </label>
         <button type="button" class="secondary-action compact-action book-canon-row-action-button"
-          data-book-canon-action="remove" data-record-id="${escapeHtml(item.record_id || '')}" ${mutationEnabled ? '' : 'disabled'}>Return</button>
+          data-book-canon-action="remove" data-record-id="${escapeHtml(item.record_id || '')}" title="Returns this Canon item from the book’s planning scope. Master Canon is unchanged; book approval may need to be renewed." ${mutationEnabled ? '' : 'disabled'}>Return</button>
       </div>
     </div>`).join('');
 
     const errorMarkup = state.bookScopeError
-      ? `<div class="workspace-error-note"><strong>Canon for This Book could not load.</strong> ${escapeHtml(state.bookScopeError)} <button type="button" class="secondary-action compact-action" id="book-plan-canon-retry">Retry</button></div>`
+      ? `<div class="workspace-error-note"><strong>Canon for This Book could not load.</strong> ${escapeHtml(state.bookScopeError)} <button type="button" class="secondary-action compact-action" id="book-plan-canon-retry" title="Tries to load Canon for This Book again. No planning data is changed.">Retry</button></div>`
       : '';
 
     return `<details class="workspace-detail-card planner-book-canon-embedded" ${selectedIds.size && approved ? '' : 'open'}>
@@ -4281,20 +4327,20 @@
         ${errorMarkup}
         <div class="book-canon-toolbar compact-planner-toolbar">
           <label class="book-canon-filter"><span>Filter visible Canon (optional)</span><input id="book-plan-canon-query" type="search" value="${escapeHtml(state.bookScopeQuery || '')}" placeholder="Filter by name, alias, summary, or date" /></label>
-          <label class="planner-toggle book-canon-future-toggle" title="Include future Canon records in the visible browser">
+          <label class="planner-toggle book-canon-future-toggle" title="Shows Canon that becomes available in later books. It does not add anything to this book.">
             <input id="book-plan-canon-show-future" type="checkbox" ${state.bookScopeIncludeFuture ? 'checked' : ''}/>
             <span>Show Future Canon</span>
           </label>
-          <button type="button" id="book-plan-canon-refresh" class="secondary-action" ${loading ? 'disabled' : ''}>${loading ? 'Loading…' : 'Refresh'}</button>
+          <button type="button" id="book-plan-canon-refresh" class="secondary-action" title="Reloads Canon availability and recommendation status for this book. It does not add or return any Canon." ${loading ? 'disabled' : ''}>${loading ? 'Loading…' : 'Refresh'}</button>
         </div>
         <details class="planner-selected-summary" ${selectedIds.size ? 'open' : ''}><summary><strong>Selected for Book ${bookNumber}</strong><span>${number(selectedIds.size)} records</span></summary><div class="planner-selected-summary-actions">
-          <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="return_summary_selected" ${!mutationEnabled || !selectedIds.size ? 'disabled' : ''}>Return Selected</button>
-          <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="return_summary_all" ${!mutationEnabled || !selectedIds.size ? 'disabled' : ''}>Return All</button>
+          <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="return_summary_selected" title="Returns the checked Canon from this book. Master Canon is unchanged; book approval may need to be renewed." ${!mutationEnabled || !selectedIds.size ? 'disabled' : ''}>Return Selected</button>
+          <button type="button" class="secondary-action compact-action" data-book-canon-batch-action="return_summary_all" title="Returns all Canon currently selected for this book. Master Canon is unchanged; book approval may need to be renewed." ${!mutationEnabled || !selectedIds.size ? 'disabled' : ''}>Return All</button>
         </div><div class="planner-selected-summary-body">${selectedMarkup || '<div class="workspace-disabled-note">Nothing selected yet.</div>'}</div></details>
         <div class="book-canon-category-stack">${categoryMarkup || (loading ? '<div class="workspace-disabled-note">Loading Canon…</div>' : '<div class="workspace-disabled-note">No Canon records are visible for the current filter.</div>')}</div>
         <div class="workspace-action-row">
-          <button type="button" id="book-plan-canon-approve" class="primary-action" ${readOnly || loading || approved || !(scopeBook.validation || {}).valid ? 'disabled' : ''}>Approve Canon for This Book</button>
-          <button type="button" id="book-plan-canon-revoke" class="secondary-action" ${readOnly || loading || !['approved','outdated'].includes(approvalStatus) ? 'disabled' : ''}>Revoke Approval</button>
+          <button type="button" id="book-plan-canon-approve" class="primary-action" title="Approves the current Canon selections for this book. It does not change Master Canon, change the Book Plan, update Book Knowledge, or generate prose." ${readOnly || loading || approved || !(scopeBook.validation || {}).valid ? 'disabled' : ''}>Approve Canon for This Book</button>
+          <button type="button" id="book-plan-canon-revoke" class="secondary-action" title="Removes approval from Canon for This Book without removing its selections or changing Master Canon." ${readOnly || loading || !['approved','outdated'].includes(approvalStatus) ? 'disabled' : ''}>Revoke Approval</button>
         </div>
         <div class="workspace-disabled-note">${approved ? 'Canon for This Book is approved. Direct changes are locked; later additions or removals are made from Chapter Planner.' : 'Add/Return and checkbox batch actions update Canon for This Book. Required/Major Book Plan fields are not changed by these actions.'}</div>
       </div>
@@ -4398,8 +4444,8 @@
     const issueRows = selectedBookIssues.map((issue) => `<tr><td>${escapeHtml(issue.book_number ? `Book ${issue.book_number}` : 'Plan')}</td><td>${escapeHtml(issue.code || 'validation_issue')}</td><td>${escapeHtml(issue.message || 'Book Plan validation issue.')}</td></tr>`).join('');
 
     mainPanel.innerHTML = `<div class="workspace-content workspace-book-plan-authoring-v1 planner-book-plan-unified">
-      <p class="placeholder">Plan one book at a time. Choose Canon for This Book, then define the book’s story intent. Approved planning feeds the Book Knowledge Pack used by Chapter Planner.</p>
-      <div class="workspace-stat-grid">${statCard('Status', String(plan.status || 'not_started').replace(/_/g, ' '))}${statCard('Complete Books', `${number(validation.complete_book_count)} / ${number(expectedBookCount)}`)}${statCard('Revision', number(plan.revision))}${statCard(`Book ${bookNumber} Approval`, approvalStatus.replace(/_/g, ' '))}${statCard('Freshness', approvalFresh ? 'current' : (approvalStatus === 'outdated' ? 'outdated' : 'not approved'))}</div>
+      <p class="placeholder">Plan one book at a time. Choose Canon for This Book, then define the book’s story intent. Once Canon for This Book and the Book Plan are approved, Book Knowledge can be prepared for Chapter Planner and, once generation is enabled, for writing.</p>
+      <div class="workspace-stat-grid">${statCard('Status', labelFor(plan.status || 'not_started'), { humanReadable: true })}${statCard('Complete Books', `${number(validation.complete_book_count)} / ${number(expectedBookCount)}`)}${statCard('Saved Version', number(plan.revision))}${statCard(`Book ${bookNumber} Approval`, labelFor(approvalStatus), { humanReadable: true })}${statCard('Freshness', approvalFresh ? 'Current' : (approvalStatus === 'outdated' ? 'Outdated' : 'Not Approved'))}</div>
 
       <section class="workspace-detail-card planner-book-selector">
         <select id="book-plan-book-number" aria-label="Choose book to configure">${Array.from({length: expectedBookCount}, (_, index) => index + 1).map((value) => `<option value="${value}" ${value === state.bookPlanBookNumber ? 'selected' : ''}>Book ${value}</option>`).join('')}</select>
@@ -4410,19 +4456,19 @@
       <form id="book-plan-form" class="book-plan-form">${renderBookPlanCard(book, expectedBookCount, readOnly, scopeBook, suggestion)}</form>
 
       <section class="workspace-detail-card"><h3>Book ${bookNumber} check</h3>${bookValidation.complete && scopeApproved ? '<div class="workspace-success-note">Book ' + bookNumber + ' is complete and Canon for This Book is approved/current.</div>' : (issueRows ? table(['Area','Code','Issue'], issueRows) : '<div class="workspace-disabled-note">Complete the Book Plan and approve Canon for This Book before approving the book.</div>')}</section>
-      <section class="workspace-detail-card"><h3>Planning readiness</h3><div class="workspace-lock-grid">${lockCard('Canon for This Book', String(scopeBook.approval_status || 'not_ready').replace(/_/g,' '))}${lockCard(`Book ${bookNumber} Plan Approval`, approvalStatus.replace(/_/g,' '))}${lockCard('Book Knowledge Pack', approvalFresh && scopeApproved ? 'Planning approved' : 'Waiting for approvals')}${lockCard('Generation','Locked')}</div></section>
+      <section class="workspace-detail-card"><h3>Planning readiness</h3><div class="workspace-lock-grid">${lockCard('Canon for This Book', labelFor(scopeBook.approval_status || 'not_ready'))}${lockCard(`Book ${bookNumber} Plan Approval`, labelFor(approvalStatus))}${lockCard('Book Knowledge', approvalFresh && scopeApproved ? 'Planning Approved' : 'Waiting for Approvals')}${lockCard('Generation','Locked')}</div></section>
       <div class="workspace-action-row">
         <button type="button" id="book-plan-refresh" class="secondary-action"
-          title="Reloads the saved Book Plan and Canon state from project storage. Unsaved on-screen Book Plan edits are discarded; saved approvals and Knowledge Packs are not changed."
+          title="Reloads the saved Book Plan and Canon for This Book. Unsaved changes currently on screen are discarded. Saved approvals and Book Knowledge are not changed."
           ${loading || saving ? 'disabled' : ''}>${loading ? 'Loading…' : 'Reload Plan'}</button>
         <button type="button" id="book-plan-save" class="primary-action"
-          title="Saves the current Book Plan fields to project storage. If Book ${bookNumber} content changed, its existing Plan approval becomes outdated and its Book Knowledge Pack may need rebuilding."
+          title="Saves your current Book Plan. If an approved plan changed, Italus will ask you to approve the new version again and may require Book Knowledge to be updated."
           ${readOnly || loading || saving || approvalLoading ? 'disabled' : ''}>${saving ? 'Saving…' : 'Save Book Plan'}</button>
         <button type="button" id="book-plan-approve" class="primary-action"
-          title="Approves the current saved Book ${bookNumber} Plan revision. This makes the Plan eligible for Book Knowledge Pack readiness; it does not compile a pack or generate prose."
+          title="Approves the current saved Book ${bookNumber} Plan for use in Book Knowledge. This does not update Book Knowledge or generate prose."
           ${canApprove ? '' : 'disabled'}>${approvalLoading ? 'Updating…' : `Approve Book ${bookNumber} Plan`}</button>
         <button type="button" id="book-plan-revoke" class="secondary-action"
-          title="Revokes Book ${bookNumber} Plan approval without changing Plan content. Book Knowledge Pack and generation readiness can become blocked until the Plan is approved again."
+          title="Removes approval from the current Book ${bookNumber} Plan without changing the plan itself. Italus may require approval again before Book Knowledge can be updated."
           ${canRevoke ? '' : 'disabled'}>${`Revoke Book ${bookNumber} Approval`}</button>
       </div>
     </div>`;
@@ -4664,7 +4710,7 @@
         state.bookScopeCatalog = { categories: [], status_counts: {}, hidden_status_counts: {} };
         state.bookScopeError = catalogError.message || String(catalogError);
       }
-      setLog(`Book Plan loaded: ${state.bookPlan.plan.status || 'unknown'}, revision ${state.bookPlan.plan.revision || 0}.`);
+      setLog(`Book Plan loaded: ${labelFor(state.bookPlan.plan.status || 'unknown')}.`);
     } catch (error) {
       state.bookPlan = { plan: { status: 'error', revision: 0, books: [], validation: { valid: false, issues: [{ code: 'load_failed', message: error.message }] } } };
       setLog(`Book Plan load failed: ${error.message}`);
@@ -4696,7 +4742,7 @@
 
     state.bookPlanSaving = true;
     renderBookPlan(state.bootstrap);
-    setLog('Saving project-local Book Plan draft…');
+    setLog('Saving Book Plan…');
 
     try {
       state.bookPlan = await apiFetch(
@@ -4711,7 +4757,7 @@
         }
       );
       setLog(
-        `Book Plan saved at revision ${state.bookPlan.plan.revision}. Review and approve this book before compiling its Book Knowledge Pack.`
+        `Book Plan saved. Review and approve this book before updating its Book Knowledge.`
       );
     } catch (error) {
       setLog(`Book Plan save failed: ${error.message}`);
@@ -4744,7 +4790,7 @@
         }
       );
       const approval = (state.bookPlan.plan.book_workflow || []).find((item) => Number(item.book_number) === bookNumber) || {};
-      setLog(`Book ${bookNumber} Plan approved at book revision ${approval.approved_revision || approval.revision || 0}. Refreshing Book Knowledge Pack readiness…`);
+      setLog(`Book ${bookNumber} Plan approved. Checking Book Knowledge readiness…`);
       try {
         const bookStatus = await apiFetch(`/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status?book_number=${encodeURIComponent(bookNumber)}`);
         cacheBookRuntimeContextForBook(bookStatus, bookNumber);
@@ -4783,7 +4829,7 @@
       );
       clearBookRuntimeContextForBook(bookNumber);
       state.dashboardBookKnowledgeRefreshNeeded = true;
-      setLog(`Book ${bookNumber} Plan approval revoked. Downstream generation remains locked.`);
+      setLog(`Book ${bookNumber} Plan approval revoked. Book Knowledge may need approval again before it can be updated.`);
     } catch (error) {
       setLog(`Book Plan approval revocation failed: ${error.message}`);
     } finally {
@@ -4809,6 +4855,27 @@
     const compilerReady = bookContext.compiler_ready === true;
     const compileEnabled = compilerReady && !readOnly && !loading;
     const readyCount = number(bookContext.ready_count || 0);
+
+    const bookKnowledgeBlockerMessage = (item) => {
+      const code = String((item || {}).code || '');
+      const bookNumber = number((item || {}).book_number || 0);
+      const messages = {
+        book_plan_reference_migration_required: 'Book planning needs an internal update before Book Knowledge can be prepared.',
+        author_canon_missing: 'Author Canon must be available before Book Knowledge can be prepared.',
+        canon_index_not_current: 'Canon references need to be refreshed before Book Knowledge can be prepared.',
+        book_plan_not_complete: `Book ${bookNumber} Plan needs to be completed first.`,
+        book_plan_not_approved: `Book ${bookNumber} Plan needs current author approval first.`,
+        book_scope_not_approved: `Canon for Book ${bookNumber} needs to be approved and current first.`
+      };
+      return messages[code] || String((item || {}).message || 'Book Knowledge needs attention before it can be updated.');
+    };
+    const bookKnowledgeAuthorMessage = loading
+      ? 'Checking Book Knowledge status…'
+      : String(bookContext.status || '') === 'error'
+        ? 'Book Knowledge status could not be refreshed. Use Refresh to try again.'
+        : readyCount > 0
+          ? `${readyCount} book(s) are ready for Book Knowledge to be updated.`
+          : `${number(bookContext.current_count || 0)} of ${number(bookContext.target_count || (bootstrap.manifest || {}).book_count || 0)} books have current Book Knowledge.`;
 
     const libraryBooks = ((((state.authorLibrary || {}).universal || {}).books || {}).items || []);
     const libraryChapters = ((((state.authorLibrary || {}).universal || {}).chapters || {}).items || []);
@@ -4842,14 +4909,14 @@
 
           <div class="workspace-author-metric-list">
             <div><strong>Planning Coverage</strong><span>${state.authorLibrary ? `${number(plannedChapters)} / ${number(targetChapters)} chapters planned` : 'Loading planning coverage…'}</span></div>
-            <div><strong>Author-Accepted Chapters</strong><span>Not tracked yet</span></div>
+            <div><strong>Author-Accepted Chapters</strong><span>Available after chapter review is enabled</span></div>
             <div><strong>Chapter in Progress</strong><span>${activeChapter ? `Chapter ${number(activeChapter)} — ${escapeHtml(chapterStatus)}` : 'Not yet planned'}</span></div>
             <div><strong>Selected Canon</strong><span>${number(target.selected_record_count || 0)} items</span></div>
-            <div><strong>Estimated Context</strong><span>${number(target.estimated_tokens || 0)} tokens</span></div>
+            <div><strong>Estimated Knowledge Size</strong><span>${number(target.estimated_tokens || 0)} tokens</span></div>
           </div>
 
           ${targetBlockers.length
-            ? `<div class="workspace-author-warning"><strong>Needs attention</strong>${targetBlockers.map((item) => `<span>${escapeHtml(item.message || item.code || 'Compilation is blocked.')}</span>`).join('')}</div>`
+            ? `<div class="workspace-author-warning"><strong>Needs attention</strong>${targetBlockers.map((item) => `<span>${escapeHtml(bookKnowledgeBlockerMessage(item))}</span>`).join('')}</div>`
             : ''}
 
           <details class="workspace-technical-details">
@@ -4869,16 +4936,16 @@
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-book-knowledge-author-phase-a">
         <section class="workspace-author-hero">
-          <span class="workspace-author-eyebrow">BOOK-SCOPED KNOWLEDGE</span>
+          <span class="workspace-author-eyebrow">BOOK WRITING FOUNDATION</span>
           <h3>Book Knowledge</h3>
           <p>
-            Each card shows the knowledge prepared for one book: its planning coverage,
-            current planning position, selected Canon, and estimated context size.
+            Book Knowledge combines the approved Canon and Book Plan for each book. It prepares that book for
+            Chapter Planner and, once generation is enabled, for writing. It is preparation for writing, not manuscript prose.
           </p>
           <p class="workspace-author-term-note">
-            <strong>Author-Accepted Chapters</strong> will mean chapters whose manuscript prose the author has accepted.
-            <strong>Continuity commit</strong> is a separate internal synchronization checkpoint and is intentionally hidden
-            unless it falls behind accepted manuscript state.
+            Each card shows planning coverage, the chapter currently in progress, selected Canon, and the estimated
+            size of the knowledge prepared for that book. <strong>Author-Accepted Chapters</strong> will show chapters
+            whose manuscript prose you have reviewed and accepted once that workflow is enabled.
           </p>
         </section>
 
@@ -4886,8 +4953,10 @@
 
         <div class="workspace-action-row workspace-author-gold-actions">
           <button type="button" id="book-runtime-context-refresh" class="secondary-action"
+            title="Reloads current Book Knowledge status. It does not update Book Knowledge or change planning."
             ${loading ? 'disabled' : ''}>${loading ? 'Refreshing…' : 'Refresh'}</button>
           <button type="button" id="book-runtime-context-generate" class="primary-action"
+            title="Updates only books whose approved Canon for This Book or Book Plan requires new Book Knowledge. Books already current are left unchanged. This does not generate prose."
             ${compileEnabled ? '' : 'disabled'}
             aria-disabled="${compileEnabled ? 'false' : 'true'}">
             ${loading ? 'Working…' : 'Update Ready Book Knowledge'}
@@ -4914,6 +4983,7 @@
           <summary>System Details</summary>
           <dl class="workspace-definition-grid workspace-definition-grid--compact">
             ${definition('Book Plan schema', plan.schema_version || '—')}
+            ${definition('Service message', bookContext.message || '—')}
             ${definition('Completed Book Plans', number(plan.complete_book_count || 0))}
             ${definition('Ready Book Knowledge', readyCount)}
             ${definition('Approved Book Canons', number(scope.approved_current_count || 0))}
@@ -4931,7 +5001,7 @@
         </details>
 
         <div class="workspace-disabled-note">
-          ${escapeHtml(bookContext.message || 'Book Knowledge status is unavailable.')}
+          ${escapeHtml(bookKnowledgeAuthorMessage)}
           ${readOnly ? ' Archived projects are read-only.' : ''}
         </div>
       </div>
@@ -4974,7 +5044,7 @@
       );
       state.bookRuntimeContext = status;
       state.bookRuntimeContextByBook = {};
-      setLog(`Book Knowledge Pack status: ${status.status || 'unknown'}; ${status.ready_count || 0} target(s) ready.`);
+      setLog(`Book Knowledge status refreshed. ${status.ready_count || 0} book(s) are ready to update.`);
     } catch (error) {
       state.bookRuntimeContextByBook = {};
       state.bookRuntimeContext = {
@@ -4989,7 +5059,7 @@
           code: 'status_load_failed',
           message: error.message
         }],
-        message: `Unable to load Book Runtime Context v2 status: ${error.message}`,
+        message: `Unable to load Book Knowledge status: ${error.message}`,
         execution_locks: {
           book_runtime_context_compilation_enabled: false,
           prompt_builder_called: false,
@@ -5027,14 +5097,14 @@
       || state.bookRuntimeContextLoading
     ) {
       setLog(
-        "No Book Knowledge Pack is ready to compile yet. Complete and approve a Book Canon and that book's Book Plan first."
+        "No Book Knowledge is ready to update yet. Complete and approve Canon for This Book and that book's Book Plan first."
       );
       return;
     }
 
     state.bookRuntimeContextLoading = true;
     renderBookRuntimeContext(state.bootstrap);
-    setLog('Compiling each ready Book Knowledge Pack from its selected Book Canon and approved Book Plan…');
+    setLog('Updating Book Knowledge for each ready book…');
 
     try {
       const result = await apiFetch(
@@ -5048,7 +5118,7 @@
         }
       );
       setLog(
-        `Compiled ${result.generated_count || 0} Book Knowledge Pack artifact(s). Downstream generation remains locked.`
+        `Updated Book Knowledge for ${result.generated_count || 0} book(s). Writing generation is not available yet.`
       );
       state.bookRuntimeContext = await apiFetch(
         `/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status`
@@ -5063,7 +5133,7 @@
         ...status,
         status: 'error',
         compiler_ready: false,
-        message: `Book Runtime Context compilation failed: ${error.message}`
+        message: `Book Knowledge update failed: ${error.message}`
       };
       setLog(state.bookRuntimeContext.message);
     } finally {
@@ -5075,22 +5145,47 @@
   function renderSettings(manifest, context, bootstrap) {
     setHeading('Settings');
     mainPanel.innerHTML = `
-      <div class="workspace-content">
-        <p class="placeholder">Settings are read-only until project setup editing rules are defined for workspace-ready projects.</p>
-        <dl class="workspace-definition-list">
-          ${definition('Project ID', manifest.project_id)}
-          ${definition('Template', manifest.template_id)}
-          ${definition('Genre', labelFor(manifest.genre), { humanReadable: true })}
-          ${definition('Engine', manifest.engine_id)}
-          ${definition('AI Provider', manifest.ai_provider)}
-          ${definition('Project Code', context.project_code)}
-          ${definition('Storage Mode', context.storage_mode)}
-          ${definition('Seed Mode', context.seed_mode)}
-          ${definition('Runtime Ready', bootstrap && bootstrap.runtime_ready ? 'true' : 'false')}
-          ${definition('Generation Enabled', bootstrap && bootstrap.generation_enabled ? 'true' : 'false')}
-          ${definition('Validation Enabled', bootstrap && bootstrap.validation_enabled ? 'true' : 'false')}
-          ${definition('Exports Enabled', bootstrap && bootstrap.exports_enabled ? 'true' : 'false')}
-        </dl>
+      <div class="workspace-content workspace-settings-author-view">
+        <section class="workspace-author-hero">
+          <span class="workspace-author-eyebrow">PROJECT SETTINGS</span>
+          <h3>${escapeHtml(manifest.project_name || 'Untitled Project')}</h3>
+          <p>
+            Review the main settings established for this project. Some settings remain locked while Italus
+            protects the project’s current Canon and planning structure.
+          </p>
+        </section>
+
+        <section class="workspace-author-summary-card">
+          <div class="workspace-author-metric-list">
+            <div><strong>Project Name</strong><span>${escapeHtml(manifest.project_name || 'Untitled Project')}</span></div>
+            <div><strong>Genre</strong><span>${escapeHtml(labelFor(manifest.genre || '—'))}</span></div>
+            <div><strong>Project Template</strong><span>${escapeHtml(labelFor(manifest.template_id || '—'))}</span></div>
+            <div><strong>Books Planned</strong><span>${number(manifest.book_count)}</span></div>
+            <div><strong>Chapters per Book</strong><span>${number(manifest.chapters_per_book)}</span></div>
+            <div><strong>Target Words per Chapter</strong><span>${number(manifest.target_words_per_chapter)}</span></div>
+            <div><strong>Selected Writing Engine</strong><span>${escapeHtml(labelFor(manifest.ai_provider || manifest.engine_id || 'Not Selected'))}</span></div>
+          </div>
+        </section>
+
+        <div class="workspace-disabled-note">
+          Writing-engine connection, model selection, pricing, and usage settings will appear here when AI generation tracking is enabled.
+        </div>
+
+        <details class="workspace-technical-details">
+          <summary>Technical Details</summary>
+          <dl class="workspace-definition-list compact">
+            ${definition('Project ID', manifest.project_id)}
+            ${definition('Engine ID', manifest.engine_id)}
+            ${definition('AI Provider ID', manifest.ai_provider)}
+            ${definition('Project Code', context.project_code)}
+            ${definition('Storage Mode', context.storage_mode)}
+            ${definition('Seed Mode', context.seed_mode)}
+            ${definition('Runtime Ready', bootstrap && bootstrap.runtime_ready ? 'Yes' : 'No')}
+            ${definition('Generation Enabled', bootstrap && bootstrap.generation_enabled ? 'Yes' : 'No')}
+            ${definition('Validation Enabled', bootstrap && bootstrap.validation_enabled ? 'Yes' : 'No')}
+            ${definition('Exports Enabled', bootstrap && bootstrap.exports_enabled ? 'Yes' : 'No')}
+          </dl>
+        </details>
       </div>
     `;
   }
@@ -5450,17 +5545,24 @@
   }
 
   function renderArchiveView(manifest, wizard) {
-    setHeading('Archive / Project Control');
+    setHeading('Archive');
     mainPanel.innerHTML = `
       <div class="workspace-content">
-        <p class="placeholder">Project control is intentionally limited during workspace bootstrap.</p>
+        <p class="placeholder">
+          Project archiving is not available yet. No project data is changed from this page.
+        </p>
         <dl class="workspace-definition-list">
           ${definition('Project', manifest.project_name)}
-          ${definition('Lifecycle', lifecycleLabel(manifest.lifecycle_state), { humanReadable: true })}
-          ${definition('Workspace Access', wizard && wizard.can_enter_workspace ? 'Open' : 'Blocked')}
-          ${definition('Resume Target', labelFor(wizard && wizard.resume_target), { humanReadable: true })}
+          ${definition('Project Status', lifecycleLabel(manifest.lifecycle_state), { humanReadable: true })}
         </dl>
-        <div class="workspace-disabled-note">Archive controls will be wired after workspace bootstrap validation.</div>
+        <details class="workspace-technical-details">
+          <summary>Technical Details</summary>
+          <dl class="workspace-definition-list compact">
+            ${definition('Workspace Access', wizard && wizard.can_enter_workspace ? 'Open' : 'Blocked')}
+            ${definition('Resume Target', labelFor(wizard && wizard.resume_target), { humanReadable: true })}
+          </dl>
+        </details>
+        <div class="workspace-disabled-note">Archive controls will be added after the project lifecycle workflow is finalized.</div>
       </div>
     `;
   }
@@ -5472,7 +5574,7 @@
         <p class="placeholder">${escapeHtml(reason)}</p>
         ${runtimeLockPanel(state.bootstrap || {})}
         <div class="workspace-disabled-note">
-          This action is blocked by design. Runtime generation, validation, and output are not migrated yet.
+          This feature is intentionally unavailable until the related writing workflow is ready.
         </div>
       </div>
     `;
@@ -5728,7 +5830,7 @@
 
   function renderNoProject() {
     setHeading('Workspace');
-    if (modeLabel) modeLabel.textContent = 'Mode: Workspace';
+    if (modeLabel) modeLabel.textContent = 'No Project';
     if (mainPanel) {
       mainPanel.innerHTML = `
         <p class="placeholder">
@@ -5736,7 +5838,7 @@
         </p>
       `;
     }
-    setLog('Workspace opened without project_id.');
+    setLog('No project was selected. Return to Existing Projects and open a workspace-ready project.');
   }
 
   function renderError(message) {
