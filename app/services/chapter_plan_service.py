@@ -33,13 +33,15 @@ from app.services import (
     book_plan_service,
     book_scope_service,
     canon_index_service,
+    pov_contract_service,
     story_eligibility_service,
     story_control_service,
 )
 
 
-CHAPTER_PLAN_SERVICE_MARKER = "project-chapter-plan-event-board-20260816"
-CHAPTER_PLAN_SCHEMA_VERSION = "project_chapter_plan_v1"
+CHAPTER_PLAN_SERVICE_MARKER = "project-chapter-plan-pov-contract-20260823"
+CHAPTER_PLAN_SCHEMA_VERSION = "project_chapter_plan_v2_pov_contract"
+CHAPTER_PLAN_LEGACY_SCHEMA_VERSIONS = frozenset({"project_chapter_plan_v1"})
 CHAPTER_PLAN_FILENAME = "chapter_plan.json"
 
 CHAPTER_STATUS_DRAFT = "draft"
@@ -139,7 +141,9 @@ def get_chapter_plan_contract() -> dict[str, Any]:
             "assigned_event_refs": "optional stable event references",
             "event_placements": "optional lightweight placement hints",
             "generation_kickoff": "optional small starting instruction",
-            "pov": "optional stable character references",
+            "pov": "stable character references authorized by the Advanced POV contract",
+            "pov_type": "optional Advanced POV type",
+            "pov_omniscient_style": "optional omniscient interior style; valid only for Third-Person Omniscient",
             "chapter_objective": "optional author text",
             "restrictions": "optional author text list",
             "story_control_refs": "optional Story Control IDs; registry is introduced in Patch 24",
@@ -148,6 +152,8 @@ def get_chapter_plan_contract() -> dict[str, Any]:
         "placement_positions": sorted(PLACEMENT_POSITIONS),
         "event_relationship_types": sorted(EVENT_RELATIONSHIP_TYPES),
         "chapter_event_role_values": sorted(CHAPTER_EVENT_ROLE_VALUES),
+        "pov_types": pov_contract_service.pov_type_options(),
+        "pov_omniscient_styles": pov_contract_service.omniscient_style_options(),
         "dependencies": {
             "book_scope": "selected references must be in Canon for This Book",
             "book_plan": "revision/hash snapshotted; approval is a readiness gate",
@@ -378,6 +384,29 @@ def save_chapter_draft_for_context(
         allowed_ids=allowed_ids,
         required_group="characters",
     )
+    selected_ids = {
+        str(ref.get("record_id") or "")
+        for ref in selected_canon_refs
+        if str(ref.get("record_id") or "")
+    }
+    unselected_pov_ids = [
+        str(ref.get("record_id") or "")
+        for ref in pov
+        if str(ref.get("record_id") or "") not in selected_ids
+    ]
+    if unselected_pov_ids:
+        raise ChapterPlanContractError(
+            "POV characters must already be selected for this chapter: "
+            + ", ".join(unselected_pov_ids)
+        )
+    try:
+        pov_type, pov_omniscient_style = pov_contract_service.normalize_plan_settings(
+            payload.get("pov_type"),
+            payload.get("pov_omniscient_style"),
+            pov,
+        )
+    except pov_contract_service.PovContractError as exc:
+        raise ChapterPlanContractError(str(exc)) from exc
 
     event_placements = _normalize_event_placements(
         context,
@@ -443,6 +472,8 @@ def save_chapter_draft_for_context(
         "event_placements": event_placements,
         "generation_kickoff": generation_kickoff,
         "pov": pov,
+        "pov_type": pov_type,
+        "pov_omniscient_style": pov_omniscient_style,
         "chapter_objective": chapter_objective,
         "restrictions": restrictions,
         "story_control_refs": story_control_refs,
@@ -712,6 +743,8 @@ def _empty_chapter(book_number: int, chapter_number: int) -> dict[str, Any]:
         "event_placements": [],
         "generation_kickoff": "",
         "pov": [],
+        "pov_type": "",
+        "pov_omniscient_style": "",
         "chapter_objective": "",
         "restrictions": [],
         "story_control_refs": [],
@@ -729,9 +762,12 @@ def _normalize_existing_document(
     if not isinstance(raw, dict):
         raise ChapterPlanContractError("Chapter Plan root must be an object.")
     schema = str(raw.get("schema_version") or "")
-    if schema != CHAPTER_PLAN_SCHEMA_VERSION:
+    accepted_schemas = {CHAPTER_PLAN_SCHEMA_VERSION, *CHAPTER_PLAN_LEGACY_SCHEMA_VERSIONS}
+    if schema not in accepted_schemas:
         raise ChapterPlanContractError(
-            f"Chapter Plan schema must be {CHAPTER_PLAN_SCHEMA_VERSION}."
+            "Chapter Plan schema must be "
+            + CHAPTER_PLAN_SCHEMA_VERSION
+            + " or a supported legacy schema."
         )
     if str(raw.get("project_id") or "") != context.project_id:
         raise ChapterPlanContractError(
@@ -811,6 +847,10 @@ def _normalize_existing_document(
                         raw_chapter.get("generation_kickoff")
                     ),
                     "pov": _normalize_stored_refs(raw_chapter.get("pov", [])),
+                    "pov_type": _clean_text(raw_chapter.get("pov_type")),
+                    "pov_omniscient_style": _clean_text(
+                        raw_chapter.get("pov_omniscient_style")
+                    ),
                     "chapter_objective": _clean_text(
                         raw_chapter.get("chapter_objective")
                     ),
@@ -899,6 +939,42 @@ def _decorate_chapter(
                         "message": "A Chapter Plan reference is no longer in Canon for This Book.",
                     }
                 )
+
+    selected_chapter_ids = {
+        str(ref.get("record_id") or "")
+        for ref in chapter.get("selected_canon_refs") or []
+        if str(ref.get("record_id") or "")
+    }
+    unselected_pov_ids = [
+        str(ref.get("record_id") or "")
+        for ref in chapter.get("pov") or []
+        if str(ref.get("record_id") or "") not in selected_chapter_ids
+    ]
+    if unselected_pov_ids:
+        hard_conflict = True
+        issues.append(
+            {
+                "code": "pov_character_not_selected_for_chapter",
+                "field": "pov",
+                "record_ids": unselected_pov_ids,
+                "message": "Every POV character must also be selected for this chapter.",
+            }
+        )
+    try:
+        pov_contract_service.normalize_plan_settings(
+            chapter.get("pov_type"),
+            chapter.get("pov_omniscient_style"),
+            list(chapter.get("pov") or []),
+        )
+    except pov_contract_service.PovContractError as exc:
+        hard_conflict = True
+        issues.append(
+            {
+                "code": "pov_contract_invalid",
+                "field": "pov",
+                "message": str(exc),
+            }
+        )
 
     control_validation = story_control_service.validate_story_control_refs(
         context.project_id,
@@ -1309,6 +1385,12 @@ def _content_hash(chapter: dict[str, Any]) -> str:
         "story_control_refs": list(chapter.get("story_control_refs") or []),
         "advanced_sequence": deepcopy(chapter.get("advanced_sequence") or []),
     }
+    pov_type = _clean_text(chapter.get("pov_type"))
+    pov_omniscient_style = _clean_text(chapter.get("pov_omniscient_style"))
+    if pov_type:
+        payload["pov_type"] = pov_type
+    if pov_omniscient_style:
+        payload["pov_omniscient_style"] = pov_omniscient_style
     encoded = json.dumps(
         payload,
         sort_keys=True,
@@ -1334,6 +1416,8 @@ def _has_planning_content(chapter: dict[str, Any]) -> bool:
         or chapter.get("assigned_event_refs")
         or _clean_text(chapter.get("generation_kickoff"))
         or chapter.get("pov")
+        or _clean_text(chapter.get("pov_type"))
+        or _clean_text(chapter.get("pov_omniscient_style"))
         or _clean_text(chapter.get("chapter_objective"))
         or chapter.get("restrictions")
         or chapter.get("story_control_refs")
@@ -1365,6 +1449,8 @@ def _stored_document(document: dict[str, Any]) -> dict[str, Any]:
                         "event_placements",
                         "generation_kickoff",
                         "pov",
+                        "pov_type",
+                        "pov_omniscient_style",
                         "chapter_objective",
                         "restrictions",
                         "story_control_refs",

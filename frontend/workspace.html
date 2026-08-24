@@ -6,7 +6,7 @@
   <title>Narrative Studio Workspace</title>
 
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="workspace.css?v=20260822-library-phase2b" />
+  <link rel="stylesheet" href="workspace.css?v=20260823-prose-rulebook-advanced-pov-v1" />
 </head>
 
 <body class="workspace-body">
@@ -19,8 +19,8 @@
       </a>
 
       <nav aria-label="Workspace commands">
-        <a href="/" data-top-menu="file">File</a>
-        <a href="#project" data-top-menu="project">Project</a>
+        <a href="/" data-top-menu="file">Home</a>
+        <a href="#project" data-top-menu="project">Dashboard</a>
         <a href="#engine" data-top-menu="engine">Engine</a>
         <a href="#generate" data-top-menu="generate" class="disabled-link" aria-disabled="true">Generate</a>
         <a href="#validation" data-top-menu="validation" class="disabled-link" aria-disabled="true">Validation</a>
@@ -85,6 +85,8 @@
         <section>
           <h3>Project</h3>
           <button type="button" data-workspace-section="dashboard">Dashboard</button>
+          <button type="button" data-workspace-section="project_runtime_context">Project Context</button>
+          <button type="button" data-workspace-section="runtime_storage_preview">Writing Memory</button>
           <button type="button" data-workspace-section="budget_plan">Budget Plan</button>
         </section>
 
@@ -98,6 +100,7 @@
           <button type="button" data-workspace-section="manuscript_plan">Manuscript Plan</button>
           <button type="button" data-workspace-section="book_plan">Book Planner</button>
           <button type="button" data-workspace-section="chapter_planner">Chapter Planner</button>
+          <button type="button" data-workspace-section="book_runtime_context">Book Knowledge</button>
         </section>
 
         <section id="workspace-library-section">
@@ -109,13 +112,10 @@
         </section>
 
         <section>
-          <h3>System / Advanced</h3>
-          <button type="button" data-workspace-section="project_runtime_context">Project Runtime Context</button>
-          <button type="button" data-workspace-section="book_runtime_context">Book Runtime Context</button>
-          <button type="button" data-workspace-section="runtime_storage_preview">Project Writing Memory</button>
-          <button type="button" data-workspace-section="memory_continuity" disabled>Memory / Continuity</button>
+          <h3>Advanced</h3>
+          <button type="button" data-workspace-section="memory_continuity" disabled>Continuity</button>
           <button type="button" data-workspace-section="validation" disabled>Validation</button>
-          <button type="button" data-workspace-section="output" disabled>Output</button>
+          <button type="button" data-workspace-section="output" disabled>Export</button>
         </section>
 
         <section>
@@ -152,6 +152,6 @@
 
   </div>
 
-  <script src="workspace.js?v=20260822-library-phase3-rebased"></script>
+  <script src="workspace.js?v=20260823-prose-rulebook-advanced-pov-v1"></script>
 </body>
 </html>

@@ -38,14 +38,16 @@ from app.services import (
     book_plan_service,
     canon_index_service,
     chapter_plan_service,
+    pov_contract_service,
     progression_override_service,
+    prose_rulebook_service,
     story_control_service,
     story_eligibility_service,
 )
 
 
-CHAPTER_KNOWLEDGE_PACK_SERVICE_MARKER = "project-chapter-knowledge-pack-v2-execution-contract-20260819"
-CHAPTER_KNOWLEDGE_PACK_SCHEMA_VERSION = "chapter_knowledge_pack_v2"
+CHAPTER_KNOWLEDGE_PACK_SERVICE_MARKER = "project-chapter-knowledge-pack-v3-pov-rulebook-20260823"
+CHAPTER_KNOWLEDGE_PACK_SCHEMA_VERSION = "chapter_knowledge_pack_v3_pov_rulebook"
 CHAPTER_KNOWLEDGE_PACK_DIRECTORY = "chapter_knowledge_pack"
 AUTHOR_CANON_RELATIVE_PATH = Path("canon") / "author_canon.json"
 
@@ -288,6 +290,7 @@ def get_chapter_knowledge_pack_status_for_context(
         context,
         target_ref=None,
     )
+    prose_rulebook = prose_rulebook_service.get_prose_rulebook_contract()
 
     source = {
         "book_runtime_context_sha256": str((book_target or {}).get("sha256") or ""),
@@ -306,6 +309,8 @@ def get_chapter_knowledge_pack_status_for_context(
         "canon_index_revision": str(
             (book_status.get("canon_index") or {}).get("revision") or ""
         ),
+        "prose_rulebook_version": str(prose_rulebook.get("version") or ""),
+        "prose_rulebook_sha256": str(prose_rulebook.get("sha256") or ""),
     }
     dependency_hash = _json_hash(source)
 
@@ -488,6 +493,7 @@ def compile_chapter_knowledge_pack_for_context(
         for record_id in selected_ids
     ]
     chapter_execution_contract = _build_chapter_execution_contract(chapter)
+    prose_rulebook = prose_rulebook_service.get_prose_rulebook_contract()
 
     plan = book_plan_service.get_book_plan_for_context(context, manifest)["plan"]
     book = next(
@@ -535,6 +541,7 @@ def compile_chapter_knowledge_pack_for_context(
         prior_ending_context=prior_ending,
         unlock_evaluations=unlock_evaluations,
         chapter_execution_contract=chapter_execution_contract,
+        prose_rulebook=prose_rulebook,
     )
     pack_tokens = _estimate_tokens(body)
     book_tokens = int(
@@ -609,6 +616,24 @@ def compile_chapter_knowledge_pack_for_context(
         "event_placements": deepcopy(chapter.get("event_placements") or []),
         "chapter_event_sequence": deepcopy(chapter.get("event_placements") or []),
         "chapter_execution_contract": deepcopy(chapter_execution_contract),
+        "prose_rulebook": {
+            "version": str(prose_rulebook.get("version") or ""),
+            "sha256": str(prose_rulebook.get("sha256") or ""),
+            "filename": str(prose_rulebook.get("filename") or ""),
+            "quantitative_metrics": deepcopy(
+                prose_rulebook.get("quantitative_metrics") or {}
+            ),
+        },
+        "prompt_facing_controls": {
+            "pov_contract": deepcopy(
+                chapter_execution_contract.get("pov_contract") or {}
+            ),
+            "prose_rulebook": {
+                "version": str(prose_rulebook.get("version") or ""),
+                "sha256": str(prose_rulebook.get("sha256") or ""),
+                "prompt_text": str(prose_rulebook.get("prompt_text") or ""),
+            },
+        },
         "story_control_refs": list(chapter.get("story_control_refs") or []),
         "story_controls": deepcopy(controls),
         "unlock_evaluations": unlock_evaluations,
@@ -627,6 +652,13 @@ def compile_chapter_knowledge_pack_for_context(
         "validator_sidecar": {
             "selected_record_ids": selected_ids,
             "chapter_execution_contract": deepcopy(chapter_execution_contract),
+            "prose_rulebook": {
+                "version": str(prose_rulebook.get("version") or ""),
+                "sha256": str(prose_rulebook.get("sha256") or ""),
+                "quantitative_metrics": deepcopy(
+                    prose_rulebook.get("quantitative_metrics") or {}
+                ),
+            },
             "event_placements": deepcopy(chapter.get("event_placements") or []),
             "chapter_restrictions": deepcopy(chapter.get("restrictions") or []),
             "allowed_reveals": deepcopy(book.get("allowed_reveals") or []),
@@ -1067,6 +1099,14 @@ def _build_chapter_execution_contract(chapter: dict[str, Any]) -> dict[str, Any]
     ]
     participants.extend(pov_refs)
     participants = _dedupe_refs(participants)
+    try:
+        pov_contract = pov_contract_service.build_prompt_contract(
+            chapter.get("pov_type"),
+            chapter.get("pov_omniscient_style"),
+            _dedupe_refs(pov_refs),
+        )
+    except pov_contract_service.PovContractError as exc:
+        raise ChapterKnowledgePackError(str(exc)) from exc
 
     locations = _dedupe_refs(
         [ref for ref in selected_refs if ref.get("record_type") == "location"]
@@ -1152,6 +1192,7 @@ def _build_chapter_execution_contract(chapter: dict[str, Any]) -> dict[str, Any]
         "required_event_sequence": placed_events,
         "required_additional_canon_refs": additional,
         "pov_refs": _dedupe_refs(pov_refs),
+        "pov_contract": pov_contract,
     }
 
 
@@ -1166,6 +1207,7 @@ def _render_chapter_body(
     prior_ending_context: str,
     unlock_evaluations: list[dict[str, Any]],
     chapter_execution_contract: dict[str, Any],
+    prose_rulebook: dict[str, Any],
 ) -> str:
     lines = [
         "## Book Boundary",
@@ -1197,12 +1239,48 @@ def _render_chapter_body(
     else:
         lines.append("- None")
 
-    lines.extend(["", "### POV Constraint"])
-    pov_refs = chapter_execution_contract.get("pov_refs") or []
-    if pov_refs:
-        lines.extend([f"- {ref.get('label') or ref.get('record_id')}" for ref in pov_refs])
+    lines.extend(["", "### POV Contract"])
+    pov_contract = chapter_execution_contract.get("pov_contract") or {}
+    if pov_contract.get("configured") is True:
+        lines.append(
+            f"- POV Type: {pov_contract.get('pov_type_label') or pov_contract.get('pov_type')}"
+        )
+        pov_refs = pov_contract.get("character_refs") or []
+        if pov_refs:
+            lines.append("- Authorized POV Character(s):")
+            lines.extend(
+                [
+                    f"  - {ref.get('label') or ref.get('record_id')}"
+                    for ref in pov_refs
+                ]
+            )
+        else:
+            lines.append("- Authorized POV Character(s): None")
+        lines.extend(
+            [
+                f"- Interior Access: {pov_contract.get('interior_access') or ''}",
+                f"- Pronoun Mode: {pov_contract.get('pronoun_mode') or ''}",
+                f"- Narrator Scope: {pov_contract.get('narrator_scope') or ''}",
+                f"- Head-Hopping: {pov_contract.get('head_hopping') or ''}",
+            ]
+        )
+        if pov_contract.get("omniscient_style"):
+            lines.append(
+                "- Omniscient Interior Style: "
+                + str(
+                    pov_contract.get("omniscient_style_label")
+                    or pov_contract.get("omniscient_style")
+                )
+            )
+        lines.extend(["", "#### POV Prompt Rules"])
+        lines.extend(
+            [
+                f"- {rule}"
+                for rule in pov_contract.get("prompt_rules") or []
+            ]
+        )
     else:
-        lines.append("- None")
+        lines.append("- Not configured")
 
     lines.extend(["", "### Required Chapter Locations"])
     required_locations = chapter_execution_contract.get("required_location_refs") or []
@@ -1308,7 +1386,17 @@ def _render_chapter_body(
     if not (chapter.get("event_placements") or []):
         lines.append("- None")
 
-    lines.extend(["", "## Selected Chapter Canon", ""])
+    lines.extend(
+        [
+            "",
+            "## Prose Generation Rulebook",
+            "",
+            str(prose_rulebook.get("prompt_text") or "").strip(),
+            "",
+            "## Selected Chapter Canon",
+            "",
+        ]
+    )
     for record in bounded_records:
         label = _record_label(record)
         lines.extend(

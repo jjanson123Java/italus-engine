@@ -16,6 +16,8 @@
     bookPlanBookNumber: 1,
     bookRuntimeContext: null,
     bookRuntimeContextLoading: false,
+    bookRuntimeContextByBook: {},
+    dashboardBookKnowledgeRefreshNeeded: true,
     bookScope: null,
     bookScopeCatalog: null,
     bookScopeLoading: false,
@@ -112,6 +114,16 @@
 
       applyMenuState(bootstrap);
       renderSection('dashboard');
+
+      // Populate template-specific Library navigation after the Dashboard paints.
+      // This preserves the lightweight bootstrap path while making the full
+      // Library menu available after a hard refresh without requiring a Library click first.
+      void ensureAuthorLibrary()
+        .then(() => {
+          if (state.activeSection === 'dashboard') renderSection('dashboard');
+        })
+        .catch((error) => setLog(`Library navigation unavailable: ${error.message}`));
+
       setLog(`Workspace bootstrap loaded for ${id}. Generation runtime disabled.`);
     } catch (error) {
       renderError(`Workspace bootstrap failed: ${error.message}`);
@@ -574,7 +586,11 @@
       return;
     }
 
-    state.activeSection = sectionId || 'dashboard';
+    const nextSection = sectionId || 'dashboard';
+    if (state.activeSection === 'dashboard' && nextSection !== 'dashboard') {
+      state.dashboardBookKnowledgeRefreshNeeded = true;
+    }
+    state.activeSection = nextSection;
 
     document.querySelectorAll('[data-workspace-section]').forEach((button) => {
       button.classList.toggle('active', button.dataset.workspaceSection === state.activeSection);
@@ -587,7 +603,12 @@
     const summary = bootstrap.summary || {};
 
     const viewMap = {
-      dashboard: () => renderDashboard(manifest, budget, wizard, bootstrap),
+      dashboard: () => {
+        renderDashboard(manifest, budget, wizard, bootstrap);
+        if (state.dashboardBookKnowledgeRefreshNeeded && !state.bookRuntimeContextLoading) {
+          void loadBookRuntimeContextStatus();
+        }
+      },
       manuscript_plan: () => renderManuscriptPlan(manifest, budget, wizard, summary),
       budget_plan: () => renderBudgetPlan(budget, manifest),
       books: () => { void renderAuthorLibrary('books', bootstrap); },
@@ -624,62 +645,239 @@
     renderer();
   }
 
-    function renderDashboard(manifest, budget, wizard, bootstrap) {
-    setHeading('Project Dashboard');
+  function renderDashboard(manifest, budget, wizard, bootstrap) {
+    setHeading('Dashboard');
+
     const summary = bootstrap.summary || {};
     const runtimeContext = bootstrap.runtime_context || {};
-    const projectContext = runtimeContext.project || {};
-    const bookPlan = runtimeContext.book_plan || {};
-    const bookContext = runtimeContext.books || {};
-    const gates = [
-      ['Workspace Access', bootstrap.can_enter_workspace ? 'PASS' : 'BLOCKED', lifecycleLabel(manifest.lifecycle_state)],
-      [
-        'Author Canon',
-        summary.attention_required_section_count ? 'ATTENTION' : 'PASS',
-        `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)} required complete`
-      ],
-      [
-        'Canon Markdown',
-        summary.attention_required_section_count ? 'ATTENTION' : 'PASS',
-        `${number(summary.current_markdown_source_count)} current sources`
-      ],
-      ['Project Runtime Context', String(projectContext.status || 'not_generated').toUpperCase(), projectContext.message || 'Not generated'],
-      ['Book Plan', String(bookPlan.status || 'not_available').toUpperCase(), bookPlan.message || 'Not available'],
-      ['Book Runtime Context', String(bookContext.status || 'blocked').toUpperCase(), bookContext.message || 'Blocked'],
-      ['Generation', bootstrap.generation_enabled ? 'ENABLED' : 'DISABLED', 'Protected until runtime migration'],
-      ['Validation', bootstrap.validation_enabled ? 'ENABLED' : 'DISABLED', 'Validation runtime is not wired'],
-      ['Exports', bootstrap.exports_enabled ? 'ENABLED' : 'DISABLED', 'Output pipeline is not enabled']
-    ];
+    const projectContext = state.projectRuntimeContext || runtimeContext.project || {};
+    const bookContext = state.bookRuntimeContext || runtimeContext.books || {};
+    const bookKnowledgeDetailLoaded = Boolean(state.bookRuntimeContext);
+    const bookKnowledgeStatusError = String(bookContext.status || '') === 'error';
+    const bookKnowledgeStatusFresh = Boolean(
+      bookKnowledgeDetailLoaded
+      && !bookKnowledgeStatusError
+      && state.dashboardBookKnowledgeRefreshNeeded !== true
+      && state.bookRuntimeContextLoading !== true
+    );
+    const bookKnowledgeChecking = Boolean(
+      state.dashboardBookKnowledgeRefreshNeeded === true
+      || state.bookRuntimeContextLoading === true
+    );
+    const bookKnowledgeTargets = bookKnowledgeStatusFresh && Array.isArray(bookContext.targets)
+      ? bookContext.targets
+      : [];
+    const actionableBookKnowledgeTargets = bookKnowledgeTargets.filter((target) =>
+      target
+      && target.compiler_ready === true
+      && String(target.status || '').trim().toLowerCase() !== 'current'
+    );
+    const authorLibrary = state.authorLibrary || null;
+    const libraryBooks = Array.isArray((((authorLibrary || {}).universal || {}).books || {}).items)
+      ? (((authorLibrary || {}).universal || {}).books || {}).items
+      : [];
+    const libraryChapters = Array.isArray((((authorLibrary || {}).universal || {}).chapters || {}).items)
+      ? (((authorLibrary || {}).universal || {}).chapters || {}).items
+      : [];
+    const libraryLoaded = Boolean(authorLibrary);
+    const attention = [];
+
+    const projectContextStatus = String(projectContext.status || 'not generated').replace(/_/g, ' ');
+    let projectContextSummary = `${projectContextStatus} — project-wide Canon knowledge status.`;
+    if (projectContext.artifact_current === true && projectContext.approval_fresh === true) {
+      projectContextSummary = 'Current and approved — project-wide Canon context is ready for downstream Book Knowledge.';
+    } else if (projectContext.artifact_current === true && String(projectContext.approval_status || '') === 'approval_required') {
+      projectContextSummary = 'Current — project-wide Canon context is compiled and waiting for author approval.';
+    } else if (String(projectContext.status || '') === 'outdated') {
+      projectContextSummary = 'Outdated — Canon changed after this Project Context was compiled; update and approve it.';
+    } else if (String(projectContext.status || '') === 'missing') {
+      projectContextSummary = 'Not generated — create the project-wide Canon context before relying on downstream knowledge.';
+    } else if (String(projectContext.status || '') === 'blocked') {
+      projectContextSummary = 'Blocked — required Canon or rendered source material needs attention first.';
+    }
+
+    const plannedBooks = libraryBooks
+      .filter((item) =>
+        number(item.planned_chapters) > 0
+        || !['', 'not_ready'].includes(String(item.approval_status || '').trim().toLowerCase())
+      )
+      .sort((a, b) => number(b.book_number) - number(a.book_number));
+
+    const latestChapter = libraryChapters
+      .slice()
+      .sort((a, b) =>
+        number(b.book_number) - number(a.book_number)
+        || number(b.chapter_number) - number(a.chapter_number)
+      )[0] || null;
+
+    const latestBookNumber = latestChapter
+      ? number(latestChapter.book_number)
+      : (plannedBooks[0] ? number(plannedBooks[0].book_number) : 0);
+    const latestBook = libraryBooks.find((item) => number(item.book_number) === latestBookNumber) || {};
+    const latestBookTitle = String(latestBook.title || '').trim();
+    const latestBookDisplay = latestBookNumber
+      ? `Book ${latestBookNumber}${latestBookTitle ? ` — ${latestBookTitle}` : ''}`
+      : 'No Book Plan activity recorded';
+
+    const bookPlanningSummary = !libraryLoaded
+      ? 'Loading Book and Chapter planning summary…'
+      : latestBookNumber
+        ? `${latestBookDisplay} · ${bookPlanApprovalStatusLabel(latestBook.approval_status || 'not_ready')} · ${number(latestBook.planned_chapters)} / ${number(latestBook.target_chapters || manifest.chapters_per_book)} chapters planned`
+        : 'No Book Plan or Chapter Plan activity is recorded yet.';
+
+    const latestChapterSummary = !libraryLoaded
+      ? 'Loading latest planned Chapter…'
+      : latestChapter
+        ? `Book ${number(latestChapter.book_number)}, Chapter ${number(latestChapter.chapter_number)} — ${chapterPlanningStatusLabel(latestChapter.status || 'draft')}`
+        : 'No Chapter Plan has been created yet.';
+
+    const planningCoverageSummary = !libraryLoaded
+      ? 'Loading planning coverage…'
+      : latestBookNumber
+        ? `${number(latestBook.planned_chapters)} / ${number(latestBook.target_chapters || manifest.chapters_per_book)} chapters planned in Book ${latestBookNumber}`
+        : `0 / ${number(manifest.chapters_per_book)} chapters planned`;
+
+    const seriesName = String(manifest.series_name || manifest.project_name || 'This project').trim();
+    const seriesPlanSummary = number(manifest.book_count) === 1
+      ? 'This project is planned as 1 book.'
+      : `${seriesName} is planned as a ${number(manifest.book_count)}-book series.`;
+
+    const bookKnowledgeSummary = bookKnowledgeChecking
+      ? `Checking current Book Knowledge status across ${number(manifest.book_count)} books…`
+      : bookKnowledgeStatusError
+        ? 'Book Knowledge status could not be refreshed. Open Book Knowledge and retry the status check.'
+        : bookKnowledgeStatusFresh
+          ? `${number(bookContext.current_count)} current Book Knowledge pack(s) across ${number(bookContext.target_count || manifest.book_count)} books. ${actionableBookKnowledgeTargets.length ? `${number(actionableBookKnowledgeTargets.length)} pack(s) need compilation or recompilation and are ready now.` : 'No Book Knowledge pack currently needs compilation.'} These are compiled per-book Canon + Book Plan context, not completed manuscripts.`
+          : `Per-book compiled Canon + Book Plan context for ${number(manifest.book_count)} books. Currentness has not been checked in this Dashboard session yet.`;
+
+    if (number(summary.attention_required_section_count) > 0) {
+      attention.push(`${number(summary.attention_required_section_count)} Canon section(s) need author attention.`);
+    }
+    if (projectContext.artifact_current === false || String(projectContext.approval_status || '') === 'outdated') {
+      attention.push('Project Context needs to be updated before downstream knowledge remains current.');
+    }
+
+    if (libraryLoaded) {
+      const approvalNeeded = libraryBooks
+        .filter((item) => String(item.approval_status || '').trim().toLowerCase() === 'approval_required')
+        .sort((a, b) => number(a.book_number) - number(b.book_number));
+      const outdatedPlans = libraryBooks
+        .filter((item) => String(item.approval_status || '').trim().toLowerCase() === 'outdated')
+        .sort((a, b) => number(a.book_number) - number(b.book_number));
+      const chapterIssues = libraryChapters
+        .filter((item) => ['outdated', 'reconciliation_required'].includes(String(item.status || '').trim().toLowerCase()))
+        .sort((a, b) =>
+          number(a.book_number) - number(b.book_number)
+          || number(a.chapter_number) - number(b.chapter_number)
+        );
+
+      if (approvalNeeded.length) {
+        attention.push(`Book ${number(approvalNeeded[0].book_number)} Plan is ready for author approval.`);
+      }
+      if (outdatedPlans.length) {
+        attention.push(`Book ${number(outdatedPlans[0].book_number)} Plan is outdated and needs review.`);
+      }
+      if (chapterIssues.length) {
+        const issue = chapterIssues[0];
+        attention.push(`Book ${number(issue.book_number)}, Chapter ${number(issue.chapter_number)} planning needs review: ${chapterPlanningStatusLabel(issue.status || 'outdated')}.`);
+      }
+    }
+
+    if (bookKnowledgeStatusError && !bookKnowledgeChecking) {
+      attention.push('Book Knowledge status could not be refreshed. Open Book Knowledge and retry the status check.');
+    }
+    if (bookKnowledgeStatusFresh && actionableBookKnowledgeTargets.length) {
+      const actionableMissing = actionableBookKnowledgeTargets.filter((target) =>
+        String(target.status || '').trim().toLowerCase() === 'missing'
+      );
+      const actionableOutdated = actionableBookKnowledgeTargets.filter((target) =>
+        String(target.status || '').trim().toLowerCase() === 'outdated'
+      );
+      const actionableOther = actionableBookKnowledgeTargets.length - actionableMissing.length - actionableOutdated.length;
+
+      if (actionableMissing.length) {
+        attention.push(`${number(actionableMissing.length)} Book Knowledge pack(s) are ready to compile.`);
+      }
+      if (actionableOutdated.length) {
+        attention.push(`${number(actionableOutdated.length)} Book Knowledge pack(s) are outdated and ready to recompile.`);
+      }
+      if (actionableOther > 0) {
+        attention.push(`${number(actionableOther)} Book Knowledge pack(s) are ready for compilation.`);
+      }
+    }
+
+    const attentionBody = attention.length
+      ? `<ul class="workspace-author-attention-list">${attention.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+      : `<div class="workspace-success-note">
+          No project-wide issue is currently flagged. Book Planner, Chapter Planner, and Book Knowledge
+          perform their detailed per-book checks when those pages are opened.
+        </div>`;
 
     mainPanel.innerHTML = `
-      <div class="workspace-content workspace-navigation-detail-20260707">
-        <p class="placeholder">The workspace is available. Author canon is project-local; runtime context and generation remain locked.</p>
+      <div class="workspace-content workspace-author-dashboard-phase-a">
+        <section class="workspace-author-hero">
+          <span class="workspace-author-eyebrow">CURRENT PROJECT</span>
+          <h3>${escapeHtml(manifest.project_name || 'Untitled Project')}</h3>
+          <p>
+            Your author command center. This page summarizes project-wide readiness, the latest recorded
+            planning position, and where to continue without replacing the dedicated working pages.
+          </p>
+        </section>
 
-        <section class="workspace-panel">
-          <h3>Project Readiness</h3>
-          <div class="workspace-stat-grid">
-            ${statCard('Project', manifest.project_name || 'Untitled Project')}
-            ${statCard('Lifecycle', lifecycleLabel(manifest.lifecycle_state), { humanReadable: true })}
-            ${statCard('Resume Target', labelFor(wizard.resume_target || 'workspace'), { humanReadable: true })}
-            ${statCard('Author Canon', `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)} complete`)}
-            ${statCard('Needs Attention', number(summary.attention_required_section_count))}
-            ${statCard('Current Markdown', number(summary.current_markdown_source_count))}
-            ${statCard('Project Runtime Context', String(projectContext.status || 'not_generated').replace(/_/g, ' '))}
-            ${statCard('Budget Status', budget.token_budget_status || '—')}
-            ${statCard('Generation', bootstrap.generation_enabled ? 'Enabled' : 'Disabled')}
+        <section class="workspace-author-dashboard-grid">
+          <article class="workspace-author-summary-card">
+            <h3>Project Progress</h3>
+            <div class="workspace-author-metric-list">
+              <div><strong>Author Canon</strong><span>${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)} required sections complete</span></div>
+              <div><strong>Project Context</strong><span>${escapeHtml(projectContextSummary)}</span></div>
+              <div><strong>Book Planning</strong><span>${escapeHtml(bookPlanningSummary)}</span></div>
+              <div><strong>Book Knowledge</strong><span>${escapeHtml(bookKnowledgeSummary)}</span></div>
+            </div>
+          </article>
+
+          <article class="workspace-author-summary-card">
+            <h3>Writing Position</h3>
+            <div class="workspace-author-metric-list">
+              <div><strong>Series Plan</strong><span>${escapeHtml(seriesPlanSummary)}</span></div>
+              <div><strong>Latest Planned Book</strong><span>${escapeHtml(latestBookDisplay)}</span></div>
+              <div><strong>Latest Planned Chapter</strong><span>${escapeHtml(latestChapterSummary)}</span></div>
+              <div><strong>Planning Coverage</strong><span>${escapeHtml(planningCoverageSummary)}</span></div>
+              <div><strong>Author-Accepted Chapters</strong><span>Not tracked until manuscript acceptance becomes authoritative.</span></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="workspace-author-summary-card">
+          <h3>Needs Attention</h3>
+          ${attentionBody}
+        </section>
+
+        <section class="workspace-author-summary-card">
+          <h3>Continue</h3>
+          <p class="placeholder">Choose the dedicated page for the work you want to do next.</p>
+          <div class="workspace-author-action-grid">
+            <button type="button" class="workspace-author-action" data-dashboard-target="book_plan">Book Planner</button>
+            <button type="button" class="workspace-author-action" data-dashboard-target="chapter_planner">Chapter Planner</button>
+            <button type="button" class="workspace-author-action" data-dashboard-target="project_runtime_context">Project Context</button>
+            <button type="button" class="workspace-author-action" data-dashboard-target="book_runtime_context">Book Knowledge</button>
+            <button type="button" class="workspace-author-action" data-dashboard-target="books">Library — Books</button>
           </div>
         </section>
 
-        <section class="workspace-panel">
-          <h3>Readiness Gates</h3>
-          <div class="workspace-gate-list">
-            ${gates.map(([label, status, detail]) => readinessGate(label, status, detail)).join('')}
+        <details class="workspace-technical-details workspace-author-dashboard-technical">
+          <summary>Technical Status</summary>
+          <div class="workspace-lock-grid">
+            ${lockCard('Generation', bootstrap.generation_enabled ? 'Enabled' : 'Locked')}
+            ${lockCard('Validation', bootstrap.validation_enabled ? 'Enabled' : 'Locked')}
+            ${lockCard('Export', bootstrap.exports_enabled ? 'Enabled' : 'Locked')}
           </div>
-        </section>
-
-        ${runtimeLockPanel(bootstrap)}
+        </details>
       </div>
     `;
+
+    mainPanel.querySelectorAll('[data-dashboard-target]').forEach((button) => {
+      button.addEventListener('click', () => renderSection(button.dataset.dashboardTarget || 'dashboard'));
+    });
   }
 
   function renderManuscriptPlan(manifest, budget, wizard, summary) {
@@ -1142,7 +1340,7 @@
   }
 
   function renderProjectRuntimeContext(bootstrap) {
-    setHeading('Project Runtime Context');
+    setHeading('Project Context');
 
     const bootstrapContext = (bootstrap.runtime_context || {}).project || {};
     const projectContext = state.projectRuntimeContext || bootstrapContext;
@@ -1160,9 +1358,11 @@
     const approveEnabled = artifactCurrent && !approvalFresh && !loading && !readOnly;
     const revokeEnabled = ['approved', 'outdated'].includes(approvalStatus)
       && !loading && !readOnly;
+    const needsUpdate = !artifactCurrent || approvalStatus === 'outdated';
+
     const targetRows = targets.map((target) => `
       <tr>
-        <td>${escapeHtml(target.label || 'Project Runtime Context')}</td>
+        <td>${escapeHtml(target.label || 'Project Context')}</td>
         <td>${statusBadge(String(target.status || (target.exists ? 'generated' : 'missing')).toUpperCase())}</td>
         <td><code>${escapeHtml(target.project_relative_path || target.relative_path || '—')}</code></td>
         <td>${target.sha256 ? `<code>${escapeHtml(String(target.sha256).slice(0, 16))}…</code>` : '—'}</td>
@@ -1171,57 +1371,65 @@
     `).join('');
 
     mainPanel.innerHTML = `
-      <div class="workspace-content workspace-project-runtime-approval-v1">
-        <p class="placeholder">
-          Review the project-level runtime context boundary. Approval is bound
-          to the current artifact and current source-set SHA-256. Canon changes
-          make the artifact and approval outdated.
-        </p>
-        <div class="workspace-stat-grid">
-          ${statCard('Status', String(projectContext.status || 'not_generated').replace(/_/g, ' '))}
-          ${statCard('Validation', validationReady ? 'Ready' : 'Blocked')}
-          ${statCard('Artifact', artifactCurrent ? 'Current' : (projectContext.generated_count ? 'Outdated' : 'Missing'))}
-          ${statCard('Approval', approvalStatus.replace(/_/g, ' '))}
-          ${statCard('Freshness', approvalFresh ? 'current' : (approvalStatus === 'outdated' ? 'outdated' : 'not approved'))}
-        </div>
-        <section class="workspace-detail-card">
-          <h3>Canon readiness</h3>
-          <dl class="workspace-definition-grid workspace-definition-grid--compact">
-            ${definition('Required sections', `${number(validation.required_sections_complete)} / ${number(validation.required_sections_total)}`)}
-            ${definition('Rendered Markdown sources', number(validation.rendered_sources_total))}
-          </dl>
-          <details class="workspace-technical-details">
-            <summary>Technical details</summary>
-            <dl class="workspace-definition-grid workspace-definition-grid--compact">
-              ${definition('Source-set SHA-256', projectContext.source_set_sha256 ? `${String(projectContext.source_set_sha256).slice(0, 20)}…` : '—')}
-              ${definition('Approved artifact SHA-256', projectContext.approved_artifact_sha256 ? `${String(projectContext.approved_artifact_sha256).slice(0, 20)}…` : '—')}
-              ${definition('Approved source-set SHA-256', projectContext.approved_source_set_sha256 ? `${String(projectContext.approved_source_set_sha256).slice(0, 20)}…` : '—')}
-              ${definition('Approved at', projectContext.approved_at || '—')}
-            </dl>
-          </details>
+      <div class="workspace-content workspace-project-context-author-phase-a">
+        <section class="workspace-author-hero">
+          <span class="workspace-author-eyebrow">PROJECT KNOWLEDGE FOUNDATION</span>
+          <h3>${artifactCurrent && approvalFresh ? 'PROJECT CONTEXT CURRENT' : (needsUpdate ? 'PROJECT CONTEXT NEEDS ATTENTION' : 'PROJECT CONTEXT')}</h3>
+          <p>
+            Project Context is the approved project-wide knowledge foundation used to prepare
+            Book Knowledge and Chapter Knowledge. Update it when Canon changes, then approve the current version.
+          </p>
         </section>
-        <section class="workspace-detail-card">
-          <h3>Project-local artifact</h3>
-          ${table(['Artifact', 'State', 'Project path', 'SHA-256', 'Source-set SHA-256'], targetRows)}
-        </section>
-        <section class="workspace-detail-card">
-          <h3>Execution boundary</h3>
-          <div class="workspace-lock-grid">
-            ${lockCard('Approval', approvalFresh ? 'Current' : 'Blocked')}
-            ${lockCard('Prompt Builder', locks.prompt_builder_called ? 'Called' : 'Not called')}
-            ${lockCard('Provider', locks.provider_called ? 'Called' : 'Blocked')}
-            ${lockCard('Runtime Writes', locks.runtime_written ? 'Written' : 'Blocked')}
-            ${lockCard('Draft Persistence', locks.draft_persisted ? 'Written' : 'Blocked')}
-            ${lockCard('Generation Unlock', locks.generation_unlocked ? 'Unlocked' : 'Locked')}
+
+        <section class="workspace-author-summary-card">
+          <div class="workspace-author-metric-list">
+            <div><strong>Canon Readiness</strong><span>${validationReady ? 'Ready' : 'Needs attention'}</span></div>
+            <div><strong>Context Status</strong><span>${escapeHtml(String(projectContext.status || 'not generated').replace(/_/g, ' '))}</span></div>
+            <div><strong>Approval</strong><span>${escapeHtml(approvalStatus.replace(/_/g, ' '))}</span></div>
+            <div><strong>Needs Update</strong><span>${needsUpdate ? 'Yes' : 'No'}</span></div>
           </div>
         </section>
-        <div class="workspace-action-row">
-          <button type="button" id="project-runtime-context-refresh" class="secondary-action" ${loading ? 'disabled' : ''}>${loading ? 'Working…' : 'Refresh Status'}</button>
-          <button type="button" id="project-runtime-context-generate" class="primary-action" ${generateEnabled ? '' : 'disabled'}>Generate Project Runtime Context</button>
-          <button type="button" id="project-runtime-context-approve" class="primary-action" ${approveEnabled ? '' : 'disabled'}>Approve Current Context</button>
+
+        <div class="workspace-action-row workspace-author-gold-actions">
+          <button type="button" id="project-runtime-context-refresh" class="secondary-action" ${loading ? 'disabled' : ''}>${loading ? 'Working…' : 'Refresh'}</button>
+          <button type="button" id="project-runtime-context-generate" class="primary-action" ${generateEnabled ? '' : 'disabled'}>Update Project Context</button>
+          <button type="button" id="project-runtime-context-approve" class="primary-action" ${approveEnabled ? '' : 'disabled'}>Approve Project Context</button>
           <button type="button" id="project-runtime-context-revoke" class="secondary-action" ${revokeEnabled ? '' : 'disabled'}>Revoke Approval</button>
         </div>
-        <div class="workspace-disabled-note">${escapeHtml(projectContext.message || 'Project Runtime Context status is unavailable.')}</div>
+
+        <div class="workspace-disabled-note">${escapeHtml(projectContext.message || 'Project Context status is unavailable.')}</div>
+
+        <details class="workspace-technical-details">
+          <summary>Technical Details</summary>
+          <div class="workspace-author-technical-stack">
+            <section class="workspace-detail-card">
+              <h3>Canon and approval metadata</h3>
+              <dl class="workspace-definition-grid workspace-definition-grid--compact">
+                ${definition('Required sections', `${number(validation.required_sections_complete)} / ${number(validation.required_sections_total)}`)}
+                ${definition('Rendered Markdown sources', number(validation.rendered_sources_total))}
+                ${definition('Source-set SHA-256', projectContext.source_set_sha256 ? `${String(projectContext.source_set_sha256).slice(0, 20)}…` : '—')}
+                ${definition('Approved artifact SHA-256', projectContext.approved_artifact_sha256 ? `${String(projectContext.approved_artifact_sha256).slice(0, 20)}…` : '—')}
+                ${definition('Approved source-set SHA-256', projectContext.approved_source_set_sha256 ? `${String(projectContext.approved_source_set_sha256).slice(0, 20)}…` : '—')}
+                ${definition('Approved at', projectContext.approved_at || '—')}
+              </dl>
+            </section>
+            <section class="workspace-detail-card">
+              <h3>Artifact</h3>
+              ${table(['Artifact', 'State', 'Project path', 'SHA-256', 'Source-set SHA-256'], targetRows)}
+            </section>
+            <section class="workspace-detail-card">
+              <h3>Execution boundary</h3>
+              <div class="workspace-lock-grid">
+                ${lockCard('Approval', approvalFresh ? 'Current' : 'Blocked')}
+                ${lockCard('Prompt Builder', locks.prompt_builder_called ? 'Called' : 'Not called')}
+                ${lockCard('Provider', locks.provider_called ? 'Called' : 'Blocked')}
+                ${lockCard('Runtime Writes', locks.runtime_written ? 'Written' : 'Blocked')}
+                ${lockCard('Draft Persistence', locks.draft_persisted ? 'Written' : 'Blocked')}
+                ${lockCard('Generation Unlock', locks.generation_unlocked ? 'Unlocked' : 'Locked')}
+              </div>
+            </section>
+          </div>
+        </details>
       </div>
     `;
     document.getElementById('project-runtime-context-refresh')?.addEventListener('click', () => void loadProjectRuntimeContextStatus());
@@ -1773,10 +1981,16 @@
       .split(/\r?\n/).map((value) => value.trim()).filter(Boolean);
     const storyControlRefs = Array.from(mainPanel.querySelectorAll('[data-story-control-ref]:checked'))
       .map((node) => String(node.dataset.storyControlRef || '')).filter(Boolean);
+    const povType = String(document.getElementById('chapter-pov-type')?.value || current.pov_type || '');
+    const povOmniscientStyle = povType === 'third_person_omniscient'
+      ? String(document.getElementById('chapter-pov-omniscient-style')?.value || current.pov_omniscient_style || 'restrained')
+      : '';
     state.chapterPlanDraft = {
       key: chapterDraftKey(),
       selected_canon_refs: selectedCanonRefs,
       pov,
+      pov_type: povType,
+      pov_omniscient_style: povOmniscientStyle,
       assigned_event_refs: assignedEventRefs,
       event_placements: eventPlacements,
       generation_kickoff: String(document.getElementById('chapter-plan-kickoff')?.value || current.generation_kickoff || ''),
@@ -1801,6 +2015,8 @@
       ...savedChapter,
       selected_canon_refs: draft.selected_canon_refs || savedChapter.selected_canon_refs || [],
       pov: draft.pov || savedChapter.pov || [],
+      pov_type: draft.pov_type ?? savedChapter.pov_type ?? '',
+      pov_omniscient_style: draft.pov_omniscient_style ?? savedChapter.pov_omniscient_style ?? '',
       assigned_event_refs: draft.assigned_event_refs || savedChapter.assigned_event_refs || [],
       event_placements: draft.event_placements || savedChapter.event_placements || [],
       generation_kickoff: draft.generation_kickoff ?? savedChapter.generation_kickoff ?? '',
@@ -1917,16 +2133,39 @@
     );
   }
 
+  function cacheBookRuntimeContextForBook(status, fallbackBookNumber = 0) {
+    const targets = Array.isArray((status || {}).targets) ? status.targets : [];
+    const targetBookNumber = Number(
+      (status || {}).requested_book_number
+      || fallbackBookNumber
+      || ((targets[0] || {}).book_number)
+      || 0
+    );
+    if (!targetBookNumber) return;
+    state.bookRuntimeContextByBook[String(targetBookNumber)] = status;
+  }
+
+  function clearBookRuntimeContextForBook(bookNumber) {
+    const key = String(Number(bookNumber || 0));
+    if (!key || key === '0') return;
+    delete state.bookRuntimeContextByBook[key];
+  }
+
+  function bookRuntimeContextForBook(bookNumber) {
+    const key = String(Number(bookNumber || 0));
+    return state.bookRuntimeContextByBook[key] || state.bookRuntimeContext || {};
+  }
+
   function chapterPlanApprovalBlockerForCurrentBook() {
-    const status = state.bookRuntimeContext || {};
     const bookNumber = Number(state.chapterPlanBookNumber || 1);
+    const status = bookRuntimeContextForBook(bookNumber);
     const target = (status.targets || []).find((item) => Number(item.book_number) === bookNumber) || {};
     return (target.blockers || []).find((item) => String(item.code || '') === 'book_plan_not_approved') || null;
   }
 
   function currentBookKnowledgeTarget() {
-    const status = state.bookRuntimeContext || {};
     const bookNumber = Number(state.chapterPlanBookNumber || 1);
+    const status = bookRuntimeContextForBook(bookNumber);
     return (status.targets || []).find((item) => Number(item.book_number) === bookNumber) || {};
   }
 
@@ -1983,6 +2222,8 @@
       event_placements: [],
       generation_kickoff: '',
       pov: [],
+      pov_type: '',
+      pov_omniscient_style: '',
       chapter_objective: '',
       restrictions: [],
       story_control_refs: [],
@@ -2010,6 +2251,32 @@
     const povIds = new Set(
       (chapter.pov || []).map((item) => String(item.record_id || ''))
     );
+    const povType = String(chapter.pov_type || '');
+    const povOmniscientStyle = String(chapter.pov_omniscient_style || '');
+    const povCharacterSelectionDisabled = !povType || povType === 'third_person_objective';
+    const povTypeOptions = [
+      ['', 'Not configured'],
+      ['first_person', 'First-Person'],
+      ['second_person', 'Second-Person'],
+      ['third_person_limited', 'Third-Person Limited'],
+      ['third_person_omniscient', 'Third-Person Omniscient'],
+      ['third_person_objective', 'Third-Person Objective'],
+      ['choral_collective', 'Choral / Collective']
+    ];
+    const omniscientStyleOptions = [
+      ['restrained', 'Restrained Omniscient'],
+      ['broad', 'Broad Omniscient'],
+      ['narrator_led', 'Narrator-Led Omniscient']
+    ];
+    const povHelpByType = {
+      '': 'Choose the narrative perspective first. Character POV checkboxes stay disabled until the selected type uses character interior access.',
+      first_person: 'Exactly one selected Character may be POV. That Character narrates in first person; all other characters remain fully interactive but their private interiors stay inaccessible.',
+      second_person: 'Exactly one selected Character may be POV. The focal Character is rendered through second-person narration; other characters remain external participants.',
+      third_person_limited: 'Exactly one selected Character may be POV. Third-person narration may enter only that Character\'s interior; other characters may speak, act, and interact normally.',
+      third_person_omniscient: 'One or more selected Characters may be authorized for interior access. The omniscient style controls how the narrator moves among those interiors; rapid ungrounded head-hopping remains prohibited.',
+      third_person_objective: 'No Character POV is used. Narration remains external and may report observable action, dialogue, expression, sound, and environment without direct access to any private interior.',
+      choral_collective: 'Select at least two Characters to form the collective voice. Shared knowledge may be narrated collectively; private knowledge belonging to one member must not silently become group knowledge.'
+    };
     const assignedEventIds = new Set(
       (chapter.assigned_event_refs || []).map((item) => String(item.record_id || ''))
     );
@@ -2020,6 +2287,7 @@
     const revealThreads = (state.plannerRevealCatalog || {}).threads || [];
     const bookScopeBook = (((state.bookScope || {}).document || {}).books || []).find((item) => Number(item.book_number) === Number(state.chapterPlanBookNumber)) || {};
     const bookScopeApproved = bookScopeBook.approval_status === 'approved' && bookScopeBook.approval_fresh === true;
+    const knowledgePackStatusPending = state.chapterKnowledgePack === null;
     const chapterKnowledgePack = state.chapterKnowledgePack || {};
     const knowledgePackStatus = String(chapterKnowledgePack.status || 'missing');
     const knowledgePackBlockers = chapterKnowledgePack.blockers || [];
@@ -2027,13 +2295,15 @@
     const knowledgePackTokens = chapterKnowledgePack.token_accounting || {};
     const knowledgePackFile = chapterKnowledgePack.pack || {};
     const recoverySnapshot = chapterKnowledgePack.recovery_snapshot || {};
-    const knowledgePackDisplayStatus = knowledgePackFile.current === true
-      ? 'Current'
-      : knowledgePackFile.exists === true
-        ? 'Needs Recompile'
-        : chapterKnowledgePack.compiler_ready === true
-          ? 'Ready to Compile'
-          : labelFor(knowledgePackStatus || 'Blocked');
+    const knowledgePackDisplayStatus = knowledgePackStatusPending
+      ? 'Checking…'
+      : knowledgePackFile.current === true
+        ? 'Current'
+        : knowledgePackFile.exists === true
+          ? 'Needs Recompile'
+          : chapterKnowledgePack.compiler_ready === true
+            ? 'Ready to Compile'
+            : labelFor(knowledgePackStatus || 'Blocked');
     const knowledgePackBusy = state.chapterKnowledgePackLoading === true;
     const bookKnowledgeCompileBusy = state.chapterBookKnowledgeCompileLoading === true;
     const bookKnowledgeOnlyBlocker = knowledgePackBlockers.length > 0
@@ -2064,10 +2334,12 @@
           <div class="book-canon-browser-main">
             <strong>${escapeHtml(item.label || recordId)}</strong>
             <small>${escapeHtml(item.summary || labelFor(item.record_group_id || item.record_type || 'Canon'))}</small>
-            ${isCharacter ? `<label class="chapter-pov-choice" data-chapter-pov-wrap="${escapeHtml(recordId)}" ${isSelected ? '' : 'hidden'}><input type="checkbox" data-chapter-pov-ref="${escapeHtml(recordId)}" ${isPov ? 'checked' : ''} ${readOnly || loading ? 'disabled' : ''} /> POV</label>` : ''}
+            <div class="chapter-canon-choice-flags">
+              <label class="book-canon-batch-check chapter-batch-row-selector" title="${isSelected ? 'Select this row for Return Selected' : 'Select this row for Add Selected'}"><input type="checkbox" data-chapter-canon-batch-ref="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''} /><span>Select</span></label>
+              ${isCharacter ? `<label class="chapter-pov-choice" data-chapter-pov-wrap="${escapeHtml(recordId)}" ${isSelected ? '' : 'hidden'} title="${povCharacterSelectionDisabled ? 'Choose an Advanced POV type that uses character interior access first.' : 'Authorize this selected character for the active POV contract.'}"><input type="checkbox" data-chapter-pov-ref="${escapeHtml(recordId)}" ${isPov ? 'checked' : ''} ${readOnly || loading || povCharacterSelectionDisabled ? 'disabled' : ''} /><span>POV</span></label>` : ''}
+            </div>
           </div>
           <div class="chapter-row-actions">
-            <label class="book-canon-batch-check" title="Mark for batch action"><input type="checkbox" data-chapter-canon-batch-ref="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''} /></label>
             ${isSelected
               ? `<button type="button" class="secondary-action compact-action book-canon-row-action-button" data-chapter-canon-return="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''}>Return</button>`
               : `<button type="button" class="primary-action compact-action book-canon-row-action-button" data-chapter-canon-add="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''}>Add to Chapter</button>`}
@@ -2429,6 +2701,35 @@
           </div>
         </details>
 
+        <details id="chapter-pov-settings-section" class="chapter-planner-card chapter-pov-settings-card" open>
+          <summary><strong>Advanced POV</strong></summary>
+          <p class="placeholder">
+            Choose how narration handles consciousness for this chapter. The POV checkboxes beside selected Characters authorize
+            Character interior access only; they do not remove other selected Characters from dialogue, action, or interaction.
+          </p>
+          <div class="chapter-pov-settings-grid">
+            <label class="chapter-planner-field">
+              POV Type
+              <select id="chapter-pov-type" ${readOnly || loading ? 'disabled' : ''}>
+                ${povTypeOptions.map(([value, label]) => `
+                  <option value="${escapeHtml(value)}" ${povType === value ? 'selected' : ''}>${escapeHtml(label)}</option>
+                `).join('')}
+              </select>
+            </label>
+            <label class="chapter-planner-field" id="chapter-pov-omniscient-style-wrap" ${povType === 'third_person_omniscient' ? '' : 'hidden'}>
+              Omniscient Interior Style
+              <select id="chapter-pov-omniscient-style" ${readOnly || loading ? 'disabled' : ''}>
+                ${omniscientStyleOptions.map(([value, label]) => `
+                  <option value="${escapeHtml(value)}" ${(povOmniscientStyle || 'restrained') === value ? 'selected' : ''}>${escapeHtml(label)}</option>
+                `).join('')}
+              </select>
+            </label>
+          </div>
+          <div class="workspace-disabled-note chapter-pov-help">
+            ${escapeHtml(povHelpByType[povType] || povHelpByType[''])}
+          </div>
+        </details>
+
         ${recoveryNotice}
         <div id="chapter-unsaved-reminder" class="workspace-warning-note" ${chapterDraftDirty ? '' : 'hidden'}>
           <strong>Unsaved Chapter Plan changes.</strong>
@@ -2771,9 +3072,11 @@
             ${statCard('Generation', 'Locked')}
           </div>
 
-          ${chapterDraftDirty
-            ? '<div class="workspace-warning-note chapter-pack-next-step"><strong>Next: Save Chapter Plan.</strong> Your current selections and instructions are still only on screen. Save them first; then compile the Chapter Knowledge Pack.</div>'
-            : bookKnowledgeOnlyBlocker
+          ${knowledgePackStatusPending
+            ? '<div class="workspace-disabled-note chapter-pack-next-step"><strong>Checking Chapter Knowledge Pack status…</strong> Italus is confirming whether this chapter pack is current, needs recompilation, or has not been compiled yet.</div>'
+            : chapterDraftDirty
+              ? '<div class="workspace-warning-note chapter-pack-next-step"><strong>Next: Save Chapter Plan.</strong> Your current selections and instructions are still only on screen. Save them first; then compile the Chapter Knowledge Pack.</div>'
+              : bookKnowledgeOnlyBlocker
               ? `<div class="workspace-warning-note chapter-pack-next-step"><strong>Book ${number(state.chapterPlanBookNumber)} needs its shared Knowledge Pack updated first.</strong> This happens when Book-level Canon or the Book Plan changed. Click <strong>Update Book ${number(state.chapterPlanBookNumber)} Knowledge Pack</strong> once, then compile the Chapter Knowledge Pack.</div>`
               : knowledgePackBlockerRows
                 ? `<div class="workspace-disabled-note"><strong>This chapter is not ready to compile yet.</strong><ul>${knowledgePackBlockerRows}</ul>${bookPlanApprovalBlocker ? `<p><strong>Book ${number(state.chapterPlanBookNumber)} Plan changed after its last approval.</strong> Review and approve the Book Plan before updating its Knowledge Pack.</p>` : ''}</div>`
@@ -3060,7 +3363,39 @@
     document.getElementById('chapter-open-book-knowledge')?.addEventListener('click', () => renderSection('book_runtime_context'));
     document.getElementById('chapter-recover-previous-pack')?.addEventListener('click', () => recoverChapterPlannerFromPreviousPack());
     document.getElementById('chapter-plan-save')?.addEventListener('click', () => void saveChapterPlanner());
-    mainPanel.querySelectorAll('#chapter-plan-kickoff, #chapter-plan-objective, #chapter-plan-restrictions, [data-chapter-pov-ref], [data-chapter-event-position], [data-chapter-event-role], [data-chapter-event-relationship], [data-chapter-event-anchor], [data-chapter-event-objective], [data-story-control-ref], #story-control-type, #story-control-subject, #story-control-instruction, #story-control-certainty, #story-control-presentation, #story-control-weight').forEach((node) => {
+
+    document.getElementById('chapter-pov-type')?.addEventListener('change', (event) => {
+      const nextType = String(event.target.value || '');
+      const povBoxes = Array.from(mainPanel.querySelectorAll('[data-chapter-pov-ref]'));
+      const checkedBoxes = povBoxes.filter((node) => node.checked);
+      const singleCharacterTypes = new Set(['first_person', 'second_person', 'third_person_limited']);
+      if (!nextType || nextType === 'third_person_objective') {
+        povBoxes.forEach((node) => { node.checked = false; });
+      } else if (singleCharacterTypes.has(nextType) && checkedBoxes.length > 1) {
+        povBoxes.forEach((node) => { node.checked = false; });
+      }
+      markChapterPlannerDraftDirty();
+      renderChapterPlannerPreservingUi('chapter-pov-settings-section');
+    });
+
+    mainPanel.querySelectorAll('[data-chapter-pov-ref]').forEach((node) => {
+      node.addEventListener('change', () => {
+        const type = String(document.getElementById('chapter-pov-type')?.value || '');
+        if (!type || type === 'third_person_objective') {
+          node.checked = false;
+        } else if (
+          node.checked
+          && ['first_person', 'second_person', 'third_person_limited'].includes(type)
+        ) {
+          mainPanel.querySelectorAll('[data-chapter-pov-ref]').forEach((other) => {
+            if (other !== node) other.checked = false;
+          });
+        }
+        markChapterPlannerDraftDirty();
+      });
+    });
+
+    mainPanel.querySelectorAll('#chapter-plan-kickoff, #chapter-plan-objective, #chapter-plan-restrictions, #chapter-pov-omniscient-style, [data-chapter-event-position], [data-chapter-event-role], [data-chapter-event-relationship], [data-chapter-event-anchor], [data-chapter-event-objective], [data-story-control-ref], #story-control-type, #story-control-subject, #story-control-instruction, #story-control-certainty, #story-control-presentation, #story-control-weight').forEach((node) => {
       node.addEventListener(node.tagName === 'TEXTAREA' || node.tagName === 'INPUT' ? 'input' : 'change', () => markChapterPlannerDraftDirty());
       if (node.tagName === 'SELECT' || node.type === 'checkbox') node.addEventListener('change', () => markChapterPlannerDraftDirty());
     });
@@ -3133,14 +3468,15 @@
     if (!keepLoading) captureChapterPlannerDraft();
     const requestToken = Number(state.chapterKnowledgePackRequestToken || 0) + 1;
     state.chapterKnowledgePackRequestToken = requestToken;
+    const bookNumber = Number(state.chapterPlanBookNumber || 1);
     try {
       const [packStatus, bookStatus] = await Promise.all([
         apiFetch(`/api/project/${encodeURIComponent(projectId)}/chapter-knowledge-pack/${state.chapterPlanBookNumber}/${state.chapterPlanChapterNumber}/status`),
-        apiFetch(`/api/project/${encodeURIComponent(projectId)}/runtime-context/books/${encodeURIComponent(Number(state.chapterPlanBookNumber || 1))}/readiness-fast`)
+        apiFetch(`/api/project/${encodeURIComponent(projectId)}/runtime-context/books/${encodeURIComponent(bookNumber)}/readiness-fast`)
       ]);
       if (requestToken !== state.chapterKnowledgePackRequestToken) return;
       state.chapterKnowledgePack = packStatus;
-      state.bookRuntimeContext = bookStatus;
+      cacheBookRuntimeContextForBook(bookStatus, bookNumber);
     } catch (error) {
       if (requestToken !== state.chapterKnowledgePackRequestToken) return;
       state.chapterKnowledgePack = {
@@ -3186,9 +3522,11 @@
         `Book ${bookNumber} Knowledge Pack ${Number(result.generated_count || 0) > 0 ? 'compiled' : 'is already current'}. ` +
         'Refreshing Chapter Knowledge Pack readiness…'
       );
-      state.bookRuntimeContext = await apiFetch(
+      const refreshedBookStatus = await apiFetch(
         `/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status?book_number=${encodeURIComponent(bookNumber)}`
       );
+      cacheBookRuntimeContextForBook(refreshedBookStatus, bookNumber);
+      state.dashboardBookKnowledgeRefreshNeeded = true;
       state.chapterKnowledgePack = null;
       await loadChapterKnowledgePackStatus(true);
     } catch (error) {
@@ -3671,6 +4009,8 @@
             event_placements: eventPlacements,
             generation_kickoff: String(draft.generation_kickoff || '').trim(),
             pov,
+            pov_type: String(draft.pov_type || '').trim(),
+            pov_omniscient_style: String(draft.pov_omniscient_style || '').trim(),
             chapter_objective: String(draft.chapter_objective || '').trim(),
             restrictions,
             story_control_refs: draft.story_control_refs || [],
@@ -4322,10 +4662,12 @@
       const approval = (state.bookPlan.plan.book_workflow || []).find((item) => Number(item.book_number) === bookNumber) || {};
       setLog(`Book ${bookNumber} Plan approved at book revision ${approval.approved_revision || approval.revision || 0}. Refreshing Book Knowledge Pack readiness…`);
       try {
-        state.bookRuntimeContext = await apiFetch(`/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status?book_number=${encodeURIComponent(bookNumber)}`);
+        const bookStatus = await apiFetch(`/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status?book_number=${encodeURIComponent(bookNumber)}`);
+        cacheBookRuntimeContextForBook(bookStatus, bookNumber);
       } catch (_error) {
-        state.bookRuntimeContext = null;
+        clearBookRuntimeContextForBook(bookNumber);
       }
+      state.dashboardBookKnowledgeRefreshNeeded = true;
     } catch (error) {
       setLog(`Book Plan approval failed: ${error.message}`);
     } finally {
@@ -4355,6 +4697,8 @@
           headers: { Accept: 'application/json' }
         }
       );
+      clearBookRuntimeContextForBook(bookNumber);
+      state.dashboardBookKnowledgeRefreshNeeded = true;
       setLog(`Book ${bookNumber} Plan approval revoked. Downstream generation remains locked.`);
     } catch (error) {
       setLog(`Book Plan approval revocation failed: ${error.message}`);
@@ -4365,7 +4709,7 @@
   }
 
   function renderBookRuntimeContext(bootstrap) {
-    setHeading('Book Knowledge Packs');
+    setHeading('Book Knowledge');
 
     const bootstrapContext = (bootstrap.runtime_context || {}).books || {};
     const bookContext = state.bookRuntimeContext || bootstrapContext;
@@ -4382,85 +4726,116 @@
     const compileEnabled = compilerReady && !readOnly && !loading;
     const readyCount = number(bookContext.ready_count || 0);
 
-    const targetRows = targets.map((target) => `
-      <tr>
-        <td>${escapeHtml(target.label || `Book ${target.book_number || '—'} Knowledge Pack`)}</td>
-        <td>${statusBadge(String(target.status || (target.exists ? 'current' : 'missing')).toUpperCase())}</td>
-        <td>${target.compiler_ready === true ? 'Ready' : 'Waiting for this book'} </td>
-        <td>${number(target.selected_record_count || 0)}</td>
-        <td>${number(target.estimated_tokens || 0)}</td>
-        <td>${target.dependency_set_sha256
-          ? `<code>${escapeHtml(String(target.dependency_set_sha256).slice(0, 16))}…</code>`
-          : '—'}</td>
-      </tr>
-    `).join('');
+    const libraryBooks = ((((state.authorLibrary || {}).universal || {}).books || {}).items || []);
+    const libraryChapters = ((((state.authorLibrary || {}).universal || {}).chapters || {}).items || []);
 
-    const blockerRows = blockers.map((blocker) => `
-      <tr>
-        <td>${escapeHtml(blocker.book_number ? `Book ${blocker.book_number}` : 'Project')}</td>
-        <td>${escapeHtml(blocker.code || 'blocked')}</td>
-        <td>${escapeHtml(blocker.message || 'Compilation is blocked.')}</td>
-      </tr>
-    `).join('');
+    const cards = targets.map((target) => {
+      const bookNumber = Number(target.book_number || 0);
+      const libraryBook = libraryBooks.find((book) => Number(book.book_number || 0) === bookNumber) || {};
+      const plannedChapters = Number(libraryBook.planned_chapters || 0);
+      const targetChapters = Number(libraryBook.target_chapters || (bootstrap.manifest || {}).chapters_per_book || 0);
+      const activeChapter = Number(libraryBook.active_chapter || 0);
+      const chapterRecord = libraryChapters.find((chapter) =>
+        Number(chapter.book_number || 0) === bookNumber
+        && Number(chapter.chapter_number || 0) === activeChapter
+      ) || {};
+      const chapterStatus = activeChapter
+        ? chapterPlanningStatusLabel(chapterRecord.status || 'draft')
+        : 'NOT YET PLANNED';
+      const title = String(libraryBook.title || `Book ${bookNumber}`);
+      const knowledgeStatus = String(target.status || (target.exists ? 'current' : 'missing')).toUpperCase();
+      const targetBlockers = Array.isArray(target.blockers) ? target.blockers : [];
+
+      return `
+        <article class="workspace-book-knowledge-card">
+          <header>
+            <div>
+              <span class="workspace-author-eyebrow">BOOK ${number(bookNumber)}</span>
+              <h3>${escapeHtml(title)}</h3>
+            </div>
+            <div>${statusBadge(`KNOWLEDGE ${knowledgeStatus}`)}</div>
+          </header>
+
+          <div class="workspace-author-metric-list">
+            <div><strong>Planning Coverage</strong><span>${state.authorLibrary ? `${number(plannedChapters)} / ${number(targetChapters)} chapters planned` : 'Loading planning coverage…'}</span></div>
+            <div><strong>Author-Accepted Chapters</strong><span>Not tracked yet</span></div>
+            <div><strong>Chapter in Progress</strong><span>${activeChapter ? `Chapter ${number(activeChapter)} — ${escapeHtml(chapterStatus)}` : 'Not yet planned'}</span></div>
+            <div><strong>Selected Canon</strong><span>${number(target.selected_record_count || 0)} items</span></div>
+            <div><strong>Estimated Context</strong><span>${number(target.estimated_tokens || 0)} tokens</span></div>
+          </div>
+
+          ${targetBlockers.length
+            ? `<div class="workspace-author-warning"><strong>Needs attention</strong>${targetBlockers.map((item) => `<span>${escapeHtml(item.message || item.code || 'Compilation is blocked.')}</span>`).join('')}</div>`
+            : ''}
+
+          <details class="workspace-technical-details">
+            <summary>Technical Details</summary>
+            <dl class="workspace-definition-grid workspace-definition-grid--compact">
+              ${definition('Artifact state', knowledgeStatus)}
+              ${definition('Compiler readiness', target.compiler_ready === true ? 'Ready' : 'Waiting')}
+              ${definition('Artifact path', target.project_relative_path || '—')}
+              ${definition('SHA-256', target.sha256 ? `${String(target.sha256).slice(0, 20)}…` : '—')}
+              ${definition('Dependency SHA-256', target.dependency_set_sha256 ? `${String(target.dependency_set_sha256).slice(0, 20)}…` : '—')}
+            </dl>
+          </details>
+        </article>
+      `;
+    }).join('') || '<div class="workspace-disabled-note">No Book Knowledge targets are available yet.</div>';
 
     mainPanel.innerHTML = `
-      <div class="workspace-content workspace-book-runtime-context-v2">
-        <p class="placeholder">
-          Each Book Knowledge Pack contains the Canon you selected for that book,
-          the approved Book Plan, and project-wide rules needed downstream. A book
-          can compile as soon as its own Book Canon and Book Plan are approved;
-          later unfinished books do not block it. Required/Major choices add
-          stronger usage obligations but do not control which selected Canon enters the pack.
-        </p>
+      <div class="workspace-content workspace-book-knowledge-author-phase-a">
+        <section class="workspace-author-hero">
+          <span class="workspace-author-eyebrow">BOOK-SCOPED KNOWLEDGE</span>
+          <h3>Book Knowledge</h3>
+          <p>
+            Each card shows the knowledge prepared for one book: its planning coverage,
+            current planning position, selected Canon, and estimated context size.
+          </p>
+          <p class="workspace-author-term-note">
+            <strong>Author-Accepted Chapters</strong> will mean chapters whose manuscript prose the author has accepted.
+            <strong>Continuity commit</strong> is a separate internal synchronization checkpoint and is intentionally hidden
+            unless it falls behind accepted manuscript state.
+          </p>
+        </section>
 
-        <div class="workspace-stat-grid">
-          ${statCard('Status', String(bookContext.status || 'blocked').replace(/_/g, ' '))}
-          ${statCard('Ready to Compile', readyCount)}
-          ${statCard('Current', `${number(bookContext.current_count)} / ${number(bookContext.target_count)}`)}
-          ${statCard('Missing', number(bookContext.missing_count))}
-          ${statCard('Outdated', number(bookContext.outdated_count))}
+        <div class="workspace-book-knowledge-list">${cards}</div>
+
+        <div class="workspace-action-row workspace-author-gold-actions">
+          <button type="button" id="book-runtime-context-refresh" class="secondary-action"
+            ${loading ? 'disabled' : ''}>${loading ? 'Refreshing…' : 'Refresh'}</button>
+          <button type="button" id="book-runtime-context-generate" class="primary-action"
+            ${compileEnabled ? '' : 'disabled'}
+            aria-disabled="${compileEnabled ? 'false' : 'true'}">
+            ${loading ? 'Working…' : 'Update Ready Book Knowledge'}
+          </button>
         </div>
 
-        <section class="workspace-detail-card">
-          <h3>Source readiness</h3>
+        ${blockers.length ? `
+          <details class="workspace-technical-details">
+            <summary>Compilation Details</summary>
+            ${table(
+              ['Scope', 'Code', 'Reason'],
+              blockers.map((blocker) => `
+                <tr>
+                  <td>${escapeHtml(blocker.book_number ? `Book ${blocker.book_number}` : 'Project')}</td>
+                  <td>${escapeHtml(blocker.code || 'blocked')}</td>
+                  <td>${escapeHtml(blocker.message || 'Compilation is blocked.')}</td>
+                </tr>
+              `).join('')
+            )}
+          </details>
+        ` : ''}
+
+        <details class="workspace-technical-details">
+          <summary>System Details</summary>
           <dl class="workspace-definition-grid workspace-definition-grid--compact">
             ${definition('Book Plan schema', plan.schema_version || '—')}
             ${definition('Completed Book Plans', number(plan.complete_book_count || 0))}
-            ${definition('Ready Book Knowledge Packs', readyCount)}
+            ${definition('Ready Book Knowledge', readyCount)}
             ${definition('Approved Book Canons', number(scope.approved_current_count || 0))}
             ${definition('Author Canon', authorCanon.exists ? 'Present' : 'Missing')}
             ${definition('Canon Index', labelFor(canonIndex.state || 'unknown'))}
           </dl>
-          <details class="workspace-technical-details">
-            <summary>Technical details</summary>
-            <dl class="workspace-definition-grid workspace-definition-grid--compact">
-              ${definition('Author Canon SHA-256', authorCanon.sha256
-                ? `${String(authorCanon.sha256).slice(0, 20)}…`
-                : '—')}
-              ${definition('Canon Index revision', canonIndex.revision
-                ? `${String(canonIndex.revision).slice(0, 20)}…`
-                : '—')}
-            </dl>
-          </details>
-        </section>
-
-        <section class="workspace-detail-card">
-          <h3>Book artifacts</h3>
-          ${table(
-            ['Artifact', 'State', 'Readiness', 'Selected Canon', 'Est. Tokens', 'Dependency Hash'],
-            targetRows
-          )}
-        </section>
-
-        <section class="workspace-detail-card">
-          <h3>Compilation blockers</h3>
-          ${blockers.length
-            ? table(['Scope', 'Code', 'Reason'], blockerRows)
-            : '<div class="workspace-success-note">No compilation blockers.</div>'}
-        </section>
-
-        <section class="workspace-detail-card">
-          <h3>Execution boundary</h3>
           <div class="workspace-lock-grid">
             ${lockCard('Compilation', compilerReady ? 'Ready' : 'Blocked')}
             ${lockCard('Full Project Context Append', 'Disabled')}
@@ -4469,20 +4844,10 @@
             ${lockCard('Approved Continuity Writes', locks.approved_continuity_written ? 'Written' : 'Blocked')}
             ${lockCard('Generation Unlock', locks.generation_unlocked ? 'Unlocked' : 'Locked')}
           </div>
-        </section>
-
-        <div class="workspace-action-row">
-          <button type="button" id="book-runtime-context-refresh" class="secondary-action"
-            ${loading ? 'disabled' : ''}>${loading ? 'Refreshing…' : 'Refresh Status'}</button>
-          <button type="button" id="book-runtime-context-generate" class="primary-action"
-            ${compileEnabled ? '' : 'disabled'}
-            aria-disabled="${compileEnabled ? 'false' : 'true'}">
-            ${loading ? 'Working…' : 'Compile Ready Book Knowledge Packs'}
-          </button>
-        </div>
+        </details>
 
         <div class="workspace-disabled-note">
-          ${escapeHtml(bookContext.message || 'Book Runtime Context v2 status is unavailable.')}
+          ${escapeHtml(bookContext.message || 'Book Knowledge status is unavailable.')}
           ${readOnly ? ' Archived projects are read-only.' : ''}
         </div>
       </div>
@@ -4500,12 +4865,21 @@
     if (!state.bookRuntimeContext && !state.bookRuntimeContextLoading) {
       void loadBookRuntimeContextStatus();
     }
+
+    if (!state.authorLibrary && !state.authorLibraryLoading) {
+      void ensureAuthorLibrary()
+        .then(() => {
+          if (state.activeSection === 'book_runtime_context') renderBookRuntimeContext(bootstrap);
+        })
+        .catch((error) => setLog(`Book Knowledge planning coverage unavailable: ${error.message}`));
+    }
   }
 
   async function loadBookRuntimeContextStatus() {
     if (!projectId || state.bookRuntimeContextLoading) return;
 
     state.bookRuntimeContextLoading = true;
+    state.dashboardBookKnowledgeRefreshNeeded = false;
     if (state.activeSection === 'book_runtime_context') {
       renderBookRuntimeContext(state.bootstrap);
     }
@@ -4515,8 +4889,10 @@
         `/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status`
       );
       state.bookRuntimeContext = status;
+      state.bookRuntimeContextByBook = {};
       setLog(`Book Knowledge Pack status: ${status.status || 'unknown'}; ${status.ready_count || 0} target(s) ready.`);
     } catch (error) {
+      state.bookRuntimeContextByBook = {};
       state.bookRuntimeContext = {
         status: 'error',
         compiler_ready: false,
@@ -4545,6 +4921,14 @@
       state.bookRuntimeContextLoading = false;
       if (state.activeSection === 'book_runtime_context') {
         renderBookRuntimeContext(state.bootstrap);
+      } else if (state.activeSection === 'dashboard') {
+        const bootstrap = state.bootstrap || {};
+        renderDashboard(
+          bootstrap.manifest || {},
+          bootstrap.budget_plan || {},
+          bootstrap.wizard_state || {},
+          bootstrap
+        );
       }
     }
   }
@@ -4585,8 +4969,12 @@
       state.bookRuntimeContext = await apiFetch(
         `/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status`
       );
+      state.bookRuntimeContextByBook = {};
+      state.dashboardBookKnowledgeRefreshNeeded = false;
       state.chapterKnowledgePack = null;
     } catch (error) {
+      state.bookRuntimeContextByBook = {};
+      state.dashboardBookKnowledgeRefreshNeeded = false;
       state.bookRuntimeContext = {
         ...status,
         status: 'error',
@@ -4623,9 +5011,8 @@
     `;
   }
 
-
   function renderRuntimeStoragePreview(manifest, context, bootstrap) {
-    setHeading('Project Writing Memory Preview');
+    setHeading('Writing Memory');
 
     const projectIdValue = (manifest && manifest.project_id) || projectId || '<project_id>';
     const projectNameValue = (manifest && manifest.project_name) || projectIdValue;
@@ -4635,86 +5022,46 @@
     const runtimeFiles = Array.isArray(runtimeStorage.files) && runtimeStorage.files.length
       ? runtimeStorage.files
       : [
-          {
-            label: 'Books',
-            role: 'author_facing',
-            relative_path: `${storageRoot}books.json`,
-            description: 'Project-local generated book-level manuscript records.',
-            status: 'not_created'
-          },
-          {
-            label: 'Chapters',
-            role: 'author_facing',
-            relative_path: `${storageRoot}chapters.json`,
-            description: 'Project-local generated chapter records.',
-            status: 'not_created'
-          },
-          {
-            label: 'Scenes',
-            role: 'author_facing',
-            relative_path: `${storageRoot}scenes.json`,
-            description: 'Project-local generated scene text and scene metadata.',
-            status: 'not_created'
-          },
-          {
-            label: 'Writing Session',
-            role: 'author_facing',
-            relative_path: `${storageRoot}session_state.json`,
-            description: 'Project-local resumable writing session state.',
-            status: 'not_created'
-          },
-          {
-            label: 'Continuity Coverage',
-            role: 'author_facing',
-            relative_path: `${storageRoot}coverage_map.json`,
-            description: 'Project-local continuity and coverage tracking.',
-            status: 'not_created'
-          },
-          {
-            label: 'Book State',
-            role: 'internal_continuity',
-            relative_path: `${storageRoot}book_state.json`,
-            description: 'Internal project-local book generation state.',
-            status: 'not_created'
-          },
-          {
-            label: 'Chapter Continuity Digests',
-            role: 'internal_continuity',
-            relative_path: `${storageRoot}chapter_continuity_digests.json`,
-            description: 'Internal project-local continuity digests used by later runtime migration stages.',
-            status: 'not_created'
-          }
+          { label: 'Books', role: 'author_facing', relative_path: `${storageRoot}books.json`, description: 'Project-local generated book-level manuscript records.', status: 'not_created' },
+          { label: 'Chapters', role: 'author_facing', relative_path: `${storageRoot}chapters.json`, description: 'Project-local generated chapter records.', status: 'not_created' },
+          { label: 'Scenes', role: 'author_facing', relative_path: `${storageRoot}scenes.json`, description: 'Project-local generated scene text and scene metadata.', status: 'not_created' },
+          { label: 'Writing Session', role: 'author_facing', relative_path: `${storageRoot}session_state.json`, description: 'Project-local resumable writing session state.', status: 'not_created' },
+          { label: 'Continuity Coverage', role: 'author_facing', relative_path: `${storageRoot}coverage_map.json`, description: 'Project-local continuity and coverage tracking.', status: 'not_created' },
+          { label: 'Book State', role: 'internal_continuity', relative_path: `${storageRoot}book_state.json`, description: 'Internal project-local book generation state.', status: 'not_created' },
+          { label: 'Chapter Continuity Digests', role: 'internal_continuity', relative_path: `${storageRoot}chapter_continuity_digests.json`, description: 'Internal project-local continuity digests used by later runtime migration stages.', status: 'not_created' }
         ];
 
+    const authorFacingFiles = runtimeFiles.filter((item) => item.role !== 'internal_continuity');
+    const internalFiles = runtimeFiles.filter((item) => item.role === 'internal_continuity');
+
     mainPanel.innerHTML = `
-      <div class="workspace-content workspace-runtime-storage-preview-20260708 workspace-runtime-storage-author-ux-20260708 workspace-project-runtime-storage-service-20260708 workspace-runtime-storage-auto-init-20260708">
-        <p class="placeholder">
-          This page shows the project’s backend-owned Writing Memory containers. They are prepared automatically by the project lifecycle and remain locked for generation until later runtime gates pass.
-        </p>
+      <div class="workspace-content workspace-writing-memory-author-phase-a">
+        <section class="workspace-author-hero">
+          <span class="workspace-author-eyebrow">PROJECT WRITING STATE</span>
+          <h3>Writing Memory</h3>
+          <p>
+            Writing Memory is where Italus will keep the manuscript, resumable writing-session state,
+            and story-memory records that belong to this project as generation stages are enabled.
+          </p>
+        </section>
 
-        <section class="workspace-panel workspace-runtime-memory-summary">
-          <h3>Writing Memory Status</h3>
-          <dl class="workspace-definition-list">
-            ${definition('Project', projectNameValue)}
-            ${definition('Writing Memory', runtimeStatus === 'initialized' ? 'Initialized' : 'Not initialized yet')}
-            ${definition('Backend Storage Status', runtimeStatus)}
-            ${definition('Current Source', 'Read-only seed/reference data')}
-            ${definition('Generation', bootstrap && bootstrap.generation_enabled ? 'Enabled' : 'Locked')}
-          </dl>
-          <div class="workspace-disabled-note">
-            Technical storage target: Project-local runtime storage. The backend lifecycle prepares empty runtime files automatically and never copies legacy data.
+        <section class="workspace-author-summary-card">
+          <div class="workspace-author-metric-list">
+            <div><strong>Project</strong><span>${escapeHtml(projectNameValue)}</span></div>
+            <div><strong>Writing Memory</strong><span>${runtimeStatus === 'initialized' ? 'Prepared' : 'Not prepared yet'}</span></div>
+            <div><strong>Manuscript Writes</strong><span>${bootstrap && bootstrap.generation_enabled ? 'Generation enabled' : 'Locked until later migration stages'}</span></div>
           </div>
         </section>
 
-        <section class="workspace-panel">
-          <h3>What Will Be Saved Later</h3>
+        <section class="workspace-author-summary-card">
+          <h3>What Writing Memory Will Keep</h3>
           <div class="workspace-runtime-storage-grid">
-            ${runtimeStorageFolderCard(storageRoot, runtimeStorage).map(runtimeStorageStatusCard).concat(runtimeFiles.map(runtimeStorageStatusCard)).join('')}
+            ${authorFacingFiles.map(runtimeStorageStatusCard).join('')}
           </div>
         </section>
 
-        <section class="workspace-panel">
-          <h3>Technical Storage Details</h3>
+        <details class="workspace-technical-details">
+          <summary>Technical Details</summary>
           <dl class="workspace-definition-list">
             ${definition('Project ID', projectIdValue)}
             ${definition('Runtime Folder', storageRoot)}
@@ -4724,26 +5071,16 @@
             ${definition('Current Storage Mode', context && context.storage_mode ? context.storage_mode : 'legacy root data')}
             ${definition('Runtime Storage', runtimeStatus === 'initialized' ? 'Prepared automatically' : 'Not prepared')}
           </dl>
-          <div class="workspace-disabled-note">
-            Legacy read-only data remains the current source for browsing. Runtime storage is prepared as empty project-local containers for later generation migration.
+          <div class="workspace-runtime-storage-grid">
+            ${runtimeStorageFolderCard(storageRoot, runtimeStorage).map(runtimeStorageStatusCard).concat(internalFiles.map(runtimeStorageStatusCard)).join('')}
           </div>
-        </section>
-
-        <section class="workspace-panel">
-          <h3>What Is Still Locked</h3>
-          <p class="placeholder">
-            These actions stay locked after storage preparation. Runtime containers exist, but generation cannot write until prompt routing, provider execution, validation, and export gates are approved.
-          </p>
           <div class="workspace-lock-grid">
             ${lockCard('Runtime Containers', runtimeStatus === 'initialized' ? 'Prepared' : 'Not prepared')}
             ${lockCard('Copy Legacy Data', 'Blocked')}
             ${lockCard('Save Generated Scenes', 'Blocked')}
             ${lockCard('Enable Generation', 'Blocked')}
           </div>
-          <div class="workspace-disabled-note">
-            The backend storage service is installed in status-only mode. It reports the seven-file runtime contract without enabling generation.
-          </div>
-        </section>
+        </details>
       </div>
     `;
   }

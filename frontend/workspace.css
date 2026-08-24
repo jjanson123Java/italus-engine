@@ -1559,6 +1559,60 @@
 }
 
 
+/* Chapter Planner Canon-row checkbox layout: Select is intentionally left of POV. */
+.workspace-chapter-planner-v1 .chapter-canon-choice-flags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 0.45rem;
+}
+
+.workspace-chapter-planner-v1 .chapter-canon-choice-flags .chapter-batch-row-selector,
+.workspace-chapter-planner-v1 .chapter-canon-choice-flags .chapter-pov-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 1.35rem;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+  font-size: 0.82rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.workspace-chapter-planner-v1 .chapter-canon-choice-flags input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: #c19b3b;
+}
+
+.workspace-chapter-planner-v1 .chapter-canon-choice-flags .chapter-pov-choice[hidden] {
+  display: none;
+}
+
+/* Advanced chapter POV contract controls. */
+.workspace-chapter-planner-v1 .chapter-pov-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.workspace-chapter-planner-v1 .chapter-pov-settings-card .chapter-planner-field {
+  margin: 0;
+}
+
+.workspace-chapter-planner-v1 #chapter-pov-omniscient-style-wrap[hidden] {
+  display: none;
+}
+
+.workspace-chapter-planner-v1 .chapter-pov-help {
+  margin-top: 0.8rem;
+}
+
 /* Patch 30D: Selected-for-Book rows use the same left-content/right-actions contract as catalog rows. */
 .planner-book-canon-embedded .book-canon-selected-summary-row {
   grid-template-columns: minmax(0, 1fr) max-content;
@@ -2468,4 +2522,195 @@
   font-weight: 700;
   line-height: 1.35;
   opacity: 1;
+}
+
+
+/* Author Workspace UX Phase A — scoped author-facing surfaces only. */
+.workspace-author-dashboard-phase-a,
+.workspace-project-context-author-phase-a,
+.workspace-book-knowledge-author-phase-a,
+.workspace-writing-memory-author-phase-a {
+  display: grid;
+  gap: 18px;
+}
+
+.workspace-author-hero {
+  border: 1px solid rgba(215, 183, 101, 0.45);
+  border-radius: 14px;
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(42, 37, 28, 0.96), rgba(20, 19, 17, 0.98));
+}
+
+.workspace-author-hero h3 {
+  margin: 4px 0 8px;
+  color: #ead39a;
+}
+
+.workspace-author-hero p {
+  margin: 0;
+  max-width: 82ch;
+  line-height: 1.55;
+}
+
+.workspace-author-eyebrow {
+  display: inline-block;
+  color: #d7b765;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.workspace-author-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.workspace-author-summary-card,
+.workspace-book-knowledge-card {
+  border: 1px solid rgba(215, 183, 101, 0.28);
+  border-radius: 14px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(32, 31, 28, 0.98), rgba(21, 21, 19, 0.98));
+}
+
+.workspace-author-summary-card > h3,
+.workspace-book-knowledge-card h3 {
+  margin-top: 0;
+}
+
+.workspace-author-metric-list {
+  display: grid;
+  gap: 10px;
+}
+
+.workspace-author-metric-list > div {
+  display: grid;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(215, 183, 101, 0.13);
+}
+
+.workspace-author-metric-list > div:last-child {
+  border-bottom: 0;
+}
+
+.workspace-author-metric-list strong {
+  color: #d7b765;
+}
+
+.workspace-author-metric-list span {
+  line-height: 1.45;
+}
+
+.workspace-author-attention-list {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.workspace-author-attention-list li + li {
+  margin-top: 8px;
+}
+
+.workspace-author-action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 10px;
+}
+
+.workspace-author-dashboard-phase-a .workspace-author-action,
+.workspace-project-context-author-phase-a .workspace-author-gold-actions .primary-action,
+.workspace-project-context-author-phase-a .workspace-author-gold-actions .secondary-action,
+.workspace-book-knowledge-author-phase-a .workspace-author-gold-actions .primary-action,
+.workspace-book-knowledge-author-phase-a .workspace-author-gold-actions .secondary-action {
+  min-height: 46px;
+  border: 2px solid #d7b765;
+  border-radius: 11px;
+  color: #e8ce87;
+  background: linear-gradient(180deg, #302b20 0%, #1b1915 100%);
+  font-weight: 700;
+}
+
+.workspace-author-dashboard-phase-a .workspace-author-action:hover,
+.workspace-project-context-author-phase-a .workspace-author-gold-actions .primary-action:hover:not(:disabled),
+.workspace-project-context-author-phase-a .workspace-author-gold-actions .secondary-action:hover:not(:disabled),
+.workspace-book-knowledge-author-phase-a .workspace-author-gold-actions .primary-action:hover:not(:disabled),
+.workspace-book-knowledge-author-phase-a .workspace-author-gold-actions .secondary-action:hover:not(:disabled) {
+  border-color: #efd58b;
+  color: #fff0bd;
+}
+
+.workspace-author-dashboard-phase-a .workspace-author-action:focus-visible,
+.workspace-project-context-author-phase-a .workspace-author-gold-actions .primary-action:focus-visible,
+.workspace-project-context-author-phase-a .workspace-author-gold-actions .secondary-action:focus-visible,
+.workspace-book-knowledge-author-phase-a .workspace-author-gold-actions .primary-action:focus-visible,
+.workspace-book-knowledge-author-phase-a .workspace-author-gold-actions .secondary-action:focus-visible {
+  outline: 2px solid #efd58b;
+  outline-offset: 2px;
+}
+
+.workspace-project-context-author-phase-a .workspace-author-gold-actions button:disabled,
+.workspace-book-knowledge-author-phase-a .workspace-author-gold-actions button:disabled {
+  opacity: 0.48;
+}
+
+.workspace-book-knowledge-list {
+  display: grid;
+  gap: 16px;
+}
+
+.workspace-book-knowledge-card > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.workspace-book-knowledge-card > header h3 {
+  margin: 4px 0 0;
+}
+
+.workspace-author-term-note {
+  margin-top: 12px !important;
+  padding-top: 12px;
+  border-top: 1px solid rgba(215, 183, 101, 0.2);
+  color: #d8d3c5;
+}
+
+.workspace-author-warning {
+  display: grid;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid rgba(215, 183, 101, 0.55);
+  border-radius: 10px;
+}
+
+.workspace-author-warning strong {
+  color: #e6c574;
+}
+
+.workspace-author-technical-stack {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.workspace-author-dashboard-technical,
+.workspace-project-context-author-phase-a > .workspace-technical-details,
+.workspace-book-knowledge-author-phase-a .workspace-technical-details,
+.workspace-writing-memory-author-phase-a > .workspace-technical-details {
+  border: 1px solid rgba(215, 183, 101, 0.22);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.workspace-author-dashboard-technical > summary,
+.workspace-project-context-author-phase-a > .workspace-technical-details > summary,
+.workspace-book-knowledge-author-phase-a .workspace-technical-details > summary,
+.workspace-writing-memory-author-phase-a > .workspace-technical-details > summary {
+  cursor: pointer;
+  color: #d7b765;
+  font-weight: 700;
 }

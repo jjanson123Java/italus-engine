@@ -123,6 +123,8 @@ class ChapterPlanDraftRequest(BaseModel):
     event_placements: list[dict[str, Any]] = Field(default_factory=list)
     generation_kickoff: str = Field(default="")
     pov: list[dict[str, Any]] = Field(default_factory=list)
+    pov_type: str = Field(default="")
+    pov_omniscient_style: str = Field(default="")
     chapter_objective: str = Field(default="")
     restrictions: list[str] = Field(default_factory=list)
     story_control_refs: list[str] = Field(default_factory=list)
