@@ -273,13 +273,13 @@ and saved in place with PATCH /api/project/{id}.
           : 'Resume Setup';
     const actionAttr = archived ? 'data-restore-project-id' : 'data-resume-project-id';
     const deletable = !archived && (lifecycle === 'DRAFT_SETUP' || lifecycle === 'CANON_IN_PROGRESS');
-    const projectName = manifest.project_name || 'Untitled Project';
+    const projectName = manifest.project_name || 'Untitled Book';
 
     return `
       <article class="project-card">
         <h3>${escapeHtml(projectName)}</h3>
         <dl>
-          <div><dt>Project ID</dt><dd>${escapeHtml(projectId)}</dd></div>
+          <div><dt>Book Name</dt><dd>${escapeHtml(projectName)}</dd></div>
           <div><dt>Lifecycle</dt><dd class="human-readable-value">${escapeHtml(humanizeIdentifier(lifecycle, lifecycleLabels))}</dd></div>
           <div><dt>Genre</dt><dd class="human-readable-value">${escapeHtml(humanizeIdentifier(manifest.genre))}</dd></div>
           <div><dt>Budget</dt><dd>${escapeHtml(budget.token_budget_status || '—')}</dd></div>
@@ -412,7 +412,12 @@ and saved in place with PATCH /api/project/{id}.
     if (!projectId) return;
 
     const target = document.getElementById('canon-setup-state');
+    const title = document.getElementById('canon-setup-title');
     showModal('canon');
+
+    if (title) {
+      title.textContent = 'Canon Template';
+    }
 
     if (target) {
       target.innerHTML = '<p class="setup-note">Loading canon architecture…</p>';
@@ -488,6 +493,7 @@ and saved in place with PATCH /api/project/{id}.
 
   function renderCanonSetup(setup) {
     const target = document.getElementById('canon-setup-state');
+    const title = document.getElementById('canon-setup-title');
     const confirmButton = document.getElementById('accept-genre-template');
     if (!target) return;
 
@@ -508,6 +514,40 @@ and saved in place with PATCH /api/project/{id}.
         )
       : [];
     const resumeTarget = (wizardState.resume_target || summary.resume_target || 'genre_template');
+    const completedSteps = Array.isArray(wizardState.completed_steps)
+      ? wizardState.completed_steps
+      : [];
+    const templateConfirmed = completedSteps.includes('genre_template');
+    const requiredSectionCount = Number(summary.required_author_section_count || 0);
+    const completedRequiredSectionCount = Number(
+      summary.completed_required_author_section_count || 0
+    );
+    const allRequiredSectionsComplete = Boolean(
+      summary.all_required_author_sections_complete
+    );
+    const canonSourcesReady = Boolean(
+      summary.canon_sources_ready_for_setup_completion
+    );
+    const canEditCanon = Boolean(setup.can_edit) && !Boolean(setup.read_only);
+    const canConfirmTemplate = (
+      canEditCanon
+      && allRequiredSectionsComplete
+      && !templateConfirmed
+    );
+    const canCompleteSetup = (
+      canEditCanon
+      && allRequiredSectionsComplete
+      && templateConfirmed
+      && canonSourcesReady
+    );
+    const rawGenre = String(manifest.genre || template.genre || '').trim();
+    const genreLabel = rawGenre
+      ? humanizeIdentifier(rawGenre)
+      : String(template.label || 'Canon').trim();
+
+    if (title) {
+      title.textContent = `${genreLabel} Template`;
+    }
 
     target.innerHTML = `
       <section class="canon-template-summary">
@@ -521,8 +561,18 @@ and saved in place with PATCH /api/project/{id}.
         <p class="setup-note">${escapeHtml(template.description || '')}</p>
         <p class="setup-note">
           Author-facing canon sections: ${Number(summary.author_section_count || 0)} total.
-          Required: ${Number(summary.required_author_section_count || 0)}.
+          Required: ${requiredSectionCount}.
+          Marked complete: ${completedRequiredSectionCount}/${requiredSectionCount}.
           Needing attention: ${Number(summary.attention_required_section_count || 0)}.
+        </p>
+        <p class="setup-note">
+          ${allRequiredSectionsComplete
+            ? (templateConfirmed
+                ? (canonSourcesReady
+                    ? 'All required Canon sections are Marked Complete and their Canon sources are current. Complete Canon Setup is available.'
+                    : 'All required Canon sections are Marked Complete and the template is confirmed. Render any Canon source still marked out of date before completing Canon Setup.')
+                : 'All required Canon sections are Marked Complete. Confirm Genre Template next.')
+            : 'Confirm Genre Template and Complete Canon Setup remain unavailable until every required Canon section is Marked Complete.'}
         </p>
         ${Array.isArray(summary.attention_required_sections) && summary.attention_required_sections.length
           ? `<p class="setup-note attention-required-list">Attention required: ${summary.attention_required_sections
@@ -539,7 +589,7 @@ and saved in place with PATCH /api/project/{id}.
           : '<p class="setup-note">All canon sections are complete with verified current Markdown sources.</p>'}
       </section>
       <section class="canon-action-toolbar" aria-label="Canon setup actions">
-        <button type="button" class="primary-button" data-canon-action="complete-setup" ${setup.read_only ? 'disabled' : ''}>Complete Canon Setup</button>
+        <button type="button" class="primary-button" data-canon-action="complete-setup" ${canCompleteSetup ? '' : 'disabled'}>Complete Canon Setup</button>
       </section>
       <div class="canon-group-list">
         ${groups.map(renderCanonGroup).join('')}
@@ -550,10 +600,10 @@ and saved in place with PATCH /api/project/{id}.
     `;
 
     if (confirmButton) {
-      confirmButton.disabled = resumeTarget !== 'genre_template' || Boolean(setup.read_only);
-      confirmButton.textContent = resumeTarget === 'genre_template'
-        ? 'Confirm Genre Template'
-        : 'Template Confirmed';
+      confirmButton.disabled = !canConfirmTemplate;
+      confirmButton.textContent = templateConfirmed
+        ? 'Template Confirmed'
+        : 'Confirm Genre Template';
     }
 
     if (window.ItalusCanonAuthoring && typeof window.ItalusCanonAuthoring.renderCanonWorkbookShell === 'function') {
@@ -639,14 +689,16 @@ and saved in place with PATCH /api/project/{id}.
 
   function renderEditModeNotice(project) {
     const preview = getBudgetPreview();
+    const manifest = project.manifest || {};
     const budgetPlan = project.budget_plan || {};
     const resume = project.resume || {};
+    const bookName = manifest.project_name || 'Untitled Book';
     if (!preview) return;
 
     window.ItalusProjectWizard.renderBudgetPreview(preview, budgetPlan);
     appendMessage(
       preview,
-      `Editing existing project: ${state.activeProjectId}. Resume target: ${resume.resume_target || 'project_metadata'}.`,
+      `Editing book: ${bookName}. Resume target: ${resume.resume_target || 'project_metadata'}.`,
       'success'
     );
   }
@@ -661,7 +713,7 @@ and saved in place with PATCH /api/project/{id}.
     window.ItalusProjectWizard.renderBudgetPreview(target, budgetPlan);
     appendMessage(
       target,
-      `${message} Project ID: ${manifest.project_id}. Lifecycle: ${manifest.lifecycle_state}. Resume: ${resume.resume_target || 'project_metadata'}.`,
+      `${message} Book Name: ${manifest.project_name || 'Untitled Book'}. Lifecycle: ${manifest.lifecycle_state}. Resume: ${resume.resume_target || 'project_metadata'}.`,
       'success'
     );
   }

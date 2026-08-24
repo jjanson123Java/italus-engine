@@ -13,6 +13,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from pathlib import Path
+import shutil
 from typing import Any
 
 from app.projects import project_loader
@@ -546,6 +547,124 @@ def get_project_canon_status_for_context(
         "author_canon_status": author_canon.get("status", "missing"),
         "storage_ready": all(path.exists() for path in paths.values()),
         "execution_locks": _execution_locks(),
+    }
+
+
+def reset_canon_for_template_change(
+    project_id: str,
+    previous_manifest: dict[str, Any],
+    updated_manifest: dict[str, Any],
+) -> dict[str, Any]:
+    """Reset active Canon setup state when the project changes template families.
+
+    The old Canon/template-derived state is moved into a project-local history
+    directory before a fresh active Canon store is created from the new
+    template. No author data is silently discarded or mixed across genres.
+    """
+
+    previous_schema = _template_schema_for_manifest(previous_manifest)
+    updated_schema = _template_schema_for_manifest(updated_manifest)
+    previous_template_id = str(previous_schema.get("template_id") or "").strip()
+    updated_template_id = str(updated_schema.get("template_id") or "").strip()
+
+    if previous_template_id == updated_template_id:
+        return {
+            "changed": False,
+            "project_id": project_id,
+            "previous_template_id": previous_template_id,
+            "updated_template_id": updated_template_id,
+            "archive_path": None,
+        }
+
+    context = build_project_context(updated_manifest)
+    if context.project_id != project_id:
+        raise ValueError("Updated manifest project_id does not match the requested project.")
+
+    timestamp_token = (
+        utc_now_iso()
+        .replace("-", "")
+        .replace(":", "")
+        .replace("+", "_")
+    )
+    history_root = (
+        context.project_dir
+        / "canon_template_history"
+        / f"{timestamp_token}_{previous_template_id or 'unknown'}_to_{updated_template_id or 'unknown'}"
+    )
+    if history_root.exists():
+        raise FileExistsError(f"Canon template history path already exists: {history_root}")
+    history_root.mkdir(parents=True, exist_ok=False)
+
+    active_paths = [
+        project_canon_dir_for_context(context),
+        context.project_canon_sources_dir,
+        context.project_canon_generated_dir,
+        context.project_canon_manifests_dir,
+        context.project_canon_packs_dir,
+    ]
+    moved_paths: list[tuple[Path, Path]] = []
+
+    try:
+        for active_path in active_paths:
+            if not active_path.exists():
+                continue
+            archived_path = history_root / active_path.name
+            active_path.rename(archived_path)
+            moved_paths.append((active_path, archived_path))
+
+        context.ensure_project_canon_dirs()
+        ensure_author_canon_for_context(
+            context,
+            updated_manifest,
+            updated_schema,
+        )
+
+        project_loader.write_json(
+            history_root / "template_change.json",
+            {
+                "project_id": project_id,
+                "changed_at": utc_now_iso(),
+                "previous_template_id": previous_template_id,
+                "previous_genre": previous_manifest.get("genre"),
+                "updated_template_id": updated_template_id,
+                "updated_genre": updated_manifest.get("genre"),
+                "active_canon_reset": True,
+                "author_truth_discarded": False,
+                "archived_directories": [
+                    archived_path.name
+                    for _, archived_path in moved_paths
+                ],
+            },
+        )
+    except Exception:
+        for active_path in active_paths:
+            if not active_path.exists():
+                continue
+            if active_path.is_dir():
+                shutil.rmtree(active_path)
+            else:
+                active_path.unlink()
+
+        restore_failed = False
+        for active_path, archived_path in reversed(moved_paths):
+            if not archived_path.exists():
+                restore_failed = True
+                continue
+            try:
+                archived_path.rename(active_path)
+            except Exception:
+                restore_failed = True
+
+        if not restore_failed:
+            shutil.rmtree(history_root, ignore_errors=True)
+        raise
+
+    return {
+        "changed": True,
+        "project_id": project_id,
+        "previous_template_id": previous_template_id,
+        "updated_template_id": updated_template_id,
+        "archive_path": _relative(history_root, context.project_dir),
     }
 
 

@@ -1408,6 +1408,110 @@ body.modal-open {
 }
 
 
+
+/* Canon Template Wizard — Book Planner gold control treatment */
+#canon-setup-modal [data-canon-open-section],
+#canon-setup-modal [data-canon-migrate-template] {
+  min-height: 42px;
+  border: 2px solid #d7b765;
+  border-radius: 11px;
+  padding: 0.7rem 0.95rem;
+  background:
+    linear-gradient(180deg, rgba(18, 16, 12, 0.94), rgba(0, 0, 0, 0.82));
+  color: #d7b765;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.18),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.12),
+    inset 0 1px 0 rgba(255, 239, 190, 0.08),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+}
+
+#canon-setup-modal [data-canon-open-section]:hover,
+#canon-setup-modal [data-canon-migrate-template]:hover {
+  border-color: #efd486;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.26),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.16),
+    0 0 18px rgba(215, 183, 101, 0.14),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+#canon-setup-modal [data-canon-open-section]:focus-visible,
+#canon-setup-modal [data-canon-migrate-template]:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.9);
+  outline-offset: 3px;
+}
+
+/* Canon section editor controls - Chapter Planner Canon action family */
+#canon-setup-modal [data-canon-save-section],
+#canon-setup-modal [data-canon-complete-section],
+#canon-setup-modal [data-canon-close-section] {
+  width: auto !important;
+  min-width: 0;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid rgba(245, 217, 155, 0.42);
+  border-radius: 7px;
+  background: rgba(48, 101, 60, 0.58);
+  color: #f8ead1;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#canon-setup-modal [data-canon-save-section]:hover:not(:disabled),
+#canon-setup-modal [data-canon-complete-section]:hover:not(:disabled),
+#canon-setup-modal [data-canon-close-section]:hover:not(:disabled) {
+  border-color: rgba(245, 217, 155, 0.62);
+  background: rgba(58, 119, 71, 0.68);
+}
+
+#canon-setup-modal [data-canon-save-section]:focus-visible,
+#canon-setup-modal [data-canon-complete-section]:focus-visible,
+#canon-setup-modal [data-canon-close-section]:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.82);
+  outline-offset: 2px;
+}
+
+#canon-setup-modal [data-canon-save-section]:disabled,
+#canon-setup-modal [data-canon-complete-section]:disabled,
+#canon-setup-modal [data-canon-close-section]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Canon record add controls - Chapter Planner Canon action family */
+#canon-setup-modal [data-canon-add-record] {
+  width: auto !important;
+  min-width: 0;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid rgba(245, 217, 155, 0.42);
+  border-radius: 7px;
+  background: rgba(48, 101, 60, 0.58);
+  color: #f8ead1;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#canon-setup-modal [data-canon-add-record]:hover:not(:disabled) {
+  border-color: rgba(245, 217, 155, 0.62);
+  background: rgba(58, 119, 71, 0.68);
+}
+
+#canon-setup-modal [data-canon-add-record]:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.82);
+  outline-offset: 2px;
+}
+
+#canon-setup-modal [data-canon-add-record]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 /* Canon workbook authoring fields */
 .canon-field-row {
   display: grid;

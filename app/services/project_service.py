@@ -21,7 +21,7 @@ from app.projects.project_manifest import (
 from app.projects import project_loader
 from app.services.budget_service import estimate_project_budget
 from app.services.wizard_service import create_initial_wizard_state, resolve_resume_target
-from app.services import project_runtime_storage_service
+from app.services import canon_template_service, project_canon_service, project_runtime_storage_service
 
 
 EDITABLE_PROJECT_FIELDS = {
@@ -92,6 +92,9 @@ def update_project(
 
     existing_created_at = manifest.created_at
     existing_project_id = manifest.project_id
+    original_manifest_payload = manifest.to_dict()
+    original_budget_plan = project_loader.load_budget_plan(existing_project_id)
+    original_wizard_state = project_loader.load_wizard_state(existing_project_id)
     updated_payload = manifest.to_dict()
 
     for field_name in EDITABLE_PROJECT_FIELDS:
@@ -111,19 +114,50 @@ def update_project(
     )
     updated_manifest.touch()
 
+    previous_template_id = _resolved_template_id(original_manifest_payload)
+    updated_template_id = _resolved_template_id(updated_manifest.to_dict())
+    template_changed = previous_template_id != updated_template_id
+
     budget_plan = estimate_project_budget(updated_manifest.to_dict())
     wizard_state = _updated_wizard_state(
         project_id=existing_project_id,
-        current_wizard_state=project_loader.load_wizard_state(existing_project_id),
+        current_wizard_state=original_wizard_state,
         lifecycle_state=updated_manifest.lifecycle_state,
         continue_to_canon=continue_to_canon,
+        reset_genre_template=template_changed,
     )
 
-    project_loader.save_manifest(updated_manifest)
-    project_loader.save_budget_plan(existing_project_id, budget_plan)
-    project_loader.save_wizard_state(existing_project_id, wizard_state)
+    canon_template_change: dict[str, Any] | None = None
+    try:
+        project_loader.save_manifest(updated_manifest)
+        project_loader.save_budget_plan(existing_project_id, budget_plan)
+        project_loader.save_wizard_state(existing_project_id, wizard_state)
 
-    return project_payload(updated_manifest, budget_plan=budget_plan, wizard_state=wizard_state)
+        if template_changed:
+            canon_template_change = project_canon_service.reset_canon_for_template_change(
+                existing_project_id,
+                original_manifest_payload,
+                updated_manifest.to_dict(),
+            )
+    except Exception:
+        project_loader.write_json(
+            project_loader.manifest_path(existing_project_id),
+            original_manifest_payload,
+        )
+        project_loader.write_json(
+            project_loader.budget_plan_path(existing_project_id),
+            original_budget_plan,
+        )
+        project_loader.write_json(
+            project_loader.wizard_state_path(existing_project_id),
+            original_wizard_state,
+        )
+        raise
+
+    result = project_payload(updated_manifest, budget_plan=budget_plan, wizard_state=wizard_state)
+    if canon_template_change is not None:
+        result["canon_template_change"] = canon_template_change
+    return result
 
 
 def estimate_budget(payload: dict[str, Any]) -> dict[str, Any]:
@@ -244,6 +278,7 @@ def _updated_wizard_state(
     current_wizard_state: dict[str, Any] | None,
     lifecycle_state: str,
     continue_to_canon: bool,
+    reset_genre_template: bool,
 ) -> dict[str, Any]:
     wizard_state = current_wizard_state or create_initial_wizard_state(project_id)
 
@@ -274,6 +309,33 @@ def _updated_wizard_state(
         if "project_metadata" not in wizard_state.get("incomplete_steps", []):
             wizard_state["incomplete_steps"] = _with_unique(wizard_state.get("incomplete_steps", []), "project_metadata")
 
+    if reset_genre_template:
+        wizard_state["completed_steps"] = [
+            step
+            for step in wizard_state.get("completed_steps", [])
+            if step not in {"genre_template", "canon_groups", "canon_sets"}
+        ]
+        remaining_incomplete = [
+            step
+            for step in wizard_state.get("incomplete_steps", [])
+            if step not in {"project_metadata", "genre_template", "canon_groups", "canon_sets"}
+        ]
+        wizard_state["incomplete_steps"] = [
+            *remaining_incomplete,
+            "genre_template",
+            "canon_sets",
+        ]
+        wizard_state["current_phase"] = "CANON_WIZARD"
+        wizard_state["current_step_id"] = "genre_template"
+        wizard_state["resume_target"] = "genre_template"
+        wizard_state["required_canon_sets"] = []
+        wizard_state["canon_set_statuses"] = {}
+        wizard_state["canon_group_statuses"] = {}
+        wizard_state["canon_groups_initialized"] = False
+        wizard_state["canon_workspace_initialized"] = False
+        wizard_state["canon_reset_pending"] = False
+        wizard_state["reset_canon_set_ids"] = []
+
     wizard_state["project_id"] = project_id
     wizard_state["last_saved_at"] = utc_now_iso()
     wizard_state["last_opened_at"] = utc_now_iso()
@@ -284,6 +346,14 @@ def _updated_wizard_state(
     wizard_state.setdefault("canon_reset_pending", False)
     wizard_state.setdefault("reset_canon_set_ids", [])
     return wizard_state
+
+
+def _resolved_template_id(manifest_payload: dict[str, Any]) -> str:
+    schema = canon_template_service.get_canon_questionnaire_template(
+        manifest_payload.get("template_id"),
+        manifest_payload.get("genre"),
+    )
+    return str(schema.get("template_id") or "").strip()
 
 
 def _with_unique(values: list[Any], value: Any) -> list[Any]:

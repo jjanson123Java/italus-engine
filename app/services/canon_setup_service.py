@@ -72,6 +72,16 @@ def get_canon_setup(project_id: str) -> dict[str, Any]:
             or section.get("markdown_file", {}).get("freshness_verified") is not True
         )
     ]
+    required_sections_total = int(
+        validation_status.get("required_sections_total") or 0
+    )
+    required_sections_complete = int(
+        validation_status.get("required_sections_complete") or 0
+    )
+    all_required_author_sections_complete = (
+        required_sections_total > 0
+        and required_sections_complete == required_sections_total
+    )
 
     return {
         "status": "ok",
@@ -94,6 +104,11 @@ def get_canon_setup(project_id: str) -> dict[str, Any]:
             "author_section_count": len(author_sections),
             "required_author_section_count": sum(
                 1 for section in author_sections if section.get("required")
+            ),
+            "completed_required_author_section_count": required_sections_complete,
+            "all_required_author_sections_complete": all_required_author_sections_complete,
+            "canon_sources_ready_for_setup_completion": bool(
+                validation_status.get("ready_for_packet_generation")
             ),
             "attention_required_section_count": len(attention_sections),
             "attention_required_sections": [
