@@ -138,7 +138,6 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
             "project": {
                 **project_runtime_context_status,
                 "enabled": True,
-                "approval_status": "not_available",
                 "review_enabled": True,
             },
             "book_scope": {
