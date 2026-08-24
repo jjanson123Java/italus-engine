@@ -1354,11 +1354,51 @@
     const loading = state.projectRuntimeContextLoading === true
       || state.projectRuntimeContextApprovalLoading === true;
     const readOnly = bootstrap.read_only === true;
-    const generateEnabled = validationReady && !loading && !readOnly;
+    const artifactExists = Number(projectContext.generated_count || 0) > 0
+      || targets.some((target) => target && target.exists === true);
+    const needsUpdate = String(projectContext.status || '') === 'outdated';
+    const generateEnabled = validationReady && !artifactCurrent && !loading && !readOnly;
     const approveEnabled = artifactCurrent && !approvalFresh && !loading && !readOnly;
     const revokeEnabled = ['approved', 'outdated'].includes(approvalStatus)
       && !loading && !readOnly;
-    const needsUpdate = !artifactCurrent || approvalStatus === 'outdated';
+
+    const contextStateHeading = !validationReady
+      ? 'PROJECT CONTEXT WAITING ON CANON'
+      : !artifactExists
+        ? 'PROJECT CONTEXT READY TO CREATE'
+        : !artifactCurrent
+          ? 'PROJECT CONTEXT NEEDS UPDATE'
+          : !approvalFresh
+            ? 'PROJECT CONTEXT READY FOR APPROVAL'
+            : 'PROJECT CONTEXT CURRENT';
+
+    const contextStatusLabel = !validationReady
+      ? 'Waiting on Canon'
+      : !artifactExists
+        ? 'Not Created'
+        : !artifactCurrent
+          ? 'Needs Update'
+          : 'Current';
+
+    const approvalLabel = approvalFresh
+      ? 'Approved'
+      : approvalStatus === 'outdated'
+        ? 'Needs Reapproval'
+        : artifactCurrent
+          ? 'Ready for Approval'
+          : 'Not Ready';
+
+    const generateLabel = artifactCurrent
+      ? 'Project Context Up to Date'
+      : artifactExists
+        ? 'Update Project Context'
+        : 'Create Project Context';
+
+    const generateTitle = artifactCurrent
+      ? 'Project Context already matches the current Canon, so no rebuild is needed. Rebuilding is disabled to avoid creating a new artifact and unnecessary reapproval.'
+      : artifactExists
+        ? 'Rebuilds Project Context from the project’s current Canon because the saved context no longer matches it. This does not change Canon or generate prose. Approve the rebuilt version before downstream knowledge uses it.'
+        : 'Creates Project Context from the project’s current Canon. This does not change Canon or generate prose. Approve the new Project Context before downstream knowledge uses it.';
 
     const targetRows = targets.map((target) => `
       <tr>
@@ -1373,28 +1413,72 @@
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-project-context-author-phase-a">
         <section class="workspace-author-hero">
-          <span class="workspace-author-eyebrow">PROJECT KNOWLEDGE FOUNDATION</span>
-          <h3>${artifactCurrent && approvalFresh ? 'PROJECT CONTEXT CURRENT' : (needsUpdate ? 'PROJECT CONTEXT NEEDS ATTENTION' : 'PROJECT CONTEXT')}</h3>
+          <h3 class="workspace-author-hero-title">PROJECT KNOWLEDGE FOUNDATION</h3>
+          <div class="workspace-author-status-heading">${contextStateHeading}</div>
           <p>
-            Project Context is the approved project-wide knowledge foundation used to prepare
-            Book Knowledge and Chapter Knowledge. Update it when Canon changes, then approve the current version.
+            Project Context brings together the current Canon for your project so Italus has a consistent
+            understanding of your world, characters, history, and story foundations. When you change Canon,
+            update Project Context and approve the new version before continuing with book and chapter planning.
           </p>
         </section>
 
         <section class="workspace-author-summary-card">
           <div class="workspace-author-metric-list">
-            <div><strong>Canon Readiness</strong><span>${validationReady ? 'Ready' : 'Needs attention'}</span></div>
-            <div><strong>Context Status</strong><span>${escapeHtml(String(projectContext.status || 'not generated').replace(/_/g, ' '))}</span></div>
-            <div><strong>Approval</strong><span>${escapeHtml(approvalStatus.replace(/_/g, ' '))}</span></div>
-            <div><strong>Needs Update</strong><span>${needsUpdate ? 'Yes' : 'No'}</span></div>
+            <div>
+              <strong>Canon Readiness</strong>
+              <span>${validationReady ? 'Ready' : 'Needs Attention'}</span>
+              <small>${validationReady
+                ? 'Required Canon is complete enough to build Project Context.'
+                : 'Complete required Canon and current Canon Markdown before Project Context can be created or updated.'}</small>
+            </div>
+            <div>
+              <strong>Context Status</strong>
+              <span>${escapeHtml(contextStatusLabel)}</span>
+              <small>${!validationReady
+                ? 'Project Context cannot be prepared until Canon is ready.'
+                : !artifactExists
+                  ? 'No Project Context has been created for this project yet.'
+                  : !artifactCurrent
+                    ? 'Canon changed after this Project Context was created.'
+                    : 'Project Context matches the Canon currently saved for this project.'}</small>
+            </div>
+            <div>
+              <strong>Author Approval</strong>
+              <span>${escapeHtml(approvalLabel)}</span>
+              <small>${approvalFresh
+                ? 'You approved this exact current Project Context.'
+                : approvalStatus === 'outdated'
+                  ? 'A previously approved version no longer matches the current Project Context.'
+                  : artifactCurrent
+                    ? 'The current Project Context is ready for your approval.'
+                    : 'Approval becomes available after Project Context is current.'}</small>
+            </div>
+            <div>
+              <strong>Needs Update</strong>
+              <span>${needsUpdate ? 'Yes' : 'No'}</span>
+              <small>${needsUpdate
+                ? 'Canon has changed since this Project Context was built.'
+                : artifactCurrent
+                  ? 'No Canon changes require a Project Context rebuild.'
+                  : !artifactExists
+                    ? 'Create Project Context first; there is no older context to update.'
+                    : 'No update is available until Canon is ready.'}</small>
+            </div>
           </div>
         </section>
 
         <div class="workspace-action-row workspace-author-gold-actions">
-          <button type="button" id="project-runtime-context-refresh" class="secondary-action" ${loading ? 'disabled' : ''}>${loading ? 'Working…' : 'Refresh'}</button>
-          <button type="button" id="project-runtime-context-generate" class="primary-action" ${generateEnabled ? '' : 'disabled'}>Update Project Context</button>
-          <button type="button" id="project-runtime-context-approve" class="primary-action" ${approveEnabled ? '' : 'disabled'}>Approve Project Context</button>
-          <button type="button" id="project-runtime-context-revoke" class="secondary-action" ${revokeEnabled ? '' : 'disabled'}>Revoke Approval</button>
+          <button type="button" id="project-runtime-context-refresh" class="secondary-action"
+            title="Reloads Project Context and approval status. It does not rebuild Project Context or change saved project data."
+            ${loading ? 'disabled' : ''}>${loading ? 'Working…' : 'Refresh'}</button>
+          <button type="button" id="project-runtime-context-generate" class="primary-action"
+            title="${escapeHtml(generateTitle)}" ${generateEnabled ? '' : 'disabled'}>${generateLabel}</button>
+          <button type="button" id="project-runtime-context-approve" class="primary-action"
+            title="Approves the current Project Context for use when preparing Book Knowledge and Chapter Knowledge. It does not change Canon or generate prose."
+            ${approveEnabled ? '' : 'disabled'}>Approve Project Context</button>
+          <button type="button" id="project-runtime-context-revoke" class="secondary-action"
+            title="Removes approval from the current Project Context without deleting it or changing Canon. Book and chapter readiness may be blocked until Project Context is approved again."
+            ${revokeEnabled ? '' : 'disabled'}>Revoke Approval</button>
         </div>
 
         <div class="workspace-disabled-note">${escapeHtml(projectContext.message || 'Project Context status is unavailable.')}</div>
@@ -5031,32 +5115,49 @@
           { label: 'Chapter Continuity Digests', role: 'internal_continuity', relative_path: `${storageRoot}chapter_continuity_digests.json`, description: 'Internal project-local continuity digests used by later runtime migration stages.', status: 'not_created' }
         ];
 
-    const authorFacingFiles = runtimeFiles.filter((item) => item.role !== 'internal_continuity');
-    const internalFiles = runtimeFiles.filter((item) => item.role === 'internal_continuity');
+    const writingMemoryConcepts = [
+      {
+        label: 'Manuscript Progress',
+        description: 'Keeps track of the books, chapters, and scenes created for this project and where the manuscript currently stands.'
+      },
+      {
+        label: 'Resume Your Work',
+        description: 'Remembers where you stopped so you can return to the project and continue from the appropriate book, chapter, or writing step.'
+      },
+      {
+        label: 'Story Continuity',
+        description: 'Keeps track of important story developments already established in the manuscript so later writing can remain consistent with what came before.'
+      }
+    ];
 
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-writing-memory-author-phase-a">
         <section class="workspace-author-hero">
-          <span class="workspace-author-eyebrow">PROJECT WRITING STATE</span>
-          <h3>Writing Memory</h3>
+          <h3 class="workspace-author-hero-title">PROJECT WRITING STATE</h3>
           <p>
-            Writing Memory is where Italus will keep the manuscript, resumable writing-session state,
-            and story-memory records that belong to this project as generation stages are enabled.
+            Writing Memory helps Italus remember your manuscript, where you left off, and what has already
+            happened in the story. It allows you to return to your project and continue writing without losing
+            the important story details established along the way.
           </p>
         </section>
 
         <section class="workspace-author-summary-card">
           <div class="workspace-author-metric-list">
             <div><strong>Project</strong><span>${escapeHtml(projectNameValue)}</span></div>
-            <div><strong>Writing Memory</strong><span>${runtimeStatus === 'initialized' ? 'Prepared' : 'Not prepared yet'}</span></div>
-            <div><strong>Manuscript Writes</strong><span>${bootstrap && bootstrap.generation_enabled ? 'Generation enabled' : 'Locked until later migration stages'}</span></div>
+            <div><strong>Memory Status</strong><span>${runtimeStatus === 'initialized' ? 'Ready' : 'Not Ready Yet'}</span></div>
+            <div><strong>Writing Availability</strong><span>${bootstrap && bootstrap.generation_enabled ? 'Available' : 'Not Available Yet'}</span></div>
           </div>
         </section>
 
         <section class="workspace-author-summary-card">
-          <h3>What Writing Memory Will Keep</h3>
-          <div class="workspace-runtime-storage-grid">
-            ${authorFacingFiles.map(runtimeStorageStatusCard).join('')}
+          <h3>What Italus Remembers</h3>
+          <div class="workspace-writing-memory-concept-grid">
+            ${writingMemoryConcepts.map((item) => `
+              <article class="workspace-writing-memory-concept-card">
+                <h4>${escapeHtml(item.label)}</h4>
+                <p>${escapeHtml(item.description)}</p>
+              </article>
+            `).join('')}
           </div>
         </section>
 
@@ -5072,7 +5173,7 @@
             ${definition('Runtime Storage', runtimeStatus === 'initialized' ? 'Prepared automatically' : 'Not prepared')}
           </dl>
           <div class="workspace-runtime-storage-grid">
-            ${runtimeStorageFolderCard(storageRoot, runtimeStorage).map(runtimeStorageStatusCard).concat(internalFiles.map(runtimeStorageStatusCard)).join('')}
+            ${runtimeStorageFolderCard(storageRoot, runtimeStorage).map(runtimeStorageStatusCard).concat(runtimeFiles.map(runtimeStorageStatusCard)).join('')}
           </div>
           <div class="workspace-lock-grid">
             ${lockCard('Runtime Containers', runtimeStatus === 'initialized' ? 'Prepared' : 'Not prepared')}

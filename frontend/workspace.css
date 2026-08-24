@@ -2714,3 +2714,63 @@
   color: #d7b765;
   font-weight: 700;
 }
+
+
+/* Author Context Memory UX v2 — pre-Prompt-Builder author-facing clarity. */
+.workspace-project-context-author-phase-a .workspace-author-hero-title,
+.workspace-writing-memory-author-phase-a .workspace-author-hero-title {
+  margin: 0 0 8px;
+  color: #ead39a;
+  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: 0.045em;
+  line-height: 1.2;
+}
+
+.workspace-project-context-author-phase-a .workspace-author-status-heading {
+  margin: 0 0 10px;
+  color: #d7b765;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.workspace-project-context-author-phase-a .workspace-author-metric-list small {
+  display: block;
+  max-width: 76ch;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.workspace-writing-memory-concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.workspace-writing-memory-concept-card {
+  border: 1px solid rgba(215, 183, 101, 0.22);
+  border-radius: 12px;
+  padding: 14px;
+  background: rgba(15, 15, 13, 0.38);
+}
+
+.workspace-writing-memory-concept-card h4 {
+  margin: 0 0 7px;
+  color: #e6c574;
+  font-size: 1rem;
+}
+
+.workspace-writing-memory-concept-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.workspace-writing-memory-author-phase-a > .workspace-technical-details .workspace-runtime-storage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
