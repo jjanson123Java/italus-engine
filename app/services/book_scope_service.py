@@ -151,6 +151,16 @@ def get_book_scope_for_context(
 ) -> dict[str, Any]:
     expected_book_count = _book_count(manifest)
     index_status = dict(index_status or canon_index_service.ensure_current_index(context.project_id))
+    if eligibility_context is None:
+        indexed_records = canon_index_service.list_records_current(
+            context.project_id,
+            limit=10000,
+        )["results"]
+        eligibility_context = story_eligibility_service.prepare_story_eligibility_context(
+            context,
+            index_status=index_status,
+            indexed_records=indexed_records,
+        )
     path = book_scope_path_for_context(context)
     exists = path.exists()
 
