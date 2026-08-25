@@ -790,28 +790,6 @@ html[data-theme="sci-fi"] #workspace-view-trigger:focus-visible {
    - themes planner selection states without changing semantics
    ============================================================ */
 
-/* The original lower-right Italus information panel is baked into the
-   protected classic background. The Sci-Fi scene intentionally covers the
-   right side, so render a protected crop above the Sci-Fi scene rather than
-   editing library-desk-bg.png. Percent geometry matches the source artwork. */
-html[data-theme="sci-fi"] .page-shell::after {
-  content: "";
-  position: absolute;
-  z-index: 4;
-  left: 29.6224%;
-  right: 0;
-  bottom: 0;
-  height: 14.6484%;
-  pointer-events: none;
-  background: url("/assets/themes/shared/italus-heritage-panel.png") left bottom / 100% 100% no-repeat;
-  filter:
-    hue-rotate(145deg)
-    saturate(1.55)
-    brightness(1.08)
-    contrast(1.04)
-    drop-shadow(0 -8px 24px rgba(0, 0, 0, 0.34));
-}
-
 /* Learn More / About Italus modal: replace the remaining classic decorative
    gold with Sci-Fi cyan/violet while leaving prose content unchanged. */
 html[data-theme="sci-fi"] .learn-more-modal::before {
@@ -1654,28 +1632,6 @@ html[data-theme="mystery"] #workspace-view-trigger:focus-visible {
    - themes planner selection states without changing semantics
    ============================================================ */
 
-/* The original lower-right Italus information panel is baked into the
-   protected classic background. The Sci-Fi scene intentionally covers the
-   right side, so render a protected crop above the Sci-Fi scene rather than
-   editing library-desk-bg.png. Percent geometry matches the source artwork. */
-html[data-theme="mystery"] .page-shell::after {
-  content: "";
-  position: absolute;
-  z-index: 4;
-  left: 29.6224%;
-  right: 0;
-  bottom: 0;
-  height: 14.6484%;
-  pointer-events: none;
-  background: url("/assets/themes/shared/italus-heritage-panel.png") left bottom / 100% 100% no-repeat;
-  filter:
-    hue-rotate(145deg)
-    saturate(1.55)
-    brightness(1.08)
-    contrast(1.04)
-    drop-shadow(0 -8px 24px rgba(0, 0, 0, 0.34));
-}
-
 /* Learn More / About Italus modal: replace the remaining classic decorative
    gold with Sci-Fi cyan/violet while leaving prose content unchanged. */
 html[data-theme="mystery"] .learn-more-modal::before {
@@ -2311,23 +2267,6 @@ html[data-theme="fantasy"] .background-art {
   filter: sepia(0.20) saturate(0.82) brightness(0.66) contrast(1.03);
 }
 
-html[data-theme="fantasy"] .page-shell::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  top: 10.9%;
-  right: 0;
-  bottom: 0;
-  left: 31%;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(6, 9, 29, 0.98) 0%, rgba(6, 9, 29, 0.18) 13%, rgba(6, 9, 29, 0.04) 28%),
-    linear-gradient(180deg, rgba(6, 9, 29, 0.03) 0%, rgba(6, 9, 29, 0.14) 72%, rgba(6, 9, 29, 0.82) 100%),
-    url("/assets/themes/fantasy/studio-bg.png") center / cover no-repeat;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 100%);
-}
-
 html[data-theme="fantasy"] .site-header {
   background:
     linear-gradient(90deg, rgba(7, 10, 31, 0.985), rgba(12, 16, 44, 0.965)),
@@ -2496,14 +2435,6 @@ html[data-theme="fantasy"] .theme-current-status strong {
 }
 
 /* Workspace */
-html[data-theme="fantasy"] .workspace-body {
-  background:
-    linear-gradient(rgba(1, 6, 18, 0.86), rgba(1, 7, 20, 0.94)),
-    url("/assets/themes/fantasy/studio-bg.png") center / cover fixed no-repeat,
-    #010611;
-  color: var(--sci-fi-text);
-}
-
 html[data-theme="fantasy"] .workspace-nav {
   background: rgba(2, 10, 26, 0.94);
   border-bottom-color: rgba(70, 217, 255, 0.34);
@@ -2904,28 +2835,6 @@ html[data-theme="fantasy"] #workspace-view-trigger:focus-visible {
    - themes planner selection states without changing semantics
    ============================================================ */
 
-/* The original lower-right Italus information panel is baked into the
-   protected classic background. The Sci-Fi scene intentionally covers the
-   right side, so render a protected crop above the Sci-Fi scene rather than
-   editing library-desk-bg.png. Percent geometry matches the source artwork. */
-html[data-theme="fantasy"] .page-shell::after {
-  content: "";
-  position: absolute;
-  z-index: 4;
-  left: 29.6224%;
-  right: 0;
-  bottom: 0;
-  height: 14.6484%;
-  pointer-events: none;
-  background: url("/assets/themes/shared/italus-heritage-panel.png") left bottom / 100% 100% no-repeat;
-  filter:
-    hue-rotate(145deg)
-    saturate(1.55)
-    brightness(1.08)
-    contrast(1.04)
-    drop-shadow(0 -8px 24px rgba(0, 0, 0, 0.34));
-}
-
 /* Learn More / About Italus modal: replace the remaining classic decorative
    gold with Sci-Fi cyan/violet while leaving prose content unchanged. */
 html[data-theme="fantasy"] .learn-more-modal::before {
@@ -3009,14 +2918,6 @@ html[data-theme="fantasy"] .studio-modal-close:focus-visible {
 
 /* Help page inherits the active browser theme. Content and Help workflow are
    unchanged; this is presentation only. */
-html[data-theme="fantasy"] .help-body {
-  background:
-    linear-gradient(rgba(1, 6, 17, 0.84), rgba(1, 6, 17, 0.97)),
-    url("/assets/themes/fantasy/studio-bg.png") center / cover fixed,
-    #010611;
-  color: var(--sci-fi-text);
-}
-
 html[data-theme="fantasy"] .help-header {
   background: rgba(1, 9, 24, 0.96);
   border-bottom-color: rgba(70, 217, 255, 0.34);
@@ -3311,7 +3212,7 @@ html[data-theme="fantasy"] .secondary-button:focus-visible {
 html[data-theme="fantasy"] .workspace-body {
   background:
     linear-gradient(rgba(7, 10, 30, 0.88), rgba(5, 8, 24, 0.95)),
-    url("/assets/themes/fantasy/studio-bg.png") center / cover fixed no-repeat,
+    url("/assets/themes/fantasy/studio-bg.jpg") center / cover fixed no-repeat,
     var(--fantasy-charcoal);
   color: var(--fantasy-text);
 }
@@ -3406,14 +3307,6 @@ html[data-theme="fantasy"] .workspace-view-submenu-options button[aria-pressed="
 }
 
 /* Learn More / Help pages. */
-html[data-theme="fantasy"] .help-body {
-  background:
-    linear-gradient(rgba(7, 10, 30, 0.86), rgba(5, 8, 24, 0.97)),
-    url("/assets/themes/fantasy/studio-bg.png") center / cover fixed,
-    var(--fantasy-charcoal);
-  color: var(--fantasy-text);
-}
-
 html[data-theme="fantasy"] .help-header {
   background: rgba(7, 10, 30, 0.96);
   border-bottom-color: var(--fantasy-border);
@@ -3842,11 +3735,6 @@ html[data-theme="fantasy"] .brand-name,
 html[data-theme="fantasy"] .workspace-brand {
   color: #f3a0de !important;
   text-shadow: 0 0 16px rgba(243, 160, 222, 0.18);
-}
-
-html[data-theme="fantasy"] .page-shell::after {
-  background-image: url("/assets/themes/fantasy/italus-heritage-panel-pink.png");
-  filter: drop-shadow(0 -8px 24px rgba(0, 0, 0, 0.34));
 }
 
 /* Book Planner selector: retain dark surface, use Fantasy pink atmosphere. */
@@ -5473,10 +5361,7 @@ html[data-theme="fantasy"] :is(
 /* ========================================================================== */
 
 html[data-theme="sci-fi"] .page-shell {
-  background:
-    linear-gradient(90deg, rgba(1, 6, 17, 0.18), rgba(1, 6, 17, 0.06)),
-    url("/assets/themes/sci-fi/studio-bg-live.png") center center / cover no-repeat,
-    #010611;
+  background: #010611;
 }
 
 html[data-theme="sci-fi"] .page-shell::before {
@@ -5846,14 +5731,6 @@ html[data-theme="sci-fi"] .page-shell::after {
   filter: none !important;
 }
 
-/* Approved clean Sci-Fi scene: no baked header/footer/UI. */
-html[data-theme="sci-fi"] .page-shell {
-  background:
-    linear-gradient(90deg, rgba(1, 6, 17, 0.14), rgba(1, 6, 17, 0.03)),
-    url("/assets/themes/sci-fi/studio-bg-live-v2.png") center center / cover no-repeat,
-    #010611 !important;
-}
-
 /* Top-left Italus mark: each theme owns a native raster instead of filtering
    the Original legacy medallion. */
 html[data-theme="original"] .brand-mark,
@@ -5887,16 +5764,7 @@ html[data-theme="fantasy"] .learn-more-tree {
 /* Live landing feature medallions. Original and Sci-Fi use the live HTML
    feature rows now. Mystery/Fantasy assets are installed in this patch and
    become active when those landing compositions are migrated from baked UI. */
-html[data-theme="original"] .original-landing-feature:nth-child(1) img {
-  content: url("/assets/themes/original/feature-author-centric-v2.png");
-  filter: none !important;
-}
-html[data-theme="original"] .original-landing-feature:nth-child(2) img {
-  content: url("/assets/themes/original/feature-deep-continuity-v2.png");
-  filter: none !important;
-}
-html[data-theme="original"] .original-landing-feature:nth-child(3) img {
-  content: url("/assets/themes/original/feature-timeless-creativity-v2.png");
+html[data-theme="original"] .original-landing-feature img {
   filter: none !important;
 }
 
