@@ -6,15 +6,17 @@
   <title>Italus Author Workspace</title>
   <script>
     try {
-      document.documentElement.dataset.theme = localStorage.getItem('italus.theme') || 'original';
+      const allowedThemes = new Set(['original', 'sci-fi', 'mystery', 'fantasy']);
+      const storedTheme = String(localStorage.getItem('italus.theme') || '').trim().toLowerCase();
+      document.documentElement.dataset.theme = allowedThemes.has(storedTheme) ? storedTheme : 'original';
     } catch (_) {
       document.documentElement.dataset.theme = 'original';
     }
   </script>
 
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="workspace.css?v=20260824-author-workspace-final-ux-sweep-v1" />
-  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260824-sci-fi-theme-v1-4" />
+  <link rel="stylesheet" href="styles.css?v=20260825-responsive-display-v1-1-full-viewport" />
+  <link rel="stylesheet" href="workspace.css?v=20260825-responsive-view-menu-regression-repair-v1" />
+  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260825-final-theme-surface-ownership-v1" />
 </head>
 
 <body class="workspace-body">
@@ -84,7 +86,7 @@
           </div>
         </div>
         <a href="#settings" data-top-menu="settings">Settings</a>
-        <a href="/help?v=20260824-sci-fi-theme-v1-5">Help</a>
+        <a href="/help?v=20260825-fantasy-theme-v1-1-layout-art">Help</a>
       </nav>
     </header>
 
@@ -163,7 +165,7 @@
 
   </div>
 
-  <script src="/js/theme_manager.js?v=20260824-sci-fi-theme-v1-4"></script>
-  <script src="workspace.js?v=20260824-sci-fi-theme-v1-3"></script>
+  <script src="/js/theme_manager.js?v=20260825-fantasy-theme-v1-1-layout-art"></script>
+  <script src="workspace.js?v=20260825-planner-layout-spacing-v1"></script>
 </body>
 </html>

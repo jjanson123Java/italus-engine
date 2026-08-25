@@ -2245,9 +2245,30 @@
 }
 
 .workspace-view-submenu-options button {
+  position: relative;
   min-height: 36px;
-  padding: 8px 10px;
+  padding: 8px 10px 8px 34px;
   font-size: 14px;
+}
+
+.workspace-view-submenu-options button::before {
+  content: "\2713";
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  color: currentColor;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  opacity: 0;
+}
+
+.workspace-view-submenu-options button.active::before,
+.workspace-view-submenu-options button[aria-pressed="true"]::before {
+  opacity: 1;
 }
 
 .workspace-view-submenu-options button:hover,
@@ -2779,4 +2800,394 @@
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
+}
+
+/* 2026-08-25 Planner layout spacing and fieldset normalization.
+   Presentation-only: keeps planner data/behavior unchanged. */
+.planner-book-plan-unified .planner-reference-picker {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.planner-book-plan-unified .planner-reference-picker > legend {
+  display: block;
+  float: left;
+  width: 100%;
+  margin: 0 0 0.4rem;
+  padding: 0;
+  line-height: 1.35;
+}
+
+.planner-book-plan-unified .planner-reference-picker > details {
+  clear: both;
+  width: 100%;
+  border: 1px solid rgba(245, 217, 155, 0.22);
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.workspace-chapter-planner-v1 .chapter-batch-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0.75rem 0 0.9rem;
+}
+
+.workspace-chapter-planner-v1 .chapter-batch-toolbar + .chapter-planner-list,
+.workspace-chapter-planner-v1 .chapter-batch-toolbar + .chapter-event-sequence-list {
+  margin-top: 0.15rem;
+}
+
+.workspace-chapter-planner-v1 .chapter-plan-find-subsection .chapter-batch-toolbar {
+  margin-top: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.workspace-chapter-planner-v1 .knowledge-pack-workflow-actions {
+  margin-top: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+.workspace-chapter-planner-v1 .chapter-pack-next-step + .knowledge-pack-workflow-actions,
+.workspace-chapter-planner-v1 .workspace-disabled-note + .knowledge-pack-workflow-actions,
+.workspace-chapter-planner-v1 .workspace-warning-note + .knowledge-pack-workflow-actions,
+.workspace-chapter-planner-v1 .workspace-success-note + .knowledge-pack-workflow-actions {
+  margin-top: 1rem;
+}
+
+
+/* ========================================================================== */
+/* Italus Responsive Display Adaptation v1 - Workspace geometry              */
+/* Theme-neutral layout only.                                                 */
+/* ========================================================================== */
+
+.workspace-shell,
+.workspace-grid,
+.project-explorer,
+.author-workspace,
+.workspace-content,
+.editor-surface,
+.panel {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.workspace-nav {
+  min-height: 64px;
+  height: clamp(64px, 7.2svh, 74px);
+  padding-inline: clamp(14px, 2.2vw, 34px);
+  gap: clamp(12px, 2vw, 28px);
+}
+
+.workspace-brand {
+  flex: 0 0 auto;
+  font-size: clamp(1rem, 1.25vw, 1.3125rem);
+  letter-spacing: clamp(1.5px, 0.2vw, 3px);
+  white-space: nowrap;
+}
+
+.workspace-brand img {
+  width: clamp(36px, 3.2vw, 44px);
+  height: clamp(36px, 3.2vw, 44px);
+}
+
+.workspace-nav nav {
+  min-width: 0;
+  max-width: 100%;
+  gap: clamp(12px, 1.7vw, 24px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+.workspace-nav nav a {
+  flex: 0 0 auto;
+  font-size: clamp(0.82rem, 0.95vw, 0.9375rem);
+}
+
+.workspace-grid {
+  grid-template-columns: clamp(220px, 18vw, 280px) minmax(0, 1fr);
+  gap: clamp(10px, 1.2vw, 18px);
+  padding: clamp(10px, 1.5vw, 22px);
+  align-items: start;
+}
+
+.project-explorer {
+  padding: clamp(14px, 1.6vw, 22px);
+}
+
+.author-workspace {
+  padding: clamp(14px, 1.7vw, 24px);
+  container-type: inline-size;
+}
+
+.workspace-title-row {
+  gap: 16px;
+  margin-bottom: clamp(14px, 1.5vw, 22px);
+}
+
+.workspace-title-row > * {
+  min-width: 0;
+}
+
+.workspace-title-row h1 {
+  font-size: clamp(1.7rem, 2.2vw, 2.125rem);
+  overflow-wrap: anywhere;
+}
+
+.editor-surface {
+  margin-top: clamp(12px, 1.3vw, 18px);
+  padding: clamp(14px, 1.7vw, 26px);
+}
+
+.workspace-content p,
+.workspace-content li,
+.editor-surface p,
+.editor-surface li {
+  overflow-wrap: anywhere;
+}
+
+/* Keep long-form author copy readable on ultra-wide/signage displays. */
+.workspace-content > p,
+.workspace-author-hero > p,
+.workspace-panel > p,
+.placeholder {
+  max-width: 82ch;
+}
+
+.workspace-stat-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+}
+
+.workspace-definition-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+}
+
+.workspace-tabs {
+  grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+}
+
+.workspace-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.workspace-table {
+  min-width: min(680px, 100%);
+}
+
+.workspace-body img,
+.workspace-body svg,
+.workspace-body video,
+.workspace-body canvas {
+  max-width: 100%;
+}
+
+.workspace-body img,
+.workspace-body video {
+  height: auto;
+}
+
+.workspace-body input,
+.workspace-body select,
+.workspace-body textarea,
+.workspace-body button {
+  max-width: 100%;
+}
+
+.workspace-body input,
+.workspace-body select,
+.workspace-body textarea {
+  min-width: 0;
+}
+
+.workspace-body textarea {
+  resize: vertical;
+}
+
+/* Component/container adaptation follows actual author-panel width, not monitor model. */
+@container (max-width: 980px) {
+  .workspace-stat-grid,
+  .planner-book-plan-unified .workspace-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .workspace-definition-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (max-width: 680px) {
+  .workspace-stat-grid,
+  .planner-book-plan-unified .workspace-stat-grid,
+  .workspace-definition-list,
+  .workspace-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-title-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #workspace-mode {
+    align-self: flex-start;
+  }
+}
+
+/* Standard desktop. */
+@media (max-width: 1439px) {
+  .workspace-grid {
+    grid-template-columns: clamp(220px, 19vw, 250px) minmax(0, 1fr);
+  }
+}
+
+/* Compact desktop / TV effective viewport. */
+@media (max-width: 1099px) {
+  .workspace-grid {
+    grid-template-columns: clamp(200px, 22vw, 230px) minmax(0, 1fr);
+  }
+
+  .workspace-nav {
+    height: auto;
+    min-height: 64px;
+    flex-wrap: wrap;
+    padding-block: 9px;
+  }
+
+  .workspace-nav nav {
+    flex: 1 1 520px;
+  }
+
+  .project-explorer button,
+  .workspace-tabs button,
+  .workspace-body button {
+    padding-block: 9px;
+  }
+}
+
+/* Narrow / portrait signage: stack the workspace instead of squeezing it. */
+@media (max-width: 799px) {
+  .workspace-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-explorer {
+    position: static;
+  }
+
+  .workspace-nav {
+    align-items: flex-start;
+  }
+
+  .workspace-nav nav {
+    flex-basis: 100%;
+  }
+
+  .workspace-definition-list,
+  .workspace-stat-grid,
+  .workspace-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .runtime-console {
+    margin-inline: 10px;
+  }
+}
+
+/* Compact-height displays, including 1366x768 TVs with browser chrome. */
+@media (max-height: 850px) {
+  .workspace-nav {
+    min-height: 58px;
+    height: auto;
+    padding-block: 7px;
+  }
+
+  .workspace-grid {
+    padding-block: 10px;
+  }
+
+  .project-explorer,
+  .author-workspace,
+  .editor-surface {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .panel h2 {
+    margin-bottom: 14px;
+  }
+
+  .project-explorer button,
+  .workspace-tabs button {
+    margin-block: 5px;
+  }
+}
+
+@media (max-height: 700px) {
+  .workspace-nav {
+    min-height: 52px;
+  }
+
+  .workspace-brand img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .workspace-grid {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .project-explorer,
+  .author-workspace,
+  .editor-surface {
+    padding: 12px;
+  }
+
+  .workspace-title-row {
+    margin-bottom: 12px;
+  }
+
+  .workspace-stat-grid,
+  .workspace-definition-list {
+    gap: 8px;
+  }
+}
+
+/* Responsive View Menu Regression Repair v1
+   Keep the command row responsive without making it a clipping container.
+   The View dropdown is absolutely positioned below the nav and must be able
+   to escape the nav box vertically. */
+.workspace-nav nav {
+  overflow: visible;
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+
+.workspace-nav-menu {
+  overflow: visible;
+}
+
+.workspace-view-menu-panel {
+  overflow: visible;
+}
+
+@media (max-width: 1099px) {
+  .workspace-nav nav {
+    overflow: visible;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 799px) {
+  .workspace-nav nav {
+    overflow: visible;
+    flex-wrap: wrap;
+  }
 }

@@ -64,6 +64,10 @@
     authorLibraryLoading: false
   };
 
+  const plannerViewPreferenceStorageKey = 'italus.workspace.plannerViewModes.v1';
+  const plannerViewTargets = ['book_plan', 'chapter_planner', 'library'];
+  const plannerViewModeValues = ['default', 'collapse', 'expand'];
+
   const workspaceJsVersion = 'workspace-author-workspace-final-ux-sweep-v1-20260824';
   console.info(`[ITALUS] ${workspaceJsVersion} loaded`);
   const plannerIntentVersion = 'workspace-planner-intent-model-v1-20260817';
@@ -92,6 +96,7 @@
   document.addEventListener('DOMContentLoaded', init);
 
   async function init() {
+    restorePlannerViewPreferences();
     bindSidebar();
     bindTopMenu();
     bindRuntimeGateNavigation();
@@ -212,16 +217,17 @@
 
         const target = String(button.dataset.plannerViewTarget || '');
         const mode = String(button.dataset.plannerViewMode || 'default');
-        if (!['book_plan', 'chapter_planner', 'library'].includes(target)) return;
-        if (!['default', 'collapse', 'expand'].includes(mode)) return;
+        if (!plannerViewTargets.includes(target)) return;
+        if (!plannerViewModeValues.includes(mode)) return;
 
         state.plannerViewModes[target] = mode;
+        persistPlannerViewPreferences();
         updatePlannerViewMenuSelection(target);
         applyPlannerViewMode(target, mode === 'default');
 
         const plannerLabel = target === 'book_plan' ? 'Book Planner' : (target === 'chapter_planner' ? 'Chapter Planner' : 'Library');
         const modeLabel = mode === 'collapse' ? 'Collapse All' : (mode === 'expand' ? 'Expand All' : 'Default');
-        setLog(`${plannerLabel} view set to ${modeLabel}.`);
+        setLog(`${plannerLabel} view set to ${modeLabel}. This View preference is saved in this browser.`);
       });
     });
 
@@ -237,6 +243,40 @@
     updatePlannerViewMenuSelection('book_plan');
     updatePlannerViewMenuSelection('chapter_planner');
     updatePlannerViewMenuSelection('library');
+  }
+
+  function restorePlannerViewPreferences() {
+    try {
+      const raw = window.localStorage.getItem(plannerViewPreferenceStorageKey);
+      if (!raw) return;
+      const saved = JSON.parse(raw);
+      if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return;
+
+      plannerViewTargets.forEach((target) => {
+        const mode = String(saved[target] || '');
+        if (plannerViewModeValues.includes(mode)) {
+          state.plannerViewModes[target] = mode;
+        }
+      });
+    } catch (error) {
+      console.warn('[ITALUS] Planner View preferences could not be restored.', error);
+    }
+  }
+
+  function persistPlannerViewPreferences() {
+    const saved = Object.fromEntries(
+      plannerViewTargets.map((target) => [
+        target,
+        plannerViewModeValues.includes(String((state.plannerViewModes || {})[target] || ''))
+          ? String(state.plannerViewModes[target])
+          : 'default'
+      ])
+    );
+    try {
+      window.localStorage.setItem(plannerViewPreferenceStorageKey, JSON.stringify(saved));
+    } catch (error) {
+      console.warn('[ITALUS] Planner View preferences could not be saved.', error);
+    }
   }
 
   function toggleWorkspaceViewMenu() {
@@ -5170,25 +5210,42 @@
         <section class="workspace-author-summary-card workspace-theme-panel">
           <h4>Themes</h4>
           <p>Choose how Narrative Studio looks. The theme changes immediately and does not alter Canon, planning, manuscript data, or generation settings.</p>
-          <div class="theme-option-grid" aria-label="Narrative Studio themes">
+          <div class="theme-option-grid" data-theme-options-root aria-label="Narrative Studio themes">
             <button type="button" class="theme-option-card" data-theme-option="original" aria-pressed="false">
               <span class="theme-option-preview theme-option-preview--original" aria-hidden="true"></span>
               <span class="theme-option-copy">
-                <strong>Original</strong>
+                <strong>Original <span class="theme-option-default-badge">Default</span></strong>
                 <span>Classic Italus library, dark green panels, gold accents, and leather-desk atmosphere.</span>
               </span>
             </button>
             <button type="button" class="theme-option-card" data-theme-option="sci-fi" aria-pressed="false">
               <span class="theme-option-preview theme-option-preview--sci-fi" aria-hidden="true"></span>
               <span class="theme-option-copy">
-                <strong>Sci‑Fi</strong>
+                <strong>Sci-Fi</strong>
                 <span>Futuristic night studio with cyan and violet controls, deep-space lighting, and a city beyond the desk.</span>
+              </span>
+            </button>
+
+
+            <button type="button" class="theme-option-card" data-theme-option="mystery" aria-pressed="false">
+              <span class="theme-option-preview theme-option-preview--mystery" aria-hidden="true"></span>
+              <span class="theme-option-copy">
+                <strong>Mystery</strong>
+                <span>Lamplit detective-writer studio with brass and burgundy accents, classic clues, and literary suspense.</span>
+              </span>
+            </button>
+
+            <button type="button" class="theme-option-card" data-theme-option="fantasy" aria-pressed="false">
+              <span class="theme-option-preview theme-option-preview--fantasy" aria-hidden="true"></span>
+              <span class="theme-option-copy">
+                <strong>Fantasy</strong>
+                <span>Enchanted indigo and violet studio with luminous blue, emerald, silver, and magical authoring atmosphere.</span>
               </span>
             </button>
           </div>
           <p class="theme-current-status">
             Current theme: <strong data-theme-current-label>${escapeHtml(window.ItalusTheme ? window.ItalusTheme.THEMES[window.ItalusTheme.getTheme()].label : 'Original')}</strong>.
-            <span data-theme-selection-status>Changes apply without reloading.</span>
+            <span data-theme-selection-status>Theme preferences are managed by Narrative Studio.</span>
           </p>
         </section>
 

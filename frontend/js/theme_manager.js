@@ -3,9 +3,13 @@
 
   const STORAGE_KEY = 'italus.theme';
   const DEFAULT_THEME = 'original';
+  const PICKER_VERSION_KEY = 'italus.theme.pickerVersion';
+  const PICKER_VERSION = 'v1.9-fantasy';
   const THEMES = Object.freeze({
-    original: { id: 'original', label: 'Original', description: 'The classic Italus library and leather-desk studio.' },
-    'sci-fi': { id: 'sci-fi', label: 'Sci‑Fi', description: 'A neon blue and violet futuristic studio overlooking a night city and deep space.' }
+    original: { id: 'original', label: 'Original', description: 'The classic Italus library and leather-desk studio.', isDefault: true },
+    'sci-fi': { id: 'sci-fi', label: 'Sci-Fi', description: 'A neon blue and violet futuristic studio overlooking a night city and deep space.', isDefault: false },
+    mystery: { id: 'mystery', label: 'Mystery', description: 'A dark, atmospheric writing skin inspired by detective fiction, lamplit desks, and literary suspense.', isDefault: false },
+    fantasy: { id: 'fantasy', label: 'Fantasy', description: 'An enchanted author studio of deep indigo, arcane purple, luminous blue, emerald, and moonlit silver.', isDefault: false }
   });
 
   function normalizeTheme(value) {
@@ -28,19 +32,19 @@
   function persistTheme(themeId) {
     try {
       window.localStorage.setItem(STORAGE_KEY, themeId);
+      window.localStorage.setItem(PICKER_VERSION_KEY, PICKER_VERSION);
     } catch (_) {
-      // Local preference persistence is best-effort; the live theme still applies.
+      // Preference persistence is best-effort. The live theme still applies.
     }
   }
 
   function syncControls(themeId) {
     const active = normalizeTheme(themeId);
+
     document.querySelectorAll('[data-theme-option]').forEach((control) => {
       const selected = normalizeTheme(control.dataset.themeOption) === active;
       control.classList.toggle('theme-option-card--selected', selected);
       control.setAttribute('aria-pressed', selected ? 'true' : 'false');
-      const radio = control.querySelector('input[type="radio"]');
-      if (radio) radio.checked = selected;
     });
 
     document.querySelectorAll('[data-theme-current-label]').forEach((node) => {
@@ -52,7 +56,9 @@
     });
 
     document.querySelectorAll('[data-theme-selection-status]').forEach((node) => {
-      node.textContent = `${THEMES[active].label} is active. Changes apply immediately.`;
+      node.textContent = active === DEFAULT_THEME
+        ? 'Original is active. This is the default skin. Changes apply immediately.'
+        : `${THEMES[active].label} is active. This preference is remembered in this browser. Original remains the default skin.`;
     });
   }
 
@@ -120,6 +126,9 @@
   window.ItalusTheme = {
     STORAGE_KEY,
     THEMES,
+    DEFAULT_THEME,
+    PICKER_VERSION_KEY,
+    PICKER_VERSION,
     getTheme: currentTheme,
     setTheme: applyTheme,
     syncControls,

@@ -1814,3 +1814,699 @@ form[data-canon-section-form] .wizard-actions {
 .canon-item-card[data-status="CURRENT"] > span {
   font-weight: 700;
 }
+
+
+/* ========================================================================== */
+/* Italus Responsive Display Adaptation v1                                   */
+/* Geometry only: no theme, persistence, or application behavior changes.    */
+/* ========================================================================== */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.page-shell {
+  width: 100%;
+  max-width: 1536px;
+  height: min(100svh, 1024px);
+  min-height: min(560px, 100svh);
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.background-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.site-header {
+  height: clamp(72px, 11.25svh, 96px);
+  min-height: 0;
+  gap: clamp(14px, 2.75vw, 42px);
+  padding-inline: clamp(16px, 2vw, 30px);
+}
+
+.brand-mark {
+  width: clamp(44px, 4.1vw, 62px);
+  height: clamp(44px, 4.1vw, 62px);
+  flex: 0 0 auto;
+}
+
+.brand-name {
+  font-size: clamp(1.2rem, 1.65vw, 1.95rem);
+}
+
+.main-nav {
+  min-width: 0;
+  gap: clamp(14px, 2.7vw, 42px);
+}
+
+.main-nav a {
+  font-size: clamp(0.82rem, 0.95vw, 1rem);
+}
+
+.header-quote {
+  min-width: 0;
+  max-width: clamp(220px, 24vw, 330px);
+  font-size: clamp(0.76rem, 0.9vw, 1rem);
+}
+
+.project-tiles {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.8vw, 28px);
+}
+
+.project-tile,
+.project-tile img {
+  max-width: 100%;
+}
+
+.project-tile img {
+  width: auto;
+  height: clamp(230px, 31svh, 360px);
+  object-fit: contain;
+}
+
+.learn-more-link {
+  width: clamp(112px, 8.85%, 148px);
+  min-width: 0;
+  height: clamp(42px, 5.25svh, 54px);
+  min-height: 0;
+}
+
+/* Ensure all project/wizard modals remain usable on short or narrow displays. */
+.studio-modal,
+.learn-more-modal {
+  max-width: min(94vw, 1180px);
+  max-height: min(90svh, 960px);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.studio-modal input,
+.studio-modal select,
+.studio-modal textarea,
+.studio-modal button,
+.learn-more-modal input,
+.learn-more-modal select,
+.learn-more-modal textarea,
+.learn-more-modal button {
+  max-width: 100%;
+}
+
+/* Ultra/Wide: preserve a readable, centered composition instead of stretching. */
+@media (min-width: 1800px) {
+  .page-shell {
+    max-width: 1536px;
+  }
+}
+
+/* Compact desktop / mixed-DPI displays. */
+@media (max-width: 1100px) {
+  .site-header {
+    display: grid;
+    grid-template-columns: minmax(180px, auto) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    height: auto;
+    min-height: 108px;
+    padding: 12px 16px 10px;
+    row-gap: 6px;
+  }
+
+  .brand-link {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .header-quote {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .main-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    gap: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    padding-bottom: 3px;
+  }
+
+  .project-tiles {
+    left: 34%;
+    right: 2.5%;
+    top: 38%;
+  }
+}
+
+/* Narrow/portrait: reflow rather than scale the artwork or controls. */
+@media (max-width: 800px) {
+  .page-shell {
+    min-width: 0;
+    height: max(100svh, 620px);
+    min-height: 620px;
+  }
+
+  .site-header {
+    grid-template-columns: minmax(160px, auto) minmax(0, 1fr);
+  }
+
+  .brand-name {
+    letter-spacing: 0.12em;
+  }
+
+  .header-quote {
+    font-size: 0.72rem;
+  }
+
+  .project-tiles {
+    left: 3%;
+    right: 3%;
+    top: 36%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .project-tile img {
+    width: 100%;
+    height: auto;
+    max-height: 42svh;
+  }
+
+  .learn-more-link {
+    right: 3%;
+    bottom: 3%;
+  }
+}
+
+/* Short-display vertical density. */
+@media (max-height: 850px) {
+  .site-header {
+    height: clamp(68px, 10.5svh, 88px);
+  }
+
+  .project-tiles {
+    top: 36%;
+  }
+
+  .project-tile img {
+    height: clamp(210px, 36svh, 300px);
+  }
+}
+
+@media (max-height: 700px) {
+  .site-header {
+    min-height: 92px;
+    padding-block: 8px;
+  }
+
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+  }
+
+  .main-nav a {
+    padding-block: 8px;
+  }
+
+  .project-tiles {
+    top: 34%;
+  }
+
+  .project-tile img {
+    height: clamp(190px, 35svh, 250px);
+  }
+
+  .learn-more-link {
+    height: 40px;
+    bottom: 2.5%;
+  }
+}
+
+
+/* ========================================================================== */
+/* Italus Responsive Display Adaptation v1.1                                 */
+/* Full-viewport landing correction.                                         */
+/* The landing canvas owns the viewport; content is never globally scaled.   */
+/* ========================================================================== */
+
+.page-shell {
+  width: 100%;
+  max-width: none;
+  height: 100svh;
+  min-height: 0;
+  margin-inline: 0;
+}
+
+@supports (height: 100dvh) {
+  .page-shell {
+    height: 100dvh;
+  }
+}
+
+/* Do not reintroduce pillarboxing on ultrawide/signage viewports. */
+@media (min-width: 1800px) {
+  .page-shell {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+  }
+}
+
+/* Narrow/portrait displays must fit the actual viewport rather than force
+   the previous 620px minimum canvas height. */
+@media (max-width: 800px) {
+  .page-shell {
+    min-width: 0;
+    height: 100svh;
+    min-height: 0;
+  }
+
+  @supports (height: 100dvh) {
+    .page-shell {
+      height: 100dvh;
+    }
+  }
+}
+
+/* Artwork remains proportional. Different aspect ratios crop safely instead
+   of stretching the approved theme image. */
+.background-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+
+/* ========================================================================== */
+/* Original Landing Live Composition v1                                      */
+/* Original only: clean scene artwork + live HTML narrative/heritage layers. */
+/* Sci-Fi, Mystery, Fantasy remain on their current landing compositions.    */
+/* ========================================================================== */
+
+.original-landing-intro,
+.original-heritage {
+  display: none;
+}
+
+html[data-theme="original"] .page-shell {
+  background:
+    linear-gradient(90deg, rgba(1, 8, 7, 0.12), rgba(1, 8, 7, 0.02)),
+    url("assets/themes/original/studio-bg-clean.png") center center / cover no-repeat,
+    #020807;
+}
+
+/* Hide only the old baked Original raster. Other themes still use it as their
+   temporary left-side underlay until their own landing refactors are approved. */
+html[data-theme="original"] .background-art {
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-theme="original"] .original-landing-intro {
+  display: block;
+  position: absolute;
+  z-index: 8;
+  top: clamp(112px, 15.2svh, 166px);
+  left: clamp(34px, 3.6vw, 58px);
+  width: clamp(330px, 29vw, 455px);
+  color: #f2ead8;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.88);
+}
+
+html[data-theme="original"] .original-landing-eyebrow {
+  margin: 0 0 clamp(8px, 1.2svh, 14px);
+  color: #d6a85f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.88rem, 1.05vw, 1.12rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+html[data-theme="original"] .original-landing-intro h1 {
+  margin: 0;
+  color: #f2ead8;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.35rem, 3.75vw, 3.7rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.018em;
+}
+
+html[data-theme="original"] .original-landing-tagline {
+  margin: clamp(14px, 2.1svh, 24px) 0 0;
+  color: #d6a85f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.05rem, 1.55vw, 1.42rem);
+  line-height: 1.25;
+}
+
+html[data-theme="original"] .original-landing-description {
+  margin: clamp(16px, 2.2svh, 26px) 0 0;
+  max-width: 37ch;
+  color: #f0eee7;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+  line-height: 1.62;
+}
+
+html[data-theme="original"] .original-landing-divider {
+  display: block;
+  width: clamp(54px, 4.3vw, 76px);
+  height: 1px;
+  margin: clamp(18px, 2.4svh, 28px) 0;
+  background: linear-gradient(90deg, rgba(214, 168, 95, 0.98), rgba(214, 168, 95, 0.18));
+  box-shadow: 0 0 10px rgba(214, 168, 95, 0.16);
+}
+
+html[data-theme="original"] .original-landing-features {
+  display: grid;
+  gap: clamp(14px, 1.9svh, 24px);
+}
+
+html[data-theme="original"] .original-landing-feature {
+  display: grid;
+  grid-template-columns: clamp(58px, 5.2vw, 78px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(14px, 1.55vw, 22px);
+  min-width: 0;
+}
+
+html[data-theme="original"] .original-landing-feature img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: drop-shadow(0 7px 16px rgba(0, 0, 0, 0.42));
+}
+
+html[data-theme="original"] .original-landing-feature h2 {
+  margin: 0 0 5px;
+  color: #f2ead8;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.08rem, 1.45vw, 1.42rem);
+  font-weight: 400;
+  line-height: 1.12;
+}
+
+html[data-theme="original"] .original-landing-feature p {
+  margin: 0;
+  max-width: 32ch;
+  color: #dedbd3;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: clamp(0.8rem, 0.95vw, 0.98rem);
+  line-height: 1.48;
+}
+
+/* The project action images remain the approved live assets, but the Original
+   composition owns their geometry independently from the clean background. */
+html[data-theme="original"] .project-tiles {
+  left: clamp(520px, 39%, 760px);
+  right: clamp(34px, 4vw, 72px);
+  top: clamp(270px, 38.5svh, 430px);
+  gap: clamp(16px, 2vw, 32px);
+}
+
+html[data-theme="original"] .project-tile img {
+  height: clamp(230px, 31svh, 350px);
+}
+
+html[data-theme="original"] .learn-more-link {
+  display: none;
+}
+
+html[data-theme="original"] .original-heritage {
+  display: grid;
+  grid-template-columns: minmax(225px, auto) minmax(320px, 1fr) auto;
+  align-items: center;
+  gap: clamp(18px, 2vw, 34px);
+  position: absolute;
+  z-index: 14;
+  left: clamp(455px, 30%, 590px);
+  right: 0;
+  bottom: 0;
+  min-height: clamp(88px, 13svh, 128px);
+  padding: clamp(14px, 1.6vw, 24px) clamp(20px, 2.2vw, 34px);
+  border-top: 1px solid rgba(214, 168, 95, 0.15);
+  background:
+    linear-gradient(90deg, rgba(2, 10, 9, 0.98), rgba(3, 11, 10, 0.94)),
+    #020807;
+  box-shadow: 0 -18px 42px rgba(0, 0, 0, 0.22);
+}
+
+html[data-theme="original"] .original-heritage-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+html[data-theme="original"] .original-heritage-brand img {
+  width: clamp(50px, 4vw, 66px);
+  height: clamp(50px, 4vw, 66px);
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+html[data-theme="original"] .original-heritage-brand div {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+html[data-theme="original"] .original-heritage-brand strong {
+  color: #d6a85f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.15rem, 1.55vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+
+html[data-theme="original"] .original-heritage-brand span,
+html[data-theme="original"] .original-heritage-copy {
+  color: #f0e9dd;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: clamp(0.72rem, 0.78vw, 0.86rem);
+  line-height: 1.38;
+}
+
+html[data-theme="original"] .original-heritage-copy {
+  min-width: 0;
+  padding-left: clamp(14px, 1.4vw, 24px);
+  border-left: 1px solid rgba(214, 168, 95, 0.2);
+}
+
+html[data-theme="original"] .original-heritage-copy p {
+  margin: 0;
+}
+
+html[data-theme="original"] .original-heritage-copy p + p {
+  margin-top: 5px;
+}
+
+html[data-theme="original"] .original-heritage-learn-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: clamp(108px, 8.6vw, 142px);
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid rgba(214, 168, 95, 0.72);
+  border-radius: 4px;
+  color: #f1dfb5;
+  background: rgba(7, 13, 12, 0.34);
+  text-decoration: none;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.8rem, 0.9vw, 0.95rem);
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+html[data-theme="original"] .original-heritage-learn-more:hover,
+html[data-theme="original"] .original-heritage-learn-more:focus-visible {
+  color: #07100e;
+  background: rgba(214, 168, 95, 0.92);
+  border-color: rgba(244, 214, 158, 0.96);
+  box-shadow: 0 0 18px rgba(214, 168, 95, 0.26);
+  outline: none;
+}
+
+/* Compact desktop / 1366-class displays: retain the same composition while
+   tightening typography and moving the cards slightly inward. */
+@media (max-width: 1450px) {
+  html[data-theme="original"] .original-landing-intro {
+    top: clamp(108px, 14.5svh, 138px);
+    left: clamp(28px, 3.5vw, 48px);
+    width: clamp(310px, 30.5vw, 420px);
+  }
+
+  html[data-theme="original"] .original-landing-intro h1 {
+    font-size: clamp(2.25rem, 3.5vw, 3.2rem);
+  }
+
+  html[data-theme="original"] .project-tiles {
+    left: 38%;
+    right: 2.6%;
+    top: 36%;
+  }
+
+  html[data-theme="original"] .project-tile img {
+    height: clamp(205px, 34svh, 285px);
+  }
+
+  html[data-theme="original"] .original-heritage {
+    left: 31%;
+    min-height: clamp(82px, 12svh, 104px);
+    gap: 16px;
+    padding: 12px 20px;
+  }
+}
+
+/* Short displays receive denser spacing without scaling the application. */
+@media (max-height: 820px) {
+  html[data-theme="original"] .original-landing-intro {
+    top: 104px;
+  }
+
+  html[data-theme="original"] .original-landing-tagline {
+    margin-top: 10px;
+  }
+
+  html[data-theme="original"] .original-landing-description {
+    margin-top: 12px;
+    line-height: 1.48;
+  }
+
+  html[data-theme="original"] .original-landing-divider {
+    margin-block: 14px;
+  }
+
+  html[data-theme="original"] .original-landing-features {
+    gap: 10px;
+  }
+
+  html[data-theme="original"] .original-landing-feature {
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  html[data-theme="original"] .original-landing-feature h2 {
+    font-size: 1.08rem;
+  }
+
+  html[data-theme="original"] .original-landing-feature p {
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  html[data-theme="original"] .project-tiles {
+    top: 35%;
+  }
+
+  html[data-theme="original"] .project-tile img {
+    height: clamp(195px, 35svh, 260px);
+  }
+
+  html[data-theme="original"] .original-heritage {
+    min-height: 88px;
+  }
+}
+
+/* Narrow/portrait fallback: all live UI becomes normal-flow content over the
+   clean scene. Vertical scrolling is intentional; horizontal overflow is not. */
+@media (max-width: 760px) {
+  html[data-theme="original"] .page-shell {
+    height: auto;
+    min-height: 100svh;
+    overflow-y: auto;
+    background-position: 60% top;
+  }
+
+  html[data-theme="original"] .original-landing-intro {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    margin: 126px 22px 24px;
+    padding: 22px;
+    border: 1px solid rgba(214, 168, 95, 0.18);
+    border-radius: 14px;
+    background: rgba(2, 10, 9, 0.82);
+    backdrop-filter: blur(6px);
+  }
+
+  html[data-theme="original"] .project-tiles {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 20px;
+  }
+
+  html[data-theme="original"] .project-tile img {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+  }
+
+  html[data-theme="original"] .original-heritage {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    grid-template-columns: 1fr;
+    margin-top: 28px;
+    padding: 20px;
+  }
+
+  html[data-theme="original"] .original-heritage-copy {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  html[data-theme="original"] .original-heritage-learn-more {
+    justify-self: start;
+  }
+}
+
+
+/* Learn More close-control clearance v1.
+   Shared across all themes so the close button never overlaps the hero panel. */
+.learn-more-modal {
+  padding-top: max(62px, clamp(54px, 5vw, 70px));
+}
+
+.learn-more-modal .studio-modal-close {
+  top: 14px;
+  right: 18px;
+}
+
+
+/* Learn More close-control inner-frame placement v2.
+   The close control belongs inside the inset rounded frame, upper-left,
+   with reserved vertical clearance above the Learn More hero panel. */
+.learn-more-modal {
+  padding-top: max(78px, clamp(74px, 6vw, 88px));
+}
+
+.learn-more-modal > .studio-modal-close {
+  position: absolute !important;
+  top: 28px !important;
+  left: 28px !important;
+  right: auto !important;
+  margin: 0 !important;
+  z-index: 5;
+}

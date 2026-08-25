@@ -6,13 +6,15 @@
   <title>ITALUS Narrative Studio</title>
   <script>
     try {
-      document.documentElement.dataset.theme = localStorage.getItem('italus.theme') || 'original';
+      const allowedThemes = new Set(['original', 'sci-fi', 'mystery', 'fantasy']);
+      const storedTheme = String(localStorage.getItem('italus.theme') || '').trim().toLowerCase();
+      document.documentElement.dataset.theme = allowedThemes.has(storedTheme) ? storedTheme : 'original';
     } catch (_) {
       document.documentElement.dataset.theme = 'original';
     }
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260816-canon-planning-layout-polish-v1">
-  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260824-sci-fi-theme-v1-4">
+  <link rel="stylesheet" href="styles.css?v=20260825-learn-more-close-inner-upper-left-v2">
+  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260825-fantasy-landing-live-composition-v1">
 </head>
 <body>
   <main class="page-shell" aria-label="ITALUS Narrative Studio landing page">
@@ -63,7 +65,7 @@
         <div class="nav-item">
           <button type="button" class="nav-trigger">Help</button>
           <div class="dropdown-menu">
-            <a href="/help?v=20260824-sci-fi-theme-v1-5">Documentation</a>
+            <a href="/help?v=20260825-fantasy-theme-v1-1-layout-art">Documentation</a>
             <a href="#learn-more" data-project-action="learnMore">About Italus</a>
             <a href="/api/health">API Health</a>
           </div>
@@ -80,6 +82,44 @@
       
     </header>
 
+    <section class="original-landing-intro" aria-labelledby="original-landing-title">
+      <p class="original-landing-eyebrow">WELCOME TO</p>
+      <h1 id="original-landing-title">Narrative Studio</h1>
+      <p class="original-landing-tagline">Craft Stories That Last Generations</p>
+      <p class="original-landing-description">
+        Inspired by Italus — Europe’s oldest living tree,<br>
+        rooted in nature, shaped by time, and built to endure.
+      </p>
+      <span class="original-landing-divider" aria-hidden="true"></span>
+
+      <div class="original-landing-features">
+        <article class="original-landing-feature">
+          <img src="assets/themes/original/feature-author-centric.png" alt="" aria-hidden="true">
+          <div>
+            <h2>Author-Centric</h2>
+            <p>Built for novelists, storytellers, and world-builders.</p>
+          </div>
+        </article>
+        <article class="original-landing-feature">
+          <img src="assets/themes/original/feature-deep-continuity.png" alt="" aria-hidden="true">
+          <div>
+            <h2>Deep Continuity</h2>
+            <p>Canon-controlled. Consistent. Persistent.</p>
+          </div>
+        </article>
+        <article class="original-landing-feature">
+          <img src="assets/themes/original/feature-timeless-creativity.png" alt="" aria-hidden="true">
+          <div>
+            <h2>Timeless Creativity</h2>
+            <p>From the first spark to the final chapter.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <img class="sci-fi-tree-accent" src="assets/themes/sci-fi/tree-accent-floating-island-v2.png?v=20260825-atmospheric-v2" alt="" aria-hidden="true">
+    <img class="fantasy-tree-accent" src="assets/themes/fantasy/tree-accent-floating-island.png?v=20260825-fantasy-live-v1" alt="" aria-hidden="true">
+
     <section class="project-tiles" aria-label="Project actions">
       <a class="project-tile tile-one" href="#" data-project-action="new" aria-label="Create a new project">
         <img src="assets/tile-new-project.png" alt="New Project — Create New">
@@ -95,6 +135,21 @@
     <a class="learn-more-link" href="#learn-more" data-project-action="learnMore" aria-label="Learn more about Italus">
       Learn More
     </a>
+
+    <section class="original-heritage" aria-label="About Italus">
+      <div class="original-heritage-brand">
+        <img src="assets/italus-tree-circle.png" alt="" aria-hidden="true">
+        <div>
+          <strong>ITALUS</strong>
+          <span>Rooted in Time. Built for Eternity.</span>
+        </div>
+      </div>
+      <div class="original-heritage-copy">
+        <p>Italus is Europe’s oldest scientifically dated living tree, estimated to be over 1,230 years old.</p>
+        <p>A symbol of resilience, depth, and the stories that outlive us.</p>
+      </div>
+      <a class="original-heritage-learn-more" href="#learn-more" data-project-action="learnMore">Learn More</a>
+    </section>
   </main>
 
   <section class="studio-modal-layer" id="studio-modal-layer" aria-hidden="true">
@@ -300,11 +355,11 @@
         <p>Choose the look of Narrative Studio. Theme changes apply immediately and do not change project content or workflow.</p>
       </header>
 
-      <div class="theme-option-grid" aria-label="Narrative Studio themes">
+      <div class="theme-option-grid" data-theme-options-root aria-label="Narrative Studio themes">
         <button type="button" class="theme-option-card" data-theme-option="original" aria-pressed="false">
           <span class="theme-option-preview theme-option-preview--original" aria-hidden="true"></span>
           <span class="theme-option-copy">
-            <strong>Original</strong>
+            <strong>Original <span class="theme-option-default-badge">Default</span></strong>
             <span>Classic Italus library, dark green panels, gold accents, and leather-desk atmosphere.</span>
           </span>
         </button>
@@ -312,8 +367,25 @@
         <button type="button" class="theme-option-card" data-theme-option="sci-fi" aria-pressed="false">
           <span class="theme-option-preview theme-option-preview--sci-fi" aria-hidden="true"></span>
           <span class="theme-option-copy">
-            <strong>Sci‑Fi</strong>
+            <strong>Sci-Fi</strong>
             <span>Futuristic night studio with cyan and violet controls, deep-space lighting, and a city beyond the desk.</span>
+          </span>
+        </button>
+
+
+        <button type="button" class="theme-option-card" data-theme-option="mystery" aria-pressed="false">
+          <span class="theme-option-preview theme-option-preview--mystery" aria-hidden="true"></span>
+          <span class="theme-option-copy">
+            <strong>Mystery</strong>
+            <span>Lamplit detective-writer studio with brass and burgundy accents, classic clues, and literary suspense.</span>
+          </span>
+        </button>
+
+        <button type="button" class="theme-option-card" data-theme-option="fantasy" aria-pressed="false">
+          <span class="theme-option-preview theme-option-preview--fantasy" aria-hidden="true"></span>
+          <span class="theme-option-copy">
+            <strong>Fantasy</strong>
+            <span>Enchanted indigo and violet studio with luminous blue, emerald, silver, and magical authoring atmosphere.</span>
           </span>
         </button>
       </div>
@@ -346,7 +418,7 @@
     </section>
   </section>
 
-  <script src="/js/theme_manager.js?v=20260824-sci-fi-theme-v1-4"></script>
+  <script src="/js/theme_manager.js?v=20260825-fantasy-theme-v1-1-layout-art"></script>
   <script src="/js/project_wizard.js"></script>
   <script src="/js/canon_authoring.js?v=20260816-canon-reference-hardening-v1"></script>
   <script src="/js/project_lifecycle.js?v=20260822-existing-project-book-name-v1"></script>

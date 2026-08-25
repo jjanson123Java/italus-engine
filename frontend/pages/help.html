@@ -6,13 +6,15 @@
   <title>Help | ITALUS Narrative Studio</title>
   <script>
     try {
-      document.documentElement.dataset.theme = localStorage.getItem('italus.theme') || 'original';
+      const allowedThemes = new Set(['original', 'sci-fi', 'mystery', 'fantasy']);
+      const storedTheme = String(localStorage.getItem('italus.theme') || '').trim().toLowerCase();
+      document.documentElement.dataset.theme = allowedThemes.has(storedTheme) ? storedTheme : 'original';
     } catch (_) {
       document.documentElement.dataset.theme = 'original';
     }
   </script>
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260824-sci-fi-theme-v1-5">
+  <link rel="stylesheet" href="/styles.css?v=20260825-responsive-display-v1-1-full-viewport">
+  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260825-final-theme-surface-ownership-v1">
 </head>
 
 <body class="help-body">
@@ -51,7 +53,7 @@
       <div class="nav-item">
         <button type="button" class="nav-trigger">Help</button>
         <div class="dropdown-menu">
-          <a href="/help?v=20260824-sci-fi-theme-v1-5">Documentation</a>
+          <a href="/help?v=20260825-fantasy-theme-v1-1-layout-art">Documentation</a>
           <a href="/">About Italus</a>
           <a href="/api/health">API Health</a>
         </div>
@@ -475,6 +477,6 @@
     <span>ITALUS Narrative Studio</span>
     <span>Canon first. Continuity always.</span>
   </footer>
-  <script src="/js/theme_manager.js?v=20260824-sci-fi-theme-v1-5"></script>
+  <script src="/js/theme_manager.js?v=20260825-fantasy-theme-v1-1-layout-art"></script>
 </body>
 </html>
