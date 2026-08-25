@@ -4,7 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Help | ITALUS Narrative Studio</title>
+  <script>
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('italus.theme') || 'original';
+    } catch (_) {
+      document.documentElement.dataset.theme = 'original';
+    }
+  </script>
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260824-sci-fi-theme-v1-5">
 </head>
 
 <body class="help-body">
@@ -43,7 +51,7 @@
       <div class="nav-item">
         <button type="button" class="nav-trigger">Help</button>
         <div class="dropdown-menu">
-          <a href="/help">Documentation</a>
+          <a href="/help?v=20260824-sci-fi-theme-v1-5">Documentation</a>
           <a href="/">About Italus</a>
           <a href="/api/health">API Health</a>
         </div>
@@ -467,5 +475,6 @@
     <span>ITALUS Narrative Studio</span>
     <span>Canon first. Continuity always.</span>
   </footer>
+  <script src="/js/theme_manager.js?v=20260824-sci-fi-theme-v1-5"></script>
 </body>
 </html>

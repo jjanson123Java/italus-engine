@@ -5167,6 +5167,31 @@
           </div>
         </section>
 
+        <section class="workspace-author-summary-card workspace-theme-panel">
+          <h4>Themes</h4>
+          <p>Choose how Narrative Studio looks. The theme changes immediately and does not alter Canon, planning, manuscript data, or generation settings.</p>
+          <div class="theme-option-grid" aria-label="Narrative Studio themes">
+            <button type="button" class="theme-option-card" data-theme-option="original" aria-pressed="false">
+              <span class="theme-option-preview theme-option-preview--original" aria-hidden="true"></span>
+              <span class="theme-option-copy">
+                <strong>Original</strong>
+                <span>Classic Italus library, dark green panels, gold accents, and leather-desk atmosphere.</span>
+              </span>
+            </button>
+            <button type="button" class="theme-option-card" data-theme-option="sci-fi" aria-pressed="false">
+              <span class="theme-option-preview theme-option-preview--sci-fi" aria-hidden="true"></span>
+              <span class="theme-option-copy">
+                <strong>Sci‑Fi</strong>
+                <span>Futuristic night studio with cyan and violet controls, deep-space lighting, and a city beyond the desk.</span>
+              </span>
+            </button>
+          </div>
+          <p class="theme-current-status">
+            Current theme: <strong data-theme-current-label>${escapeHtml(window.ItalusTheme ? window.ItalusTheme.THEMES[window.ItalusTheme.getTheme()].label : 'Original')}</strong>.
+            <span data-theme-selection-status>Changes apply without reloading.</span>
+          </p>
+        </section>
+
         <div class="workspace-disabled-note">
           Writing-engine connection, model selection, pricing, and usage settings will appear here when AI generation tracking is enabled.
         </div>
@@ -5188,6 +5213,9 @@
         </details>
       </div>
     `;
+    if (window.ItalusTheme && typeof window.ItalusTheme.syncControls === 'function') {
+      window.ItalusTheme.syncControls(window.ItalusTheme.getTheme());
+    }
   }
 
   function renderRuntimeStoragePreview(manifest, context, bootstrap) {

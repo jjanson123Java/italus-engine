@@ -1,0 +1,967 @@
+
+/* ITALUS runtime skin system.
+   The Original skin remains the existing production CSS.
+   This file only adds optional theme selectors and the shared theme picker. */
+
+.theme-option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.theme-option-card {
+  appearance: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 14px;
+  text-align: left;
+  color: inherit;
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(214, 168, 95, 0.3);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease, background 160ms ease;
+}
+
+.theme-option-card:hover,
+.theme-option-card:focus-visible {
+  transform: translateY(-1px);
+  border-color: var(--gold, #d6a85f);
+  outline: none;
+}
+
+.theme-option-card--selected {
+  border-color: var(--gold, #d6a85f);
+  box-shadow: 0 0 0 2px rgba(214, 168, 95, 0.12), 0 14px 32px rgba(0, 0, 0, 0.26);
+}
+
+.theme-option-preview {
+  height: 82px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.theme-option-preview--original {
+  background-image:
+    linear-gradient(rgba(3, 8, 7, 0.12), rgba(3, 8, 7, 0.2)),
+    url("/assets/library-desk-bg.png");
+}
+
+.theme-option-preview--sci-fi {
+  background-image:
+    linear-gradient(rgba(1, 8, 20, 0.05), rgba(1, 8, 20, 0.16)),
+    url("/assets/themes/sci-fi/thumbnail.jpg");
+}
+
+.theme-option-copy strong,
+.theme-option-copy span {
+  display: block;
+}
+
+.theme-option-copy strong {
+  margin-bottom: 6px;
+  color: var(--cream, #f2ead8);
+  font-size: 1.02rem;
+}
+
+.theme-option-copy span {
+  color: rgba(242, 234, 216, 0.72);
+  line-height: 1.45;
+  font-size: 0.88rem;
+}
+
+.theme-current-status {
+  margin: 16px 0 0;
+  color: rgba(242, 234, 216, 0.76);
+}
+
+.theme-current-status strong {
+  color: var(--gold, #d6a85f);
+}
+
+.theme-menu-action {
+  width: 100%;
+  display: block;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #eadcc4;
+  text-align: left;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.theme-menu-action:hover,
+.theme-menu-action:focus-visible {
+  color: #f2c56b;
+  background: rgba(37, 91, 55, 0.78);
+  outline: none;
+}
+
+.workspace-theme-panel {
+  margin-top: 18px;
+}
+
+.workspace-theme-panel h4 {
+  margin: 0;
+  color: #f3e8d3;
+  font-size: 1.05rem;
+}
+
+.workspace-theme-panel > p {
+  margin: 7px 0 0;
+  color: #d9c7aa;
+  line-height: 1.5;
+}
+
+.workspace-theme-panel .theme-option-card {
+  min-height: 112px;
+}
+
+@media (max-width: 720px) {
+  .theme-option-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------- Sci-Fi skin ---------------- */
+
+html[data-theme="sci-fi"] {
+  color-scheme: dark;
+  --gold: #46d9ff;
+  --cream: #e5f4ff;
+  --header-bg: rgba(2, 9, 24, 0.97);
+  --header-border: rgba(70, 217, 255, 0.28);
+  --sci-fi-cyan: #46d9ff;
+  --sci-fi-cyan-soft: #8be8ff;
+  --sci-fi-violet: #8d63ff;
+  --sci-fi-violet-soft: #b9a3ff;
+  --sci-fi-panel: rgba(4, 15, 34, 0.94);
+  --sci-fi-panel-soft: rgba(7, 24, 48, 0.86);
+  --sci-fi-border: rgba(70, 217, 255, 0.34);
+  --sci-fi-text: #dcefff;
+  --sci-fi-muted: #9db5ca;
+}
+
+html[data-theme="sci-fi"] body {
+  background: #010611;
+  color: var(--sci-fi-text);
+}
+
+/* Keep the original left-side Narrative Studio copy and marks, but shift the
+   existing artwork into the skin palette. The new futuristic scene overlays
+   only the right side. */
+html[data-theme="sci-fi"] .page-shell {
+  background: #010611;
+  isolation: isolate;
+}
+
+html[data-theme="sci-fi"] .background-art {
+  filter: hue-rotate(116deg) saturate(1.2) brightness(0.78) contrast(1.08);
+}
+
+html[data-theme="sci-fi"] .page-shell::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 10.9%;
+  right: 0;
+  bottom: 0;
+  left: 31%;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(1, 6, 17, 0.98) 0%, rgba(1, 6, 17, 0.15) 13%, rgba(1, 6, 17, 0.02) 28%),
+    linear-gradient(180deg, rgba(1, 6, 17, 0.02) 0%, rgba(1, 6, 17, 0.08) 72%, rgba(1, 6, 17, 0.76) 100%),
+    url("/assets/themes/sci-fi/studio-bg.jpg") center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 100%);
+}
+
+html[data-theme="sci-fi"] .site-header {
+  background:
+    linear-gradient(90deg, rgba(1, 9, 24, 0.985), rgba(3, 10, 28, 0.965)),
+    var(--header-bg);
+  border-bottom-color: var(--sci-fi-border);
+  box-shadow: 0 8px 28px rgba(0, 8, 28, 0.44);
+}
+
+html[data-theme="sci-fi"] .brand-name,
+html[data-theme="sci-fi"] .main-nav a:hover,
+html[data-theme="sci-fi"] .main-nav a:focus-visible,
+html[data-theme="sci-fi"] .nav-trigger:hover,
+html[data-theme="sci-fi"] .nav-item:focus-within .nav-trigger,
+html[data-theme="sci-fi"] .dropdown-menu a:hover,
+html[data-theme="sci-fi"] .dropdown-menu a:focus-visible,
+html[data-theme="sci-fi"] .theme-menu-action:hover,
+html[data-theme="sci-fi"] .theme-menu-action:focus-visible {
+  color: var(--sci-fi-cyan);
+  text-shadow: 0 0 18px rgba(70, 217, 255, 0.28);
+}
+
+html[data-theme="sci-fi"] .brand-mark,
+html[data-theme="sci-fi"] .learn-more-tree,
+html[data-theme="sci-fi"] .workspace-brand img {
+  filter: hue-rotate(115deg) saturate(1.6) brightness(1.25) drop-shadow(0 0 14px rgba(70, 217, 255, 0.35));
+}
+
+html[data-theme="sci-fi"] .main-nav a::after {
+  background: linear-gradient(90deg, var(--sci-fi-cyan), var(--sci-fi-violet));
+}
+
+html[data-theme="sci-fi"] .dropdown-menu {
+  background: rgba(3, 12, 29, 0.97);
+  border-color: var(--sci-fi-border);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.56), 0 0 28px rgba(70, 217, 255, 0.07);
+}
+
+html[data-theme="sci-fi"] .dropdown-menu a,
+html[data-theme="sci-fi"] .dropdown-menu .disabled-item,
+html[data-theme="sci-fi"] .theme-menu-action {
+  color: #d7e9f8;
+}
+
+html[data-theme="sci-fi"] .dropdown-menu a:hover,
+html[data-theme="sci-fi"] .dropdown-menu a:focus-visible,
+html[data-theme="sci-fi"] .theme-menu-action:hover,
+html[data-theme="sci-fi"] .theme-menu-action:focus-visible {
+  background: linear-gradient(90deg, rgba(19, 79, 111, 0.68), rgba(68, 40, 120, 0.48));
+}
+
+html[data-theme="sci-fi"] .project-tile {
+  filter:
+    drop-shadow(0 18px 28px rgba(0, 0, 0, 0.52))
+    drop-shadow(0 0 18px rgba(70, 217, 255, 0.13));
+}
+
+html[data-theme="sci-fi"] .project-tile img {
+  filter: hue-rotate(118deg) saturate(1.28) brightness(1.05) contrast(1.06);
+}
+
+html[data-theme="sci-fi"] .learn-more-link {
+  color: var(--sci-fi-cyan);
+  border-color: rgba(70, 217, 255, 0.48);
+  background: rgba(4, 18, 39, 0.82);
+  box-shadow: 0 0 22px rgba(70, 217, 255, 0.12);
+}
+
+/* Landing wizards and Canon authoring */
+html[data-theme="sci-fi"] .studio-modal-backdrop {
+  background: rgba(0, 3, 12, 0.78);
+  backdrop-filter: blur(7px);
+}
+
+html[data-theme="sci-fi"] .studio-modal,
+html[data-theme="sci-fi"] .learn-more-modal {
+  border-color: var(--sci-fi-border);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(111, 73, 255, 0.12), transparent 32%),
+    linear-gradient(145deg, rgba(4, 18, 40, 0.985), rgba(2, 8, 23, 0.99));
+  box-shadow:
+    0 28px 88px rgba(0, 0, 0, 0.72),
+    0 0 44px rgba(70, 217, 255, 0.08);
+}
+
+html[data-theme="sci-fi"] .studio-modal-header .eyebrow,
+html[data-theme="sci-fi"] .studio-modal-header h2,
+html[data-theme="sci-fi"] .setup-note,
+html[data-theme="sci-fi"] .attention-section-label--gold,
+html[data-theme="sci-fi"] .canon-group-card h3,
+html[data-theme="sci-fi"] .canon-action-status {
+  color: var(--sci-fi-cyan);
+}
+
+html[data-theme="sci-fi"] .studio-modal-header p,
+html[data-theme="sci-fi"] .form-grid label,
+html[data-theme="sci-fi"] .project-picker-state,
+html[data-theme="sci-fi"] .theme-option-copy span {
+  color: #b8cde0;
+}
+
+html[data-theme="sci-fi"] :is(.form-grid input, .form-grid select, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea) {
+  border-color: rgba(70, 217, 255, 0.25);
+  background: rgba(0, 7, 22, 0.66);
+  color: #e5f4ff;
+}
+
+html[data-theme="sci-fi"] :is(.form-grid input, .form-grid select, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea):focus {
+  border-color: var(--sci-fi-cyan);
+  box-shadow: 0 0 0 3px rgba(70, 217, 255, 0.12);
+}
+
+html[data-theme="sci-fi"] :is(.budget-preview, .project-picker-state, .canon-template-summary, .canon-group-card, .canon-item-card, .canon-record-group) {
+  border-color: rgba(70, 217, 255, 0.22);
+  background: rgba(3, 14, 32, 0.72);
+}
+
+html[data-theme="sci-fi"] .budget-preview dd {
+  color: var(--sci-fi-cyan);
+}
+
+html[data-theme="sci-fi"] .primary-button {
+  border-color: var(--sci-fi-cyan);
+  background: linear-gradient(90deg, #0aa9dd, #4669e8 58%, #7656e8);
+  color: #f4fbff;
+  box-shadow: 0 0 18px rgba(70, 217, 255, 0.15);
+}
+
+html[data-theme="sci-fi"] .secondary-button,
+html[data-theme="sci-fi"] #canon-setup-modal [data-canon-open-section],
+html[data-theme="sci-fi"] #canon-setup-modal [data-canon-migrate-template],
+html[data-theme="sci-fi"] #canon-setup-modal [data-canon-save-section],
+html[data-theme="sci-fi"] #canon-setup-modal [data-canon-complete-section],
+html[data-theme="sci-fi"] #canon-setup-modal [data-canon-close-section],
+html[data-theme="sci-fi"] #canon-setup-modal [data-canon-add-record] {
+  border-color: rgba(70, 217, 255, 0.44);
+  background: linear-gradient(145deg, rgba(8, 40, 73, 0.88), rgba(36, 25, 78, 0.76));
+  color: #dff5ff;
+}
+
+html[data-theme="sci-fi"] :is(
+  .secondary-button,
+  #canon-setup-modal [data-canon-open-section],
+  #canon-setup-modal [data-canon-migrate-template],
+  #canon-setup-modal [data-canon-save-section],
+  #canon-setup-modal [data-canon-complete-section],
+  #canon-setup-modal [data-canon-close-section],
+  #canon-setup-modal [data-canon-add-record]
+):hover:not(:disabled) {
+  border-color: var(--sci-fi-cyan);
+  box-shadow: 0 0 20px rgba(70, 217, 255, 0.14);
+}
+
+html[data-theme="sci-fi"] .theme-option-card {
+  border-color: rgba(70, 217, 255, 0.24);
+  background: rgba(3, 14, 32, 0.72);
+}
+
+html[data-theme="sci-fi"] .theme-option-card--selected {
+  border-color: var(--sci-fi-violet);
+  box-shadow: 0 0 0 2px rgba(141, 99, 255, 0.15), 0 0 26px rgba(70, 217, 255, 0.1);
+}
+
+html[data-theme="sci-fi"] .theme-option-copy strong,
+html[data-theme="sci-fi"] .theme-current-status strong {
+  color: var(--sci-fi-cyan);
+}
+
+/* Workspace */
+html[data-theme="sci-fi"] .workspace-body {
+  background:
+    linear-gradient(rgba(1, 6, 18, 0.86), rgba(1, 7, 20, 0.94)),
+    url("/assets/themes/sci-fi/studio-bg.jpg") center / cover fixed no-repeat,
+    #010611;
+  color: var(--sci-fi-text);
+}
+
+html[data-theme="sci-fi"] .workspace-nav {
+  background: rgba(2, 10, 26, 0.94);
+  border-bottom-color: rgba(70, 217, 255, 0.34);
+  box-shadow: 0 8px 28px rgba(0, 5, 20, 0.42);
+}
+
+html[data-theme="sci-fi"] .workspace-brand,
+html[data-theme="sci-fi"] .workspace-nav nav a:hover,
+html[data-theme="sci-fi"] .panel h2,
+html[data-theme="sci-fi"] .panel h3,
+html[data-theme="sci-fi"] .eyebrow,
+html[data-theme="sci-fi"] .workspace-author-eyebrow,
+html[data-theme="sci-fi"] .workspace-definition-list dt,
+html[data-theme="sci-fi"] .workspace-definition-grid--compact dt,
+html[data-theme="sci-fi"] .workspace-stat-card span,
+html[data-theme="sci-fi"] .workspace-table th,
+html[data-theme="sci-fi"] .workspace-technical-details summary {
+  color: var(--sci-fi-cyan);
+}
+
+html[data-theme="sci-fi"] .workspace-nav nav a,
+html[data-theme="sci-fi"] .workspace-content,
+html[data-theme="sci-fi"] .workspace-title-row h1,
+html[data-theme="sci-fi"] .workspace-definition-list dd,
+html[data-theme="sci-fi"] .workspace-definition-grid--compact dd,
+html[data-theme="sci-fi"] .workspace-stat-card strong,
+html[data-theme="sci-fi"] .workspace-table td,
+html[data-theme="sci-fi"] .runtime-console p {
+  color: #dcefff;
+}
+
+html[data-theme="sci-fi"] :is(.panel, .editor-surface, .status-card, .workspace-stat-card, .workspace-definition-list div, .workspace-table-wrap) {
+  border-color: rgba(70, 217, 255, 0.22);
+  background-color: rgba(3, 16, 34, 0.84);
+}
+
+html[data-theme="sci-fi"] .panel {
+  background:
+    linear-gradient(160deg, rgba(4, 19, 39, 0.91), rgba(2, 10, 25, 0.91));
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.54), inset 0 0 0 1px rgba(141, 99, 255, 0.035);
+}
+
+html[data-theme="sci-fi"] .editor-surface {
+  background: rgba(1, 9, 24, 0.78);
+}
+
+html[data-theme="sci-fi"] :is(.project-explorer button, .workspace-tabs button, .workspace-body button) {
+  border-color: rgba(70, 217, 255, 0.24);
+  background: linear-gradient(145deg, rgba(6, 35, 62, 0.78), rgba(16, 18, 51, 0.76));
+  color: #dcefff;
+}
+
+html[data-theme="sci-fi"] :is(.project-explorer button, .workspace-tabs button, .workspace-body button):hover:not(:disabled):not([aria-disabled="true"]) {
+  border-color: rgba(70, 217, 255, 0.7);
+  background: linear-gradient(145deg, rgba(10, 61, 91, 0.88), rgba(52, 34, 101, 0.82));
+  box-shadow: 0 0 20px rgba(70, 217, 255, 0.08);
+}
+
+html[data-theme="sci-fi"] .project-explorer button.active:not(.workspace-disabled) {
+  border-color: var(--sci-fi-cyan);
+  background: linear-gradient(90deg, rgba(11, 87, 121, 0.92), rgba(64, 44, 124, 0.84));
+  box-shadow: 0 0 16px rgba(70, 217, 255, 0.1);
+}
+
+html[data-theme="sci-fi"] #workspace-mode,
+html[data-theme="sci-fi"] .workspace-status-badge {
+  color: var(--sci-fi-cyan);
+  border-color: rgba(70, 217, 255, 0.34);
+  background: rgba(7, 37, 62, 0.55);
+}
+
+html[data-theme="sci-fi"] :is(
+  .workspace-author-hero,
+  .workspace-author-summary-card,
+  .workspace-book-runtime-context-card,
+  .book-planner-card,
+  .chapter-planner-card,
+  .workspace-library-card,
+  .workspace-navigation-detail-20260707 .workspace-panel,
+  .workspace-runtime-lock-panel
+) {
+  border-color: rgba(70, 217, 255, 0.22);
+  background: linear-gradient(155deg, rgba(4, 20, 41, 0.84), rgba(4, 11, 28, 0.82));
+}
+
+html[data-theme="sci-fi"] .workspace-disabled-note {
+  color: #b7c8da;
+  background: rgba(52, 32, 92, 0.24);
+  border-color: rgba(141, 99, 255, 0.34);
+}
+
+html[data-theme="sci-fi"] .workspace-view-menu-panel,
+html[data-theme="sci-fi"] .workspace-view-submenu-options {
+  background: rgba(3, 12, 29, 0.98);
+  border-color: rgba(70, 217, 255, 0.28);
+}
+
+html[data-theme="sci-fi"] .workspace-view-menu-panel button:hover,
+html[data-theme="sci-fi"] .workspace-view-submenu-options button:hover {
+  background: rgba(31, 49, 91, 0.78);
+}
+
+html[data-theme="sci-fi"] .runtime-console {
+  border-color: rgba(141, 99, 255, 0.25);
+}
+
+html[data-theme="sci-fi"] .placeholder,
+html[data-theme="sci-fi"] .workspace-theme-panel > p {
+  color: var(--sci-fi-muted);
+}
+
+/* ---------------- Sci-Fi v1.3 visual refinement ----------------
+   Presentation-only refinements. Original theme behavior remains unchanged. */
+
+/* Make the active theme unmistakable without adding an Apply workflow. */
+.theme-option-card {
+  position: relative;
+}
+
+.theme-option-card--selected {
+  border-width: 2px;
+  background:
+    linear-gradient(145deg, rgba(91, 66, 25, 0.20), rgba(0, 0, 0, 0.22));
+}
+
+.theme-option-card--selected::after {
+  content: "\2713  ACTIVE";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  border: 1px solid rgba(214, 168, 95, 0.72);
+  border-radius: 999px;
+  background: rgba(31, 25, 15, 0.94);
+  color: var(--gold, #d6a85f);
+  box-shadow: 0 0 14px rgba(214, 168, 95, 0.12);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.theme-option-card--selected .theme-option-copy {
+  padding-right: 76px;
+}
+
+.theme-current-status {
+  padding: 10px 12px;
+  border: 1px solid rgba(214, 168, 95, 0.22);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+html[data-theme="sci-fi"] .theme-option-card--selected {
+  border-color: var(--sci-fi-violet);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(141, 99, 255, 0.20), transparent 34%),
+    linear-gradient(145deg, rgba(7, 31, 61, 0.92), rgba(29, 20, 67, 0.90));
+  box-shadow:
+    0 0 0 2px rgba(141, 99, 255, 0.18),
+    0 0 30px rgba(70, 217, 255, 0.14),
+    0 14px 32px rgba(0, 0, 0, 0.30);
+}
+
+html[data-theme="sci-fi"] .theme-option-card--selected::after {
+  border-color: rgba(70, 217, 255, 0.72);
+  background: linear-gradient(90deg, rgba(7, 64, 92, 0.96), rgba(55, 34, 112, 0.96));
+  color: #e8f8ff;
+  box-shadow:
+    0 0 16px rgba(70, 217, 255, 0.20),
+    inset 0 0 0 1px rgba(185, 163, 255, 0.12);
+}
+
+html[data-theme="sci-fi"] .theme-current-status {
+  border-color: rgba(70, 217, 255, 0.24);
+  background: linear-gradient(90deg, rgba(7, 36, 64, 0.52), rgba(35, 24, 75, 0.44));
+  color: #bcd1e4;
+}
+
+/* The base tile animation owns the filter property. Give Sci-Fi its own
+   filter animation so cyan/violet recoloring persists on every frame. */
+html[data-theme="sci-fi"] .project-tile img {
+  animation-name: tile-lantern-glow-sci-fi;
+}
+
+@keyframes tile-lantern-glow-sci-fi {
+  0%, 100% {
+    filter:
+      hue-rotate(145deg)
+      saturate(1.48)
+      brightness(1.04)
+      contrast(1.08);
+  }
+  50% {
+    filter:
+      hue-rotate(145deg)
+      saturate(1.62)
+      brightness(1.12)
+      contrast(1.09);
+  }
+}
+
+html[data-theme="sci-fi"] .project-tile:hover,
+html[data-theme="sci-fi"] .project-tile:focus-visible {
+  filter:
+    drop-shadow(0 28px 34px rgba(0, 0, 0, 0.56))
+    drop-shadow(0 0 22px rgba(70, 217, 255, 0.34))
+    drop-shadow(0 0 30px rgba(141, 99, 255, 0.18));
+}
+
+html[data-theme="sci-fi"] .project-tile:focus-visible {
+  box-shadow:
+    0 0 0 2px rgba(70, 217, 255, 0.82),
+    0 0 0 5px rgba(141, 99, 255, 0.20);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="sci-fi"] .project-tile img {
+    animation: none;
+    filter:
+      hue-rotate(145deg)
+      saturate(1.48)
+      brightness(1.04)
+      contrast(1.08);
+  }
+}
+
+/* Sci-Fi decorative hierarchy:
+   cyan = primary labels/actions, violet = disclosure/navigation emphasis.
+   Semantic success/warning/error colors are intentionally not overridden. */
+html[data-theme="sci-fi"] :is(
+  .workspace-readiness-card header span,
+  .book-plan-field > span,
+  .book-canon-toolbar label,
+  .workspace-chapter-planner-v1 .chapter-planner-toolbar label,
+  .workspace-chapter-planner-v1 .chapter-planner-field,
+  .story-control-form h4,
+  .story-control-registry-card h4,
+  .planner-reference-picker legend,
+  .chapter-event-controls label,
+  .planner-reveal-card header,
+  .planner-book-plan-unified .planner-book-selector-label,
+  .book-plan-time-span-field > small strong,
+  .planner-book-plan-unified .book-canon-toolbar label.planner-toggle.book-canon-future-toggle,
+  .library-author-section > summary,
+  .library-record-fields dt,
+  .library-readable-text h5,
+  .library-readable-text li::marker,
+  .library-chapter-card .library-chapter-book-context,
+  .workspace-author-eyebrow,
+  .workspace-author-metric-list strong,
+  .workspace-author-dashboard-technical > summary,
+  .workspace-project-context-author-phase-a > .workspace-technical-details > summary,
+  .workspace-book-knowledge-author-phase-a .workspace-technical-details > summary,
+  .workspace-writing-memory-author-phase-a > .workspace-technical-details > summary,
+  .workspace-project-context-author-phase-a .workspace-author-status-heading,
+  .workspace-chapter-planner-v1 .chapter-knowledge-pack-card > summary,
+  .workspace-chapter-planner-v1 .chapter-workflow-emphasis
+) {
+  color: var(--sci-fi-cyan);
+}
+
+/* Disclosure triangles carry the secondary plasma-violet cue. */
+html[data-theme="sci-fi"] :is(
+  .workspace-chapter-planner-v1 > details.chapter-planner-card > summary::before,
+  .planner-book-plan-unified .planner-book-canon-embedded > summary::before,
+  .planner-book-plan-unified .planner-selected-summary > summary::before,
+  .planner-book-plan-unified .book-canon-category > summary::before,
+  .library-disclosure-chevron::before
+) {
+  color: var(--sci-fi-violet);
+  text-shadow: 0 0 12px rgba(141, 99, 255, 0.30);
+}
+
+html[data-theme="sci-fi"] :is(
+  .workspace-chapter-planner-v1 > details.chapter-planner-card > summary > strong,
+  .planner-book-plan-unified .planner-book-canon-embedded > summary > strong,
+  .planner-book-plan-unified .planner-selected-summary > summary > strong,
+  .planner-book-plan-unified .book-canon-category > summary > strong,
+  .planner-selected-summary > summary,
+  .planner-reveal-catalog > summary,
+  .planner-reference-picker > details > summary,
+  .book-canon-category > summary
+) {
+  color: var(--sci-fi-cyan);
+}
+
+/* Primary planner controls replace the old decorative gold/dark family. */
+html[data-theme="sci-fi"] .planner-book-plan-unified .planner-book-selector select,
+html[data-theme="sci-fi"] #book-plan-use-time-suggestion,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-refresh,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-retry,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-approve,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-revoke,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-refresh,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-save,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-approve,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-revoke,
+html[data-theme="sci-fi"] .workspace-chapter-planner-v1 .chapter-knowledge-pack-card button,
+html[data-theme="sci-fi"] .workspace-project-context-author-phase-a .workspace-author-gold-actions .primary-action,
+html[data-theme="sci-fi"] .workspace-project-context-author-phase-a .workspace-author-gold-actions .secondary-action,
+html[data-theme="sci-fi"] .workspace-book-knowledge-author-phase-a .workspace-author-gold-actions .primary-action,
+html[data-theme="sci-fi"] .workspace-book-knowledge-author-phase-a .workspace-author-gold-actions .secondary-action {
+  border-color: rgba(70, 217, 255, 0.72);
+  background:
+    linear-gradient(145deg, rgba(5, 47, 76, 0.96), rgba(34, 27, 86, 0.94));
+  color: #bfefff;
+  box-shadow:
+    0 0 0 1px rgba(70, 217, 255, 0.12),
+    inset 0 0 0 1px rgba(185, 163, 255, 0.07),
+    0 7px 18px rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme="sci-fi"] .planner-book-plan-unified .planner-book-selector select:hover,
+html[data-theme="sci-fi"] #book-plan-use-time-suggestion:hover:not(:disabled),
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-refresh:hover:not(:disabled),
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-retry:hover:not(:disabled),
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-approve:hover:not(:disabled),
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-revoke:hover:not(:disabled),
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-refresh:hover:not(:disabled),
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-save:hover:not(:disabled),
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-approve:hover:not(:disabled),
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-revoke:hover:not(:disabled),
+html[data-theme="sci-fi"] .workspace-chapter-planner-v1 .chapter-knowledge-pack-card button:hover:not(:disabled),
+html[data-theme="sci-fi"] .workspace-project-context-author-phase-a .workspace-author-gold-actions button:hover:not(:disabled),
+html[data-theme="sci-fi"] .workspace-book-knowledge-author-phase-a .workspace-author-gold-actions button:hover:not(:disabled) {
+  border-color: var(--sci-fi-violet-soft);
+  color: #f0f9ff;
+  box-shadow:
+    0 0 0 1px rgba(185, 163, 255, 0.18),
+    0 0 22px rgba(70, 217, 255, 0.16),
+    0 0 30px rgba(141, 99, 255, 0.10),
+    0 7px 18px rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme="sci-fi"] .planner-book-plan-unified .planner-book-selector select:focus-visible,
+html[data-theme="sci-fi"] #book-plan-use-time-suggestion:focus-visible,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-refresh:focus-visible,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-retry:focus-visible,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-approve:focus-visible,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-canon-revoke:focus-visible,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-refresh:focus-visible,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-save:focus-visible,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-approve:focus-visible,
+html[data-theme="sci-fi"] .planner-book-plan-unified #book-plan-revoke:focus-visible,
+html[data-theme="sci-fi"] .workspace-chapter-planner-v1 .chapter-knowledge-pack-card button:focus-visible,
+html[data-theme="sci-fi"] .workspace-project-context-author-phase-a .workspace-author-gold-actions button:focus-visible,
+html[data-theme="sci-fi"] .workspace-book-knowledge-author-phase-a .workspace-author-gold-actions button:focus-visible {
+  outline: 2px solid var(--sci-fi-violet-soft);
+  outline-offset: 3px;
+}
+
+html[data-theme="sci-fi"] .planner-book-plan-unified .planner-book-selector select option {
+  background: #061326;
+  color: #c8f1ff;
+}
+
+html[data-theme="sci-fi"] .planner-book-plan-unified .book-canon-toolbar label.planner-toggle.book-canon-future-toggle {
+  border-color: rgba(70, 217, 255, 0.44);
+  background: rgba(4, 25, 49, 0.72);
+  color: var(--sci-fi-cyan);
+}
+
+html[data-theme="sci-fi"] .planner-book-plan-unified .book-canon-toolbar label.planner-toggle.book-canon-future-toggle input[type="checkbox"] {
+  accent-color: var(--sci-fi-violet);
+}
+
+html[data-theme="sci-fi"] .planner-book-plan-unified .book-canon-toolbar label.planner-toggle.book-canon-future-toggle:focus-within,
+html[data-theme="sci-fi"] :is(
+  .workspace-chapter-planner-v1 > details.chapter-planner-card > summary,
+  .planner-book-plan-unified .planner-book-canon-embedded > summary,
+  .planner-book-plan-unified .planner-selected-summary > summary,
+  .planner-book-plan-unified .book-canon-category > summary
+):focus-visible {
+  outline-color: var(--sci-fi-violet-soft);
+}
+
+html[data-theme="sci-fi"] .workspace-view-submenu-trigger:hover,
+html[data-theme="sci-fi"] .workspace-view-submenu-trigger[aria-expanded="true"],
+html[data-theme="sci-fi"] .workspace-view-submenu-options button:hover,
+html[data-theme="sci-fi"] .workspace-view-submenu-options button.active,
+html[data-theme="sci-fi"] .workspace-view-submenu-options button[aria-pressed="true"] {
+  border-color: rgba(141, 99, 255, 0.68);
+  color: var(--sci-fi-cyan);
+  background: linear-gradient(90deg, rgba(8, 55, 82, 0.82), rgba(49, 34, 100, 0.78));
+}
+
+html[data-theme="sci-fi"] .workspace-view-submenu-trigger:focus-visible,
+html[data-theme="sci-fi"] .workspace-view-submenu-options button:focus-visible,
+html[data-theme="sci-fi"] #workspace-view-trigger:focus-visible {
+  outline-color: var(--sci-fi-violet-soft);
+}
+/* ============================================================
+   Sci-Fi v1.4 consistency refinement
+   - restores readable lower-right Italus heritage panel
+   - themes Learn More/About and Help surfaces
+   - themes planner selection states without changing semantics
+   ============================================================ */
+
+/* The original lower-right Italus information panel is baked into the
+   protected classic background. The Sci-Fi scene intentionally covers the
+   right side, so render a protected crop above the Sci-Fi scene rather than
+   editing library-desk-bg.png. Percent geometry matches the source artwork. */
+html[data-theme="sci-fi"] .page-shell::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  left: 29.6224%;
+  right: 0;
+  bottom: 0;
+  height: 14.6484%;
+  pointer-events: none;
+  background: url("/assets/themes/shared/italus-heritage-panel.png") left bottom / 100% 100% no-repeat;
+  filter:
+    hue-rotate(145deg)
+    saturate(1.55)
+    brightness(1.08)
+    contrast(1.04)
+    drop-shadow(0 -8px 24px rgba(0, 0, 0, 0.34));
+}
+
+/* Learn More / About Italus modal: replace the remaining classic decorative
+   gold with Sci-Fi cyan/violet while leaving prose content unchanged. */
+html[data-theme="sci-fi"] .learn-more-modal::before {
+  border-color: rgba(70, 217, 255, 0.22);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(141, 99, 255, 0.13), transparent 42%),
+    linear-gradient(180deg, rgba(2, 14, 34, 0.18), rgba(1, 7, 22, 0.62));
+}
+
+html[data-theme="sci-fi"] .learn-more-hero {
+  border-color: rgba(70, 217, 255, 0.34);
+  background:
+    linear-gradient(135deg, rgba(70, 217, 255, 0.08), rgba(4, 17, 40, 0.76)),
+    radial-gradient(circle at 18% 28%, rgba(141, 99, 255, 0.20), transparent 34%);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(202, 239, 255, 0.08);
+}
+
+html[data-theme="sci-fi"] .learn-more-tree-wrap {
+  background:
+    radial-gradient(circle, rgba(70, 217, 255, 0.21), rgba(141, 99, 255, 0.07) 60%, transparent 72%);
+}
+
+html[data-theme="sci-fi"] .learn-more-hero-copy h2,
+html[data-theme="sci-fi"] .learn-more-section h3 {
+  color: var(--sci-fi-cyan);
+  text-shadow: 0 0 18px rgba(70, 217, 255, 0.16);
+}
+
+html[data-theme="sci-fi"] .learn-more-hero-copy p,
+html[data-theme="sci-fi"] .learn-more-card p,
+html[data-theme="sci-fi"] .learn-more-manifesto p,
+html[data-theme="sci-fi"] .learn-more-steps span {
+  color: #c6d9ea;
+}
+
+html[data-theme="sci-fi"] .learn-more-card,
+html[data-theme="sci-fi"] .learn-more-steps li {
+  border-color: rgba(70, 217, 255, 0.24);
+  background:
+    linear-gradient(155deg, rgba(18, 55, 85, 0.24), rgba(2, 10, 28, 0.72));
+}
+
+html[data-theme="sci-fi"] .learn-more-card-kicker,
+html[data-theme="sci-fi"] .learn-more-manifesto span {
+  color: var(--sci-fi-violet);
+  text-shadow: 0 0 14px rgba(141, 99, 255, 0.20);
+}
+
+html[data-theme="sci-fi"] .learn-more-manifesto {
+  border-left-color: var(--sci-fi-violet);
+  background:
+    linear-gradient(135deg, rgba(70, 217, 255, 0.08), rgba(2, 10, 28, 0.72)),
+    radial-gradient(circle at 12% 18%, rgba(141, 99, 255, 0.18), transparent 36%);
+}
+
+html[data-theme="sci-fi"] .learn-more-manifesto strong,
+html[data-theme="sci-fi"] .learn-more-steps strong {
+  color: #e8f7ff;
+}
+
+html[data-theme="sci-fi"] .learn-more-steps li::before {
+  border-color: rgba(141, 99, 255, 0.58);
+  color: var(--sci-fi-cyan);
+  background: rgba(18, 28, 67, 0.72);
+  box-shadow: 0 0 14px rgba(141, 99, 255, 0.14);
+}
+
+html[data-theme="sci-fi"] .studio-modal-close {
+  border-color: rgba(70, 217, 255, 0.34);
+  color: #cfefff;
+}
+
+html[data-theme="sci-fi"] .studio-modal-close:hover,
+html[data-theme="sci-fi"] .studio-modal-close:focus-visible {
+  border-color: var(--sci-fi-violet);
+  color: var(--sci-fi-cyan);
+  box-shadow: 0 0 16px rgba(141, 99, 255, 0.18);
+}
+
+/* Help page inherits the active browser theme. Content and Help workflow are
+   unchanged; this is presentation only. */
+html[data-theme="sci-fi"] .help-body {
+  background:
+    linear-gradient(rgba(1, 6, 17, 0.84), rgba(1, 6, 17, 0.97)),
+    url("/assets/themes/sci-fi/studio-bg.jpg") center / cover fixed,
+    #010611;
+  color: var(--sci-fi-text);
+}
+
+html[data-theme="sci-fi"] .help-header {
+  background: rgba(1, 9, 24, 0.96);
+  border-bottom-color: rgba(70, 217, 255, 0.34);
+}
+
+html[data-theme="sci-fi"] .parchment-panel {
+  background:
+    radial-gradient(circle at 88% 8%, rgba(141, 99, 255, 0.08), transparent 34%),
+    linear-gradient(145deg, rgba(4, 18, 40, 0.95), rgba(2, 9, 25, 0.97));
+  border-color: rgba(70, 217, 255, 0.28);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.50),
+    inset 0 0 0 1px rgba(118, 221, 255, 0.04);
+}
+
+html[data-theme="sci-fi"] .help-hero h1,
+html[data-theme="sci-fi"] .help-section h2,
+html[data-theme="sci-fi"] .help-steps strong,
+html[data-theme="sci-fi"] .help-figure figcaption strong {
+  color: var(--sci-fi-cyan);
+}
+
+html[data-theme="sci-fi"] .help-body .eyebrow,
+html[data-theme="sci-fi"] .help-section h3 {
+  color: var(--sci-fi-violet);
+}
+
+html[data-theme="sci-fi"] .help-hero p,
+html[data-theme="sci-fi"] .help-section p,
+html[data-theme="sci-fi"] .help-section li,
+html[data-theme="sci-fi"] .help-figure figcaption,
+html[data-theme="sci-fi"] .help-figure figcaption span {
+  color: #c4d7e8;
+}
+
+html[data-theme="sci-fi"] .workflow-grid article {
+  border-color: rgba(70, 217, 255, 0.22);
+  background: linear-gradient(160deg, rgba(23, 61, 92, 0.22), rgba(2, 10, 27, 0.44));
+}
+
+html[data-theme="sci-fi"] .help-callout {
+  border-left-color: var(--sci-fi-cyan);
+  background: rgba(70, 217, 255, 0.08);
+  color: #dcefff;
+}
+
+/* Warning remains semantically amber by design. */
+html[data-theme="sci-fi"] .help-callout.warning {
+  border-left-color: #d48a42;
+  background: rgba(212, 138, 66, 0.13);
+}
+
+html[data-theme="sci-fi"] .figure-placeholder {
+  border-color: rgba(141, 99, 255, 0.54);
+  background:
+    radial-gradient(circle at center, rgba(70, 217, 255, 0.10), rgba(2, 9, 25, 0.52));
+  color: #aabfff;
+}
+
+html[data-theme="sci-fi"] .backend-flow span {
+  border-color: rgba(70, 217, 255, 0.26);
+  background: rgba(19, 57, 88, 0.18);
+  color: var(--sci-fi-cyan);
+}
+
+html[data-theme="sci-fi"] .help-footer {
+  border-top-color: rgba(70, 217, 255, 0.30);
+  background: rgba(1, 8, 22, 0.94);
+  color: #9db5ca;
+}
+
+/* Selected-for-chapter is a planning-selection state, not a semantic success
+   state. Replace the classic green/gold selection treatment only in Sci-Fi. */
+html[data-theme="sci-fi"] .workspace-chapter-planner-v1 .book-canon-browser-row.is-selected,
+html[data-theme="sci-fi"] .workspace-chapter-planner-v1 .planner-choice-row.is-selected {
+  border-color: rgba(70, 217, 255, 0.62);
+  background:
+    linear-gradient(90deg, rgba(14, 73, 104, 0.52), rgba(45, 28, 92, 0.48));
+  box-shadow:
+    inset 3px 0 0 rgba(141, 99, 255, 0.92),
+    0 0 16px rgba(70, 217, 255, 0.06);
+}
+
+html[data-theme="sci-fi"] .workspace-chapter-planner-v1 .chapter-event-card.is-selected {
+  border-color: rgba(70, 217, 255, 0.56);
+  background: linear-gradient(145deg, rgba(10, 55, 86, 0.46), rgba(31, 21, 68, 0.42));
+  box-shadow: inset 3px 0 0 rgba(141, 99, 255, 0.86);
+}

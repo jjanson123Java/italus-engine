@@ -4,7 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ITALUS Narrative Studio</title>
+  <script>
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('italus.theme') || 'original';
+    } catch (_) {
+      document.documentElement.dataset.theme = 'original';
+    }
+  </script>
   <link rel="stylesheet" href="styles.css?v=20260816-canon-planning-layout-polish-v1">
+  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260824-sci-fi-theme-v1-4">
 </head>
 <body>
   <main class="page-shell" aria-label="ITALUS Narrative Studio landing page">
@@ -47,7 +55,7 @@
           <button type="button" class="nav-trigger">Settings</button>
           <div class="dropdown-menu">
             <span class="disabled-item">Application Settings</span>
-            <span class="disabled-item">Theme Settings</span>
+            <button type="button" class="theme-menu-action" data-theme-settings-open>Themes</button>
             <span class="disabled-item">Provider Settings</span>
           </div>
         </div>
@@ -55,7 +63,7 @@
         <div class="nav-item">
           <button type="button" class="nav-trigger">Help</button>
           <div class="dropdown-menu">
-            <a href="/help">Documentation</a>
+            <a href="/help?v=20260824-sci-fi-theme-v1-5">Documentation</a>
             <a href="#learn-more" data-project-action="learnMore">About Italus</a>
             <a href="/api/health">API Health</a>
           </div>
@@ -283,6 +291,43 @@
       </div>
     </section>
 
+
+    <section class="studio-modal theme-settings-modal" id="theme-settings-modal" role="dialog" aria-modal="true" aria-labelledby="theme-settings-title" hidden>
+      <button type="button" class="studio-modal-close" data-modal-close aria-label="Close Theme Settings">×</button>
+      <header class="studio-modal-header">
+        <p class="eyebrow">Appearance</p>
+        <h2 id="theme-settings-title">Themes</h2>
+        <p>Choose the look of Narrative Studio. Theme changes apply immediately and do not change project content or workflow.</p>
+      </header>
+
+      <div class="theme-option-grid" aria-label="Narrative Studio themes">
+        <button type="button" class="theme-option-card" data-theme-option="original" aria-pressed="false">
+          <span class="theme-option-preview theme-option-preview--original" aria-hidden="true"></span>
+          <span class="theme-option-copy">
+            <strong>Original</strong>
+            <span>Classic Italus library, dark green panels, gold accents, and leather-desk atmosphere.</span>
+          </span>
+        </button>
+
+        <button type="button" class="theme-option-card" data-theme-option="sci-fi" aria-pressed="false">
+          <span class="theme-option-preview theme-option-preview--sci-fi" aria-hidden="true"></span>
+          <span class="theme-option-copy">
+            <strong>Sci‑Fi</strong>
+            <span>Futuristic night studio with cyan and violet controls, deep-space lighting, and a city beyond the desk.</span>
+          </span>
+        </button>
+      </div>
+
+      <p class="theme-current-status">
+        Current theme: <strong data-theme-current-label>Original</strong>.
+        <span data-theme-selection-status>Changes apply without reloading.</span>
+      </p>
+
+      <div class="wizard-actions">
+        <button type="button" class="secondary-button" data-modal-close>Close</button>
+      </div>
+    </section>
+
     <section class="studio-modal" id="canon-setup-modal" role="dialog" aria-modal="true" aria-labelledby="canon-setup-title" hidden>
       <button type="button" class="studio-modal-close" data-modal-close aria-label="Close Canon Setup">×</button>
       <header class="studio-modal-header">
@@ -301,6 +346,7 @@
     </section>
   </section>
 
+  <script src="/js/theme_manager.js?v=20260824-sci-fi-theme-v1-4"></script>
   <script src="/js/project_wizard.js"></script>
   <script src="/js/canon_authoring.js?v=20260816-canon-reference-hardening-v1"></script>
   <script src="/js/project_lifecycle.js?v=20260822-existing-project-book-name-v1"></script>

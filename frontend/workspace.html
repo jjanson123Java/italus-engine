@@ -4,9 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Italus Author Workspace</title>
+  <script>
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('italus.theme') || 'original';
+    } catch (_) {
+      document.documentElement.dataset.theme = 'original';
+    }
+  </script>
 
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="workspace.css?v=20260824-author-workspace-final-ux-sweep-v1" />
+  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260824-sci-fi-theme-v1-4" />
 </head>
 
 <body class="workspace-body">
@@ -76,7 +84,7 @@
           </div>
         </div>
         <a href="#settings" data-top-menu="settings">Settings</a>
-        <a href="/help">Help</a>
+        <a href="/help?v=20260824-sci-fi-theme-v1-5">Help</a>
       </nav>
     </header>
 
@@ -155,6 +163,7 @@
 
   </div>
 
-  <script src="workspace.js?v=20260824-author-workspace-final-ux-sweep-v1"></script>
+  <script src="/js/theme_manager.js?v=20260824-sci-fi-theme-v1-4"></script>
+  <script src="workspace.js?v=20260824-sci-fi-theme-v1-3"></script>
 </body>
 </html>
