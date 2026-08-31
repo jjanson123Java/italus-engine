@@ -1,0 +1,191 @@
+{
+  "status": "ready_for_packet_generation",
+  "service": "project-canon-validation-boundary-20260725",
+  "schema_version": "project_canon_validation_report_v1",
+  "project_id": "sci-fi-test-templates-d6b26d13",
+  "template_id": "science_fiction",
+  "genre": "science_fiction",
+  "ready_for_packet_generation": true,
+  "required_sections_total": 6,
+  "required_sections_complete": 6,
+  "rendered_sources_total": 6,
+  "missing_required_sections": [],
+  "missing_rendered_sources": [],
+  "sections": [
+    {
+      "section_id": "project_bible",
+      "label": "Project Bible",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "001_project_bible.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/001_project_bible.md",
+        "size_bytes": 19939,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "bcf29d9754b08bb6c851ec0ee4ee04ca048c84c92ba54b367184865950eb238b",
+        "current_content_hash": "bcf29d9754b08bb6c851ec0ee4ee04ca048c84c92ba54b367184865950eb238b",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "section_id": "world_bible",
+      "label": "Universe, Technology & Setting",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "002_world_bible.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/002_world_bible.md",
+        "size_bytes": 168993,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "6795f9f3ea849d3fd583de865b33399f0aa27751592a927e5119b224a54db004",
+        "current_content_hash": "6795f9f3ea849d3fd583de865b33399f0aa27751592a927e5119b224a54db004",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "section_id": "character_bible",
+      "label": "Character Bible",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "003_character_bible.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/003_character_bible.md",
+        "size_bytes": 317391,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "b384fbf818dc7deb42652c3c426a5c841cf4a91106b9eddcc6d7f7c9f828cca5",
+        "current_content_hash": "b384fbf818dc7deb42652c3c426a5c841cf4a91106b9eddcc6d7f7c9f828cca5",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "section_id": "timeline_event_ledger",
+      "label": "Timeline, Missions & Major Events",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "004_timeline_event_ledger.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/004_timeline_event_ledger.md",
+        "size_bytes": 105487,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "c2028d5499e4ddf1ff383a5a89efba9a38f09428ea49f07e0ec39a003c95ab0c",
+        "current_content_hash": "c2028d5499e4ddf1ff383a5a89efba9a38f09428ea49f07e0ec39a003c95ab0c",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "section_id": "technology_rules",
+      "label": "Technology Rules",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "005_technology_rules.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/005_technology_rules.md",
+        "size_bytes": 118901,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "c3051c4a9320238812511870cff9548e520e62c3e57bbdbf43bb837fdf8898d5",
+        "current_content_hash": "c3051c4a9320238812511870cff9548e520e62c3e57bbdbf43bb837fdf8898d5",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "section_id": "ships_planets_factions",
+      "label": "Ships, Planets, and Factions",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "006_ships_planets_factions.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/006_ships_planets_factions.md",
+        "size_bytes": 16886,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "0ece28de93a50316f5124ba6e9fca2d8face4d6d51525c778c0110916e84765c",
+        "current_content_hash": "0ece28de93a50316f5124ba6e9fca2d8face4d6d51525c778c0110916e84765c",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    }
+  ],
+  "files": {
+    "author_canon": {
+      "exists": true,
+      "relative_path": "canon/author_canon.json",
+      "size_bytes": 784459
+    },
+    "template_snapshot": {
+      "exists": true,
+      "relative_path": "canon/template_snapshot.json",
+      "size_bytes": 28377
+    },
+    "canon_completion": {
+      "exists": true,
+      "relative_path": "canon/canon_completion.json",
+      "size_bytes": 2114
+    }
+  },
+  "issues": [],
+  "warnings": [],
+  "locks": {
+    "generation_unlocked": false,
+    "provider_calls_allowed": false,
+    "runtime_writes_allowed": false,
+    "packet_generation_allowed": false
+  },
+  "execution_locks": {
+    "generation_enabled": false,
+    "provider_execution_enabled": false,
+    "prompt_builder_enabled": false,
+    "draft_validation_enabled": false,
+    "approved_persistence_enabled": false,
+    "export_enabled": false
+  },
+  "metadata": {
+    "validated_at": "2026-08-30T12:55:36.717836+00:00",
+    "source": "project-canon-validation-boundary-20260725"
+  }
+}

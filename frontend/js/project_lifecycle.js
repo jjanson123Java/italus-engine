@@ -113,7 +113,20 @@ and saved in place with PATCH /api/project/{id}.
 
   function bindModalClose() {
     document.querySelectorAll('[data-modal-close]').forEach((element) => {
-      element.addEventListener('click', closeAllModals);
+      element.addEventListener('click', () => {
+        const newProjectModal = document.getElementById('new-project-modal');
+        const existingProjectModal = document.getElementById('existing-project-modal');
+        const isBackdrop = element.classList.contains('studio-modal-backdrop');
+        const projectEntryModalOpen =
+          (newProjectModal && !newProjectModal.hidden) ||
+          (existingProjectModal && !existingProjectModal.hidden);
+
+        if (isBackdrop && projectEntryModalOpen) {
+          return;
+        }
+
+        closeAllModals();
+      });
     });
 
     document.addEventListener('keydown', (event) => {

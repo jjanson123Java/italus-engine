@@ -1,0 +1,5396 @@
+# Timeline & Historical Event Ledger
+
+- Project: Italus
+- Project ID: `italus-saga`
+- Template: `historical_epic`
+- Template Schema Version: `project_canon_authoring_schema_v4_reference_hardening`
+- Genre: `historical_epic`
+- Section ID: `timeline_event_ledger`
+- Rendered At: `2026-08-23T20:24:00.171703+00:00`
+- Source Content SHA-256: `42f53d425c608cc736143fbc791d27c63d1f5fecaa1de7331080761b74886709`
+- Source: `project-canon-markdown-renderer-boundary-20260715`
+
+## Purpose
+
+Control chronology, cause/effect, and immutable historical facts.
+
+## Author Guidance
+
+Historical anchors are recorded as historical or hybrid events in this ledger.
+
+## Fields
+
+No direct fields defined for this section.
+
+## Records
+
+### Events
+
+#### 1. Events
+
+- **Date or sequence:** c. 550
+- **Story Code:** BOOK1-FAROVALD-BIRTH
+- **Narrative Type:** milestone
+- **Historical / Reality Classification:** fictional
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Calabrian / Pollino uplands
+- **Characters present:** Farovald
+- **Event summary:** Farovald is born in southern Italy around 550 AD, before the 589 Pollino singularity.
+- **Cause:** Ordinary human birth in the post-Gothic-War southern Italian setting; no anomaly is present at birth.
+- **Effect:** Farovald reaches adulthood as an ordinary mortal before the later 589 event changes his physiology.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** This is background chronology, not an automatic Chapter 1 scene. If shown, it must remain historically plausible and ordinary; no supernatural signs or predestination are attached to his birth.
+- **What must not change:** Farovald is born approximately 550 AD and is about thirty-nine at the 589 singularity. His abnormal longevity does not predate 589.
+- **Continuity constraints:** - Farovald is fully mortal before 589.
+- Do not imply he is born special, chosen, prophetic, or already linked to Italus.
+- No guardian lineage exists through Farovald; Luca remains the first guardian in 789.
+#### 2. Events
+
+- **Date or sequence:** 589
+- **Story Code:** LEGACY-EVENT-001
+- **Narrative Type:** saga_event
+- **Historical / Reality Classification:** fictional
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Pollino / Southern Italy
+- **Characters present:** Italus, Farovald
+- **Event summary:** The 589 Pollino shared lightning singularity alters mature Italus and Farovald.
+- **Cause:** A direct lightning strike travels through mature Italus's damaged cambium/root system while the tree is embedded in the Pollino's mineral-rich limestone substrate and unusual mycorrhizal network. Farovald is in direct physical contact with the struck tree.
+- **Effect:** Italus develops the bounded slow mobility defined by World Canon. Farovald survives with the saga's sole radically slowed-aging human anomaly and limited non-linguistic mechanosensory coupling to major Italus/root-network conditions. The event remains unknown to public history.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** Book 1 may show this event only through a brief controlled external analepsis: storm, mature Italus, a human figure, electrical injury, scorched palms, resin/cambium damage, and physical aftermath. The flashback must not automatically state Farovald's full age, lifespan, future role, later aliases, or final fate.
+- **What must not change:** The singularity occurs in 589 in the Pollino Mountains; Italus is already mature; Farovald is approximately thirty-nine; Luca is not present; the event is not publicly documented; the condition is unique and non-repeatable; no documented historical outcome is altered.
+- **Continuity constraints:** - This is the mobility-origin event, not Italus's germination event.
+- Italus's exact germination date remains unknown and predates 589.
+- Farovald is not a guardian and this event does not create a guardian line.
+- The event must remain biological/electrochemical and non-mystical.
+- Farovald receives no linguistic or telepathic channel to Italus.
+- Book 1 disclosure is limited by Farovald reveal controls.
+#### 3. Events
+
+- **Date or sequence:** 789
+- **Story Code:** BOOK1-LUCA-DISCOVERY
+- **Narrative Type:** milestone
+- **Historical / Reality Classification:** fictional
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Pollino / Southern Italy
+- **Characters present:** Luca, Italus, Farovald
+- **Event summary:** Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later approaches Luca as a reclusive mountain monk.
+- **Cause:** A recent Pollino storm and Italus's movement leave fresh scored ground, displaced roots, and changed position that a fourteen-year-old shepherd can notice by repeated comparison.
+- **Effect:** Luca begins the first guardianship through observation, concealment, and return visits. His weak cover stories draw local suspicion. Farovald eventually intercepts him and recommends prayer as a credible reason for repeated travel into the heights, creating a practical concealment buffer without making Farovald a guardian.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** This is the 789 mainline opening after the brief 589 flashback. Luca may repeatedly inspect Italus, conceal tracks, encounter village/family suspicion, and meet Farovald on a mountain route. Farovald initially presents only as a reclusive monk. The chapter may hint that his scars and knowledge are unusual but must not disclose his full longevity.
+- **What must not change:** Luca remains the first guardian. Farovald remains outside succession. 789 is Luca's discovery of mobility, not Italus's birth. The Secrecy Doctrine does not publicly fail.
+- **Continuity constraints:** - Mainline chronology begins in 789 after the external 589 analepsis.
+- Farovald's identity and longevity are staged reveals; Chapter 1 gets only the approved storm fragment and monk encounter.
+- Luca develops the guardian practice; Farovald contributes bounded advice but does not found or control succession.
+- Any nearby real historical event remains unchanged and may only affect the scene indirectly unless separately authorized.
+#### 4. Events
+
+- **Date or sequence:** 789
+- **Story Code:** LEGACY-EVENT-002
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Western Europe
+- **Characters present:** Luca
+- **Event summary:** Charlemagne consolidates Frankish power in western Europe
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S004 (rumor, Calabria uplands): A monk on the road speaks of a Frankish king whose power keeps widening beyond the mountains.
+- S005 (dialogue, hillside shrine): A visiting cleric praises the learning at the Frankish court, while Luca wonders why grown men care so much for distant rulers.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: Western Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 5. Events
+
+- **Date or sequence:** 793
+- **Story Code:** LEGACY-EVENT-003
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** England / Europe-wide awareness later
+- **Characters present:** Luca
+- **Event summary:** Viking raid on Lindisfarne marks the start of the Viking Age
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S006 (traveler report, shepherd trail): Traders from the north describe seaborne raiders and burning monasteries, and Luca notices how fear changes footstep rhythm.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: England / Europe-wide awareness later.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 6. Events
+
+- **Date or sequence:** 800
+- **Story Code:** LEGACY-EVENT-004
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Rome
+- **Characters present:** Luca
+- **Event summary:** Charlemagne crowned Holy Roman Emperor
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S007 (pilgrimage, monastery yard): Pilgrims recount the crowning in Rome, turning one ceremony into ten contradictory versions.
+- S008 (reflection, forest edge): Soldiers invoke the new emperor's name with certainty Luca has only ever heard in storms.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 7. Events
+
+- **Date or sequence:** 802
+- **Story Code:** LEGACY-EVENT-005
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Southern Italy
+- **Characters present:** Luca
+- **Event summary:** Byzantine Empire reorganizes southern Italian holdings under imperial administration
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S009 (administration, Byzantine path station): Tax men argue about imperial boundaries while Italus senses iron in their gear through the soil.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 8. Events
+
+- **Date or sequence:** 806
+- **Story Code:** LEGACY-EVENT-006
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Italy
+- **Characters present:** Luca
+- **Event summary:** Ongoing Frankish-Byzantine rivalry shapes Italian political boundaries
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S010 (political tension, upland crossing): Two muleteers debate whether Franks or Byzantines will own the road by next winter.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 9. Events
+
+- **Date or sequence:** 810
+- **Story Code:** LEGACY-EVENT-007
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Calabria / Adriatic awareness
+- **Characters present:** Luca
+- **Event summary:** Coastal insecurity and raiding intensify in southern Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S011 (warning, coastal ridge): Smoke from a distant raid reaches the mountains before the refugees do.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: Calabria / Adriatic awareness.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 10. Events
+
+- **Date or sequence:** 812
+- **Story Code:** LEGACY-EVENT-008
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Italy
+- **Characters present:** Luca
+- **Event summary:** Pax Nicephori helps define spheres between Byzantines and Franks in Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S012 (treaty gossip, monastic guesthouse): A scribe explains new political borders to men who care more about grain prices than diplomacy.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 11. Events
+
+- **Date or sequence:** 820
+- **Story Code:** LEGACY-EVENT-009
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Calabria / Basilicata
+- **Characters present:** Luca
+- **Event summary:** Regional monastic communities expand in southern Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S013 (religion, woodland chapel): A small chapel is built near a spring, and Luca worries more about foot traffic than salvation.
+- S014 (seasonal move, forest camp): Italus leans north toward safer cover as more monks begin using the lower path.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: Calabria / Basilicata.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 12. Events
+
+- **Date or sequence:** 827
+- **Story Code:** LEGACY-EVENT-010
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Sicily
+- **Characters present:** Luca
+- **Event summary:** Muslim conquest of Sicily begins
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S015 (invasion rumor, Calabria overlook): Word spreads of fleets moving toward Sicily, and shepherds begin counting boats instead of sheep.
+- S016 (migration, nighttime route): Luca guides Italus across stony ground under moonlight to avoid men heading south for war.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 13. Events
+
+- **Date or sequence:** 840
+- **Story Code:** LEGACY-EVENT-011
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Europe
+- **Characters present:** Luca
+- **Event summary:** Civil conflict in the Carolingian world destabilizes Europe
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S017 (dynastic unrest, market road): Merchants complain that emperors die far away but still make bread expensive in Calabria.
+- S018 (character tension, rain camp): Luca debates whether to trust a wandering family asking to shelter beside the grove.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 14. Events
+
+- **Date or sequence:** 846
+- **Story Code:** LEGACY-EVENT-012
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 1
+- **Book / installment:** Book 1 — The Lightning Tree
+- **Location:** Rome
+- **Characters present:** Luca
+- **Event summary:** Arab raid on Rome shocks Latin Christendom
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S019 (aftermath, monastery gate): Survivors from Rome describe desecrated basilicas; Luca hears more horror in their silence than in their words.
+- S020 (closing reflection, Pollino grove): The tree tastes ash in the rain and learns that cities can burn without ever being seen.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Luca.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 15. Events
+
+- **Date or sequence:** 902
+- **Story Code:** LEGACY-EVENT-013
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** Sicily
+- **Characters present:** Elia
+- **Event summary:** Muslim conquest of Sicily effectively completed
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S021 (political change, inland pass): Elia hears that Sicily has fallen fully under Muslim rule and redraws safe routes in her head.
+- S022 (succession, forest shelter): In Luca’s absence, Elia realizes she is already making decisions like a guardian.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Elia.
+- Location: Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 16. Events
+
+- **Date or sequence:** 910
+- **Story Code:** LEGACY-EVENT-014
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** France / European church culture
+- **Characters present:** Elia
+- **Event summary:** Monastery at Cluny founded, signaling wider reform currents in Latin Europe
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S023 (reform, monastery road): A Cluniac pilgrim speaks of stricter prayer and cleaner altars while Elia notices his boots are still caked with the same mud as everyone else.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Elia.
+- Location: France / European church culture.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 17. Events
+
+- **Date or sequence:** 915
+- **Story Code:** LEGACY-EVENT-015
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** Southern Italy
+- **Characters present:** Elia
+- **Event summary:** Battle of Garigliano weakens Muslim raiding power on mainland Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S024 (battle aftermath, river crossing): Men wounded at Garigliano limp north, carrying both victory and fever.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Elia.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 18. Events
+
+- **Date or sequence:** 927
+- **Story Code:** LEGACY-EVENT-016
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** Mediterranean
+- **Characters present:** Elia
+- **Event summary:** Fatimid expansion affects Mediterranean trade and political tension
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S025 (Mediterranean trade, merchant halt): Arabic coins appear in a village market, and Elia marks the reach of distant powers by what changes hands.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Elia.
+- Location: Mediterranean.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 19. Events
+
+- **Date or sequence:** 940
+- **Story Code:** LEGACY-EVENT-017
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** Southern Italy
+- **Characters present:** Elia
+- **Event summary:** Trade routes and pilgrimage routes through southern Italy continue to grow
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S026 (travel, pilgrimage route): A growing stream of pilgrims makes a once-private trail unusable for Italus.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Elia.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 20. Events
+
+- **Date or sequence:** 951
+- **Story Code:** LEGACY-EVENT-018
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** Northern / Central Italy
+- **Characters present:** Elia
+- **Event summary:** Otto I’s growing influence begins reshaping the Italian political landscape
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S027 (imperial rumor, upland chapel): Priests speak of Otto’s ambitions in Italy as though mountains might care who is crowned.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Elia.
+- Location: Northern / Central Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 21. Events
+
+- **Date or sequence:** 962
+- **Story Code:** LEGACY-EVENT-019
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** Rome
+- **Characters present:** Elia
+- **Event summary:** Otto I crowned Holy Roman Emperor
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S028 (coronation report, monastery refectory): News of a new emperor arrives with men who immediately begin measuring local loyalties.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Elia.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 22. Events
+
+- **Date or sequence:** 968
+- **Story Code:** LEGACY-EVENT-020
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** Southern Italy
+- **Characters present:** Elia
+- **Event summary:** Byzantine and western church competition intensifies in southern Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S029 (church tension, southern monastery): Greek and Latin clergy argue over words Elia does not trust either side to define honestly.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Elia.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 23. Events
+
+- **Date or sequence:** 976
+- **Story Code:** LEGACY-EVENT-021
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** Byzantium / Southern Italy
+- **Characters present:** Marco
+- **Event summary:** Periodic instability in the Byzantine Empire affects Italian administration
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S030 (transition, road watch): Marco inherits responsibility while still feeling more son than guardian.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Marco.
+- Location: Byzantium / Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 24. Events
+
+- **Date or sequence:** 982
+- **Story Code:** LEGACY-EVENT-022
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** Calabria
+- **Characters present:** Marco
+- **Event summary:** Battle of Stilo: Otto II defeated in Calabria
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S031 (battle aftermath, Calabria hills): Survivors of Stilo pass through in shock, and Marco sees how defeat moves slower than armies.
+- S032 (signal, hidden hollow): Italus tightens roots against rocky soil while the smell of blood rises from the valley below.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Marco.
+- Location: Calabria.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 25. Events
+
+- **Date or sequence:** 987
+- **Story Code:** LEGACY-EVENT-023
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** Europe
+- **Characters present:** Marco
+- **Event summary:** Capetian monarchy begins in France, part of wider European dynastic reordering
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S033 (dynastic news, inn yard): Traders mention a new French king, and Marco notices how quickly strangers make permanence out of fresh power.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Marco.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 26. Events
+
+- **Date or sequence:** 989
+- **Story Code:** LEGACY-EVENT-024
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 2
+- **Book / installment:** Book 2 — Daughter of the Mountain
+- **Location:** France / Europe-wide church culture
+- **Characters present:** Marco
+- **Event summary:** Peace and Truce of God movements begin shaping church responses to violence
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S034 (church peace movement, chapel path): Priests preach restraint in violence while armed cousins settle a land dispute outside the chapel wall.
+- S035 (handoff, twilight route): Marco begins preparing Simonetta, choosing which truths to say aloud and which must be learned by watching.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Marco.
+- Location: France / Europe-wide church culture.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 27. Events
+
+- **Date or sequence:** 1000
+- **Story Code:** LEGACY-EVENT-025
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Europe / Italy
+- **Characters present:** Simonetta
+- **Event summary:** Pilgrimage culture intensifies across Europe, increasing long-distance movement
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S036 (travel density, pilgrimage road): Simonetta watches the roads thicken with pilgrims and understands the old hidden paths are no longer enough.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Simonetta.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 28. Events
+
+- **Date or sequence:** 1009
+- **Story Code:** LEGACY-EVENT-026
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Jerusalem / Europe
+- **Characters present:** Simonetta
+- **Event summary:** Destruction of the Church of the Holy Sepulchre heightens Christian tensions
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S037 (holy site rumor, monastery archive): Monks speak of the Holy Sepulchre’s destruction and argue about whether outrage travels faster than truth.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Simonetta.
+- Location: Jerusalem / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 29. Events
+
+- **Date or sequence:** 1016
+- **Story Code:** LEGACY-EVENT-027
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Southern Italy
+- **Characters present:** Simonetta
+- **Event summary:** Norman influence expands in southern Italy through mercenary activity
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S038 (mercenary arrival, southern manor): Norman mercenaries swagger through camp as though temporary service were destiny.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Simonetta.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 30. Events
+
+- **Date or sequence:** 1030
+- **Story Code:** LEGACY-EVENT-028
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Campania / Southern Italy
+- **Characters present:** Simonetta
+- **Event summary:** County of Aversa established under Norman leadership
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S039 (county formation, Campania road): New Norman authority produces more seals, more tolls, and fewer quiet roads.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Simonetta.
+- Location: Campania / Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 31. Events
+
+- **Date or sequence:** 1039
+- **Story Code:** LEGACY-EVENT-029
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Southern Italy
+- **Characters present:** Simonetta
+- **Event summary:** Byzantines lose additional control in southern Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S040 (imperial retreat, upland village): Byzantine officers leave a post in haste, and the villagers immediately pretend they had never supported them.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Simonetta.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 32. Events
+
+- **Date or sequence:** 1048
+- **Story Code:** LEGACY-EVENT-030
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Rome
+- **Characters present:** Simonetta
+- **Event summary:** Reform papacy strengthens church centralization
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S041 (papal reform, church guesthouse): A reform-minded priest questions local practices while stealing glances at Simonetta’s unusual calm.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Simonetta.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 33. Events
+
+- **Date or sequence:** 1054
+- **Story Code:** LEGACY-EVENT-031
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Rome / Constantinople
+- **Characters present:** Brother Anselm of Cosenza, Simonetta
+- **Event summary:** Great Schism between eastern and western churches
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S042 (schism, mountain priory): Word of mutual excommunication reaches Calabria in fragments and certainties.
+- S043 (church conflict, monastery court): Anselm hears the news as administrative fact first, spiritual catastrophe second.
+- S198 (theological dispute, monastery scriptorium): A copied letter causes more fear than an armed patrol.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Simonetta / Brother Anselm.
+- Location: Rome / Constantinople.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 34. Events
+
+- **Date or sequence:** 1054
+- **Story Code:** FAROVALD-DROP-1054
+- **Narrative Type:** clue
+- **Historical / Reality Classification:** fictional
+- **Historical Constraint:** constrained
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Benedictine monastic archive / southern Italy
+- **Characters present:** Farovald, Brother Anselm of Cosenza
+- **Event summary:** Farovald leaves a small stitched botanical folio in a concealed monastic archive compartment for Brother Anselm. The folio uses ordinary plant descriptions to encode a limited set of current mountain-route warnings and a pointer to a gap in the inherited guardian record. Its authorship is not self-evident at first recovery.
+- **Cause:** Direct recurring contact with an unaging Farovald has become more dangerous as monastic communities preserve faces, names, and written records. Anselm also needs a way to distinguish inherited knowledge from gaps without exposing Italus.
+- **Effect:** Anselm gains a bounded continuity aid and a reason to examine the guardian record more critically. The cache supports, but does not replace, his own work of encoding and preserving knowledge.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** The folio may be recovered without a face-to-face meeting. It contains only route conditions, botanical-code pointers, and record-gap clues knowable by 1054. It does not predict the Great Schism or any later event.
+- **What must not change:** The Great Schism and all documented historical outcomes remain unchanged. Farovald is not made Anselm's superior or succession authority.
+- **Continuity constraints:** This is the first explicitly canonical later-era Farovald dead drop. The physical object is a stitched folio using period-appropriate ink/parchment and botanical disguise. It may not contain later aliases, future outcomes, or a complete biography of Farovald. Its disclosure is controlled by `farovald-anselm-archive-cache`.
+#### 35. Events
+
+- **Date or sequence:** 1059
+- **Story Code:** LEGACY-EVENT-032
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Southern Italy
+- **Characters present:** Brother Anselm of Cosenza, Simonetta
+- **Event summary:** Treaty of Melfi legitimizes Norman power in southern Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S044 (legitimacy, Melfi road): Norman rule becomes legal on paper, which changes little and everything at once.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Simonetta / Brother Anselm.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 36. Events
+
+- **Date or sequence:** 1061
+- **Story Code:** LEGACY-EVENT-033
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Sicily
+- **Characters present:** Brother Anselm of Cosenza
+- **Event summary:** Norman conquest of Sicily begins
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S045 (invasion, Sicilian crossing): Ferrymen whisper of Norman banners on Sicilian shores.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Brother Anselm.
+- Location: Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 37. Events
+
+- **Date or sequence:** 1071
+- **Story Code:** LEGACY-EVENT-034
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Bari / Southern Italy
+- **Characters present:** Brother Anselm of Cosenza
+- **Event summary:** Fall of Bari ends major Byzantine presence in southern Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S046 (conquest aftermath, Bari hinterland): The fall of Bari makes even old men speak of “new ages” as though ages listened.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Brother Anselm.
+- Location: Bari / Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 38. Events
+
+- **Date or sequence:** 1073–1085
+- **Story Code:** LEGACY-EVENT-035
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Rome / Europe
+- **Characters present:** Brother Anselm of Cosenza
+- **Event summary:** Gregorian Reform reshapes the papacy and church authority
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S047 (reform church, Rome-bound road): Gregory’s struggle with kings becomes sermon material in places that barely know Rome exists.
+- S048 (encoded writing, abbey cell): Anselm starts hiding the first true notes on Italus inside botanical observations.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Brother Anselm.
+- Location: Rome / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 39. Events
+
+- **Date or sequence:** 1095
+- **Story Code:** LEGACY-EVENT-036
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Europe / Mediterranean
+- **Characters present:** Brother Anselm of Cosenza
+- **Event summary:** First Crusade proclaimed at Clermont
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S049 (crusade call, French monastery): Men who had never crossed their own valleys now speak of Jerusalem as obligation.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Brother Anselm.
+- Location: Europe / Mediterranean.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 40. Events
+
+- **Date or sequence:** 1097
+- **Story Code:** LEGACY-EVENT-037
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Italy / Mediterranean
+- **Characters present:** Brother Anselm of Cosenza
+- **Event summary:** Crusader armies moving east transform roads, ports, and supply corridors
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S050 (crusader logistics, Adriatic port road): Bohemond’s forces change the cadence of roads by sheer volume.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Brother Anselm.
+- Location: Italy / Mediterranean.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 41. Events
+
+- **Date or sequence:** 1099
+- **Story Code:** LEGACY-EVENT-038
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Jerusalem
+- **Characters present:** Brother Anselm of Cosenza
+- **Event summary:** Crusaders capture Jerusalem
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S051 (conquest report, monastery courtyard): Returning clerics speak of victory with voices that do not sound victorious.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Brother Anselm.
+- Location: Jerusalem.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 42. Events
+
+- **Date or sequence:** 1101
+- **Story Code:** LEGACY-EVENT-039
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Mediterranean
+- **Characters present:** Brother Anselm of Cosenza
+- **Event summary:** Additional crusading waves and return travel reshape Mediterranean movement
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S052 (return traffic, harbor village): Ships come back with relics, fevers, and men who have learned to look past people.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Brother Anselm.
+- Location: Mediterranean.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 43. Events
+
+- **Date or sequence:** 1110
+- **Story Code:** LEGACY-EVENT-040
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 3
+- **Book / installment:** Book 3 — The Observers
+- **Location:** Southern Italy
+- **Characters present:** Brother Anselm of Cosenza, Caterina
+- **Event summary:** Late Norman consolidation in southern Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S053 (succession overlap, Calabria track): Caterina walks the route with him in silence, learning that routes are also judgments.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Brother Anselm / Caterina.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 44. Events
+
+- **Date or sequence:** 1111
+- **Story Code:** LEGACY-EVENT-041
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Italy / Holy Roman Empire
+- **Characters present:** Caterina
+- **Event summary:** Imperial-papal tensions continue under Henry V
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S054 (political tension, imperial road): Messengers speak of emperor and pope as though two distant men can reorder local fear.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Italy / Holy Roman Empire.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 45. Events
+
+- **Date or sequence:** 1122
+- **Story Code:** LEGACY-EVENT-042
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Europe
+- **Characters present:** Caterina
+- **Event summary:** Concordat of Worms partially resolves the Investiture Controversy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S055 (settlement, monastery archive): The Concordat ends one kind of conflict but leaves every opportunist intact.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 46. Events
+
+- **Date or sequence:** 1130
+- **Story Code:** LEGACY-EVENT-043
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Sicily / Southern Italy
+- **Characters present:** Caterina
+- **Event summary:** Kingdom of Sicily established under Roger II
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S056 (kingdom formation, Sicilian coast road): Royal consolidation means better roads and fewer places to hide.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Sicily / Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 47. Events
+
+- **Date or sequence:** 1140
+- **Story Code:** LEGACY-EVENT-044
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Southern Italy
+- **Characters present:** Caterina
+- **Event summary:** Assizes of Ariano strengthen Sicilian royal administration
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S057 (legal reform, southern market town): New administrative order reaches the countryside as tax ledgers and measuring cords.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 48. Events
+
+- **Date or sequence:** 1147–1149
+- **Story Code:** LEGACY-EVENT-045
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Europe / Mediterranean
+- **Characters present:** Caterina
+- **Event summary:** Second Crusade affects Mediterranean traffic and political culture
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S058 (crusade traffic, coastal crossing): Another crusade fills inns with piety, boasting, and lice.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Europe / Mediterranean.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 49. Events
+
+- **Date or sequence:** 1154
+- **Story Code:** LEGACY-EVENT-046
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Southern Italy / Mediterranean
+- **Characters present:** Caterina
+- **Event summary:** Byzantine and Norman rivalry still shapes southern waters and trade
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S059 (rivalry, port village): Traders swear both Byzantines and Normans are winning, depending on who buys wine.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Southern Italy / Mediterranean.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 50. Events
+
+- **Date or sequence:** 1169
+- **Story Code:** LEGACY-EVENT-047
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Sicily
+- **Characters present:** Caterina
+- **Event summary:** Major earthquake strikes eastern Sicily
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S060 (disaster, eastern Sicily): The earthquake turns stone to dust and forces Caterina to move Italus sooner than planned.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 51. Events
+
+- **Date or sequence:** 1183
+- **Story Code:** LEGACY-EVENT-048
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Italy
+- **Characters present:** Caterina
+- **Event summary:** Peace of Constance stabilizes parts of northern Italian politics
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S061 (political stabilization, pilgrim shelter): North Italian peace means southern routes carry more scholars and more maps.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 52. Events
+
+- **Date or sequence:** 1187
+- **Story Code:** LEGACY-EVENT-049
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Levant / Europe
+- **Characters present:** Caterina
+- **Event summary:** Saladin recaptures Jerusalem
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S062 (crusade shock, monastery garden): News of Jerusalem lost again makes men reach for the same old language of certainty.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Levant / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 53. Events
+
+- **Date or sequence:** 1194
+- **Story Code:** LEGACY-EVENT-050
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Italy / Sicily
+- **Characters present:** Caterina
+- **Event summary:** Frederick II born
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S063 (dynastic birth, Sicilian manor): A newborn prince matters to people who will never see him and still be changed by him.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Italy / Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 54. Events
+
+- **Date or sequence:** 1204
+- **Story Code:** LEGACY-EVENT-051
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Constantinople
+- **Characters present:** Caterina
+- **Event summary:** Fourth Crusade sacks Constantinople
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S064 (sack of Constantinople, harbor inn): Refugees describe fellow Christians looting Christian cities, and Caterina stops trusting any tidy explanation of faith.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Constantinople.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 55. Events
+
+- **Date or sequence:** 1212
+- **Story Code:** LEGACY-EVENT-052
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Europe
+- **Characters present:** Caterina
+- **Event summary:** Children’s Crusade tradition emerges in memory and rumor
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S065 (rumor wave, hillside chapel): Stories of children marching to the sea reach the mountains and sound half warning, half lie.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 56. Events
+
+- **Date or sequence:** 1220
+- **Story Code:** LEGACY-EVENT-053
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Rome
+- **Characters present:** Amara of Palermo, Caterina
+- **Event summary:** Frederick II crowned Holy Roman Emperor
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S066 (coronation, Rome outskirts): Amara steps fully into guardianship as Frederick enters empire and appetite at the same time.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Caterina / Amara.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 57. Events
+
+- **Date or sequence:** 1224
+- **Story Code:** LEGACY-EVENT-054
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Southern Italy
+- **Characters present:** Amara of Palermo
+- **Event summary:** University of Naples founded
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S067 (university culture, Naples): Court scholars debate translation, Aristotle, and what counts as knowledge.
+- S068 (intellectual tension, Naples): Young minds learn categories while Amara learns how dangerous categories can be.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 58. Events
+
+- **Date or sequence:** 1231
+- **Story Code:** LEGACY-EVENT-055
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Southern Italy / Sicily
+- **Characters present:** Amara of Palermo
+- **Event summary:** Constitutions of Melfi issued
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S069 (legal state, southern road station): The Constitutions of Melfi make bureaucracy feel more dangerous than cavalry.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Southern Italy / Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 59. Events
+
+- **Date or sequence:** 1239
+- **Story Code:** LEGACY-EVENT-056
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Italy
+- **Characters present:** Amara of Palermo
+- **Event summary:** Frederick II’s conflicts with the papacy intensify
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S070 (papal conflict, court-adjacent villa): Imperial collectors inventory unusual animals and plants, narrowing Amara’s margin for error.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 60. Events
+
+- **Date or sequence:** 1241
+- **Story Code:** LEGACY-EVENT-057
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Europe
+- **Characters present:** Amara of Palermo
+- **Event summary:** Mongol pressure in eastern Europe changes western political awareness
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S071 (eastern fear, merchant caravan): Rumors of Mongols turn distant geography into immediate dread.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 61. Events
+
+- **Date or sequence:** 1248
+- **Story Code:** LEGACY-EVENT-058
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Mediterranean / Europe
+- **Characters present:** Amara of Palermo
+- **Event summary:** Crusading failures deepen cynicism and apocalyptic rhetoric
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S072 (failed crusade, monastery refectory): Failed holy war leaves only practical consequences: displaced men, suspicious clerics, hungry roads.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Mediterranean / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 62. Events
+
+- **Date or sequence:** 1250
+- **Story Code:** LEGACY-EVENT-059
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Southern Italy / Sicily
+- **Characters present:** Amara of Palermo
+- **Event summary:** Death of Frederick II
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S073 (death of ruler, Sicilian hillside): Frederick dies, but the collectors and habits of power survive him.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Southern Italy / Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 63. Events
+
+- **Date or sequence:** 1266
+- **Story Code:** LEGACY-EVENT-060
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Southern Italy
+- **Characters present:** Amara of Palermo
+- **Event summary:** Battle of Benevento shifts southern Italian rule to the Angevins
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S074 (battle aftermath, Benevento road): A new dynasty means old cover stories fail all at once.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 64. Events
+
+- **Date or sequence:** 1282
+- **Story Code:** LEGACY-EVENT-061
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Sicily
+- **Characters present:** Amara of Palermo
+- **Event summary:** Sicilian Vespers revolt
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S075 (uprising, Sicilian village): Bells, knives, and rumor move faster than any proclamation.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 65. Events
+
+- **Date or sequence:** 1291
+- **Story Code:** LEGACY-EVENT-062
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Eastern Mediterranean
+- **Characters present:** Amara of Palermo
+- **Event summary:** Fall of Acre ends the last major Crusader stronghold in the Levant
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S076 (Acre falls, eastern merchant house): Merchants speak of the Levant as though a door has closed and another, darker one opened.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Eastern Mediterranean.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 66. Events
+
+- **Date or sequence:** 1300
+- **Story Code:** LEGACY-EVENT-063
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Rome
+- **Characters present:** Amara of Palermo
+- **Event summary:** Jubilee proclaimed by Boniface VIII draws pilgrims to Rome
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S077 (jubilee crowd, Rome approaches): Pilgrims thicken every approach to Rome, making concealment a logistical war.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 67. Events
+
+- **Date or sequence:** 1302
+- **Story Code:** LEGACY-EVENT-064
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Europe
+- **Characters present:** Amara of Palermo
+- **Event summary:** Conflict between papacy and monarchy deepens under Boniface VIII and Philip IV
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S078 (papal-monarchical conflict, abbey road): Men invoke spiritual power in the language of tax disputes and territory.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 68. Events
+
+- **Date or sequence:** 1309
+- **Story Code:** LEGACY-EVENT-065
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Western Christendom
+- **Characters present:** Amara of Palermo
+- **Event summary:** Papacy moves to Avignon
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S079 (Avignon papacy, southern hospice): Even the pope can move, Amara thinks, though not with roots.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara.
+- Location: Western Christendom.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 69. Events
+
+- **Date or sequence:** 1310
+- **Story Code:** LEGACY-EVENT-066
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 4
+- **Book / installment:** Book 4 — The Emperor’s Naturalists
+- **Location:** Italy
+- **Characters present:** Amara of Palermo, Giacomo
+- **Event summary:** Henry VII’s Italian campaign renews imperial tensions
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S080 (succession, Pollino return path): Giacomo receives not certainty but weight.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Amara / Giacomo.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 70. Events
+
+- **Date or sequence:** 1315–1317
+- **Story Code:** LEGACY-EVENT-067
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Europe
+- **Characters present:** Giacomo
+- **Event summary:** Great European Famine
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S081 (famine, mountain farms): Hungry winters change village manners before they change numbers.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 71. Events
+
+- **Date or sequence:** 1320
+- **Story Code:** LEGACY-EVENT-068
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Europe / Italy
+- **Characters present:** Giacomo
+- **Event summary:** Rural stress and grain shortages reshape village life
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S082 (scarcity, grain road): Grain carts move under armed watch, and Giacomo learns hunger makes everyone observant.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 72. Events
+
+- **Date or sequence:** 1337
+- **Story Code:** LEGACY-EVENT-069
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Western Europe / trade implications
+- **Characters present:** Giacomo
+- **Event summary:** Hundred Years’ War begins
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S083 (war rumor, monastery inn): Distant war in France still changes prices in southern Italy.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Western Europe / trade implications.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 73. Events
+
+- **Date or sequence:** 1347
+- **Story Code:** LEGACY-EVENT-070
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Sicily / Italy
+- **Characters present:** Giacomo
+- **Event summary:** Black Death reaches Mediterranean ports, including Messina
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S084 (plague arrival, Messina harbor): Sailors refuse to unload ships whose silence is worse than noise.
+- S085 (disease omen, coastal road): Italus smells unfamiliar rot in the wind before anyone names sickness.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Sicily / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 74. Events
+
+- **Date or sequence:** 1348
+- **Story Code:** LEGACY-EVENT-071
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Italy
+- **Characters present:** Giacomo
+- **Event summary:** Black Death devastates Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S086 (catastrophe, plague village): Letters from scholars cannot carry the smell of mass burial, only its idea.
+- S087 (burial, abandoned chapel): Giacomo helps dig because there is no one else left.
+- S199 (environmental aftermath, abandoned orchard): Birds return to a village faster than people do.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 75. Events
+
+- **Date or sequence:** 1349
+- **Story Code:** LEGACY-EVENT-072
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Europe / Italy
+- **Characters present:** Giacomo
+- **Event summary:** Continued plague mortality and social collapse
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S088 (collapse, hill route): Roads go quiet except for carts that should not travel uncovered.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 76. Events
+
+- **Date or sequence:** 1351
+- **Story Code:** LEGACY-EVENT-073
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Europe
+- **Characters present:** Giacomo
+- **Event summary:** Additional plague wave spreads across Europe
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S089 (recurrence, resettled hamlet): Survivors who had begun rebuilding now hear the word “again.”
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 77. Events
+
+- **Date or sequence:** 1361
+- **Story Code:** LEGACY-EVENT-074
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Europe / Italy
+- **Characters present:** Giacomo
+- **Event summary:** Another major plague recurrence
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S090 (youth mortality, monastery garden): A new wave takes younger people first, and old men stop pretending experience protects anyone.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 78. Events
+
+- **Date or sequence:** 1377
+- **Story Code:** LEGACY-EVENT-075
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Rome
+- **Characters present:** Giacomo
+- **Event summary:** Papacy returns from Avignon to Rome
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S091 (papal return, Rome road): Rome receives the pope back like a city greeting a ghost.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 79. Events
+
+- **Date or sequence:** 1378
+- **Story Code:** LEGACY-EVENT-076
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Rome / Europe
+- **Characters present:** Giacomo
+- **Event summary:** Western Schism begins
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S092 (schism, pilgrim station): Holiness and politics become indistinguishable to everyone except the dead.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Rome / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 80. Events
+
+- **Date or sequence:** 1381
+- **Story Code:** LEGACY-EVENT-077
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Europe
+- **Characters present:** Giacomo
+- **Event summary:** Revolt and labor unrest appear across Europe after plague disruption
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S093 (labor unrest, market square): Peasants now know what their labor is worth because plague taught them the count.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 81. Events
+
+- **Date or sequence:** 1389
+- **Story Code:** LEGACY-EVENT-078
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Balkans / Europe
+- **Characters present:** Giacomo
+- **Event summary:** Battle of Kosovo becomes a major eastern European turning point
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S094 (battle memory, Balkan rumor road): News from Kosovo arrives warped but heavy.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Balkans / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 82. Events
+
+- **Date or sequence:** 1397
+- **Story Code:** LEGACY-EVENT-079
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Italy
+- **Characters present:** Giacomo
+- **Event summary:** Commercial recovery expands in Italian city-states despite demographic scars
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S095 (commercial recovery, Florence-bound trail): Prosperity returns to cities first and to memory last.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 83. Events
+
+- **Date or sequence:** 1400
+- **Story Code:** LEGACY-EVENT-080
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 5
+- **Book / installment:** Book 5 — The Black Years
+- **Location:** Italy
+- **Characters present:** Giacomo
+- **Event summary:** Early Renaissance conditions strengthen in Florence and beyond
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S096 (transition, ridge overlook): Beauty returns to Italy before trust does.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Giacomo.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 84. Events
+
+- **Date or sequence:** 1415
+- **Story Code:** LEGACY-EVENT-081
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** France / Europe
+- **Characters present:** Orsolina
+- **Event summary:** Battle of Agincourt
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S097 (battle report, merchant encampment): Men describe Agincourt with admiration for arrows and none for corpses.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: France / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 85. Events
+
+- **Date or sequence:** 1417
+- **Story Code:** LEGACY-EVENT-082
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Europe
+- **Characters present:** Orsolina
+- **Event summary:** End of the Western Schism at Council of Constance
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S098 (schism ends, monastery archive): Unity is announced in a tone that suggests paperwork has defeated revelation.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 86. Events
+
+- **Date or sequence:** 1434
+- **Story Code:** LEGACY-EVENT-083
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Florence / Italy
+- **Characters present:** Orsolina
+- **Event summary:** Medici power consolidated in Florence
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S099 (banking power, Florentine approach): Gold changes roads more reliably than kings.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Florence / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 87. Events
+
+- **Date or sequence:** 1450
+- **Story Code:** LEGACY-EVENT-084
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Europe
+- **Characters present:** Orsolina
+- **Event summary:** Gutenberg-era print culture begins reshaping Europe
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S100 (print revolution, print shop district): Printed pages make dangerous ideas easier to move than trees.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 88. Events
+
+- **Date or sequence:** 1453
+- **Story Code:** LEGACY-EVENT-085
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Constantinople / Italy
+- **Characters present:** Orsolina
+- **Event summary:** Fall of Constantinople
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S101 (empire falls, Adriatic port): The end of Constantinople arrives in port gossip and refugee inventories.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Constantinople / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 89. Events
+
+- **Date or sequence:** 1469
+- **Story Code:** LEGACY-EVENT-086
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Florence
+- **Characters present:** Orsolina
+- **Event summary:** Rise of Lorenzo de’ Medici symbolizes high Renaissance patronage
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S102 (patronage culture, Florence outskirts): Art and power begin to travel together.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Florence.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 90. Events
+
+- **Date or sequence:** 1478
+- **Story Code:** LEGACY-EVENT-087
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Florence
+- **Characters present:** Orsolina
+- **Event summary:** Pazzi conspiracy reveals volatility of Italian politics
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S103 (conspiracy, noble villa): Everyone in Florence seems to know who must die next except those who actually will.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Florence.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 91. Events
+
+- **Date or sequence:** 1485
+- **Story Code:** LEGACY-EVENT-088
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Italy
+- **Characters present:** Orsolina
+- **Event summary:** Renaissance artistic and humanist culture expands across Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S104 (renaissance culture, workshop quarter): Men sketch flying machines while peasants still fear drought.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 92. Events
+
+- **Date or sequence:** 1492
+- **Story Code:** LEGACY-EVENT-089
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Spain / Europe
+- **Characters present:** Orsolina
+- **Event summary:** Columbus sails west from Spain
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S105 (exploration, Spanish lodging house): A voyage west sounds like a lie until the lie acquires investors.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Spain / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 93. Events
+
+- **Date or sequence:** 1494
+- **Story Code:** LEGACY-EVENT-090
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Italy
+- **Characters present:** Orsolina
+- **Event summary:** French invasion launches the Italian Wars
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S106 (French invasion, Italian road): Foreign armies make maps feel temporary.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 94. Events
+
+- **Date or sequence:** 1498
+- **Story Code:** LEGACY-EVENT-091
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Florence
+- **Characters present:** Orsolina
+- **Event summary:** Savonarola executed in Florence
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S107 (execution, Florence road): Fire consumes one certainty and feeds three more.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Florence.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 95. Events
+
+- **Date or sequence:** 1503
+- **Story Code:** LEGACY-EVENT-092
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Rome
+- **Characters present:** Orsolina
+- **Event summary:** Pope Julius II era begins; intense artistic and political ambition in Rome
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S108 (papal ambition, Rome outskirts): Rome becomes a workshop for glory and masonry.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Orsolina.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 96. Events
+
+- **Date or sequence:** 1517
+- **Story Code:** LEGACY-EVENT-093
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Europe
+- **Characters present:** Pietro
+- **Event summary:** Martin Luther’s theses ignite the Reformation
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S109 (reformation, monastery guesthouse): Pamphlets make distant dissent feel local and contagious.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 97. Events
+
+- **Date or sequence:** 1519–1522
+- **Story Code:** LEGACY-EVENT-094
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Global / Europe
+- **Characters present:** Pietro
+- **Event summary:** Magellan-Elcano circumnavigation proves global sea linkage
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S110 (global linkage, port tavern): Men speak of circling the world as though distance has been insulted and beaten.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Global / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 98. Events
+
+- **Date or sequence:** 1525
+- **Story Code:** LEGACY-EVENT-095
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Northern Italy
+- **Characters present:** Pietro
+- **Event summary:** Battle of Pavia reshapes Italian power politics
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S111 (battle aftermath, northern military road): Pavia teaches nobles and peasants different lessons from the same dead.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Northern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 99. Events
+
+- **Date or sequence:** 1527
+- **Story Code:** LEGACY-EVENT-096
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Rome
+- **Characters present:** Pietro
+- **Event summary:** Sack of Rome
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S112 (sack, ruined Roman garden): Pietro plays the madman while soldiers camp within sight of Italus.
+- S113 (witness, ruined Roman garden): Fragments of great cities are carried in the same arms that carry bread.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 100. Events
+
+- **Date or sequence:** 1527
+- **Story Code:** FAROVALD-DROP-1527
+- **Narrative Type:** clue
+- **Historical / Reality Classification:** fictional
+- **Historical Constraint:** constrained
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Appennine / southern-route monastic waystation
+- **Characters present:** Farovald, Pietro
+- **Event summary:** During the disorder surrounding the 1527 Sack of Rome, Farovald leaves Pietro a sealed waxed-linen route packet containing a hand-drawn fallback corridor, safe water points, and one archive location outside the immediate crisis zone.
+- **Cause:** The Sack destroys or scatters records and makes direct travel/meeting patterns unsafe. Pietro needs a bounded fallback route that does not depend on the journal lost in the crisis.
+- **Effect:** Pietro can move without relying on the destroyed journal's unique contents. The packet preserves only route continuity; it does not reconstruct the lost journal.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** The packet may be found at a prearranged physical site without direct contact. Its information is limited to routes and safe points Farovald personally knows by 1527.
+- **What must not change:** The Sack of Rome occurs as historically documented. The destroyed/lost journal remains genuinely lost except for information independently named in this packet.
+- **Continuity constraints:** The cache is a sealed waxed-linen route packet with period-appropriate hand-drawn material. It must not reproduce the destroyed journal in full. Its disclosure is controlled by `farovald-pietro-route-cache`.
+#### 101. Events
+
+- **Date or sequence:** 1543
+- **Story Code:** LEGACY-EVENT-097
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Europe
+- **Characters present:** Pietro
+- **Event summary:** Copernicus publishes heliocentric theory
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S114 (heliocentrism, scholar’s villa): A new theory sounds harmless until men realize it displaces them.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 102. Events
+
+- **Date or sequence:** 1555
+- **Story Code:** LEGACY-EVENT-098
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Central Europe
+- **Characters present:** Pietro
+- **Event summary:** Peace of Augsburg recognizes religious division in the Empire
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S115 (confessional division, diplomatic road): Peace is declared by naming division permanent.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Central Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 103. Events
+
+- **Date or sequence:** 1563
+- **Story Code:** LEGACY-EVENT-099
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Europe / Italy
+- **Characters present:** Pietro
+- **Event summary:** Council of Trent closes, shaping Counter-Reformation Catholicism
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S116 (counter-reformation, council aftermath): Rome grows more careful with words and less careful with fear.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 104. Events
+
+- **Date or sequence:** 1564
+- **Story Code:** LEGACY-EVENT-100
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Italy
+- **Characters present:** Pietro
+- **Event summary:** Galileo born
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S117 (birth of scientist, Pisan road): A child is born whose questions will later feel like weather.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 105. Events
+
+- **Date or sequence:** 1571
+- **Story Code:** LEGACY-EVENT-101
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Mediterranean
+- **Characters present:** Pietro
+- **Event summary:** Battle of Lepanto
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S118 (naval battle, coastal monastery): Lepanto reaches Calabria first as bells, then as names.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Mediterranean.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 106. Events
+
+- **Date or sequence:** 1582
+- **Story Code:** LEGACY-EVENT-102
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Catholic Europe / Italy
+- **Characters present:** Pietro
+- **Event summary:** Gregorian calendar reform
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S119 (calendar reform, parish office): Time itself is edited by decree, and the villagers mistrust the arithmetic.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Catholic Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 107. Events
+
+- **Date or sequence:** 1588
+- **Story Code:** LEGACY-EVENT-103
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Europe
+- **Characters present:** Pietro
+- **Event summary:** Spanish Armada defeated
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S120 (armada defeat, merchant hall): Europe speaks of seas as though they can take sides.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 108. Events
+
+- **Date or sequence:** 1600
+- **Story Code:** LEGACY-EVENT-104
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Rome
+- **Characters present:** Pietro
+- **Event summary:** Giordano Bruno executed in Rome
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S121 (execution, Rome road): Pietro hears Bruno burned for ideas and wonders whether fire always reveals more about the burners.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 109. Events
+
+- **Date or sequence:** 1609
+- **Story Code:** LEGACY-EVENT-105
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Padua / Italy
+- **Characters present:** Pietro
+- **Event summary:** Galileo begins telescopic observations
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S122 (observation, Padua-adjacent route): Looking farther becomes politically dangerous.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Padua / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 110. Events
+
+- **Date or sequence:** 1618
+- **Story Code:** LEGACY-EVENT-106
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 6
+- **Book / installment:** Book 6 — Maps of the World
+- **Location:** Central Europe / wider implications
+- **Characters present:** Pietro
+- **Event summary:** Thirty Years’ War begins
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S123 (war onset, diplomatic lodging): A continental war begins in rooms far from the fields that will feed it.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Pietro.
+- Location: Central Europe / wider implications.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 111. Events
+
+- **Date or sequence:** 1623
+- **Story Code:** LEGACY-EVENT-107
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Rome
+- **Characters present:** Domenico
+- **Event summary:** Urban VIII becomes pope, shaping Galileo’s Roman world
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S124 (papal accession, Rome): A new pope rearranges the emotional weather of scholars before the actual weather changes.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Domenico.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 112. Events
+
+- **Date or sequence:** 1633
+- **Story Code:** LEGACY-EVENT-108
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Rome
+- **Characters present:** Domenico
+- **Event summary:** Galileo tried by the Inquisition
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S125 (trial, Rome): Domenico hears the old astronomer forced into obedience and writes the word “forced” three times.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Domenico.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 113. Events
+
+- **Date or sequence:** 1648
+- **Story Code:** LEGACY-EVENT-109
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Europe
+- **Characters present:** Domenico
+- **Event summary:** Peace of Westphalia ends the Thirty Years’ War
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S126 (peace treaty, scholar’s study): Westphalia is explained as peace and received as accounting.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Domenico.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 114. Events
+
+- **Date or sequence:** 1656
+- **Story Code:** LEGACY-EVENT-110
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Southern Italy
+- **Characters present:** Domenico
+- **Event summary:** Major plague outbreak in Naples
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S127 (plague, Naples outskirts): Disease returns as if history had only been resting.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Domenico.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 115. Events
+
+- **Date or sequence:** 1666
+- **Story Code:** LEGACY-EVENT-111
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Europe
+- **Characters present:** Domenico
+- **Event summary:** Great Fire of London symbolizes vulnerability of dense early modern cities
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S128 (fire report, merchant house): London burns far away and still convinces everyone cities are temporary.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Domenico.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 116. Events
+
+- **Date or sequence:** 1687
+- **Story Code:** LEGACY-EVENT-112
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Europe
+- **Characters present:** Domenico
+- **Event summary:** Newton publishes Principia
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S129 (physics, natural philosopher circle): Domenico hears of laws that govern apples and planets and thinks men always loved renaming old astonishments.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Domenico.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 117. Events
+
+- **Date or sequence:** 1693
+- **Story Code:** LEGACY-EVENT-113
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Sicily
+- **Characters present:** Domenico
+- **Event summary:** Great Sicilian earthquake
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S130 (earthquake, Sicilian route): Italus senses tremors days early, and Domenico discovers foreknowledge without utility.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Domenico.
+- Location: Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 118. Events
+
+- **Date or sequence:** 1701
+- **Story Code:** LEGACY-EVENT-114
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Europe / Italy
+- **Characters present:** Domenico
+- **Event summary:** War of the Spanish Succession begins
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S131 (dynastic war, war road): Succession disputes make corpses in places no succession will ever notice.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Domenico.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 119. Events
+
+- **Date or sequence:** 1713
+- **Story Code:** LEGACY-EVENT-115
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Europe / Italy
+- **Characters present:** Agata
+- **Event summary:** Treaty of Utrecht reshapes dynastic control, including in Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S132 (treaty order, southern court road): Agata inherits a Europe that believes treaties end ambition.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Agata.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 120. Events
+
+- **Date or sequence:** 1734
+- **Story Code:** LEGACY-EVENT-116
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Southern Italy
+- **Characters present:** Agata
+- **Event summary:** Bourbon rule begins in Naples and Sicily
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S133 (Bourbon rule, Naples road): New rulers bring new uniforms and identical appetite.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Agata.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 121. Events
+
+- **Date or sequence:** 1755
+- **Story Code:** LEGACY-EVENT-117
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Europe
+- **Characters present:** Agata
+- **Event summary:** Lisbon earthquake shocks Enlightenment thought
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S134 (philosophical shock, scholar’s kitchen): Lisbon shakes cities that never moved.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Agata.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 122. Events
+
+- **Date or sequence:** 1764
+- **Story Code:** LEGACY-EVENT-118
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Italy / Europe
+- **Characters present:** Agata
+- **Event summary:** Beccaria’s Enlightenment thought spreads from Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S135 (enlightenment, Italian salon): Agata hears the first biological explanation of resin and distrusts how neatly it fits.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Agata.
+- Location: Italy / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 123. Events
+
+- **Date or sequence:** 1776
+- **Story Code:** LEGACY-EVENT-119
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Atlantic world / Europe
+- **Characters present:** Agata
+- **Event summary:** American Revolution begins
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S136 (Atlantic revolution, diplomatic salon): Liberty becomes exportable rhetoric.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Agata.
+- Location: Atlantic world / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 124. Events
+
+- **Date or sequence:** 1789
+- **Story Code:** LEGACY-EVENT-120
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** France / Europe
+- **Characters present:** Agata
+- **Event summary:** French Revolution begins
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S137 (revolution, French road inn): Men begin to speak of equality with the same certainty they once used for kings.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Agata.
+- Location: France / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 125. Events
+
+- **Date or sequence:** 1789
+- **Story Code:** FAROVALD-DROP-1789
+- **Narrative Type:** clue
+- **Historical / Reality Classification:** fictional
+- **Historical Constraint:** constrained
+- **Available From:** 7
+- **Book / installment:** Book 7 — The Age of Reason
+- **Location:** Pollino / southern Italian administrative corridor
+- **Characters present:** Farovald, Agata
+- **Event summary:** As administrative record-keeping accelerates in the revolutionary era, Farovald leaves Agata a compact paper-life continuity packet: observations on recurring surname risk, inheritance-paper patterns, safe archive jurisdictions, and warnings about keeping one face attached to one identity for too long.
+- **Cause:** Increasingly persistent civic and imperial records make oral cover stories less reliable for unusually long-lived guardians and for Farovald himself.
+- **Effect:** Agata gains practical material that can later inform the lineage's paper-identity methods without receiving forged future documents or knowledge from later administrations.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** The packet may contain examples copied from documents already encountered by 1789 and advice based on Farovald's past experience. It cannot contain 19th- or 20th-century procedures.
+- **What must not change:** The French Revolution and Italian political developments remain unchanged. The packet does not create a modern identity system ahead of its time.
+- **Continuity constraints:** This cache establishes the raw administrative observations later guardians can refine. It uses ordinary paper/ink and current-era examples only. Its disclosure is controlled by `farovald-agata-paper-cache`.
+#### 126. Events
+
+- **Date or sequence:** 1798–1799
+- **Story Code:** LEGACY-EVENT-121
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Italy
+- **Characters present:** Agata
+- **Event summary:** Napoleon’s campaigns and republican experiments reshape Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S138 (Napoleonic upheaval, northern Italian road): Armies drag new law behind old hunger.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Agata.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 127. Events
+
+- **Date or sequence:** 1804
+- **Story Code:** LEGACY-EVENT-122
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Europe
+- **Characters present:** Emilio
+- **Event summary:** Napoleon crowned emperor
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S139 (imperial pomp, village hall): Emilio learns modern states count everything except what matters to roots.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 128. Events
+
+- **Date or sequence:** 1815
+- **Story Code:** LEGACY-EVENT-123
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Europe / Italy
+- **Characters present:** Emilio
+- **Event summary:** Congress of Vienna redraws Europe after Napoleon
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S140 (restored order, diplomatic posting route): Vienna redraws the continent with rulers and ink, not rivers.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 129. Events
+
+- **Date or sequence:** 1820–1821
+- **Story Code:** LEGACY-EVENT-124
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Italy
+- **Characters present:** Emilio
+- **Event summary:** Carbonari and constitutional revolts in Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S141 (constitutional unrest, secret meeting place): Carbonari cells teach Emilio how politics now travels in whispers instead of banners.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 130. Events
+
+- **Date or sequence:** 1831
+- **Story Code:** LEGACY-EVENT-125
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Italy
+- **Characters present:** Emilio
+- **Event summary:** Mazzinian nationalism strengthens Italian unification ideas
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S142 (nationalism, exile lodging): Ideas of Italy begin to feel heavier than local loyalties.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 131. Events
+
+- **Date or sequence:** 1848
+- **Story Code:** LEGACY-EVENT-126
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Europe / Italy
+- **Characters present:** Emilio
+- **Event summary:** Revolutions across Europe, including Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S143 (revolutions, city edge): Whole cities begin to speak in the grammar of inevitability.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 132. Events
+
+- **Date or sequence:** 1859
+- **Story Code:** LEGACY-EVENT-127
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Italy
+- **Characters present:** Emilio
+- **Event summary:** Second Italian War of Independence
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S144 (independence war, military road): Diplomacy and blood arrive in the same week.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 133. Events
+
+- **Date or sequence:** 1860
+- **Story Code:** LEGACY-EVENT-128
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Southern Italy / Sicily
+- **Characters present:** Emilio
+- **Event summary:** Garibaldi’s Expedition of the Thousand
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S145 (Garibaldi campaign, southern landing route): Red shirts turn rumor into administration.
+- S200 (migration, Sicilian ferry point): Volunteers arrive with songs that fade once marching begins.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Southern Italy / Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 134. Events
+
+- **Date or sequence:** 1861
+- **Story Code:** LEGACY-EVENT-129
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Italy
+- **Characters present:** Emilio
+- **Event summary:** Kingdom of Italy proclaimed
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S146 (proclamation, newly unified Italy): The nation acquires a name while the hills lose trees.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 135. Events
+
+- **Date or sequence:** 1866
+- **Story Code:** LEGACY-EVENT-130
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Italy
+- **Characters present:** Emilio
+- **Event summary:** Third Italian War of Independence
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S147 (further unification, army road): Another war is fought to complete what men insist history has already decided.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 136. Events
+
+- **Date or sequence:** 1870
+- **Story Code:** LEGACY-EVENT-131
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Rome
+- **Characters present:** Emilio
+- **Event summary:** Capture of Rome completes major phase of Italian unification
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S148 (capture of Rome, Rome outskirts): Even Rome can be finished and begun again in the same season.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 137. Events
+
+- **Date or sequence:** 1871
+- **Story Code:** LEGACY-EVENT-132
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Italy
+- **Characters present:** Emilio
+- **Event summary:** Rome becomes capital of Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S149 (capital shift, rail line survey): Bureaucracy reaches places armies never cared to.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 138. Events
+
+- **Date or sequence:** 1882
+- **Story Code:** LEGACY-EVENT-133
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Italy
+- **Characters present:** Emilio
+- **Event summary:** Death of Giuseppe Garibaldi
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S150 (death of hero, funeral rumor): The dead become easier to agree on than the living.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 139. Events
+
+- **Date or sequence:** 1883
+- **Story Code:** LEGACY-EVENT-134
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Global / climate effects
+- **Characters present:** Emilio
+- **Event summary:** Krakatoa eruption becomes a global atmospheric event
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S151 (global atmosphere, weather discussion): A distant eruption stains sunsets over Italy, proving distance can still act locally.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Global / climate effects.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 140. Events
+
+- **Date or sequence:** 1890s
+- **Story Code:** LEGACY-EVENT-135
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Italy
+- **Characters present:** Emilio
+- **Event summary:** Industrialization and migration reshape Italian society
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S152 (modernization, industrial town fringe): Factories teach valleys new smells.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 141. Events
+
+- **Date or sequence:** 1896
+- **Story Code:** LEGACY-EVENT-136
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 8
+- **Book / installment:** Book 8 — The Nation
+- **Location:** Italy / Eritrea / national mood
+- **Characters present:** Emilio
+- **Event summary:** Battle of Adwa affects Italian imperial politics and identity
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S153 (imperial humiliation, nationalist club): Adwa teaches Italy that modern states can still feel medieval in defeat.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Emilio.
+- Location: Italy / Eritrea / national mood.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 142. Events
+
+- **Date or sequence:** 1908
+- **Story Code:** LEGACY-EVENT-137
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Sicily / Calabria
+- **Characters present:** Rosa
+- **Event summary:** Messina earthquake and tsunami devastate southern Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S154 (earthquake, Calabria): Messina’s destruction makes all stone seem temporary.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Sicily / Calabria.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 143. Events
+
+- **Date or sequence:** 1911–1912
+- **Story Code:** LEGACY-EVENT-138
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Italy / Mediterranean
+- **Characters present:** Rosa
+- **Event summary:** Italo-Turkish War
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S155 (colonial war, southern road): Libya enters village talk as if conquest were weather.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Italy / Mediterranean.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 144. Events
+
+- **Date or sequence:** 1914
+- **Story Code:** LEGACY-EVENT-139
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Europe
+- **Characters present:** Rosa
+- **Event summary:** World War I begins
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S156 (war begins, station town): A European war begins and immediately becomes local paperwork.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 145. Events
+
+- **Date or sequence:** 1915
+- **Story Code:** LEGACY-EVENT-140
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Italy
+- **Characters present:** Rosa
+- **Event summary:** Italy enters World War I
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S157 (Italy enters war, railway siding): Troop trains teach Rosa what modern speed sounds like in the ground.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 146. Events
+
+- **Date or sequence:** 1916
+- **Story Code:** LEGACY-EVENT-141
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Northeastern Italy
+- **Characters present:** Rosa
+- **Event summary:** Brutal attrition on the Isonzo Front
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S158 (attrition, family farm): The front is far away and still empties villages.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Northeastern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 147. Events
+
+- **Date or sequence:** 1917
+- **Story Code:** LEGACY-EVENT-142
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Italy
+- **Characters present:** Rosa
+- **Event summary:** Caporetto disaster
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S159 (Caporetto, church square): Defeat travels home before wounded sons do.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 148. Events
+
+- **Date or sequence:** 1918
+- **Story Code:** LEGACY-EVENT-143
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Europe
+- **Characters present:** Rosa
+- **Event summary:** World War I ends
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S160 (armistice, village return road): Peace arrives with flags and missing limbs.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 149. Events
+
+- **Date or sequence:** 1918–1919
+- **Story Code:** LEGACY-EVENT-144
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Global / Italy
+- **Characters present:** Rosa
+- **Event summary:** Spanish flu pandemic
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S161 (pandemic, isolated grove): Sickness enters after war, when everyone has already spent their fear.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Global / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 150. Events
+
+- **Date or sequence:** 1919
+- **Story Code:** LEGACY-EVENT-145
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Italy
+- **Characters present:** Rosa
+- **Event summary:** Postwar unrest and social fractures intensify in Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S162 (unrest, market town): Peace produces angrier men than war did.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 151. Events
+
+- **Date or sequence:** 1922
+- **Story Code:** LEGACY-EVENT-146
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Italy
+- **Characters present:** Rosa
+- **Event summary:** Mussolini’s March on Rome
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S163 (fascism, roadside rally): Order becomes a costume men wear to excuse violence.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 152. Events
+
+- **Date or sequence:** 1929
+- **Story Code:** LEGACY-EVENT-147
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Rome / Italy
+- **Characters present:** Rosa
+- **Event summary:** Lateran Treaty resolves the Roman Question
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S164 (Roman Question resolved, parish office): Church and state sign papers; villagers change almost nothing.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Rome / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 153. Events
+
+- **Date or sequence:** 1935–1936
+- **Story Code:** LEGACY-EVENT-148
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Italy / empire politics
+- **Characters present:** Rosa
+- **Event summary:** Italian invasion of Ethiopia
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S165 (empire, village café): Ethiopia is reduced to a headline by men who will never see Africa.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Italy / empire politics.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 154. Events
+
+- **Date or sequence:** 1938
+- **Story Code:** LEGACY-EVENT-149
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Italy
+- **Characters present:** Rosa
+- **Event summary:** Anti-Jewish racial laws in Fascist Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S166 (racial laws, schoolyard edge): Official cruelty becomes administrative language.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 155. Events
+
+- **Date or sequence:** 1939
+- **Story Code:** LEGACY-EVENT-150
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 9
+- **Book / installment:** Book 9 — The War That Took the Guardian
+- **Location:** Europe
+- **Characters present:** Rosa
+- **Event summary:** World War II begins in Europe
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S167 (war onset, Pollino refuge): Rosa prepares for another war by choosing where Italus must be left alone.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 156. Events
+
+- **Date or sequence:** 1940
+- **Story Code:** LEGACY-EVENT-151
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Italy
+- **Characters present:** Rosa, Theodora Bassi
+- **Event summary:** Italy enters World War II
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S168 (wartime transition, southern Italy): One guardian is ending as another begins, and war refuses to wait for orderly succession.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Rosa / Theodora Bassi.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 157. Events
+
+- **Date or sequence:** 1940
+- **Story Code:** FAROVALD-DROP-1940
+- **Narrative Type:** clue
+- **Historical / Reality Classification:** fictional
+- **Historical Constraint:** constrained
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Pollino Mountains
+- **Characters present:** Farovald, Theodora Bassi
+- **Event summary:** At the 1940 succession crisis, Farovald leaves Theodora a weatherproof Pollino contingency cache containing prewar mountain-route maps, a short list of compromised roads/settlements, and a pointer to one surviving guardian record location.
+- **Cause:** War, surveillance, displacement, and Rosa's death make ordinary handoff channels unreliable while direct contact with Farovald risks drawing attention.
+- **Effect:** Theodora receives a bounded operational bridge into guardianship without being given Farovald's full history or a complete replacement for records destroyed during wartime.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** The cache uses materials plausible in 1940, such as oilcloth, paper maps, pencil/ink notes, and a simple metal container. It contains no post-1940 knowledge.
+- **What must not change:** Italy enters World War II as documented. Destroyed guardian records remain destroyed unless the cache event explicitly names a surviving pointer.
+- **Continuity constraints:** The cache is operational, not prophetic. It contains route and record-location information only. Its disclosure is controlled by `farovald-theodora-contingency-cache`.
+#### 158. Events
+
+- **Date or sequence:** 1943
+- **Story Code:** LEGACY-EVENT-152
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Sicily
+- **Characters present:** Theodora Bassi
+- **Event summary:** Allied invasion of Sicily
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S169 (invasion, Sicily): Theodora hides Italus while armies treat orchards like temporary maps.
+- S201 (concealment, bombed olive grove): Allied movement compresses every safe route into one dangerous night.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Sicily.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 159. Events
+
+- **Date or sequence:** 1943
+- **Story Code:** LEGACY-EVENT-153
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Italy
+- **Characters present:** Theodora Bassi
+- **Event summary:** Allied invasion of mainland Italy and collapse of Mussolini’s regime
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S170 (regime collapse, mainland Italy): Mussolini falls, but roads stay dangerous.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 160. Events
+
+- **Date or sequence:** 1944
+- **Story Code:** LEGACY-EVENT-154
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Italy
+- **Characters present:** Theodora Bassi
+- **Event summary:** Continued warfare and destruction across Italy
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S171 (occupation, olive grove): Bomb craters make the grove both harder to cross and easier to hide in.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 161. Events
+
+- **Date or sequence:** 1945
+- **Story Code:** LEGACY-EVENT-155
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Europe / Italy
+- **Characters present:** Theodora Bassi
+- **Event summary:** World War II ends in Europe
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S172 (war ends, southern town): Victory sounds mostly like exhaustion.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 162. Events
+
+- **Date or sequence:** 1946
+- **Story Code:** LEGACY-EVENT-156
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Italy
+- **Characters present:** Theodora Bassi
+- **Event summary:** Italy becomes a republic
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S173 (republic, polling place road): Monarchy becomes memory faster than expected.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 163. Events
+
+- **Date or sequence:** 1948
+- **Story Code:** LEGACY-EVENT-157
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Italy
+- **Characters present:** Theodora Bassi
+- **Event summary:** New Italian constitution takes effect
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S174 (constitution, administrative office): New rights arrive on paper while Theodora still works by secrecy and silence.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 164. Events
+
+- **Date or sequence:** 1957
+- **Story Code:** LEGACY-EVENT-158
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Rome
+- **Characters present:** Theodora Bassi
+- **Event summary:** Treaty of Rome creates the EEC
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S175 (European integration, Rome-linked road): Rome creates a community larger than any village and still smaller than memory.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Rome.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 165. Events
+
+- **Date or sequence:** 1963
+- **Story Code:** LEGACY-EVENT-159
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Italy
+- **Characters present:** Theodora Bassi
+- **Event summary:** Vajont disaster reflects dangers of modern development
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S176 (modern disaster, mountain road): The Vajont lesson is that modern engineering still forgets the ground.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 166. Events
+
+- **Date or sequence:** 1968
+- **Story Code:** LEGACY-EVENT-160
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Italy / Europe
+- **Characters present:** Theodora Bassi
+- **Event summary:** Global protest era influences Italian social life
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S177 (protests, university edge): Student revolt borrows language from movements far beyond Italy.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Italy / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 167. Events
+
+- **Date or sequence:** 1969
+- **Story Code:** LEGACY-EVENT-161
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Italy
+- **Characters present:** Theodora Bassi
+- **Event summary:** Piazza Fontana bombing begins Years of Lead atmosphere
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S178 (terror, train station): Bombings teach the country to mistrust public spaces.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 168. Events
+
+- **Date or sequence:** 1970s
+- **Story Code:** LEGACY-EVENT-162
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Europe / Italy
+- **Characters present:** Theodora Bassi
+- **Event summary:** Environmental awareness and anti-industrial critique grow
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S179 (ecological awareness, environmental meeting): People begin to speak of nature as if it were newly discovered.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 169. Events
+
+- **Date or sequence:** 1978
+- **Story Code:** LEGACY-EVENT-163
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Italy
+- **Characters present:** Theodora Bassi
+- **Event summary:** Kidnapping and murder of Aldo Moro
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S180 (political violence, city edge): A kidnapping shrinks public trust more than distance ever did.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 170. Events
+
+- **Date or sequence:** 1980
+- **Story Code:** LEGACY-EVENT-164
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Southern Italy
+- **Characters present:** Theodora Bassi
+- **Event summary:** Irpinia earthquake
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S181 (earthquake, southern Italy): Irpinia confirms again that the ground is patient and never loyal.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 171. Events
+
+- **Date or sequence:** 1985
+- **Story Code:** LEGACY-EVENT-165
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Southern Italy
+- **Characters present:** Final Guardian, Theodora Bassi
+- **Event summary:** End of Theodora’s formal service period
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S182 (final handoff, Pollino return path): Theodora prepares the last guardian not by speeches but by repetition.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Theodora Bassi / Final Guardian.
+- Location: Southern Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 172. Events
+
+- **Date or sequence:** 1985
+- **Story Code:** FAROVALD-DROP-1985
+- **Narrative Type:** transition
+- **Historical / Reality Classification:** fictional
+- **Historical Constraint:** constrained
+- **Available From:** 10
+- **Book / installment:** Book 10 — The Olive Grove
+- **Location:** Pollino Mountains / guardian handoff route
+- **Characters present:** Farovald, Final Guardian
+- **Event summary:** Near the end of Theodora's formal service period, Farovald prepares an analog handoff cache for the Final Guardian: paper topographic overlays, non-digital rendezvous alternatives, continuity checks for inherited records, and a warning that emerging satellite mapping and increasingly persistent digital records are beginning to make repeated physical patterns easier to detect.
+- **Cause:** The guardian line is entering an era in which emerging digital records, computerized databases, and satellite mapping are beginning to make both Farovald's unaging identity and repeated route behavior more vulnerable.
+- **Effect:** The Final Guardian receives a deliberately low-technology fallback kit that can be authenticated against inherited guardian knowledge. The cache supports adaptation without disclosing Farovald's final fate.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** The cache contains only technology and knowledge plausible by 1985. It does not predict specific later digital platforms or historical events.
+- **What must not change:** Theodora's service transition and later documented history remain unchanged. The cache cannot identify or appoint the Final Guardian; it is available only after the lineage handoff already establishes the recipient.
+- **Continuity constraints:** The cache is analog by design and cannot contain future data. It may be discovered in Book 10 or carried into Book 11. Its disclosure is controlled by `farovald-final-guardian-analog-cache`.
+#### 173. Events
+
+- **Date or sequence:** 1986
+- **Story Code:** LEGACY-EVENT-166
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Europe
+- **Characters present:** Final Guardian
+- **Event summary:** Chernobyl disaster sharpens environmental consciousness across Europe
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S183 (environmental consciousness, protected forest): A nuclear disaster elsewhere changes how Europeans talk about invisible harm.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 174. Events
+
+- **Date or sequence:** 1989
+- **Story Code:** LEGACY-EVENT-167
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Europe
+- **Characters present:** Final Guardian
+- **Event summary:** Fall of the Berlin Wall
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S184 (Cold War collapse, park ranger station): The Wall falls in distant Berlin and still alters the confidence of local officials.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 175. Events
+
+- **Date or sequence:** 1991
+- **Story Code:** LEGACY-EVENT-168
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Europe / global
+- **Characters present:** Final Guardian
+- **Event summary:** End of the Cold War
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S185 (end of Cold War, satellite office rumor): One order ends and surveillance technologies keep improving anyway.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Europe / global.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 176. Events
+
+- **Date or sequence:** 1992
+- **Story Code:** LEGACY-EVENT-169
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Europe
+- **Characters present:** Final Guardian
+- **Event summary:** Maastricht Treaty deepens European integration
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S186 (integration, EU road project): Europe becomes easier to cross and harder to disappear inside.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 177. Events
+
+- **Date or sequence:** 1990s
+- **Story Code:** LEGACY-EVENT-170
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Global / Europe
+- **Characters present:** Final Guardian
+- **Event summary:** Satellite mapping and digital cartography become common
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S187 (digital mapping, ridge overlook): Maps stop being paper and start becoming permanent.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Global / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 178. Events
+
+- **Date or sequence:** 1992
+- **Story Code:** LEGACY-EVENT-171
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Italy
+- **Characters present:** Final Guardian
+- **Event summary:** Mani Pulite investigations transform Italian politics
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S188 (corruption scandal, Italian town hall): Even corruption modernizes.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 179. Events
+
+- **Date or sequence:** 1997
+- **Story Code:** LEGACY-EVENT-172
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Global
+- **Characters present:** Final Guardian
+- **Event summary:** Kyoto Protocol era begins international climate focus
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S189 (climate policy, environmental conference fringe): The climate acquires treaties and still keeps changing.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Global.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 180. Events
+
+- **Date or sequence:** 1999
+- **Story Code:** LEGACY-EVENT-173
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Europe / Italy
+- **Characters present:** Final Guardian
+- **Event summary:** Euro monetary integration advances
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S190 (euro integration, market square): New money changes memory faster than anyone admits.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Europe / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 181. Events
+
+- **Date or sequence:** 2001
+- **Story Code:** LEGACY-EVENT-174
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Global
+- **Characters present:** Final Guardian
+- **Event summary:** September 11 attacks reshape global security culture
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S191 (security culture, transport checkpoint): Fear becomes procedural after terror.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Global.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 182. Events
+
+- **Date or sequence:** 2002
+- **Story Code:** LEGACY-EVENT-175
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Italy / Europe
+- **Characters present:** Final Guardian
+- **Event summary:** Euro banknotes and coins enter circulation
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S192 (euro cash, village shop): Coins change, but old hands count the same way.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Italy / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 183. Events
+
+- **Date or sequence:** 2008
+- **Story Code:** LEGACY-EVENT-176
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Global / Europe
+- **Characters present:** Final Guardian
+- **Event summary:** Global financial crisis
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S193 (financial crisis, foreclosure road): Economic collapse now arrives without armies.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Global / Europe.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 184. Events
+
+- **Date or sequence:** 2009
+- **Story Code:** LEGACY-EVENT-177
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Italy
+- **Characters present:** Final Guardian
+- **Event summary:** L’Aquila earthquake
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S194 (earthquake, Abruzzo route): L’Aquila proves stone still falls faster than policy.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 185. Events
+
+- **Date or sequence:** 2015
+- **Story Code:** LEGACY-EVENT-178
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Global
+- **Characters present:** Final Guardian
+- **Event summary:** Paris Climate Agreement
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S195 (climate agreement, environmental youth gathering): Young people begin speaking in the tense Italus understands best: too late but not finished.
+- S202 (cultural observation, climate march fringe): The Final Guardian hears language of urgency that sounds unlike any earlier century and too much like all of them.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Global.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 186. Events
+
+- **Date or sequence:** 2016
+- **Story Code:** LEGACY-EVENT-179
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Italy
+- **Characters present:** Final Guardian
+- **Event summary:** Central Italy earthquake sequence renews awareness of fragile landscapes
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S196 (seismic fragility, central Italy): Repeated earthquakes make permanence feel like superstition.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+#### 187. Events
+
+- **Date or sequence:** 2020
+- **Story Code:** LEGACY-EVENT-180
+- **Narrative Type:** historical_event
+- **Historical / Reality Classification:** historical
+- **Historical Constraint:** immutable
+- **Available From:** 11
+- **Book / installment:** Book 11 — The Last Guardian
+- **Location:** Global / Italy
+- **Characters present:** Final Guardian
+- **Event summary:** Global pandemic
+- **Cause:** Not separately normalized in the legacy backbone; do not invent.
+- **Effect:** Not separately normalized in the legacy backbone; use only effects explicitly established by approved planning/continuity.
+- **Fictional interaction allowed?:** True
+- **Allowed interaction notes:** - S197 (pandemic, locked-down forest edge): Human movement stops; the mountains notice the silence first.
+- **Permission boundary:** A `Yes` value in `fictional_interaction_allowed` is bounded by this record's interaction notes and continuity constraints; it does not authorize unrestricted participation in the historical event.
+- If a named historical figure is involved, the contact must also conform to an applicable record in the Historical Character Interaction Map; absence of such a record does not create permission for direct contact.
+- **What must not change:** The historical event's established date/range, documented outcome, and historically fixed consequences.
+- **Continuity constraints:** - Guardian assignment from legacy backbone: Final Guardian.
+- Location: Global / Italy.
+- Historical figures must be alive and geographically plausible.
+- Guardians/Italus may not cause or prevent the documented historical outcome.
+- Any multi-guardian scene must be an authorized transition/handoff.
+- Event location does not automatically establish Italus's physical presence at the historical event.
+- If Italus is physically present, its route and presence must comply with World Canon movement speed, concealment, rooting, energy/recovery, major-city avoidance, and Pollino-regeneration limits.
+- Historical events may reach Italus/guardians indirectly through rumor, travelers, documents, political consequences, or regional effects when direct physical presence would be implausible.
+- This event record may narrow World Canon permissions but may not override World Canon historical immutability, secrecy, biology, geography, guardian chronology, or communication rules.
+- Legacy historical-status note (preserved): Established legacy historical-backbone record. Historical dates and outcomes must remain unchanged.
+---
+
+Renderer boundary: project-local Markdown source only. This file is not a knowledge pack, control packet, runtime memory, generated draft, or export artifact.

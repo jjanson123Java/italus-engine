@@ -1,0 +1,705 @@
+{
+  "schema_version": "project_author_canon_v1",
+  "project_id": "italus-saga",
+  "template_id": "historical_epic",
+  "genre": "historical_epic",
+  "questionnaire": {
+    "template_id": "historical_epic",
+    "genre": "historical_epic",
+    "label": "Historical Epic / Historical Fantasy",
+    "description": "Historically anchored fiction with explicit historical interaction controls.",
+    "version": "project_canon_authoring_schema_v4_reference_hardening",
+    "sections": [
+      {
+        "section_id": "project_bible",
+        "label": "Project Bible",
+        "required": true,
+        "purpose": "Define the narrative contract and project identity.",
+        "author_guidance": "Establish what the story promises to the reader.",
+        "fields": [
+          {
+            "field_id": "project_title",
+            "label": "Project title",
+            "field_type": "short_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "series_title",
+            "label": "Series title",
+            "field_type": "short_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "subgenre",
+            "label": "Subgenre",
+            "field_type": "short_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "target_audience",
+            "label": "Target audience",
+            "field_type": "short_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "narrative_promise",
+            "label": "Narrative promise",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "central_theme",
+            "label": "Central theme",
+            "field_type": "long_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "tone",
+            "label": "Tone",
+            "field_type": "long_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "content_boundaries",
+            "label": "Content boundaries",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "author_notes",
+            "label": "Author notes",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          }
+        ],
+        "records": []
+      },
+      {
+        "section_id": "world_bible",
+        "label": "Historical World & Setting",
+        "required": true,
+        "purpose": "Define the setting, world rules, geography, and locations.",
+        "author_guidance": "Define era, geography, culture, historical boundaries, fictional logic, and project locations.",
+        "fields": [
+          {
+            "field_id": "historical_period",
+            "label": "Historical period",
+            "field_type": "short_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "setting_summary",
+            "label": "Setting summary",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "geography",
+            "label": "Geography",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "cultures",
+            "label": "Cultures and societies",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "political_rules",
+            "label": "Political rules",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "religious_or_mythic_context",
+            "label": "Religious / mythic context",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "historical_constraints",
+            "label": "Historical constraints",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "fictional_allowances",
+            "label": "Fictional allowances",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "forbidden_contradictions",
+            "label": "Forbidden contradictions",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          }
+        ],
+        "records": [
+          {
+            "record_id": "locations",
+            "label": "Locations",
+            "field_type": "record_list",
+            "required": false,
+            "min_items": 0,
+            "help_text": "",
+            "fields": [
+              {
+                "field_id": "name",
+                "label": "Name",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "available_from_book",
+                "label": "Available From",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "Choose the earliest book where this character, location, event, or other canon item should normally become available. For example, choosing Book 3 keeps it out of normal planning for Books 1 and 2. Leave it blank if it can be used from the beginning or you do not want to set a restriction.",
+                "placeholder": "Book number (for example, 3)",
+                "planning_field": true
+              },
+              {
+                "field_id": "type",
+                "label": "Type",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "region",
+                "label": "Region",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "description",
+                "label": "Description",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "rules",
+                "label": "Location rules",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "associated_characters",
+                "label": "Associated characters",
+                "field_type": "record_ref_list",
+                "required": false,
+                "help_text": "Select the Canon characters directly associated with this location.",
+                "placeholder": "",
+                "reference_targets": [
+                  "characters"
+                ]
+              },
+              {
+                "field_id": "associated_events",
+                "label": "Associated events",
+                "field_type": "record_ref_list",
+                "required": false,
+                "help_text": "Select the Canon events directly associated with this location.",
+                "placeholder": "",
+                "reference_targets": [
+                  "events"
+                ]
+              },
+              {
+                "field_id": "sensory_details",
+                "label": "Sensory details",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "continuity_notes",
+                "label": "Continuity notes",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "character_bible",
+        "label": "Character Bible",
+        "required": true,
+        "purpose": "Create stable character records for continuity and story planning.",
+        "author_guidance": "Add one record for each major character or recurring entity.",
+        "fields": [],
+        "records": [
+          {
+            "record_id": "characters",
+            "label": "Characters",
+            "field_type": "record_list",
+            "required": true,
+            "min_items": 1,
+            "help_text": "Major characters, subjects, historical figures, or recurring entities.",
+            "fields": [
+              {
+                "field_id": "name",
+                "label": "Name",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "aliases",
+                "label": "Aliases",
+                "field_type": "long_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "available_from_book",
+                "label": "Available From",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "Choose the earliest book where this character, location, event, or other canon item should normally become available. For example, choosing Book 3 keeps it out of normal planning for Books 1 and 2. Leave it blank if it can be used from the beginning or you do not want to set a restriction.",
+                "placeholder": "Book number (for example, 3)",
+                "planning_field": true
+              },
+              {
+                "field_id": "role",
+                "label": "Narrative role",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "status",
+                "label": "Status",
+                "field_type": "select",
+                "required": true,
+                "help_text": "",
+                "placeholder": "",
+                "options": [
+                  "active",
+                  "dead",
+                  "missing",
+                  "unknown",
+                  "historical",
+                  "fictional"
+                ]
+              },
+              {
+                "field_id": "age_or_lifespan",
+                "label": "Age or lifespan",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "first_appearance",
+                "label": "First appearance",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "relationships",
+                "label": "Relationships",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "goals",
+                "label": "Goals",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "fears",
+                "label": "Fears",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "voice",
+                "label": "Voice",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "arc",
+                "label": "Character arc",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "canon_constraints",
+                "label": "Canon constraints",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "timeline_event_ledger",
+        "label": "Timeline & Historical Event Ledger",
+        "required": true,
+        "purpose": "Control chronology, cause/effect, and immutable historical facts.",
+        "author_guidance": "Historical anchors are recorded as historical or hybrid events in this ledger.",
+        "fields": [],
+        "records": [
+          {
+            "record_id": "events",
+            "label": "Events",
+            "field_type": "record_list",
+            "required": true,
+            "min_items": 1,
+            "help_text": "Fictional, historical, and hybrid events maintained in one chronology.",
+            "fields": [
+              {
+                "field_id": "date_or_sequence",
+                "label": "Date or sequence",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "story_code",
+                "label": "Story Code",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "Give this item a short code or nickname that is easy for you to recognize while planning, such as FIRST-CONTACT or JAX-M003. Use one if it helps you organize your story. Leave it blank if you do not need one.",
+                "placeholder": "",
+                "planning_field": true
+              },
+              {
+                "field_id": "narrative_type",
+                "label": "Narrative Type",
+                "field_type": "select",
+                "required": false,
+                "help_text": "Choose the role this event plays in the story, such as a mission, reveal, milestone, clue, escalation, or consequence. This can make events easier to organize and plan. Leave it blank if you have not decided yet.",
+                "placeholder": "",
+                "options": [
+                  "mission",
+                  "reveal",
+                  "saga_event",
+                  "historical_event",
+                  "milestone",
+                  "clue",
+                  "relationship_change",
+                  "escalation",
+                  "transition",
+                  "consequence",
+                  "other"
+                ],
+                "planning_field": true,
+                "migration_reconciliation": true
+              },
+              {
+                "field_id": "event_type",
+                "label": "Historical / Reality Classification",
+                "field_type": "select",
+                "required": true,
+                "help_text": "Classifies this event's relationship to real historical fact.",
+                "placeholder": "",
+                "options": [
+                  "fictional",
+                  "historical",
+                  "hybrid"
+                ]
+              },
+              {
+                "field_id": "historical_status",
+                "label": "Historical Constraint",
+                "field_type": "select",
+                "required": true,
+                "help_text": "Defines how strictly the historical event must be preserved.",
+                "placeholder": "",
+                "options": [
+                  "flexible",
+                  "constrained",
+                  "immutable"
+                ]
+              },
+              {
+                "field_id": "available_from_book",
+                "label": "Available From",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "Choose the earliest book where this character, location, event, or other canon item should normally become available. For example, choosing Book 3 keeps it out of normal planning for Books 1 and 2. Leave it blank if it can be used from the beginning or you do not want to set a restriction.",
+                "placeholder": "Book number (for example, 3)",
+                "planning_field": true
+              },
+              {
+                "field_id": "book",
+                "label": "Book / installment",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "location",
+                "label": "Location",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "characters_present",
+                "label": "Characters present",
+                "field_type": "record_ref_list",
+                "required": false,
+                "help_text": "Select the Canon characters present for this event.",
+                "placeholder": "",
+                "reference_targets": [
+                  "characters"
+                ]
+              },
+              {
+                "field_id": "event_summary",
+                "label": "Event summary",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "cause",
+                "label": "Cause",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "effect",
+                "label": "Effect",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "fictional_interaction_allowed",
+                "label": "Fictional interaction allowed?",
+                "field_type": "boolean",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "allowed_interaction_notes",
+                "label": "Allowed interaction notes",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "must_not_change",
+                "label": "What must not change",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "continuity_constraints",
+                "label": "Continuity constraints",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "historical_interaction_map",
+        "label": "Historical Character Interaction Map",
+        "required": true,
+        "purpose": "Control how fictional characters may interact with real historical people or events.",
+        "author_guidance": "Record only relationships that require explicit historical interaction limits.",
+        "fields": [],
+        "records": [
+          {
+            "record_id": "interactions",
+            "label": "Allowed Historical Interactions",
+            "field_type": "record_list",
+            "required": true,
+            "min_items": 1,
+            "help_text": "",
+            "fields": [
+              {
+                "field_id": "fictional_character",
+                "label": "Fictional character(s)",
+                "field_type": "record_ref_list",
+                "required": true,
+                "help_text": "Select the Canon fictional character or characters governed by this historical interaction.",
+                "placeholder": "",
+                "reference_targets": [
+                  "characters"
+                ]
+              },
+              {
+                "field_id": "historical_figure",
+                "label": "Historical figure",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "date_or_period",
+                "label": "Date or period",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "interaction_type",
+                "label": "Interaction type",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "allowed_scope",
+                "label": "Allowed scope",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "prohibited_changes",
+                "label": "Prohibited changes",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "continuity_notes",
+                "label": "Continuity notes",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "extends": "base",
+    "italus_guided": true,
+    "authoring_model": {
+      "author_input": "structured_fields_plus_rich_text",
+      "primary_storage": "project_local_json",
+      "readable_rendering": "project_local_markdown",
+      "future_compiled_packets": "generated_later_from_author_canon",
+      "xml_primary_storage": false,
+      "raw_text_primary_storage": false
+    },
+    "execution_locks": {
+      "generation_enabled": false,
+      "provider_execution_enabled": false,
+      "prompt_builder_enabled": false,
+      "draft_validation_enabled": false,
+      "approved_persistence_enabled": false,
+      "export_enabled": false
+    },
+    "completion_model": {
+      "section_count": 5,
+      "required_section_count": 5,
+      "required_field_count": 37,
+      "repeatable_record_count": 4,
+      "completion_rule": "all_required_sections_complete_and_required_fields_answered"
+    },
+    "service": "project-canon-template-questionnaire-boundary-20260715"
+  },
+  "metadata": {
+    "created_at": "2026-08-18T17:40:51.326119+00:00",
+    "source": "project-local-author-canon-storage-boundary-20260715"
+  },
+  "execution_locks": {
+    "generation_enabled": false,
+    "provider_execution_enabled": false,
+    "prompt_builder_enabled": false,
+    "draft_validation_enabled": false,
+    "approved_persistence_enabled": false,
+    "export_enabled": false
+  }
+}

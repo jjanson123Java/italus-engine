@@ -5209,8 +5209,8 @@
 
         <section class="workspace-author-summary-card workspace-theme-panel">
           <h4>Themes</h4>
-          <p>Choose how Narrative Studio looks. The theme changes immediately and does not alter Canon, planning, manuscript data, or generation settings.</p>
-          <div class="theme-option-grid" data-theme-options-root aria-label="Narrative Studio themes">
+          <p>Choose how Italus Studio looks. The theme changes immediately and does not alter Canon, planning, manuscript data, or generation settings.</p>
+          <div class="theme-option-grid" data-theme-options-root aria-label="Italus Studio themes">
             <button type="button" class="theme-option-card" data-theme-option="original" aria-pressed="false">
               <span class="theme-option-preview theme-option-preview--original" aria-hidden="true"></span>
               <span class="theme-option-copy">
@@ -5245,7 +5245,7 @@
           </div>
           <p class="theme-current-status">
             Current theme: <strong data-theme-current-label>${escapeHtml(window.ItalusTheme ? window.ItalusTheme.THEMES[window.ItalusTheme.getTheme()].label : 'Original')}</strong>.
-            <span data-theme-selection-status>Theme preferences are managed by Narrative Studio.</span>
+            <span data-theme-selection-status>Theme preferences are managed by Italus Studio.</span>
           </p>
         </section>
 

@@ -1,0 +1,48 @@
+{
+  "migration_marker": "project-template-snapshot-migration-v1",
+  "project_id": "italus-saga",
+  "template_id": "historical_epic",
+  "from_template_version": "project_canon_authoring_schema_v4_reference_hardening",
+  "to_template_version": "project_canon_authoring_schema_v4_reference_hardening",
+  "migrated_at": "2026-08-18T17:40:52.801479+00:00",
+  "archive_path": null,
+  "author_canon_modified": false,
+  "author_story_content_modified": false,
+  "reference_migration": {
+    "status": "ok",
+    "service": "canon-reference-hardening-boundary-20260816",
+    "schema_version": "canon_reference_v1",
+    "project_id": "italus-saga",
+    "migrated_at": "2026-08-18T17:40:52.801479+00:00",
+    "author_canon_modified": false,
+    "author_story_content_modified": false,
+    "author_truth_invented": false,
+    "archive_path": null,
+    "migrated_reference_field_count": 0,
+    "migrated_reference_value_count": 0,
+    "unresolved_count": 0,
+    "unresolved": [],
+    "repair_marker": "italus_corrected_canon_workspace_rebuild_patch",
+    "repair_reason": "Corrected development rebuild persisted current-version Canon reference verification.",
+    "execution_locks": {
+      "generation_enabled": false,
+      "provider_execution_enabled": false,
+      "prompt_builder_enabled": false,
+      "draft_validation_enabled": false,
+      "approved_persistence_enabled": false,
+      "export_enabled": false
+    }
+  },
+  "reconciliation_required": [],
+  "reconciliation_required_count": 0,
+  "repair_marker": "italus_corrected_canon_workspace_rebuild_patch",
+  "repair_reason": "Corrected development rebuild persisted current template migration status.",
+  "execution_locks": {
+    "generation_enabled": false,
+    "provider_execution_enabled": false,
+    "prompt_builder_enabled": false,
+    "draft_validation_enabled": false,
+    "approved_persistence_enabled": false,
+    "export_enabled": false
+  }
+}

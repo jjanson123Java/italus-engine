@@ -382,7 +382,7 @@ def get_book_scope_catalog(
         )
 
     ordered_categories = []
-    category_rank = {"characters": 0, "events": 1, "locations": 2, "interactions": 3}
+    category_rank = {"characters": 0, "events": 1, "locations": 2, "systems": 3, "interactions": 4}
     template_id = str(manifest_dict.get("template_id") or "")
     genre = str(manifest_dict.get("genre") or "")
     for key in sorted(categories, key=lambda value: (category_rank.get(value, 9), value)):
@@ -474,6 +474,7 @@ def _planner_relevance_context(
         "events": [],
         "characters": [],
         "locations": [],
+        "systems": [],
         "interactions": [],
     }
     for section in sections.values():
@@ -502,6 +503,7 @@ def _planner_relevance_context(
     recommended_event_ids: set[str] = set()
     event_years: list[int] = []
     event_character_ids: set[str] = set()
+    event_location_texts: list[str] = []
     for row in groups["events"]:
         if _book_number_from_value(row.get("book")) != book_number:
             continue
@@ -513,6 +515,9 @@ def _planner_relevance_context(
         year = _first_year(row.get("date_or_sequence"))
         if year is not None:
             event_years.append(year)
+        location_text = str(row.get("location") or "").strip()
+        if location_text:
+            event_location_texts.append(location_text)
         for ref in _ref_values(row.get("characters_present")):
             event_character_ids.add(ref)
 
@@ -544,6 +549,20 @@ def _planner_relevance_context(
             if introduced_here and character_link:
                 recommend(record_id, "introduced_with_recommended_character")
 
+    recommended_system_ids: set[str] = set()
+    for row in groups["systems"]:
+        record_id = str(row.get("internal_id") or "")
+        system_name = str(row.get("name") or "").strip()
+        if not record_id or not system_name:
+            continue
+        referenced_by_event_location = any(
+            _canon_label_in_text(system_name, location_text)
+            for location_text in event_location_texts
+        )
+        if referenced_by_event_location:
+            recommended_system_ids.add(record_id)
+            recommend(record_id, "referenced_by_recommended_event_location")
+
     if event_years and recommended_character_ids:
         first_year = min(event_years)
         last_year = max(event_years)
@@ -563,10 +582,27 @@ def _planner_relevance_context(
         "reasons_by_id": reasons_by_id,
         "recommended_event_ids": recommended_event_ids,
         "recommended_character_ids": recommended_character_ids,
+        "recommended_system_ids": recommended_system_ids,
         "event_year_range": (
             [min(event_years), max(event_years)] if event_years else []
         ),
     }
+
+
+def _canon_label_in_text(label: Any, text: Any) -> bool:
+    """Return True when a Canon label appears as a bounded phrase in free text."""
+
+    needle = _search_text(label)
+    haystack = _search_text(text)
+    if not needle or not haystack:
+        return False
+    return bool(
+        re.search(
+            rf"(?<!\w){re.escape(needle)}(?!\w)",
+            haystack,
+            flags=re.IGNORECASE,
+        )
+    )
 
 
 def _ref_values(value: Any) -> list[str]:

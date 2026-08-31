@@ -1,0 +1,336 @@
+{
+  "patch_id": "italus_corrected_canon_workspace_rebuild_patch",
+  "project_id": "italus-saga",
+  "project_name": "Italus",
+  "bootstrap_type": "development_author_canon_workspace_bootstrap",
+  "source_canon": {
+    "source": "Italus_Canon_Migration_MD_SERRA_STORY_READY_v6",
+    "sha256": {
+      "01_italus_project_bible.md": "d83869cb193b15a35bb649b9687d5b6b3bbc169663da1f4042f4a2f1390b0631",
+      "02_italus_historical_world_and_setting.md": "8fb86eab30a7b3c02df35865c7a9b328cee407fc65dd6f2832d5ebb33f425c5d",
+      "03_italus_character_bible.md": "c2a04571b64be8ae9b1c6989a1ef8c2bd4db1eac6849d35edf26892e49dd3d02",
+      "04_italus_timeline_historical_event_ledger.md": "63a5021f289a482c78204d014f212b06806e98d8a3791c8c9349ca54aed01cac",
+      "05_italus_historical_character_interaction_map.md": "95ca42485b63c66e5b5f52b7251d90bb1ef82915952180df98a5e666ffc95727"
+    },
+    "record_counts": {
+      "locations": 241,
+      "characters": 18,
+      "events": 180,
+      "interactions": 84
+    },
+    "schema_validation": "pass",
+    "floating_field_data_imported": false
+  },
+  "normalization": {
+    "available_from_book": 439,
+    "boolean": 180,
+    "status": "pass",
+    "historical_event_character_tokens_normalized": 81,
+    "preserved_by_historical_interaction_map": 81,
+    "character_label_aliases": {
+      "Brother Anselm": "Brother Anselm of Cosenza",
+      "Amara": "Amara of Palermo"
+    },
+    "events_characters_present_policy": "Current schema accepts Character Bible references only. Historical figures were removed from this reference field only after matching event-scoped Historical Interaction records were verified.",
+    "legacy_reference_approvals_created": 0
+  },
+  "manifest": {
+    "project_id": "italus-saga",
+    "project_name": "Italus",
+    "project_kind": "series",
+    "series_name": "The Italus Saga",
+    "book_count": 11,
+    "chapters_per_book": 40,
+    "target_words_per_chapter": 4000,
+    "target_words_per_book": 160000,
+    "target_total_words": 1760000,
+    "token_budget_total": 4000000,
+    "token_budget_per_generation": 16000,
+    "genre": "historical_epic",
+    "subgenre": "Historical fantasy / historically grounded speculative saga.",
+    "template_id": "historical_epic",
+    "engine_id": "italus",
+    "ai_provider": "claude",
+    "lifecycle_state": "READY_FOR_WORKSPACE",
+    "previous_state_before_archive": null,
+    "created_at": "2026-08-18T17:40:51.263924+00:00",
+    "updated_at": "2026-08-18T17:40:52.498016+00:00"
+  },
+  "budget_plan": {
+    "book_count": 11,
+    "chapters_per_book": 40,
+    "target_words_per_chapter": 4000,
+    "target_words_per_book": 160000,
+    "target_total_words": 1760000,
+    "token_budget_total": 4000000,
+    "token_budget_per_generation": 16000,
+    "token_multiplier": 1.3,
+    "warning_threshold": 0.85,
+    "estimated_words_per_book": 160000,
+    "estimated_words_total": 1760000,
+    "estimated_tokens_per_book": 208000,
+    "estimated_tokens_total": 2288000,
+    "estimated_tokens_per_chapter": 5200,
+    "estimated_generation_passes_required": 143,
+    "token_budget_status": "OK",
+    "recommendations": []
+  },
+  "wizard": {
+    "lifecycle_state": "READY_FOR_WORKSPACE",
+    "resume_target": "workspace",
+    "can_enter_workspace": true,
+    "canon_setup_completed": true,
+    "approved_canon_refs_count": 0
+  },
+  "canon_validation": {
+    "status": "ready_for_packet_generation",
+    "ready_for_packet_generation": true,
+    "issues": [],
+    "warnings": [],
+    "required_sections_complete": 5,
+    "required_sections_total": 5
+  },
+  "canon_index": {
+    "fresh": true,
+    "counts": {
+      "entities": 523,
+      "aliases": 19,
+      "relationships": 972,
+      "dependencies": 0,
+      "issues": 0
+    },
+    "index_content_hash": "d5f2006a0a923d0faef56720997016abdb9a54b26e4b210c3f345c88ed70d76f"
+  },
+  "runtime_storage": {
+    "marker": "project-runtime-storage-service-20260708",
+    "project_id": "italus-saga",
+    "runtime_root": "data/projects/italus-saga/runtime",
+    "runtime_root_exists": true,
+    "status": "initialized",
+    "initialized": true,
+    "runtime_ready": false,
+    "generation_ready": false,
+    "creates_runtime_files": true,
+    "auto_initialization_marker": "runtime-storage-auto-initialize-20260708",
+    "migration_policy": "auto_ensure_empty_project_runtime_no_legacy_copy",
+    "legacy_source_mode": "legacy_root_read_only",
+    "file_contract_version": "stage9_seven_file_contract",
+    "required_file_count": 7,
+    "required_files_present": true,
+    "files": [
+      {
+        "file_name": "books.json",
+        "label": "Books",
+        "role": "author_facing",
+        "relative_path": "data/projects/italus-saga/runtime/books.json",
+        "exists": true,
+        "status": "present",
+        "description": "Project-local generated book-level manuscript records."
+      },
+      {
+        "file_name": "chapters.json",
+        "label": "Chapters",
+        "role": "author_facing",
+        "relative_path": "data/projects/italus-saga/runtime/chapters.json",
+        "exists": true,
+        "status": "present",
+        "description": "Project-local generated chapter records."
+      },
+      {
+        "file_name": "scenes.json",
+        "label": "Scenes",
+        "role": "author_facing",
+        "relative_path": "data/projects/italus-saga/runtime/scenes.json",
+        "exists": true,
+        "status": "present",
+        "description": "Project-local generated scene text and scene metadata."
+      },
+      {
+        "file_name": "session_state.json",
+        "label": "Writing Session",
+        "role": "author_facing",
+        "relative_path": "data/projects/italus-saga/runtime/session_state.json",
+        "exists": true,
+        "status": "present",
+        "description": "Project-local resumable writing session state."
+      },
+      {
+        "file_name": "coverage_map.json",
+        "label": "Continuity Coverage",
+        "role": "author_facing",
+        "relative_path": "data/projects/italus-saga/runtime/coverage_map.json",
+        "exists": true,
+        "status": "present",
+        "description": "Project-local continuity and coverage tracking."
+      },
+      {
+        "file_name": "book_state.json",
+        "label": "Book State",
+        "role": "internal_continuity",
+        "relative_path": "data/projects/italus-saga/runtime/book_state.json",
+        "exists": true,
+        "status": "present",
+        "description": "Internal project-local book generation state."
+      },
+      {
+        "file_name": "chapter_continuity_digests.json",
+        "label": "Chapter Continuity Digests",
+        "role": "internal_continuity",
+        "relative_path": "data/projects/italus-saga/runtime/chapter_continuity_digests.json",
+        "exists": true,
+        "status": "present",
+        "description": "Internal project-local continuity digests used by later runtime migration stages."
+      }
+    ],
+    "locked_actions": {
+      "create_runtime_folder": "auto_ensured_by_project_creation_and_workspace_bootstrap",
+      "copy_legacy_data": "blocked_until_migration_design",
+      "save_generated_scenes": "blocked_until_generation_storage_migration",
+      "enable_generation": "blocked_until_all_runtime_gates_pass"
+    },
+    "message": "Project runtime storage is owned by the backend lifecycle. New projects and workspace bootstrap ensure empty project-local runtime files without copying legacy data.",
+    "auto_initialization": {
+      "marker": "runtime-storage-auto-initialize-20260708",
+      "created_files": [],
+      "existing_files": [
+        "books.json",
+        "chapters.json",
+        "scenes.json",
+        "session_state.json",
+        "coverage_map.json",
+        "book_state.json",
+        "chapter_continuity_digests.json"
+      ],
+      "policy": "create_missing_empty_runtime_files_only",
+      "legacy_copy": "never"
+    }
+  },
+  "provenance": {
+    "status": "ok",
+    "provenance_capture_ready": true
+  },
+  "project_runtime_context": {
+    "generated_count": 1,
+    "approval_status": "approved",
+    "approval_fresh": true
+  },
+  "template_persistence": {
+    "status": "ok",
+    "service": "project-template-snapshot-migration-v1",
+    "project_id": "italus-saga",
+    "snapshot_exists": true,
+    "current_template_id": "historical_epic",
+    "active_template_id": "historical_epic",
+    "current_template_version": "project_canon_authoring_schema_v4_reference_hardening",
+    "active_template_version": "project_canon_authoring_schema_v4_reference_hardening",
+    "migration_required": false,
+    "can_migrate": false,
+    "template_conflict": false,
+    "persistence_conflict": false,
+    "persistence_verified": true,
+    "persistence": {
+      "verified": true,
+      "snapshot_verified": true,
+      "template_report_verified": true,
+      "reference_report_verified": true,
+      "author_archive_verified": true,
+      "expected_template_version": "project_canon_authoring_schema_v4_reference_hardening",
+      "persisted_template_version": "project_canon_authoring_schema_v4_reference_hardening",
+      "template_snapshot_path": "canon/template_snapshot.json",
+      "template_migration_report_path": "canon/template_migration_report.json",
+      "reference_migration_report_path": "canon/canon_reference_migration_report.json"
+    },
+    "reconciliation_required": [],
+    "reference_migration": {
+      "status": "ok",
+      "service": "canon-reference-hardening-boundary-20260816",
+      "schema_version": "canon_reference_v1",
+      "project_id": "italus-saga",
+      "migrated_at": "2026-08-18T17:40:52.801479+00:00",
+      "author_canon_modified": false,
+      "author_story_content_modified": false,
+      "author_truth_invented": false,
+      "archive_path": null,
+      "migrated_reference_field_count": 0,
+      "migrated_reference_value_count": 0,
+      "unresolved_count": 0,
+      "unresolved": [],
+      "repair_marker": "italus_corrected_canon_workspace_rebuild_patch",
+      "repair_reason": "Corrected development rebuild persisted current-version Canon reference verification.",
+      "execution_locks": {
+        "generation_enabled": false,
+        "provider_execution_enabled": false,
+        "prompt_builder_enabled": false,
+        "draft_validation_enabled": false,
+        "approved_persistence_enabled": false,
+        "export_enabled": false
+      }
+    },
+    "execution_locks": {
+      "generation_enabled": false,
+      "provider_execution_enabled": false,
+      "prompt_builder_enabled": false,
+      "draft_validation_enabled": false,
+      "approved_persistence_enabled": false,
+      "export_enabled": false
+    }
+  },
+  "planner_eligibility_by_book": {
+    "1": {
+      "AVAILABLE_TO_ADD": 126,
+      "FUTURE": 397
+    },
+    "2": {
+      "AVAILABLE_TO_ADD": 161,
+      "FUTURE": 362
+    },
+    "3": {
+      "AVAILABLE_TO_ADD": 208,
+      "FUTURE": 315
+    },
+    "4": {
+      "AVAILABLE_TO_ADD": 270,
+      "FUTURE": 253
+    },
+    "5": {
+      "AVAILABLE_TO_ADD": 303,
+      "FUTURE": 220
+    },
+    "6": {
+      "AVAILABLE_TO_ADD": 365,
+      "FUTURE": 158
+    },
+    "7": {
+      "AVAILABLE_TO_ADD": 395,
+      "FUTURE": 128
+    },
+    "8": {
+      "AVAILABLE_TO_ADD": 430,
+      "FUTURE": 93
+    },
+    "9": {
+      "AVAILABLE_TO_ADD": 463,
+      "FUTURE": 60
+    },
+    "10": {
+      "AVAILABLE_TO_ADD": 492,
+      "FUTURE": 31
+    },
+    "11": {
+      "AVAILABLE_TO_ADD": 523
+    }
+  },
+  "workspace_library": {
+    "source_mode": "project_local",
+    "books": 0,
+    "chapters": 0,
+    "events": 180,
+    "scenes": 0,
+    "characters": 18
+  },
+  "workspace": {
+    "can_enter_workspace": true,
+    "read_only": false,
+    "author_canon_all_required_complete": true
+  }
+}

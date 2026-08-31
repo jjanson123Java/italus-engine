@@ -1,0 +1,10 @@
+{
+  "content_hash": "9b98760ef538910f32c5034b8cf141713c5464bc72e8cc97462d36d52b91cb33",
+  "hash_algorithm": "sha256:utf8_exact_v1",
+  "project_id": "sci-fi-test-templates-d6b26d13",
+  "schema_version": "provenance_lineage_v1",
+  "segments": {},
+  "source_event_count": 0,
+  "source_origin_count": 0,
+  "versions": {}
+}

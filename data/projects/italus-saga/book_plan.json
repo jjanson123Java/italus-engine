@@ -1,0 +1,327 @@
+{
+  "schema_version": "project_book_plan_v3_per_book_approval",
+  "service": "project-book-plan-stable-ref-consistency-20260816",
+  "project_id": "italus-saga",
+  "template_id": "historical_epic",
+  "genre": "historical_epic",
+  "book_count": 11,
+  "status": "draft",
+  "approval_status": "not_ready",
+  "revision": 4,
+  "content_hash": "50d7b818c3100e224f495f8c5ae25170f9d0a060e61d735505fcd2107715d64f",
+  "approved_revision": 0,
+  "approved_content_hash": "",
+  "approved_at": "",
+  "created_at": "2026-08-19T17:01:51.684528+00:00",
+  "updated_at": "2026-08-23T20:24:01.466760+00:00",
+  "books": [
+    {
+      "book_number": 1,
+      "title": "Italus - The Lightening Tree",
+      "time_span": "c. 550 birth backstory; 589 origin flashback; 789–846 mainline",
+      "primary_arc": "Book 1 opens in media res in 789 with fourteen-year-old Luca discovering fresh evidence that the mature Italus has moved. A brief external analepsis to 589 reveals only fragments of the shared Pollino lightning singularity and an unidentified scarred man before the narrative returns to Luca. Luca's curiosity develops into the first guardian practice through repeated observation, concealment, movement planning, and eventual succession to Elia. Farovald appears in 789 as a reclusive monk who recognizes Luca's poor cover stories and offers the prayer alibi; later Book-1 reveal beats progressively establish his abnormal physical connection, lack of visible aging, true name, 589 connection, and non-lineage perimeter role. Luca remains the first guardian and founder of the guardian lineage.",
+      "major_events": [
+        {
+          "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+          "record_type": "event",
+          "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+          "resolution_status": "resolved"
+        },
+        {
+          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+          "record_type": "event",
+          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+          "resolution_status": "resolved"
+        }
+      ],
+      "required_characters": [
+        {
+          "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+          "record_type": "character",
+          "label": "Luca",
+          "resolution_status": "resolved"
+        },
+        {
+          "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+          "record_type": "character",
+          "label": "Italus",
+          "resolution_status": "resolved"
+        },
+        {
+          "record_id": "char_719cd0333a9840efa32e1870e223b939",
+          "record_type": "character",
+          "label": "Farovald",
+          "resolution_status": "resolved"
+        }
+      ],
+      "required_locations": [],
+      "ending_state": "By the end of Book 1, Luca has transformed his 789 discovery into the first durable guardian practice and has begun transferring responsibility to Elia. Italus remains hidden and biologically unexplained to the wider world. The reader now knows Farovald by name, understands that he was directly altered in the 589 singularity, and understands that he is an exceptional non-lineage continuity witness who will protect the wider secrecy perimeter while Luca's descendants carry guardianship. Farovald is explicitly not a guardian and does not control succession. Later aliases, later interventions, full lifespan, and final-series fate remain unrevealed.",
+      "handoff_to_next_book": "As Luca ages, the central problem shifts from protecting Italus himself to ensuring that protection can survive him. Elia has grown up close enough to Luca and Italus to recognize patterns in their lives without initially possessing the full burden of the secret. Luca begins the deliberate transfer of practical knowledge, secrecy expectations, and responsibility to his daughter. Book 1 closes with guardianship no longer belonging solely to Luca: the lineage has begun. Book 2 opens with Elia confronting what it means to inherit a duty she did not create and must now make her own.",
+      "allowed_reveals": [
+        "farovald-storm-fragment",
+        "farovald-nerve-reflex",
+        "farovald-unaging-face",
+        "farovald-perimeter-pact"
+      ],
+      "forbidden_future_knowledge": [
+        "Farovald's later cover identities and later-book interventions unless the author selects the matching reveal thread in that later book.",
+        "Farovald's exact full lifespan or final-series fate before Book 11.",
+        "Any statement that Farovald is Guardian Zero, a succession authority, or the founder of the guardian lineage.",
+        "Any telepathic, linguistic, prophetic, or remote-vision interpretation of Farovald's biological coupling to Italus."
+      ],
+      "notes": "Prepare Book 2 for the hand off to the daughter of Luca Elia"
+    },
+    {
+      "book_number": 2,
+      "title": "",
+      "time_span": "",
+      "primary_arc": "",
+      "major_events": [],
+      "required_characters": [],
+      "required_locations": [],
+      "ending_state": "",
+      "handoff_to_next_book": "",
+      "allowed_reveals": [],
+      "forbidden_future_knowledge": [],
+      "notes": ""
+    },
+    {
+      "book_number": 3,
+      "title": "",
+      "time_span": "",
+      "primary_arc": "",
+      "major_events": [],
+      "required_characters": [],
+      "required_locations": [],
+      "ending_state": "",
+      "handoff_to_next_book": "",
+      "allowed_reveals": [],
+      "forbidden_future_knowledge": [],
+      "notes": ""
+    },
+    {
+      "book_number": 4,
+      "title": "",
+      "time_span": "",
+      "primary_arc": "",
+      "major_events": [],
+      "required_characters": [],
+      "required_locations": [],
+      "ending_state": "",
+      "handoff_to_next_book": "",
+      "allowed_reveals": [],
+      "forbidden_future_knowledge": [],
+      "notes": ""
+    },
+    {
+      "book_number": 5,
+      "title": "",
+      "time_span": "",
+      "primary_arc": "",
+      "major_events": [],
+      "required_characters": [],
+      "required_locations": [],
+      "ending_state": "",
+      "handoff_to_next_book": "",
+      "allowed_reveals": [],
+      "forbidden_future_knowledge": [],
+      "notes": ""
+    },
+    {
+      "book_number": 6,
+      "title": "",
+      "time_span": "",
+      "primary_arc": "",
+      "major_events": [],
+      "required_characters": [],
+      "required_locations": [],
+      "ending_state": "",
+      "handoff_to_next_book": "",
+      "allowed_reveals": [],
+      "forbidden_future_knowledge": [],
+      "notes": ""
+    },
+    {
+      "book_number": 7,
+      "title": "",
+      "time_span": "",
+      "primary_arc": "",
+      "major_events": [],
+      "required_characters": [],
+      "required_locations": [],
+      "ending_state": "",
+      "handoff_to_next_book": "",
+      "allowed_reveals": [],
+      "forbidden_future_knowledge": [],
+      "notes": ""
+    },
+    {
+      "book_number": 8,
+      "title": "",
+      "time_span": "",
+      "primary_arc": "",
+      "major_events": [],
+      "required_characters": [],
+      "required_locations": [],
+      "ending_state": "",
+      "handoff_to_next_book": "",
+      "allowed_reveals": [],
+      "forbidden_future_knowledge": [],
+      "notes": ""
+    },
+    {
+      "book_number": 9,
+      "title": "",
+      "time_span": "",
+      "primary_arc": "",
+      "major_events": [],
+      "required_characters": [],
+      "required_locations": [],
+      "ending_state": "",
+      "handoff_to_next_book": "",
+      "allowed_reveals": [],
+      "forbidden_future_knowledge": [],
+      "notes": ""
+    },
+    {
+      "book_number": 10,
+      "title": "",
+      "time_span": "",
+      "primary_arc": "",
+      "major_events": [],
+      "required_characters": [],
+      "required_locations": [],
+      "ending_state": "",
+      "handoff_to_next_book": "",
+      "allowed_reveals": [],
+      "forbidden_future_knowledge": [],
+      "notes": ""
+    },
+    {
+      "book_number": 11,
+      "title": "",
+      "time_span": "",
+      "primary_arc": "",
+      "major_events": [],
+      "required_characters": [],
+      "required_locations": [],
+      "ending_state": "",
+      "handoff_to_next_book": "",
+      "allowed_reveals": [],
+      "forbidden_future_knowledge": [],
+      "notes": ""
+    }
+  ],
+  "book_workflow": [
+    {
+      "book_number": 1,
+      "revision": 4,
+      "content_hash": "f96b94ddf697721d9f81f299b499b840079ec2e71a8f651d47ecf24612931d19",
+      "approval_status": "approved",
+      "approval_fresh": true,
+      "approved_revision": 4,
+      "approved_content_hash": "f96b94ddf697721d9f81f299b499b840079ec2e71a8f651d47ecf24612931d19",
+      "approved_at": "2026-08-23T20:24:01.466760+00:00"
+    },
+    {
+      "book_number": 2,
+      "revision": 0,
+      "content_hash": "4ed30c477067b2344fe99a2e584da0404bab7968d58f8bd7216a769f8aa66d62",
+      "approval_status": "not_ready",
+      "approval_fresh": false,
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_at": ""
+    },
+    {
+      "book_number": 3,
+      "revision": 0,
+      "content_hash": "327da7fb69ee7796df3c90e6099e2e67038c7827e3426a48810d1664aca3fc7e",
+      "approval_status": "not_ready",
+      "approval_fresh": false,
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_at": ""
+    },
+    {
+      "book_number": 4,
+      "revision": 0,
+      "content_hash": "565d451a5678c300dc09beb4b70559b80d3080ecfb9424508d232f378ce8d6a2",
+      "approval_status": "not_ready",
+      "approval_fresh": false,
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_at": ""
+    },
+    {
+      "book_number": 5,
+      "revision": 0,
+      "content_hash": "018203634ae347e08cb8da798199b40af666a6b15c61b579a19d1c7d6f58083e",
+      "approval_status": "not_ready",
+      "approval_fresh": false,
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_at": ""
+    },
+    {
+      "book_number": 6,
+      "revision": 0,
+      "content_hash": "26230f1f9dc7e10c56f1c3fd706dfd0afcc4182633d1d7ee42ba0b190b4cbc0f",
+      "approval_status": "not_ready",
+      "approval_fresh": false,
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_at": ""
+    },
+    {
+      "book_number": 7,
+      "revision": 0,
+      "content_hash": "a117dfe9761adb53ae20e14aedf215b2a8dca88e3bdb72bd1dfcd8b358f49ce4",
+      "approval_status": "not_ready",
+      "approval_fresh": false,
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_at": ""
+    },
+    {
+      "book_number": 8,
+      "revision": 0,
+      "content_hash": "fb45f1d24cc399a314c6b31fa05216df7e933ec32489fe9f79bf8aca7d912aa0",
+      "approval_status": "not_ready",
+      "approval_fresh": false,
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_at": ""
+    },
+    {
+      "book_number": 9,
+      "revision": 0,
+      "content_hash": "84eca2fde72600f818bf1587bb063eb0ae2ee3702ab373da6d6f053f15e4eb5e",
+      "approval_status": "not_ready",
+      "approval_fresh": false,
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_at": ""
+    },
+    {
+      "book_number": 10,
+      "revision": 0,
+      "content_hash": "d81410fe3bcf7d86b7b0ccef28871ccb2232273268c8b6528f25fa8d73964b36",
+      "approval_status": "not_ready",
+      "approval_fresh": false,
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_at": ""
+    },
+    {
+      "book_number": 11,
+      "revision": 0,
+      "content_hash": "534b609c6e8a1406f4d63dae84fbcc268d5a3fe272eeb6585c7198a13cadb1fc",
+      "approval_status": "not_ready",
+      "approval_fresh": false,
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_at": ""
+    }
+  ]
+}

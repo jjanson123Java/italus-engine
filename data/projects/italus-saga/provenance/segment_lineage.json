@@ -1,0 +1,10 @@
+{
+  "content_hash": "b2c1cc950b2150603919c5cb8f06cae7ef693275e53165f4d2f8e5f8f2667c05",
+  "hash_algorithm": "sha256:utf8_exact_v1",
+  "project_id": "italus-saga",
+  "schema_version": "provenance_lineage_v1",
+  "segments": {},
+  "source_event_count": 0,
+  "source_origin_count": 0,
+  "versions": {}
+}

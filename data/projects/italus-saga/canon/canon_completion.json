@@ -1,0 +1,59 @@
+{
+  "schema_version": "project_author_canon_v1",
+  "project_id": "italus-saga",
+  "template_id": "historical_epic",
+  "genre": "historical_epic",
+  "required_section_count": 5,
+  "completed_required_section_count": 5,
+  "section_status": {
+    "project_bible": {
+      "section_id": "project_bible",
+      "required": true,
+      "status": "complete",
+      "missing_required_fields": [],
+      "updated_at": "2026-08-23T20:24:00.129512+00:00"
+    },
+    "world_bible": {
+      "section_id": "world_bible",
+      "required": true,
+      "status": "complete",
+      "missing_required_fields": [],
+      "updated_at": "2026-08-23T20:24:00.129512+00:00"
+    },
+    "character_bible": {
+      "section_id": "character_bible",
+      "required": true,
+      "status": "complete",
+      "missing_required_fields": [],
+      "updated_at": "2026-08-23T20:24:00.129512+00:00"
+    },
+    "timeline_event_ledger": {
+      "section_id": "timeline_event_ledger",
+      "required": true,
+      "status": "complete",
+      "missing_required_fields": [],
+      "updated_at": "2026-08-23T20:24:00.129512+00:00"
+    },
+    "historical_interaction_map": {
+      "section_id": "historical_interaction_map",
+      "required": true,
+      "status": "complete",
+      "missing_required_fields": [],
+      "updated_at": "2026-08-23T20:24:00.129512+00:00"
+    }
+  },
+  "metadata": {
+    "created_at": "2026-08-18T17:40:51.329179+00:00",
+    "updated_at": "2026-08-23T20:24:00.129512+00:00",
+    "source": "project-canon-authoring-workflow-boundary-20260715"
+  },
+  "execution_locks": {
+    "generation_enabled": false,
+    "provider_execution_enabled": false,
+    "prompt_builder_enabled": false,
+    "draft_validation_enabled": false,
+    "approved_persistence_enabled": false,
+    "export_enabled": false
+  },
+  "all_required_sections_complete": true
+}

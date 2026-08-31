@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ITALUS Narrative Studio</title>
+  <title>Italus Studio</title>
   <script>
     try {
       const allowedThemes = new Set(['original', 'sci-fi', 'mystery', 'fantasy']);
@@ -13,12 +13,12 @@
       document.documentElement.dataset.theme = 'original';
     }
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260825-learn-more-close-inner-upper-left-v2">
-  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260825-theme-reference-normalization-v1">
+  <link rel="stylesheet" href="styles.css?v=20260830-canon-expanded-field-editor-v1">
+  <link rel="stylesheet" href="/assets/themes/themes.css?v=20260830-theme-modal-short-viewport-v1">
 </head>
 <body>
-  <main class="page-shell" aria-label="ITALUS Narrative Studio landing page">
-    <img class="background-art" src="assets/library-desk-bg.png" alt="Narrative Studio library desk background">
+  <main class="page-shell" aria-label="Italus Studio landing page">
+    <img class="background-art" src="assets/library-desk-bg.png" alt="Italus Studio library desk background">
 
     <header class="site-header" aria-label="Primary navigation">
       <a class="brand-link" href="#" aria-label="ITALUS home">
@@ -39,7 +39,7 @@
             <a href="#"
                id="exit-narrative-studio"
                class="menu-item menu-danger">
-              Exit Narrative Studio
+              Exit Italus Studio
             </a>
           </div>
         </div>
@@ -84,7 +84,7 @@
 
     <section class="original-landing-intro" aria-labelledby="original-landing-title">
       <p class="original-landing-eyebrow">WELCOME TO</p>
-      <h1 id="original-landing-title">Narrative Studio</h1>
+      <h1 id="original-landing-title">Italus Studio</h1>
       <p class="original-landing-tagline">Craft Stories That Last Generations</p>
       <p class="original-landing-description">
         Inspired by Italus — Europe’s oldest living tree,<br>
@@ -164,7 +164,8 @@
       </header>
 
       <form id="new-project-form" class="wizard-form">
-        <div class="form-grid">
+        <div class="wizard-scroll-region">
+          <div class="form-grid">
           <label>
             Book Name
             <input name="project_name" type="text" placeholder="Book title" required>
@@ -213,11 +214,12 @@
               <option value="literary">Literary</option>
             </select>
           </label>
-        </div>
+          </div>
 
-        <section class="budget-preview" id="budget-preview" aria-live="polite">
-          Complete the project basics to estimate word and token load.
-        </section>
+          <section class="budget-preview" id="budget-preview" aria-live="polite">
+            Complete the project basics to estimate word and token load.
+          </section>
+        </div>
 
         <div class="wizard-actions">
           <button type="button" class="secondary-button" data-modal-close>Cancel</button>
@@ -264,7 +266,7 @@
           <img src="assets/italus-tree-circle.png" alt="" class="learn-more-tree">
         </div>
         <div class="learn-more-hero-copy">
-          <p class="eyebrow">About Italus Narrative Studio</p>
+          <p class="eyebrow">About Italus Studio</p>
           <h2 id="learn-more-title">Rooted in Time, Built for Eternity</h2>
           <p>
             Great stories endure when their roots run deep. Italus helps authors protect canon,
@@ -320,7 +322,7 @@
       <blockquote class="learn-more-manifesto">
         <span>Our Manifesto</span>
         <p>
-          At our Narrative Studio, we believe great stories are like Italus. They require deep roots
+          At Italus Studio, we believe great stories are like Italus. They require deep roots
           to stand tall. In an era of rapid AI generation, we do not replace the creator; we anchor them.
           The studio acts as digital bedrock for authors — managing canon consistency, protecting creative
           authenticity, and ensuring your literary universe remains unbreakable over time.
@@ -352,10 +354,10 @@
       <header class="studio-modal-header">
         <p class="eyebrow">Appearance</p>
         <h2 id="theme-settings-title">Themes</h2>
-        <p>Choose the look of Narrative Studio. Theme changes apply immediately and do not change project content or workflow.</p>
+        <p>Choose the look of Italus Studio. Theme changes apply immediately and do not change project content or workflow.</p>
       </header>
 
-      <div class="theme-option-grid" data-theme-options-root aria-label="Narrative Studio themes">
+      <div class="theme-option-grid" data-theme-options-root aria-label="Italus Studio themes">
         <button type="button" class="theme-option-card" data-theme-option="original" aria-pressed="false">
           <span class="theme-option-preview theme-option-preview--original" aria-hidden="true"></span>
           <span class="theme-option-copy">
@@ -420,7 +422,7 @@
 
   <script src="/js/theme_manager.js?v=20260825-fantasy-theme-v1-1-layout-art"></script>
   <script src="/js/project_wizard.js"></script>
-  <script src="/js/canon_authoring.js?v=20260816-canon-reference-hardening-v1"></script>
+  <script src="/js/canon_authoring.js?v=20260830-patch15-persistence-repair-v1"></script>
   <script src="/js/project_lifecycle.js?v=20260822-existing-project-book-name-v1"></script>
   <script src="script.js"></script>
 </body>

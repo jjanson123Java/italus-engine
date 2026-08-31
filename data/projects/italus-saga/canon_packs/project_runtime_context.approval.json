@@ -1,0 +1,7 @@
+{
+  "schema_version": "project_runtime_context_approval_v1",
+  "project_id": "italus-saga",
+  "approved_at": "2026-08-23T20:24:00.381431+00:00",
+  "approved_artifact_sha256": "7779a38d947a275dd5152cbc600e2f055d1a8f9466efe9058d6c773310ecda57",
+  "approved_source_set_sha256": "eb868c5440a0bc3a3b172cf2c99ed2afc1f50d0fc4493c855c153c6b24d2813d"
+}

@@ -1,0 +1,652 @@
+{
+  "schema_version": "project_book_scope_v1",
+  "service": "project-book-scope-backend-20260816",
+  "project_id": "italus-saga",
+  "book_count": 11,
+  "created_at": "2026-08-18T20:28:44.868952+00:00",
+  "updated_at": "2026-08-23T20:24:00.560489+00:00",
+  "books": [
+    {
+      "book_number": 1,
+      "status": "COMPLETE",
+      "revision": 28,
+      "content_hash": "5c9283b67769beb124f1001ca6d98f9fd5cbf63668e701285484a31e1503e376",
+      "approved_revision": 28,
+      "approved_content_hash": "5c9283b67769beb124f1001ca6d98f9fd5cbf63668e701285484a31e1503e376",
+      "approved_source_canon_hash": "abb61e05e04273d1c4f2b919b059026359aa85a4fe70389e0f97a9004eb1e768",
+      "approved_source_index_revision": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+      "approved_at": "2026-08-23T20:24:00.560489+00:00",
+      "approval_status": "approved",
+      "source_canon_hash": "abb61e05e04273d1c4f2b919b059026359aa85a4fe70389e0f97a9004eb1e768",
+      "source_index_revision": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+      "selections": [
+        {
+          "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+          "record_type": "character",
+          "label": "Luca",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "c93c39f03672c5cc16f5163172c3473cbdb443f9137bc105879f2573c740b78e"
+        },
+        {
+          "record_id": "char_719cd0333a9840efa32e1870e223b939",
+          "record_type": "character",
+          "label": "Farovald",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "f7357cf5781eb45231ef05af79ce31bb62c1b529d8719be98bd98787a1d523f1"
+        },
+        {
+          "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+          "record_type": "character",
+          "label": "Italus",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "3463a0fd9a97d6e27a0f1461f004e16c30d4a4c8e349cab417de31c3d8bf57bc"
+        },
+        {
+          "record_id": "evt_00b7668f35b5426eaf8b3377792a0b1e",
+          "record_type": "event",
+          "label": "827 — Muslim conquest of Sicily begins",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "3fe763c4a8fc0c50201b7f2f79a589fa6f51651341e110c28a11d32c447cd575"
+        },
+        {
+          "record_id": "evt_04e6eede195a43368481dd8bd6c74d77",
+          "record_type": "event",
+          "label": "812 — Pax Nicephori helps define spheres between Byzantines and Franks in Italy",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "20a6682e7b606c1086e49493877d0c8351ad8068023550228674d090e60a6220"
+        },
+        {
+          "record_id": "evt_217d67101802482b926f32f350f0080d",
+          "record_type": "event",
+          "label": "840 — Civil conflict in the Carolingian world destabilizes Europe",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "ff06e7bb09aa2750de45488ed16c28c03bde6751735ce6339dba620c6e76cf43"
+        },
+        {
+          "record_id": "evt_3e7a74f4666548fab513ee5468b47af8",
+          "record_type": "event",
+          "label": "820 — Regional monastic communities expand in southern Italy",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "cf301c55c4cde3367c239067a89a6f49deb3b66bbabc46e67217eb8244e506e1"
+        },
+        {
+          "record_id": "evt_562112157a604b1e87244ed45ec94776",
+          "record_type": "event",
+          "label": "810 — Coastal insecurity and raiding intensify in southern Italy",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "cc3af5bbce96702368cc2a10d5206fa34aa24ad03f4886dee82dc674dc58bbf8"
+        },
+        {
+          "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+          "record_type": "event",
+          "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "1afa071397267c3899fd80c3958ff913e9413dfffef85aa7084c72c627c4d7c9"
+        },
+        {
+          "record_id": "evt_5eb7b1d1dcdb4594885ea356d6fa9cdc",
+          "record_type": "event",
+          "label": "800 — Charlemagne crowned Holy Roman Emperor",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "330371f496b9d542c4f7e2cdf71d64437dc31ac5c659a32d1e8f0accbf1b6b01"
+        },
+        {
+          "record_id": "evt_6758863397264b63b6007d2a27728179",
+          "record_type": "event",
+          "label": "846 — Arab raid on Rome shocks Latin Christendom",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "580bbe975bab48b8174852bbe9cf35e401d189ae06b7df114a3ea4d51475183d"
+        },
+        {
+          "record_id": "evt_6f04ef88d3d64c3d9cf935b4c6881764",
+          "record_type": "event",
+          "label": "806 — Ongoing Frankish-Byzantine rivalry shapes Italian political boundaries",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "9f6a4ee4d6e53519613bdd333df69d70af411ee21c7462a6b3dcb5089574b672"
+        },
+        {
+          "record_id": "evt_79812835de3348a08fd2a80ccbba111a",
+          "record_type": "event",
+          "label": "789 — Charlemagne consolidates Frankish power in western Europe",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "e72b82c52f0874be4e0f21bc63b7b1b0c451e18482f2d80e93fee0b52efcab02"
+        },
+        {
+          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+          "record_type": "event",
+          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+        },
+        {
+          "record_id": "evt_c735939fc51144229e8a2be2151b9a5d",
+          "record_type": "event",
+          "label": "c. 550 — Farovald is born in southern Italy around 550 AD, before the 589 Pollino singularity.",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "6663417c58d32b88a020b6edc82a311b5e3bec2f4afc5555f940a2ee82af2b5c"
+        },
+        {
+          "record_id": "evt_ce7b3f7b09834d2caef92ebde361cbe4",
+          "record_type": "event",
+          "label": "793 — Viking raid on Lindisfarne marks the start of the Viking Age",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "5eef5cb60558a99b0bae0dfe39b0edf15416ce0c54b7a33676de27a497a16105"
+        },
+        {
+          "record_id": "evt_d585e12b0eda4eecb9666708f0939d26",
+          "record_type": "event",
+          "label": "802 — Byzantine Empire reorganizes southern Italian holdings under imperial administration",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "425bdae0e6918047f2d759be67cf33b2fa807aa695ed06e35735d5a2cafaa832"
+        },
+        {
+          "record_id": "loc_07a3b9ea24af48bbb573ab8742ddd2de",
+          "record_type": "location",
+          "label": "rain camp",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "305acd7f8396264a7737e4b03202769f8bcdb299aa8393435add32c9352cf683"
+        },
+        {
+          "record_id": "loc_094423afd27445d0846d05114d1814d6",
+          "record_type": "location",
+          "label": "coastal ridge",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "5835b368c0a41d6eb64af244b63bdd8bae24eae4b02b9512e0482f877fa71fc8"
+        },
+        {
+          "record_id": "loc_0ad9ceb86ffc43eba673b5eed17fa55f",
+          "record_type": "location",
+          "label": "Pollino grove",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "5853c1eb636d99d9784ac399efaff67d62cd1167ba810aee070339976b575f59"
+        },
+        {
+          "record_id": "loc_17441b9a08e9414c819bdb44d5f93525",
+          "record_type": "location",
+          "label": "Calabria / Basilicata",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "80cf37dda8cc101e77f5df1a5793b2b9adec086a91682a0f0bf9dc0ce6fddf6e"
+        },
+        {
+          "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+          "record_type": "location",
+          "label": "Pollino / Southern Italy",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "b173432c612c026978a8830549c9afd65e9cf4b6ada58fb3c7d0d6cabc7cfa6d"
+        },
+        {
+          "record_id": "loc_220e0491f1f94bd980cc8fb7dcfbe51f",
+          "record_type": "location",
+          "label": "forest edge",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "d5c07076ac6829fdef241c3a4b214aa5631952c62db864b2cddddb9e2b3d548a"
+        },
+        {
+          "record_id": "loc_29e3ce2d81834947aa8d0006f8e34fc7",
+          "record_type": "location",
+          "label": "Byzantine path station",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "fd90596afea877232f00a2746424e86bbee8465a02b92bf9074a5c645c48f272"
+        },
+        {
+          "record_id": "loc_2ca8463030df49b28a1c66b2eff2242b",
+          "record_type": "location",
+          "label": "Rome",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "c72eff576a8c882097ecb308d5d3c507aeb50f1c1e1db421c52e70e5311af065"
+        },
+        {
+          "record_id": "loc_2f37178a7f8f401493111c5f3dffd184",
+          "record_type": "location",
+          "label": "nighttime route",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "f914eceb05038a93a817e0976e16d274adbe7289787d847e006f52d40eaa164e"
+        },
+        {
+          "record_id": "loc_3268fa1bb0944e56a76eeab0e38d1da6",
+          "record_type": "location",
+          "label": "woodland chapel",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "213733aea087307d4f20da1880e34776425c553432039c1d8356c88a0ea052ec"
+        },
+        {
+          "record_id": "loc_32b30343903146ad892f06b41e6adbc1",
+          "record_type": "location",
+          "label": "monastic guesthouse",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "1f281622734bdb0609cfd3e97ae3e60b7a7c65ba37726bde6ca28b7d182ea858"
+        },
+        {
+          "record_id": "loc_468db05fe31241d4b0c3bb37100cf589",
+          "record_type": "location",
+          "label": "hillside shrine",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "fcad148b8d34113a5e517979f5eb691d4c66d7077d3820338fee289969191c68"
+        },
+        {
+          "record_id": "loc_6942be7c1f3a48a5967e176d0d5ae69e",
+          "record_type": "location",
+          "label": "Western Europe",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "e2d971068ee6036b65640eecf2b2ab390046a88ca8e21c653e0709c8a114e6a2"
+        },
+        {
+          "record_id": "loc_706ca3624fcf487aba212c9505dfdec9",
+          "record_type": "location",
+          "label": "Europe",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "6fe925d1ef6cfb33c7b24caea45d51ca24f5923a2db3a13580b38711dc506f73"
+        },
+        {
+          "record_id": "loc_7859a191d861430c8e10355cad83e8bd",
+          "record_type": "location",
+          "label": "Italy",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "680ae1dcb52233928e272f5eb8aa05f8fa682948995c623721259830f7f53ba0"
+        },
+        {
+          "record_id": "loc_8bd22da49f954207b3d5a18aef313207",
+          "record_type": "location",
+          "label": "Calabria overlook",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "60cd5c27739850f5648ea50595357c67d074310589672fa8bf07c84dd1d2f8c9"
+        },
+        {
+          "record_id": "loc_9f0b5792adc3495596f51b88840984a9",
+          "record_type": "location",
+          "label": "Southern Italy",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "0d7e62277e1a955321ee48cf45271a9b5737e39842eb5c6ac06beeb7f77bb484"
+        },
+        {
+          "record_id": "loc_a72ac808f21b484e9960152de850495d",
+          "record_type": "location",
+          "label": "England / Europe-wide awareness later",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "64ddce96806fc0df0382017159b965e1cd375c2f0dbb21fcd4b728140c86ae7b"
+        },
+        {
+          "record_id": "loc_ab596cbfd3a446229f4f15c4e3751684",
+          "record_type": "location",
+          "label": "market road",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "1ec9102458010e2a35d74488b3b6310536b1ebe5d53ddb5ac92a70755da2fbcb"
+        },
+        {
+          "record_id": "loc_c161498b5c4f4f57a514f009d0551223",
+          "record_type": "location",
+          "label": "shepherd trail",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "a08e673d318688e727cfbe2fd0d314f6d99f6c6284d338ea117dbe06138459fe"
+        },
+        {
+          "record_id": "loc_d01f24cd51c44df3997592c5195d0e0a",
+          "record_type": "location",
+          "label": "Calabria uplands",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "2142b0aea179e2987145784a890addd4186618ca686884ce61a157d211125697"
+        },
+        {
+          "record_id": "loc_da4961e8f03940db8ad8188f55d9182f",
+          "record_type": "location",
+          "label": "monastery yard",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "156b375f1528050aa62529aa9df37b9e0fa24c3b024d543aae4c5d4a9140e301"
+        },
+        {
+          "record_id": "loc_db647b3b8b504a4782f0b69942d4f71b",
+          "record_type": "location",
+          "label": "upland crossing",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "a4c7e65238a950853a7b7be5fe1f497f569dc4e8ac46e971934ffd94e858b6ea"
+        },
+        {
+          "record_id": "loc_e6164fb38d2842619c78837e3d524b1a",
+          "record_type": "location",
+          "label": "forest camp",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "a672c8d377954739f26c36f086b29499753f71cb4d98d35912befeef5a62f64f"
+        },
+        {
+          "record_id": "loc_e80c69151aff49588a04581212e3767a",
+          "record_type": "location",
+          "label": "Calabria / Adriatic awareness",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "0f750051db16377ea9a1bc9e4773a749bd6ab43207b61269222c96854280c0cd"
+        },
+        {
+          "record_id": "loc_f556059bd6ab4e58a98d6fec998fba26",
+          "record_type": "location",
+          "label": "Pollino Mountains",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "43cbe2a637ce16ac087e7676fa7b7656a134912df574bd33eb638e2a54e13fce"
+        },
+        {
+          "record_id": "loc_ff0c39fe60df40fc8e07f744c71fe1e9",
+          "record_type": "location",
+          "label": "monastery gate",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "8a18f0803416dd13c3564a9a097f14d8706b8f58a63cb73b3e1c0f2fdb7b548f"
+        },
+        {
+          "record_id": "loc_ff995104928b41adbaa3c949caa63b43",
+          "record_type": "location",
+          "label": "Sicily",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "ee62d2e94243b6ba25b1061acdaca9828748280e3867eb03a41f6a8e764db398"
+        },
+        {
+          "record_id": "rel_06ae2bf327bf4bff8a666fe9ffdf3699",
+          "record_type": "interaction",
+          "label": "827 — Ziyadat Allah I — invasion rumor",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "17fa5a4bb6557383ba0aed348caee42b7b9c961a343f516011862fd0e9951896"
+        },
+        {
+          "record_id": "rel_256f7b7fa5d04e0dab024b87d80313fb",
+          "record_type": "interaction",
+          "label": "800 — Charlemagne — reflection",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "10d7569a5066c69b8cede59294075a5c7d525ef68b91b2589a511fde0651d73d"
+        },
+        {
+          "record_id": "rel_32b4bfb71130490c8b1bfe80916a1907",
+          "record_type": "interaction",
+          "label": "840 — Louis the Pious — dynastic unrest",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "049bed8e035e1dcef9196273e660900277ece9f062181b3cb9d01b2a9433ca8f"
+        },
+        {
+          "record_id": "rel_679caa05984c4db4aaad292e783ad3d0",
+          "record_type": "interaction",
+          "label": "789 — Charlemagne — rumor",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "2a9f12a5c11e93054ed2506f8ad92a6b87a31dbe98b33424bcbb425b6546f03c"
+        },
+        {
+          "record_id": "rel_7158a7d30d744d6898559df9c36589b4",
+          "record_type": "interaction",
+          "label": "789 — Alcuin of York — dialogue",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "80a0545f96323d5277c186b65150bc3270e9964ee550b2c955d0eb9eff5589a0"
+        },
+        {
+          "record_id": "rel_74f4060e2b8f4df1a5deca952d99747e",
+          "record_type": "interaction",
+          "label": "793 — Alfred the Great — traveler report",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "c10fa7d6d3d3529eea6a43294a597cf00c2356ff3e49774e588165c3746bc33d"
+        },
+        {
+          "record_id": "rel_931ee6a7c6a54f4790495c21d972dd89",
+          "record_type": "interaction",
+          "label": "800 — Pope Leo III — pilgrimage",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "8d21b40204bdd502e21cf80e1a71424abec8b976b8328838ace7d601eb15f6f7"
+        },
+        {
+          "record_id": "rel_986694bc9ca7414c9b8a856c0c9f9d83",
+          "record_type": "interaction",
+          "label": "846 — Pope Sergius II — aftermath",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "fdb9978aa227aa4c7d808547206c96e88469aab021281d88010a0665206597db"
+        },
+        {
+          "record_id": "rel_f0b3f06866d74ebba27f95b5ec666b46",
+          "record_type": "interaction",
+          "label": "802 — Nikephoros I — administration",
+          "source_class": "master_canon",
+          "usage_mode": "direct",
+          "source_record_hash": "6a4ccfbc771d3e66cbe76b1a018cc5ce3ae21566c7e5f15b89db58495f90249c"
+        }
+      ],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "2026-08-18T20:28:44.868952+00:00",
+      "updated_at": "2026-08-23T20:24:00.560489+00:00"
+    },
+    {
+      "book_number": 2,
+      "status": "NOT_STARTED",
+      "revision": 0,
+      "content_hash": "086d0fa935a1879f830e3bd4316ba3eff8c31f9585265cfdbae1a29731a837ea",
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_source_canon_hash": "",
+      "approved_source_index_revision": "",
+      "approved_at": "",
+      "approval_status": "not_ready",
+      "source_canon_hash": "7e16a9dc2f9fa68fffc1f5fe21b5ab4327b4cc63ef1e30a1bd529192cc89923a",
+      "source_index_revision": "018774b4b05e885ccbda768eb25fb0e3cc23f73b74261e11d3da5b0a9bcc0c0c",
+      "selections": [],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "",
+      "updated_at": ""
+    },
+    {
+      "book_number": 3,
+      "status": "NOT_STARTED",
+      "revision": 0,
+      "content_hash": "100ea9893d5b82b1e86d68cbf5b497accc2a0c894be11c93b902fb814e778f96",
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_source_canon_hash": "",
+      "approved_source_index_revision": "",
+      "approved_at": "",
+      "approval_status": "not_ready",
+      "source_canon_hash": "7e16a9dc2f9fa68fffc1f5fe21b5ab4327b4cc63ef1e30a1bd529192cc89923a",
+      "source_index_revision": "018774b4b05e885ccbda768eb25fb0e3cc23f73b74261e11d3da5b0a9bcc0c0c",
+      "selections": [],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "",
+      "updated_at": ""
+    },
+    {
+      "book_number": 4,
+      "status": "NOT_STARTED",
+      "revision": 0,
+      "content_hash": "1c2687af27e9bfd01df812f06d6b8d4492174aecef574da0a659553ef54be325",
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_source_canon_hash": "",
+      "approved_source_index_revision": "",
+      "approved_at": "",
+      "approval_status": "not_ready",
+      "source_canon_hash": "7e16a9dc2f9fa68fffc1f5fe21b5ab4327b4cc63ef1e30a1bd529192cc89923a",
+      "source_index_revision": "018774b4b05e885ccbda768eb25fb0e3cc23f73b74261e11d3da5b0a9bcc0c0c",
+      "selections": [],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "",
+      "updated_at": ""
+    },
+    {
+      "book_number": 5,
+      "status": "NOT_STARTED",
+      "revision": 0,
+      "content_hash": "6e86190486d4a79bcaaa8317f11da859ef2717ac64c913fc63ecef622c3d1ea7",
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_source_canon_hash": "",
+      "approved_source_index_revision": "",
+      "approved_at": "",
+      "approval_status": "not_ready",
+      "source_canon_hash": "7e16a9dc2f9fa68fffc1f5fe21b5ab4327b4cc63ef1e30a1bd529192cc89923a",
+      "source_index_revision": "018774b4b05e885ccbda768eb25fb0e3cc23f73b74261e11d3da5b0a9bcc0c0c",
+      "selections": [],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "",
+      "updated_at": ""
+    },
+    {
+      "book_number": 6,
+      "status": "NOT_STARTED",
+      "revision": 0,
+      "content_hash": "db7351074d9c82fd391d5e2110318b7741b135a5029cca75bdc5ed1d9f475c3e",
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_source_canon_hash": "",
+      "approved_source_index_revision": "",
+      "approved_at": "",
+      "approval_status": "not_ready",
+      "source_canon_hash": "7e16a9dc2f9fa68fffc1f5fe21b5ab4327b4cc63ef1e30a1bd529192cc89923a",
+      "source_index_revision": "018774b4b05e885ccbda768eb25fb0e3cc23f73b74261e11d3da5b0a9bcc0c0c",
+      "selections": [],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "",
+      "updated_at": ""
+    },
+    {
+      "book_number": 7,
+      "status": "NOT_STARTED",
+      "revision": 0,
+      "content_hash": "2b6b583a50fe67587e85a61a245f5ee83b5dc33e7ed4eacde10749fe6f293ae7",
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_source_canon_hash": "",
+      "approved_source_index_revision": "",
+      "approved_at": "",
+      "approval_status": "not_ready",
+      "source_canon_hash": "7e16a9dc2f9fa68fffc1f5fe21b5ab4327b4cc63ef1e30a1bd529192cc89923a",
+      "source_index_revision": "018774b4b05e885ccbda768eb25fb0e3cc23f73b74261e11d3da5b0a9bcc0c0c",
+      "selections": [],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "",
+      "updated_at": ""
+    },
+    {
+      "book_number": 8,
+      "status": "NOT_STARTED",
+      "revision": 0,
+      "content_hash": "1ab3795c8841b3ead84eacecc51796b53e4059831c438bfd4dbb3a4aaa6f4a9f",
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_source_canon_hash": "",
+      "approved_source_index_revision": "",
+      "approved_at": "",
+      "approval_status": "not_ready",
+      "source_canon_hash": "7e16a9dc2f9fa68fffc1f5fe21b5ab4327b4cc63ef1e30a1bd529192cc89923a",
+      "source_index_revision": "018774b4b05e885ccbda768eb25fb0e3cc23f73b74261e11d3da5b0a9bcc0c0c",
+      "selections": [],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "",
+      "updated_at": ""
+    },
+    {
+      "book_number": 9,
+      "status": "NOT_STARTED",
+      "revision": 0,
+      "content_hash": "d442d11e9911f0d01e4c3b44c228327418cdf2508241fea3391bae21361ff1fb",
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_source_canon_hash": "",
+      "approved_source_index_revision": "",
+      "approved_at": "",
+      "approval_status": "not_ready",
+      "source_canon_hash": "7e16a9dc2f9fa68fffc1f5fe21b5ab4327b4cc63ef1e30a1bd529192cc89923a",
+      "source_index_revision": "018774b4b05e885ccbda768eb25fb0e3cc23f73b74261e11d3da5b0a9bcc0c0c",
+      "selections": [],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "",
+      "updated_at": ""
+    },
+    {
+      "book_number": 10,
+      "status": "NOT_STARTED",
+      "revision": 0,
+      "content_hash": "2b256019b2d0ec121f47f36d7b152b47c1c4c6984e0120e3743e50b36d9ff605",
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_source_canon_hash": "",
+      "approved_source_index_revision": "",
+      "approved_at": "",
+      "approval_status": "not_ready",
+      "source_canon_hash": "7e16a9dc2f9fa68fffc1f5fe21b5ab4327b4cc63ef1e30a1bd529192cc89923a",
+      "source_index_revision": "018774b4b05e885ccbda768eb25fb0e3cc23f73b74261e11d3da5b0a9bcc0c0c",
+      "selections": [],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "",
+      "updated_at": ""
+    },
+    {
+      "book_number": 11,
+      "status": "NOT_STARTED",
+      "revision": 0,
+      "content_hash": "f8467243ca0048c92d56ebf6e2e1f0d6380370cc4a2e175c146efffd870533dc",
+      "approved_revision": 0,
+      "approved_content_hash": "",
+      "approved_source_canon_hash": "",
+      "approved_source_index_revision": "",
+      "approved_at": "",
+      "approval_status": "not_ready",
+      "source_canon_hash": "7e16a9dc2f9fa68fffc1f5fe21b5ab4327b4cc63ef1e30a1bd529192cc89923a",
+      "source_index_revision": "018774b4b05e885ccbda768eb25fb0e3cc23f73b74261e11d3da5b0a9bcc0c0c",
+      "selections": [],
+      "constraints": {},
+      "amendments": [],
+      "created_at": "",
+      "updated_at": ""
+    }
+  ]
+}

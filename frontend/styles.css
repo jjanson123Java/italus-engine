@@ -1740,15 +1740,11 @@ form[data-canon-section-form] .wizard-actions {
 }
 
 #canon-setup-modal .canon-section-actions {
-  position: sticky;
-  bottom: 0;
-  z-index: 6;
+  position: static;
   margin-top: 12px;
   padding: 12px;
   border-top: 1px solid rgba(214, 168, 95, 0.28);
   background: rgba(3, 13, 12, 0.96);
-  box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(8px);
 }
 
 .canon-section-actions .canon-quick-add-button {
@@ -1756,6 +1752,153 @@ form[data-canon-section-form] .wizard-actions {
   font-weight: 700;
 }
 
+#canon-setup-modal .canon-textarea-shell {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+#canon-setup-modal .canon-textarea-shell textarea {
+  display: block;
+  padding-bottom: 3rem;
+}
+
+#canon-setup-modal .canon-textarea-expand {
+  position: absolute;
+  right: 2.25rem;
+  bottom: 0.65rem;
+  z-index: 2;
+  min-height: 30px;
+  border: 1px solid rgba(214, 168, 95, 0.62);
+  border-radius: 7px;
+  padding: 0.32rem 0.55rem;
+  background: rgba(7, 24, 22, 0.94);
+  color: #efd486;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+#canon-setup-modal .canon-textarea-expand:hover,
+#canon-setup-modal .canon-textarea-expand:focus-visible {
+  border-color: #efd486;
+  background: rgba(18, 48, 42, 0.98);
+  color: #fff4d2;
+}
+
+#canon-setup-modal .canon-textarea-expand:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.9);
+  outline-offset: 2px;
+}
+
+body.canon-expanded-editor-open {
+  overflow: hidden;
+}
+
+.canon-expanded-field-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 240;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 3vw, 34px);
+  background: rgba(0, 4, 10, 0.82);
+  backdrop-filter: blur(8px);
+}
+
+.canon-expanded-field-panel {
+  width: min(1220px, calc(100vw - 36px));
+  height: min(900px, calc(100vh - 40px));
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid rgba(63, 200, 245, 0.42);
+  border-radius: 18px;
+  padding: clamp(18px, 2.5vw, 30px);
+  background:
+    radial-gradient(circle at top left, rgba(29, 115, 145, 0.13), transparent 32%),
+    linear-gradient(145deg, rgba(4, 20, 37, 0.995), rgba(6, 12, 35, 0.995));
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.72),
+    0 0 36px rgba(63, 200, 245, 0.08);
+}
+
+.canon-expanded-field-header {
+  display: grid;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.canon-expanded-field-return {
+  justify-self: start;
+  color: #78dcff;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.canon-expanded-field-return:hover,
+.canon-expanded-field-return:focus-visible {
+  color: #c8f3ff;
+  text-decoration: underline;
+}
+
+.canon-expanded-field-return:focus-visible {
+  outline: 2px solid rgba(120, 220, 255, 0.75);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.canon-expanded-field-eyebrow {
+  display: block;
+  margin-bottom: 4px;
+  color: #49d1ff;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.canon-expanded-field-header h3 {
+  margin: 0;
+  color: #eefbff;
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+}
+
+.canon-expanded-field-header p {
+  margin: 6px 0 0;
+  color: rgba(227, 244, 250, 0.78);
+  font-family: "Segoe UI", Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.canon-expanded-field-input {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  border: 1px solid rgba(120, 220, 255, 0.45);
+  border-radius: 12px;
+  padding: 1rem 1.05rem;
+  background: rgba(244, 249, 251, 0.985);
+  color: #101820;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.62;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.canon-expanded-field-input:focus {
+  outline: 3px solid rgba(73, 209, 255, 0.32);
+  border-color: #49d1ff;
+}
 
 @media (max-width: 760px) {
   #canon-setup-modal .canon-section-actions {
@@ -1764,6 +1907,17 @@ form[data-canon-section-form] .wizard-actions {
 
   #canon-setup-modal .canon-section-actions button {
     flex: 1 1 100%;
+  }
+
+  .canon-expanded-field-overlay {
+    padding: 10px;
+  }
+
+  .canon-expanded-field-panel {
+    width: calc(100vw - 20px);
+    height: calc(100vh - 20px);
+    border-radius: 12px;
+    padding: 16px;
   }
 }
 
@@ -1909,6 +2063,152 @@ body {
   max-height: min(90svh, 960px);
   overflow: auto;
   overscroll-behavior: contain;
+}
+
+/* New Project modal: adapt to the live browser viewport without scaling text. */
+#new-project-modal:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  width: min(920px, calc(100vw - 24px));
+  max-width: min(96vw, 920px);
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow: hidden;
+}
+
+#new-project-modal .studio-modal-header {
+  flex: 0 0 auto;
+  padding-right: 48px;
+}
+
+#new-project-modal .wizard-form {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2dvh, 22px);
+  overflow: hidden;
+}
+
+#new-project-modal .wizard-scroll-region {
+  min-height: 0;
+  display: grid;
+  gap: clamp(12px, 2dvh, 22px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding-right: 4px;
+}
+
+#new-project-modal .wizard-actions {
+  flex: 0 0 auto;
+}
+
+@media (max-height: 850px) {
+  #new-project-modal:not([hidden]) {
+    padding: clamp(14px, 2.6dvh, 24px);
+  }
+
+  #new-project-modal .studio-modal-header {
+    margin-bottom: clamp(10px, 1.7dvh, 18px);
+  }
+
+  #new-project-modal .studio-modal-header h2 {
+    margin-bottom: 6px;
+  }
+
+  #new-project-modal .wizard-scroll-region {
+    gap: clamp(10px, 1.5dvh, 16px);
+  }
+
+  #new-project-modal .form-grid {
+    row-gap: clamp(10px, 1.5dvh, 16px);
+  }
+
+  #new-project-modal .form-grid label {
+    gap: 5px;
+  }
+
+  #new-project-modal .form-grid input,
+  #new-project-modal .form-grid select {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  #new-project-modal .budget-preview {
+    padding: 12px 14px;
+  }
+
+  #new-project-modal .budget-preview dl {
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  #new-project-modal .budget-preview dl div {
+    padding: 8px 10px;
+  }
+}
+
+/* Existing Projects modal: keep the project list scrollable while actions remain visible. */
+#existing-project-modal:not([hidden]) {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(920px, calc(100vw - 56px));
+  max-width: min(94vw, 920px);
+  max-height: calc(100vh - 56px);
+  max-height: calc(100dvh - 56px);
+  overflow: hidden;
+}
+
+#existing-project-modal .studio-modal-header {
+  min-height: 0;
+  margin-bottom: 18px;
+  padding-right: 48px;
+}
+
+#existing-project-modal #existing-project-state {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+#existing-project-modal .wizard-actions {
+  flex: 0 0 auto;
+  margin-top: 18px;
+}
+
+@media (max-height: 850px) {
+  #existing-project-modal:not([hidden]) {
+    padding: clamp(14px, 2.6dvh, 24px);
+  }
+
+  #existing-project-modal .studio-modal-header {
+    margin-bottom: clamp(10px, 1.7dvh, 18px);
+  }
+
+  #existing-project-modal .studio-modal-header h2 {
+    margin-bottom: 6px;
+  }
+
+  #existing-project-modal #existing-project-state {
+    padding: 14px;
+  }
+
+  #existing-project-modal .project-card-list {
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  #existing-project-modal .project-card {
+    padding: 14px;
+  }
+
+  #existing-project-modal .wizard-actions {
+    margin-top: clamp(10px, 1.7dvh, 18px);
+  }
 }
 
 .studio-modal input,

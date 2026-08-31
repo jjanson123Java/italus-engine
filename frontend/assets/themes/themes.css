@@ -185,35 +185,6 @@ html[data-theme="sci-fi"] body {
   color: var(--sci-fi-text);
 }
 
-/* Keep the original left-side Narrative Studio copy and marks, but shift the
-   existing artwork into the skin palette. The new futuristic scene overlays
-   only the right side. */
-html[data-theme="sci-fi"] .page-shell {
-  background: #010611;
-  isolation: isolate;
-}
-
-html[data-theme="sci-fi"] .background-art {
-  filter: hue-rotate(116deg) saturate(1.2) brightness(0.78) contrast(1.08);
-}
-
-html[data-theme="sci-fi"] .page-shell::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  top: 10.9%;
-  right: 0;
-  bottom: 0;
-  left: 31%;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(1, 6, 17, 0.98) 0%, rgba(1, 6, 17, 0.15) 13%, rgba(1, 6, 17, 0.02) 28%),
-    linear-gradient(180deg, rgba(1, 6, 17, 0.02) 0%, rgba(1, 6, 17, 0.08) 72%, rgba(1, 6, 17, 0.76) 100%),
-    url("/assets/themes/sci-fi/studio-bg.jpg") center / cover no-repeat;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 100%);
-}
-
 html[data-theme="sci-fi"] .site-header {
   background:
     linear-gradient(90deg, rgba(1, 9, 24, 0.985), rgba(3, 10, 28, 0.965)),
@@ -385,7 +356,7 @@ html[data-theme="sci-fi"] .theme-current-status strong {
 html[data-theme="sci-fi"] .workspace-body {
   background:
     linear-gradient(rgba(1, 6, 18, 0.86), rgba(1, 7, 20, 0.94)),
-    url("/assets/themes/sci-fi/studio-bg.jpg") center / cover fixed no-repeat,
+    url("/assets/themes/sci-fi/studio-bg-separated.png") center / cover fixed no-repeat,
     #010611;
   color: var(--sci-fi-text);
 }
@@ -876,7 +847,7 @@ html[data-theme="sci-fi"] .studio-modal-close:focus-visible {
 html[data-theme="sci-fi"] .help-body {
   background:
     linear-gradient(rgba(1, 6, 17, 0.84), rgba(1, 6, 17, 0.97)),
-    url("/assets/themes/sci-fi/studio-bg.jpg") center / cover fixed,
+    url("/assets/themes/sci-fi/studio-bg-separated.png") center / cover fixed,
     #010611;
   color: var(--sci-fi-text);
 }
@@ -5360,20 +5331,6 @@ html[data-theme="fantasy"] :is(
 /* Scene artwork is artwork only. Intro/feature/heritage UI is live HTML.    */
 /* ========================================================================== */
 
-html[data-theme="sci-fi"] .page-shell {
-  background: #010611;
-}
-
-html[data-theme="sci-fi"] .page-shell::before {
-  content: none;
-}
-
-html[data-theme="sci-fi"] .background-art {
-  opacity: 0;
-  pointer-events: none;
-  filter: none;
-}
-
 html[data-theme="sci-fi"] .original-landing-intro {
   display: block;
   position: absolute;
@@ -5819,10 +5776,57 @@ html[data-theme="fantasy"] .original-landing-feature:nth-child(3) img {
 }
 
 html[data-theme="sci-fi"] .page-shell {
+  isolation: isolate;
   background:
     linear-gradient(90deg, rgba(1, 6, 17, 0.14), rgba(1, 6, 17, 0.03)),
-    url("/assets/themes/sci-fi/studio-bg-separated.png") center center / cover no-repeat,
+    url("/assets/themes/sci-fi/studio-bg-separated.png") center bottom / cover no-repeat,
     #010611 !important;
+}
+
+html[data-theme="sci-fi"] .page-shell::before,
+html[data-theme="sci-fi"] .page-shell::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  filter: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+html[data-theme="sci-fi"] .background-art {
+  opacity: 0 !important;
+  pointer-events: none;
+  filter: none !important;
+}
+
+
+/* Sci-Fi desktop viewport acceptance matrix.
+   30-inch and Vizio: 1366x768 @ 100%.
+   27-inch: 1920x1080 @ 100%.
+   DeskPro: 3840x2160 @ 150% (approximately 2560x1440 CSS px).
+   These rules tune only framing/scale; the canonical background owner remains
+   the single .page-shell background declaration above. */
+@media (min-width: 761px) and (max-width: 1450px) and (max-height: 820px) {
+  html[data-theme="sci-fi"] .page-shell {
+    background-size: auto 100%;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-color: #010611;
+  }
+}
+
+@media (min-width: 1451px) and (max-width: 2199px) and (min-height: 821px) {
+  html[data-theme="sci-fi"] .page-shell {
+    background-size: cover;
+    background-position: center bottom;
+  }
+}
+
+@media (min-width: 2200px) and (min-height: 1200px) {
+  html[data-theme="sci-fi"] .page-shell {
+    background-size: cover;
+    background-position: center bottom;
+  }
 }
 
 html[data-theme="sci-fi"] .sci-fi-tree-accent {
@@ -6523,3 +6527,82 @@ html[data-theme="fantasy"] .original-landing-feature:nth-child(3) img { content:
   html[data-theme="fantasy"] .original-heritage-copy { padding-left:0; border-left:0; }
   html[data-theme="fantasy"] .original-heritage-learn-more { justify-self:start; }
 }
+
+/* ==========================================================================
+   Themes modal short-display fit
+   Keeps all theme choices, current-theme status, and Close action visible
+   on compact desktop browser viewports without changing normal-height layouts.
+   ========================================================================== */
+@media (min-width: 981px) and (max-height: 850px) {
+  .theme-settings-modal {
+    width: min(1240px, calc(100vw - 32px));
+    max-height: calc(100vh - 24px);
+    padding: clamp(16px, 2.6vh, 24px);
+  }
+
+  .theme-settings-modal .studio-modal-header .eyebrow {
+    margin-bottom: 4px;
+  }
+
+  .theme-settings-modal .studio-modal-header h2 {
+    margin-bottom: 6px;
+  }
+
+  .theme-settings-modal .studio-modal-header p:last-child {
+    margin-bottom: 0;
+  }
+
+  .theme-settings-modal .theme-option-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px 12px;
+    margin-top: 12px;
+  }
+
+  .theme-settings-modal .theme-option-card {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 12px;
+    min-height: 0;
+    padding: 10px;
+  }
+
+  .theme-settings-modal .theme-option-preview {
+    height: 64px;
+  }
+
+  .theme-settings-modal .theme-option-copy strong {
+    margin-bottom: 3px;
+    font-size: 0.96rem;
+  }
+
+  .theme-settings-modal .theme-option-copy span {
+    font-size: 0.82rem;
+    line-height: 1.3;
+  }
+
+  .theme-settings-modal .theme-option-card--selected .theme-option-copy {
+    padding-right: 62px;
+  }
+
+  .theme-settings-modal .theme-option-card--selected::after {
+    top: 8px;
+    right: 8px;
+    padding: 3px 6px;
+    font-size: 0.64rem;
+  }
+
+  .theme-settings-modal .theme-current-status {
+    margin-top: 10px;
+    padding: 7px 10px;
+    font-size: 0.86rem;
+    line-height: 1.3;
+  }
+
+  .theme-settings-modal .wizard-actions {
+    margin-top: 8px;
+  }
+
+  .theme-settings-modal .secondary-button {
+    padding: 8px 14px;
+  }
+}
+

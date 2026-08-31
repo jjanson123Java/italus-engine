@@ -1,0 +1,35 @@
+{
+  "actor_types": [
+    "AUTHOR",
+    "EXTERNAL_AUTHOR_ATTESTED",
+    "MODEL",
+    "SYSTEM_DETERMINISTIC"
+  ],
+  "created_at": "2026-08-18T17:40:52.291439+00:00",
+  "event_types": [
+    "AUTHOR_ACCEPT",
+    "AUTHOR_DELETE",
+    "AUTHOR_EDIT",
+    "AUTHOR_INSERT",
+    "AUTHOR_MERGE",
+    "AUTHOR_MOVE",
+    "AUTHOR_REJECT",
+    "AUTHOR_REPLACE",
+    "AUTHOR_SPLIT",
+    "MODEL_COPYEDIT",
+    "MODEL_GENERATE",
+    "MODEL_REGENERATE",
+    "MODEL_REWRITE",
+    "SYSTEM_FORMAT",
+    "SYSTEM_NORMALIZE"
+  ],
+  "hash_algorithm": "sha256:utf8_exact_v1",
+  "project_id": "italus-saga",
+  "provenance_schema_version": "authorship_provenance_v1",
+  "service": "project-authorship-provenance-v1-20260817",
+  "source_of_truth": {
+    "events": "append_only_jsonl",
+    "lineage": "derived_rebuildable_index",
+    "origins": "immutable_files"
+  }
+}

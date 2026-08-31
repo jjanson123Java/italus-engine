@@ -1,0 +1,65 @@
+{
+  "schema_version": "project_story_controls_v1",
+  "project_id": "italus-saga",
+  "revision": 9,
+  "content_hash": "7050177c644c8809bf204bf0e15fd117d6ea22904997362a48b1ad573f7e29e7",
+  "controls": [
+    {
+      "control_id": "story-control-43694f1e3338401d",
+      "book_number": 1,
+      "chapter_number": 1,
+      "status": "PLANNED",
+      "control_type": "mystery_reveal",
+      "subject_ref": {
+        "record_id": "char_719cd0333a9840efa32e1870e223b939",
+        "record_type": "character",
+        "label": "Farovald",
+        "source_record_hash": "bd3c353e814502930af882935240499b9af79a6759651f2dd4431314d77be125"
+      },
+      "instruction": "Reveal only the approved 589 storm fragment: mature Italus in the storm, a human figure in direct contact with the tree, lightning injury, scorched palms, resin/cambium damage, and immediate sensory aftermath. Return to Luca's 789 discovery before explaining the man's age, longevity, full biological connection, later identities, or future role. In the 789 mainline he appears only as a reclusive monk who later advises Luca to use prayer as a credible cover story.",
+      "certainty": "hint",
+      "presentation": "foreshadowing",
+      "narrative_weight": "brief_clue",
+      "who_learns": [],
+      "effective_point": "current_unit",
+      "knowledge_ceiling": "Book 1 Chapter 1 storm fragment only",
+      "allowed_interpretations": [
+        "The monk was physically present at the old storm.",
+        "His palms carry old lightning damage.",
+        "He knows the Pollino terrain and Luca's repeated visits unusually well."
+      ],
+      "forbidden_assertions": [
+        "Farovald is a guardian or Guardian Zero.",
+        "Farovald's exact age or full lifespan.",
+        "Farovald is immortal by magic.",
+        "Farovald and Italus communicate telepathically or linguistically.",
+        "Farovald's later aliases, later interventions, or final fate."
+      ],
+      "persistence": "chapter_local",
+      "notes": "Instantiated from farovald-storm-fragment during the developer Canon migration.",
+      "validation_snapshot": {
+        "valid": true,
+        "issues": []
+      },
+      "protection_snapshot": {
+        "checked": true,
+        "eligibility_status": "ACTIVE",
+        "reason_codes": [],
+        "message": "Active at the current story position."
+      },
+      "semantic_guard_snapshot": {
+        "mode": "deterministic_obvious_mismatch_only",
+        "complete_semantic_interpretation": false,
+        "mismatch": false,
+        "chosen_certainty": "hint",
+        "minimum_obvious_certainty": "",
+        "matched_phrase": "",
+        "message": "No obvious certainty-strength conflict detected; full semantic interpretation is deferred."
+      },
+      "created_at": "2026-08-23T19:26:49.922922+00:00",
+      "updated_at": "2026-08-23T19:26:49.922934+00:00"
+    }
+  ],
+  "created_at": "2026-08-21T20:13:38.556732+00:00",
+  "updated_at": "2026-08-23T19:26:50.023589+00:00"
+}

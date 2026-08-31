@@ -1,0 +1,170 @@
+{
+  "schema_version": "project_chapter_plan_v2_pov_contract",
+  "project_id": "italus-saga",
+  "books": [
+    {
+      "book_number": 1,
+      "chapters": [
+        {
+          "book_number": 1,
+          "chapter_number": 1,
+          "status": "complete",
+          "revision": 12,
+          "content_hash": "30e832a662e17c1432599696784d9f95ee4b1aa93eba4614bd8d6d362fdfc580",
+          "book_scope_revision": 28,
+          "book_scope_hash": "5c9283b67769beb124f1001ca6d98f9fd5cbf63668e701285484a31e1503e376",
+          "book_plan_revision": 4,
+          "book_plan_hash": "f96b94ddf697721d9f81f299b499b840079ec2e71a8f651d47ecf24612931d19",
+          "continuity_revision": "",
+          "selected_canon_refs": [
+            {
+              "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+              "record_type": "character",
+              "label": "Luca",
+              "source_record_hash": "c93c39f03672c5cc16f5163172c3473cbdb443f9137bc105879f2573c740b78e"
+            },
+            {
+              "record_id": "char_719cd0333a9840efa32e1870e223b939",
+              "record_type": "character",
+              "label": "Farovald",
+              "source_record_hash": "f7357cf5781eb45231ef05af79ce31bb62c1b529d8719be98bd98787a1d523f1"
+            },
+            {
+              "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+              "record_type": "character",
+              "label": "Italus",
+              "source_record_hash": "3463a0fd9a97d6e27a0f1461f004e16c30d4a4c8e349cab417de31c3d8bf57bc"
+            },
+            {
+              "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+              "record_type": "location",
+              "label": "Pollino / Southern Italy",
+              "source_record_hash": "b173432c612c026978a8830549c9afd65e9cf4b6ada58fb3c7d0d6cabc7cfa6d"
+            }
+          ],
+          "assigned_event_refs": [
+            {
+              "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+              "record_type": "event",
+              "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+              "source_record_hash": "1afa071397267c3899fd80c3958ff913e9413dfffef85aa7084c72c627c4d7c9"
+            },
+            {
+              "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+              "record_type": "event",
+              "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+              "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+            }
+          ],
+          "event_placements": [
+            {
+              "event_ref": {
+                "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+                "record_type": "event",
+                "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+                "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+              },
+              "position": "opening",
+              "relationship_to_anchor": "same_anchor",
+              "anchor_event_ref": null,
+              "chapter_role": "opening",
+              "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
+              "ordinal": 0
+            },
+            {
+              "event_ref": {
+                "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+                "record_type": "event",
+                "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+                "source_record_hash": "1afa071397267c3899fd80c3958ff913e9413dfffef85aa7084c72c627c4d7c9"
+              },
+              "position": "early",
+              "relationship_to_anchor": "remembers",
+              "anchor_event_ref": {
+                "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+                "record_type": "event",
+                "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+                "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+              },
+              "chapter_role": "reveal",
+              "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+              "ordinal": 1
+            }
+          ],
+          "generation_kickoff": "Open in media res in 789 with Luca finding fresh physical evidence that Italus moved. Use the discovery as the sensory bridge into one brief external analepsis of the 589 Pollino storm, then return immediately to Luca's 789 mainline.",
+          "pov": [
+            {
+              "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+              "record_type": "character",
+              "label": "Luca",
+              "source_record_hash": "c93c39f03672c5cc16f5163172c3473cbdb443f9137bc105879f2573c740b78e"
+            },
+            {
+              "record_id": "char_719cd0333a9840efa32e1870e223b939",
+              "record_type": "character",
+              "label": "Farovald",
+              "source_record_hash": "f7357cf5781eb45231ef05af79ce31bb62c1b529d8719be98bd98787a1d523f1"
+            }
+          ],
+          "pov_type": "third_person_omniscient",
+          "pov_omniscient_style": "restrained",
+          "chapter_objective": "Luca repeatedly investigates the changed position and ground disturbance around Italus, while his increasingly weak excuses for returning to the Pollino heights draw family and village suspicion. Farovald watches the pattern from concealment. Later, presenting himself only as a reclusive mountain monk, he intercepts Luca on the route, challenges the boy's poor excuses, and recommends prayer as a socially credible reason for repeated trips. Luca begins the first practical concealment habits of guardianship; Farovald does not become or appoint a guardian.",
+          "restrictions": [
+            "Chapter 1 may disclose only the attached Farovald storm-fragment Story Control.",
+            "Do not disclose Farovald's exact age, full lifespan, later aliases, later interventions, or final fate.",
+            "Do not call Farovald a guardian, Guardian Zero, or succession authority.",
+            "Do not present Farovald's connection to Italus as telepathy, language, prophecy, or remote vision."
+          ],
+          "story_control_refs": [
+            "story-control-43694f1e3338401d"
+          ],
+          "advanced_sequence": [],
+          "created_at": "2026-08-19T19:19:13.029628+00:00",
+          "updated_at": "2026-08-24T01:11:58.309301+00:00"
+        }
+      ]
+    },
+    {
+      "book_number": 2,
+      "chapters": []
+    },
+    {
+      "book_number": 3,
+      "chapters": []
+    },
+    {
+      "book_number": 4,
+      "chapters": []
+    },
+    {
+      "book_number": 5,
+      "chapters": []
+    },
+    {
+      "book_number": 6,
+      "chapters": []
+    },
+    {
+      "book_number": 7,
+      "chapters": []
+    },
+    {
+      "book_number": 8,
+      "chapters": []
+    },
+    {
+      "book_number": 9,
+      "chapters": []
+    },
+    {
+      "book_number": 10,
+      "chapters": []
+    },
+    {
+      "book_number": 11,
+      "chapters": []
+    }
+  ],
+  "created_at": "2026-08-19T19:19:13.029628+00:00",
+  "updated_at": "2026-08-24T01:11:58.309301+00:00"
+}

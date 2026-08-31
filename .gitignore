@@ -39,7 +39,12 @@ downloads/
 
 # Italus local runtime/generated artifacts
 budget_estimate_response.json
-data/projects/
+data/projects/*
+!data/projects/.gitkeep
+!data/projects/italus-saga/
+!data/projects/italus-saga/**
+!data/projects/sci-fi-test-templates-d6b26d13/
+!data/projects/sci-fi-test-templates-d6b26d13/**
 canon_sources/* - Copy.txt
 
 # Asset source bundles
@@ -53,3 +58,4 @@ tools/verify_italus_*_patch.ps1
 tools/rollback_italus_*_patch.ps1
 tools/docs_italus_*_patch.ps1
 desktop.ini
+.morpheus_backups/

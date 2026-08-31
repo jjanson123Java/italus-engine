@@ -200,6 +200,122 @@ def _verify_canon_reference_migration_persistence(
     }
 
 
+
+
+def _template_migration_metadata(snapshot: dict[str, Any]) -> dict[str, Any]:
+    """Return compact migration metadata stored in the active template snapshot."""
+
+    metadata = snapshot.get("metadata") if isinstance(snapshot, dict) else {}
+    if not isinstance(metadata, dict):
+        return {}
+    migration = metadata.get("template_migration")
+    return migration if isinstance(migration, dict) else {}
+
+
+def _current_snapshot_persistence(
+    *,
+    snapshot_path: Path,
+    snapshot: dict[str, Any],
+    expected_template_version: str,
+) -> dict[str, Any] | None:
+    """Resolve persistence from the active snapshot when no live artifacts are required.
+
+    New projects created on the current template have no migration metadata and
+    therefore need no migration audit files. Completed migrations carry a
+    compact finalized marker in template_snapshot.json; temporary reports and
+    rollback archives are no longer runtime dependencies after that marker is
+    written.
+    """
+
+    questionnaire = (
+        snapshot.get("questionnaire")
+        if isinstance(snapshot.get("questionnaire"), dict)
+        else {}
+    )
+    persisted_version = str(questionnaire.get("version") or "").strip()
+    if not snapshot_path.exists() or persisted_version != expected_template_version:
+        return None
+
+    migration = _template_migration_metadata(snapshot)
+    if not migration:
+        return {
+            "verified": True,
+            "snapshot_verified": True,
+            "template_report_verified": True,
+            "reference_report_verified": True,
+            "author_archive_verified": True,
+            "artifact_verification_required": False,
+            "verification_mode": "current_snapshot",
+            "expected_template_version": expected_template_version,
+            "persisted_template_version": persisted_version,
+            "template_snapshot_path": snapshot_path.name,
+            "template_migration_report_path": None,
+            "reference_migration_report_path": None,
+        }
+
+    finalized = bool(
+        migration.get("marker") == TEMPLATE_SNAPSHOT_MIGRATION_MARKER
+        and str(migration.get("to_template_version") or "").strip()
+        == expected_template_version
+        and migration.get("persistence_verified") is True
+    )
+    if not finalized:
+        return None
+
+    return {
+        "verified": True,
+        "snapshot_verified": True,
+        "template_report_verified": True,
+        "reference_report_verified": True,
+        "author_archive_verified": True,
+        "artifact_verification_required": False,
+        "verification_mode": "finalized_snapshot",
+        "expected_template_version": expected_template_version,
+        "persisted_template_version": persisted_version,
+        "template_snapshot_path": snapshot_path.name,
+        "template_migration_report_path": None,
+        "reference_migration_report_path": None,
+    }
+
+
+def _cleanup_completed_template_migration_artifacts(
+    context: ProjectContext,
+    *,
+    template_report_path: Path,
+    reference_report_path: Path,
+    template_archive_path: Path,
+    author_archive_path: Path | None,
+    previous_template_report_archive: Path | None,
+) -> list[str]:
+    """Remove transaction-only migration files after durable finalization is ready.
+
+    These files are rollback/verification artifacts for the migration
+    transaction itself. They are not Author Canon and are not retained as
+    permanent runtime dependencies.
+    """
+
+    candidates = [
+        template_report_path,
+        reference_report_path,
+        template_archive_path,
+        author_archive_path,
+        previous_template_report_archive,
+    ]
+    removed: list[str] = []
+    for path in candidates:
+        if path is None or not path.exists():
+            continue
+        if path.is_dir():
+            continue
+        path.unlink()
+        removed.append(_relative(path, context.project_dir))
+
+    archive_dir = project_canon_dir_for_context(context) / "archive"
+    if archive_dir.exists() and not any(archive_dir.iterdir()):
+        archive_dir.rmdir()
+
+    return removed
+
 def get_template_snapshot_migration_status(project_id: str) -> dict[str, Any]:
     """Return read-only template snapshot migration status for one project."""
 
@@ -208,11 +324,19 @@ def get_template_snapshot_migration_status(project_id: str) -> dict[str, Any]:
     return get_template_snapshot_migration_status_for_context(context, manifest.to_dict())
 
 
+
 def get_template_snapshot_migration_status_for_context(
     context: ProjectContext,
     manifest: dict[str, Any],
 ) -> dict[str, Any]:
-    """Compare the project-local snapshot with the active template and persisted migration state."""
+    """Compare the project-local snapshot with the active template.
+
+    Migration reports and rollback archives are transaction artifacts. A new
+    project on the current template needs none. A completed migration records a
+    compact finalized summary in template_snapshot.json and then operates from
+    that snapshot without permanent artifact dependencies. Legacy/in-progress
+    migrations still use the older artifact verifier and fail closed.
+    """
 
     snapshot_path = template_snapshot_path_for_context(context)
     snapshot = _load_json_if_present(snapshot_path, default={})
@@ -237,24 +361,53 @@ def get_template_snapshot_migration_status_for_context(
         and current_template_id != active_template_id
     )
 
-    report = _load_json_if_present(
-        template_migration_report_path_for_context(context),
-        default={},
-    )
-    reference_report = _load_json_if_present(
-        canon_reference_migration_report_path_for_context(context),
-        default={},
-    )
-    reconciliation = (
-        report.get("reconciliation_required")
-        if isinstance(report.get("reconciliation_required"), list)
-        else []
+    migration_metadata = _template_migration_metadata(snapshot)
+    finalized_migration = bool(
+        migration_metadata.get("marker") == TEMPLATE_SNAPSHOT_MIGRATION_MARKER
+        and migration_metadata.get("persistence_verified") is True
+        and str(migration_metadata.get("to_template_version") or "").strip()
+        == active_version
     )
 
-    persistence = _verify_canon_reference_migration_persistence(
-        context,
+    if finalized_migration:
+        reconciliation = (
+            migration_metadata.get("reconciliation_required")
+            if isinstance(migration_metadata.get("reconciliation_required"), list)
+            else []
+        )
+        reference_migration = (
+            deepcopy(migration_metadata.get("reference_migration"))
+            if isinstance(migration_metadata.get("reference_migration"), dict)
+            else {}
+        )
+    else:
+        report = _load_json_if_present(
+            template_migration_report_path_for_context(context),
+            default={},
+        )
+        reference_migration = _load_json_if_present(
+            canon_reference_migration_report_path_for_context(context),
+            default={},
+        )
+        reconciliation = (
+            report.get("reconciliation_required")
+            if isinstance(report.get("reconciliation_required"), list)
+            else []
+        )
+
+    persistence = _current_snapshot_persistence(
+        snapshot_path=snapshot_path,
+        snapshot=snapshot,
         expected_template_version=active_version,
     )
+    if persistence is None:
+        persistence = _verify_canon_reference_migration_persistence(
+            context,
+            expected_template_version=active_version,
+        )
+        persistence["artifact_verification_required"] = True
+        persistence["verification_mode"] = "legacy_migration_artifacts"
+
     version_migration_required = bool(
         snapshot_path.exists()
         and not template_conflict
@@ -288,11 +441,9 @@ def get_template_snapshot_migration_status_for_context(
         "persistence_verified": bool(persistence["verified"]),
         "persistence": deepcopy(persistence),
         "reconciliation_required": deepcopy(reconciliation),
-        "reference_migration": deepcopy(reference_report),
+        "reference_migration": deepcopy(reference_migration),
         "execution_locks": _execution_locks(),
     }
-
-
 
 def migrate_template_snapshot(project_id: str) -> dict[str, Any]:
     """Upgrade the project-local template snapshot without changing author story values."""
@@ -302,11 +453,17 @@ def migrate_template_snapshot(project_id: str) -> dict[str, Any]:
     return migrate_template_snapshot_for_context(context, manifest.to_dict())
 
 
+
 def migrate_template_snapshot_for_context(
     context: ProjectContext,
     manifest: dict[str, Any],
 ) -> dict[str, Any]:
-    """Upgrade the project snapshot and migrate declared Canon references safely."""
+    """Upgrade the project snapshot and migrate declared Canon references safely.
+
+    Migration reports and rollback archives are created only for the active
+    migration transaction. After the transaction verifies, the snapshot stores
+    a compact finalized summary and the temporary artifacts are removed.
+    """
 
     project_canon_dir_for_context(context, create=True)
     paths = _paths_for_context(context)
@@ -342,11 +499,11 @@ def migrate_template_snapshot_for_context(
         status = get_template_snapshot_migration_status_for_context(context, manifest)
         if not status.get("persistence_verified"):
             raise TemplateSnapshotMigrationConflictError(
-                "Project template version is current but Patch 15 persistence artifacts are incomplete. "
-                "Restore the pre-migration project state before retrying the upgrade."
+                "Project template version is current but its migration transaction is incomplete. "
+                "Restore or complete the migration before continuing Canon editing."
             )
         status["migrated"] = False
-        status["message"] = "Project template snapshot is already current and persistence is verified."
+        status["message"] = "Project template snapshot is already current."
         return status
 
     migrated_questionnaire = _merge_questionnaire_for_migration(
@@ -355,7 +512,7 @@ def migrate_template_snapshot_for_context(
         active_template_id=active_template_id,
     )
 
-    # Patch 14 stable record identity is a hard prerequisite for Patch 15.
+    # Stable record identity is a hard prerequisite for reference migration.
     backfill_existing_canon_record_identities(context.project_id)
     author_canon = _load_json_if_present(paths["author_canon"], default={})
     migrated_author_canon, reference_summary = canon_reference_service.migrate_author_canon_references(
@@ -406,6 +563,7 @@ def migrate_template_snapshot_for_context(
         "from_template_version": current_version or None,
         "to_template_version": active_version or None,
         "migrated_at": now,
+        "persistence_verified": False,
         "archive_path": _relative(archive_path, context.project_dir),
     }
     migrated_snapshot["metadata"] = metadata
@@ -455,24 +613,19 @@ def migrate_template_snapshot_for_context(
         "execution_locks": _execution_locks(),
     }
 
-    previous_template_report_path = template_migration_report_path_for_context(context)
+    template_report_path = template_migration_report_path_for_context(context)
     previous_template_report_archive = _canon_reference_previous_template_report_archive_path(context)
-    if previous_template_report_path.exists() and not previous_template_report_archive.exists():
+    if template_report_path.exists() and not previous_template_report_archive.exists():
         previous_template_report_archive.parent.mkdir(parents=True, exist_ok=True)
         project_loader.write_json(
             previous_template_report_archive,
-            _load_json_if_present(previous_template_report_path, default={}),
+            _load_json_if_present(template_report_path, default={}),
         )
 
+    reference_report_path = canon_reference_migration_report_path_for_context(context)
     project_loader.write_json(paths["template_snapshot"], migrated_snapshot)
-    project_loader.write_json(
-        previous_template_report_path,
-        report,
-    )
-    project_loader.write_json(
-        canon_reference_migration_report_path_for_context(context),
-        reference_report,
-    )
+    project_loader.write_json(template_report_path, report)
+    project_loader.write_json(reference_report_path, reference_report)
 
     persistence = _verify_canon_reference_migration_persistence(
         context,
@@ -483,19 +636,75 @@ def migrate_template_snapshot_for_context(
             "Canon template migration wrote project files but persistence verification failed."
         )
 
+    compact_reference_summary = {
+        "status": "ok",
+        "service": canon_reference_service.CANON_REFERENCE_SERVICE_MARKER,
+        "schema_version": canon_reference_service.CANON_REFERENCE_SCHEMA_VERSION,
+        "author_canon_modified": bool(reference_summary.get("changed")),
+        "author_story_content_modified": False,
+        "author_truth_invented": False,
+        "migrated_reference_field_count": int(
+            reference_summary.get("migrated_reference_field_count") or 0
+        ),
+        "migrated_reference_value_count": int(
+            reference_summary.get("migrated_reference_value_count") or 0
+        ),
+        "unresolved_count": int(reference_summary.get("unresolved_count") or 0),
+        "unresolved": deepcopy(reference_summary.get("unresolved") or []),
+    }
+
+    removed_artifacts = _cleanup_completed_template_migration_artifacts(
+        context,
+        template_report_path=template_report_path,
+        reference_report_path=reference_report_path,
+        template_archive_path=archive_path,
+        author_archive_path=author_archive_path if reference_summary.get("changed") else None,
+        previous_template_report_archive=previous_template_report_archive,
+    )
+
+    finalized_at = utc_now_iso()
+    metadata["updated_at"] = finalized_at
+    metadata["template_migration"] = {
+        "marker": TEMPLATE_SNAPSHOT_MIGRATION_MARKER,
+        "from_template_version": current_version or None,
+        "to_template_version": active_version or None,
+        "migrated_at": now,
+        "persistence_verified": True,
+        "verification_completed_at": finalized_at,
+        "author_canon_modified": bool(reference_summary.get("changed")),
+        "author_story_content_modified": False,
+        "reference_migration": compact_reference_summary,
+        "reconciliation_required": deepcopy(combined_reconciliation),
+        "reconciliation_required_count": report["reconciliation_required_count"],
+    }
+    migrated_snapshot["metadata"] = metadata
+    project_loader.write_json(paths["template_snapshot"], migrated_snapshot)
+
+    finalized_persistence = _current_snapshot_persistence(
+        snapshot_path=paths["template_snapshot"],
+        snapshot=migrated_snapshot,
+        expected_template_version=active_version,
+    )
+    if not finalized_persistence or not finalized_persistence.get("verified"):
+        raise TemplateSnapshotMigrationConflictError(
+            "Canon template migration finalized but the active snapshot did not verify."
+        )
+
     return {
         "status": "ok",
         "service": TEMPLATE_SNAPSHOT_MIGRATION_MARKER,
         "project_id": context.project_id,
         "migrated": True,
         "persistence_verified": True,
-        "persistence": deepcopy(persistence),
+        "persistence": deepcopy(finalized_persistence),
         "from_template_version": current_version or None,
         "to_template_version": active_version or None,
-        "archive_path": report["archive_path"],
+        "archive_path": None,
+        "migration_artifacts_retained": False,
+        "removed_migration_artifacts": removed_artifacts,
         "author_canon_modified": bool(reference_summary.get("changed")),
         "author_story_content_modified": False,
-        "reference_migration": deepcopy(reference_report),
+        "reference_migration": deepcopy(compact_reference_summary),
         "reconciliation_required": deepcopy(combined_reconciliation),
         "reconciliation_required_count": report["reconciliation_required_count"],
         "execution_locks": _execution_locks(),

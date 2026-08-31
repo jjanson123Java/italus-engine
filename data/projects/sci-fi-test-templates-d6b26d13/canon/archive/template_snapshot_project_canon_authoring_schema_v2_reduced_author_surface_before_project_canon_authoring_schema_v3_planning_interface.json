@@ -1,0 +1,701 @@
+{
+  "schema_version": "project_author_canon_v1",
+  "project_id": "sci-fi-test-templates-d6b26d13",
+  "template_id": "science_fiction",
+  "genre": "science_fiction",
+  "questionnaire": {
+    "template_id": "science_fiction",
+    "genre": "science_fiction",
+    "label": "Science Fiction",
+    "description": "Science-fiction canon with technology, science constraints, ships/planets, and faction logic.",
+    "version": "project_canon_authoring_schema_v2_reduced_author_surface",
+    "sections": [
+      {
+        "section_id": "project_bible",
+        "label": "Project Bible",
+        "required": true,
+        "purpose": "Define the narrative contract and project identity.",
+        "author_guidance": "Establish what the story promises to the reader.",
+        "fields": [
+          {
+            "field_id": "project_title",
+            "label": "Project title",
+            "field_type": "short_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "series_title",
+            "label": "Series title",
+            "field_type": "short_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "subgenre",
+            "label": "Subgenre",
+            "field_type": "short_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "target_audience",
+            "label": "Target audience",
+            "field_type": "short_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "narrative_promise",
+            "label": "Narrative promise",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "central_theme",
+            "label": "Central theme",
+            "field_type": "long_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "tone",
+            "label": "Tone",
+            "field_type": "long_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "content_boundaries",
+            "label": "Content boundaries",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "author_notes",
+            "label": "Author notes",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          }
+        ],
+        "records": []
+      },
+      {
+        "section_id": "world_bible",
+        "label": "Universe, Technology & Setting",
+        "required": true,
+        "purpose": "Define the setting, world rules, geography, and locations.",
+        "author_guidance": "Locations are maintained here so setting facts have one authority.",
+        "fields": [
+          {
+            "field_id": "setting_summary",
+            "label": "Setting summary",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "time_period",
+            "label": "Time period / era",
+            "field_type": "short_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "geography",
+            "label": "Geography",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "cultures",
+            "label": "Cultures and societies",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "social_rules",
+            "label": "Social rules",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "political_rules",
+            "label": "Political rules",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "economic_rules",
+            "label": "Economic rules",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "technology_or_magic_rules",
+            "label": "Technology or magic rules",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "forbidden_contradictions",
+            "label": "Forbidden contradictions",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "open_questions",
+            "label": "Open questions",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          }
+        ],
+        "records": [
+          {
+            "record_id": "locations",
+            "label": "Locations",
+            "field_type": "record_list",
+            "required": false,
+            "min_items": 0,
+            "help_text": "",
+            "fields": [
+              {
+                "field_id": "name",
+                "label": "Name",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "type",
+                "label": "Type",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "region",
+                "label": "Region",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "description",
+                "label": "Description",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "rules",
+                "label": "Location rules",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "associated_characters",
+                "label": "Associated characters",
+                "field_type": "long_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "associated_events",
+                "label": "Associated events",
+                "field_type": "long_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "sensory_details",
+                "label": "Sensory details",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "continuity_notes",
+                "label": "Continuity notes",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "character_bible",
+        "label": "Character Bible",
+        "required": true,
+        "purpose": "Create stable character records for continuity and story planning.",
+        "author_guidance": "Add one record for each major character or recurring entity.",
+        "fields": [],
+        "records": [
+          {
+            "record_id": "characters",
+            "label": "Characters",
+            "field_type": "record_list",
+            "required": true,
+            "min_items": 1,
+            "help_text": "Major characters, subjects, historical figures, or recurring entities.",
+            "fields": [
+              {
+                "field_id": "name",
+                "label": "Name",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "aliases",
+                "label": "Aliases",
+                "field_type": "long_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "role",
+                "label": "Narrative role",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "status",
+                "label": "Status",
+                "field_type": "select",
+                "required": true,
+                "help_text": "",
+                "placeholder": "",
+                "options": [
+                  "active",
+                  "dead",
+                  "missing",
+                  "unknown",
+                  "historical",
+                  "fictional"
+                ]
+              },
+              {
+                "field_id": "age_or_lifespan",
+                "label": "Age or lifespan",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "first_appearance",
+                "label": "First appearance",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "relationships",
+                "label": "Relationships",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "goals",
+                "label": "Goals",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "fears",
+                "label": "Fears",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "voice",
+                "label": "Voice",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "arc",
+                "label": "Character arc",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "canon_constraints",
+                "label": "Canon constraints",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "timeline_event_ledger",
+        "label": "Timeline, Missions & Major Events",
+        "required": true,
+        "purpose": "Control chronology, cause/effect, and immutable historical facts.",
+        "author_guidance": "Historical anchors are recorded as historical or hybrid events in this ledger.",
+        "fields": [],
+        "records": [
+          {
+            "record_id": "events",
+            "label": "Events",
+            "field_type": "record_list",
+            "required": true,
+            "min_items": 1,
+            "help_text": "Fictional, historical, and hybrid events maintained in one chronology.",
+            "fields": [
+              {
+                "field_id": "event_id",
+                "label": "Event ID",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "date_or_sequence",
+                "label": "Date or sequence",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "event_type",
+                "label": "Event type",
+                "field_type": "select",
+                "required": true,
+                "help_text": "",
+                "placeholder": "",
+                "options": [
+                  "fictional",
+                  "historical",
+                  "hybrid"
+                ]
+              },
+              {
+                "field_id": "historical_status",
+                "label": "Historical status",
+                "field_type": "select",
+                "required": true,
+                "help_text": "",
+                "placeholder": "",
+                "options": [
+                  "flexible",
+                  "constrained",
+                  "immutable"
+                ]
+              },
+              {
+                "field_id": "book",
+                "label": "Book / installment",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "location",
+                "label": "Location",
+                "field_type": "short_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "characters_present",
+                "label": "Characters present",
+                "field_type": "long_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "event_summary",
+                "label": "Event summary",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "cause",
+                "label": "Cause",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "effect",
+                "label": "Effect",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "fictional_interaction_allowed",
+                "label": "Fictional interaction allowed?",
+                "field_type": "boolean",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "allowed_interaction_notes",
+                "label": "Allowed interaction notes",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "must_not_change",
+                "label": "What must not change",
+                "field_type": "rich_text",
+                "required": false,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "continuity_constraints",
+                "label": "Continuity constraints",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "section_id": "technology_rules",
+        "label": "Technology Rules",
+        "required": true,
+        "purpose": "Define technical capabilities and limits.",
+        "author_guidance": "Future scenes must obey these constraints.",
+        "fields": [
+          {
+            "field_id": "core_technologies",
+            "label": "Core technologies",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "technology_limits",
+            "label": "Technology limits",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "ai_rules",
+            "label": "AI rules",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "travel_rules",
+            "label": "Travel / FTL rules",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "weapons_or_defense_rules",
+            "label": "Weapons / defense rules",
+            "field_type": "rich_text",
+            "required": false,
+            "help_text": "",
+            "placeholder": ""
+          },
+          {
+            "field_id": "scientific_impossibilities",
+            "label": "Scientific impossibilities",
+            "field_type": "rich_text",
+            "required": true,
+            "help_text": "",
+            "placeholder": ""
+          }
+        ],
+        "records": []
+      },
+      {
+        "section_id": "ships_planets_factions",
+        "label": "Ships, Planets, and Factions",
+        "required": true,
+        "purpose": "Define operational setting elements.",
+        "author_guidance": "Record every ship, planet, station, or faction that governs plot logic.",
+        "fields": [],
+        "records": [
+          {
+            "record_id": "systems",
+            "label": "Ships / Planets / Factions",
+            "field_type": "record_list",
+            "required": true,
+            "min_items": 1,
+            "help_text": "",
+            "fields": [
+              {
+                "field_id": "name",
+                "label": "Name",
+                "field_type": "short_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "type",
+                "label": "Type",
+                "field_type": "select",
+                "required": true,
+                "help_text": "",
+                "placeholder": "",
+                "options": [
+                  "ship",
+                  "planet",
+                  "station",
+                  "faction",
+                  "species",
+                  "organization"
+                ]
+              },
+              {
+                "field_id": "description",
+                "label": "Description",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "capabilities",
+                "label": "Capabilities",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              },
+              {
+                "field_id": "limits",
+                "label": "Limits",
+                "field_type": "rich_text",
+                "required": true,
+                "help_text": "",
+                "placeholder": ""
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "extends": "base",
+    "italus_guided": false,
+    "authoring_model": {
+      "author_input": "structured_fields_plus_rich_text",
+      "primary_storage": "project_local_json",
+      "readable_rendering": "project_local_markdown",
+      "future_compiled_packets": "generated_later_from_author_canon",
+      "xml_primary_storage": false,
+      "raw_text_primary_storage": false
+    },
+    "execution_locks": {
+      "generation_enabled": false,
+      "provider_execution_enabled": false,
+      "prompt_builder_enabled": false,
+      "draft_validation_enabled": false,
+      "approved_persistence_enabled": false,
+      "export_enabled": false
+    },
+    "completion_model": {
+      "section_count": 6,
+      "required_section_count": 6,
+      "required_field_count": 37,
+      "repeatable_record_count": 4,
+      "completion_rule": "all_required_sections_complete_and_required_fields_answered"
+    },
+    "service": "project-canon-template-questionnaire-boundary-20260715"
+  },
+  "metadata": {
+    "created_at": "2026-07-26T00:15:31.776088+00:00",
+    "source": "project-local-author-canon-storage-boundary-20260715",
+    "template_alignment": "canon-template-alignment-v3"
+  },
+  "execution_locks": {
+    "generation_enabled": false,
+    "provider_execution_enabled": false,
+    "prompt_builder_enabled": false,
+    "draft_validation_enabled": false,
+    "approved_persistence_enabled": false,
+    "export_enabled": false
+  }
+}

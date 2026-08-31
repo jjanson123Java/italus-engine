@@ -1,0 +1,333 @@
+{
+  "schema_version": "planner_reveal_catalog_v1",
+  "project_id": "italus-saga",
+  "threads": [
+    {
+      "reveal_id": "farovald-storm-fragment",
+      "title": "Who was at the 589 Pollino storm?",
+      "eligible_books": [
+        1
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "Who is the scarred man glimpsed during the 589 storm, and why does his presence matter to Luca's 789 discovery?",
+      "purpose": "Establish a controlled origin fragment without disclosing Farovald's age, longevity, later identities, or full biological connection.",
+      "next_reveal": "Show only the mature pine, violent storm, a human figure in contact with Italus, scorched palms, resin/cambium injury, and immediate sensory aftermath; return to 789 before explaining what the event did to the man.",
+      "forbidden_early_disclosure": "Do not state Farovald's age, full lifespan, immortality, later aliases, later guardian interventions, or final fate. Do not call him a guardian.",
+      "default_certainty": "hint",
+      "default_presentation": "foreshadowing",
+      "default_weight": "brief_clue"
+    },
+    {
+      "reveal_id": "farovald-nerve-reflex",
+      "title": "Why does Farovald physically react when Italus is stressed?",
+      "eligible_books": [
+        1
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "Is the monk merely observant, or is his body physically linked to Italus?",
+      "purpose": "Advance the mystery from unusual knowledge to a bounded physiological connection without revealing the full 589 mechanism.",
+      "next_reveal": "In a mid-Book-1 chapter, show Farovald experiencing a localized palm/nerve response that correlates with a major Italus root-pressure or resin-temperature change before he can physically inspect the tree.",
+      "forbidden_early_disclosure": "Do not describe telepathy, language, remote sight, prophecy, or the complete 589 biological mechanism. Do not disclose his total age.",
+      "default_certainty": "supported_evidence",
+      "default_presentation": "sensory_reveal",
+      "default_weight": "short_reveal_beat"
+    },
+    {
+      "reveal_id": "farovald-unaging-face",
+      "title": "Why has Farovald barely aged while Luca has?",
+      "eligible_books": [
+        1
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "How can the same monk look almost unchanged decades after Luca first met him?",
+      "purpose": "Make Farovald's abnormal longevity undeniable late in Book 1 while preserving the deeper mechanism and future history.",
+      "next_reveal": "Place the reveal after enough mainline time has passed for Luca to show unmistakable aging; Farovald's face and lightning-scarred hands remain recognizably unchanged.",
+      "forbidden_early_disclosure": "Do not move this reveal to 810; Luca is only about thirty-five then. Do not disclose Farovald's later aliases, full lifespan, or final-series resolution.",
+      "default_certainty": "corroborated_fact",
+      "default_presentation": "visual_contrast",
+      "default_weight": "major_scene_beat"
+    },
+    {
+      "reveal_id": "farovald-perimeter-pact",
+      "title": "What is Farovald's place beside the guardian line?",
+      "eligible_books": [
+        1
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "If Farovald is not a guardian, why does he keep returning to Luca and Italus?",
+      "purpose": "Close Book 1 by naming Farovald, confirming the 589 connection and defining his non-lineage perimeter role without exposing later-book identities or final fate.",
+      "next_reveal": "Near the Book-1 resolution, disclose Farovald's name, that he was directly altered in the 589 event, and that he will watch the wider secrecy perimeter while Luca's family carries guardianship.",
+      "forbidden_early_disclosure": "Do not make Farovald Guardian Zero, a succession authority, or the inventor of the entire guardian doctrine. Do not reveal later aliases or final fate.",
+      "default_certainty": "corroborated_fact",
+      "default_presentation": "dialogue",
+      "default_weight": "major_scene_beat"
+    },
+    {
+      "reveal_id": "farovald-returning-identity",
+      "title": "Which later stranger is Farovald?",
+      "eligible_books": [
+        3,
+        6,
+        7,
+        8,
+        10
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "Has the apparently ordinary monk, archivist, traveler, or warden appeared in another century under a different identity?",
+      "purpose": "Let the author decide when a later guardian or reader recognizes Farovald under a period-appropriate cover identity.",
+      "next_reveal": "Introduce one era-appropriate cover identity naturally, then reveal only the next justified physical or behavioral marker that links the person back to Farovald.",
+      "forbidden_early_disclosure": "Do not preload all future aliases into prose. Do not reveal every historical intervention or his final fate when a single returning identity is enough.",
+      "default_certainty": "suspicion",
+      "default_presentation": "foreshadowing",
+      "default_weight": "short_reveal_beat"
+    },
+    {
+      "reveal_id": "farovald-anselm-archive-cache",
+      "title": "Who left Anselm the coded botanical folio?",
+      "eligible_books": [
+        3
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "Is the archive folio merely an old monastic note, or a deliberately planted continuity cache connected to Farovald?",
+      "purpose": "Let the author introduce the first explicit later-era Farovald dead drop without forcing immediate recognition of his identity.",
+      "next_reveal": "Reveal the physical folio and one bounded route/record-gap clue first. Farovald's authorship can remain uncertain until the chapter has earned the connection.",
+      "forbidden_early_disclosure": "Do not reveal future dead drops, Farovald's complete chronology, or knowledge later than 1054. Do not let the folio solve every missing guardian record.",
+      "default_certainty": "supported_evidence",
+      "default_presentation": "physical_artifact",
+      "default_weight": "short_reveal_beat"
+    },
+    {
+      "reveal_id": "farovald-pietro-route-cache",
+      "title": "Who prepared Pietro's 1527 fallback route packet?",
+      "eligible_books": [
+        6
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "Why does a sealed route packet anticipate exactly the roads Pietro can still use after the Sack of Rome?",
+      "purpose": "Use Farovald's indirect assistance to preserve route continuity while keeping the destroyed journal genuinely lost.",
+      "next_reveal": "Show the waxed-linen packet, route strip, and safe-water annotations. Reveal authorship only when a physical/behavioral marker justifies the connection.",
+      "forbidden_early_disclosure": "Do not recreate the lost journal in full, predict the Sack, or expose later Farovald identities.",
+      "default_certainty": "supported_evidence",
+      "default_presentation": "physical_artifact",
+      "default_weight": "major_scene_beat"
+    },
+    {
+      "reveal_id": "farovald-agata-paper-cache",
+      "title": "Who left Agata the paper-life continuity packet?",
+      "eligible_books": [
+        7
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "Why does the packet understand the identity risks created by increasingly persistent government records?",
+      "purpose": "Introduce Farovald's accumulated administrative experience as bounded evidence that helps Agata adapt without importing later-century knowledge.",
+      "next_reveal": "Expose one or two era-correct observations about surname repetition, inheritance papers, or archive jurisdictions before confirming the packet's source.",
+      "forbidden_early_disclosure": "Do not use 19th/20th-century identity techniques in 1789, predict later governments, or make Farovald an omniscient planner.",
+      "default_certainty": "supported_evidence",
+      "default_presentation": "technical_record",
+      "default_weight": "short_reveal_beat"
+    },
+    {
+      "reveal_id": "farovald-theodora-contingency-cache",
+      "title": "Who prepared Theodora's 1940 Pollino contingency cache?",
+      "eligible_books": [
+        10
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "Who anticipated the routes, compromised roads, and surviving record location that Theodora needs during the wartime handoff?",
+      "purpose": "Provide a bounded wartime continuity bridge after Rosa's death while preserving destroyed-record consequences.",
+      "next_reveal": "Show the oilcloth/metal cache, maps, and one surviving-record pointer. Let the author decide when the Farovald connection becomes explicit.",
+      "forbidden_early_disclosure": "Do not restore destroyed records, disclose Farovald's final fate, or include post-1940 knowledge.",
+      "default_certainty": "supported_evidence",
+      "default_presentation": "physical_artifact",
+      "default_weight": "major_scene_beat"
+    },
+    {
+      "reveal_id": "farovald-final-guardian-analog-cache",
+      "title": "Why does the Final Guardian receive an analog fallback cache?",
+      "eligible_books": [
+        10,
+        11
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "Why has Farovald deliberately chosen physical maps and offline verification as digital records and mapping become more persistent?",
+      "purpose": "Turn the transition toward persistent digital records and mapping into a concrete continuity problem without revealing Farovald's final resolution.",
+      "next_reveal": "Reveal the analog fallback materials and the warning about repeated physical/digital patterns. Keep Farovald's endpoint separate behind the final-resolution thread.",
+      "forbidden_early_disclosure": "Do not predict specific future platforms, expose the final-resolution mechanism, or imply the cache appoints the Final Guardian.",
+      "default_certainty": "corroborated_fact",
+      "default_presentation": "physical_artifact",
+      "default_weight": "major_scene_beat"
+    },
+    {
+      "reveal_id": "farovald-final-resolution",
+      "title": "How does Farovald's long life finally end?",
+      "eligible_books": [
+        11
+      ],
+      "subject_record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "reader_question": "What biological limit finally closes Farovald's deep-time witness?",
+      "purpose": "Reserve Farovald's final resolution for Book 11 so Book 1 and intermediate books cannot automatically expose it.",
+      "next_reveal": "Do not define the final mechanism until Book 11 planning. Resolve it there against the then-current World Canon and the accumulated evidence established in prior books.",
+      "forbidden_early_disclosure": "No Book 1–10 chapter may state Farovald's exact endpoint, exact final mechanism, or a literal time-travel outcome as settled Canon.",
+      "default_certainty": "hint",
+      "default_presentation": "foreshadowing",
+      "default_weight": "brief_clue"
+    },
+    {
+      "reveal_id": "family-line-simonetta",
+      "title": "Who succeeds the family lineage?",
+      "eligible_books": [
+        2,
+        3
+      ],
+      "reader_question": "Who will inherit the family-line guardianship after Marco?",
+      "purpose": "Introduce Simonetta as a person before the reader is told that she is the next guardian, then let preparation and observation establish her significance.",
+      "next_reveal": "Advance only the next justified clue about Simonetta's preparation or succession significance; do not jump directly to the full handoff unless prior prose has earned it.",
+      "forbidden_early_disclosure": "Do not state Simonetta's complete guardian destiny before the approved succession reveal point.",
+      "default_certainty": "suspicion",
+      "default_presentation": "foreshadowing",
+      "default_weight": "brief_clue"
+    },
+    {
+      "reveal_id": "anselm-missing-knowledge",
+      "title": "Anselm detects missing knowledge",
+      "eligible_books": [
+        3
+      ],
+      "reader_question": "What has the guardian line forgotten or transmitted inconsistently?",
+      "purpose": "Turn the move from oral transmission to encoded records into a mystery about missing, inconsistent, or fragile knowledge.",
+      "next_reveal": "Show Anselm noticing a specific inconsistency or gap before revealing his decision to encode what survives.",
+      "forbidden_early_disclosure": "Do not present the later guardian record tradition as complete or already systematized.",
+      "default_certainty": "supported_evidence",
+      "default_presentation": "technical_record",
+      "default_weight": "short_reveal_beat"
+    },
+    {
+      "reveal_id": "amara-recruitment",
+      "title": "Why is Caterina interested in Amara?",
+      "eligible_books": [
+        4
+      ],
+      "reader_question": "Why is a court translator/document secretary becoming important to Caterina?",
+      "purpose": "Let Amara first function naturally in the court world, then gradually disclose that Caterina is evaluating her for a much larger responsibility.",
+      "next_reveal": "Reveal one additional reason Caterina trusts or evaluates Amara without yet making the full succession outcome obvious.",
+      "forbidden_early_disclosure": "Do not identify Amara as the next guardian at her first appearance.",
+      "default_certainty": "suspicion",
+      "default_presentation": "dialogue",
+      "default_weight": "short_reveal_beat"
+    },
+    {
+      "reveal_id": "plague-lost-record",
+      "title": "Lost or degraded guardian record during plague",
+      "eligible_books": [
+        5
+      ],
+      "reader_question": "What information disappeared during the plague years?",
+      "purpose": "Create a record-loss thread whose missing meaning can be recovered or inferred by later guardians.",
+      "next_reveal": "Establish the loss, damage, or incompleteness without immediately explaining everything the missing record contained.",
+      "forbidden_early_disclosure": "Do not reconstruct the complete missing content in the same beat that establishes the loss.",
+      "default_certainty": "supported_evidence",
+      "default_presentation": "physical_artifact",
+      "default_weight": "short_reveal_beat"
+    },
+    {
+      "reveal_id": "sack-of-rome-journal",
+      "title": "Sack of Rome lost journal",
+      "eligible_books": [
+        6
+      ],
+      "reader_question": "Which guardian knowledge was destroyed in 1527, and what survives elsewhere?",
+      "purpose": "Use the canon-supported journal destruction to create a cross-book information gap rather than a disposable historical detail.",
+      "next_reveal": "Show evidence of the journal's destruction or absence and preserve uncertainty about the unique information it contained.",
+      "forbidden_early_disclosure": "Do not let another intact record conveniently reproduce the destroyed journal in full.",
+      "default_certainty": "corroborated_fact",
+      "default_presentation": "physical_artifact",
+      "default_weight": "major_scene_beat"
+    },
+    {
+      "reveal_id": "galileo-record-doubt",
+      "title": "Galileo and Domenico's record doubt",
+      "eligible_books": [
+        7
+      ],
+      "reader_question": "If public knowledge can be forced, edited, or suppressed, how trustworthy are the guardian records?",
+      "purpose": "Use Galileo's forced recantation as an intellectual parallel that makes Domenico question transmission, suppression, and interpretation without changing Galileo's history.",
+      "next_reveal": "Let Domenico connect the trial to a specific doubt about guardian records or inherited interpretation, while keeping the historical outcome immutable.",
+      "forbidden_early_disclosure": "Do not imply that Domenico changes Galileo's trial or possesses hidden proof that alters recorded history.",
+      "default_certainty": "suspicion",
+      "default_presentation": "dialogue",
+      "default_weight": "short_reveal_beat"
+    },
+    {
+      "reveal_id": "emilio-identity-paper",
+      "title": "Emilio's identity-paper mystery",
+      "eligible_books": [
+        8
+      ],
+      "reader_question": "How can a long-lived guardian survive increasingly persistent identity records?",
+      "purpose": "Turn administrative modernization and longevity into an escalating identity-management problem.",
+      "next_reveal": "Expose one documentary inconsistency, repeated identity pattern, or paper trail that forces Emilio to adapt.",
+      "forbidden_early_disclosure": "Do not let modern records publicly prove the guardian longevity mechanism or Italus's secret.",
+      "default_certainty": "supported_evidence",
+      "default_presentation": "technical_record",
+      "default_weight": "short_reveal_beat"
+    },
+    {
+      "reveal_id": "serra-suspicion",
+      "title": "Serra, Rosa, and the Pollino secret",
+      "eligible_books": [
+        9,
+        10
+      ],
+      "reader_question": "What has Domenico Serra noticed, and how much does Rosa trust him to understand?",
+      "purpose": "Use Serra's bounded knowledge progression to bridge Rosa and Theodora without turning Serra into a guardian or giving him the complete secret.",
+      "next_reveal": "Advance Serra only one knowledge step supported by prior prose: suspicion, recognition of a Pollino-linked responsibility, or the need for succession.",
+      "forbidden_early_disclosure": "Do not give Serra full mobility, resin, signal-system, route, decoding-key, or complete guardian-record knowledge.",
+      "default_certainty": "suspicion",
+      "default_presentation": "dialogue",
+      "default_weight": "brief_clue"
+    },
+    {
+      "reveal_id": "wwii-destroyed-record",
+      "title": "WWII destroyed guardian record",
+      "eligible_books": [
+        10
+      ],
+      "reader_question": "What continuity knowledge was lost during the war?",
+      "purpose": "Create a second canon-supported information-loss point that compounds earlier fragmentation and matters to the final consolidation arc.",
+      "next_reveal": "Establish which record or collection is gone or inaccessible without immediately solving the resulting knowledge gap.",
+      "forbidden_early_disclosure": "Do not make the loss narratively meaningless by preserving an exact duplicate elsewhere.",
+      "default_certainty": "corroborated_fact",
+      "default_presentation": "physical_artifact",
+      "default_weight": "major_scene_beat"
+    },
+    {
+      "reveal_id": "future-guardian-identity",
+      "title": "The unnamed future guardian",
+      "eligible_books": [
+        10,
+        11
+      ],
+      "reader_question": "Which apparently ordinary person will become the Final Guardian?",
+      "purpose": "Introduce the eventual Final Guardian before formally identifying their narrative importance.",
+      "next_reveal": "Show the future guardian in an ordinary or secondary role and reveal only the next justified sign of Theodora's interest or preparation.",
+      "forbidden_early_disclosure": "Do not identify the person's full future significance until the author-approved succession point.",
+      "default_certainty": "hint",
+      "default_presentation": "foreshadowing",
+      "default_weight": "brief_clue"
+    },
+    {
+      "reveal_id": "final-consolidation",
+      "title": "The scattered record consolidation",
+      "eligible_books": [
+        11
+      ],
+      "reader_question": "What does the surviving guardian record reveal only when its scattered pieces are brought together?",
+      "purpose": "Use notebooks, monastery holdings, family collections, lost maps, and incomplete records as the series-level mystery spine.",
+      "next_reveal": "Recover or correlate one additional piece and show what new question or partial answer it creates; preserve the fact that no single historical record was complete.",
+      "forbidden_early_disclosure": "Do not collapse the fragmented tradition into one previously complete master record.",
+      "default_certainty": "supported_evidence",
+      "default_presentation": "technical_record",
+      "default_weight": "major_scene_beat"
+    }
+  ]
+}

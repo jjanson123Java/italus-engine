@@ -1,0 +1,168 @@
+{
+  "status": "ready_for_packet_generation",
+  "service": "project-canon-validation-boundary-20260725",
+  "schema_version": "project_canon_validation_report_v1",
+  "project_id": "italus-saga",
+  "template_id": "historical_epic",
+  "genre": "historical_epic",
+  "ready_for_packet_generation": true,
+  "required_sections_total": 5,
+  "required_sections_complete": 5,
+  "rendered_sources_total": 5,
+  "missing_required_sections": [],
+  "missing_rendered_sources": [],
+  "sections": [
+    {
+      "section_id": "project_bible",
+      "label": "Project Bible",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "001_project_bible.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/001_project_bible.md",
+        "size_bytes": 5057,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "ed7d7896c142308c637b87ef6f1537a8f7ef8f245ac4054e916598a766ec6c6e",
+        "current_content_hash": "ed7d7896c142308c637b87ef6f1537a8f7ef8f245ac4054e916598a766ec6c6e",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "section_id": "world_bible",
+      "label": "Historical World & Setting",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "002_world_bible.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/002_world_bible.md",
+        "size_bytes": 365801,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "0c397e486e06ed2639246f35b1c453dd0323af0cc5ce7ba05e9f3fc3e8fe4847",
+        "current_content_hash": "0c397e486e06ed2639246f35b1c453dd0323af0cc5ce7ba05e9f3fc3e8fe4847",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "section_id": "character_bible",
+      "label": "Character Bible",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "003_character_bible.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/003_character_bible.md",
+        "size_bytes": 93765,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "9fa02d2dcd9692ddfe06e9a395ae6ab9086ee0e710765a24dfb6bf96924ee07f",
+        "current_content_hash": "9fa02d2dcd9692ddfe06e9a395ae6ab9086ee0e710765a24dfb6bf96924ee07f",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "section_id": "timeline_event_ledger",
+      "label": "Timeline & Historical Event Ledger",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "004_timeline_event_ledger.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/004_timeline_event_ledger.md",
+        "size_bytes": 467501,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "9c644510961a9ab1709d6c77644126e66790265a91050feb9fb05434568f5313",
+        "current_content_hash": "9c644510961a9ab1709d6c77644126e66790265a91050feb9fb05434568f5313",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "section_id": "historical_interaction_map",
+      "label": "Historical Character Interaction Map",
+      "required": true,
+      "completion_status": "complete",
+      "complete": true,
+      "missing_required_fields": [],
+      "expected_markdown_file": "005_historical_interaction_map.md",
+      "markdown_file": {
+        "exists": true,
+        "relative_path": "canon/canon_sources/005_historical_interaction_map.md",
+        "size_bytes": 122082,
+        "freshness_verified": true,
+        "content_matches": true,
+        "rendered_from_hash": "5102529604cdfd4ccaf20a9b7cbb1d39ce9117ebdb6424c427dccf4fdf44607f",
+        "current_content_hash": "5102529604cdfd4ccaf20a9b7cbb1d39ce9117ebdb6424c427dccf4fdf44607f",
+        "verification_method": "embedded_sha256_and_template_version",
+        "render_status": "current",
+        "action_required": false
+      },
+      "issues": [],
+      "warnings": []
+    }
+  ],
+  "files": {
+    "author_canon": {
+      "exists": true,
+      "relative_path": "canon/author_canon.json",
+      "size_bytes": 1197108
+    },
+    "template_snapshot": {
+      "exists": true,
+      "relative_path": "canon/template_snapshot.json",
+      "size_bytes": 25414
+    },
+    "canon_completion": {
+      "exists": true,
+      "relative_path": "canon/canon_completion.json",
+      "size_bytes": 1888
+    }
+  },
+  "issues": [],
+  "warnings": [],
+  "locks": {
+    "generation_unlocked": false,
+    "provider_calls_allowed": false,
+    "runtime_writes_allowed": false,
+    "packet_generation_allowed": false
+  },
+  "execution_locks": {
+    "generation_enabled": false,
+    "provider_execution_enabled": false,
+    "prompt_builder_enabled": false,
+    "draft_validation_enabled": false,
+    "approved_persistence_enabled": false,
+    "export_enabled": false
+  },
+  "metadata": {
+    "validated_at": "2026-08-18T17:40:52.047315+00:00",
+    "source": "project-canon-validation-boundary-20260725"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "project_id": "italus-saga",
+  "current_phase": "WORKSPACE_GATE",
+  "current_step_id": "workspace",
+  "completed_steps": [
+    "project_metadata",
+    "genre_template",
+    "canon_groups",
+    "canon_setup"
+  ],
+  "incomplete_steps": [
+    "canon_sets"
+  ],
+  "required_canon_sets": [
+    "world_bible",
+    "character_bible",
+    "historical_character_interaction_map",
+    "appendix_signal_lexicon",
+    "timeline_drift_detector",
+    "continuity_prompt",
+    "book_generation_engine",
+    "master_storytelling_context",
+    "series_manifest",
+    "books_manifest",
+    "events_manifest",
+    "scene_types_manifest",
+    "pack_manifest",
+    "core_knowledge_pack",
+    "generation_knowledge_pack",
+    "book_knowledge_packs"
+  ],
+  "canon_set_statuses": {
+    "world_bible": "REFERENCE_DETECTED",
+    "character_bible": "REFERENCE_DETECTED",
+    "historical_character_interaction_map": "REFERENCE_DETECTED",
+    "appendix_signal_lexicon": "REFERENCE_DETECTED",
+    "timeline_drift_detector": "REFERENCE_DETECTED",
+    "continuity_prompt": "REFERENCE_DETECTED",
+    "book_generation_engine": "REFERENCE_DETECTED",
+    "master_storytelling_context": "REFERENCE_DETECTED",
+    "series_manifest": "REFERENCE_DETECTED",
+    "books_manifest": "REFERENCE_DETECTED",
+    "events_manifest": "REFERENCE_DETECTED",
+    "scene_types_manifest": "REFERENCE_DETECTED",
+    "pack_manifest": "REFERENCE_DETECTED",
+    "core_knowledge_pack": "REFERENCE_DETECTED",
+    "generation_knowledge_pack": "REFERENCE_DETECTED",
+    "book_knowledge_packs": "REFERENCE_DETECTED"
+  },
+  "canon_reset_pending": false,
+  "reset_canon_set_ids": [],
+  "last_saved_at": "2026-08-18T17:40:52.498016+00:00",
+  "last_opened_at": "2026-08-18T17:40:52.498016+00:00",
+  "resume_target": "workspace",
+  "can_enter_workspace": true,
+  "blocking_requirements": [],
+  "lifecycle_state": "READY_FOR_WORKSPACE",
+  "canon_groups_initialized": true,
+  "canon_workspace_initialized": true,
+  "canon_group_statuses": {
+    "editable_canon": "DETECTED",
+    "locked_rules": "DETECTED",
+    "system_support_files": "DETECTED",
+    "structured_indexes": "DETECTED",
+    "runtime_knowledge_packs": "DETECTED"
+  },
+  "canon_setup_completed": true,
+  "canon_setup_completed_at": "2026-08-18T17:40:52.498016+00:00"
+}

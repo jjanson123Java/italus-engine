@@ -1,0 +1,22 @@
+{
+  "project_id": "italus-saga",
+  "project_name": "Italus",
+  "project_kind": "series",
+  "series_name": "The Italus Saga",
+  "book_count": 11,
+  "chapters_per_book": 40,
+  "target_words_per_chapter": 4000,
+  "target_words_per_book": 160000,
+  "target_total_words": 1760000,
+  "token_budget_total": 4000000,
+  "token_budget_per_generation": 16000,
+  "genre": "historical_epic",
+  "subgenre": "Historical fantasy / historically grounded speculative saga.",
+  "template_id": "historical_epic",
+  "engine_id": "italus",
+  "ai_provider": "claude",
+  "lifecycle_state": "READY_FOR_WORKSPACE",
+  "previous_state_before_archive": null,
+  "created_at": "2026-08-18T17:40:51.263924+00:00",
+  "updated_at": "2026-08-18T17:40:52.498016+00:00"
+}

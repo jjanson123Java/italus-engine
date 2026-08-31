@@ -1,0 +1,46 @@
+{
+  "project_id": "sci-fi-test-templates-d6b26d13",
+  "current_phase": "WORKSPACE_GATE",
+  "current_step_id": "workspace",
+  "completed_steps": [
+    "project_metadata",
+    "canon_groups",
+    "canon_setup"
+  ],
+  "incomplete_steps": [
+    "genre_template",
+    "canon_sets"
+  ],
+  "required_canon_sets": [
+    "world_bible",
+    "technology_rules",
+    "faction_bible",
+    "timeline",
+    "project_knowledge_pack",
+    "book_knowledge_packs"
+  ],
+  "canon_set_statuses": {
+    "world_bible": "MISSING",
+    "technology_rules": "MISSING",
+    "faction_bible": "MISSING",
+    "timeline": "MISSING",
+    "project_knowledge_pack": "GENERATED_PENDING",
+    "book_knowledge_packs": "MISSING"
+  },
+  "canon_reset_pending": false,
+  "reset_canon_set_ids": [],
+  "last_saved_at": "2026-08-30T12:55:36.686728+00:00",
+  "last_opened_at": "2026-08-30T12:55:36.686728+00:00",
+  "resume_target": "workspace",
+  "can_enter_workspace": true,
+  "blocking_requirements": [],
+  "lifecycle_state": "READY_FOR_WORKSPACE",
+  "canon_groups_initialized": true,
+  "canon_workspace_initialized": true,
+  "canon_group_statuses": {
+    "editable_canon": "MISSING_REQUIRED",
+    "runtime_knowledge_packs": "GENERATED_PENDING"
+  },
+  "canon_setup_completed": true,
+  "canon_setup_completed_at": "2026-08-30T12:55:36.686728+00:00"
+}

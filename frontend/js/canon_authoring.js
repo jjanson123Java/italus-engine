@@ -17,6 +17,7 @@ write runtime memory, or unlock generation.
   const VALIDATION_STATUS_ROUTE_SUFFIX = '/canon/validation';
   const VALIDATION_RUN_ROUTE_SUFFIX = '/canon/validation/run';
   const TARGET_STATE = new Map();
+  let ACTIVE_EXPANDED_EDITOR = null;
 
   function escapeHtml(value) {
     return String(value ?? '')
@@ -341,23 +342,17 @@ write runtime memory, or unlock generation.
     }
 
     if (migration.persistence_conflict) {
-      const persistence = migration.persistence || {};
       return `
         <article class="canon-group-card" data-status="BLOCKED" data-canon-template-migration-panel>
           <header>
             <div>
-              <h3>Canon Template Persistence Error</h3>
-              <p class="canon-file-missing">The template version appears current, but required Patch 15 migration artifacts are missing or invalid.</p>
+              <h3>Canon Setup Needs Attention</h3>
+              <p class="canon-file-missing">This project's Canon template storage could not be fully verified.</p>
             </div>
             <span>BLOCKED</span>
           </header>
           <p class="setup-note">
-            Persistence verification failed. Do not continue Canon editing or begin the next migration patch.
-          </p>
-          <p class="setup-note">
-            Snapshot: ${persistence.snapshot_verified ? 'verified' : 'missing / invalid'} ·
-            Migration report: ${persistence.template_report_verified ? 'verified' : 'missing / invalid'} ·
-            Reference report: ${persistence.reference_report_verified ? 'verified' : 'missing / invalid'}
+            Editing is temporarily unavailable to protect your Canon. Repair the project setup before continuing.
           </p>
         </article>
       `;
@@ -506,10 +501,13 @@ write runtime memory, or unlock generation.
     }
 
     return `
-      <label class="canon-field-row">
+      <div class="canon-field-row">
         <span>${escapeHtml(label)}${required ? ' *' : ''}</span>
-        <textarea name="${escapeHtml(name)}" data-canon-field-id="${escapeHtml(fieldId)}" rows="${type === 'rich_text' ? '8' : '4'}" placeholder="${escapeHtml(placeholder)}">${escapeHtml(value || '')}</textarea>
-      </label>
+        <div class="canon-textarea-shell" data-canon-textarea-shell>
+          <textarea name="${escapeHtml(name)}" data-canon-field-id="${escapeHtml(fieldId)}" rows="${type === 'rich_text' ? '8' : '4'}" placeholder="${escapeHtml(placeholder)}" aria-label="${escapeHtml(label)}">${escapeHtml(value || '')}</textarea>
+          <button type="button" class="canon-textarea-expand" data-canon-expand-textarea data-canon-expand-label="${escapeHtml(label)}" title="Expand ${escapeHtml(label)}" aria-label="Expand ${escapeHtml(label)}">Expand</button>
+        </div>
+      </div>
       ${help}
     `;
   }
@@ -646,10 +644,13 @@ write runtime memory, or unlock generation.
     }
 
     return `
-      <label class="canon-field-row">
+      <div class="canon-field-row">
         <span>${fieldLabelHtml(field)}</span>
-        <textarea ${dataAttrs} rows="${type === 'rich_text' ? '6' : '3'}" placeholder="${escapeHtml(field.placeholder || '')}">${escapeHtml(value || '')}</textarea>
-      </label>
+        <div class="canon-textarea-shell" data-canon-textarea-shell>
+          <textarea ${dataAttrs} rows="${type === 'rich_text' ? '6' : '3'}" placeholder="${escapeHtml(field.placeholder || '')}" aria-label="${escapeHtml(field.label || fieldId || 'Canon field')}">${escapeHtml(value || '')}</textarea>
+          <button type="button" class="canon-textarea-expand" data-canon-expand-textarea data-canon-expand-label="${escapeHtml(field.label || fieldId || 'Canon field')}" title="Expand ${escapeHtml(field.label || fieldId || 'Canon field')}" aria-label="Expand ${escapeHtml(field.label || fieldId || 'Canon field')}">Expand</button>
+        </div>
+      </div>
       ${help}
     `;
   }
@@ -810,6 +811,103 @@ write runtime memory, or unlock generation.
     const next = Object.assign({}, current, config || {}, { targetId });
     TARGET_STATE.set(targetId, next);
     return next;
+  }
+
+  function closeExpandedCanonTextarea(restoreFocus = true) {
+    const active = ACTIVE_EXPANDED_EDITOR;
+    if (!active) return;
+
+    ACTIVE_EXPANDED_EDITOR = null;
+    document.removeEventListener('keydown', active.keydownHandler);
+    active.overlay.remove();
+    document.body.classList.remove('canon-expanded-editor-open');
+
+    if (restoreFocus && active.sourceTextarea && active.sourceTextarea.isConnected) {
+      window.requestAnimationFrame(() => {
+        active.sourceTextarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        active.sourceTextarea.focus({ preventScroll: true });
+      });
+    }
+  }
+
+  function openExpandedCanonTextarea(button) {
+    const shell = button.closest('[data-canon-textarea-shell]');
+    const sourceTextarea = shell ? shell.querySelector('textarea') : null;
+    if (!sourceTextarea) {
+      throw new Error('Canon field editor could not locate the source textarea.');
+    }
+
+    if (ACTIVE_EXPANDED_EDITOR) {
+      closeExpandedCanonTextarea(false);
+    }
+
+    const fieldLabel = String(
+      button.getAttribute('data-canon-expand-label')
+      || sourceTextarea.getAttribute('aria-label')
+      || 'Canon field'
+    ).trim() || 'Canon field';
+
+    const overlay = document.createElement('div');
+    overlay.className = 'canon-expanded-field-overlay';
+    overlay.setAttribute('data-canon-expanded-field-editor', '');
+    overlay.innerHTML = `
+      <section class="canon-expanded-field-panel" role="dialog" aria-modal="true" aria-label="Expanded editor for ${escapeHtml(fieldLabel)}">
+        <header class="canon-expanded-field-header">
+          <a href="#" class="canon-expanded-field-return" data-canon-expanded-return>&larr; Return to Canon</a>
+          <div>
+            <span class="canon-expanded-field-eyebrow">Expanded Canon Field</span>
+            <h3>${escapeHtml(fieldLabel)}</h3>
+            <p>Changes update the original field as you type. Press Esc or click the shaded area to return. Use the section's existing Save Draft action when you are ready to persist the Canon section.</p>
+          </div>
+        </header>
+        <textarea class="canon-expanded-field-input" data-canon-expanded-field-input aria-label="${escapeHtml(fieldLabel)}"></textarea>
+      </section>
+    `;
+
+    const expandedTextarea = overlay.querySelector('[data-canon-expanded-field-input]');
+    const returnLink = overlay.querySelector('[data-canon-expanded-return]');
+    expandedTextarea.value = sourceTextarea.value || '';
+    expandedTextarea.placeholder = sourceTextarea.placeholder || '';
+
+    const keydownHandler = (event) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      closeExpandedCanonTextarea(true);
+    };
+
+    expandedTextarea.addEventListener('input', () => {
+      sourceTextarea.value = expandedTextarea.value;
+      sourceTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    overlay.addEventListener('pointerdown', (event) => {
+      if (event.target === overlay) {
+        closeExpandedCanonTextarea(true);
+      }
+    });
+
+    returnLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      closeExpandedCanonTextarea(true);
+    });
+
+    ACTIVE_EXPANDED_EDITOR = {
+      overlay,
+      sourceTextarea,
+      keydownHandler
+    };
+
+    document.addEventListener('keydown', keydownHandler);
+    document.body.classList.add('canon-expanded-editor-open');
+    document.body.appendChild(overlay);
+
+    window.requestAnimationFrame(() => {
+      expandedTextarea.focus();
+      if (typeof expandedTextarea.setSelectionRange === 'function') {
+        const cursor = expandedTextarea.value.length;
+        expandedTextarea.setSelectionRange(cursor, cursor);
+      }
+    });
   }
 
   function collectFormPayload(form) {
@@ -990,9 +1088,15 @@ write runtime memory, or unlock generation.
       const renderSectionButton = event.target.closest('[data-canon-render-section-markdown]');
       const addButton = event.target.closest('[data-canon-add-record]');
       const removeButton = event.target.closest('[data-canon-remove-record]');
+      const expandTextareaButton = event.target.closest('[data-canon-expand-textarea]');
       const state = TARGET_STATE.get(target.id || 'canon-workbook-shell') || {};
 
       try {
+        if (expandTextareaButton) {
+          openExpandedCanonTextarea(expandTextareaButton);
+          return;
+        }
+
         if (migrationButton) {
           const result = await migrateCanonTemplate(state.projectId);
           const migration = result.migration || {};

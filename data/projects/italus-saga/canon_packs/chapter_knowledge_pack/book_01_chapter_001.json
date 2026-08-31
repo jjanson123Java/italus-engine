@@ -1,0 +1,1375 @@
+{
+  "assigned_event_refs": [
+    {
+      "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+      "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+      "record_type": "event",
+      "source_record_hash": "1afa071397267c3899fd80c3958ff913e9413dfffef85aa7084c72c627c4d7c9"
+    },
+    {
+      "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+      "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+      "record_type": "event",
+      "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+    }
+  ],
+  "book_number": 1,
+  "chapter_event_sequence": [
+    {
+      "anchor_event_ref": null,
+      "chapter_role": "opening",
+      "event_ref": {
+        "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+        "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+        "record_type": "event",
+        "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+      },
+      "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
+      "ordinal": 0,
+      "position": "opening",
+      "relationship_to_anchor": "same_anchor"
+    },
+    {
+      "anchor_event_ref": {
+        "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+        "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+        "record_type": "event",
+        "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+      },
+      "chapter_role": "reveal",
+      "event_ref": {
+        "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+        "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+        "record_type": "event",
+        "source_record_hash": "1afa071397267c3899fd80c3958ff913e9413dfffef85aa7084c72c627c4d7c9"
+      },
+      "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+      "ordinal": 1,
+      "position": "early",
+      "relationship_to_anchor": "remembers"
+    }
+  ],
+  "chapter_execution_contract": {
+    "contract_version": "chapter_execution_contract_v1",
+    "pov_contract": {
+      "character_refs": [
+        {
+          "label": "Luca",
+          "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+          "record_type": "character"
+        },
+        {
+          "label": "Farovald",
+          "record_id": "char_719cd0333a9840efa32e1870e223b939",
+          "record_type": "character"
+        }
+      ],
+      "configured": true,
+      "contract_version": "pov_contract_v1",
+      "head_hopping": "rapid_switching_forbidden",
+      "interior_access": "multiple_authorized_characters",
+      "narrator_scope": "omniscient",
+      "omniscient_style": "restrained",
+      "omniscient_style_label": "Restrained Omniscient",
+      "pov_type": "third_person_omniscient",
+      "pov_type_label": "Third-Person Omniscient",
+      "prompt_rules": [
+        "POV controls narrative access to consciousness; it does not control chapter participation.",
+        "Non-POV chapter participants may speak, act, react, move, interact, and affect events normally.",
+        "POV never overrides Canon, historical constraints, Book reveal boundaries, Story Controls, Chapter Plan requirements, or Approved Continuity.",
+        "Do not grant a POV character knowledge that the character cannot possess at the current story position.",
+        "Do not expose hidden or future Canon merely because a POV character learns it later in the story.",
+        "Do not invent a POV transition, narrator change, or interior-access permission that is not authorized by this contract.",
+        "Use third-person omniscient narration.",
+        "Direct interior access is permitted only for these authorized characters: Luca, Farovald.",
+        "The narrator may know information beyond one character's immediate perception only when that information is permitted by Canon and the Chapter Plan.",
+        "Do not reveal the private interior of an unauthorized character.",
+        "Do not use omniscience as permission for arbitrary sentence-level switching between minds.",
+        "Use restrained omniscience.",
+        "Maintain one stable focal center for substantial passages rather than alternating rapidly between private minds.",
+        "When interior focus changes, clearly ground the reader in the new authorized character before revealing that character's private experience.",
+        "Do not move from one private interior to another sentence-by-sentence merely for convenience.",
+        "A change of interior focus must be narratively grounded and sustained long enough to establish a coherent focal center."
+      ],
+      "pronoun_mode": "third_person"
+    },
+    "pov_refs": [
+      {
+        "label": "Luca",
+        "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+        "record_type": "character"
+      },
+      {
+        "label": "Farovald",
+        "record_id": "char_719cd0333a9840efa32e1870e223b939",
+        "record_type": "character"
+      }
+    ],
+    "required_additional_canon_refs": [],
+    "required_event_sequence": [
+      {
+        "anchor_event_ref": {},
+        "chapter_role": "opening",
+        "event_ref": {
+          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+          "record_type": "event"
+        },
+        "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
+        "ordinal": 1,
+        "position": "opening",
+        "relationship_to_anchor": "same_anchor"
+      },
+      {
+        "anchor_event_ref": {
+          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+          "record_type": "event"
+        },
+        "chapter_role": "reveal",
+        "event_ref": {
+          "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+          "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+          "record_type": "event"
+        },
+        "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+        "ordinal": 2,
+        "position": "early",
+        "relationship_to_anchor": "remembers"
+      }
+    ],
+    "required_location_refs": [
+      {
+        "label": "Pollino / Southern Italy",
+        "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+        "record_type": "location"
+      }
+    ],
+    "required_participant_refs": [
+      {
+        "label": "Luca",
+        "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+        "record_type": "character"
+      },
+      {
+        "label": "Farovald",
+        "record_id": "char_719cd0333a9840efa32e1870e223b939",
+        "record_type": "character"
+      },
+      {
+        "label": "Italus",
+        "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+        "record_type": "character"
+      }
+    ],
+    "semantics": {
+      "book_required": "Book Plan Required/Major fields are separate optional book-completion constraints and are not prerequisites for chapter participation.",
+      "book_selection": "Selected for Book controls downstream availability and does not by itself create a chapter-use obligation.",
+      "chapter_selection": "Author-selected chapter records are execution obligations for this chapter. They must be represented where their type and placement apply."
+    }
+  },
+  "chapter_number": 1,
+  "continuity": {
+    "approved_through": null,
+    "bounded_state": {},
+    "required": false,
+    "source_revision": "",
+    "source_sha256": ""
+  },
+  "dependency_set_sha256": "08b4e29f67f3f08b3a9fd41307705462652f22d6235e8fd6c86cfc5bc3a659af",
+  "event_placements": [
+    {
+      "anchor_event_ref": null,
+      "chapter_role": "opening",
+      "event_ref": {
+        "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+        "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+        "record_type": "event",
+        "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+      },
+      "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
+      "ordinal": 0,
+      "position": "opening",
+      "relationship_to_anchor": "same_anchor"
+    },
+    {
+      "anchor_event_ref": {
+        "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+        "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+        "record_type": "event",
+        "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+      },
+      "chapter_role": "reveal",
+      "event_ref": {
+        "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+        "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+        "record_type": "event",
+        "source_record_hash": "1afa071397267c3899fd80c3958ff913e9413dfffef85aa7084c72c627c4d7c9"
+      },
+      "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+      "ordinal": 1,
+      "position": "early",
+      "relationship_to_anchor": "remembers"
+    }
+  ],
+  "execution_locks": {
+    "approved_continuity_write_enabled": false,
+    "generation_enabled": false,
+    "master_canon_mutation_enabled": false,
+    "prompt_builder_enabled": false,
+    "provider_execution_enabled": false,
+    "runtime_memory_write_enabled": false
+  },
+  "generated_at": "2026-08-24T01:12:14.592227+00:00",
+  "mode": "chapter_1",
+  "pack_project_relative_path": "canon_packs/chapter_knowledge_pack/book_01_chapter_001.md",
+  "pack_sha256": "4537c8804630ec56fa23a68e29b6bc56e720e64656d6583f25f223bdab06b056",
+  "prior_ending_context": {
+    "character_count": 0,
+    "included": false,
+    "sha256": ""
+  },
+  "project_id": "italus-saga",
+  "prompt_facing_controls": {
+    "pov_contract": {
+      "character_refs": [
+        {
+          "label": "Luca",
+          "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+          "record_type": "character"
+        },
+        {
+          "label": "Farovald",
+          "record_id": "char_719cd0333a9840efa32e1870e223b939",
+          "record_type": "character"
+        }
+      ],
+      "configured": true,
+      "contract_version": "pov_contract_v1",
+      "head_hopping": "rapid_switching_forbidden",
+      "interior_access": "multiple_authorized_characters",
+      "narrator_scope": "omniscient",
+      "omniscient_style": "restrained",
+      "omniscient_style_label": "Restrained Omniscient",
+      "pov_type": "third_person_omniscient",
+      "pov_type_label": "Third-Person Omniscient",
+      "prompt_rules": [
+        "POV controls narrative access to consciousness; it does not control chapter participation.",
+        "Non-POV chapter participants may speak, act, react, move, interact, and affect events normally.",
+        "POV never overrides Canon, historical constraints, Book reveal boundaries, Story Controls, Chapter Plan requirements, or Approved Continuity.",
+        "Do not grant a POV character knowledge that the character cannot possess at the current story position.",
+        "Do not expose hidden or future Canon merely because a POV character learns it later in the story.",
+        "Do not invent a POV transition, narrator change, or interior-access permission that is not authorized by this contract.",
+        "Use third-person omniscient narration.",
+        "Direct interior access is permitted only for these authorized characters: Luca, Farovald.",
+        "The narrator may know information beyond one character's immediate perception only when that information is permitted by Canon and the Chapter Plan.",
+        "Do not reveal the private interior of an unauthorized character.",
+        "Do not use omniscience as permission for arbitrary sentence-level switching between minds.",
+        "Use restrained omniscience.",
+        "Maintain one stable focal center for substantial passages rather than alternating rapidly between private minds.",
+        "When interior focus changes, clearly ground the reader in the new authorized character before revealing that character's private experience.",
+        "Do not move from one private interior to another sentence-by-sentence merely for convenience.",
+        "A change of interior focus must be narratively grounded and sustained long enough to establish a coherent focal center."
+      ],
+      "pronoun_mode": "third_person"
+    },
+    "prose_rulebook": {
+      "prompt_text": "# GENERIC PROSE GENERATION RULEBOOK\n## Version 1.1 — Prose Mechanics + Quantitative Pre-Return Validation\n\n---\n\n## 1. PURPOSE\n\nThis rulebook governs prose mechanics for generated chapter text.\n\nIt controls:\n- target length\n- grammar\n- sentence construction\n- paragraph construction\n- punctuation\n- repetition\n- literary-device frequency\n- readability\n- output cleanliness\n\nIt does **not** define:\n- Canon facts\n- character identities\n- historical truth\n- chapter events\n- reveal permissions\n- Point of View (POV) type\n- POV character authorization\n- Author Voice\n- character knowledge\n- continuity state\n\nThose controls must come from their own authoritative inputs.\n\n---\n\n## 2. AUTHORITY AND PRECEDENCE\n\nWhen instructions conflict, apply this precedence:\n\n1. Canon and historical truth\n2. Book reveal and knowledge boundaries\n3. Story Controls\n4. Chapter Plan, required events, objectives, and restrictions\n5. POV Contract\n6. Author Voice\n7. This Prose Mechanics Rulebook\n8. Quantitative targets\n9. Output formatting\n\nNever violate a higher-priority instruction merely to satisfy a prose metric.\n\nDo not invent events, knowledge, dialogue, facts, or interior states merely to reach a target word count or punctuation count.\n\n---\n\n## 3. QUANTITATIVE METRICS\n\nThese metrics are generation constraints. They must be checked after the prose draft is complete and before the prose is returned to the calling application.\n\n| Metric | Target | Enforcement |\n|---|---|---|\n| Word Count | **Minimum 4,000 words** | **HARD PASS/FAIL** |\n| Em-dashes | 0–6 preferred, max 8 | Revise if above max |\n| Semicolons | 0–10 preferred, max 15 | Revise if above max |\n| Colons | Sparingly, max 3 | Revise if above max |\n| Ellipses | Only when justified, max 4 | Revise if above max |\n| Similes | Max 12 | Revise if above max |\n\n### Internal Quantitative Compliance Table\n\nAfter generation, populate this table internally from the completed prose before returning it to the application:\n\n| Metric | Target | Actual | Status |\n|---|---|---|---|\n| Word Count | Minimum 4,000 | Count completed prose | PASS if >= 4,000; otherwise FAIL and revise |\n| Em-dashes | 0–6 preferred, max 8 | Count completed prose | PASS if <= 8 |\n| Semicolons | 0–10 preferred, max 15 | Count completed prose | PASS if <= 15 |\n| Colons | Sparingly, max 3 | Count completed prose | PASS if <= 3 |\n| Ellipses | Justified only, max 4 | Count completed prose | PASS if <= 4 |\n| Similes | Max 12 | Evaluate/count completed prose | PASS if <= 12 |\n\nThis table is an internal validation structure. Do not include it in returned chapter prose unless the calling workflow explicitly requests a compliance report.\n\n### Word Count Rule\n\n- A generated chapter must contain **at least 4,000 words** before it is returned to the calling application.\n- A chapter below 4,000 words is **not complete** and must not be returned as final prose.\n- After drafting, determine the actual word count of the prose.\n- If the word count is below 4,000, revise and expand the existing chapter material before returning it.\n- Expansion must deepen or fully execute material already required by Canon, Chapter Plan, events, objectives, POV, continuity, dialogue, action, setting, or character interaction.\n- Do not invent new Canon, new events, unauthorized knowledge, filler scenes, redundant exposition, or repetitive description merely to reach 4,000 words.\n- After any expansion or revision, determine the word count again.\n- Repeat the revise-and-recount cycle until the prose is at least 4,000 words.\n- Do not claim compliance based on an estimated target alone; perform the pre-return check on the completed prose.\n- If another authoritative project setting requires a higher minimum word count, the higher minimum governs.\n- No upper word-count limit is imposed by this generic rulebook unless another authoritative project setting supplies one.\n\n### Quantitative Pre-Return Validation\n\nBefore returning prose to the application:\n\n1. Complete the prose draft.\n2. Determine the actual word count.\n3. If word count is below 4,000, mark the draft as failing internally and revise it.\n4. Recount after revision.\n5. Check punctuation and literary-device maxima.\n6. Revise any metric that exceeds a hard maximum without violating higher-priority story controls.\n7. Recheck all quantitative metrics after the final revision.\n8. Return prose only after the hard word-count minimum is satisfied.\n\nThe compliance check is internal. Do not include metric tables, counts, PASS/FAIL labels, or validation commentary in the returned chapter prose unless the calling workflow explicitly requests them.\n\n---\n\n## 4. GRAMMAR\n\n- Use grammatically complete prose unless a deliberate fragment serves dialogue, thought, rhythm, tension, or emphasis.\n- Maintain consistent tense unless the Chapter Plan explicitly requires a temporal shift.\n- Maintain grammatical person required by the active POV Contract.\n- Preserve clear subject-reference relationships.\n- Avoid accidental pronoun ambiguity.\n- Avoid malformed sentence joins and comma splices.\n- Avoid unnecessary passive construction when a clear active sentence is stronger.\n- Do not sacrifice meaning, Canon accuracy, POV control, or continuity for stylistic smoothness.\n- Dialogue may use natural contractions, fragments, interruptions, and incomplete syntax when appropriate to character speech.\n\n---\n\n## 5. SENTENCE ARCHITECTURE\n\n### General\n- Vary sentence length and structure.\n- Avoid monotonous repeated sentence patterns.\n- Avoid long runs of sentences with identical grammatical construction.\n- Use short sentences deliberately rather than habitually.\n\n### Very Short Sentences\nA very short sentence is approximately **8 words or fewer**.\n\nRules:\n- Use very short sentences for emphasis, impact, tension, reversal, clarity, or rhythm.\n- Avoid clustering several very short sentences unless the dramatic effect clearly requires it.\n- Do not allow very short sentences to dominate a paragraph or page.\n- Prefer syntactic variety over repeated subject-verb-object statements.\n\n### Long Sentences\n- Long sentences are acceptable when their structure remains clear.\n- Break sentences that become difficult to parse.\n- Avoid excessive nesting of clauses.\n- Do not use sentence length alone to manufacture a literary tone.\n\n---\n\n## 6. PARAGRAPH ARCHITECTURE\n\n- Vary paragraph length naturally.\n- Avoid mechanically uniform paragraph sizes.\n- Avoid repeated single-sentence paragraphs unless used deliberately for emphasis.\n- Dialogue paragraphs may remain short where normal dialogue formatting requires it.\n- Use paragraph breaks to support changes in action, speaker, focus, pacing, or emphasis.\n- Do not split paragraphs solely to manufacture visual drama.\n- Avoid dense blocks when a natural structural break improves readability.\n\n---\n\n## 7. PUNCTUATION\n\nPunctuation limits are anti-pattern controls, not quotas.\n\n### Em Dashes\n- Use sparingly.\n- Preferred: **0–6 per chapter**\n- Maximum: **8 per chapter**\n- Do not use em dashes as the default substitute for commas, parentheses, or periods.\n\n### Semicolons\n- Use sparingly.\n- Preferred: **0–10 per chapter**\n- Maximum: **15 per chapter**\n- Use only where two closely related independent clauses genuinely benefit from the connection.\n\n### Colons\n- Use sparingly.\n- Preferred maximum: **3 per chapter**\n- Use only when introducing an explanation, list, consequence, or formal expansion.\n\n### Ellipses\n- Use only when narratively justified.\n- Preferred maximum: **4 per chapter**\n- Appropriate uses include hesitation, trailing thought, interruption of cognition, or deliberate dissolution.\n- Do not insert ellipses merely to satisfy a stylistic pattern.\n\n### Exclamation Marks\n- Use rarely in narration.\n- Dialogue may use them when character emotion genuinely warrants them.\n- Avoid repeated exclamation marks.\n\n### Parentheses\n- Use minimally in narrative prose unless Author Voice explicitly favors them.\n\n---\n\n## 8. LITERARY DEVICES\n\n### Similes\n- Use selectively.\n- Preferred maximum: **12 per chapter**.\n- Avoid repeating the same comparison structure.\n- Favor concrete, context-appropriate imagery.\n- Do not force similes into passages that are already clear.\n\n### Metaphor\n- Use with restraint.\n- Avoid stacking multiple metaphors around the same object or idea.\n- Maintain metaphorical consistency within a passage.\n\n### Personification\n- Use selectively.\n- Do not let personification dominate descriptive prose.\n- Avoid making systems, landscapes, or objects seem intentional when that would create false factual implications.\n\n### Fragments\n- Use deliberately.\n- Appropriate for thought, impact, urgency, dialogue, or emphasis.\n- Avoid repeated fragment-heavy prose unless Author Voice explicitly requires it.\n\n---\n\n## 9. REPETITION CONTROL\n\n- Avoid repeating the same adjective, adverb, image, phrase, or sentence opening in close proximity.\n- Avoid restating information the reader already understands unless repetition serves deliberate emphasis.\n- Avoid redundant emotional labeling after emotion has already been shown through action or dialogue.\n- Avoid repetitive character-name use where pronouns remain clear.\n- Avoid excessive filtering phrases such as:\n  - \"he saw\"\n  - \"she noticed\"\n  - \"he realized\"\n  - \"she felt\"\n  - \"he knew\"\n  unless the filtering itself is narratively important.\n\n---\n\n## 10. DESCRIPTION AND EXPOSITION\n\n- Ground abstract information in concrete context when appropriate.\n- Prefer specific sensory or physical detail over generic description.\n- Do not overload passages with simultaneous sensory categories.\n- Avoid exposition that repeats Canon information without narrative purpose.\n- Do not convert structured Canon into encyclopedia-style prose unless the Chapter Plan requires exposition.\n- Integrate necessary background information into action, observation, dialogue, memory, or narration naturally.\n\n---\n\n## 11. DIALOGUE MECHANICS\n\n- Dialogue must sound distinct from surrounding narration.\n- Avoid dialogue that exists only to explain information both speakers already know.\n- Use dialogue tags clearly and unobtrusively.\n- Prefer \"said\" where no stronger action or clarification is required.\n- Avoid excessive adverbial dialogue tags.\n- Allow action beats to replace dialogue tags when speaker identity remains clear.\n- Do not force every spoken line to carry plot information.\n- Preserve natural interruptions, hesitation, silence, and incomplete thoughts when justified.\n\n---\n\n## 12. POV NON-INTERFERENCE RULE\n\nThis rulebook does not determine Point of View.\n\nThe active POV Contract controls:\n- grammatical perspective\n- authorized focal character or characters\n- interior-access permissions\n- narrator scope\n- knowledge boundaries\n- head-hopping restrictions\n\nAll grammar, punctuation, sentence, paragraph, and word-count rules in this rulebook must be satisfied **within** the active POV Contract.\n\nIf a prose-mechanics rule would cause a POV violation, the POV Contract wins.\n\nExamples:\n- Do not enter another character's private thoughts merely to add variety.\n- Do not switch narrators merely to improve pacing.\n- Do not change grammatical person to avoid sentence repetition.\n- Do not expose hidden knowledge to satisfy exposition needs.\n\n---\n\n## 13. AUTHOR VOICE NON-INTERFERENCE RULE\n\nThis rulebook defines mechanical quality, not project-specific voice.\n\nAuthor Voice may control:\n- diction\n- formality\n- cadence\n- descriptive density\n- dialogue style\n- tonal qualities\n- preferred imagery\n- degree of interiority\n- stylistic conventions\n\nWhere Author Voice and this rulebook differ, Author Voice takes precedence unless it would violate Canon, POV, or another higher-priority control.\n\n---\n\n## 14. ANTI-PADDING RULES\n\nNever add prose solely to satisfy a numerical target.\n\nDo not pad with:\n- repeated description\n- repeated emotional interpretation\n- unnecessary weather references\n- redundant dialogue\n- invented backstory\n- invented Canon\n- repeated summaries\n- unnecessary internal monologue\n- repeated sensory observations\n- artificial transitions\n- decorative metaphors without narrative function\n\n---\n\n## 15. ANTI-TRUNCATION RULES\n\nNever remove required material solely to satisfy a numerical maximum.\n\nDo not omit:\n- required events\n- required participants\n- required reveals\n- required restrictions\n- required transitions\n- required continuity\n- necessary cause-and-effect\n- necessary dialogue\n- necessary resolution\n\nIf prose exceeds the preferred target because required material cannot be responsibly compressed, preserve required material.\n\n---\n\n## 16. OUTPUT CLEANLINESS\n\nReturn chapter prose only unless the calling workflow explicitly requests analysis or metadata.\n\nDo not include:\n- compliance reports\n- word-count notes\n- punctuation counts\n- rule explanations\n- hidden reasoning\n- validator commentary\n- drafting notes\n- checklists\n- headings not requested by the chapter format\n\n---\n\n## 17. GENERATION SELF-CHECK\n\nBefore returning prose, verify:\n\n- Final prose contains at least 4,000 words, or a higher authoritative project minimum if one is configured.\n- Grammar is sound.\n- Tense is consistent.\n- Grammatical person matches the POV Contract.\n- Sentence lengths are varied.\n- Very short sentences are not excessively clustered.\n- Paragraph lengths are varied.\n- Em-dash use is within limit.\n- Semicolon use is within limit.\n- Colons are used sparingly.\n- Ellipses are justified and limited.\n- Similes are not excessive.\n- Repetition is controlled.\n- Required chapter material is not missing.\n- No content was invented solely to satisfy prose metrics.\n- POV rules were not altered by prose-mechanics requirements.\n- Canon and continuity were preserved.\n- Output contains prose only unless otherwise requested.\n\n---\n\n## 18. COMPLIANCE PRINCIPLE\n\nA mechanically perfect chapter that violates Canon, POV, continuity, required events, or reveal boundaries is a failed chapter.\n\nMechanical rules exist to improve prose quality.\n\nThey must never become more authoritative than story truth or narrative control.",
+      "sha256": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+      "version": "1.1"
+    }
+  },
+  "prose_rulebook": {
+    "filename": "generic_prose_generation_rulebook_v1_1.md",
+    "quantitative_metrics": {
+      "colons": {
+        "hard_maximum": 3
+      },
+      "ellipses": {
+        "hard_maximum": 4,
+        "must_be_narratively_justified": true
+      },
+      "em_dashes": {
+        "hard_maximum": 8,
+        "preferred_maximum": 6,
+        "preferred_minimum": 0
+      },
+      "semicolons": {
+        "hard_maximum": 15,
+        "preferred_maximum": 10,
+        "preferred_minimum": 0
+      },
+      "similes": {
+        "hard_maximum": 12
+      },
+      "word_count": {
+        "hard_fail_below_minimum": true,
+        "minimum": 4000
+      }
+    },
+    "sha256": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+    "version": "1.1"
+  },
+  "schema_version": "chapter_knowledge_pack_v3_pov_rulebook",
+  "selected_canon_refs": [
+    {
+      "label": "Luca",
+      "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+      "record_type": "character",
+      "source_record_hash": "c93c39f03672c5cc16f5163172c3473cbdb443f9137bc105879f2573c740b78e"
+    },
+    {
+      "label": "Farovald",
+      "record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "record_type": "character",
+      "source_record_hash": "f7357cf5781eb45231ef05af79ce31bb62c1b529d8719be98bd98787a1d523f1"
+    },
+    {
+      "label": "Italus",
+      "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+      "record_type": "character",
+      "source_record_hash": "3463a0fd9a97d6e27a0f1461f004e16c30d4a4c8e349cab417de31c3d8bf57bc"
+    },
+    {
+      "label": "Pollino / Southern Italy",
+      "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+      "record_type": "location",
+      "source_record_hash": "b173432c612c026978a8830549c9afd65e9cf4b6ada58fb3c7d0d6cabc7cfa6d"
+    }
+  ],
+  "service": "project-chapter-knowledge-pack-v3-pov-rulebook-20260823",
+  "source": {
+    "approved_continuity_revision": "",
+    "approved_continuity_sha256": "",
+    "approved_continuity_through": null,
+    "book_runtime_context_path": "canon_packs/book_runtime_context/book_01.md",
+    "book_runtime_context_sha256": "8077066ea129c664c505abe19678973bc6e2729366847548ccd01d9f07fa555d",
+    "canon_index_revision": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+    "chapter_plan_revision": 12,
+    "chapter_plan_sha256": "30e832a662e17c1432599696784d9f95ee4b1aa93eba4614bd8d6d362fdfc580",
+    "progression_override_revision": 0,
+    "progression_override_sha256": "f7bde2c42980713730ce6211d447037fe8632087a8255aeef92b788c2c91a0bd",
+    "prose_rulebook_sha256": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+    "prose_rulebook_version": "1.1",
+    "story_control_revision": 9,
+    "story_control_sha256": "7050177c644c8809bf204bf0e15fd117d6ea22904997362a48b1ad573f7e29e7"
+  },
+  "story_control_refs": [
+    "story-control-43694f1e3338401d"
+  ],
+  "story_controls": [
+    {
+      "allowed_interpretations": [
+        "The monk was physically present at the old storm.",
+        "His palms carry old lightning damage.",
+        "He knows the Pollino terrain and Luca's repeated visits unusually well."
+      ],
+      "book_number": 1,
+      "certainty": "hint",
+      "chapter_number": 1,
+      "control_id": "story-control-43694f1e3338401d",
+      "control_type": "mystery_reveal",
+      "created_at": "2026-08-23T19:26:49.922922+00:00",
+      "effective_point": "current_unit",
+      "forbidden_assertions": [
+        "Farovald is a guardian or Guardian Zero.",
+        "Farovald's exact age or full lifespan.",
+        "Farovald is immortal by magic.",
+        "Farovald and Italus communicate telepathically or linguistically.",
+        "Farovald's later aliases, later interventions, or final fate."
+      ],
+      "instruction": "Reveal only the approved 589 storm fragment: mature Italus in the storm, a human figure in direct contact with the tree, lightning injury, scorched palms, resin/cambium damage, and immediate sensory aftermath. Return to Luca's 789 discovery before explaining the man's age, longevity, full biological connection, later identities, or future role. In the 789 mainline he appears only as a reclusive monk who later advises Luca to use prayer as a credible cover story.",
+      "knowledge_ceiling": "Book 1 Chapter 1 storm fragment only",
+      "narrative_weight": "brief_clue",
+      "notes": "Instantiated from farovald-storm-fragment during the developer Canon migration.",
+      "persistence": "chapter_local",
+      "presentation": "foreshadowing",
+      "protection": {
+        "checked": true,
+        "eligibility_status": "ACTIVE",
+        "message": "Active at the current story position.",
+        "reason_codes": []
+      },
+      "protection_snapshot": {
+        "checked": true,
+        "eligibility_status": "ACTIVE",
+        "message": "Active at the current story position.",
+        "reason_codes": []
+      },
+      "semantic_guard": {
+        "chosen_certainty": "hint",
+        "complete_semantic_interpretation": false,
+        "matched_phrase": "",
+        "message": "No obvious certainty-strength conflict detected; full semantic interpretation is deferred.",
+        "minimum_obvious_certainty": "",
+        "mismatch": false,
+        "mode": "deterministic_obvious_mismatch_only"
+      },
+      "semantic_guard_snapshot": {
+        "chosen_certainty": "hint",
+        "complete_semantic_interpretation": false,
+        "matched_phrase": "",
+        "message": "No obvious certainty-strength conflict detected; full semantic interpretation is deferred.",
+        "minimum_obvious_certainty": "",
+        "mismatch": false,
+        "mode": "deterministic_obvious_mismatch_only"
+      },
+      "status": "PLANNED",
+      "subject_ref": {
+        "label": "Farovald",
+        "record_id": "char_719cd0333a9840efa32e1870e223b939",
+        "record_type": "character",
+        "source_record_hash": "bd3c353e814502930af882935240499b9af79a6759651f2dd4431314d77be125"
+      },
+      "updated_at": "2026-08-23T19:26:49.922934+00:00",
+      "validation": {
+        "issues": [],
+        "valid": true
+      },
+      "validation_snapshot": {
+        "issues": [],
+        "valid": true
+      },
+      "who_learns": []
+    }
+  ],
+  "token_accounting": {
+    "book_runtime_context_estimated_tokens": 41967,
+    "chapter_knowledge_pack_estimated_tokens": 18736,
+    "full_project_runtime_context_estimated_tokens": 271580,
+    "reduction_from_book_runtime_context": 23231,
+    "reduction_from_book_runtime_context_percent": 55.36,
+    "reduction_from_full_project_runtime_context": 252844,
+    "reduction_from_full_project_runtime_context_percent": 93.1
+  },
+  "unlock_evaluations": [
+    {
+      "decision": {
+        "allowed_actions": [
+          "continue"
+        ],
+        "author_message": "Active at the current story position.",
+        "available": true,
+        "available_from_book": 1,
+        "candidate_ref": {
+          "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+          "record_group_id": "events",
+          "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+          "record_type": "event",
+          "story_code": "LEGACY-EVENT-001"
+        },
+        "completed_prerequisites": [],
+        "current_position": {
+          "book_number": 1,
+          "chapter_number": 1
+        },
+        "diagnostics": {},
+        "execution_locks": {
+          "approved_continuity_write_enabled": false,
+          "audited_override_write_enabled": false,
+          "book_scope_mutation_enabled": false,
+          "generation_enabled": false,
+          "planner_model_enabled": false,
+          "prompt_builder_enabled": false,
+          "provider_execution_enabled": false
+        },
+        "in_book": false,
+        "missing_prerequisites": [],
+        "override_applied": false,
+        "override_history": [],
+        "override_record": {},
+        "project_id": "italus-saga",
+        "reason_codes": [],
+        "requested_use": "event_placement",
+        "requirement_policy": "ALL",
+        "requirements": [],
+        "schema_version": "story_eligibility_v1",
+        "selected": true,
+        "service": "project-story-eligibility-boundary-20260816",
+        "source_continuity_hash": "",
+        "source_continuity_revision": "",
+        "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+        "status": "ACTIVE"
+      },
+      "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+      "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+      "record_type": "event",
+      "requested_use": "event_placement"
+    },
+    {
+      "decision": {
+        "allowed_actions": [
+          "continue"
+        ],
+        "author_message": "Active at the current story position.",
+        "available": true,
+        "available_from_book": 1,
+        "candidate_ref": {
+          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+          "record_group_id": "events",
+          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+          "record_type": "event",
+          "story_code": "BOOK1-LUCA-DISCOVERY"
+        },
+        "completed_prerequisites": [],
+        "current_position": {
+          "book_number": 1,
+          "chapter_number": 1
+        },
+        "diagnostics": {},
+        "execution_locks": {
+          "approved_continuity_write_enabled": false,
+          "audited_override_write_enabled": false,
+          "book_scope_mutation_enabled": false,
+          "generation_enabled": false,
+          "planner_model_enabled": false,
+          "prompt_builder_enabled": false,
+          "provider_execution_enabled": false
+        },
+        "in_book": false,
+        "missing_prerequisites": [],
+        "override_applied": false,
+        "override_history": [],
+        "override_record": {},
+        "project_id": "italus-saga",
+        "reason_codes": [],
+        "requested_use": "event_placement",
+        "requirement_policy": "ALL",
+        "requirements": [],
+        "schema_version": "story_eligibility_v1",
+        "selected": true,
+        "service": "project-story-eligibility-boundary-20260816",
+        "source_continuity_hash": "",
+        "source_continuity_revision": "",
+        "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+        "status": "ACTIVE"
+      },
+      "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+      "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+      "record_type": "event",
+      "requested_use": "event_placement"
+    },
+    {
+      "decision": {
+        "allowed_actions": [
+          "continue"
+        ],
+        "author_message": "Active at the current story position.",
+        "available": true,
+        "available_from_book": 1,
+        "candidate_ref": {
+          "label": "Luca",
+          "record_group_id": "characters",
+          "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+          "record_type": "character",
+          "story_code": ""
+        },
+        "completed_prerequisites": [],
+        "current_position": {
+          "book_number": 1,
+          "chapter_number": 1
+        },
+        "diagnostics": {},
+        "execution_locks": {
+          "approved_continuity_write_enabled": false,
+          "audited_override_write_enabled": false,
+          "book_scope_mutation_enabled": false,
+          "generation_enabled": false,
+          "planner_model_enabled": false,
+          "prompt_builder_enabled": false,
+          "provider_execution_enabled": false
+        },
+        "in_book": false,
+        "missing_prerequisites": [],
+        "override_applied": false,
+        "override_history": [],
+        "override_record": {},
+        "project_id": "italus-saga",
+        "reason_codes": [],
+        "requested_use": "chapter_selection",
+        "requirement_policy": "ALL",
+        "requirements": [],
+        "schema_version": "story_eligibility_v1",
+        "selected": true,
+        "service": "project-story-eligibility-boundary-20260816",
+        "source_continuity_hash": "",
+        "source_continuity_revision": "",
+        "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+        "status": "ACTIVE"
+      },
+      "label": "Luca",
+      "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+      "record_type": "character",
+      "requested_use": "chapter_selection"
+    },
+    {
+      "decision": {
+        "allowed_actions": [
+          "continue"
+        ],
+        "author_message": "Active at the current story position.",
+        "available": true,
+        "available_from_book": 1,
+        "candidate_ref": {
+          "label": "Farovald",
+          "record_group_id": "characters",
+          "record_id": "char_719cd0333a9840efa32e1870e223b939",
+          "record_type": "character",
+          "story_code": ""
+        },
+        "completed_prerequisites": [],
+        "current_position": {
+          "book_number": 1,
+          "chapter_number": 1
+        },
+        "diagnostics": {},
+        "execution_locks": {
+          "approved_continuity_write_enabled": false,
+          "audited_override_write_enabled": false,
+          "book_scope_mutation_enabled": false,
+          "generation_enabled": false,
+          "planner_model_enabled": false,
+          "prompt_builder_enabled": false,
+          "provider_execution_enabled": false
+        },
+        "in_book": false,
+        "missing_prerequisites": [],
+        "override_applied": false,
+        "override_history": [],
+        "override_record": {},
+        "project_id": "italus-saga",
+        "reason_codes": [],
+        "requested_use": "chapter_selection",
+        "requirement_policy": "ALL",
+        "requirements": [],
+        "schema_version": "story_eligibility_v1",
+        "selected": true,
+        "service": "project-story-eligibility-boundary-20260816",
+        "source_continuity_hash": "",
+        "source_continuity_revision": "",
+        "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+        "status": "ACTIVE"
+      },
+      "label": "Farovald",
+      "record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "record_type": "character",
+      "requested_use": "chapter_selection"
+    },
+    {
+      "decision": {
+        "allowed_actions": [
+          "continue"
+        ],
+        "author_message": "Active at the current story position.",
+        "available": true,
+        "available_from_book": 1,
+        "candidate_ref": {
+          "label": "Italus",
+          "record_group_id": "characters",
+          "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+          "record_type": "character",
+          "story_code": ""
+        },
+        "completed_prerequisites": [],
+        "current_position": {
+          "book_number": 1,
+          "chapter_number": 1
+        },
+        "diagnostics": {},
+        "execution_locks": {
+          "approved_continuity_write_enabled": false,
+          "audited_override_write_enabled": false,
+          "book_scope_mutation_enabled": false,
+          "generation_enabled": false,
+          "planner_model_enabled": false,
+          "prompt_builder_enabled": false,
+          "provider_execution_enabled": false
+        },
+        "in_book": false,
+        "missing_prerequisites": [],
+        "override_applied": false,
+        "override_history": [],
+        "override_record": {},
+        "project_id": "italus-saga",
+        "reason_codes": [],
+        "requested_use": "chapter_selection",
+        "requirement_policy": "ALL",
+        "requirements": [],
+        "schema_version": "story_eligibility_v1",
+        "selected": true,
+        "service": "project-story-eligibility-boundary-20260816",
+        "source_continuity_hash": "",
+        "source_continuity_revision": "",
+        "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+        "status": "ACTIVE"
+      },
+      "label": "Italus",
+      "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+      "record_type": "character",
+      "requested_use": "chapter_selection"
+    },
+    {
+      "decision": {
+        "allowed_actions": [
+          "continue"
+        ],
+        "author_message": "Active at the current story position.",
+        "available": true,
+        "available_from_book": 1,
+        "candidate_ref": {
+          "label": "Pollino / Southern Italy",
+          "record_group_id": "locations",
+          "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+          "record_type": "location",
+          "story_code": ""
+        },
+        "completed_prerequisites": [],
+        "current_position": {
+          "book_number": 1,
+          "chapter_number": 1
+        },
+        "diagnostics": {},
+        "execution_locks": {
+          "approved_continuity_write_enabled": false,
+          "audited_override_write_enabled": false,
+          "book_scope_mutation_enabled": false,
+          "generation_enabled": false,
+          "planner_model_enabled": false,
+          "prompt_builder_enabled": false,
+          "provider_execution_enabled": false
+        },
+        "in_book": false,
+        "missing_prerequisites": [],
+        "override_applied": false,
+        "override_history": [],
+        "override_record": {},
+        "project_id": "italus-saga",
+        "reason_codes": [],
+        "requested_use": "chapter_selection",
+        "requirement_policy": "ALL",
+        "requirements": [],
+        "schema_version": "story_eligibility_v1",
+        "selected": true,
+        "service": "project-story-eligibility-boundary-20260816",
+        "source_continuity_hash": "",
+        "source_continuity_revision": "",
+        "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+        "status": "ACTIVE"
+      },
+      "label": "Pollino / Southern Italy",
+      "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+      "record_type": "location",
+      "requested_use": "chapter_selection"
+    }
+  ],
+  "validator_sidecar": {
+    "allowed_reveals": [
+      "farovald-storm-fragment",
+      "farovald-nerve-reflex",
+      "farovald-unaging-face",
+      "farovald-perimeter-pact"
+    ],
+    "approved_continuity_source_revision": "",
+    "approved_continuity_source_sha256": "",
+    "chapter_execution_contract": {
+      "contract_version": "chapter_execution_contract_v1",
+      "pov_contract": {
+        "character_refs": [
+          {
+            "label": "Luca",
+            "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+            "record_type": "character"
+          },
+          {
+            "label": "Farovald",
+            "record_id": "char_719cd0333a9840efa32e1870e223b939",
+            "record_type": "character"
+          }
+        ],
+        "configured": true,
+        "contract_version": "pov_contract_v1",
+        "head_hopping": "rapid_switching_forbidden",
+        "interior_access": "multiple_authorized_characters",
+        "narrator_scope": "omniscient",
+        "omniscient_style": "restrained",
+        "omniscient_style_label": "Restrained Omniscient",
+        "pov_type": "third_person_omniscient",
+        "pov_type_label": "Third-Person Omniscient",
+        "prompt_rules": [
+          "POV controls narrative access to consciousness; it does not control chapter participation.",
+          "Non-POV chapter participants may speak, act, react, move, interact, and affect events normally.",
+          "POV never overrides Canon, historical constraints, Book reveal boundaries, Story Controls, Chapter Plan requirements, or Approved Continuity.",
+          "Do not grant a POV character knowledge that the character cannot possess at the current story position.",
+          "Do not expose hidden or future Canon merely because a POV character learns it later in the story.",
+          "Do not invent a POV transition, narrator change, or interior-access permission that is not authorized by this contract.",
+          "Use third-person omniscient narration.",
+          "Direct interior access is permitted only for these authorized characters: Luca, Farovald.",
+          "The narrator may know information beyond one character's immediate perception only when that information is permitted by Canon and the Chapter Plan.",
+          "Do not reveal the private interior of an unauthorized character.",
+          "Do not use omniscience as permission for arbitrary sentence-level switching between minds.",
+          "Use restrained omniscience.",
+          "Maintain one stable focal center for substantial passages rather than alternating rapidly between private minds.",
+          "When interior focus changes, clearly ground the reader in the new authorized character before revealing that character's private experience.",
+          "Do not move from one private interior to another sentence-by-sentence merely for convenience.",
+          "A change of interior focus must be narratively grounded and sustained long enough to establish a coherent focal center."
+        ],
+        "pronoun_mode": "third_person"
+      },
+      "pov_refs": [
+        {
+          "label": "Luca",
+          "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+          "record_type": "character"
+        },
+        {
+          "label": "Farovald",
+          "record_id": "char_719cd0333a9840efa32e1870e223b939",
+          "record_type": "character"
+        }
+      ],
+      "required_additional_canon_refs": [],
+      "required_event_sequence": [
+        {
+          "anchor_event_ref": {},
+          "chapter_role": "opening",
+          "event_ref": {
+            "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+            "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+            "record_type": "event"
+          },
+          "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
+          "ordinal": 1,
+          "position": "opening",
+          "relationship_to_anchor": "same_anchor"
+        },
+        {
+          "anchor_event_ref": {
+            "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+            "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+            "record_type": "event"
+          },
+          "chapter_role": "reveal",
+          "event_ref": {
+            "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+            "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+            "record_type": "event"
+          },
+          "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+          "ordinal": 2,
+          "position": "early",
+          "relationship_to_anchor": "remembers"
+        }
+      ],
+      "required_location_refs": [
+        {
+          "label": "Pollino / Southern Italy",
+          "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+          "record_type": "location"
+        }
+      ],
+      "required_participant_refs": [
+        {
+          "label": "Luca",
+          "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+          "record_type": "character"
+        },
+        {
+          "label": "Farovald",
+          "record_id": "char_719cd0333a9840efa32e1870e223b939",
+          "record_type": "character"
+        },
+        {
+          "label": "Italus",
+          "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+          "record_type": "character"
+        }
+      ],
+      "semantics": {
+        "book_required": "Book Plan Required/Major fields are separate optional book-completion constraints and are not prerequisites for chapter participation.",
+        "book_selection": "Selected for Book controls downstream availability and does not by itself create a chapter-use obligation.",
+        "chapter_selection": "Author-selected chapter records are execution obligations for this chapter. They must be represented where their type and placement apply."
+      }
+    },
+    "chapter_restrictions": [
+      "Chapter 1 may disclose only the attached Farovald storm-fragment Story Control.",
+      "Do not disclose Farovald's exact age, full lifespan, later aliases, later interventions, or final fate.",
+      "Do not call Farovald a guardian, Guardian Zero, or succession authority.",
+      "Do not present Farovald's connection to Italus as telepathy, language, prophecy, or remote vision."
+    ],
+    "event_placements": [
+      {
+        "anchor_event_ref": null,
+        "chapter_role": "opening",
+        "event_ref": {
+          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+          "record_type": "event",
+          "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+        },
+        "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
+        "ordinal": 0,
+        "position": "opening",
+        "relationship_to_anchor": "same_anchor"
+      },
+      {
+        "anchor_event_ref": {
+          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+          "record_type": "event",
+          "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+        },
+        "chapter_role": "reveal",
+        "event_ref": {
+          "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+          "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+          "record_type": "event",
+          "source_record_hash": "1afa071397267c3899fd80c3958ff913e9413dfffef85aa7084c72c627c4d7c9"
+        },
+        "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+        "ordinal": 1,
+        "position": "early",
+        "relationship_to_anchor": "remembers"
+      }
+    ],
+    "forbidden_future_knowledge": [
+      "Farovald's later cover identities and later-book interventions unless the author selects the matching reveal thread in that later book.",
+      "Farovald's exact full lifespan or final-series fate before Book 11.",
+      "Any statement that Farovald is Guardian Zero, a succession authority, or the founder of the guardian lineage.",
+      "Any telepathic, linguistic, prophetic, or remote-vision interpretation of Farovald's biological coupling to Italus."
+    ],
+    "prose_rulebook": {
+      "quantitative_metrics": {
+        "colons": {
+          "hard_maximum": 3
+        },
+        "ellipses": {
+          "hard_maximum": 4,
+          "must_be_narratively_justified": true
+        },
+        "em_dashes": {
+          "hard_maximum": 8,
+          "preferred_maximum": 6,
+          "preferred_minimum": 0
+        },
+        "semicolons": {
+          "hard_maximum": 15,
+          "preferred_maximum": 10,
+          "preferred_minimum": 0
+        },
+        "similes": {
+          "hard_maximum": 12
+        },
+        "word_count": {
+          "hard_fail_below_minimum": true,
+          "minimum": 4000
+        }
+      },
+      "sha256": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+      "version": "1.1"
+    },
+    "selected_record_ids": [
+      "char_07e57a82d71c4027a501b25ca4514c8d",
+      "char_719cd0333a9840efa32e1870e223b939",
+      "char_b1ffca3231de404caa92e3366cf30cc3",
+      "loc_17d98e3790b3484793f75c28a64dbd9b",
+      "evt_5d3a9168c11e49f9aad230d5834868a9",
+      "evt_7f5813ffa94e4620accdc52b7850e735"
+    ],
+    "story_controls": [
+      {
+        "allowed_interpretations": [
+          "The monk was physically present at the old storm.",
+          "His palms carry old lightning damage.",
+          "He knows the Pollino terrain and Luca's repeated visits unusually well."
+        ],
+        "book_number": 1,
+        "certainty": "hint",
+        "chapter_number": 1,
+        "control_id": "story-control-43694f1e3338401d",
+        "control_type": "mystery_reveal",
+        "created_at": "2026-08-23T19:26:49.922922+00:00",
+        "effective_point": "current_unit",
+        "forbidden_assertions": [
+          "Farovald is a guardian or Guardian Zero.",
+          "Farovald's exact age or full lifespan.",
+          "Farovald is immortal by magic.",
+          "Farovald and Italus communicate telepathically or linguistically.",
+          "Farovald's later aliases, later interventions, or final fate."
+        ],
+        "instruction": "Reveal only the approved 589 storm fragment: mature Italus in the storm, a human figure in direct contact with the tree, lightning injury, scorched palms, resin/cambium damage, and immediate sensory aftermath. Return to Luca's 789 discovery before explaining the man's age, longevity, full biological connection, later identities, or future role. In the 789 mainline he appears only as a reclusive monk who later advises Luca to use prayer as a credible cover story.",
+        "knowledge_ceiling": "Book 1 Chapter 1 storm fragment only",
+        "narrative_weight": "brief_clue",
+        "notes": "Instantiated from farovald-storm-fragment during the developer Canon migration.",
+        "persistence": "chapter_local",
+        "presentation": "foreshadowing",
+        "protection": {
+          "checked": true,
+          "eligibility_status": "ACTIVE",
+          "message": "Active at the current story position.",
+          "reason_codes": []
+        },
+        "protection_snapshot": {
+          "checked": true,
+          "eligibility_status": "ACTIVE",
+          "message": "Active at the current story position.",
+          "reason_codes": []
+        },
+        "semantic_guard": {
+          "chosen_certainty": "hint",
+          "complete_semantic_interpretation": false,
+          "matched_phrase": "",
+          "message": "No obvious certainty-strength conflict detected; full semantic interpretation is deferred.",
+          "minimum_obvious_certainty": "",
+          "mismatch": false,
+          "mode": "deterministic_obvious_mismatch_only"
+        },
+        "semantic_guard_snapshot": {
+          "chosen_certainty": "hint",
+          "complete_semantic_interpretation": false,
+          "matched_phrase": "",
+          "message": "No obvious certainty-strength conflict detected; full semantic interpretation is deferred.",
+          "minimum_obvious_certainty": "",
+          "mismatch": false,
+          "mode": "deterministic_obvious_mismatch_only"
+        },
+        "status": "PLANNED",
+        "subject_ref": {
+          "label": "Farovald",
+          "record_id": "char_719cd0333a9840efa32e1870e223b939",
+          "record_type": "character",
+          "source_record_hash": "bd3c353e814502930af882935240499b9af79a6759651f2dd4431314d77be125"
+        },
+        "updated_at": "2026-08-23T19:26:49.922934+00:00",
+        "validation": {
+          "issues": [],
+          "valid": true
+        },
+        "validation_snapshot": {
+          "issues": [],
+          "valid": true
+        },
+        "who_learns": []
+      }
+    ],
+    "unlock_evaluations": [
+      {
+        "decision": {
+          "allowed_actions": [
+            "continue"
+          ],
+          "author_message": "Active at the current story position.",
+          "available": true,
+          "available_from_book": 1,
+          "candidate_ref": {
+            "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+            "record_group_id": "events",
+            "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+            "record_type": "event",
+            "story_code": "LEGACY-EVENT-001"
+          },
+          "completed_prerequisites": [],
+          "current_position": {
+            "book_number": 1,
+            "chapter_number": 1
+          },
+          "diagnostics": {},
+          "execution_locks": {
+            "approved_continuity_write_enabled": false,
+            "audited_override_write_enabled": false,
+            "book_scope_mutation_enabled": false,
+            "generation_enabled": false,
+            "planner_model_enabled": false,
+            "prompt_builder_enabled": false,
+            "provider_execution_enabled": false
+          },
+          "in_book": false,
+          "missing_prerequisites": [],
+          "override_applied": false,
+          "override_history": [],
+          "override_record": {},
+          "project_id": "italus-saga",
+          "reason_codes": [],
+          "requested_use": "event_placement",
+          "requirement_policy": "ALL",
+          "requirements": [],
+          "schema_version": "story_eligibility_v1",
+          "selected": true,
+          "service": "project-story-eligibility-boundary-20260816",
+          "source_continuity_hash": "",
+          "source_continuity_revision": "",
+          "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+          "status": "ACTIVE"
+        },
+        "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+        "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+        "record_type": "event",
+        "requested_use": "event_placement"
+      },
+      {
+        "decision": {
+          "allowed_actions": [
+            "continue"
+          ],
+          "author_message": "Active at the current story position.",
+          "available": true,
+          "available_from_book": 1,
+          "candidate_ref": {
+            "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+            "record_group_id": "events",
+            "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+            "record_type": "event",
+            "story_code": "BOOK1-LUCA-DISCOVERY"
+          },
+          "completed_prerequisites": [],
+          "current_position": {
+            "book_number": 1,
+            "chapter_number": 1
+          },
+          "diagnostics": {},
+          "execution_locks": {
+            "approved_continuity_write_enabled": false,
+            "audited_override_write_enabled": false,
+            "book_scope_mutation_enabled": false,
+            "generation_enabled": false,
+            "planner_model_enabled": false,
+            "prompt_builder_enabled": false,
+            "provider_execution_enabled": false
+          },
+          "in_book": false,
+          "missing_prerequisites": [],
+          "override_applied": false,
+          "override_history": [],
+          "override_record": {},
+          "project_id": "italus-saga",
+          "reason_codes": [],
+          "requested_use": "event_placement",
+          "requirement_policy": "ALL",
+          "requirements": [],
+          "schema_version": "story_eligibility_v1",
+          "selected": true,
+          "service": "project-story-eligibility-boundary-20260816",
+          "source_continuity_hash": "",
+          "source_continuity_revision": "",
+          "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+          "status": "ACTIVE"
+        },
+        "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+        "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+        "record_type": "event",
+        "requested_use": "event_placement"
+      },
+      {
+        "decision": {
+          "allowed_actions": [
+            "continue"
+          ],
+          "author_message": "Active at the current story position.",
+          "available": true,
+          "available_from_book": 1,
+          "candidate_ref": {
+            "label": "Luca",
+            "record_group_id": "characters",
+            "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+            "record_type": "character",
+            "story_code": ""
+          },
+          "completed_prerequisites": [],
+          "current_position": {
+            "book_number": 1,
+            "chapter_number": 1
+          },
+          "diagnostics": {},
+          "execution_locks": {
+            "approved_continuity_write_enabled": false,
+            "audited_override_write_enabled": false,
+            "book_scope_mutation_enabled": false,
+            "generation_enabled": false,
+            "planner_model_enabled": false,
+            "prompt_builder_enabled": false,
+            "provider_execution_enabled": false
+          },
+          "in_book": false,
+          "missing_prerequisites": [],
+          "override_applied": false,
+          "override_history": [],
+          "override_record": {},
+          "project_id": "italus-saga",
+          "reason_codes": [],
+          "requested_use": "chapter_selection",
+          "requirement_policy": "ALL",
+          "requirements": [],
+          "schema_version": "story_eligibility_v1",
+          "selected": true,
+          "service": "project-story-eligibility-boundary-20260816",
+          "source_continuity_hash": "",
+          "source_continuity_revision": "",
+          "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+          "status": "ACTIVE"
+        },
+        "label": "Luca",
+        "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+        "record_type": "character",
+        "requested_use": "chapter_selection"
+      },
+      {
+        "decision": {
+          "allowed_actions": [
+            "continue"
+          ],
+          "author_message": "Active at the current story position.",
+          "available": true,
+          "available_from_book": 1,
+          "candidate_ref": {
+            "label": "Farovald",
+            "record_group_id": "characters",
+            "record_id": "char_719cd0333a9840efa32e1870e223b939",
+            "record_type": "character",
+            "story_code": ""
+          },
+          "completed_prerequisites": [],
+          "current_position": {
+            "book_number": 1,
+            "chapter_number": 1
+          },
+          "diagnostics": {},
+          "execution_locks": {
+            "approved_continuity_write_enabled": false,
+            "audited_override_write_enabled": false,
+            "book_scope_mutation_enabled": false,
+            "generation_enabled": false,
+            "planner_model_enabled": false,
+            "prompt_builder_enabled": false,
+            "provider_execution_enabled": false
+          },
+          "in_book": false,
+          "missing_prerequisites": [],
+          "override_applied": false,
+          "override_history": [],
+          "override_record": {},
+          "project_id": "italus-saga",
+          "reason_codes": [],
+          "requested_use": "chapter_selection",
+          "requirement_policy": "ALL",
+          "requirements": [],
+          "schema_version": "story_eligibility_v1",
+          "selected": true,
+          "service": "project-story-eligibility-boundary-20260816",
+          "source_continuity_hash": "",
+          "source_continuity_revision": "",
+          "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+          "status": "ACTIVE"
+        },
+        "label": "Farovald",
+        "record_id": "char_719cd0333a9840efa32e1870e223b939",
+        "record_type": "character",
+        "requested_use": "chapter_selection"
+      },
+      {
+        "decision": {
+          "allowed_actions": [
+            "continue"
+          ],
+          "author_message": "Active at the current story position.",
+          "available": true,
+          "available_from_book": 1,
+          "candidate_ref": {
+            "label": "Italus",
+            "record_group_id": "characters",
+            "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+            "record_type": "character",
+            "story_code": ""
+          },
+          "completed_prerequisites": [],
+          "current_position": {
+            "book_number": 1,
+            "chapter_number": 1
+          },
+          "diagnostics": {},
+          "execution_locks": {
+            "approved_continuity_write_enabled": false,
+            "audited_override_write_enabled": false,
+            "book_scope_mutation_enabled": false,
+            "generation_enabled": false,
+            "planner_model_enabled": false,
+            "prompt_builder_enabled": false,
+            "provider_execution_enabled": false
+          },
+          "in_book": false,
+          "missing_prerequisites": [],
+          "override_applied": false,
+          "override_history": [],
+          "override_record": {},
+          "project_id": "italus-saga",
+          "reason_codes": [],
+          "requested_use": "chapter_selection",
+          "requirement_policy": "ALL",
+          "requirements": [],
+          "schema_version": "story_eligibility_v1",
+          "selected": true,
+          "service": "project-story-eligibility-boundary-20260816",
+          "source_continuity_hash": "",
+          "source_continuity_revision": "",
+          "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+          "status": "ACTIVE"
+        },
+        "label": "Italus",
+        "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+        "record_type": "character",
+        "requested_use": "chapter_selection"
+      },
+      {
+        "decision": {
+          "allowed_actions": [
+            "continue"
+          ],
+          "author_message": "Active at the current story position.",
+          "available": true,
+          "available_from_book": 1,
+          "candidate_ref": {
+            "label": "Pollino / Southern Italy",
+            "record_group_id": "locations",
+            "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+            "record_type": "location",
+            "story_code": ""
+          },
+          "completed_prerequisites": [],
+          "current_position": {
+            "book_number": 1,
+            "chapter_number": 1
+          },
+          "diagnostics": {},
+          "execution_locks": {
+            "approved_continuity_write_enabled": false,
+            "audited_override_write_enabled": false,
+            "book_scope_mutation_enabled": false,
+            "generation_enabled": false,
+            "planner_model_enabled": false,
+            "prompt_builder_enabled": false,
+            "provider_execution_enabled": false
+          },
+          "in_book": false,
+          "missing_prerequisites": [],
+          "override_applied": false,
+          "override_history": [],
+          "override_record": {},
+          "project_id": "italus-saga",
+          "reason_codes": [],
+          "requested_use": "chapter_selection",
+          "requirement_policy": "ALL",
+          "requirements": [],
+          "schema_version": "story_eligibility_v1",
+          "selected": true,
+          "service": "project-story-eligibility-boundary-20260816",
+          "source_continuity_hash": "",
+          "source_continuity_revision": "",
+          "source_index_hash": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
+          "status": "ACTIVE"
+        },
+        "label": "Pollino / Southern Italy",
+        "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+        "record_type": "location",
+        "requested_use": "chapter_selection"
+      }
+    ]
+  }
+}
