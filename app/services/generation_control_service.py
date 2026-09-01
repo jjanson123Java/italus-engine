@@ -5,9 +5,10 @@ This service is the single project-local readiness authority for a requested
 book/chapter generation position. It evaluates current project-local planning,
 runtime-context, Story Control, Chapter Knowledge Pack, and provenance state.
 
-Patch 29 remains non-executing: it does not build prompts, call providers,
-validate generated drafts, persist accepted prose, write Approved Continuity,
-or unlock generation. Downstream migration boundaries remain explicit blockers.
+Primary 32 keeps this gate non-executing: it may authorize project-local
+prompt/request construction, but it does not call providers, validate generated
+drafts, persist accepted prose, write Approved Continuity, or unlock generation.
+Downstream migration boundaries remain explicit blockers.
 """
 
 from __future__ import annotations
@@ -36,8 +37,8 @@ GENERATION_CONTROL_SERVICE_MARKER = "generation-readiness-gate-vnext-20260817"
 GENERATION_CONTROL_SERVICE_VERSION = "generation_readiness_gate_vnext_v1"
 GENERATION_READINESS_SCHEMA_VERSION = "generation_readiness_vnext_v1"
 
-# These downstream owners are deliberately not claimed by Patch 29.
-PROMPT_BUILDER_PROJECT_LOCAL_ROUTING_READY = False
+# Primary 32 claims only project-local prompt/request construction.
+PROMPT_BUILDER_PROJECT_LOCAL_ROUTING_READY = True
 PROVIDER_EXECUTION_READY = False
 VALIDATOR_READY = False
 AUTHOR_REVIEW_PERSISTENCE_READY = False
@@ -57,12 +58,13 @@ _UPSTREAM_CHECK_NAMES = {
     "chapter_plan_current_ready",
     "story_controls_valid",
     "chapter_knowledge_pack_current",
+    "prompt_builder_project_local_routing_ready",
     "provenance_capture_ready",
 }
 
 
 def get_generation_control_contract() -> dict[str, Any]:
-    """Return the Patch-29 readiness dimensions and locked downstream owners."""
+    """Return readiness dimensions and the currently locked downstream owners."""
 
     return {
         "status": "ok",
@@ -92,7 +94,7 @@ def get_generation_control_contract() -> dict[str, Any]:
             "approved_continuity_commit_path_ready",
         ],
         "patch_29_locks": {
-            "prompt_builder_project_local_routing_ready": False,
+            "prompt_builder_project_local_routing_ready": True,
             "provider_execution_ready": False,
             "validator_ready": False,
             "author_review_persistence_ready": False,
@@ -190,10 +192,11 @@ def get_generation_control_status_for_context(
         context,
         manifest_payload,
     )
-    book_runtime = book_knowledge_pack_service.get_book_runtime_context_status_for_context(
+    plan_result = book_plan_service.get_book_plan_for_context(
         context,
         manifest_payload,
     )
+    plan_payload = dict(plan_result.get("plan") or {})
     provenance_status = authorship_provenance_service.get_provenance_status_for_context(
         context
     )
@@ -209,6 +212,9 @@ def get_generation_control_status_for_context(
 
     scope_book: dict[str, Any] | None = None
     runtime_book: dict[str, Any] | None = None
+    requested_plan_validation: dict[str, Any] = {}
+    requested_plan_workflow: dict[str, Any] = {}
+    requested_plan_issues: list[dict[str, Any]] = []
     chapter: dict[str, Any] | None = None
     control_validation: dict[str, Any] = {
         "valid": False,
@@ -233,14 +239,44 @@ def get_generation_control_status_for_context(
             ),
             None,
         )
-        runtime_book = next(
+        requested_plan_validation = next(
             (
-                item
-                for item in book_runtime.get("targets") or []
+                dict(item)
+                for item in (plan_payload.get("validation") or {}).get("books") or []
                 if int(item.get("book_number") or 0) == int(book_number)
             ),
-            None,
+            {},
         )
+        requested_plan_workflow = next(
+            (
+                dict(item)
+                for item in plan_payload.get("book_workflow") or []
+                if int(item.get("book_number") or 0) == int(book_number)
+            ),
+            {},
+        )
+        requested_plan_issues = [
+            deepcopy(item)
+            for item in (plan_payload.get("validation") or {}).get("issues") or []
+            if not item.get("book_number")
+            or int(item.get("book_number") or 0) == int(book_number)
+        ]
+        if index_current:
+            requested_book_runtime = (
+                book_knowledge_pack_service.get_book_runtime_context_status_for_context(
+                    context,
+                    manifest_payload,
+                    book_number=int(book_number),
+                )
+            )
+            runtime_book = next(
+                (
+                    item
+                    for item in requested_book_runtime.get("targets") or []
+                    if int(item.get("book_number") or 0) == int(book_number)
+                ),
+                None,
+            )
         chapter_result = chapter_plan_service.get_chapter(
             context.project_id,
             book_number=int(book_number),
@@ -273,19 +309,23 @@ def get_generation_control_status_for_context(
     )
 
     plan_ready = bool(
-        plan_status.get("valid") is True
-        and plan_status.get("approval_status") == book_plan_service.APPROVAL_APPROVED
-        and plan_status.get("approval_fresh") is True
+        position_ready
+        and requested_plan_validation.get("complete") is True
+        and requested_plan_validation.get("book_scope_approved") is True
+        and requested_plan_workflow.get("approval_status")
+        == book_plan_service.APPROVAL_APPROVED
+        and requested_plan_workflow.get("approval_fresh") is True
         and not plan_status.get("migration_required")
-        and bool(plan_status.get("approved_content_hash"))
-        and plan_status.get("approved_content_hash") == plan_status.get("content_hash")
+        and bool(requested_plan_workflow.get("approved_content_hash"))
+        and requested_plan_workflow.get("approved_content_hash")
+        == requested_plan_workflow.get("content_hash")
     )
 
     references_resolved = bool(
         plan_ready
         and scope_ready
         and not plan_status.get("migration_required")
-        and not plan_status.get("issues")
+        and not requested_plan_issues
     )
 
     runtime_book_ready = bool(
@@ -407,15 +447,26 @@ def get_generation_control_status_for_context(
             plan_ready,
             "book_plan_not_current_approved",
             (
-                "Book Plan is current and approval-fresh."
+                f"Book {book_number} Plan is current and approval-fresh."
                 if plan_ready
-                else "Book Plan must be valid, current, and approval-fresh."
+                else "Requested Book Plan must be complete, current, and approval-fresh."
             ),
             details={
-                "status": plan_status.get("status"),
-                "valid": bool(plan_status.get("valid")),
-                "approval_status": plan_status.get("approval_status"),
-                "approval_fresh": bool(plan_status.get("approval_fresh")),
+                "book_number": book_number,
+                "complete": bool(requested_plan_validation.get("complete")),
+                "reference_issue_count": int(
+                    requested_plan_validation.get("reference_issue_count") or 0
+                ),
+                "approval_status": requested_plan_workflow.get("approval_status"),
+                "approval_fresh": bool(
+                    requested_plan_workflow.get("approval_fresh")
+                ),
+                "content_hash": str(
+                    requested_plan_workflow.get("content_hash") or ""
+                ),
+                "approved_content_hash": str(
+                    requested_plan_workflow.get("approved_content_hash") or ""
+                ),
                 "migration_required": bool(plan_status.get("migration_required")),
             },
         ),
@@ -428,7 +479,7 @@ def get_generation_control_status_for_context(
                 if references_resolved
                 else "Book Plan / Book Canon reference reconciliation is incomplete."
             ),
-            details={"issues": deepcopy(plan_status.get("issues") or [])},
+            details={"issues": deepcopy(requested_plan_issues)},
         ),
         _readiness_check(
             "book_runtime_context_current",
@@ -494,19 +545,19 @@ def get_generation_control_status_for_context(
             "prompt_builder_project_local_routing_ready",
             PROMPT_BUILDER_PROJECT_LOCAL_ROUTING_READY,
             "prompt_builder_project_local_routing_not_ready",
-            "Patch 30 has not yet migrated Prompt Builder to the Chapter Knowledge Pack.",
+            "Primary 32 project-local Prompt Builder routing is ready and has no legacy-pack fallback.",
         ),
         _readiness_check(
             "provider_execution_ready",
             PROVIDER_EXECUTION_READY,
             "provider_execution_not_ready",
-            "Patch 31 provider execution / immutable MODEL-origin wiring is not yet enabled.",
+            "Primary 33.2 provider execution / immutable MODEL-origin wiring is not yet enabled.",
         ),
         _readiness_check(
             "validator_ready",
             VALIDATOR_READY,
             "validator_not_ready",
-            "Patch 32 structured validator migration is not yet complete.",
+            "Primary 34 structured validator migration is not yet complete.",
         ),
         _readiness_check(
             "provenance_capture_ready",
@@ -529,13 +580,13 @@ def get_generation_control_status_for_context(
             "author_review_persistence_ready",
             AUTHOR_REVIEW_PERSISTENCE_READY,
             "author_review_persistence_not_ready",
-            "Patch 32 author review/edit/reject persistence is not yet migrated.",
+            "Primary 34 author review/edit/reject persistence is not yet migrated.",
         ),
         _readiness_check(
             "approved_continuity_commit_path_ready",
             APPROVED_CONTINUITY_COMMIT_PATH_READY,
             "approved_continuity_commit_path_not_ready",
-            "Patch 34 accepted-prose Approved Continuity commit path is not yet enabled.",
+            "Primary 36 accepted-prose Approved Continuity commit path is not yet enabled.",
         ),
     ]
 
@@ -573,7 +624,7 @@ def get_generation_control_status_for_context(
         "provider_execution_locked": True,
         "generation_enabled": False,
         "provider_execution_enabled": False,
-        "prompt_builder_enabled": False,
+        "prompt_builder_enabled": True,
         "draft_validation_enabled": False,
         "approved_persistence_enabled": False,
         "readiness": checks,
@@ -586,6 +637,15 @@ def get_generation_control_status_for_context(
             "provenance_capture_ready": provenance_ready,
         },
         "blockers": blockers,
+        "upstream_blockers": [
+            {
+                "code": item["code"],
+                "check": item["name"],
+                "message": item["message"],
+            }
+            for item in upstream_checks
+            if item["required"] and not item["ready"]
+        ],
         "blocking_reasons": [item["message"] for item in blockers],
         "dependency_state": {
             "runtime_storage": deepcopy(runtime_status),
@@ -608,7 +668,7 @@ def get_generation_control_status_for_context(
             "chapter_knowledge_pack": deepcopy(chapter_pack_status),
             "provenance": deepcopy(provenance_status),
             "downstream_migration": {
-                "prompt_builder_project_local_routing_ready": False,
+                "prompt_builder_project_local_routing_ready": True,
                 "provider_execution_ready": False,
                 "validator_ready": False,
                 "author_review_persistence_ready": False,
@@ -616,10 +676,10 @@ def get_generation_control_status_for_context(
             },
         },
         "future_boundaries": {
-            "prompt_builder_migration": "patch_30_locked",
-            "provider_execution": "patch_31_locked",
-            "validator_and_author_review": "patch_32_locked",
-            "approved_continuity_commit": "patch_34_locked",
+            "prompt_builder_migration": "primary_32_ready",
+            "provider_execution": "primary_33_2_locked",
+            "validator_and_author_review": "primary_34_locked",
+            "approved_continuity_commit": "primary_36_locked",
         },
         "message": (
             "Generation readiness is satisfied."

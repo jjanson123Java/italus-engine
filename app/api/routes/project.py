@@ -32,6 +32,7 @@ from app.services import (
     planner_query_service,
     authorship_provenance_service,
     generation_control_service,
+    generation_service,
     planner_reveal_catalog_service,
 )
 
@@ -133,6 +134,11 @@ class ChapterPlanDraftRequest(BaseModel):
 
 class ChapterKnowledgePackCompileRequest(BaseModel):
     prior_ending_context: str = Field(default="", max_length=8000)
+
+
+class GenerationRequestBuildRequest(BaseModel):
+    book_number: int = Field(ge=1)
+    chapter_number: int = Field(ge=1)
 
 
 class ProgressionOverrideRequest(BaseModel):
@@ -754,6 +760,26 @@ def get_generation_readiness(
         )
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.post("/api/project/{project_id}/generation-request/build")
+def build_generation_request(
+    project_id: str,
+    request: GenerationRequestBuildRequest,
+):
+    """Build a provider-neutral Primary-32 request without executing it."""
+
+    try:
+        return generation_service.build_generation_request_envelope(
+            project_id,
+            book_number=request.book_number,
+            chapter_number=request.chapter_number,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except generation_service.GenerationRequestBuildError as exc:
+        status_code = 422 if exc.code == "request_scope_invalid" else 409
+        raise HTTPException(status_code=status_code, detail=exc.to_detail()) from exc
 
 
 @router.get("/api/project/{project_id}/runtime-context/project/status")
