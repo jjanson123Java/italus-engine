@@ -3191,3 +3191,122 @@
     flex-wrap: wrap;
   }
 }
+
+/* Primary 33.1 workspace pricing source layout */
+.workspace-pricing-source-field dd {
+  min-width: 0;
+}
+
+.workspace-pricing-source-link {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  color: #f5d99b;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.workspace-pricing-source-link:hover,
+.workspace-pricing-source-link:focus-visible {
+  color: #fff0c6;
+}
+
+/* Primary 33.2.1A2 - Workspace project model control visual alignment v1 */
+.workspace-provider-model-control {
+  display: grid;
+  gap: 0.72rem;
+  margin-top: 0.8rem;
+}
+
+.workspace-provider-model-control > label {
+  display: grid;
+  grid-template-columns: minmax(220px, 360px);
+  gap: 0.4rem;
+  width: fit-content;
+  max-width: 100%;
+  color: #d7b765;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+#workspace-provider-model-select {
+  width: 100%;
+  min-height: 46px;
+  border: 2px solid #d7b765;
+  border-radius: 11px;
+  padding: 0.7rem 2.2rem 0.7rem 0.85rem;
+  background:
+    linear-gradient(180deg, rgba(18, 16, 12, 0.94), rgba(0, 0, 0, 0.82));
+  color: #d7b765;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.18),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.12),
+    inset 0 1px 0 rgba(255, 239, 190, 0.08),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+  color-scheme: dark;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+}
+
+#workspace-provider-model-select:hover:not(:disabled) {
+  border-color: #efd486;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.26),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.16),
+    0 0 18px rgba(215, 183, 101, 0.14),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+#workspace-provider-model-select:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.9);
+  outline-offset: 3px;
+}
+
+#workspace-provider-model-select option {
+  background: #12100c;
+  color: #d7b765;
+  font-weight: 700;
+}
+
+#workspace-provider-model-save {
+  width: fit-content;
+  min-height: 46px;
+  border: 2px solid #d7b765;
+  border-radius: 11px;
+  padding: 0.7rem 1rem !important;
+  background: linear-gradient(180deg, #302b20 0%, #1b1915 100%);
+  color: #e8ce87;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.12),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#workspace-provider-model-save:hover:not(:disabled) {
+  border-color: #efd58b;
+  color: #fff0bd;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.2),
+    0 0 18px rgba(215, 183, 101, 0.12),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+#workspace-provider-model-save:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.9);
+  outline-offset: 3px;
+}
+
+#workspace-provider-model-select:disabled,
+#workspace-provider-model-save:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

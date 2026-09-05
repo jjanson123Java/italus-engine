@@ -61,14 +61,17 @@
     chapterEventSequenceDefaultAppliedKey: '',
     plannerViewModes: { book_plan: 'default', chapter_planner: 'default', library: 'default' },
     authorLibrary: null,
-    authorLibraryLoading: false
+    authorLibraryLoading: false,
+    providerWorkspaceSummary: null,
+    providerWorkspaceSummaryLoading: false,
+    providerProjectModelSaving: false
   };
 
   const plannerViewPreferenceStorageKey = 'italus.workspace.plannerViewModes.v1';
   const plannerViewTargets = ['book_plan', 'chapter_planner', 'library'];
   const plannerViewModeValues = ['default', 'collapse', 'expand'];
 
-  const workspaceJsVersion = 'workspace-author-workspace-final-ux-sweep-v1-20260824';
+  const workspaceJsVersion = 'workspace-primary33-2-1a2-project-model-control-v1-20260903';
   console.info(`[ITALUS] ${workspaceJsVersion} loaded`);
   const plannerIntentVersion = 'workspace-planner-intent-model-v1-20260817';
   console.info(`[ITALUS] ${plannerIntentVersion} loaded`);
@@ -76,7 +79,7 @@
   console.info(`[ITALUS] ${chapterKnowledgePackVersion} loaded`);
   const gatePanelNavigationVersion = 'workspace-gate-panel-navigation-v2-20260708';
   console.info(`[ITALUS] ${gatePanelNavigationVersion} loaded`);
-  const providerStatusVersion = 'workspace-provider-author-view-cleanup-20260708';
+  const providerStatusVersion = 'workspace-provider-authority-v1-20260902';
   console.info(`[ITALUS] ${providerStatusVersion} loaded`);
   const runtimeStoragePreviewVersion = 'workspace-runtime-storage-preview-20260708';
   console.info(`[ITALUS] ${runtimeStoragePreviewVersion} loaded`);
@@ -663,7 +666,7 @@
         }
       },
       manuscript_plan: () => renderManuscriptPlan(manifest, budget, wizard, summary),
-      budget_plan: () => renderBudgetPlan(budget, manifest),
+      budget_plan: () => { void renderBudgetPlan(budget, manifest); },
       books: () => { void renderAuthorLibrary('books', bootstrap); },
       chapters: () => { void renderAuthorLibrary('chapters', bootstrap); },
       scenes: () => { void renderAuthorLibrary('scenes', bootstrap); },
@@ -680,8 +683,8 @@
         }
       },
       book_runtime_context: () => renderBookRuntimeContext(bootstrap),
-      settings: () => renderSettings(manifest, context, bootstrap),
-      provider_status: () => renderProviderStatusPanel(manifest, bootstrap),
+      settings: () => { void renderSettings(manifest, context, bootstrap); },
+      provider_status: () => { void renderProviderStatusPanel(manifest, bootstrap); },
       runtime_storage_preview: () => renderRuntimeStoragePreview(manifest, context, bootstrap),
       archive: () => renderArchiveView(manifest, wizard),
       memory_continuity: () => renderDisabled('Continuity', 'Continuity will become available when accepted manuscript chapters can be carried forward as established story history.'),
@@ -954,32 +957,576 @@
     `;
   }
 
-  function renderBudgetPlan(budget, manifest) {
+  async function loadProviderWorkspaceSummary() {
+    if (state.providerWorkspaceSummaryLoading) {
+      while (state.providerWorkspaceSummaryLoading) {
+        await new Promise((resolve) => window.setTimeout(resolve, 25));
+      }
+      return state.providerWorkspaceSummary;
+    }
+
+    state.providerWorkspaceSummaryLoading = true;
+    try {
+      const payload = await apiFetch(
+        `/api/provider/projects/${encodeURIComponent(projectId)}/workspace-summary`,
+        { cache: 'no-store' }
+      );
+      state.providerWorkspaceSummary = payload;
+      return payload;
+    } finally {
+      state.providerWorkspaceSummaryLoading = false;
+    }
+  }
+
+
+  function formatHumanDateTime(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '—';
+    const parsed = new Date(raw);
+    if (Number.isNaN(parsed.getTime())) return raw;
+    try {
+      return new Intl.DateTimeFormat(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit'
+      }).format(parsed);
+    } catch (_) {
+      return parsed.toLocaleString();
+    }
+  }
+
+  function compactPricingId(value) {
+    const raw = String(
+      value && typeof value === 'object' ? value.pricing_version_id || '' : value || ''
+    ).trim();
+    return raw.startsWith('pricing_') ? raw.slice('pricing_'.length) : raw || 'unavailable';
+  }
+
+  function samePricingEffectiveDate(left, right) {
+    if (!left || !right) return false;
+    const leftTime = new Date(left.effective_from || '').getTime();
+    const rightTime = new Date(right.effective_from || '').getTime();
+    return Number.isFinite(leftTime) && Number.isFinite(rightTime) && leftTime === rightTime;
+  }
+
+  function previousPricingLabel(current, previous) {
+    return samePricingEffectiveDate(current, previous)
+      ? 'Superseded Same-Effective Version'
+      : 'Previous Effective Pricing';
+  }
+
+
+  function projectModelControlMarkup(providerSummary) {
+    const binding = (providerSummary && providerSummary.binding) || null;
+    const control = (providerSummary && providerSummary.project_model_control) || null;
+    if (!binding || !control) return '';
+
+    const availableModels = Array.isArray(control.available_models)
+      ? control.available_models
+      : [];
+    const effectiveModelId = String(control.effective_model_id || binding.model_id || '');
+    const profileDefaultModelId = String(control.profile_default_model_id || '');
+    const locked = Boolean(control.locked);
+    const canChange = Boolean(control.can_change) && !locked;
+    const currentPresent = availableModels.some(
+      (model) => String((model && model.model_id) || '') === effectiveModelId
+    );
+    const modelOptions = [
+      ...(currentPresent || !effectiveModelId
+        ? []
+        : [{ display_name: 'Current project model', model_id: effectiveModelId }]),
+      ...availableModels
+    ].map((model) => {
+      const modelId = String((model && model.model_id) || '');
+      const displayName = String((model && model.display_name) || modelId || 'Model');
+      const selected = modelId === effectiveModelId ? ' selected' : '';
+      return `<option value="${escapeHtml(modelId)}"${selected}>${escapeHtml(`${displayName} — ${modelId}`)}</option>`;
+    }).join('');
+
+    const sourceLabel = String(control.model_selection_source || '') === 'project_override'
+      ? 'Project override'
+      : 'Provider profile default at binding';
+    const lockNote = locked
+      ? `
+        <div class="workspace-disabled-note">
+          This project already has provider usage. Direct model changes are locked so historical billing and execution
+          lineage cannot be rewritten. Use the later controlled migration workflow to change models after usage begins.
+        </div>
+      `
+      : `
+        <p class="placeholder">
+          Changing this value updates only this project's effective model. The saved Provider Settings profile and API key
+          are not changed. A different model creates a new project binding instance before provider usage begins.
+        </p>
+      `;
+
+    return `
+      <div class="workspace-provider-model-control">
+        <dl class="workspace-definition-list compact">
+          ${definition('Provider Profile Default Model', profileDefaultModelId || '—')}
+          ${definition('Project Model Source', sourceLabel)}
+        </dl>
+        <label>
+          Project Model
+          <select id="workspace-provider-model-select" ${canChange ? '' : 'disabled'}>
+            ${modelOptions}
+          </select>
+        </label>
+        <div>
+          <button
+            type="button"
+            id="workspace-provider-model-save"
+            class="primary-action compact-action"
+            ${canChange && availableModels.length ? '' : 'disabled'}
+          >Save Project Model</button>
+        </div>
+        <p id="workspace-provider-model-status" class="placeholder" aria-live="polite"></p>
+        ${lockNote}
+      </div>
+    `;
+  }
+
+
+  async function saveWorkspaceProjectModel(providerSummary, budget, manifest) {
+    const select = document.getElementById('workspace-provider-model-select');
+    const button = document.getElementById('workspace-provider-model-save');
+    const status = document.getElementById('workspace-provider-model-status');
+    if (!select || !button || !status || state.providerProjectModelSaving) return;
+
+    const binding = (providerSummary && providerSummary.binding) || {};
+    const currentModelId = String(binding.model_id || '');
+    const requestedModelId = String(select.value || '').trim();
+    if (!requestedModelId) {
+      status.textContent = 'Choose an accepted project model.';
+      return;
+    }
+    if (requestedModelId === currentModelId) {
+      status.textContent = 'This project is already using that model.';
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Change only this project's model from ${currentModelId || 'the current model'} to ${requestedModelId}? ` +
+      'The saved Provider Settings profile and API key will not be changed.'
+    );
+    if (!confirmed) return;
+
+    state.providerProjectModelSaving = true;
+    button.disabled = true;
+    select.disabled = true;
+    status.textContent = 'Saving project model…';
+
+    try {
+      await apiFetch(
+        `/api/provider/projects/${encodeURIComponent(projectId)}/model`,
+        {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ model_id: requestedModelId })
+        }
+      );
+      state.providerWorkspaceSummary = null;
+      status.textContent = 'Project model saved. Refreshing pricing and binding details…';
+      await renderBudgetPlan(budget, manifest);
+    } catch (error) {
+      status.textContent = error.message || String(error);
+      button.disabled = false;
+      select.disabled = false;
+    } finally {
+      state.providerProjectModelSaving = false;
+    }
+  }
+
+
+  function bindWorkspaceProjectModelControl(providerSummary, budget, manifest) {
+    const button = document.getElementById('workspace-provider-model-save');
+    if (!button || button.disabled) return;
+    button.addEventListener('click', () => {
+      saveWorkspaceProjectModel(providerSummary, budget, manifest);
+    });
+  }
+
+
+  function pricingDisplayLabel(pricing, providerLabel, modelId) {
+    if (!pricing) return 'No active pricing';
+    const provider = String(providerLabel || pricing.provider_id || 'Provider');
+    const model = String(modelId || pricing.model_id || 'model');
+    const verified = pricing.verified_at || pricing.effective_from || pricing.created_at;
+    return verified
+      ? `${provider} — ${model} — verified ${formatHumanDateTime(verified)}`
+      : `${provider} — ${model}`;
+  }
+
+  function shortLineageId(value, prefix) {
+    const text = String(value || '').trim();
+    if (!text || text === 'legacy_unattributed') return 'Legacy / unattributed';
+    const compact = text.length > 18 ? `${text.slice(0, 10)}…${text.slice(-6)}` : text;
+    return prefix ? `${prefix} ${compact}` : compact;
+  }
+
+  function recordedBillingBlock(providerSummary) {
+    const summary = (providerSummary && providerSummary.usage_summary) || {};
+    const eventCount = Number(summary.event_count || 0);
+    if (!eventCount) {
+      return `
+        <section class="workspace-panel">
+          <h3>Recorded Project Billing</h3>
+          <p class="placeholder">
+            No provider usage has been recorded for this project. This is expected while provider execution remains locked.
+            Planning prices may exist, but they are not actual project billing.
+          </p>
+        </section>
+      `;
+    }
+
+    const totalsByCurrency = summary.totals_by_currency || {};
+    const currencyEntries = Object.entries(totalsByCurrency);
+    const currencyRows = summary.cumulative_cost_available
+      ? ''
+      : currencyEntries.map(([currency, item]) => (
+          definition(
+            `Project Cost (${currency})`,
+            formatMoney(item && item.actual_cost, currency)
+          )
+        )).join('');
+
+    const singleLifetimeCost = summary.cumulative_cost_available
+      ? definition(
+          'Project Lifetime Recorded Cost',
+          formatMoney(summary.actual_cost, summary.currency)
+        )
+      : '';
+
+    const mixedCurrencyWarning = summary.has_mixed_currency
+      ? `
+        <div class="workspace-disabled-note">
+          Multiple billing currencies are present. Italus preserves each currency subtotal separately and does not
+          create an invalid combined total. No FX conversion is performed.
+        </div>
+      `
+      : '';
+
+    const segments = Array.isArray(providerSummary && providerSummary.billing_history)
+      ? providerSummary.billing_history
+      : [];
+
+    const segmentCards = segments.map((segment, index) => {
+      const snapshot = (segment && segment.pricing_snapshot) || {};
+      const segmentRates = snapshot.rates_per_mtok || {};
+      const currency = String(segment.currency || snapshot.currency || 'USD');
+      const segmentCost = segment.cumulative_cost_available
+        ? formatMoney(segment.actual_cost, currency)
+        : 'Separate currency totals required';
+
+      return `
+        <article class="library-card compact">
+          <header>
+            <div>
+              <span class="library-kicker">Billing Segment ${number(index + 1)}</span>
+              <h4>${escapeHtml(`${segment.provider_id || 'provider'} / ${segment.model_id || 'model'}`)}</h4>
+            </div>
+          </header>
+          <dl class="workspace-definition-list compact">
+            ${definition(
+              'Pricing Used',
+              pricingDisplayLabel(
+                snapshot,
+                labelFor(segment.provider_id || snapshot.provider_id || 'provider'),
+                segment.model_id || snapshot.model_id
+              )
+            )}
+            ${definition('Internal Pricing Reference', shortLineageId(segment.pricing_version_id, ''))}
+            ${definition('Pricing Integrity Reference', shortLineageId(segment.pricing_version_sha256, ''))}
+            ${definition('Credential Instance', shortLineageId(segment.credential_instance_id, ''))}
+            ${definition('Binding Instance', shortLineageId(segment.binding_instance_id, ''))}
+            ${definition('Recorded Events', number(segment.event_count || 0))}
+            ${definition('Actual Input Tokens', number(segment.actual_input_tokens || 0))}
+            ${definition('Actual Output Tokens', number(segment.actual_output_tokens || 0))}
+            ${definition('Cache Write Tokens', number(segment.cache_write_tokens || 0))}
+            ${definition('5m Cache Write Tokens', number(segment.cache_write_5m_tokens || 0))}
+            ${definition('1h Cache Write Tokens', number(segment.cache_write_1h_tokens || 0))}
+            ${definition('Cache Read Tokens', number(segment.cache_read_tokens || 0))}
+            ${definition('Recorded Cost', segmentCost)}
+            ${definition(
+              'Rate Snapshot — Input / MTok',
+              snapshot.currency ? `${snapshot.currency} ${segmentRates.input_per_mtok || '0'}` : 'legacy / unavailable'
+            )}
+            ${definition(
+              'Rate Snapshot — Output / MTok',
+              snapshot.currency ? `${snapshot.currency} ${segmentRates.output_per_mtok || '0'}` : 'legacy / unavailable'
+            )}
+            ${definition(
+              'Rate Snapshot — 5m Cache Write / MTok',
+              snapshot.currency ? `${snapshot.currency} ${segmentRates.cache_write_5m_per_mtok || '0'}` : 'legacy / unavailable'
+            )}
+            ${definition(
+              'Rate Snapshot — 1h Cache Write / MTok',
+              snapshot.currency ? `${snapshot.currency} ${segmentRates.cache_write_1h_per_mtok || '0'}` : 'legacy / unavailable'
+            )}
+            ${definition(
+              'Rate Snapshot — Cache Read / MTok',
+              snapshot.currency ? `${snapshot.currency} ${segmentRates.cache_read_per_mtok || '0'}` : 'legacy / unavailable'
+            )}
+          </dl>
+        </article>
+      `;
+    }).join('');
+
+    return `
+      <section class="workspace-panel">
+        <h3>Recorded Project Billing</h3>
+        <dl class="workspace-definition-list">
+          ${definition('Recorded Usage Events', number(eventCount))}
+          ${definition('Actual Input Tokens', number(summary.actual_input_tokens || 0))}
+          ${definition('Actual Output Tokens', number(summary.actual_output_tokens || 0))}
+          ${definition('Cache Write Tokens', number(summary.cache_write_tokens || 0))}
+          ${definition('5m Cache Write Tokens', number(summary.cache_write_5m_tokens || 0))}
+          ${definition('1h Cache Write Tokens', number(summary.cache_write_1h_tokens || 0))}
+          ${definition('Cache Read Tokens', number(summary.cache_read_tokens || 0))}
+          ${singleLifetimeCost}
+          ${currencyRows}
+        </dl>
+        ${mixedCurrencyWarning}
+        <details class="workspace-technical-details" open>
+          <summary>Billing History</summary>
+          <p class="placeholder">
+            Historical rows retain provider/model, immutable pricing version, non-secret credential instance,
+            and project binding instance. Historical costs are never recalculated when current pricing changes.
+          </p>
+          <div class="library-card-list">
+            ${segmentCards || '<p class="placeholder">No billing segments are available.</p>'}
+          </div>
+        </details>
+      </section>
+    `;
+  }
+
+  async function renderBudgetPlan(budget, manifest) {
     setHeading('Budget Plan');
     mainPanel.innerHTML = `
       <div class="workspace-content">
+        <p class="placeholder">Loading project provider pricing and planning estimate…</p>
+      </div>
+    `;
+
+    let providerSummary;
+    try {
+      providerSummary = await loadProviderWorkspaceSummary();
+    } catch (error) {
+      if (state.activeSection !== 'budget_plan') return;
+      mainPanel.innerHTML = `
+        <div class="workspace-content">
+          <p class="placeholder">
+            Your project planning token estimate is available, but provider pricing could not be loaded.
+          </p>
+          <dl class="workspace-definition-list">
+            ${definition('Planned Token Budget', number(budget.token_budget_total))}
+            ${definition('Estimated Project Usage', `${number(budget.estimated_tokens_total)} planned generated-output tokens`)}
+            ${definition('Budget Status', labelFor(budget.token_budget_status || '—'), { humanReadable: true })}
+          </dl>
+          <div class="workspace-disabled-note">${escapeHtml(error.message || String(error))}</div>
+        </div>
+      `;
+      return;
+    }
+
+    if (state.activeSection !== 'budget_plan') return;
+
+    const binding = (providerSummary && providerSummary.binding) || null;
+    const pricing = (providerSummary && providerSummary.pricing) || null;
+    const scheduledPricing = (providerSummary && providerSummary.scheduled_pricing) || null;
+    const previousPricing = (providerSummary && providerSummary.previous_pricing) || null;
+    const pricingLifecycle = (providerSummary && providerSummary.pricing_lifecycle) || {};
+    const freshness = (providerSummary && providerSummary.pricing_freshness) || {};
+    const policy = (providerSummary && providerSummary.pricing_policy) || {};
+    const estimate = (providerSummary && providerSummary.planning_estimate) || null;
+    const usageSummary = (providerSummary && providerSummary.usage_summary) || {};
+    const billingBlock = recordedBillingBlock(providerSummary);
+    const providerLabel = boundProviderLabel(providerSummary);
+    const rates = (pricing && pricing.rates_per_mtok) || {};
+    const previousRates = (previousPricing && previousPricing.rates_per_mtok) || {};
+    const previousLabel = previousPricingLabel(pricing, previousPricing);
+    const pricingSource = safeHttpUrl(pricing && pricing.source_url);
+    const freshnessWarning = freshness.warning
+      ? `<div class="workspace-disabled-note">${escapeHtml(freshness.message || 'Provider pricing should be reviewed before relying on this estimate.')}</div>`
+      : '';
+    const pricingSourceField = pricingSource
+      ? `
+        <div class="workspace-pricing-source-field">
+          <dt>Official Pricing Source</dt>
+          <dd>
+            <a
+              class="workspace-pricing-source-link"
+              href="${escapeHtml(pricingSource)}"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="${escapeHtml(pricingSource)}"
+            >Open official provider pricing ↗</a>
+          </dd>
+        </div>
+      `
+      : `
+        <div class="workspace-pricing-source-field">
+          <dt>Official Pricing Source</dt>
+          <dd class="placeholder">No active official pricing source is available.</dd>
+        </div>
+      `;
+
+    const projectModelControl = projectModelControlMarkup(providerSummary);
+    const providerPlanningBlock = binding
+      ? `
+        <section class="workspace-panel">
+          <h3>Provider Pricing</h3>
+          <dl class="workspace-definition-list">
+            ${definition('Bound Provider', providerLabel)}
+            ${definition('Effective Project Model', binding.model_id || '—')}
+            ${definition('Service Tier', labelFor(binding.service_tier || 'standard'))}
+            ${definition('Inference Scope', labelFor(binding.inference_scope || 'global'))}
+            ${definition(
+              'Active Pricing',
+              pricing
+                ? `${providerLabel} — ${binding.model_id || 'model'}`
+                : 'No active pricing version'
+            )}
+            ${definition(
+              'Current Pricing',
+              pricing
+                ? `${pricing.currency || 'USD'} input ${rates.input_per_mtok || '0'} / output ${rates.output_per_mtok || '0'} per MTok`
+                : '—'
+            )}
+            ${definition(
+              'Current Pricing ID',
+              pricing && pricing.pricing_version_id ? compactPricingId(pricing) : '—'
+            )}
+            ${definition(
+              'Current Effective From',
+              pricing ? formatHumanDateTime(pricing.effective_from) : '—'
+            )}
+            ${definition(
+              'Current Entered in Italus',
+              pricing ? formatHumanDateTime(pricing.created_at) : '—'
+            )}
+            ${definition(
+              'Pricing Verified',
+              pricing ? formatHumanDateTime(pricing.verified_at) : '—'
+            )}
+            ${definition(
+              previousLabel,
+              previousPricing
+                ? `${previousPricing.currency || 'USD'} input ${previousRates.input_per_mtok || '0'} / output ${previousRates.output_per_mtok || '0'} per MTok`
+                : 'None'
+            )}
+            ${definition(
+              `${previousLabel} ID`,
+              previousPricing && previousPricing.pricing_version_id
+                ? compactPricingId(previousPricing)
+                : 'None'
+            )}
+            ${definition(
+              `${previousLabel} Effective From`,
+              previousPricing ? formatHumanDateTime(previousPricing.effective_from) : '—'
+            )}
+            ${definition(
+              `${previousLabel} Entered in Italus`,
+              previousPricing ? formatHumanDateTime(previousPricing.created_at) : '—'
+            )}
+            ${definition(
+              'Next Scheduled Pricing',
+              scheduledPricing
+                ? `${scheduledPricing.currency || 'USD'} input ${(scheduledPricing.rates_per_mtok || {}).input_per_mtok || '0'} / output ${(scheduledPricing.rates_per_mtok || {}).output_per_mtok || '0'} per MTok — Pricing ID: ${compactPricingId(scheduledPricing)} — Effective From ${formatHumanDateTime(scheduledPricing.effective_from)} — Entered in Italus ${formatHumanDateTime(scheduledPricing.created_at)}`
+                : 'None'
+            )}
+            ${definition(
+              'Retired Pricing Versions',
+              number(pricingLifecycle.retired_count || 0)
+            )}
+            ${definition('Pricing Review Threshold', `${number(policy.freshness_threshold_days || 30)} days`)}
+            ${pricingSourceField}
+          </dl>
+          ${projectModelControl}
+          ${freshnessWarning}
+        </section>
+
+        <section class="workspace-panel">
+          <h3>Planning Estimate</h3>
+          <dl class="workspace-definition-list">
+            ${definition('Estimated Project Usage', `${number(budget.estimated_tokens_total)} planned generated-output tokens`)}
+            ${definition(
+              'Estimated Project Cost (Planning)',
+              estimate
+                ? `${formatMoney(estimate.estimated_cost, estimate.currency)} — generated output only`
+                : 'Unavailable until an active pricing version is configured'
+            )}
+          </dl>
+          <p class="placeholder">
+            This is a Planning Estimate, not Actual Cost. It prices the existing Project Setup generated-output
+            token estimate against the active saved output rate. Prompt input, cache, provider-tool, tax,
+            discount, and provider-rounding charges are not included until exact provider accounting is available.
+          </p>
+        </section>
+      `
+      : `
+        <section class="workspace-panel">
+          <h3>Provider Pricing</h3>
+          <p class="placeholder">
+            No provider/model is bound to this project. Bind a saved provider profile in Provider Settings
+            to view the active pricing version and a provider-priced Planning Estimate.
+          </p>
+        </section>
+      `;
+
+    mainPanel.innerHTML = `
+      <div class="workspace-content">
         <p class="placeholder">
-          Your current AI-writing budget estimate from Project Setup. Actual token use and generation cost will
-          appear here when writing-engine tracking is enabled.
+          Project AI budget planning. The saved Provider Settings profile remains reusable; this page may change only
+          the effective model bound to this project before provider usage begins. No provider call is made.
         </p>
-        <dl class="workspace-definition-list">
-          ${definition('Planned Token Budget', number(budget.token_budget_total))}
-          ${definition('Estimated Tokens per Chapter', number(budget.estimated_tokens_per_chapter))}
-          ${definition('Estimated Project Tokens', number(budget.estimated_tokens_total))}
-          ${definition('Estimated Generation Passes', number(budget.estimated_generation_passes_required))}
-          ${definition('Budget Status', labelFor(budget.token_budget_status || '—'), { humanReadable: true })}
-          ${definition('Project Target Words', number(manifest && manifest.target_total_words))}
-        </dl>
+
+        <section class="workspace-panel">
+          <h3>Project Planning</h3>
+          <dl class="workspace-definition-list">
+            ${definition('Planned Token Budget', number(budget.token_budget_total))}
+            ${definition('Estimated Tokens per Chapter', number(budget.estimated_tokens_per_chapter))}
+            ${definition('Estimated Project Tokens', number(budget.estimated_tokens_total))}
+            ${definition('Estimated Generation Passes', number(budget.estimated_generation_passes_required))}
+            ${definition('Budget Status', labelFor(budget.token_budget_status || '—'), { humanReadable: true })}
+            ${definition('Project Target Words', number(manifest && manifest.target_total_words))}
+          </dl>
+        </section>
+
+        ${providerPlanningBlock}
+
+        ${billingBlock}
+
         <details class="workspace-technical-details">
           <summary>Technical Details</summary>
           <dl class="workspace-definition-list compact">
             ${definition('Token Budget per Generation', number(budget.token_budget_per_generation))}
             ${definition('Token Multiplier', budget.token_multiplier || '—')}
+            ${definition('Input Rate / MTok', pricing ? `${pricing.currency || 'USD'} ${rates.input_per_mtok || '0'}` : '—')}
+            ${definition('Output Rate / MTok', pricing ? `${pricing.currency || 'USD'} ${rates.output_per_mtok || '0'}` : '—')}
+            ${definition('5m Cache Write / MTok', pricing ? `${pricing.currency || 'USD'} ${rates.cache_write_5m_per_mtok || '0'}` : '—')}
+            ${definition('1h Cache Write / MTok', pricing ? `${pricing.currency || 'USD'} ${rates.cache_write_1h_per_mtok || '0'}` : '—')}
+            ${definition('Cache Read / MTok', pricing ? `${pricing.currency || 'USD'} ${rates.cache_read_per_mtok || '0'}` : '—')}
+            ${definition('Pricing Freshness Status', freshness.status || '—')}
+            ${definition('Binding Instance', binding && binding.binding_instance_id ? binding.binding_instance_id : 'Not assigned yet')}
+            ${definition('Recorded Billing Events', number(usageSummary.event_count || 0))}
+            ${definition('Binding Lock', providerSummary && providerSummary.binding_lock && providerSummary.binding_lock.locked ? 'Locked after provider usage' : 'Changeable before provider usage')}
           </dl>
         </details>
-        <div class="workspace-disabled-note">Actual usage and pricing will be added when AI generation tracking is enabled.</div>
+
+        <div class="workspace-disabled-note">
+          Provider execution remains locked. When Primary 33.2 records authoritative provider usage, this page will preserve
+          provider/model, pricing-version, credential-instance, binding-instance, token, and currency-separated billing history.
+        </div>
       </div>
     `;
+    bindWorkspaceProjectModelControl(providerSummary, budget, manifest);
   }
 
   async function ensureAuthorLibrary() {
@@ -5182,8 +5729,21 @@
     }
   }
 
-  function renderSettings(manifest, context, bootstrap) {
+  async function renderSettings(manifest, context, bootstrap) {
     setHeading('Settings');
+
+    let providerSummary = state.providerWorkspaceSummary;
+    try {
+      providerSummary = await loadProviderWorkspaceSummary();
+    } catch (error) {
+      providerSummary = null;
+    }
+    if (state.activeSection !== 'settings') return;
+
+    const binding = (providerSummary && providerSummary.binding) || null;
+    const providerLabel = binding ? boundProviderLabel(providerSummary) : 'Not bound';
+    const providerModel = binding ? (binding.model_id || '—') : 'Not bound';
+
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-settings-author-view">
         <section class="workspace-author-hero">
@@ -5203,7 +5763,8 @@
             <div><strong>Books Planned</strong><span>${number(manifest.book_count)}</span></div>
             <div><strong>Chapters per Book</strong><span>${number(manifest.chapters_per_book)}</span></div>
             <div><strong>Target Words per Chapter</strong><span>${number(manifest.target_words_per_chapter)}</span></div>
-            <div><strong>Selected Writing Engine</strong><span>${escapeHtml(labelFor(manifest.ai_provider || manifest.engine_id || 'Not Selected'))}</span></div>
+            <div><strong>Bound AI Provider</strong><span>${escapeHtml(providerLabel)}</span></div>
+            <div><strong>Bound AI Model</strong><span>${escapeHtml(providerModel)}</span></div>
           </div>
         </section>
 
@@ -5250,7 +5811,7 @@
         </section>
 
         <div class="workspace-disabled-note">
-          Writing-engine connection, model selection, pricing, and usage settings will appear here when AI generation tracking is enabled.
+          Provider/model binding and pricing are managed in Provider Settings. Provider execution remains locked until Primary 33.2.
         </div>
 
         <details class="workspace-technical-details">
@@ -5258,7 +5819,9 @@
           <dl class="workspace-definition-list compact">
             ${definition('Project ID', manifest.project_id)}
             ${definition('Engine ID', manifest.engine_id)}
-            ${definition('AI Provider ID', manifest.ai_provider)}
+            ${definition('Authoritative Provider ID', binding ? binding.provider_id : '—')}
+            ${definition('Authoritative Model ID', binding ? binding.model_id : '—')}
+            ${definition('Legacy Manifest AI Provider', manifest.ai_provider || '—')}
             ${definition('Project Code', context.project_code)}
             ${definition('Storage Mode', context.storage_mode)}
             ${definition('Seed Mode', context.seed_mode)}
@@ -5547,83 +6110,127 @@
   }
 
 
-  function renderProviderStatusPanel(manifest, bootstrap) {
+  async function renderProviderStatusPanel(manifest, bootstrap) {
     setHeading('Provider Configuration Status');
+    mainPanel.innerHTML = `
+      <div class="workspace-content">
+        <p class="placeholder">Loading authoritative provider configuration…</p>
+      </div>
+    `;
 
-    const selectedProvider = String((manifest && manifest.ai_provider) || 'claude').toLowerCase();
-    const providers = providerStatusCatalog(selectedProvider);
-    const cards = providers.map(providerStatusCard).join('');
-    const selected = providers.find((provider) => provider.selected) || providers[0];
+    let providerSummary;
+    try {
+      providerSummary = await loadProviderWorkspaceSummary();
+    } catch (error) {
+      if (state.activeSection !== 'provider_status') return;
+      mainPanel.innerHTML = `
+        <div class="workspace-content">
+          <div class="workspace-disabled-note">Provider status could not be loaded: ${escapeHtml(error.message || String(error))}</div>
+        </div>
+      `;
+      return;
+    }
+    if (state.activeSection !== 'provider_status') return;
+
+    const binding = providerSummary.binding || null;
+    const providers = Array.isArray(providerSummary.provider_catalog)
+      ? providerSummary.provider_catalog
+      : [];
+    const cards = providers.map((provider) => providerStatusCard(provider, providerSummary)).join('');
+    const providerLabel = binding ? boundProviderLabel(providerSummary) : 'Not bound';
+    const modelLabel = binding ? (binding.model_id || '—') : 'Not bound';
+    const lock = providerSummary.binding_lock || {};
 
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-provider-status-panel workspace-provider-author-view-cleanup-20260708">
-        <p class="placeholder">Read-only writing engine status for this project. This page shows which writing engines are available without checking API keys, calling providers, or enabling generation.</p>
+        <p class="placeholder">
+          Read-only provider status from the same Provider 33.1 authority used by Provider Settings.
+          This page does not return API keys, call providers, or enable generation.
+        </p>
 
         <section class="workspace-panel workspace-provider-summary">
-          <h3>Writing Engine Status</h3>
+          <h3>Project Provider Status</h3>
           <div class="workspace-provider-summary-grid">
-            ${statCard('Selected Writing Engine', selected ? selected.label : labelFor(selectedProvider))}
-            ${statCard('Workspace Generation', bootstrap && bootstrap.generation_enabled ? 'Enabled' : 'Locked')}
-            ${statCard('Connection Status', 'Not checked')}
+            ${statCard('Bound Provider', providerLabel)}
+            ${statCard('Bound Model', modelLabel)}
+            ${statCard('Provider Lock', lock.locked ? 'Locked after usage' : 'Changeable before usage')}
             ${statCard('Provider Calls', 'Disabled')}
           </div>
           <div class="workspace-disabled-note">
-            Generation remains locked until project-local runtime storage, prompt routing, validation, and output handling are migrated.
+            Provider execution remains locked until Primary 33.2 acceptance gates pass.
           </div>
         </section>
 
         <section class="workspace-panel">
-          <h3>Available Writing Engines</h3>
+          <h3>Provider Catalog</h3>
           <div class="workspace-provider-grid">
-            ${cards}
+            ${cards || '<p class="placeholder">No provider catalog entries are available.</p>'}
           </div>
         </section>
 
         <div class="workspace-disabled-note">
-          No writing engine is contacted from this workspace. Account keys are never shown here.
+          Italus shows credential status only. API-key values are never shown in Workspace.
         </div>
       </div>
     `;
   }
 
-  function providerStatusCatalog(selectedProvider) {
-    return [
-      {
-        id: 'claude',
-        label: 'Claude',
-        availability: 'Selected',
-        description: 'Ready for future workspace connection after runtime migration.',
-        selected: selectedProvider === 'claude'
-      },
-      {
-        id: 'openai',
-        label: 'OpenAI',
-        availability: 'Available',
-        description: 'Available as a writing engine option, but not connected to workspace generation yet.',
-        selected: selectedProvider === 'openai'
-      },
-      {
-        id: 'novelcraft',
-        label: 'NovelCraft',
-        availability: 'Available',
-        description: 'Available as a writing engine option, but not connected to workspace generation yet.',
-        selected: selectedProvider === 'novelcraft'
-      }
-    ];
+  function boundProviderLabel(providerSummary) {
+    const binding = (providerSummary && providerSummary.binding) || {};
+    const providerId = String(binding.provider_id || '').toLowerCase();
+    const catalog = Array.isArray(providerSummary && providerSummary.provider_catalog)
+      ? providerSummary.provider_catalog
+      : [];
+    const provider = catalog.find(
+      (item) => String((item && item.provider_id) || '').toLowerCase() === providerId
+    );
+    return provider
+      ? String(provider.label || provider.provider_id || 'Unknown Provider')
+      : labelFor(providerId || 'Unknown Provider');
   }
 
-  function providerStatusCard(provider) {
+  function providerStatusCard(provider, providerSummary) {
+    const providerId = String((provider && provider.provider_id) || '').toLowerCase();
+    const binding = (providerSummary && providerSummary.binding) || {};
+    const selected = providerId && providerId === String(binding.provider_id || '').toLowerCase();
+    const profiles = Array.isArray(providerSummary && providerSummary.configured_profiles)
+      ? providerSummary.configured_profiles
+      : [];
+    const configured = profiles.some(
+      (profile) => String((profile && profile.provider_id) || '').toLowerCase() === providerId
+    );
+    const enabled = Boolean(provider && provider.configuration_enabled);
+    const badge = selected
+      ? 'BOUND'
+      : !enabled
+        ? 'EXPERIMENTAL / DISABLED'
+        : configured
+          ? 'CONFIGURED'
+          : 'AVAILABLE';
+    const useLabel = selected
+      ? 'Bound to this project'
+      : !enabled
+        ? 'Not available for project binding'
+        : configured
+          ? 'Configured profile available'
+          : 'Profile not configured';
+
     return `
-      <article class="workspace-provider-card ${provider.selected ? 'selected' : ''}">
+      <article class="workspace-provider-card ${selected ? 'selected' : ''}">
         <header>
-          <strong>${escapeHtml(provider.label)}</strong>
-          ${provider.selected ? statusBadge('SELECTED') : statusBadge('AVAILABLE')}
+          <strong>${escapeHtml((provider && provider.label) || providerId || 'Unknown Provider')}</strong>
+          ${statusBadge(badge)}
         </header>
-        <p>${escapeHtml(provider.description)}</p>
+        <p>${escapeHtml(
+          enabled
+            ? 'Direct provider configuration is available. Generation remains locked.'
+            : 'Experimental placeholder only. Configuration and execution are disabled.'
+        )}</p>
         <dl class="workspace-definition-list compact">
-          ${definition('Workspace Use', provider.selected ? 'Selected for this project' : 'Available for future selection')}
-          ${definition('Generation', 'Locked until migration is complete')}
-          ${definition('Connection', 'Not checked yet')}
+          ${definition('Workspace Use', useLabel)}
+          ${definition('Credential Status', labelFor((provider && provider.credential_status) || 'unknown'))}
+          ${definition('Model Catalog', labelFor((provider && provider.model_catalog_status) || 'not loaded'))}
+          ${definition('Generation', 'Locked')}
         </dl>
       </article>
     `;
@@ -6056,6 +6663,35 @@
   function number(value) {
     const parsed = Number(value);
     return Number.isFinite(parsed) ? parsed.toLocaleString() : '—';
+  }
+
+  function safeHttpUrl(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    try {
+      const parsed = new URL(raw);
+      if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return '';
+      return parsed.href;
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function formatMoney(value, currency) {
+    const amount = Number(value);
+    if (!Number.isFinite(amount)) return '—';
+    const code = String(currency || 'USD').trim().toUpperCase() || 'USD';
+    try {
+      return new Intl.NumberFormat(undefined, {
+        style: 'currency',
+        currency: code,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: amount > 0 && amount < 0.01 ? 6 : 2
+      }).format(amount);
+    } catch (error) {
+      const digits = amount > 0 && amount < 0.01 ? 6 : 2;
+      return `${code} ${amount.toFixed(digits)}`;
+    }
   }
 
   const lifecycleLabels = {

@@ -37,9 +37,11 @@ GENERATION_CONTROL_SERVICE_MARKER = "generation-readiness-gate-vnext-20260817"
 GENERATION_CONTROL_SERVICE_VERSION = "generation_readiness_gate_vnext_v1"
 GENERATION_READINESS_SCHEMA_VERSION = "generation_readiness_vnext_v1"
 
-# Primary 32 claims only project-local prompt/request construction.
+# Primary 32 owns project-local prompt/request construction. Primary 33.2.2B
+# makes the bounded provider-execution component ready while later validation,
+# author-review persistence, and Approved Continuity gates remain locked.
 PROMPT_BUILDER_PROJECT_LOCAL_ROUTING_READY = True
-PROVIDER_EXECUTION_READY = False
+PROVIDER_EXECUTION_READY = True
 VALIDATOR_READY = False
 AUTHOR_REVIEW_PERSISTENCE_READY = False
 APPROVED_CONTINUITY_COMMIT_PATH_READY = False
@@ -60,6 +62,7 @@ _UPSTREAM_CHECK_NAMES = {
     "chapter_knowledge_pack_current",
     "prompt_builder_project_local_routing_ready",
     "provenance_capture_ready",
+    "provider_origin_wiring_ready",
 }
 
 
@@ -90,20 +93,22 @@ def get_generation_control_contract() -> dict[str, Any]:
             "provider_execution_ready",
             "validator_ready",
             "provenance_capture_ready",
+            "provider_origin_wiring_ready",
             "author_review_persistence_ready",
             "approved_continuity_commit_path_ready",
         ],
         "patch_29_locks": {
             "prompt_builder_project_local_routing_ready": True,
-            "provider_execution_ready": False,
+            "provider_execution_ready": True,
             "validator_ready": False,
             "author_review_persistence_ready": False,
             "approved_continuity_commit_path_ready": False,
         },
         "message": (
             "Generation Readiness Gate vNEXT is authoritative for readiness "
-            "reporting. Provider execution remains locked until downstream "
-            "migration owners are complete."
+            "reporting. The bounded provider-execution component is ready; "
+            "validator, author-review persistence, and Approved Continuity "
+            "migration owners remain locked."
         ),
     }
 
@@ -359,6 +364,13 @@ def get_generation_control_status_for_context(
         provenance_status.get("provenance_capture_ready") is True
         and provenance_status.get("integrity_status") == "ok"
     )
+    provider_origin_wiring_ready = bool(
+        provenance_ready
+        and provenance_status.get("provider_origin_wiring_ready") is True
+    )
+    provider_execution_ready = bool(
+        PROVIDER_EXECUTION_READY and provider_origin_wiring_ready
+    )
 
     canon_records_normalized = bool(
         canon_setup_completed
@@ -548,10 +560,30 @@ def get_generation_control_status_for_context(
             "Primary 32 project-local Prompt Builder routing is ready and has no legacy-pack fallback.",
         ),
         _readiness_check(
+            "provider_origin_wiring_ready",
+            provider_origin_wiring_ready,
+            "provider_origin_wiring_not_ready",
+            (
+                "Primary 33 immutable MODEL-origin registration is wired and ready."
+                if provider_origin_wiring_ready
+                else "Provider execution is blocked until immutable MODEL-origin registration is ready."
+            ),
+            details={
+                "provenance_capture_ready": provenance_ready,
+                "provider_origin_wiring_ready": bool(
+                    provenance_status.get("provider_origin_wiring_ready")
+                ),
+            },
+        ),
+        _readiness_check(
             "provider_execution_ready",
-            PROVIDER_EXECUTION_READY,
+            provider_execution_ready,
             "provider_execution_not_ready",
-            "Primary 33.2 provider execution / immutable MODEL-origin wiring is not yet enabled.",
+            (
+                "Primary 33 provider execution and immutable MODEL-origin registration are ready."
+                if provider_execution_ready
+                else "Provider execution is not ready."
+            ),
         ),
         _readiness_check(
             "validator_ready",
@@ -621,9 +653,9 @@ def get_generation_control_status_for_context(
         "ready": ready,
         "upstream_ready": upstream_ready,
         "generation_locked": True,
-        "provider_execution_locked": True,
+        "provider_execution_locked": not provider_execution_ready,
         "generation_enabled": False,
-        "provider_execution_enabled": False,
+        "provider_execution_enabled": provider_execution_ready,
         "prompt_builder_enabled": True,
         "draft_validation_enabled": False,
         "approved_persistence_enabled": False,
@@ -635,6 +667,7 @@ def get_generation_control_status_for_context(
             "upstream_ready": upstream_ready,
             "downstream_pipeline_ready": False,
             "provenance_capture_ready": provenance_ready,
+            "provider_origin_wiring_ready": provider_origin_wiring_ready,
         },
         "blockers": blockers,
         "upstream_blockers": [
@@ -669,7 +702,8 @@ def get_generation_control_status_for_context(
             "provenance": deepcopy(provenance_status),
             "downstream_migration": {
                 "prompt_builder_project_local_routing_ready": True,
-                "provider_execution_ready": False,
+                "provider_origin_wiring_ready": provider_origin_wiring_ready,
+                "provider_execution_ready": provider_execution_ready,
                 "validator_ready": False,
                 "author_review_persistence_ready": False,
                 "approved_continuity_commit_path_ready": False,
@@ -677,7 +711,8 @@ def get_generation_control_status_for_context(
         },
         "future_boundaries": {
             "prompt_builder_migration": "primary_32_ready",
-            "provider_execution": "primary_33_2_locked",
+            "provider_execution": "primary_33_provider_candidate_origin_ready",
+            "provider_candidate_model_origin": "primary_33_ready",
             "validator_and_author_review": "primary_34_locked",
             "approved_continuity_commit": "primary_36_locked",
         },
@@ -685,8 +720,9 @@ def get_generation_control_status_for_context(
             "Generation readiness is satisfied."
             if ready
             else (
-                "Upstream project-local generation inputs are ready; downstream "
-                "migration boundaries still lock provider execution."
+                "Upstream project-local generation inputs and bounded provider execution "
+                "are ready; downstream validator/review/continuity boundaries still lock "
+                "end-to-end generation."
                 if upstream_ready
                 else "Generation readiness is blocked by project-local dependencies."
             )

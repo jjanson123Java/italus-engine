@@ -318,14 +318,17 @@ def get_provenance_status_for_context(
         "version_count": version_count,
         "segment_count": segment_count,
         "provenance_capture_ready": capture_ready,
-        "provider_origin_wiring_ready": False,
+        "provider_origin_wiring_ready": capture_ready,
         "review_lineage_wiring_ready": False,
         "chapter_scoring_ready": False,
         "ledger_ready": False,
         "generation_unlocked": False,
         "execution_locks": _execution_locks(),
         "message": (
-            "Authorship provenance storage and lineage capture are ready."
+            (
+                "Authorship provenance storage, lineage capture, and provider "
+                "MODEL-origin wiring are ready."
+            )
             if capture_ready
             else "Authorship provenance storage requires initialization or recovery."
         ),
@@ -1557,8 +1560,8 @@ def _execution_locks() -> dict[str, bool]:
     return {
         "authorship_scoring_locked": True,
         "ledger_locked": True,
-        "provider_execution_locked": True,
-        "prompt_builder_locked": True,
+        "provider_execution_locked": False,
+        "prompt_builder_locked": False,
         "validator_review_wiring_locked": True,
         "approved_continuity_write_locked": True,
         "author_voice_update_locked": True,

@@ -116,12 +116,14 @@ and saved in place with PATCH /api/project/{id}.
       element.addEventListener('click', () => {
         const newProjectModal = document.getElementById('new-project-modal');
         const existingProjectModal = document.getElementById('existing-project-modal');
+        const providerSettingsModal = document.getElementById('provider-settings-modal');
         const isBackdrop = element.classList.contains('studio-modal-backdrop');
-        const projectEntryModalOpen =
+        const backdropProtectedModalOpen =
           (newProjectModal && !newProjectModal.hidden) ||
-          (existingProjectModal && !existingProjectModal.hidden);
+          (existingProjectModal && !existingProjectModal.hidden) ||
+          (providerSettingsModal && !providerSettingsModal.hidden);
 
-        if (isBackdrop && projectEntryModalOpen) {
+        if (isBackdrop && backdropProtectedModalOpen) {
           return;
         }
 

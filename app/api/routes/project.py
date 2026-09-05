@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request, Response
 from pydantic import BaseModel, Field
 
 from app.projects.project_loader import InvalidProjectIdError, ProjectNotFoundError
@@ -33,6 +33,14 @@ from app.services import (
     authorship_provenance_service,
     generation_control_service,
     generation_service,
+    provider_config_service,
+    provider_credential_service,
+    provider_binding_service,
+    provider_pricing_service,
+    provider_usage_service,
+    provider_workspace_service,
+    provider_preflight_service,
+    provider_execution_service,
     planner_reveal_catalog_service,
 )
 
@@ -139,6 +147,20 @@ class ChapterKnowledgePackCompileRequest(BaseModel):
 class GenerationRequestBuildRequest(BaseModel):
     book_number: int = Field(ge=1)
     chapter_number: int = Field(ge=1)
+
+
+class ProviderGenerationExecuteRequest(BaseModel):
+    """Bounded public input for Primary 33.2.2B provider execution.
+
+    Provider, model, binding, credential, pricing, token usage, cost, and receipt
+    identities are deliberately absent because the backend owns them.
+    """
+
+    book_number: int = Field(ge=1)
+    chapter_number: int = Field(ge=1)
+
+    class Config:
+        extra = "forbid"
 
 
 class ProgressionOverrideRequest(BaseModel):
@@ -1430,3 +1452,471 @@ def open_archive(request: LegacyProjectRequest):
         "projects": project_service.list_projects("archived"),
         "legacy_request": _model_to_dict(request),
     }
+
+
+class ProviderConfigSaveRequest(BaseModel):
+    provider_id: str = Field(min_length=1)
+    model_id: str = Field(min_length=1)
+    service_tier: str = Field(default="standard", min_length=1)
+    inference_scope: str = Field(default="global", min_length=1)
+
+
+class ProviderCredentialSaveRequest(BaseModel):
+    api_key: str = Field(min_length=8, max_length=2048)
+
+
+class ProviderProjectBindingRequest(BaseModel):
+    provider_id: str = Field(min_length=1)
+
+
+class ProviderProjectModelRequest(BaseModel):
+    model_id: str = Field(min_length=1)
+
+
+class ProviderPricingVersionRequest(BaseModel):
+    provider_id: str = Field(min_length=1)
+    model_id: str = Field(min_length=1)
+    service_tier: str = Field(default="standard", min_length=1)
+    inference_scope: str = Field(default="global", min_length=1)
+    currency: str = Field(default="USD", min_length=1)
+    input_per_mtok: str = Field(min_length=1)
+    output_per_mtok: str = Field(min_length=1)
+    cache_write_5m_per_mtok: str = Field(default="0")
+    cache_write_1h_per_mtok: str = Field(default="0")
+    cache_read_per_mtok: str = Field(default="0")
+    effective_from: str = Field(min_length=1)
+    verified_at: str = Field(min_length=1)
+    source_url: str = Field(min_length=1)
+    notes: str = Field(default="")
+
+
+class ProviderPricingPolicyRequest(BaseModel):
+    freshness_threshold_days: int = Field(ge=1, le=3650)
+
+
+@router.get("/api/provider/catalog")
+def get_provider_catalog():
+    """Return the Primary 33.1 provider catalog without secrets or execution."""
+    return provider_config_service.provider_catalog()
+
+
+@router.get("/api/provider/config")
+def get_provider_config(
+    provider_id: str | None = Query(default=None),
+):
+    """Return one non-secret provider profile plus all configured profile summaries."""
+    try:
+        return provider_config_service.get_provider_config(provider_id)
+    except provider_config_service.ProviderConfigError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.put("/api/provider/config")
+def save_provider_config(request: ProviderConfigSaveRequest):
+    """Persist one non-secret provider/model profile.
+
+    Multiple providers may be configured simultaneously. API credentials are
+    resolved by the backend secure credential abstraction and are never
+    returned to the browser.
+    """
+    try:
+        return provider_config_service.save_provider_config(
+            **_model_to_dict(request)
+        )
+    except provider_config_service.ProviderConfigError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/provider/profiles")
+def get_provider_profiles():
+    """Return saved provider profiles with project associations and credential state."""
+    profiles = provider_config_service.list_provider_profiles()
+    associations = provider_binding_service.list_provider_profile_associations()
+
+    by_provider: dict[str, list[dict[str, Any]]] = {}
+    for association in associations:
+        provider_id = str(association.get("provider_id") or "").strip().lower()
+        if provider_id:
+            by_provider.setdefault(provider_id, []).append(association)
+
+    result: list[dict[str, Any]] = []
+    for profile in profiles:
+        provider_id = str(profile.get("provider_id") or "").strip().lower()
+        linked = by_provider.get(provider_id, [])
+        result.append(
+            {
+                **profile,
+                "associations": linked,
+                "association_count": len(linked),
+                "can_delete": len(linked) == 0,
+            }
+        )
+
+    return {
+        "status": "ok",
+        "schema_version": "primary33.1-provider-profile-inventory-v1",
+        "profiles": result,
+        "provider_execution_allowed": False,
+    }
+
+
+@router.delete("/api/provider/config/{provider_id}")
+def delete_provider_profile(provider_id: str):
+    """Delete one saved provider/model profile only after all project bindings are removed."""
+    try:
+        associations = provider_binding_service.list_provider_profile_associations(provider_id)
+        if associations:
+            project_names = ", ".join(
+                str(item.get("project_name") or item.get("project_id") or "project")
+                for item in associations
+            )
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Disassociate this provider profile from every project before deleting it. "
+                    f"Still associated with: {project_names}."
+                ),
+            )
+        return provider_config_service.delete_provider_profile(provider_id)
+    except provider_config_service.ProviderConfigError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+def _require_local_provider_credential_admin(request: Request) -> None:
+    client_host = str(request.client.host if request.client else "").strip().lower()
+    if client_host not in {"127.0.0.1", "::1", "localhost"}:
+        raise HTTPException(
+            status_code=403,
+            detail=(
+                "Interactive provider credential management is restricted to the local Italus application."
+            ),
+        )
+    if not provider_credential_service.interactive_management_available():
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "Interactive provider credential management is unavailable for the trusted "
+                "credential backend selected by this deployment."
+            ),
+        )
+
+
+@router.get("/api/provider/credentials/status")
+def get_provider_credential_status():
+    """Return provider credential state only; never return secret values."""
+    return provider_credential_service.credential_states()
+
+
+@router.put("/api/provider/credentials/{provider_id}")
+def save_provider_credential(
+    provider_id: str,
+    request_payload: ProviderCredentialSaveRequest,
+    request: Request,
+):
+    """Store one provider key using the trusted local secure credential backend."""
+    _require_local_provider_credential_admin(request)
+    try:
+        return provider_credential_service.save_api_key(
+            provider_id,
+            request_payload.api_key,
+        )
+    except provider_credential_service.ProviderCredentialError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.delete("/api/provider/credentials/{provider_id}")
+def delete_provider_credential(
+    provider_id: str,
+    request: Request,
+):
+    """Delete only an Italus-managed local credential; external secrets are untouched."""
+    _require_local_provider_credential_admin(request)
+    try:
+        return provider_credential_service.delete_stored_api_key(provider_id)
+    except provider_credential_service.ProviderCredentialError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/provider/projects/{project_id}/binding")
+def get_project_provider_binding(project_id: str):
+    """Return the project-local provider/model binding and lock state."""
+    try:
+        return provider_binding_service.get_project_provider_binding(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except provider_binding_service.ProviderBindingError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/provider/projects/{project_id}/workspace-summary")
+def get_project_provider_workspace_summary(
+    project_id: str,
+    response: Response,
+):
+    """Return the read-only Provider 33.1 projection used by Workspace."""
+    response.headers["Cache-Control"] = "no-store, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    try:
+        return provider_workspace_service.get_project_provider_workspace_summary(
+            project_id
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except (
+        provider_binding_service.ProviderBindingError,
+        provider_pricing_service.ProviderPricingError,
+        ValueError,
+    ) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.put("/api/provider/projects/{project_id}/binding")
+def save_project_provider_binding(
+    project_id: str,
+    request: ProviderProjectBindingRequest,
+):
+    """Bind one saved provider/model profile to one project.
+
+    The binding may be corrected before provider usage begins. Once any
+    provider usage exists for the project, provider/model switching is rejected.
+    """
+    try:
+        return provider_binding_service.save_project_provider_binding(
+            project_id,
+            provider_id=request.provider_id,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except provider_binding_service.ProviderBindingLockedError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except (
+        provider_binding_service.ProviderBindingError,
+        provider_config_service.ProviderConfigError,
+    ) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.put("/api/provider/projects/{project_id}/model")
+def save_project_provider_model(
+    project_id: str,
+    request: ProviderProjectModelRequest,
+):
+    """Change only the project-effective model for the currently bound provider.
+
+    Provider Settings remains unchanged. The model must be accepted by the
+    bound provider's curated direct-model catalog. Post-usage changes remain
+    locked until the controlled migration phase.
+    """
+    try:
+        return provider_binding_service.save_project_model_override(
+            project_id,
+            model_id=request.model_id,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except provider_binding_service.ProviderBindingLockedError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except (
+        provider_binding_service.ProviderBindingError,
+        provider_config_service.ProviderConfigError,
+    ) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.delete("/api/provider/projects/{project_id}/binding")
+def delete_project_provider_binding(project_id: str):
+    """Disassociate a provider profile without deleting the project."""
+    try:
+        return provider_binding_service.delete_project_provider_binding(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except provider_binding_service.ProviderBindingLockedError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except provider_binding_service.ProviderBindingError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/provider/pricing/policy")
+def get_provider_pricing_policy():
+    """Return the application-global pricing freshness warning policy."""
+    return provider_pricing_service.get_pricing_policy()
+
+
+@router.put("/api/provider/pricing/policy")
+def save_provider_pricing_policy(request: ProviderPricingPolicyRequest):
+    """Persist the application-global pricing freshness warning threshold."""
+    try:
+        return provider_pricing_service.save_pricing_policy(
+            freshness_threshold_days=request.freshness_threshold_days,
+        )
+    except provider_pricing_service.ProviderPricingError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/provider/pricing/current")
+def get_current_provider_pricing(
+    provider_id: str = Query(min_length=1),
+    model_id: str = Query(min_length=1),
+    service_tier: str = Query(default="standard", min_length=1),
+    inference_scope: str = Query(default="global", min_length=1),
+):
+    """Return the immutable pricing version effective now for one provider/model key."""
+    return provider_pricing_service.get_current_pricing(
+        provider_id=provider_id,
+        model_id=model_id,
+        service_tier=service_tier,
+        inference_scope=inference_scope,
+    )
+
+
+@router.post("/api/provider/pricing/versions")
+def save_provider_pricing_version(request: ProviderPricingVersionRequest):
+    """Create a new immutable pricing version without rewriting prior price history."""
+    try:
+        return provider_pricing_service.save_pricing_version(
+            **_model_to_dict(request)
+        )
+    except provider_pricing_service.ProviderPricingError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/provider/pricing/registry")
+def get_provider_pricing_registry(
+    provider_id: str = Query(min_length=1),
+    service_tier: str = Query(default="standard", min_length=1),
+    inference_scope: str = Query(default="global", min_length=1),
+):
+    """Return current, scheduled, and retired immutable pricing by catalog model."""
+    try:
+        return provider_pricing_service.get_pricing_registry(
+            provider_id=provider_id,
+            service_tier=service_tier,
+            inference_scope=inference_scope,
+        )
+    except provider_pricing_service.ProviderPricingError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/provider/pricing/history")
+def get_provider_pricing_history(
+    provider_id: str | None = Query(default=None),
+    model_id: str | None = Query(default=None),
+    limit: int = Query(default=100, ge=1, le=500),
+):
+    """Return append-only pricing history metadata."""
+    return provider_pricing_service.list_pricing_history(
+        provider_id=provider_id,
+        model_id=model_id,
+        limit=limit,
+    )
+
+
+@router.post("/api/provider/projects/{project_id}/preflight")
+def run_project_provider_preflight(project_id: str):
+    """Run the non-generating provider authentication/model/pricing preflight.
+
+    The backend may contact the bound direct provider's model metadata endpoint.
+    It never returns credential plaintext, records provider usage, or enables
+    generation.
+    """
+    try:
+        return provider_preflight_service.run_project_provider_preflight(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except (
+        provider_binding_service.ProviderBindingError,
+        provider_config_service.ProviderConfigError,
+        provider_credential_service.ProviderCredentialError,
+        provider_pricing_service.ProviderPricingError,
+        ValueError,
+    ) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+def _provider_execution_http_status(exc: provider_execution_service.ProviderExecutionError) -> int:
+    """Map safe provider-execution failures to stable HTTP status classes."""
+    if exc.reconciliation_required:
+        return 409
+
+    code = str(exc.code or "")
+    if code in {"request_scope_invalid", "PROVIDER_REQUEST_REJECTED"}:
+        return 422
+    if code == "PROVIDER_RATE_LIMITED":
+        return 429
+    if code == "PROVIDER_UNAVAILABLE":
+        return 503
+    if code == "PROVIDER_REQUEST_FAILED":
+        return 502
+    if code == "PROVIDER_EXECUTION_ACTIVATION_LOCKED":
+        return 503
+    return 409
+
+
+@router.post("/api/provider/projects/{project_id}/generation/execute")
+def execute_project_provider_generation(
+    project_id: str,
+    payload: ProviderGenerationExecuteRequest,
+    http_request: Request,
+):
+    """Execute one controlled provider generation with server-owned lineage.
+
+    The caller supplies only the project position and an Idempotency-Key header.
+    Provider/model/credential/pricing/usage/cost identities are resolved and
+    committed exclusively by the backend execution service.
+    """
+    idempotency_key = str(http_request.headers.get("Idempotency-Key") or "").strip()
+    if not idempotency_key:
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "code": "IDEMPOTENCY_KEY_REQUIRED",
+                "message": "Idempotency-Key header is required for provider generation.",
+            },
+        )
+    if len(idempotency_key.encode("utf-8")) > 256:
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "code": "IDEMPOTENCY_KEY_TOO_LONG",
+                "message": "Idempotency-Key must not exceed 256 UTF-8 bytes.",
+            },
+        )
+
+    try:
+        return provider_execution_service.execute_provider_generation(
+            project_id,
+            book_number=payload.book_number,
+            chapter_number=payload.chapter_number,
+            idempotency_key=idempotency_key,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except provider_execution_service.ProviderExecutionError as exc:
+        raise HTTPException(
+            status_code=_provider_execution_http_status(exc),
+            detail=exc.to_detail(),
+        ) from exc
+
+
+@router.get("/api/provider/projects/{project_id}/usage/summary")
+def get_provider_usage_summary(project_id: str):
+    """Return the rebuildable provider-usage summary for one project."""
+    try:
+        return provider_usage_service.get_usage_summary(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.get("/api/provider/projects/{project_id}/usage/events")
+def get_provider_usage_events(
+    project_id: str,
+    limit: int = Query(default=100, ge=1, le=500),
+):
+    """Return provider usage events without exposing a browser write surface."""
+    try:
+        return provider_usage_service.list_usage_events(
+            project_id,
+            limit=limit,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc

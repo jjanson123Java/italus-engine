@@ -6606,3 +6606,136 @@ html[data-theme="fantasy"] .original-landing-feature:nth-child(3) img { content:
   }
 }
 
+/* Primary 33.2.1A2 - project model control theme alignment v1 */
+/* Sci-Fi follows the established cyan/violet Workspace planner-control family. */
+html[data-theme="sci-fi"] .workspace-provider-model-control > label {
+  color: var(--sci-fi-cyan);
+}
+
+html[data-theme="sci-fi"] #workspace-provider-model-select,
+html[data-theme="sci-fi"] #workspace-provider-model-save {
+  border-color: rgba(70, 217, 255, 0.72);
+  background: linear-gradient(145deg, rgba(5, 47, 76, 0.96), rgba(34, 27, 86, 0.94));
+  color: #bfefff;
+  box-shadow:
+    0 0 0 1px rgba(70, 217, 255, 0.12),
+    inset 0 0 0 1px rgba(185, 163, 255, 0.07),
+    0 7px 18px rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme="sci-fi"] #workspace-provider-model-select:hover:not(:disabled),
+html[data-theme="sci-fi"] #workspace-provider-model-save:hover:not(:disabled) {
+  border-color: var(--sci-fi-violet-soft);
+  color: #f0f9ff;
+  box-shadow:
+    0 0 0 1px rgba(185, 163, 255, 0.18),
+    0 0 22px rgba(70, 217, 255, 0.16),
+    0 0 30px rgba(141, 99, 255, 0.10),
+    0 7px 18px rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme="sci-fi"] #workspace-provider-model-select:focus-visible,
+html[data-theme="sci-fi"] #workspace-provider-model-save:focus-visible {
+  outline-color: var(--sci-fi-violet-soft);
+}
+
+html[data-theme="sci-fi"] #workspace-provider-model-select option {
+  background: #061326;
+  color: #c8f1ff;
+}
+
+/* Mystery follows the established brass/burgundy Workspace planner-control family. */
+html[data-theme="mystery"] .workspace-provider-model-control > label {
+  color: var(--mystery-brass);
+}
+
+html[data-theme="mystery"] #workspace-provider-model-select,
+html[data-theme="mystery"] #workspace-provider-model-save {
+  border-color: rgba(201, 161, 93, 0.44);
+  background: linear-gradient(145deg, rgba(55, 34, 24, 0.90), rgba(66, 28, 36, 0.84));
+  color: var(--mystery-text);
+  box-shadow:
+    0 0 0 1px rgba(201, 161, 93, 0.07),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+html[data-theme="mystery"] #workspace-provider-model-select:hover:not(:disabled),
+html[data-theme="mystery"] #workspace-provider-model-save:hover:not(:disabled) {
+  border-color: var(--mystery-brass-soft);
+  background: linear-gradient(145deg, rgba(78, 46, 27, 0.94), rgba(98, 36, 49, 0.88));
+  color: #fff4e3;
+  box-shadow:
+    0 0 20px rgba(201, 161, 93, 0.12),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+html[data-theme="mystery"] #workspace-provider-model-select:focus-visible,
+html[data-theme="mystery"] #workspace-provider-model-save:focus-visible {
+  outline-color: var(--mystery-brass-soft);
+}
+
+html[data-theme="mystery"] #workspace-provider-model-select option {
+  background: #1b110e;
+  color: var(--mystery-text);
+}
+
+/* Fantasy follows the final pink Workspace selector/action family. */
+html[data-theme="fantasy"] .workspace-provider-model-control > label {
+  color: #f3a0de;
+}
+
+html[data-theme="fantasy"] #workspace-provider-model-select {
+  border-color: rgba(243, 160, 222, 0.66);
+  background: linear-gradient(180deg, rgba(25, 13, 39, 0.98), rgba(12, 6, 22, 0.98));
+  color: #ffd8f4;
+  box-shadow:
+    0 0 0 1px rgba(243, 160, 222, 0.10),
+    inset 0 0 0 1px rgba(255, 214, 243, 0.05),
+    0 7px 18px rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme="fantasy"] #workspace-provider-model-select:hover:not(:disabled) {
+  border-color: #ffd0f1;
+  color: #fff2fb;
+  background: linear-gradient(180deg, rgba(44, 22, 63, 0.98), rgba(21, 10, 34, 0.98));
+  box-shadow:
+    0 0 18px rgba(243, 160, 222, 0.15),
+    0 7px 18px rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme="fantasy"] #workspace-provider-model-select:focus-visible {
+  outline-color: rgba(255, 208, 244, 0.88);
+}
+
+html[data-theme="fantasy"] #workspace-provider-model-select option {
+  background: #12091f;
+  color: #ffd8f4;
+}
+
+html[data-theme="fantasy"] #workspace-provider-model-select option:checked {
+  background: #6f3f94;
+  color: #fff6fd;
+}
+
+html[data-theme="fantasy"] #workspace-provider-model-save {
+  border-color: rgba(243, 160, 222, 0.48);
+  background: linear-gradient(145deg, rgba(72, 38, 100, 0.92), rgba(116, 60, 130, 0.86));
+  color: #fff0fb;
+  box-shadow:
+    0 0 0 1px rgba(243, 160, 222, 0.08),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+html[data-theme="fantasy"] #workspace-provider-model-save:hover:not(:disabled) {
+  border-color: rgba(255, 208, 244, 0.78);
+  background: linear-gradient(145deg, rgba(105, 53, 140, 0.96), rgba(168, 84, 157, 0.88));
+  color: #fff8fe;
+  box-shadow:
+    0 0 20px rgba(243, 160, 222, 0.14),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+html[data-theme="fantasy"] #workspace-provider-model-save:focus-visible {
+  outline-color: rgba(255, 208, 244, 0.88);
+}
+

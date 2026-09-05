@@ -7,11 +7,15 @@ control runtime prompt packing or generation context.
 
 from __future__ import annotations
 
+from decimal import Decimal, InvalidOperation
 from typing import Any
 
 
 TOKEN_MULTIPLIER_DEFAULT = 1.3
 WARNING_THRESHOLD_DEFAULT = 0.85
+PROVIDER_PLANNING_COST_SCHEMA_VERSION = "primary33.1-provider-planning-cost-v1"
+_ONE_MTOK = Decimal("1000000")
+_PLANNING_COST_QUANTUM = Decimal("0.000001")
 
 
 def estimate_project_budget(
@@ -68,6 +72,78 @@ def estimate_project_budget(
         "token_budget_status": status,
         "recommendations": _recommendations(status),
     }
+
+
+def estimate_provider_planning_cost(
+    budget_plan: dict[str, Any],
+    pricing: dict[str, Any],
+) -> dict[str, Any]:
+    """Return a provider-priced *planning* estimate for generated output only.
+
+    The existing project planning estimate is derived from target prose words, so
+    `estimated_tokens_total` represents planned generated-output volume. Primary
+    33.1 does not yet have an exact provider request and therefore cannot know
+    prompt-input, cache, tool, tax, discount, or provider-rounding charges.
+
+    This function intentionally prices only the planned generated-output tokens
+    against the active immutable output rate. It must never be presented as an
+    actual provider charge or as the exact pre-generation estimate introduced in
+    Primary 33.2.
+    """
+
+    try:
+        estimated_output_tokens = int(budget_plan.get("estimated_tokens_total") or 0)
+    except (TypeError, ValueError):
+        estimated_output_tokens = 0
+    estimated_output_tokens = max(estimated_output_tokens, 0)
+
+    rates = pricing.get("rates_per_mtok")
+    rates = rates if isinstance(rates, dict) else {}
+    output_rate = _nonnegative_decimal(
+        rates.get("output_per_mtok"),
+        "output_per_mtok",
+    )
+    estimated_cost = (
+        Decimal(estimated_output_tokens) / _ONE_MTOK
+    ) * output_rate
+
+    return {
+        "status": "ok",
+        "schema_version": PROVIDER_PLANNING_COST_SCHEMA_VERSION,
+        "estimate_kind": "planning_estimate",
+        "basis": "planned_generated_output_tokens_only",
+        "estimated_generated_output_tokens": estimated_output_tokens,
+        "estimated_cost": _decimal_cost_string(estimated_cost),
+        "currency": str(pricing.get("currency") or "").strip().upper() or None,
+        "pricing_version_id": pricing.get("pricing_version_id"),
+        "output_rate_per_mtok": format(output_rate.normalize(), "f"),
+        "actual_cost": False,
+        "includes_prompt_input": False,
+        "includes_cache": False,
+        "includes_provider_tools": False,
+        "note": (
+            "Planning Estimate: generated output only. Prompt input, cache, "
+            "provider-tool, tax, discount, and provider-rounding charges are "
+            "not included until exact provider accounting is available."
+        ),
+    }
+
+
+def _nonnegative_decimal(value: Any, field_name: str) -> Decimal:
+    raw = str(value if value is not None else "0").strip() or "0"
+    try:
+        parsed = Decimal(raw)
+    except InvalidOperation as exc:
+        raise ValueError(f"{field_name} must be a decimal number") from exc
+    if not parsed.is_finite() or parsed < 0:
+        raise ValueError(f"{field_name} must be a finite nonnegative decimal")
+    return parsed
+
+
+def _decimal_cost_string(value: Decimal) -> str:
+    rounded = value.quantize(_PLANNING_COST_QUANTUM)
+    normalized = format(rounded.normalize(), "f")
+    return "0" if normalized in {"", "-0"} else normalized
 
 
 def _positive_int(value: Any, default: int) -> int:
