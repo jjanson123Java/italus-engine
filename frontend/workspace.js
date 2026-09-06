@@ -64,7 +64,14 @@
     authorLibraryLoading: false,
     providerWorkspaceSummary: null,
     providerWorkspaceSummaryLoading: false,
-    providerProjectModelSaving: false
+    providerProjectModelSaving: false,
+    authorReviewGenerationOptions: [],
+    authorReviewGenerationId: '',
+    authorReviewValidation: null,
+    authorReviewStatus: null,
+    authorReviewLoading: false,
+    authorReviewSaving: false,
+    authorReviewError: ''
   };
 
   const plannerViewPreferenceStorageKey = 'italus.workspace.plannerViewModes.v1';
@@ -83,6 +90,8 @@
   console.info(`[ITALUS] ${providerStatusVersion} loaded`);
   const runtimeStoragePreviewVersion = 'workspace-runtime-storage-preview-20260708';
   console.info(`[ITALUS] ${runtimeStoragePreviewVersion} loaded`);
+  const primary34AuthorReviewUiVersion = 'workspace-primary34-author-review-ui-v1-20260906';
+  console.info(`[ITALUS] ${primary34AuthorReviewUiVersion} loaded`);
 
   const modeLabel = document.getElementById('workspace-mode');
   const runtimeLog = document.getElementById('runtime-log');
@@ -132,7 +141,7 @@
         })
         .catch((error) => setLog(`Library navigation unavailable: ${error.message}`));
 
-      setLog(`Project workspace ready for ${id}. Writing generation is not available yet.`);
+      setLog(`Project workspace ready for ${id}. Validation & Review is available for completed provider-generated drafts.`);
     } catch (error) {
       renderError(`Project workspace failed to open: ${error.message}`);
       setLog(`Project workspace could not open for ${id}: ${error.message}`);
@@ -200,6 +209,7 @@
 
         closeWorkspaceViewMenu();
         if (menu === 'project') renderSection('dashboard');
+        if (menu === 'validation') renderSection('validation');
         if (menu === 'settings') renderSection('settings');
       });
     });
@@ -633,6 +643,16 @@
         button.removeAttribute('title');
       }
     });
+
+    const validationTopMenu = document.querySelector('[data-top-menu="validation"]');
+    if (validationTopMenu) {
+      const enabled = bootstrap && bootstrap.validation_enabled === true;
+      validationTopMenu.classList.toggle('disabled-link', !enabled);
+      validationTopMenu.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+      validationTopMenu.title = enabled
+        ? 'Review generated chapter candidates, inspect validation results, and record author accept, edit, or reject decisions.'
+        : 'Validation & Review is not available for this project state.';
+    }
   }
 
   function renderSection(sectionId) {
@@ -688,7 +708,7 @@
       runtime_storage_preview: () => renderRuntimeStoragePreview(manifest, context, bootstrap),
       archive: () => renderArchiveView(manifest, wizard),
       memory_continuity: () => renderDisabled('Continuity', 'Continuity will become available when accepted manuscript chapters can be carried forward as established story history.'),
-      validation: () => renderValidationReadinessPanel(manifest, context, bootstrap),
+      validation: () => { void renderAuthorReviewPanel(manifest, context, bootstrap); },
       output: () => renderExportReadinessPanel(manifest, context, bootstrap)
     };
 
@@ -5958,73 +5978,323 @@
   }
 
 
-  function renderValidationReadinessPanel(manifest, context, bootstrap) {
-    setHeading('Validation Readiness');
+  async function renderAuthorReviewPanel(manifest, context, bootstrap) {
+    setHeading('Validation & Author Review');
 
-    const projectIdValue = (manifest && manifest.project_id) || projectId || '<project_id>';
-    const validationChecks = [
-      {
-        label: 'Project Context',
-        status: 'Pending',
-        detail: 'Validation must read from project-local runtime storage after migration.'
-      },
-      {
-        label: 'Canon Continuity',
-        status: 'Pending',
-        detail: 'Approved canon remains available as reference context but validation is not wired.'
-      },
-      {
-        label: 'Scene Coverage',
-        status: 'Pending',
-        detail: 'Scene coverage checks wait for project-scoped scene records.'
-      },
-      {
-        label: 'Runtime Results',
-        status: 'Pending',
-        detail: 'Validation result storage is not connected to this workspace.'
+    if (state.authorReviewLoading) {
+      mainPanel.innerHTML = `
+        <div class="workspace-content workspace-author-review">
+          <p class="placeholder">Loading generated drafts available for author review…</p>
+        </div>
+      `;
+      return;
+    }
+
+    if (!state.authorReviewGenerationOptions.length) {
+      state.authorReviewLoading = true;
+      state.authorReviewError = '';
+      mainPanel.innerHTML = `
+        <div class="workspace-content workspace-author-review">
+          <p class="placeholder">Loading generated drafts available for author review…</p>
+        </div>
+      `;
+      try {
+        const usage = await apiFetch(
+          `/api/provider/projects/${encodeURIComponent(projectId)}/usage/events?limit=100`,
+          { cache: 'no-store' }
+        );
+        const events = Array.isArray(usage.events) ? usage.events.slice().reverse() : [];
+        const seen = new Set();
+        state.authorReviewGenerationOptions = events
+          .map((event) => ({
+            generation_id: String((event && event.generation_id) || '').trim(),
+            recorded_at: String((event && event.recorded_at) || '').trim(),
+            provider_id: String((event && event.provider_id) || '').trim(),
+            model_id: String((event && event.model_id) || '').trim()
+          }))
+          .filter((item) => {
+            if (!item.generation_id || seen.has(item.generation_id)) return false;
+            seen.add(item.generation_id);
+            return true;
+          });
+        if (!state.authorReviewGenerationId && state.authorReviewGenerationOptions.length) {
+          state.authorReviewGenerationId = state.authorReviewGenerationOptions[0].generation_id;
+        }
+      } catch (error) {
+        state.authorReviewError = error.message || String(error);
+      } finally {
+        state.authorReviewLoading = false;
       }
-    ];
+    }
+
+    if (
+      state.authorReviewGenerationId
+      && (!state.authorReviewValidation || !state.authorReviewStatus)
+      && !state.authorReviewError
+    ) {
+      await loadAuthorReviewGeneration(state.authorReviewGenerationId, { render: false });
+    }
+
+    if (state.activeSection !== 'validation') return;
+    paintAuthorReviewPanel(manifest, bootstrap);
+  }
+
+  async function loadAuthorReviewGeneration(generationId, options = {}) {
+    const selected = String(generationId || '').trim();
+    if (!selected) {
+      state.authorReviewGenerationId = '';
+      state.authorReviewValidation = null;
+      state.authorReviewStatus = null;
+      state.authorReviewError = '';
+      if (options.render !== false && state.activeSection === 'validation') {
+        paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+      }
+      return;
+    }
+
+    state.authorReviewGenerationId = selected;
+    state.authorReviewLoading = true;
+    state.authorReviewError = '';
+    try {
+      const encodedProject = encodeURIComponent(projectId);
+      const encodedGeneration = encodeURIComponent(selected);
+      const [validation, review] = await Promise.all([
+        apiFetch(
+          `/api/provider/projects/${encodedProject}/generation/${encodedGeneration}/validation`,
+          { cache: 'no-store' }
+        ),
+        apiFetch(
+          `/api/provider/projects/${encodedProject}/generation/${encodedGeneration}/review`,
+          { cache: 'no-store' }
+        )
+      ]);
+      state.authorReviewValidation = validation;
+      state.authorReviewStatus = review;
+    } catch (error) {
+      state.authorReviewValidation = null;
+      state.authorReviewStatus = null;
+      state.authorReviewError = error.message || String(error);
+    } finally {
+      state.authorReviewLoading = false;
+    }
+
+    if (options.render !== false && state.activeSection === 'validation') {
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+    }
+  }
+
+  function paintAuthorReviewPanel(manifest, bootstrap) {
+    const options = state.authorReviewGenerationOptions || [];
+    const validation = state.authorReviewValidation || {};
+    const review = state.authorReviewStatus || {};
+    const selected = String(state.authorReviewGenerationId || '');
+    const candidate = validation.candidate || {};
+    const validatorContext = validation.validator_context || {};
+    const checks = Array.isArray(validation.checks) ? validation.checks : [];
+    const blockers = Array.isArray(validation.blockers) ? validation.blockers : [];
+    const terminal = review.terminal === true;
+    const readOnly = bootstrap && bootstrap.read_only === true;
+    const busy = state.authorReviewLoading || state.authorReviewSaving;
+    const reviewState = String(review.review_state || (
+      selected ? 'loading' : 'no_candidate_selected'
+    ));
+    const currentContent = String(
+      review.current_content != null ? review.current_content : (candidate.text || '')
+    );
+    const currentVersionId = String(review.current_version_id || candidate.model_origin_version_id || '');
+    const bookNumber = Number(validatorContext.book_number || 0);
+    const chapterNumber = Number(validatorContext.chapter_number || 0);
+    const generationOptions = options.map((item) => {
+      const labelParts = [
+        item.generation_id,
+        item.provider_id && item.model_id ? `${item.provider_id} / ${item.model_id}` : '',
+        item.recorded_at ? formatHumanDateTime(item.recorded_at) : ''
+      ].filter(Boolean);
+      return `<option value="${escapeHtml(item.generation_id)}" ${item.generation_id === selected ? 'selected' : ''}>${escapeHtml(labelParts.join(' — '))}</option>`;
+    }).join('');
+
+    const checkCards = checks.length
+      ? checks.map((item) => `
+          <article class="workspace-author-review-check ${item.passed ? 'is-pass' : 'is-blocked'}">
+            <strong>${escapeHtml(item.name || item.check || 'Validation check')}</strong>
+            <span>${item.passed ? 'PASS' : 'BLOCKED'}</span>
+            <p>${escapeHtml(item.message || '')}</p>
+          </article>
+        `).join('')
+      : '<div class="workspace-disabled-note">No validation report is loaded.</div>';
+
+    const blockerMarkup = blockers.length
+      ? `
+        <div class="workspace-author-review-blockers">
+          <strong>Review is blocked</strong>
+          <ul>
+            ${blockers.map((item) => `<li>${escapeHtml(item.message || item.code || 'Validation blocker')}</li>`).join('')}
+          </ul>
+        </div>
+      `
+      : '';
+
+    const selectedMarkup = selected && state.authorReviewValidation && state.authorReviewStatus
+      ? `
+        <section class="workspace-panel">
+          <div class="workspace-author-review-heading">
+            <div>
+              <p class="eyebrow">Primary 34</p>
+              <h3>Generated Draft</h3>
+            </div>
+            <span class="workspace-author-review-state">${escapeHtml(labelFor(reviewState))}</span>
+          </div>
+
+          <dl class="workspace-definition-list">
+            ${definition('Generation ID', selected)}
+            ${definition('Book / Chapter', bookNumber && chapterNumber ? `Book ${bookNumber}, Chapter ${chapterNumber}` : '—')}
+            ${definition('Provider / Model', [validatorContext.provider_id, validatorContext.model_id].filter(Boolean).join(' / ') || '—')}
+            ${definition('Current Version', currentVersionId || '—')}
+            ${definition('Approved Continuity', review.approved_continuity_committed === true ? 'Committed' : 'Locked — Primary 36')}
+          </dl>
+
+          ${blockerMarkup}
+
+          <label class="workspace-author-review-editor-label" for="author-review-content">
+            Draft text
+          </label>
+          <textarea
+            id="author-review-content"
+            class="workspace-author-review-editor"
+            rows="24"
+            ${terminal || readOnly || validation.ready_for_author_review !== true ? 'readonly' : ''}
+          >${escapeHtml(currentContent)}</textarea>
+
+          <div class="workspace-author-review-actions">
+            <button type="button" data-author-review-action="edit"
+              ${busy || terminal || readOnly || validation.ready_for_author_review !== true ? 'disabled' : ''}>
+              Save Edit
+            </button>
+            <button type="button" data-author-review-action="accept" class="primary"
+              ${busy || terminal || readOnly || validation.ready_for_author_review !== true ? 'disabled' : ''}>
+              Accept Draft
+            </button>
+            <button type="button" data-author-review-action="reject" class="danger"
+              ${busy || terminal || readOnly || validation.ready_for_author_review !== true ? 'disabled' : ''}>
+              Reject Draft
+            </button>
+          </div>
+
+          <div class="workspace-author-review-boundary">
+            <strong>Review boundary:</strong>
+            Accept records author acceptance provenance only. It does not commit Approved Continuity,
+            mutate Canon/story state, or update Author Voice.
+          </div>
+        </section>
+
+        <section class="workspace-panel">
+          <h3>Validation Results</h3>
+          <div class="workspace-author-review-check-grid">${checkCards}</div>
+        </section>
+      `
+      : '';
 
     mainPanel.innerHTML = `
-      <div class="workspace-content workspace-validation-export-readiness-20260708 workspace-validation-export-contrast-fix-20260708">
+      <div class="workspace-content workspace-author-review">
         <p class="placeholder">
-          Read-only validation readiness panel. This page shows what must be connected before validation can run.
+          Review provider-generated chapter candidates after Primary 34 structured validation.
+          This surface records author accept, edit, or reject provenance only.
         </p>
 
         <section class="workspace-panel">
-          <h3>Validation Runtime Status</h3>
-          <dl class="workspace-definition-list">
-            ${definition('Project ID', projectIdValue)}
-            ${definition('Validation', bootstrap && bootstrap.validation_enabled ? 'Enabled' : 'Locked')}
-            ${definition('Runtime Ready', bootstrap && bootstrap.runtime_ready ? 'Ready' : 'Not ready')}
-            ${definition('Generation', bootstrap && bootstrap.generation_enabled ? 'Enabled' : 'Locked')}
-          </dl>
-          <div class="workspace-disabled-note">
-            No validation is run from this workspace.
-          </div>
+          <h3>Select Generated Draft</h3>
+          ${
+            options.length
+              ? `
+                <label class="workspace-author-review-select-label" for="author-review-generation">
+                  Recent provider generation
+                </label>
+                <select id="author-review-generation" class="workspace-author-review-select">
+                  ${generationOptions}
+                </select>
+              `
+              : `
+                <div class="workspace-disabled-note">
+                  No provider-generated drafts are available for this project yet.
+                  A completed provider generation will appear here after its immutable usage/receipt evidence is recorded.
+                </div>
+              `
+          }
+          ${
+            state.authorReviewError
+              ? `<div class="workspace-author-review-error">${escapeHtml(state.authorReviewError)}</div>`
+              : ''
+          }
         </section>
 
-        <section class="workspace-panel">
-          <h3>Validation Readiness Gates</h3>
-          <div class="workspace-readiness-grid">
-            ${validationChecks.map(readinessCard).join('')}
-          </div>
-        </section>
-
-        <section class="workspace-panel">
-          <h3>Validation Boundary</h3>
-          <div class="workspace-lock-grid">
-            ${lockCard('Read Runtime Manuscript', 'Blocked')}
-            ${lockCard('Run Continuity Checks', 'Blocked')}
-            ${lockCard('Save Validation Results', 'Blocked')}
-            ${lockCard('Unlock Generation', 'Blocked')}
-          </div>
-          <div class="workspace-disabled-note">
-            Validation remains locked until runtime storage, prompt routing, and result persistence are migrated.
-          </div>
-        </section>
+        ${selectedMarkup}
       </div>
     `;
+
+    document.getElementById('author-review-generation')?.addEventListener('change', (event) => {
+      state.authorReviewValidation = null;
+      state.authorReviewStatus = null;
+      void loadAuthorReviewGeneration(event.target.value);
+    });
+
+    mainPanel.querySelectorAll('[data-author-review-action]').forEach((button) => {
+      button.addEventListener('click', () => {
+        void submitAuthorReviewAction(button.dataset.authorReviewAction || '');
+      });
+    });
+  }
+
+  async function submitAuthorReviewAction(action) {
+    const generationId = String(state.authorReviewGenerationId || '').trim();
+    if (!generationId || state.authorReviewSaving) return;
+
+    const normalizedAction = String(action || '').trim().toLowerCase();
+    if (!['edit', 'accept', 'reject'].includes(normalizedAction)) return;
+
+    const editor = document.getElementById('author-review-content');
+    const content = String(editor ? editor.value : '');
+    if (normalizedAction === 'reject') {
+      const confirmed = window.confirm(
+        'Reject this generated draft? The rejection is recorded in provenance and cannot be replaced by a different terminal decision.'
+      );
+      if (!confirmed) return;
+    }
+
+    state.authorReviewSaving = true;
+    state.authorReviewError = '';
+    paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+    try {
+      const body = { action: normalizedAction };
+      if (normalizedAction === 'edit' || normalizedAction === 'accept') {
+        body.content = content;
+      }
+
+      const response = await apiFetch(
+        `/api/provider/projects/${encodeURIComponent(projectId)}/generation/${encodeURIComponent(generationId)}/review`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        }
+      );
+
+      state.authorReviewStatus = response;
+      state.authorReviewValidation = response.validation || state.authorReviewValidation;
+      const stateLabel = labelFor(response.review_state || normalizedAction);
+      setLog(`Author review recorded: ${stateLabel}. Approved Continuity remains locked.`);
+    } catch (error) {
+      state.authorReviewError = error.message || String(error);
+      setLog(`Author review could not be recorded: ${state.authorReviewError}`);
+    } finally {
+      state.authorReviewSaving = false;
+    }
+
+    if (state.activeSection === 'validation') {
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+    }
   }
 
   function renderExportReadinessPanel(manifest, context, bootstrap) {

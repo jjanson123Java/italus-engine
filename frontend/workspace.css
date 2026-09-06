@@ -3310,3 +3310,206 @@
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+/* Primary 34 - bounded author-facing Validation & Review surface. */
+.workspace-author-review {
+  display: grid;
+  gap: 18px;
+}
+
+.workspace-author-review .workspace-panel {
+  margin: 0;
+}
+
+.workspace-author-review-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.workspace-author-review-heading h3 {
+  margin-top: 0;
+}
+
+.workspace-author-review-state {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 12px;
+  border: 1px solid rgba(216, 173, 93, 0.48);
+  border-radius: 999px;
+  background: rgba(10, 32, 22, 0.7);
+  color: #f2c56b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.workspace-author-review-select-label,
+.workspace-author-review-editor-label {
+  display: block;
+  margin: 12px 0 7px;
+  color: #d8ad5d;
+  font-weight: 700;
+}
+
+.workspace-author-review-select,
+.workspace-author-review-editor {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(205, 156, 80, 0.42);
+  border-radius: 9px;
+  background: rgba(5, 14, 11, 0.82);
+  color: #f3e8d3;
+  font: inherit;
+}
+
+.workspace-author-review-select {
+  min-height: 42px;
+  padding: 9px 11px;
+}
+
+.workspace-author-review-editor {
+  min-height: 430px;
+  padding: 16px;
+  line-height: 1.65;
+  resize: vertical;
+}
+
+.workspace-author-review-editor:focus,
+.workspace-author-review-select:focus {
+  outline: 2px solid rgba(242, 197, 107, 0.5);
+  outline-offset: 1px;
+  border-color: rgba(242, 197, 107, 0.9);
+}
+
+.workspace-author-review-editor[readonly] {
+  opacity: 0.86;
+}
+
+.workspace-author-review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.workspace-author-review-actions button {
+  min-width: 132px;
+  padding: 10px 16px;
+  border: 1px solid rgba(205, 156, 80, 0.45);
+  border-radius: 9px;
+  background: rgba(18, 54, 34, 0.85);
+  color: #f0e1c9;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.workspace-author-review-actions button:hover:not(:disabled) {
+  border-color: rgba(242, 197, 107, 0.9);
+  background: rgba(37, 91, 55, 0.92);
+}
+
+.workspace-author-review-actions button.primary {
+  background: rgba(48, 101, 60, 0.92);
+  border-color: rgba(242, 197, 107, 0.72);
+}
+
+.workspace-author-review-actions button.danger {
+  background: rgba(100, 39, 31, 0.8);
+  border-color: rgba(205, 111, 91, 0.65);
+}
+
+.workspace-author-review-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.workspace-author-review-check-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.workspace-author-review-check {
+  padding: 13px;
+  border: 1px solid rgba(202, 152, 75, 0.24);
+  border-radius: 11px;
+  background: rgba(10, 32, 22, 0.68);
+}
+
+.workspace-author-review-check strong,
+.workspace-author-review-check span {
+  display: block;
+}
+
+.workspace-author-review-check span {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.workspace-author-review-check p {
+  margin: 8px 0 0;
+  color: #d9c7aa;
+  line-height: 1.45;
+}
+
+.workspace-author-review-check.is-pass {
+  border-color: rgba(90, 167, 106, 0.6);
+}
+
+.workspace-author-review-check.is-pass span {
+  color: #9bd3a7;
+}
+
+.workspace-author-review-check.is-blocked {
+  border-color: rgba(205, 111, 91, 0.72);
+}
+
+.workspace-author-review-check.is-blocked span {
+  color: #e69a87;
+}
+
+.workspace-author-review-boundary,
+.workspace-author-review-blockers,
+.workspace-author-review-error {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  line-height: 1.5;
+}
+
+.workspace-author-review-boundary {
+  border: 1px solid rgba(216, 173, 93, 0.35);
+  background: rgba(100, 73, 24, 0.2);
+  color: #eadcc4;
+}
+
+.workspace-author-review-blockers,
+.workspace-author-review-error {
+  border: 1px solid rgba(205, 111, 91, 0.6);
+  background: rgba(100, 39, 31, 0.24);
+  color: #f0c7bc;
+}
+
+.workspace-author-review-blockers ul {
+  margin: 8px 0 0 20px;
+}
+
+@media (max-width: 760px) {
+  .workspace-author-review-heading {
+    display: grid;
+  }
+
+  .workspace-author-review-actions {
+    display: grid;
+  }
+
+  .workspace-author-review-actions button {
+    width: 100%;
+  }
+}
+

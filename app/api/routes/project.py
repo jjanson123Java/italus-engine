@@ -41,6 +41,8 @@ from app.services import (
     provider_workspace_service,
     provider_preflight_service,
     provider_execution_service,
+    validation_service,
+    author_review_service,
     planner_reveal_catalog_service,
 )
 
@@ -158,6 +160,21 @@ class ProviderGenerationExecuteRequest(BaseModel):
 
     book_number: int = Field(ge=1)
     chapter_number: int = Field(ge=1)
+
+    class Config:
+        extra = "forbid"
+
+
+class AuthorReviewDecisionRequest(BaseModel):
+    """Bounded public author-review input for Primary 34.
+
+    The browser may choose only the author action and reviewed text. Actor,
+    provenance parentage, validation identity, and continuity authority remain
+    backend-owned.
+    """
+
+    action: str = Field(min_length=1, max_length=16)
+    content: str | None = Field(default=None, max_length=2_000_000)
 
     class Config:
         extra = "forbid"
@@ -1896,6 +1913,87 @@ def execute_project_provider_generation(
             status_code=_provider_execution_http_status(exc),
             detail=exc.to_detail(),
         ) from exc
+
+
+@router.get(
+    "/api/provider/projects/{project_id}/generation/{generation_id}/validation"
+)
+def validate_project_provider_generation_candidate(
+    project_id: str,
+    generation_id: str,
+):
+    """Return the read-only Primary 34 structured validator context."""
+
+    try:
+        return validation_service.validate_generation_candidate(
+            project_id,
+            generation_id,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except validation_service.CandidateValidationError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+
+
+@router.get(
+    "/api/provider/projects/{project_id}/generation/{generation_id}/review"
+)
+def get_project_provider_generation_review(
+    project_id: str,
+    generation_id: str,
+):
+    """Return current Primary 34 author-review state without mutating evidence."""
+
+    try:
+        return author_review_service.get_author_review_status(
+            project_id,
+            generation_id,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except validation_service.CandidateValidationError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+    except author_review_service.AuthorReviewError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+
+
+@router.post(
+    "/api/provider/projects/{project_id}/generation/{generation_id}/review"
+)
+def record_project_provider_generation_review(
+    project_id: str,
+    generation_id: str,
+    payload: AuthorReviewDecisionRequest,
+):
+    """Persist one backend-owned author review transition.
+
+    This route may append author-review provenance only. It cannot write
+    Approved Continuity, Canon, runtime story state, provider receipts, or usage.
+    """
+
+    try:
+        return author_review_service.record_author_review(
+            project_id,
+            generation_id,
+            action=payload.action,
+            content=payload.content,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except validation_service.CandidateValidationError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+    except author_review_service.AuthorReviewError as exc:
+        status_code = (
+            422
+            if exc.code
+            in {
+                "AUTHOR_REVIEW_ACTION_INVALID",
+                "AUTHOR_REVIEW_CONTENT_REQUIRED",
+                "AUTHOR_REVIEW_REJECT_CONTENT_MISMATCH",
+            }
+            else 409
+        )
+        raise HTTPException(status_code=status_code, detail=exc.to_detail()) from exc
 
 
 @router.get("/api/provider/projects/{project_id}/usage/summary")

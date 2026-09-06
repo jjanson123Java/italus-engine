@@ -123,7 +123,7 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
         "read_only": read_only,
         "runtime_ready": False,
         "generation_enabled": False,
-        "validation_enabled": False,
+        "validation_enabled": not read_only,
         "exports_enabled": False,
         "manifest": manifest.to_dict(),
         "budget_plan": budget_plan,
@@ -227,7 +227,7 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
             "canon_setup_completed": bool(wizard_state.get("canon_setup_completed")),
         },
         "workspace_menu": _workspace_menu(manifest.lifecycle_state, read_only),
-        "message": "Workspace bootstrap loaded. Generation runtime not yet migrated.",
+        "message": "Workspace bootstrap loaded. Validation & Review is available; Approved Continuity and production output remain locked.",
     }
     return bootstrap
 
@@ -839,7 +839,15 @@ def _workspace_menu(lifecycle_state: str, read_only: bool) -> list[dict[str, Any
             "items": [
                 _enabled_item("runtime_storage_preview", "Project Writing Memory"),
                 _disabled_item("memory_continuity", "Memory / Continuity", "Continuity memory is not yet project-scoped."),
-                _disabled_item("validation", "Validation", validation_reason),
+                (
+                    _disabled_item(
+                        "validation",
+                        "Validation & Review",
+                        "Archived projects expose author review as read-only and cannot persist review decisions.",
+                    )
+                    if read_only
+                    else _enabled_item("validation", "Validation & Review")
+                ),
                 _disabled_item("output", "Output", "Generation output is disabled until runtime migration."),
             ],
         },

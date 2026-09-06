@@ -440,6 +440,82 @@ def get_chapter_provenance_status_for_context(
     }
 
 
+def get_segment_lineage_records(
+    project_id: str,
+    *,
+    generation_id: str,
+    segment_id: str,
+) -> dict[str, Any]:
+    """Return immutable origin/event evidence for one generation segment.
+
+    Primary 34 uses this read-only helper to bind structured candidate validation
+    and author review to the exact existing provenance lineage.
+    """
+
+    manifest = project_loader.load_manifest(project_id)
+    context = build_project_context(manifest)
+    return get_segment_lineage_records_for_context(
+        context,
+        generation_id=generation_id,
+        segment_id=segment_id,
+    )
+
+
+def get_segment_lineage_records_for_context(
+    context: ProjectContext,
+    *,
+    generation_id: str,
+    segment_id: str,
+) -> dict[str, Any]:
+    generation = _required_identifier(generation_id, "generation_id")
+    segment = _required_identifier(segment_id, "segment_id")
+    root = provenance_root_for_context(context)
+    if not root.exists():
+        return {
+            "status": "not_initialized",
+            "service": AUTHORSHIP_PROVENANCE_SERVICE_MARKER,
+            "project_id": context.project_id,
+            "generation_id": generation,
+            "segment_id": segment,
+            "origins": [],
+            "events": [],
+            "versions": {},
+            "segment": {},
+        }
+
+    origins = [
+        deepcopy(item)
+        for item in _load_origin_records(context)
+        if str(item.get("generation_id") or "") == generation
+        and str(item.get("segment_id") or "") == segment
+    ]
+    events = [
+        deepcopy(item)
+        for item in _load_event_records(context)
+        if str(item.get("segment_id") or "") == segment
+        and str(item.get("source_generation_id") or "") == generation
+    ]
+    lineage = _load_lineage_document(context)
+    segment_entry = deepcopy((lineage.get("segments") or {}).get(segment) or {})
+    version_ids = list(segment_entry.get("version_ids") or [])
+    versions = {
+        version_id: deepcopy((lineage.get("versions") or {}).get(version_id))
+        for version_id in version_ids
+        if version_id in (lineage.get("versions") or {})
+    }
+    return {
+        "status": "ok",
+        "service": AUTHORSHIP_PROVENANCE_SERVICE_MARKER,
+        "project_id": context.project_id,
+        "generation_id": generation,
+        "segment_id": segment,
+        "origins": origins,
+        "events": events,
+        "versions": versions,
+        "segment": segment_entry,
+    }
+
+
 def register_origin_snapshot(
     project_id: str,
     *,
@@ -607,6 +683,7 @@ def record_lineage_event(
     metadata: dict[str, Any] | None = None,
     event_id: str | None = None,
     version_id: str | None = None,
+    persist_content_after: bool = False,
 ) -> dict[str, Any]:
     manifest = project_loader.load_manifest(project_id)
     context = build_project_context(manifest)
@@ -624,6 +701,7 @@ def record_lineage_event(
         metadata=metadata,
         event_id=event_id,
         version_id=version_id,
+        persist_content_after=persist_content_after,
     )
 
 
@@ -642,6 +720,7 @@ def record_lineage_event_for_context(
     metadata: dict[str, Any] | None = None,
     event_id: str | None = None,
     version_id: str | None = None,
+    persist_content_after: bool = False,
 ) -> dict[str, Any]:
     """Append one actor-specific provenance event and rebuild the lineage index."""
 
@@ -757,6 +836,8 @@ def record_lineage_event_for_context(
             "chapter_number": position["chapter_number"],
             "metadata": safe_metadata,
         }
+        if persist_content_after:
+            event["content_after"] = after_text
 
         _append_jsonl(root / EVENT_LOG_FILENAME, event)
         try:
@@ -1073,6 +1154,12 @@ def _validate_event_record(
             )
     _optional_position(event.get("book_number"), "book_number")
     _optional_position(event.get("chapter_number"), "chapter_number")
+    if "content_after" in event:
+        persisted_after = _content_text(event.get("content_after"))
+        if hash_text(persisted_after) != str(event.get("after_hash") or ""):
+            raise AuthorshipProvenanceContractError(
+                f"Persisted provenance event content_after hash mismatch: {event.get('event_id')}"
+            )
 
 
 def _validate_lineage_document(

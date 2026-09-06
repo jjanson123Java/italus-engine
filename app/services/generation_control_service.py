@@ -37,13 +37,14 @@ GENERATION_CONTROL_SERVICE_MARKER = "generation-readiness-gate-vnext-20260817"
 GENERATION_CONTROL_SERVICE_VERSION = "generation_readiness_gate_vnext_v1"
 GENERATION_READINESS_SCHEMA_VERSION = "generation_readiness_vnext_v1"
 
-# Primary 32 owns project-local prompt/request construction. Primary 33.2.2B
-# makes the bounded provider-execution component ready while later validation,
-# author-review persistence, and Approved Continuity gates remain locked.
+# Primary 32 owns project-local prompt/request construction. Primary 33 owns
+# bounded provider execution + immutable MODEL origin. Primary 34 now owns the
+# structured validator and author-review persistence boundary. Approved
+# Continuity remains locked for Primary 36.
 PROMPT_BUILDER_PROJECT_LOCAL_ROUTING_READY = True
 PROVIDER_EXECUTION_READY = True
-VALIDATOR_READY = False
-AUTHOR_REVIEW_PERSISTENCE_READY = False
+VALIDATOR_READY = True
+AUTHOR_REVIEW_PERSISTENCE_READY = True
 APPROVED_CONTINUITY_COMMIT_PATH_READY = False
 
 _UPSTREAM_CHECK_NAMES = {
@@ -100,15 +101,14 @@ def get_generation_control_contract() -> dict[str, Any]:
         "patch_29_locks": {
             "prompt_builder_project_local_routing_ready": True,
             "provider_execution_ready": True,
-            "validator_ready": False,
-            "author_review_persistence_ready": False,
+            "validator_ready": True,
+            "author_review_persistence_ready": True,
             "approved_continuity_commit_path_ready": False,
         },
         "message": (
             "Generation Readiness Gate vNEXT is authoritative for readiness "
-            "reporting. The bounded provider-execution component is ready; "
-            "validator, author-review persistence, and Approved Continuity "
-            "migration owners remain locked."
+            "reporting. Provider execution, structured validation, and author-review "
+            "persistence are ready; Approved Continuity remains locked for Primary 36."
         ),
     }
 
@@ -589,7 +589,7 @@ def get_generation_control_status_for_context(
             "validator_ready",
             VALIDATOR_READY,
             "validator_not_ready",
-            "Primary 34 structured validator migration is not yet complete.",
+            "Primary 34 structured candidate validation is ready.",
         ),
         _readiness_check(
             "provenance_capture_ready",
@@ -612,7 +612,7 @@ def get_generation_control_status_for_context(
             "author_review_persistence_ready",
             AUTHOR_REVIEW_PERSISTENCE_READY,
             "author_review_persistence_not_ready",
-            "Primary 34 author review/edit/reject persistence is not yet migrated.",
+            "Primary 34 author review/edit/reject persistence is ready.",
         ),
         _readiness_check(
             "approved_continuity_commit_path_ready",
@@ -657,7 +657,8 @@ def get_generation_control_status_for_context(
         "generation_enabled": False,
         "provider_execution_enabled": provider_execution_ready,
         "prompt_builder_enabled": True,
-        "draft_validation_enabled": False,
+        "draft_validation_enabled": True,
+        "author_review_persistence_enabled": True,
         "approved_persistence_enabled": False,
         "readiness": checks,
         "readiness_summary": {
@@ -704,8 +705,8 @@ def get_generation_control_status_for_context(
                 "prompt_builder_project_local_routing_ready": True,
                 "provider_origin_wiring_ready": provider_origin_wiring_ready,
                 "provider_execution_ready": provider_execution_ready,
-                "validator_ready": False,
-                "author_review_persistence_ready": False,
+                "validator_ready": True,
+                "author_review_persistence_ready": True,
                 "approved_continuity_commit_path_ready": False,
             },
         },
@@ -713,16 +714,16 @@ def get_generation_control_status_for_context(
             "prompt_builder_migration": "primary_32_ready",
             "provider_execution": "primary_33_provider_candidate_origin_ready",
             "provider_candidate_model_origin": "primary_33_ready",
-            "validator_and_author_review": "primary_34_locked",
+            "validator_and_author_review": "primary_34_ready",
             "approved_continuity_commit": "primary_36_locked",
         },
         "message": (
             "Generation readiness is satisfied."
             if ready
             else (
-                "Upstream project-local generation inputs and bounded provider execution "
-                "are ready; downstream validator/review/continuity boundaries still lock "
-                "end-to-end generation."
+                "Upstream generation, provider execution, structured validation, and "
+                "author review are ready; Approved Continuity still locks end-to-end "
+                "generation."
                 if upstream_ready
                 else "Generation readiness is blocked by project-local dependencies."
             )
