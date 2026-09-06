@@ -31,6 +31,7 @@ from app.services import (
     progression_override_service,
     planner_query_service,
     authorship_provenance_service,
+    authorship_classification_service,
     generation_control_service,
     generation_service,
     provider_config_service,
@@ -736,6 +737,12 @@ def run_planner_query(project_id: str, request: PlannerQueryRequest):
 def get_authorship_provenance_contract():
     """Return the Patch-28 provenance actor/event/storage contract."""
     return authorship_provenance_service.get_provenance_contract()
+
+
+@router.get("/api/project/provenance/classification/contract")
+def get_authorship_classification_contract():
+    """Return the versioned Primary 35 provenance classification/HCCS contract."""
+    return authorship_classification_service.get_classification_contract()
 
 
 @router.post("/api/project/{project_id}/provenance/initialize")
@@ -1954,6 +1961,30 @@ def get_project_provider_generation_review(
     except validation_service.CandidateValidationError as exc:
         raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
     except author_review_service.AuthorReviewError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+
+
+@router.get(
+    "/api/provider/projects/{project_id}/generation/{generation_id}/provenance-classification"
+)
+def get_project_provider_generation_provenance_classification(
+    project_id: str,
+    generation_id: str,
+):
+    """Return the read-only Primary 35 segment provenance/HCCS assessment."""
+
+    try:
+        return authorship_classification_service.classify_generation_segment(
+            project_id,
+            generation_id,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except validation_service.CandidateValidationError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+    except author_review_service.AuthorReviewError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+    except authorship_classification_service.AuthorshipClassificationError as exc:
         raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
 
 

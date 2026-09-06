@@ -15,7 +15,8 @@ Authoritative persistence:
 Derived/rebuildable persistence:
     provenance/segment_lineage.json lineage graph/index rebuilt from origins/events
 
-Future chapter scoring/ledger work remains outside this patch.
+Primary 35 segment scoring is provided by the separate authorship classification service.
+Future chapter aggregation/ledger work remains outside this storage service.
 """
 
 from __future__ import annotations
@@ -319,15 +320,17 @@ def get_provenance_status_for_context(
         "segment_count": segment_count,
         "provenance_capture_ready": capture_ready,
         "provider_origin_wiring_ready": capture_ready,
-        "review_lineage_wiring_ready": False,
+        "review_lineage_wiring_ready": capture_ready,
+        "segment_classification_ready": capture_ready,
         "chapter_scoring_ready": False,
         "ledger_ready": False,
         "generation_unlocked": False,
         "execution_locks": _execution_locks(),
         "message": (
             (
-                "Authorship provenance storage, lineage capture, and provider "
-                "MODEL-origin wiring are ready."
+                "Authorship provenance storage, MODEL-origin capture, Primary 34 "
+                "review lineage, and Primary 35 segment classification are ready. "
+                "Chapter aggregation and the durable authorship ledger remain deferred."
             )
             if capture_ready
             else "Authorship provenance storage requires initialization or recovery."
@@ -1645,11 +1648,11 @@ def _relative_project_path(
 
 def _execution_locks() -> dict[str, bool]:
     return {
-        "authorship_scoring_locked": True,
+        "authorship_scoring_locked": False,
         "ledger_locked": True,
         "provider_execution_locked": False,
         "prompt_builder_locked": False,
-        "validator_review_wiring_locked": True,
+        "validator_review_wiring_locked": False,
         "approved_continuity_write_locked": True,
         "author_voice_update_locked": True,
         "generation_unlock_locked": True,

@@ -24,6 +24,7 @@ from app.services import (
     story_control_service,
     project_runtime_storage_service,
     authorship_provenance_service,
+    authorship_classification_service,
 )
 from app.projects.project_manifest import (
     LIFECYCLE_ACTIVE,
@@ -51,6 +52,9 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
     context = build_project_context(manifest)
     runtime_storage_status = project_runtime_storage_service.ensure_runtime_storage_for_context(context)
     provenance_status = authorship_provenance_service.ensure_provenance_storage_for_context(context)
+    provenance_classification_contract = (
+        authorship_classification_service.get_classification_contract()
+    )
     canon_packet_status = canon_packet_service.get_canon_packet_status_for_context(context, manifest.to_dict())
     project_runtime_context_status = (
         canon_packet_generation_service.get_project_runtime_context_status_for_context(
@@ -191,11 +195,19 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
                 "origin_capture_enabled": bool(
                     provenance_status.get("provenance_capture_ready")
                 ),
-                "scoring_enabled": False,
+                "scoring_enabled": True,
+                "segment_classification_enabled": True,
+                "scoring_model_version": provenance_classification_contract.get(
+                    "scoring_model_version"
+                ),
+                "scoring_constants_version": provenance_classification_contract.get(
+                    "scoring_constants_version"
+                ),
                 "ledger_enabled": False,
                 "message": (
-                    "Authorship provenance storage and lineage foundation are ready. "
-                    "Scoring, provider wiring, and ledger generation remain locked."
+                    "Authorship provenance lineage and Primary 35 segment HCCS "
+                    "classification are ready. Durable chapter/book ledger generation "
+                    "remains locked until Primary 38."
                 ),
             },
             "books": {

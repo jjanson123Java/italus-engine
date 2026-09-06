@@ -69,6 +69,7 @@
     authorReviewGenerationId: '',
     authorReviewValidation: null,
     authorReviewStatus: null,
+    authorReviewClassification: null,
     authorReviewLoading: false,
     authorReviewSaving: false,
     authorReviewError: ''
@@ -78,7 +79,7 @@
   const plannerViewTargets = ['book_plan', 'chapter_planner', 'library'];
   const plannerViewModeValues = ['default', 'collapse', 'expand'];
 
-  const workspaceJsVersion = 'workspace-primary33-2-1a2-project-model-control-v1-20260903';
+  const workspaceJsVersion = 'workspace-primary35-provenance-classification-v1-20260906';
   console.info(`[ITALUS] ${workspaceJsVersion} loaded`);
   const plannerIntentVersion = 'workspace-planner-intent-model-v1-20260817';
   console.info(`[ITALUS] ${plannerIntentVersion} loaded`);
@@ -92,6 +93,8 @@
   console.info(`[ITALUS] ${runtimeStoragePreviewVersion} loaded`);
   const primary34AuthorReviewUiVersion = 'workspace-primary34-author-review-ui-v1-20260906';
   console.info(`[ITALUS] ${primary34AuthorReviewUiVersion} loaded`);
+  const primary35ProvenanceClassificationUiVersion = 'workspace-primary35-provenance-classification-ui-v1-20260906';
+  console.info(`[ITALUS] ${primary35ProvenanceClassificationUiVersion} loaded`);
 
   const modeLabel = document.getElementById('workspace-mode');
   const runtimeLog = document.getElementById('runtime-log');
@@ -6029,7 +6032,11 @@
 
     if (
       state.authorReviewGenerationId
-      && (!state.authorReviewValidation || !state.authorReviewStatus)
+      && (
+        !state.authorReviewValidation
+        || !state.authorReviewStatus
+        || !state.authorReviewClassification
+      )
       && !state.authorReviewError
     ) {
       await loadAuthorReviewGeneration(state.authorReviewGenerationId, { render: false });
@@ -6045,6 +6052,7 @@
       state.authorReviewGenerationId = '';
       state.authorReviewValidation = null;
       state.authorReviewStatus = null;
+      state.authorReviewClassification = null;
       state.authorReviewError = '';
       if (options.render !== false && state.activeSection === 'validation') {
         paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
@@ -6058,7 +6066,7 @@
     try {
       const encodedProject = encodeURIComponent(projectId);
       const encodedGeneration = encodeURIComponent(selected);
-      const [validation, review] = await Promise.all([
+      const [validation, review, classification] = await Promise.all([
         apiFetch(
           `/api/provider/projects/${encodedProject}/generation/${encodedGeneration}/validation`,
           { cache: 'no-store' }
@@ -6066,13 +6074,19 @@
         apiFetch(
           `/api/provider/projects/${encodedProject}/generation/${encodedGeneration}/review`,
           { cache: 'no-store' }
+        ),
+        apiFetch(
+          `/api/provider/projects/${encodedProject}/generation/${encodedGeneration}/provenance-classification`,
+          { cache: 'no-store' }
         )
       ]);
       state.authorReviewValidation = validation;
       state.authorReviewStatus = review;
+      state.authorReviewClassification = classification;
     } catch (error) {
       state.authorReviewValidation = null;
       state.authorReviewStatus = null;
+      state.authorReviewClassification = null;
       state.authorReviewError = error.message || String(error);
     } finally {
       state.authorReviewLoading = false;
@@ -6087,6 +6101,7 @@
     const options = state.authorReviewGenerationOptions || [];
     const validation = state.authorReviewValidation || {};
     const review = state.authorReviewStatus || {};
+    const classification = state.authorReviewClassification || {};
     const selected = String(state.authorReviewGenerationId || '');
     const candidate = validation.candidate || {};
     const validatorContext = validation.validator_context || {};
@@ -6133,6 +6148,72 @@
         </div>
       `
       : '';
+
+    const awardedLevel = classification.awarded_level || {};
+    const candidateLevel = classification.candidate_level || {};
+    const evidenceConfidence = classification.evidence_confidence || {};
+    const levelGates = classification.level_gates || {};
+    const components = classification.hccs_components || {};
+    const assessmentStatus = String(classification.assessment_status || 'not_loaded');
+    const classificationMarkup = assessmentStatus === 'classified'
+      ? `
+        <section class="workspace-panel">
+          <div class="workspace-author-review-heading">
+            <div>
+              <p class="eyebrow">Primary 35</p>
+              <h3>Provenance Classification</h3>
+            </div>
+            <span class="workspace-author-review-state">Level ${escapeHtml(awardedLevel.level || '—')}</span>
+          </div>
+          <dl class="workspace-definition-list">
+            ${definition('Assessment', awardedLevel.label || '—')}
+            ${definition('HCCS', classification.hccs != null ? `${classification.hccs} / 100` : '—')}
+            ${definition('Evidence confidence', evidenceConfidence.level || '—')}
+            ${definition('Segment state', labelFor(classification.final_segment_state || '—'))}
+            ${definition(
+              'Candidate / Awarded level',
+              candidateLevel.level && awardedLevel.level
+                ? `${candidateLevel.level} / ${awardedLevel.level}`
+                : '—'
+            )}
+            ${definition(
+              'HCCS dimensions (E/N/C/R/V/F)',
+              ['E', 'N', 'C', 'R', 'V', 'F']
+                .map((key) => `${key} ${Number(components[key] || 0).toFixed(2)}`)
+                .join(' · ')
+            )}
+          </dl>
+          <div class="workspace-author-review-check-grid">
+            ${['level_3', 'level_4'].map((gateKey) => {
+              const gate = levelGates[gateKey] || {};
+              return `
+                <article class="workspace-author-review-check ${gate.passed ? 'is-pass' : 'is-blocked'}">
+                  <strong>${escapeHtml(gateKey.replace('_', ' ').toUpperCase())} gate</strong>
+                  <span>${gate.passed ? 'PASS' : 'NOT MET'}</span>
+                  <p>Higher classifications require score and evidence gates; score alone is insufficient.</p>
+                </article>
+              `;
+            }).join('')}
+          </div>
+          <div class="workspace-author-review-boundary">
+            <strong>Provenance boundary:</strong>
+            ${escapeHtml(classification.disclaimer || '')}
+            Approved Continuity remains locked for Primary 36.
+          </div>
+        </section>
+      `
+      : `
+        <section class="workspace-panel">
+          <p class="eyebrow">Primary 35</p>
+          <h3>Provenance Classification</h3>
+          <div class="workspace-disabled-note">
+            ${escapeHtml(
+              classification.message
+              || 'Segment HCCS is available after a terminal author acceptance decision.'
+            )}
+          </div>
+        </section>
+      `;
 
     const selectedMarkup = selected && state.authorReviewValidation && state.authorReviewStatus
       ? `
@@ -6191,6 +6272,8 @@
           <h3>Validation Results</h3>
           <div class="workspace-author-review-check-grid">${checkCards}</div>
         </section>
+
+        ${classificationMarkup}
       `
       : '';
 
@@ -6198,7 +6281,7 @@
       <div class="workspace-content workspace-author-review">
         <p class="placeholder">
           Review provider-generated chapter candidates after Primary 34 structured validation.
-          This surface records author accept, edit, or reject provenance only.
+          Primary 35 classifies accepted segment provenance with versioned HCCS and evidence gates.
         </p>
 
         <section class="workspace-panel">
@@ -6234,6 +6317,7 @@
     document.getElementById('author-review-generation')?.addEventListener('change', (event) => {
       state.authorReviewValidation = null;
       state.authorReviewStatus = null;
+      state.authorReviewClassification = null;
       void loadAuthorReviewGeneration(event.target.value);
     });
 
@@ -6283,6 +6367,18 @@
 
       state.authorReviewStatus = response;
       state.authorReviewValidation = response.validation || state.authorReviewValidation;
+      try {
+        state.authorReviewClassification = await apiFetch(
+          `/api/provider/projects/${encodeURIComponent(projectId)}/generation/${encodeURIComponent(generationId)}/provenance-classification`,
+          { cache: 'no-store' }
+        );
+      } catch (classificationError) {
+        state.authorReviewClassification = null;
+        state.authorReviewError = (
+          `Author review was recorded, but provenance classification could not be loaded: `
+          + (classificationError.message || String(classificationError))
+        );
+      }
       const stateLabel = labelFor(response.review_state || normalizedAction);
       setLog(`Author review recorded: ${stateLabel}. Approved Continuity remains locked.`);
     } catch (error) {
