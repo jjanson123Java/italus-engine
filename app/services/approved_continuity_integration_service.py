@@ -13,7 +13,9 @@ Primary 36B remains the Approved Continuity authority. Primary 37B adds a
 post-commit Author Voice ingestion hook through this orchestration boundary.
 Author Voice persistence is subordinate to the already-durable continuity commit;
 a Voice-store failure is surfaced as retry-safe status and never rolls continuity back.
-Primary 38 authorship ledger work, provider calls, and production cutover remain out of scope.
+Primary 38 adds a post-commit authorship-ledger refresh through this same
+orchestration boundary. Ledger failure is retry-safe and never rolls continuity
+back. Provider calls, Gate 38A migration, and production cutover remain out of scope.
 """
 
 from __future__ import annotations
@@ -27,6 +29,7 @@ from app.services import (
     author_review_service,
     author_voice_store_service,
     authorship_classification_service,
+    authorship_ledger_service,
     chapter_plan_service,
     generation_service,
 )
@@ -112,7 +115,13 @@ def get_approved_continuity_integration_contract() -> dict[str, Any]:
                 "voice_failure_rolls_back_continuity": False,
                 "retry_method": "retry_generation_author_voice_ingestion",
             },
-            "writes_authorship_ledger": False,
+            "writes_authorship_ledger": True,
+            "authorship_ledger_update_policy": {
+                "primary38": True,
+                "only_after_approved_continuity_commit": True,
+                "ledger_failure_rolls_back_continuity": False,
+                "retry_method": "authorship_ledger_service.build_authorship_ledger",
+            },
             "calls_provider": False,
         },
     }
@@ -209,6 +218,9 @@ def commit_generation_approved_continuity(
         project_id,
         generation_id,
     )
+    authorship_ledger_refresh = _refresh_authorship_ledger_after_continuity(
+        project_id,
+    )
     return {
         **deepcopy(result),
         "integration_service": APPROVED_CONTINUITY_INTEGRATION_SERVICE_MARKER,
@@ -217,6 +229,7 @@ def commit_generation_approved_continuity(
         "chapter_plan_sha256": prepared["chapter_plan_sha256"],
         "establishment_count": len(normalized_established),
         "author_voice_ingestion": author_voice_ingestion,
+        "authorship_ledger_refresh": authorship_ledger_refresh,
     }
 
 
@@ -275,6 +288,37 @@ def retry_generation_author_voice_ingestion(
             },
         )
     return _ingest_author_voice_after_continuity(project_id, generation_id)
+
+
+def _refresh_authorship_ledger_after_continuity(
+    project_id: str,
+) -> dict[str, Any]:
+    """Refresh Primary 38 only after Approved Continuity is already durable."""
+
+    try:
+        return authorship_ledger_service.build_authorship_ledger(project_id)
+    except authorship_ledger_service.AuthorshipLedgerError as exc:
+        return {
+            "status": "error",
+            "service": authorship_ledger_service.AUTHORSHIP_LEDGER_SERVICE_MARKER,
+            "code": exc.code,
+            "message": str(exc),
+            "details": deepcopy(exc.details),
+            "continuity_remains_committed": True,
+            "ledger_retry_is_idempotent": True,
+            "retry_method": "authorship_ledger_service.build_authorship_ledger",
+        }
+    except Exception as exc:
+        return {
+            "status": "error",
+            "service": authorship_ledger_service.AUTHORSHIP_LEDGER_SERVICE_MARKER,
+            "code": "AUTHORSHIP_LEDGER_REFRESH_UNEXPECTED",
+            "message": "Approved Continuity committed, but Primary 38 ledger refresh failed.",
+            "details": {"error": str(exc)},
+            "continuity_remains_committed": True,
+            "ledger_retry_is_idempotent": True,
+            "retry_method": "authorship_ledger_service.build_authorship_ledger",
+        }
 
 
 def _prepare_commit_context(

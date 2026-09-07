@@ -34,6 +34,7 @@ from app.services import (
     planner_query_service,
     authorship_provenance_service,
     authorship_classification_service,
+    authorship_ledger_service,
     approved_continuity_service,
     approved_continuity_integration_service,
     generation_control_service,
@@ -41,6 +42,7 @@ from app.services import (
     provider_config_service,
     provider_credential_service,
     provider_binding_service,
+    provider_migration_service,
     provider_pricing_service,
     provider_usage_service,
     provider_workspace_service,
@@ -853,6 +855,50 @@ def get_authorship_classification_contract():
     return authorship_classification_service.get_classification_contract()
 
 
+@router.get("/api/project/provenance/ledger/contract")
+def get_authorship_ledger_contract():
+    """Return the bounded Primary 38 authorship-ledger contract."""
+
+    return authorship_ledger_service.get_authorship_ledger_contract()
+
+
+@router.get("/api/project/{project_id}/provenance/ledger/status")
+def get_authorship_ledger_status(project_id: str):
+    """Return Primary 38 ledger integrity and freshness without writing."""
+
+    try:
+        return authorship_ledger_service.get_authorship_ledger_status(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except authorship_ledger_service.AuthorshipLedgerError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+
+
+@router.get("/api/project/{project_id}/provenance/ledger")
+def get_authorship_ledger(project_id: str):
+    """Return the current persisted Primary 38 ledger."""
+
+    try:
+        return authorship_ledger_service.read_authorship_ledger(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except authorship_ledger_service.AuthorshipLedgerError as exc:
+        status_code = 404 if exc.code == "AUTHORSHIP_LEDGER_NOT_BUILT" else 409
+        raise HTTPException(status_code=status_code, detail=exc.to_detail()) from exc
+
+
+@router.post("/api/project/{project_id}/provenance/ledger/build")
+def build_authorship_ledger(project_id: str):
+    """Build/rebuild the durable Primary 38 ledger from accepted evidence."""
+
+    try:
+        return authorship_ledger_service.build_authorship_ledger(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except authorship_ledger_service.AuthorshipLedgerError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+
+
 @router.post("/api/project/{project_id}/provenance/initialize")
 def initialize_authorship_provenance(project_id: str):
     """Ensure project-local provenance storage; no provider/review execution."""
@@ -1605,6 +1651,15 @@ class ProviderProjectModelRequest(BaseModel):
     model_id: str = Field(min_length=1)
 
 
+class ProviderMigrationRequest(BaseModel):
+    idempotency_key: str = Field(min_length=1, max_length=256)
+    expected_current_binding_instance_id: str = Field(min_length=1, max_length=160)
+    target_provider_id: str = Field(min_length=1, max_length=80)
+    target_model_id: str = Field(min_length=1, max_length=240)
+    service_tier: str | None = Field(default=None, min_length=1, max_length=120)
+    inference_scope: str | None = Field(default=None, min_length=1, max_length=120)
+
+
 class ProviderPricingVersionRequest(BaseModel):
     provider_id: str = Field(min_length=1)
     model_id: str = Field(min_length=1)
@@ -1865,6 +1920,64 @@ def delete_project_provider_binding(project_id: str):
     except provider_binding_service.ProviderBindingLockedError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
     except provider_binding_service.ProviderBindingError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.get("/api/provider/projects/{project_id}/migration/contract")
+def get_provider_migration_contract(project_id: str):
+    """Return Gate 38A controlled provider/model migration authority."""
+
+    try:
+        # Validate project identity before returning the global gate contract so
+        # a typo cannot be mistaken for a project-specific migration surface.
+        provider_binding_service.binding_path(project_id)
+        return provider_migration_service.get_provider_migration_contract()
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@router.get("/api/provider/projects/{project_id}/migration/history")
+def get_provider_migration_history(project_id: str):
+    """Return integrity-validated Gate 38A migration history for one project."""
+
+    try:
+        return provider_migration_service.list_provider_migrations(project_id)
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except provider_migration_service.ProviderMigrationError as exc:
+        raise HTTPException(status_code=400, detail=exc.to_detail()) from exc
+
+
+@router.post("/api/provider/projects/{project_id}/migration")
+def migrate_project_provider_model(
+    project_id: str,
+    request: ProviderMigrationRequest,
+):
+    """Execute one Gate 38A provider/model lineage migration.
+
+    No provider is called and no credential is required by this migration.
+    Historical usage, receipts, pricing lineage, and MODEL-origin provenance
+    must remain unchanged while a new binding instance is created for future
+    execution.
+    """
+
+    try:
+        return provider_migration_service.migrate_project_provider_model(
+            project_id,
+            **_model_to_dict(request),
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except provider_migration_service.ProviderMigrationConflictError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+    except provider_migration_service.ProviderMigrationError as exc:
+        raise HTTPException(status_code=400, detail=exc.to_detail()) from exc
+    except provider_binding_service.ProviderBindingLockedError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except (
+        provider_binding_service.ProviderBindingError,
+        provider_config_service.ProviderConfigError,
+    ) as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 

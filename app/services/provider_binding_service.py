@@ -245,7 +245,7 @@ def save_project_provider_binding(
                 return get_project_provider_binding(project_id)
             raise ProviderBindingLockedError(
                 "Provider/model switching is forbidden after provider usage begins for this project. "
-                "A future controlled provider-migration workflow is required to change it safely."
+                "Use the Gate 38A controlled provider/model migration workflow to change it safely."
             )
 
         existing_binding_instance_id = str(
@@ -314,7 +314,7 @@ def save_project_model_override(
         if event_count > 0:
             raise ProviderBindingLockedError(
                 "Project model switching is forbidden after provider usage begins. "
-                "A controlled provider/model migration workflow is required to preserve billing lineage."
+                "Use the Gate 38A controlled provider/model migration workflow to preserve billing lineage."
             )
 
         provider_id = str(current.get("provider_id") or "").strip().lower()
@@ -365,6 +365,139 @@ def save_project_model_override(
         }
         _write_json_atomic(binding_path(project_id), payload)
         return get_project_provider_binding(project_id)
+
+
+
+def _apply_controlled_migration_binding(
+    project_id: str,
+    *,
+    target_provider_id: str,
+    target_model_id: str,
+    service_tier: str,
+    inference_scope: str,
+    expected_current_binding_instance_id: str,
+    migration_id: str,
+) -> dict[str, Any]:
+    """Internal Gate 38A binding transition.
+
+    This is intentionally not exposed as a normal binding operation. The
+    provider_migration_service owns preservation evidence and calls this helper
+    only while holding the project execution-state lock.
+    """
+
+    manifest = project_loader.load_manifest(project_id)
+    target_provider = str(target_provider_id or "").strip().lower()
+    target_model = str(target_model_id or "").strip()
+    target_tier = str(service_tier or "").strip().lower()
+    target_scope = str(inference_scope or "").strip().lower()
+    expected_id = str(expected_current_binding_instance_id or "").strip()
+    migration = str(migration_id or "").strip()
+
+    if not all((target_provider, target_model, target_tier, target_scope, expected_id, migration)):
+        raise ProviderBindingError(
+            "Gate 38A controlled migration binding inputs are incomplete."
+        )
+
+    profile = provider_config_service.get_provider_profile(target_provider)
+    if profile is None:
+        raise ProviderBindingError(
+            "Save the target provider profile before controlled migration."
+        )
+    try:
+        provider_config_service.require_accepted_model_id(
+            target_provider,
+            target_model,
+        )
+    except provider_config_service.ProviderConfigError as exc:
+        raise ProviderBindingError(str(exc)) from exc
+
+    with provider_generation_receipt_service.project_execution_state_lock(project_id):
+        current = _read_binding(project_id)
+        _require_binding_identity(project_id, current)
+        if current is None:
+            raise ProviderBindingError(
+                "Gate 38A controlled migration requires an existing provider binding."
+            )
+
+        current_id = str(current.get("binding_instance_id") or "").strip()
+        if not current_id or current_id != expected_id:
+            raise ProviderBindingLockedError(
+                "Gate 38A current binding instance no longer matches the migration precondition."
+            )
+
+        execution_state = _execution_intent_lock_state(project_id)
+        if bool(execution_state.get("locked")):
+            raise ProviderBindingLockedError(
+                "Gate 38A controlled migration is forbidden while provider execution is active or unresolved."
+            )
+
+        current_snapshot = {
+            "provider_id": str(current.get("provider_id") or "").strip().lower(),
+            "model_id": str(current.get("model_id") or "").strip(),
+            "service_tier": str(current.get("service_tier") or "standard").strip().lower(),
+            "inference_scope": str(current.get("inference_scope") or "global").strip().lower(),
+        }
+        target_snapshot = {
+            "provider_id": target_provider,
+            "model_id": target_model,
+            "service_tier": target_tier,
+            "inference_scope": target_scope,
+        }
+        if current_snapshot == target_snapshot:
+            raise ProviderBindingError(
+                "Gate 38A target binding must differ from the current binding."
+            )
+
+        now = _utc_iso()
+        payload = {
+            "schema_version": PROVIDER_BINDING_SCHEMA_VERSION,
+            "project_id": project_id,
+            "project_name": manifest.project_name,
+            **target_snapshot,
+            "binding_instance_id": f"bind_{uuid.uuid4().hex}",
+            "previous_binding_instance_id": current_id,
+            "provider_profile_model_id_at_binding": str(profile.get("model_id") or ""),
+            "provider_profile_updated_at": profile.get("updated_at"),
+            "model_selection_source": "gate38a_controlled_migration",
+            "migration_id": migration,
+            "migrated_from_binding_instance_id": current_id,
+            "lock_policy": LOCK_POLICY,
+            "created_at": now,
+            "updated_at": now,
+        }
+        _write_json_atomic(binding_path(project_id), payload)
+        return get_project_provider_binding(project_id)
+
+
+def _restore_binding_after_failed_controlled_migration(
+    project_id: str,
+    *,
+    expected_current_binding_instance_id: str | None,
+    prior_binding: dict[str, Any],
+) -> None:
+    """Restore the exact pre-migration binding after a failed Gate 38A transaction.
+
+    Restoration is drift-protected. It refuses to overwrite a binding that has
+    moved beyond the binding created by the failed migration.
+    """
+
+    project_loader.load_manifest(project_id)
+    if not isinstance(prior_binding, dict):
+        raise ProviderBindingError("Gate 38A prior binding snapshot is invalid.")
+
+    with provider_generation_receipt_service.project_execution_state_lock(project_id):
+        current = _read_binding(project_id)
+        _require_binding_identity(project_id, current)
+
+        expected = str(expected_current_binding_instance_id or "").strip()
+        if expected:
+            actual = str((current or {}).get("binding_instance_id") or "").strip()
+            if actual != expected:
+                raise ProviderBindingLockedError(
+                    "Gate 38A rollback refused because the current binding has drifted."
+                )
+
+        _write_json_atomic(binding_path(project_id), dict(prior_binding))
 
 
 def list_provider_profile_associations(
@@ -429,7 +562,7 @@ def delete_project_provider_binding(project_id: str) -> dict[str, Any]:
     """Disassociate a provider profile from a project without deleting the project.
 
     Provider/model disassociation is blocked once provider execution begins and
-    remains blocked after usage is recorded until controlled migration exists.
+    remains blocked after usage is recorded outside the Gate 38A controlled migration path.
     """
 
     project_loader.load_manifest(project_id)
@@ -451,7 +584,7 @@ def delete_project_provider_binding(project_id: str) -> dict[str, Any]:
         if event_count > 0:
             raise ProviderBindingLockedError(
                 "Provider/model disassociation is forbidden after provider usage begins for this project. "
-                "A future controlled provider-migration workflow is required."
+                "Use the Gate 38A controlled provider/model migration workflow."
             )
 
         path = binding_path(project_id)
