@@ -285,13 +285,13 @@ html[data-theme="sci-fi"] .theme-option-copy span {
   color: #b8cde0;
 }
 
-html[data-theme="sci-fi"] :is(.form-grid input, .form-grid select, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea) {
+html[data-theme="sci-fi"] :is(.form-grid input, .form-grid select, .form-grid textarea, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea) {
   border-color: rgba(70, 217, 255, 0.25);
   background: rgba(0, 7, 22, 0.66);
   color: #e5f4ff;
 }
 
-html[data-theme="sci-fi"] :is(.form-grid input, .form-grid select, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea):focus {
+html[data-theme="sci-fi"] :is(.form-grid input, .form-grid select, .form-grid textarea, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea):focus {
   border-color: var(--sci-fi-cyan);
   box-shadow: 0 0 0 3px rgba(70, 217, 255, 0.12);
 }
@@ -1127,13 +1127,13 @@ html[data-theme="mystery"] .theme-option-copy span {
   color: #b8cde0;
 }
 
-html[data-theme="mystery"] :is(.form-grid input, .form-grid select, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea) {
+html[data-theme="mystery"] :is(.form-grid input, .form-grid select, .form-grid textarea, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea) {
   border-color: rgba(70, 217, 255, 0.25);
   background: rgba(0, 7, 22, 0.66);
   color: #e5f4ff;
 }
 
-html[data-theme="mystery"] :is(.form-grid input, .form-grid select, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea):focus {
+html[data-theme="mystery"] :is(.form-grid input, .form-grid select, .form-grid textarea, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea):focus {
   border-color: var(--sci-fi-cyan);
   box-shadow: 0 0 0 3px rgba(70, 217, 255, 0.12);
 }
@@ -1914,6 +1914,7 @@ html[data-theme="mystery"] .project-card dd {
 html[data-theme="mystery"] :is(
   .form-grid input,
   .form-grid select,
+  .form-grid textarea,
   .canon-field-row input[type="text"],
   .canon-field-row select,
   .canon-field-row textarea
@@ -1926,6 +1927,7 @@ html[data-theme="mystery"] :is(
 html[data-theme="mystery"] :is(
   .form-grid input,
   .form-grid select,
+  .form-grid textarea,
   .canon-field-row input[type="text"],
   .canon-field-row select,
   .canon-field-row textarea
@@ -2338,13 +2340,13 @@ html[data-theme="fantasy"] .theme-option-copy span {
   color: #b8cde0;
 }
 
-html[data-theme="fantasy"] :is(.form-grid input, .form-grid select, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea) {
+html[data-theme="fantasy"] :is(.form-grid input, .form-grid select, .form-grid textarea, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea) {
   border-color: rgba(70, 217, 255, 0.25);
   background: rgba(0, 7, 22, 0.66);
   color: #e5f4ff;
 }
 
-html[data-theme="fantasy"] :is(.form-grid input, .form-grid select, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea):focus {
+html[data-theme="fantasy"] :is(.form-grid input, .form-grid select, .form-grid textarea, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea):focus {
   border-color: var(--sci-fi-cyan);
   box-shadow: 0 0 0 3px rgba(70, 217, 255, 0.12);
 }
@@ -3112,6 +3114,7 @@ html[data-theme="fantasy"] .project-card dd {
 html[data-theme="fantasy"] :is(
   .form-grid input,
   .form-grid select,
+  .form-grid textarea,
   .canon-field-row input[type="text"],
   .canon-field-row select,
   .canon-field-row textarea
@@ -3124,6 +3127,7 @@ html[data-theme="fantasy"] :is(
 html[data-theme="fantasy"] :is(
   .form-grid input,
   .form-grid select,
+  .form-grid textarea,
   .canon-field-row input[type="text"],
   .canon-field-row select,
   .canon-field-row textarea
@@ -3628,13 +3632,13 @@ html[data-theme="fantasy"] .editor-surface {
   background: rgba(20, 10, 33, 0.78);
 }
 
-html[data-theme="fantasy"] :is(.form-grid input, .form-grid select, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea) {
+html[data-theme="fantasy"] :is(.form-grid input, .form-grid select, .form-grid textarea, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea) {
   border-color: rgba(243, 160, 222, 0.25);
   background: rgba(22, 11, 36, 0.72);
   color: var(--fantasy-text);
 }
 
-html[data-theme="fantasy"] :is(.form-grid input, .form-grid select, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea):focus {
+html[data-theme="fantasy"] :is(.form-grid input, .form-grid select, .form-grid textarea, .canon-field-row input[type="text"], .canon-field-row select, .canon-field-row textarea):focus {
   border-color: var(--fantasy-brass);
   box-shadow: 0 0 0 3px rgba(243, 160, 222, 0.12);
 }

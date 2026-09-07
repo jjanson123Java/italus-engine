@@ -1,4 +1,8 @@
 {
   "timezone": "America/New_York",
-  "ai_provider": "claude"
+  "ai_provider": "claude",
+  "view": {
+    "show_tiles": false,
+    "show_learn_more": true
+  }
 }

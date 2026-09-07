@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "active_profile_id": "default-author",
+  "profiles": {
+    "default-author": {
+      "profile_id": "default-author",
+      "professional_name": "",
+      "profession_niche": "",
+      "featured_work": "",
+      "genre_mission": "",
+      "standard_bio": "",
+      "short_bio": "",
+      "credentials_achievements": "",
+      "expertise_background": "",
+      "humanizing_detail": "",
+      "location": "",
+      "professional_email": "",
+      "website": "",
+      "newsletter_url": "",
+      "cta": "",
+      "x_url": "",
+      "instagram_url": "",
+      "tiktok_url": "",
+      "linkedin_url": ""
+    }
+  }
+}

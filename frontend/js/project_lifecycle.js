@@ -111,6 +111,35 @@ and saved in place with PATCH /api/project/{id}.
     });
   }
 
+  function getActiveModal() {
+    const layer = getModalLayer();
+    if (!layer || layer.getAttribute('aria-hidden') === 'true') return null;
+    return layer.querySelector('.studio-modal:not([hidden])');
+  }
+
+  function requestModalClose(reason) {
+    const modal = getActiveModal();
+    if (!modal) {
+      closeAllModals();
+      return true;
+    }
+
+    if (reason === 'backdrop' && modal.dataset.backdropDismiss === 'false') {
+      return false;
+    }
+
+    const request = new CustomEvent('italus:modal-close-request', {
+      cancelable: true,
+      detail: { reason }
+    });
+    if (!modal.dispatchEvent(request)) {
+      return false;
+    }
+
+    closeAllModals();
+    return true;
+  }
+
   function bindModalClose() {
     document.querySelectorAll('[data-modal-close]').forEach((element) => {
       element.addEventListener('click', () => {
@@ -118,22 +147,26 @@ and saved in place with PATCH /api/project/{id}.
         const existingProjectModal = document.getElementById('existing-project-modal');
         const providerSettingsModal = document.getElementById('provider-settings-modal');
         const isBackdrop = element.classList.contains('studio-modal-backdrop');
+        const activeModal = getActiveModal();
+        const declarativeBackdropProtection =
+          activeModal && activeModal.dataset.backdropDismiss === 'false';
         const backdropProtectedModalOpen =
           (newProjectModal && !newProjectModal.hidden) ||
           (existingProjectModal && !existingProjectModal.hidden) ||
-          (providerSettingsModal && !providerSettingsModal.hidden);
+          (providerSettingsModal && !providerSettingsModal.hidden) ||
+          declarativeBackdropProtection;
 
         if (isBackdrop && backdropProtectedModalOpen) {
           return;
         }
 
-        closeAllModals();
+        requestModalClose(isBackdrop ? 'backdrop' : 'explicit');
       });
     });
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
-        closeAllModals();
+        requestModalClose('escape');
       }
     });
   }

@@ -9,8 +9,11 @@ The browser/operator may explicitly confirm only planned event/reveal references
 Project, generation, book/chapter position, accepted prose, lineage, hashes, and
 continuity storage remain backend-owned.
 
-Primary 36B does not update Author Voice, write the Primary 38 authorship ledger,
-call a provider, or perform production cutover.
+Primary 36B remains the Approved Continuity authority. Primary 37B adds a
+post-commit Author Voice ingestion hook through this orchestration boundary.
+Author Voice persistence is subordinate to the already-durable continuity commit;
+a Voice-store failure is surfaced as retry-safe status and never rolls continuity back.
+Primary 38 authorship ledger work, provider calls, and production cutover remain out of scope.
 """
 
 from __future__ import annotations
@@ -22,6 +25,7 @@ from typing import Any
 from app.services import (
     approved_continuity_service,
     author_review_service,
+    author_voice_store_service,
     authorship_classification_service,
     chapter_plan_service,
     generation_service,
@@ -100,7 +104,14 @@ def get_approved_continuity_integration_contract() -> dict[str, Any]:
             "mutates_provider_receipt": False,
             "mutates_provider_binding": False,
             "mutates_usage_or_pricing": False,
-            "updates_author_voice": False,
+            "updates_author_voice": True,
+            "author_voice_update_policy": {
+                "primary37b": True,
+                "only_after_approved_continuity_commit": True,
+                "primary37a_gate_required": True,
+                "voice_failure_rolls_back_continuity": False,
+                "retry_method": "retry_generation_author_voice_ingestion",
+            },
             "writes_authorship_ledger": False,
             "calls_provider": False,
         },
@@ -194,6 +205,10 @@ def commit_generation_approved_continuity(
         chapter_number=prepared["chapter_number"],
         established=normalized_established,
     )
+    author_voice_ingestion = _ingest_author_voice_after_continuity(
+        project_id,
+        generation_id,
+    )
     return {
         **deepcopy(result),
         "integration_service": APPROVED_CONTINUITY_INTEGRATION_SERVICE_MARKER,
@@ -201,7 +216,65 @@ def commit_generation_approved_continuity(
         "chapter_plan_revision": prepared["chapter_plan_revision"],
         "chapter_plan_sha256": prepared["chapter_plan_sha256"],
         "establishment_count": len(normalized_established),
+        "author_voice_ingestion": author_voice_ingestion,
     }
+
+
+def _ingest_author_voice_after_continuity(
+    project_id: str,
+    generation_id: str,
+) -> dict[str, Any]:
+    """Run Primary 37B only after Approved Continuity is already durable."""
+
+    try:
+        return author_voice_store_service.ingest_generation_for_author_voice(
+            project_id,
+            generation_id,
+        )
+    except author_voice_store_service.AuthorVoiceStoreError as exc:
+        return {
+            "status": "error",
+            "service": author_voice_store_service.AUTHOR_VOICE_STORE_MARKER,
+            "code": exc.code,
+            "message": str(exc),
+            "details": deepcopy(exc.details),
+            "continuity_remains_committed": True,
+            "author_voice_retry_is_idempotent": True,
+            "retry_method": "retry_generation_author_voice_ingestion",
+        }
+    except Exception as exc:
+        return {
+            "status": "error",
+            "service": author_voice_store_service.AUTHOR_VOICE_STORE_MARKER,
+            "code": "AUTHOR_VOICE_INGESTION_UNEXPECTED",
+            "message": "Approved Continuity committed, but Author Voice ingestion failed.",
+            "details": {"error": str(exc)},
+            "continuity_remains_committed": True,
+            "author_voice_retry_is_idempotent": True,
+            "retry_method": "retry_generation_author_voice_ingestion",
+        }
+
+
+def retry_generation_author_voice_ingestion(
+    project_id: str,
+    generation_id: str,
+) -> dict[str, Any]:
+    """Retry only the subordinate Author Voice write without replaying continuity."""
+
+    continuity = approved_continuity_service.get_approved_continuity_status(
+        project_id,
+        generation_id,
+    )
+    if continuity.get("generation_committed") is not True:
+        raise ApprovedContinuityIntegrationError(
+            "AUTHOR_VOICE_RETRY_CONTINUITY_REQUIRED",
+            "Author Voice retry requires an existing Approved Continuity commit.",
+            details={
+                "project_id": str(project_id or ""),
+                "generation_id": str(generation_id or ""),
+            },
+        )
+    return _ingest_author_voice_after_continuity(project_id, generation_id)
 
 
 def _prepare_commit_context(

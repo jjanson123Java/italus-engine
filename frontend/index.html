@@ -13,7 +13,7 @@
       document.documentElement.dataset.theme = 'original';
     }
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260830-canon-expanded-field-editor-v1">
+  <link rel="stylesheet" href="styles.css?v=20260907-landing-view-hover-refinement-v1">
   <link rel="stylesheet" href="/assets/themes/themes.css?v=20260830-theme-modal-short-viewport-v1">
   <link rel="stylesheet" href="/assets/provider_settings.css?v=20260904-primary33-2-1a3-pricing-registry-bootstrap-clarity-v1">
 </head>
@@ -57,7 +57,56 @@
         <div class="nav-item">
           <button type="button" class="nav-trigger">Settings</button>
           <div class="dropdown-menu">
-            <span class="disabled-item">Application Settings</span>
+            <div class="landing-settings-submenu">
+              <button type="button"
+                      class="theme-menu-action landing-settings-submenu-trigger"
+                      aria-haspopup="menu">
+                <span>Application Settings</span>
+                <span class="landing-settings-submenu-arrow" aria-hidden="true">›</span>
+              </button>
+              <div class="landing-settings-submenu-panel"
+                   role="menu"
+                   aria-label="Application Settings">
+                <button type="button"
+                        class="theme-menu-action"
+                        role="menuitem"
+                        data-author-profile-open>
+                  Author Profile
+                </button>
+                <div class="landing-settings-submenu">
+                  <button type="button"
+                          class="theme-menu-action landing-settings-submenu-trigger"
+                          aria-haspopup="menu">
+                    <span>View</span>
+                    <span class="landing-settings-submenu-arrow" aria-hidden="true">›</span>
+                  </button>
+                  <div class="landing-settings-submenu-panel"
+                       role="menu"
+                       aria-label="View">
+                    <button type="button"
+                            class="theme-menu-action landing-view-toggle"
+                            data-application-view-setting="show_tiles"
+                            role="menuitemcheckbox"
+                            aria-checked="true">
+                      <span class="landing-menu-check"
+                            data-application-view-check
+                            aria-hidden="true">✓</span>
+                      <span>View Tiles</span>
+                    </button>
+                    <button type="button"
+                            class="theme-menu-action landing-view-toggle"
+                            data-application-view-setting="show_learn_more"
+                            role="menuitemcheckbox"
+                            aria-checked="true">
+                      <span class="landing-menu-check"
+                            data-application-view-check
+                            aria-hidden="true">✓</span>
+                      <span>View Learn More</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <button type="button" class="theme-menu-action" data-theme-settings-open>Themes</button>
             <span class="disabled-item">Provider Settings</span>
           </div>
@@ -350,6 +399,170 @@
     </section>
 
 
+    <section class="studio-modal author-profile-modal"
+             id="author-profile-modal"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="author-profile-title"
+             aria-describedby="author-profile-description"
+             data-backdrop-dismiss="false"
+             data-dirty="false"
+             hidden>
+      <button type="button"
+              class="studio-modal-close"
+              data-author-profile-close
+              aria-label="Close Author Profile">×</button>
+      <header class="studio-modal-header">
+        <p class="eyebrow">Author Identity</p>
+        <h2 id="author-profile-title">Author Profile</h2>
+        <p id="author-profile-description">
+          Build the durable author information Italus can later reuse for publishing,
+          portfolio, and book-jacket workflows. Saving here does not publish or transmit your profile.
+        </p>
+      </header>
+
+      <form id="author-profile-form" class="author-profile-form">
+        <div class="author-profile-scroll">
+          <section class="author-profile-section" aria-labelledby="author-profile-identity-heading">
+            <div class="author-profile-section-heading">
+              <h3 id="author-profile-identity-heading">Identity &amp; Writing</h3>
+              <p>Use your professional name or established pen name and describe the work readers should associate with you.</p>
+            </div>
+            <div class="form-grid">
+              <label>
+                Professional / Pen Name
+                <input name="professional_name" type="text" maxlength="160" autocomplete="name">
+              </label>
+              <label>
+                Profession / Niche
+                <input name="profession_niche" type="text" maxlength="240" placeholder="Novelist, journalist, historian...">
+              </label>
+              <label>
+                Featured Book / Series
+                <input name="featured_work" type="text" maxlength="240" placeholder="Primary title or publication series">
+              </label>
+              <label>
+                General Location
+                <input name="location" type="text" maxlength="240" autocomplete="address-level2" placeholder="City / region, if you want it public">
+              </label>
+              <label class="author-profile-field--wide">
+                Mission &amp; Genre
+                <textarea name="genre_mission" maxlength="500" rows="3" placeholder="What you write, the genre or subject area, and who you write for."></textarea>
+              </label>
+            </div>
+          </section>
+
+          <section class="author-profile-section" aria-labelledby="author-profile-bio-heading">
+            <div class="author-profile-section-heading">
+              <h3 id="author-profile-bio-heading">Biography</h3>
+              <p>Keep authored variants rather than forcing one biography to serve every publishing surface.</p>
+            </div>
+            <div class="form-grid">
+              <label class="author-profile-field--wide">
+                Standard Bio
+                <textarea name="standard_bio" maxlength="4000" rows="7" placeholder="Third-person author biography. The guide recommends roughly 75–150 words for a standard profile."></textarea>
+              </label>
+              <label class="author-profile-field--wide">
+                Short / Social Bio
+                <textarea name="short_bio" maxlength="500" rows="4" placeholder="A compact bio for social, contributor, or limited-space uses."></textarea>
+              </label>
+            </div>
+          </section>
+
+          <section class="author-profile-section" aria-labelledby="author-profile-credibility-heading">
+            <div class="author-profile-section-heading">
+              <h3 id="author-profile-credibility-heading">Credibility &amp; Personal Detail</h3>
+              <p>Capture the source information future publishing adapters may selectively use.</p>
+            </div>
+            <div class="form-grid">
+              <label class="author-profile-field--wide">
+                Credentials &amp; Achievements
+                <textarea name="credentials_achievements" maxlength="1500" rows="4" placeholder="Awards, fellowships, publications, recognition, degrees, or other relevant credentials."></textarea>
+              </label>
+              <label class="author-profile-field--wide">
+                Expertise / Background
+                <textarea name="expertise_background" maxlength="1500" rows="4" placeholder="Professional experience, research, or background that supports your work."></textarea>
+              </label>
+              <label class="author-profile-field--wide">
+                Humanizing Detail
+                <textarea name="humanizing_detail" maxlength="500" rows="3" placeholder="A concise hobby, personal interest, pet, or other detail you may want in a public bio."></textarea>
+              </label>
+            </div>
+          </section>
+
+          <section class="author-profile-section" aria-labelledby="author-profile-contact-heading">
+            <div class="author-profile-section-heading">
+              <h3 id="author-profile-contact-heading">Contact, Platform &amp; CTA</h3>
+              <p>These fields remain private application data until a future workflow explicitly selects them for an output.</p>
+            </div>
+            <div class="form-grid">
+              <label>
+                Professional Email
+                <input name="professional_email" type="email" maxlength="320" autocomplete="email">
+              </label>
+              <label>
+                Website
+                <input name="website" type="url" maxlength="500" inputmode="url" placeholder="https://">
+              </label>
+              <label>
+                Newsletter
+                <input name="newsletter_url" type="url" maxlength="500" inputmode="url" placeholder="https://">
+              </label>
+              <label>
+                X / Twitter
+                <input name="x_url" type="url" maxlength="500" inputmode="url" placeholder="https://">
+              </label>
+              <label>
+                Instagram
+                <input name="instagram_url" type="url" maxlength="500" inputmode="url" placeholder="https://">
+              </label>
+              <label>
+                TikTok
+                <input name="tiktok_url" type="url" maxlength="500" inputmode="url" placeholder="https://">
+              </label>
+              <label>
+                LinkedIn
+                <input name="linkedin_url" type="url" maxlength="500" inputmode="url" placeholder="https://">
+              </label>
+              <label class="author-profile-field--wide">
+                Call to Action
+                <textarea name="cta" maxlength="500" rows="3" placeholder="Example: Visit the website or join the newsletter for updates and exclusive chapters."></textarea>
+              </label>
+            </div>
+          </section>
+
+          <p class="author-profile-deferred-note">
+            Headshot asset management, portfolio files, reviews/testimonials, CV uploads,
+            and KDP/dust-jacket generation are intentionally deferred from this profile editor.
+          </p>
+        </div>
+
+        <div id="author-profile-unsaved"
+             class="author-profile-unsaved"
+             role="alert"
+             hidden>
+          <div>
+            <strong>Unsaved profile changes</strong>
+            <span>Discard these edits, or keep editing and save them.</span>
+          </div>
+          <div class="author-profile-unsaved-actions">
+            <button type="button" class="secondary-button" data-author-profile-discard>Discard Changes</button>
+            <button type="button" class="primary-button" data-author-profile-keep-editing>Keep Editing</button>
+          </div>
+        </div>
+
+        <output id="author-profile-status"
+                class="author-profile-status"
+                aria-live="polite"
+                data-kind="neutral"></output>
+
+        <div class="wizard-actions author-profile-actions">
+          <button type="button" class="secondary-button" data-author-profile-close>Cancel</button>
+          <button type="submit" class="primary-button" data-author-profile-save>Save Profile</button>
+        </div>
+      </form>
+    </section>
+
     <section class="studio-modal theme-settings-modal" id="theme-settings-modal" role="dialog" aria-modal="true" aria-labelledby="theme-settings-title" hidden>
       <button type="button" class="studio-modal-close" data-modal-close aria-label="Close Theme Settings">×</button>
       <header class="studio-modal-header">
@@ -422,9 +635,11 @@
   </section>
 
   <script src="/js/theme_manager.js?v=20260825-fantasy-theme-v1-1-layout-art"></script>
+  <script src="/js/application_settings.js?v=20260907-landing-application-view-settings-v1"></script>
   <script src="/js/project_wizard.js"></script>
   <script src="/js/canon_authoring.js?v=20260830-patch15-persistence-repair-v1"></script>
-  <script src="/js/project_lifecycle.js?v=20260902-primary33-1-closure-v1"></script>
+  <script src="/js/project_lifecycle.js?v=20260907-author-profile-modal-policy-v1"></script>
+  <script src="/js/author_profile.js?v=20260907-author-profile-v1"></script>
   <script src="/js/provider_settings.js?v=20260905-primary33-2-1b-provider-settings-workflow-clarity-v1"></script>
   <script src="script.js"></script>
 </body>

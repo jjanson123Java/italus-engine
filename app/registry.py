@@ -16,6 +16,7 @@ COVERAGE_PATH = DATA_DIR / "coverage_map.json"
 EVENT_INDEX_PATH = DATA_DIR / "event_index.json"
 SESSION_STATE_PATH = DATA_DIR / "session_state.json"
 APP_SETTINGS_PATH = DATA_DIR / "app_settings.json"
+AUTHOR_PROFILE_PATH = DATA_DIR / "author_profile.json"
 MAX_BACKUP_SNAPSHOTS = 100
 MAX_BACKUP_AGE_DAYS = 30
 
@@ -153,6 +154,14 @@ def save_app_settings(settings: dict):
         json.dump(settings, f, indent=2, ensure_ascii=False)
 
 
+def load_author_profile_document() -> dict:
+    return load_json(AUTHOR_PROFILE_PATH, {})
+
+
+def save_author_profile_document(document: dict):
+    save_json(AUTHOR_PROFILE_PATH, document)
+
+
 
 def prune_old_backups(max_snapshots: int = MAX_BACKUP_SNAPSHOTS, max_age_days: int = MAX_BACKUP_AGE_DAYS):
     """
@@ -203,6 +212,7 @@ def create_data_backup(label: str = "manual") -> str:
         EVENT_INDEX_PATH,
         SESSION_STATE_PATH,
         APP_SETTINGS_PATH,
+        AUTHOR_PROFILE_PATH,
     ]
 
     optional_paths = [

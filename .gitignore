@@ -39,6 +39,7 @@ downloads/
 
 # Italus local runtime/generated artifacts
 budget_estimate_response.json
+data/author_voice.sqlite3
 data/projects/*
 !data/projects/.gitkeep
 !data/projects/italus-saga/

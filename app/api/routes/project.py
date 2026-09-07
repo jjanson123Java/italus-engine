@@ -8,6 +8,8 @@ from pydantic import BaseModel, Field
 from app.projects.project_loader import InvalidProjectIdError, ProjectNotFoundError
 from app.services import (
     project_service,
+    application_settings_service,
+    author_profile_service,
     project_canon_service,
     canon_setup_service,
     canon_action_service,
@@ -80,6 +82,42 @@ class BudgetEstimateRequest(BaseModel):
     target_total_words: int | None = None
     token_budget_total: int | None = 250000
     token_budget_per_generation: int | None = 8000
+
+
+class ApplicationViewSettingsRequest(BaseModel):
+    """Application-global landing-page visibility preferences."""
+
+    show_tiles: bool | None = None
+    show_learn_more: bool | None = None
+
+    class Config:
+        extra = "forbid"
+
+
+class AuthorProfileRequest(BaseModel):
+    """Application-global author profile content; no publishing side effects."""
+
+    professional_name: str | None = Field(default=None, max_length=160)
+    profession_niche: str | None = Field(default=None, max_length=240)
+    featured_work: str | None = Field(default=None, max_length=240)
+    genre_mission: str | None = Field(default=None, max_length=500)
+    standard_bio: str | None = Field(default=None, max_length=4000)
+    short_bio: str | None = Field(default=None, max_length=500)
+    credentials_achievements: str | None = Field(default=None, max_length=1500)
+    expertise_background: str | None = Field(default=None, max_length=1500)
+    humanizing_detail: str | None = Field(default=None, max_length=500)
+    location: str | None = Field(default=None, max_length=240)
+    professional_email: str | None = Field(default=None, max_length=320)
+    website: str | None = Field(default=None, max_length=500)
+    newsletter_url: str | None = Field(default=None, max_length=500)
+    cta: str | None = Field(default=None, max_length=500)
+    x_url: str | None = Field(default=None, max_length=500)
+    instagram_url: str | None = Field(default=None, max_length=500)
+    tiktok_url: str | None = Field(default=None, max_length=500)
+    linkedin_url: str | None = Field(default=None, max_length=500)
+
+    class Config:
+        extra = "forbid"
 
 
 class LegacyProjectRequest(BaseModel):
@@ -254,6 +292,48 @@ def _model_to_dict(model: BaseModel, *, exclude_unset: bool = False) -> dict[str
     if hasattr(model, "model_dump"):
         return model.model_dump(exclude_unset=exclude_unset)
     return model.dict(exclude_unset=exclude_unset)
+
+
+@router.get("/api/application/settings/view")
+def get_application_view_settings():
+    """Return application-global landing-page visibility preferences."""
+    try:
+        return application_settings_service.get_application_view_settings()
+    except application_settings_service.ApplicationSettingsError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@router.put("/api/application/settings/view")
+def save_application_view_settings(request: ApplicationViewSettingsRequest):
+    """Persist application-global landing-page visibility preferences."""
+    try:
+        payload = _model_to_dict(request, exclude_unset=True)
+        return application_settings_service.update_application_view_settings(
+            **payload
+        )
+    except application_settings_service.ApplicationSettingsError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@router.get("/api/application/author-profile")
+def get_author_profile():
+    """Return the active application-global author profile."""
+    try:
+        return author_profile_service.get_author_profile()
+    except author_profile_service.AuthorProfileStorageError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@router.put("/api/application/author-profile")
+def save_author_profile(request: AuthorProfileRequest):
+    """Persist author profile content without publishing or project mutation."""
+    try:
+        payload = _model_to_dict(request, exclude_unset=True)
+        return author_profile_service.update_author_profile(**payload)
+    except author_profile_service.AuthorProfileValidationError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except author_profile_service.AuthorProfileStorageError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
 @router.post("/api/project/estimate-budget")

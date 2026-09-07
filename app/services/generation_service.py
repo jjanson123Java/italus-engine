@@ -18,6 +18,7 @@ from app import prompt_builder
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.services import (
+    author_voice_projection_service,
     book_knowledge_pack_service,
     chapter_knowledge_pack_service,
     generation_control_service,
@@ -199,10 +200,22 @@ def build_generation_request_envelope(
     )
     prose_goal_words = max(project_target_words, minimum_words)
 
+    try:
+        author_voice_projection = (
+            author_voice_projection_service.build_author_voice_projection()
+        )
+    except author_voice_projection_service.AuthorVoiceProjectionError as exc:
+        raise GenerationRequestBuildError(
+            "author_voice_projection_failed",
+            "Author Voice projection could not be constructed safely.",
+            details=exc.to_detail(),
+        ) from exc
+
     prompt = prompt_builder.build_project_local_generation_prompt(
         book_knowledge_text=book_text,
         chapter_knowledge_text=chapter_text,
         target_words=prose_goal_words,
+        author_voice_projection=author_voice_projection,
     )
     canonical_prompt = prompt_builder.canonicalize_project_local_generation_prompt(
         prompt
@@ -239,6 +252,23 @@ def build_generation_request_envelope(
                 or sidecar.get("dependency_set_sha256")
                 or ""
             ),
+        },
+        "author_voice": {
+            "schema_version": str(author_voice_projection.get("schema_version") or ""),
+            "policy_version": str(author_voice_projection.get("policy_version") or ""),
+            "author_profile_id": str(
+                author_voice_projection.get("author_profile_id") or ""
+            ),
+            "available": author_voice_projection.get("available") is True,
+            "sample_count": int(author_voice_projection.get("sample_count") or 0),
+            "project_count": int(author_voice_projection.get("project_count") or 0),
+            "source_set_sha256": str(
+                author_voice_projection.get("source_set_sha256") or ""
+            ),
+            "projection_sha256": str(
+                author_voice_projection.get("projection_sha256") or ""
+            ),
+            "raw_prose_in_request_metadata": False,
         },
     }
 
