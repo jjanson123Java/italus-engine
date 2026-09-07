@@ -32,6 +32,8 @@ from app.services import (
     planner_query_service,
     authorship_provenance_service,
     authorship_classification_service,
+    approved_continuity_service,
+    approved_continuity_integration_service,
     generation_control_service,
     generation_service,
     provider_config_service,
@@ -176,6 +178,32 @@ class AuthorReviewDecisionRequest(BaseModel):
 
     action: str = Field(min_length=1, max_length=16)
     content: str | None = Field(default=None, max_length=2_000_000)
+
+    class Config:
+        extra = "forbid"
+
+
+class ApprovedContinuityEstablishmentRequest(BaseModel):
+    """Bounded author confirmation of a planned continuity establishment."""
+
+    type: str = Field(min_length=1, max_length=32)
+    target_ref: str = Field(min_length=1, max_length=256)
+
+    class Config:
+        extra = "forbid"
+
+
+class ApprovedContinuityCommitRequest(BaseModel):
+    """Primary 36B commit input.
+
+    Book/chapter scope, accepted prose, lineage, and all immutable identities are
+    backend-owned. The caller may only confirm which currently planned event or
+    reveal references were actually established by the accepted prose.
+    """
+
+    established: list[ApprovedContinuityEstablishmentRequest] = Field(
+        default_factory=list
+    )
 
     class Config:
         extra = "forbid"
@@ -2025,6 +2053,84 @@ def record_project_provider_generation_review(
             else 409
         )
         raise HTTPException(status_code=status_code, detail=exc.to_detail()) from exc
+
+
+@router.get("/api/project/approved-continuity/contract")
+def get_approved_continuity_contract():
+    """Return the Primary 36A/36B Approved Continuity ownership contract."""
+
+    return {
+        "core": approved_continuity_service.get_approved_continuity_contract(),
+        "integration": (
+            approved_continuity_integration_service
+            .get_approved_continuity_integration_contract()
+        ),
+    }
+
+
+@router.get(
+    "/api/provider/projects/{project_id}/generation/{generation_id}/approved-continuity"
+)
+def get_project_provider_generation_approved_continuity(
+    project_id: str,
+    generation_id: str,
+):
+    """Return read-only Primary 36B commit readiness/state for one generation."""
+
+    try:
+        return (
+            approved_continuity_integration_service
+            .get_generation_approved_continuity_status(
+                project_id,
+                generation_id,
+            )
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except approved_continuity_service.ApprovedContinuityError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_dict()) from exc
+
+
+@router.post(
+    "/api/provider/projects/{project_id}/generation/{generation_id}/approved-continuity/commit"
+)
+def commit_project_provider_generation_approved_continuity(
+    project_id: str,
+    generation_id: str,
+    payload: ApprovedContinuityCommitRequest,
+):
+    """Commit exact author-accepted prose through the Primary 36B boundary."""
+
+    try:
+        return approved_continuity_integration_service.commit_generation_approved_continuity(
+            project_id,
+            generation_id,
+            established=[item.dict() for item in payload.established],
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except approved_continuity_integration_service.ApprovedContinuityIntegrationError as exc:
+        status_code = (
+            422
+            if exc.code
+            in {
+                "APPROVED_CONTINUITY_ESTABLISHED_INVALID",
+                "APPROVED_CONTINUITY_ESTABLISHMENT_NOT_PLANNED",
+            }
+            else 409
+        )
+        raise HTTPException(status_code=status_code, detail=exc.to_detail()) from exc
+    except approved_continuity_service.ApprovedContinuityError as exc:
+        status_code = (
+            422
+            if exc.code
+            in {
+                "APPROVED_CONTINUITY_ESTABLISHED_INVALID",
+                "APPROVED_CONTINUITY_ESTABLISHED_SCOPE_MISMATCH",
+            }
+            else 409
+        )
+        raise HTTPException(status_code=status_code, detail=exc.to_dict()) from exc
 
 
 @router.get("/api/provider/projects/{project_id}/usage/summary")

@@ -25,6 +25,7 @@ from app.services import (
     project_runtime_storage_service,
     authorship_provenance_service,
     authorship_classification_service,
+    approved_continuity_integration_service,
 )
 from app.projects.project_manifest import (
     LIFECYCLE_ACTIVE,
@@ -54,6 +55,9 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
     provenance_status = authorship_provenance_service.ensure_provenance_storage_for_context(context)
     provenance_classification_contract = (
         authorship_classification_service.get_classification_contract()
+    )
+    approved_continuity_contract = (
+        approved_continuity_integration_service.get_approved_continuity_integration_contract()
     )
     canon_packet_status = canon_packet_service.get_canon_packet_status_for_context(context, manifest.to_dict())
     project_runtime_context_status = (
@@ -210,6 +214,19 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
                     "remains locked until Primary 38."
                 ),
             },
+            "approved_continuity": {
+                "enabled": True,
+                "commit_enabled": not read_only,
+                "service": approved_continuity_contract.get("service"),
+                "schema_version": approved_continuity_contract.get("schema_version"),
+                "message": (
+                    "Approved Continuity commit review is available for terminally "
+                    "author-accepted generations. Only author-confirmed planned events "
+                    "and reveals may be established."
+                    if not read_only
+                    else "Archived projects expose Approved Continuity as read-only."
+                ),
+            },
             "books": {
                 **book_runtime_context_status,
                 "enabled": True,
@@ -239,7 +256,7 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
             "canon_setup_completed": bool(wizard_state.get("canon_setup_completed")),
         },
         "workspace_menu": _workspace_menu(manifest.lifecycle_state, read_only),
-        "message": "Workspace bootstrap loaded. Validation & Review is available; Approved Continuity and production output remain locked.",
+        "message": "Workspace bootstrap loaded. Validation, Author Review, and Approved Continuity commit review are available; production output remains locked.",
     }
     return bootstrap
 

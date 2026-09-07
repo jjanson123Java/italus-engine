@@ -38,14 +38,15 @@ GENERATION_CONTROL_SERVICE_VERSION = "generation_readiness_gate_vnext_v1"
 GENERATION_READINESS_SCHEMA_VERSION = "generation_readiness_vnext_v1"
 
 # Primary 32 owns project-local prompt/request construction. Primary 33 owns
-# bounded provider execution + immutable MODEL origin. Primary 34 now owns the
-# structured validator and author-review persistence boundary. Approved
-# Continuity remains locked for Primary 36.
+# bounded provider execution + immutable MODEL origin. Primary 34 owns the structured validator and author-review persistence
+# boundary. Primary 36A/36B now provide the Approved Continuity core and
+# backend integration path; later Primary 36 subpatches still own downstream
+# reader/UI integration.
 PROMPT_BUILDER_PROJECT_LOCAL_ROUTING_READY = True
 PROVIDER_EXECUTION_READY = True
 VALIDATOR_READY = True
 AUTHOR_REVIEW_PERSISTENCE_READY = True
-APPROVED_CONTINUITY_COMMIT_PATH_READY = False
+APPROVED_CONTINUITY_COMMIT_PATH_READY = True
 
 _UPSTREAM_CHECK_NAMES = {
     "project_loaded",
@@ -103,12 +104,13 @@ def get_generation_control_contract() -> dict[str, Any]:
             "provider_execution_ready": True,
             "validator_ready": True,
             "author_review_persistence_ready": True,
-            "approved_continuity_commit_path_ready": False,
+            "approved_continuity_commit_path_ready": True,
         },
         "message": (
             "Generation Readiness Gate vNEXT is authoritative for readiness "
             "reporting. Provider execution, structured validation, and author-review "
-            "persistence are ready; Approved Continuity remains locked for Primary 36."
+            "persistence and the Primary 36 Approved Continuity commit path are ready; "
+            "downstream continuity readers/UI remain staged."
         ),
     }
 
@@ -618,7 +620,7 @@ def get_generation_control_status_for_context(
             "approved_continuity_commit_path_ready",
             APPROVED_CONTINUITY_COMMIT_PATH_READY,
             "approved_continuity_commit_path_not_ready",
-            "Primary 36 accepted-prose Approved Continuity commit path is not yet enabled.",
+            "Primary 36 accepted-prose Approved Continuity commit path is ready.",
         ),
     ]
 
@@ -659,7 +661,7 @@ def get_generation_control_status_for_context(
         "prompt_builder_enabled": True,
         "draft_validation_enabled": True,
         "author_review_persistence_enabled": True,
-        "approved_persistence_enabled": False,
+        "approved_persistence_enabled": True,
         "readiness": checks,
         "readiness_summary": {
             "ready_count": sum(1 for item in checks if item["ready"]),
@@ -707,7 +709,7 @@ def get_generation_control_status_for_context(
                 "provider_execution_ready": provider_execution_ready,
                 "validator_ready": True,
                 "author_review_persistence_ready": True,
-                "approved_continuity_commit_path_ready": False,
+                "approved_continuity_commit_path_ready": True,
             },
         },
         "future_boundaries": {
@@ -715,15 +717,15 @@ def get_generation_control_status_for_context(
             "provider_execution": "primary_33_provider_candidate_origin_ready",
             "provider_candidate_model_origin": "primary_33_ready",
             "validator_and_author_review": "primary_34_ready",
-            "approved_continuity_commit": "primary_36_locked",
+            "approved_continuity_commit": "primary_36b_backend_commit_ready",
         },
         "message": (
             "Generation readiness is satisfied."
             if ready
             else (
-                "Upstream generation, provider execution, structured validation, and "
-                "author review are ready; Approved Continuity still locks end-to-end "
-                "generation."
+                "Upstream generation, provider execution, structured validation, "
+                "author review, and the Approved Continuity commit path are ready; "
+                "end-to-end production generation remains locked."
                 if upstream_ready
                 else "Generation readiness is blocked by project-local dependencies."
             )

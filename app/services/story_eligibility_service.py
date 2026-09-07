@@ -13,6 +13,7 @@ Only Approved Continuity may satisfy event/reveal establishment requirements.
 
 from __future__ import annotations
 
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -20,7 +21,7 @@ from typing import Any
 
 from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
-from app.services import canon_index_service
+from app.services import approved_continuity_service, canon_index_service
 
 
 STORY_ELIGIBILITY_SERVICE_MARKER = "project-story-eligibility-boundary-20260816"
@@ -810,86 +811,42 @@ def _progression_override_document_hash(payload: dict[str, Any]) -> str:
     ).hexdigest()
 
 
+
 def _load_approved_continuity(context: ProjectContext) -> dict[str, Any]:
-    path = approved_continuity_path_for_context(context)
-    if not path.exists():
-        return {
-            "present": False,
-            "established": [],
-            "revision": "",
-            "content_hash": "",
-            "error": "",
-        }
+    """Load only integrity-validated Approved Continuity state."""
+
     try:
-        payload = project_loader.read_json(path)
-    except (OSError, ValueError, json.JSONDecodeError) as exc:
-        return {
-            "present": True,
-            "established": [],
-            "revision": "",
-            "content_hash": "",
-            "error": str(exc),
-        }
-
-    if not isinstance(payload, dict):
-        return {
-            "present": True,
-            "established": [],
-            "revision": "",
-            "content_hash": "",
-            "error": "root must be an object",
-        }
-    if payload.get("schema_version") != APPROVED_CONTINUITY_SCHEMA_VERSION:
-        return {
-            "present": True,
-            "established": [],
-            "revision": str(payload.get("revision") or ""),
-            "content_hash": _json_hash(payload),
-            "error": f"schema_version must be {APPROVED_CONTINUITY_SCHEMA_VERSION}",
-        }
-    established = payload.get("established", [])
-    if not isinstance(established, list):
-        return {
-            "present": True,
-            "established": [],
-            "revision": str(payload.get("revision") or ""),
-            "content_hash": _json_hash(payload),
-            "error": "established must be a list",
-        }
-
-    normalized: list[dict[str, Any]] = []
-    for index, item in enumerate(established):
-        if not isinstance(item, dict):
-            return {
-                "present": True,
-                "established": [],
-                "revision": str(payload.get("revision") or ""),
-                "content_hash": _json_hash(payload),
-                "error": f"established[{index}] must be an object",
-            }
-        requirement_type = str(item.get("type") or "").strip()
-        target_ref = str(item.get("target_ref") or "").strip()
-        if requirement_type not in SUPPORTED_REQUIREMENT_TYPES or not target_ref:
-            return {
-                "present": True,
-                "established": [],
-                "revision": str(payload.get("revision") or ""),
-                "content_hash": _json_hash(payload),
-                "error": f"established[{index}] has unsupported type or missing target_ref",
-            }
-        normalized.append(
-            {
-                "type": requirement_type,
-                "target_ref": target_ref,
-                "book_number": _coerce_optional_positive_int(item.get("book_number")),
-                "chapter_number": _coerce_optional_positive_int(item.get("chapter_number")),
-            }
+        source = approved_continuity_service.read_approved_continuity_document(
+            context.project_id
         )
+    except approved_continuity_service.ApprovedContinuityError as exc:
+        return {
+            "present": approved_continuity_path_for_context(context).exists(),
+            "established": [],
+            "revision": "",
+            "content_hash": "",
+            "approved_through": None,
+            "error": f"{exc.code}: {exc.message}",
+        }
+
+    payload = source.get("document") or {}
+    established = payload.get("established") or []
+    normalized = [
+        {
+            "type": str(item.get("type") or ""),
+            "target_ref": str(item.get("target_ref") or ""),
+            "book_number": _coerce_optional_positive_int(item.get("book_number")),
+            "chapter_number": _coerce_optional_positive_int(item.get("chapter_number")),
+        }
+        for item in established
+        if isinstance(item, dict)
+    ]
     return {
-        "present": True,
+        "present": bool(source.get("present")),
         "established": normalized,
-        "revision": str(payload.get("revision") or ""),
-        "content_hash": _json_hash(payload),
+        "revision": str(source.get("revision") or ""),
+        "content_hash": str(source.get("content_hash") or ""),
+        "approved_through": deepcopy(source.get("approved_through")),
         "error": "",
     }
 

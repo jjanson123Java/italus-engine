@@ -34,6 +34,7 @@ from app.projects import project_loader
 from app.projects.project_context import ProjectContext, build_project_context
 from app.projects.project_manifest import utc_now_iso
 from app.services import (
+    approved_continuity_service,
     book_knowledge_pack_service,
     book_plan_service,
     canon_index_service,
@@ -808,64 +809,32 @@ def _evaluate_selected_targets(
     return result
 
 
+
 def _load_approved_continuity(context: ProjectContext) -> dict[str, Any]:
-    path = story_eligibility_service.approved_continuity_path_for_context(context)
-    if not path.exists():
-        return {
-            "present": False,
-            "revision": "",
-            "content_hash": "",
-            "approved_through": None,
-            "payload": {},
-            "error": "",
-        }
+    """Load Approved Continuity through the Primary 36 integrity boundary."""
+
     try:
-        payload = project_loader.read_json(path)
-    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        source = approved_continuity_service.read_approved_continuity_document(
+            context.project_id
+        )
+    except approved_continuity_service.ApprovedContinuityError as exc:
         return {
-            "present": True,
+            "present": story_eligibility_service.approved_continuity_path_for_context(
+                context
+            ).exists(),
             "revision": "",
             "content_hash": "",
             "approved_through": None,
             "payload": {},
-            "error": str(exc),
+            "error": f"{exc.code}: {exc.message}",
         }
-    if not isinstance(payload, dict):
-        return {
-            "present": True,
-            "revision": "",
-            "content_hash": "",
-            "approved_through": None,
-            "payload": {},
-            "error": "root must be an object",
-        }
-    if payload.get("schema_version") != story_eligibility_service.APPROVED_CONTINUITY_SCHEMA_VERSION:
-        return {
-            "present": True,
-            "revision": str(payload.get("revision") or ""),
-            "content_hash": _json_hash(payload),
-            "approved_through": None,
-            "payload": payload,
-            "error": (
-                "schema_version must be "
-                f"{story_eligibility_service.APPROVED_CONTINUITY_SCHEMA_VERSION}"
-            ),
-        }
-    approved_through = payload.get("approved_through")
-    if approved_through is not None and not isinstance(approved_through, dict):
-        return {
-            "present": True,
-            "revision": str(payload.get("revision") or ""),
-            "content_hash": _json_hash(payload),
-            "approved_through": None,
-            "payload": payload,
-            "error": "approved_through must be an object when present",
-        }
+
+    payload = deepcopy(source.get("document") or {})
     return {
-        "present": True,
-        "revision": str(payload.get("revision") or ""),
-        "content_hash": _json_hash(payload),
-        "approved_through": deepcopy(approved_through),
+        "present": bool(source.get("present")),
+        "revision": str(source.get("revision") or ""),
+        "content_hash": str(source.get("content_hash") or ""),
+        "approved_through": deepcopy(source.get("approved_through")),
         "payload": payload,
         "error": "",
     }

@@ -70,16 +70,20 @@
     authorReviewValidation: null,
     authorReviewStatus: null,
     authorReviewClassification: null,
+    authorReviewContinuity: null,
+    authorReviewContinuitySelection: [],
     authorReviewLoading: false,
     authorReviewSaving: false,
-    authorReviewError: ''
+    approvedContinuitySaving: false,
+    authorReviewError: '',
+    approvedContinuityError: ''
   };
 
   const plannerViewPreferenceStorageKey = 'italus.workspace.plannerViewModes.v1';
   const plannerViewTargets = ['book_plan', 'chapter_planner', 'library'];
   const plannerViewModeValues = ['default', 'collapse', 'expand'];
 
-  const workspaceJsVersion = 'workspace-primary35-provenance-classification-v1-20260906';
+  const workspaceJsVersion = 'workspace-primary36d-approved-continuity-ui-v1-20260907';
   console.info(`[ITALUS] ${workspaceJsVersion} loaded`);
   const plannerIntentVersion = 'workspace-planner-intent-model-v1-20260817';
   console.info(`[ITALUS] ${plannerIntentVersion} loaded`);
@@ -95,6 +99,8 @@
   console.info(`[ITALUS] ${primary34AuthorReviewUiVersion} loaded`);
   const primary35ProvenanceClassificationUiVersion = 'workspace-primary35-provenance-classification-ui-v1-20260906';
   console.info(`[ITALUS] ${primary35ProvenanceClassificationUiVersion} loaded`);
+  const primary36ApprovedContinuityUiVersion = 'workspace-primary36d-approved-continuity-ui-v1-20260907';
+  console.info(`[ITALUS] ${primary36ApprovedContinuityUiVersion} loaded`);
 
   const modeLabel = document.getElementById('workspace-mode');
   const runtimeLog = document.getElementById('runtime-log');
@@ -6053,7 +6059,10 @@
       state.authorReviewValidation = null;
       state.authorReviewStatus = null;
       state.authorReviewClassification = null;
+      state.authorReviewContinuity = null;
+      state.authorReviewContinuitySelection = [];
       state.authorReviewError = '';
+      state.approvedContinuityError = '';
       if (options.render !== false && state.activeSection === 'validation') {
         paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
       }
@@ -6063,10 +6072,12 @@
     state.authorReviewGenerationId = selected;
     state.authorReviewLoading = true;
     state.authorReviewError = '';
+    state.approvedContinuityError = '';
+    state.authorReviewContinuitySelection = [];
     try {
       const encodedProject = encodeURIComponent(projectId);
       const encodedGeneration = encodeURIComponent(selected);
-      const [validation, review, classification] = await Promise.all([
+      const [validation, review, classification, continuity] = await Promise.all([
         apiFetch(
           `/api/provider/projects/${encodedProject}/generation/${encodedGeneration}/validation`,
           { cache: 'no-store' }
@@ -6078,15 +6089,22 @@
         apiFetch(
           `/api/provider/projects/${encodedProject}/generation/${encodedGeneration}/provenance-classification`,
           { cache: 'no-store' }
+        ),
+        apiFetch(
+          `/api/provider/projects/${encodedProject}/generation/${encodedGeneration}/approved-continuity`,
+          { cache: 'no-store' }
         )
       ]);
       state.authorReviewValidation = validation;
       state.authorReviewStatus = review;
       state.authorReviewClassification = classification;
+      state.authorReviewContinuity = continuity;
     } catch (error) {
       state.authorReviewValidation = null;
       state.authorReviewStatus = null;
       state.authorReviewClassification = null;
+      state.authorReviewContinuity = null;
+      state.authorReviewContinuitySelection = [];
       state.authorReviewError = error.message || String(error);
     } finally {
       state.authorReviewLoading = false;
@@ -6102,6 +6120,7 @@
     const validation = state.authorReviewValidation || {};
     const review = state.authorReviewStatus || {};
     const classification = state.authorReviewClassification || {};
+    const continuity = state.authorReviewContinuity || {};
     const selected = String(state.authorReviewGenerationId || '');
     const candidate = validation.candidate || {};
     const validatorContext = validation.validator_context || {};
@@ -6109,7 +6128,11 @@
     const blockers = Array.isArray(validation.blockers) ? validation.blockers : [];
     const terminal = review.terminal === true;
     const readOnly = bootstrap && bootstrap.read_only === true;
-    const busy = state.authorReviewLoading || state.authorReviewSaving;
+    const busy = (
+      state.authorReviewLoading
+      || state.authorReviewSaving
+      || state.approvedContinuitySaving
+    );
     const reviewState = String(review.review_state || (
       selected ? 'loading' : 'no_candidate_selected'
     ));
@@ -6198,7 +6221,7 @@
           <div class="workspace-author-review-boundary">
             <strong>Provenance boundary:</strong>
             ${escapeHtml(classification.disclaimer || '')}
-            Approved Continuity remains locked for Primary 36.
+            Approved Continuity is committed separately after terminal author acceptance.
           </div>
         </section>
       `
@@ -6214,6 +6237,121 @@
           </div>
         </section>
       `;
+
+    const continuityStatus = String(continuity.status || 'not_loaded');
+    const continuityCommitted = (
+      continuityStatus === 'committed'
+      || ((continuity.approved_continuity || {}).generation_committed === true)
+    );
+    const continuityCommit = (
+      ((continuity.approved_continuity || {}).generation_commit) || {}
+    );
+    const continuityBlockers = Array.isArray(continuity.blockers) ? continuity.blockers : [];
+    const allowedEstablishments = continuity.allowed_establishments || {};
+    const selectedEstablishmentKeys = new Set(state.authorReviewContinuitySelection || []);
+    const establishmentGroups = [
+      ['event_established', 'Events established'],
+      ['reveal_established', 'Reveals established']
+    ];
+    const establishmentMarkup = establishmentGroups.map(([type, label]) => {
+      const items = Array.isArray(allowedEstablishments[type]) ? allowedEstablishments[type] : [];
+      if (!items.length) return '';
+      return `
+        <div class="workspace-approved-continuity-group">
+          <strong>${escapeHtml(label)}</strong>
+          <div class="workspace-approved-continuity-options">
+            ${items.map((item) => {
+              const targetRef = String(item.target_ref || '');
+              const key = `${type}::${targetRef}`;
+              const checked = selectedEstablishmentKeys.has(key) ? 'checked' : '';
+              return `
+                <label class="workspace-approved-continuity-option">
+                  <input type="checkbox"
+                    data-approved-continuity-establishment
+                    data-establishment-type="${escapeHtml(type)}"
+                    data-target-ref="${escapeHtml(targetRef)}"
+                    ${checked}
+                    ${readOnly || continuityStatus !== 'ready' || state.approvedContinuitySaving ? 'disabled' : ''}>
+                  <span>
+                    <strong>${escapeHtml(item.label || targetRef)}</strong>
+                    <small>${escapeHtml(targetRef)}</small>
+                  </span>
+                </label>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const continuityMarkup = selected
+      ? `
+        <section class="workspace-panel workspace-approved-continuity">
+          <div class="workspace-author-review-heading">
+            <div>
+              <p class="eyebrow">Primary 36</p>
+              <h3>Approved Continuity</h3>
+            </div>
+            <span class="workspace-author-review-state">${escapeHtml(labelFor(continuityStatus))}</span>
+          </div>
+
+          ${continuityCommitted
+            ? `
+              <dl class="workspace-definition-list">
+                ${definition('Commit ID', continuityCommit.commit_id || '—')}
+                ${definition(
+                  'Book / Chapter',
+                  continuityCommit.book_number && continuityCommit.chapter_number
+                    ? `Book ${continuityCommit.book_number}, Chapter ${continuityCommit.chapter_number}`
+                    : '—'
+                )}
+                ${definition('Accepted Version', continuityCommit.accepted_version_id || '—')}
+                ${definition(
+                  'Established records',
+                  Array.isArray(continuityCommit.established)
+                    ? continuityCommit.established.length
+                    : 0
+                )}
+              </dl>
+              <div class="workspace-success-note">
+                This generation is part of Approved Continuity. Replaying the same commit is idempotent.
+              </div>
+            `
+            : continuityStatus === 'ready'
+              ? `
+                <div class="workspace-author-review-boundary">
+                  <strong>Continuity boundary:</strong>
+                  Confirm only planned events or reveals that actually occurred in the accepted prose.
+                  Leaving every option unchecked commits the accepted chapter without establishing a planned event/reveal.
+                </div>
+                ${establishmentMarkup || `
+                  <div class="workspace-disabled-note">
+                    This Chapter Plan has no event/reveal references available for explicit establishment.
+                  </div>
+                `}
+                <div class="workspace-author-review-actions">
+                  <button type="button" id="approved-continuity-commit" class="primary"
+                    ${busy || readOnly || continuity.commit_ready !== true ? 'disabled' : ''}>
+                    ${state.approvedContinuitySaving ? 'Committing…' : 'Commit Approved Continuity'}
+                  </button>
+                </div>
+              `
+              : `
+                <div class="workspace-disabled-note">
+                  Approved Continuity is not ready for this generation.
+                  ${continuityBlockers.length
+                    ? `<ul>${continuityBlockers.map((item) => `<li>${escapeHtml(item.message || item.code || 'Continuity blocker')}</li>`).join('')}</ul>`
+                    : ''}
+                </div>
+              `
+          }
+
+          ${state.approvedContinuityError
+            ? `<div class="workspace-author-review-error">${escapeHtml(state.approvedContinuityError)}</div>`
+            : ''}
+        </section>
+      `
+      : '';
 
     const selectedMarkup = selected && state.authorReviewValidation && state.authorReviewStatus
       ? `
@@ -6231,7 +6369,7 @@
             ${definition('Book / Chapter', bookNumber && chapterNumber ? `Book ${bookNumber}, Chapter ${chapterNumber}` : '—')}
             ${definition('Provider / Model', [validatorContext.provider_id, validatorContext.model_id].filter(Boolean).join(' / ') || '—')}
             ${definition('Current Version', currentVersionId || '—')}
-            ${definition('Approved Continuity', review.approved_continuity_committed === true ? 'Committed' : 'Locked — Primary 36')}
+            ${definition('Approved Continuity', continuityCommitted ? 'Committed' : labelFor(continuityStatus))}
           </dl>
 
           ${blockerMarkup}
@@ -6263,8 +6401,8 @@
 
           <div class="workspace-author-review-boundary">
             <strong>Review boundary:</strong>
-            Accept records author acceptance provenance only. It does not commit Approved Continuity,
-            mutate Canon/story state, or update Author Voice.
+            Accept records author acceptance provenance only. Approved Continuity remains a separate explicit commit,
+            and neither action mutates Master Canon or updates Author Voice.
           </div>
         </section>
 
@@ -6274,6 +6412,7 @@
         </section>
 
         ${classificationMarkup}
+        ${continuityMarkup}
       `
       : '';
 
@@ -6282,6 +6421,7 @@
         <p class="placeholder">
           Review provider-generated chapter candidates after Primary 34 structured validation.
           Primary 35 classifies accepted segment provenance with versioned HCCS and evidence gates.
+          Primary 36 can then commit terminally author-accepted prose into Approved Continuity.
         </p>
 
         <section class="workspace-panel">
@@ -6318,7 +6458,29 @@
       state.authorReviewValidation = null;
       state.authorReviewStatus = null;
       state.authorReviewClassification = null;
+      state.authorReviewContinuity = null;
+      state.authorReviewContinuitySelection = [];
+      state.approvedContinuityError = '';
       void loadAuthorReviewGeneration(event.target.value);
+    });
+
+    mainPanel.querySelectorAll('[data-approved-continuity-establishment]').forEach((input) => {
+      input.addEventListener('change', () => {
+        const type = String(input.dataset.establishmentType || '');
+        const targetRef = String(input.dataset.targetRef || '');
+        const key = `${type}::${targetRef}`;
+        const next = new Set(state.authorReviewContinuitySelection || []);
+        if (input.checked) {
+          next.add(key);
+        } else {
+          next.delete(key);
+        }
+        state.authorReviewContinuitySelection = Array.from(next);
+      });
+    });
+
+    document.getElementById('approved-continuity-commit')?.addEventListener('click', () => {
+      void submitApprovedContinuityCommit();
     });
 
     mainPanel.querySelectorAll('[data-author-review-action]').forEach((button) => {
@@ -6379,13 +6541,81 @@
           + (classificationError.message || String(classificationError))
         );
       }
+      try {
+        state.authorReviewContinuity = await apiFetch(
+          `/api/provider/projects/${encodeURIComponent(projectId)}/generation/${encodeURIComponent(generationId)}/approved-continuity`,
+          { cache: 'no-store' }
+        );
+        state.authorReviewContinuitySelection = [];
+      } catch (continuityError) {
+        state.authorReviewContinuity = null;
+        state.approvedContinuityError = (
+          `Author review was recorded, but Approved Continuity readiness could not be loaded: `
+          + (continuityError.message || String(continuityError))
+        );
+      }
       const stateLabel = labelFor(response.review_state || normalizedAction);
-      setLog(`Author review recorded: ${stateLabel}. Approved Continuity remains locked.`);
+      setLog(`Author review recorded: ${stateLabel}. Approved Continuity readiness refreshed.`);
     } catch (error) {
       state.authorReviewError = error.message || String(error);
       setLog(`Author review could not be recorded: ${state.authorReviewError}`);
     } finally {
       state.authorReviewSaving = false;
+    }
+
+    if (state.activeSection === 'validation') {
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+    }
+  }
+
+  async function submitApprovedContinuityCommit() {
+    const generationId = String(state.authorReviewGenerationId || '').trim();
+    if (!generationId || state.approvedContinuitySaving) return;
+
+    const continuity = state.authorReviewContinuity || {};
+    if (continuity.status !== 'ready' || continuity.commit_ready !== true) return;
+
+    const established = (state.authorReviewContinuitySelection || []).map((key) => {
+      const separator = key.indexOf('::');
+      return {
+        type: separator >= 0 ? key.slice(0, separator) : '',
+        target_ref: separator >= 0 ? key.slice(separator + 2) : ''
+      };
+    }).filter((item) => item.type && item.target_ref);
+
+    const confirmed = window.confirm(
+      'Commit this author-accepted chapter to Approved Continuity? '
+      + 'Only the checked planned events/reveals will be established.'
+    );
+    if (!confirmed) return;
+
+    state.approvedContinuitySaving = true;
+    state.approvedContinuityError = '';
+    paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+
+    try {
+      await apiFetch(
+        `/api/provider/projects/${encodeURIComponent(projectId)}/generation/${encodeURIComponent(generationId)}/approved-continuity/commit`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ established })
+        }
+      );
+      state.authorReviewContinuity = await apiFetch(
+        `/api/provider/projects/${encodeURIComponent(projectId)}/generation/${encodeURIComponent(generationId)}/approved-continuity`,
+        { cache: 'no-store' }
+      );
+      state.authorReviewContinuitySelection = [];
+      setLog('Approved Continuity committed. Story eligibility and Chapter Knowledge now consume the integrity-validated continuity state.');
+    } catch (error) {
+      state.approvedContinuityError = error.message || String(error);
+      setLog(`Approved Continuity could not be committed: ${state.approvedContinuityError}`);
+    } finally {
+      state.approvedContinuitySaving = false;
     }
 
     if (state.activeSection === 'validation') {
