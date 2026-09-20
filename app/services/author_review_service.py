@@ -15,7 +15,11 @@ from copy import deepcopy
 import hashlib
 from typing import Any
 
-from app.services import authorship_provenance_service, validation_service
+from app.services import (
+    authorship_provenance_service,
+    candidate_validation_resolution_service,
+    validation_service,
+)
 
 
 AUTHOR_REVIEW_SERVICE_MARKER = "primary34-author-review-v1"
@@ -220,6 +224,69 @@ def _record_event(
         "review_action": review_action,
         "approved_continuity_committed": False,
     }
+    if operation == "AUTHOR_REJECT":
+        deterministic_failures = []
+        for item in list(validation.get("content_rules") or []):
+            if not isinstance(item, dict):
+                continue
+            if (
+                str(item.get("evaluation_mode") or "") != "DETERMINISTIC"
+                or str(item.get("severity") or "") != "BLOCKER"
+                or str(item.get("status") or "") == "PASS"
+            ):
+                continue
+            details = item.get("details")
+            details = details if isinstance(details, dict) else {}
+            deterministic_failures.append(
+                {
+                    "rule_id": str(item.get("rule_id") or ""),
+                    "message": str(item.get("message") or ""),
+                    "instruction": str(item.get("instruction") or ""),
+                    "details": {
+                        key: details.get(key)
+                        for key in (
+                            "metric",
+                            "measurement",
+                            "operator",
+                            "threshold",
+                            "required_reduction",
+                        )
+                        if details.get(key) is not None
+                    },
+                }
+            )
+        metadata["rejection_validation"] = {
+            "validation_run_id": str(validation.get("validation_run_id") or ""),
+            "validation_result_sha256": str(
+                validation.get("validation_result_sha256") or ""
+            ),
+            "validated_content_version_id": str(
+                ctx.get("current_content_version_id") or ""
+            ),
+            "validated_content_sha256": str(
+                ctx.get("candidate_content_sha256") or ""
+            ),
+            "validator_contract_sha256": str(
+                ctx.get("validator_contract_sha256") or ""
+            ),
+            "deterministic_failures": deterministic_failures,
+        }
+    if operation == "AUTHOR_ACCEPT":
+        metadata["acceptance_validation"] = {
+            "validation_run_id": str(validation.get("validation_run_id") or ""),
+            "validation_result_sha256": str(
+                validation.get("validation_result_sha256") or ""
+            ),
+            "validated_content_version_id": str(
+                ctx.get("current_content_version_id") or ""
+            ),
+            "validated_content_sha256": str(
+                ctx.get("candidate_content_sha256") or ""
+            ),
+            "validator_contract_sha256": str(
+                ctx.get("validator_contract_sha256") or ""
+            ),
+        }
     try:
         return authorship_provenance_service.record_lineage_event(
             project_id,
@@ -274,7 +341,7 @@ def get_author_review_status(
             if operation == "AUTHOR_ACCEPT"
             else "rejected"
         )
-    elif validation.get("ready_for_author_review") is True:
+    elif validation.get("reviewable") is True:
         review_state = "pending_author_review"
     else:
         review_state = "blocked"
@@ -322,10 +389,10 @@ def record_author_review(
         project_id,
         generation_id,
     )
-    if validation.get("ready_for_author_review") is not True:
+    if validation.get("reviewable") is not True:
         raise AuthorReviewError(
             "AUTHOR_REVIEW_VALIDATION_BLOCKED",
-            "Candidate is blocked by structured validation and cannot enter author review.",
+            "Candidate integrity is blocked and cannot enter author review.",
             details={"blockers": deepcopy(validation.get("blockers") or [])},
         )
 
@@ -398,26 +465,41 @@ def record_author_review(
         status["review_write"] = result.get("status")
         return status
 
-    # ACCEPT. If the author supplied changed text, capture the edit first and
-    # then accept that exact new lineage head. Approved Continuity remains locked.
+    # ACCEPT is allowed only for the exact already-saved lineage version that
+    # produced the current acceptance-grade validation result.
     if _digest(desired_text) != _digest(current_text):
-        edit_result = _record_event(
-            project_id,
-            validation=validation,
-            parent_version_id=parent_version_id,
-            actor=authorship_provenance_service.ACTOR_AUTHOR,
-            operation="AUTHOR_EDIT",
-            content_after=desired_text,
-            review_action=ACTION_EDIT,
+        raise AuthorReviewError(
+            "AUTHOR_REVIEW_ACCEPT_REQUIRES_SAVED_VERSION",
+            "Save the edited draft first, then validate and resolve that exact version before accepting it.",
         )
-        edit_event = edit_result.get("event") or {}
-        parent_version_id = str(edit_event.get("version_id") or "")
-        if not parent_version_id:
-            # Idempotent provenance replay returns the existing event as well.
-            raise AuthorReviewError(
-                "AUTHOR_REVIEW_EDIT_VERSION_MISSING",
-                "Author edit did not return a durable lineage version.",
-            )
+
+    ctx = validation.get("validator_context") or {}
+    validated_version_id = str(ctx.get("current_content_version_id") or "")
+    validated_content_sha256 = str(ctx.get("candidate_content_sha256") or "")
+    if (
+        validated_version_id != parent_version_id
+        or validated_content_sha256 != _digest(current_text)
+    ):
+        raise AuthorReviewError(
+            "AUTHOR_REVIEW_VALIDATION_STALE",
+            "Current lineage content does not match the validation result. Reload and validate the current draft.",
+            details={
+                "current_version_id": parent_version_id,
+                "validated_version_id": validated_version_id,
+            },
+        )
+    if validation.get("acceptable_for_author_acceptance") is not True:
+        raise AuthorReviewError(
+            "AUTHOR_REVIEW_ACCEPTANCE_BLOCKED",
+            "Current draft is reviewable but not acceptance-ready.",
+            details={
+                "validation_state": validation.get("validation_state"),
+                "blockers": deepcopy(validation.get("blockers") or []),
+                "manual_resolution_required": deepcopy(
+                    validation.get("manual_resolution_required") or []
+                ),
+            },
+        )
 
     result = _record_event(
         project_id,
@@ -430,6 +512,119 @@ def record_author_review(
     )
     status = get_author_review_status(project_id, generation_id)
     status["review_write"] = result.get("status")
+    return status
+
+
+def record_author_validation_resolutions(
+    project_id: str,
+    generation_id: str,
+    *,
+    rule_ids: list[str],
+    note: str,
+) -> dict[str, Any]:
+    """Record explicit author decisions for unresolved narrative rules.
+
+    Resolutions bind to the exact current substantive lineage version, content
+    SHA-256, validator contract, and validation run. They cannot resolve
+    deterministic or integrity failures.
+    """
+
+    validation = validation_service.validate_generation_candidate(
+        project_id,
+        generation_id,
+    )
+    if validation.get("reviewable") is not True:
+        raise AuthorReviewError(
+            "AUTHOR_REVIEW_VALIDATION_BLOCKED",
+            "Candidate integrity is blocked and narrative rules cannot be resolved.",
+            details={"blockers": deepcopy(validation.get("blockers") or [])},
+        )
+
+    records = _records(project_id, validation)
+    if _terminal_event(records) is not None:
+        raise AuthorReviewError(
+            "AUTHOR_REVIEW_ALREADY_FINALIZED",
+            "Validation rules cannot be resolved after terminal author review.",
+        )
+
+    head, current_text = _head(records)
+    current_version_id = str(head.get("version_id") or "")
+    current_content_sha256 = _digest(current_text)
+    ctx = validation.get("validator_context") or {}
+    if (
+        str(ctx.get("current_content_version_id") or "") != current_version_id
+        or str(ctx.get("candidate_content_sha256") or "") != current_content_sha256
+    ):
+        raise AuthorReviewError(
+            "AUTHOR_REVIEW_VALIDATION_STALE",
+            "Current lineage content does not match the validation result.",
+        )
+
+    requested = []
+    seen: set[str] = set()
+    for value in rule_ids or []:
+        rule_id = str(value or "").strip()
+        if not rule_id or rule_id in seen:
+            continue
+        seen.add(rule_id)
+        requested.append(rule_id)
+    if not requested:
+        raise AuthorReviewError(
+            "AUTHOR_REVIEW_RESOLUTION_RULE_REQUIRED",
+            "Select at least one unresolved MANUAL/SEMANTIC rule.",
+        )
+
+    unresolved = {
+        str(item.get("rule_id") or ""): item
+        for item in (validation.get("manual_resolution_required") or [])
+        if str(item.get("rule_id") or "")
+    }
+    invalid = [rule_id for rule_id in requested if rule_id not in unresolved]
+    if invalid:
+        raise AuthorReviewError(
+            "AUTHOR_REVIEW_RESOLUTION_RULE_INVALID",
+            "Only unresolved MANUAL/SEMANTIC rules for the exact current content may be resolved.",
+            details={"rule_ids": invalid},
+        )
+
+    contract_sha256 = str(ctx.get("validator_contract_sha256") or "")
+    validation_run_id = str(validation.get("validation_run_id") or "")
+    if not contract_sha256 or not validation_run_id:
+        raise AuthorReviewError(
+            "AUTHOR_REVIEW_RESOLUTION_IDENTITY_MISSING",
+            "Validation contract/run identity is incomplete.",
+        )
+
+    results: list[dict[str, Any]] = []
+    for rule_id in requested:
+        rule = unresolved[rule_id]
+        try:
+            result = candidate_validation_resolution_service.record_author_resolution(
+                project_id,
+                generation_id,
+                content_version_id=current_version_id,
+                content_sha256=current_content_sha256,
+                validator_contract_sha256=contract_sha256,
+                rule_id=rule_id,
+                rule_type=str(rule.get("rule_type") or ""),
+                rule_instruction=str(rule.get("instruction") or rule.get("message") or ""),
+                validation_run_id=validation_run_id,
+                note=note,
+            )
+        except candidate_validation_resolution_service.CandidateValidationResolutionError as exc:
+            raise AuthorReviewError(
+                "AUTHOR_REVIEW_RESOLUTION_WRITE_FAILED",
+                str(exc),
+                details={"rule_id": rule_id},
+            ) from exc
+        results.append(result)
+
+    status = get_author_review_status(project_id, generation_id)
+    status["resolution_write"] = {
+        "requested_rule_ids": requested,
+        "recorded_count": sum(1 for item in results if item.get("recorded") is True),
+        "results": results,
+    }
     return status
 
 
@@ -460,10 +655,10 @@ def record_trusted_review_transformation(
         project_id,
         generation_id,
     )
-    if validation.get("ready_for_author_review") is not True:
+    if validation.get("reviewable") is not True:
         raise AuthorReviewError(
             "AUTHOR_REVIEW_VALIDATION_BLOCKED",
-            "Candidate is blocked by structured validation.",
+            "Candidate integrity is blocked by structured validation.",
         )
     records = _records(project_id, validation)
     if _terminal_event(records) is not None:

@@ -48,6 +48,7 @@ from app.services import (
     provider_workspace_service,
     provider_preflight_service,
     provider_execution_service,
+    candidate_semantic_validation_execution_service,
     validation_service,
     author_review_service,
     planner_reveal_catalog_service,
@@ -203,6 +204,12 @@ class ProviderGenerationExecuteRequest(BaseModel):
 
     book_number: int = Field(ge=1)
     chapter_number: int = Field(ge=1)
+    replacement_for_generation_id: str | None = Field(
+        default=None,
+        min_length=36,
+        max_length=36,
+        pattern=r"^gen_[0-9a-f]{32}$",
+    )
 
     class Config:
         extra = "forbid"
@@ -218,6 +225,16 @@ class AuthorReviewDecisionRequest(BaseModel):
 
     action: str = Field(min_length=1, max_length=16)
     content: str | None = Field(default=None, max_length=2_000_000)
+
+    class Config:
+        extra = "forbid"
+
+
+class AuthorValidationResolutionRequest(BaseModel):
+    """Explicit author resolution of unresolved narrative validation rules."""
+
+    rule_ids: list[str] = Field(min_items=1, max_items=100)
+    note: str = Field(min_length=3, max_length=2000)
 
     class Config:
         extra = "forbid"
@@ -637,7 +654,7 @@ def compile_chapter_knowledge_pack(
     chapter_number: int,
     request: ChapterKnowledgePackCompileRequest,
 ):
-    """Compile a bounded Chapter Knowledge Pack; generation/provider execution remains locked."""
+    """Compile a bounded Chapter Knowledge Pack without generation or provider execution."""
     try:
         return chapter_knowledge_pack_service.compile_chapter_knowledge_pack(
             project_id,
@@ -1739,11 +1756,14 @@ def get_provider_profiles():
             }
         )
 
+    execution = provider_config_service.provider_execution_capability()
     return {
         "status": "ok",
         "schema_version": "primary33.1-provider-profile-inventory-v1",
         "profiles": result,
-        "provider_execution_allowed": False,
+        "provider_execution_allowed": execution["provider_execution_allowed"],
+        "execution": execution,
+        "inventory_operation_executes_provider": False,
     }
 
 
@@ -2097,6 +2117,19 @@ def _provider_execution_http_status(exc: provider_execution_service.ProviderExec
     return 409
 
 
+def _semantic_validation_http_status(
+    exc: candidate_semantic_validation_execution_service.CandidateSemanticValidationExecutionError,
+) -> int:
+    code = str(exc.code or "")
+    if code in {"SEMANTIC_PROVIDER_EXECUTION_FAILED"}:
+        return 502
+    if code in {"SEMANTIC_VALIDATION_IN_PROGRESS"}:
+        return 409
+    if code in {"SEMANTIC_PROVIDER_OUTPUT_INVALID", "SEMANTIC_EVIDENCE_NOT_EXACT", "SEMANTIC_FAIL_EVIDENCE_REQUIRED"}:
+        return 502
+    return 409
+
+
 @router.post("/api/provider/projects/{project_id}/generation/execute")
 def execute_project_provider_generation(
     project_id: str,
@@ -2133,6 +2166,7 @@ def execute_project_provider_generation(
             book_number=payload.book_number,
             chapter_number=payload.chapter_number,
             idempotency_key=idempotency_key,
+            replacement_for_generation_id=payload.replacement_for_generation_id,
         )
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
@@ -2163,6 +2197,51 @@ def validate_project_provider_generation_candidate(
         raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
 
 
+@router.post(
+    "/api/provider/projects/{project_id}/generation/{generation_id}/semantic-validation/execute"
+)
+def execute_project_provider_generation_semantic_validation(
+    project_id: str,
+    generation_id: str,
+    http_request: Request,
+):
+    """Run one explicit billable semantic validation for the exact saved candidate."""
+
+    idempotency_key = str(http_request.headers.get("Idempotency-Key") or "").strip()
+    if not idempotency_key:
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "code": "IDEMPOTENCY_KEY_REQUIRED",
+                "message": "Idempotency-Key header is required for semantic validation.",
+            },
+        )
+    if len(idempotency_key.encode("utf-8")) > 256:
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "code": "IDEMPOTENCY_KEY_TOO_LONG",
+                "message": "Idempotency-Key must not exceed 256 UTF-8 bytes.",
+            },
+        )
+
+    try:
+        return candidate_semantic_validation_execution_service.execute_semantic_validation(
+            project_id,
+            generation_id,
+            idempotency_key=idempotency_key,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except validation_service.CandidateValidationError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+    except candidate_semantic_validation_execution_service.CandidateSemanticValidationExecutionError as exc:
+        raise HTTPException(
+            status_code=_semantic_validation_http_status(exc),
+            detail=exc.to_detail(),
+        ) from exc
+
+
 @router.get(
     "/api/provider/projects/{project_id}/generation/{generation_id}/review"
 )
@@ -2183,6 +2262,40 @@ def get_project_provider_generation_review(
         raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
     except author_review_service.AuthorReviewError as exc:
         raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+
+
+@router.post(
+    "/api/provider/projects/{project_id}/generation/{generation_id}/review/resolutions"
+)
+def record_project_provider_generation_validation_resolutions(
+    project_id: str,
+    generation_id: str,
+    payload: AuthorValidationResolutionRequest,
+):
+    """Persist explicit author resolution of current narrative validation rules."""
+
+    try:
+        return author_review_service.record_author_validation_resolutions(
+            project_id,
+            generation_id,
+            rule_ids=payload.rule_ids,
+            note=payload.note,
+        )
+    except (ProjectNotFoundError, InvalidProjectIdError) as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except validation_service.CandidateValidationError as exc:
+        raise HTTPException(status_code=409, detail=exc.to_detail()) from exc
+    except author_review_service.AuthorReviewError as exc:
+        status_code = (
+            422
+            if exc.code
+            in {
+                "AUTHOR_REVIEW_RESOLUTION_RULE_REQUIRED",
+                "AUTHOR_REVIEW_RESOLUTION_RULE_INVALID",
+            }
+            else 409
+        )
+        raise HTTPException(status_code=status_code, detail=exc.to_detail()) from exc
 
 
 @router.get(
@@ -2242,6 +2355,7 @@ def record_project_provider_generation_review(
                 "AUTHOR_REVIEW_ACTION_INVALID",
                 "AUTHOR_REVIEW_CONTENT_REQUIRED",
                 "AUTHOR_REVIEW_REJECT_CONTENT_MISMATCH",
+                "AUTHOR_REVIEW_ACCEPT_REQUIRES_SAVED_VERSION",
             }
             else 409
         )

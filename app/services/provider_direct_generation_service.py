@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from typing import Any, Callable
 
 
-DIRECT_GENERATION_SCHEMA_VERSION = "primary33.2.2-direct-provider-generation-v1"
+DIRECT_GENERATION_SCHEMA_VERSION = "primary42-direct-provider-generation-v2"
 DEFAULT_TIMEOUT_SECONDS = 180.0
 MAX_RESPONSE_BYTES = 32 * 1024 * 1024
 OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
@@ -379,6 +379,7 @@ def _post_json(
 def _openai_generate(
     *,
     model_id: str,
+    system_text: str,
     prompt_text: str,
     max_output_tokens: int,
     api_key: str,
@@ -394,6 +395,7 @@ def _openai_generate(
         },
         body={
             "model": model_id,
+            "instructions": system_text,
             "input": prompt_text,
             "max_output_tokens": int(max_output_tokens),
             "store": False,
@@ -426,6 +428,7 @@ def _openai_generate(
 def _anthropic_generate(
     *,
     model_id: str,
+    system_text: str,
     prompt_text: str,
     max_output_tokens: int,
     api_key: str,
@@ -442,6 +445,7 @@ def _anthropic_generate(
         },
         body={
             "model": model_id,
+            "system": system_text,
             "max_tokens": int(max_output_tokens),
             "messages": [{"role": "user", "content": prompt_text}],
         },
@@ -480,6 +484,7 @@ def execute_direct_generation(
     *,
     provider_id: str,
     model_id: str,
+    system_text: str,
     prompt_text: str,
     max_output_tokens: int,
     api_key: str,
@@ -494,6 +499,7 @@ def execute_direct_generation(
     """
     provider = str(provider_id or "").strip().lower()
     model = str(model_id or "").strip()
+    system = str(system_text or "").strip()
     prompt = str(prompt_text or "")
     secret = str(api_key or "").strip()
 
@@ -507,6 +513,12 @@ def execute_direct_generation(
         raise ProviderDirectGenerationError(
             "MODEL_ID_REQUIRED",
             "An exact provider model ID is required.",
+            provider_id=provider,
+        )
+    if not system:
+        raise ProviderDirectGenerationError(
+            "SYSTEM_INSTRUCTION_REQUIRED",
+            "The provider system instruction must not be empty.",
             provider_id=provider,
         )
     if not prompt:
@@ -538,6 +550,7 @@ def execute_direct_generation(
     if provider == "openai":
         return _openai_generate(
             model_id=model,
+            system_text=system,
             prompt_text=prompt,
             max_output_tokens=int(max_output_tokens),
             api_key=secret,
@@ -546,6 +559,7 @@ def execute_direct_generation(
         )
     return _anthropic_generate(
         model_id=model,
+        system_text=system,
         prompt_text=prompt,
         max_output_tokens=int(max_output_tokens),
         api_key=secret,

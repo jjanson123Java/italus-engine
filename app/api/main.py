@@ -4,6 +4,14 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from app.services.legacy_production_isolation_service import assert_production_isolation
+
+
+# Primary 41 fail-closed retirement gate: verify that retired runner/provider
+# executables are absent and cannot re-enter the production import surface
+# before importing FastAPI route modules.
+assert_production_isolation()
+
 from app.api.routes.health import router as health_router
 from app.api.routes.project import router as project_router
 from app.api.routes.books import router as books_router

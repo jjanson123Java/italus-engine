@@ -191,10 +191,8 @@ def get_project_provider_workspace_summary(project_id: str) -> dict[str, Any]:
         "usage_summary": usage_summary,
         "billing_history": usage_summary.get("billing_segments") or [],
         "execution": {
-            "provider_execution_allowed": False,
-            "reason": (
-                "Primary 33.2.1A3 exposes project-effective model controls and effective-dated pricing lineage only. "
-                "Provider execution remains locked until later Primary 33.2 acceptance gates pass."
-            ),
+            **provider_config_service.provider_execution_capability(),
+            "summary_operation_executes_provider": False,
+            "summary_operation": "read_only_local_state",
         },
     }

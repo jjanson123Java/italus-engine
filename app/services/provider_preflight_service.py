@@ -254,6 +254,7 @@ def _finalize(
     blockers = [item for item in checks if bool(item.get("blocking"))]
     warnings = [item for item in checks if item.get("status") == "warning"]
     ready = not blockers
+    execution_capability = provider_config_service.provider_execution_capability()
     return {
         "status": "ok",
         "schema_version": PROVIDER_PREFLIGHT_SCHEMA_VERSION,
@@ -300,12 +301,38 @@ def _finalize(
         "pricing_freshness": pricing_freshness,
         "provider_probe": provider_probe,
         "execution": {
-            "provider_execution_allowed": False,
+            "schema_version": execution_capability["schema_version"],
+            "control_plane": execution_capability["control_plane"],
+            "provider_execution_allowed": bool(
+                execution_capability["provider_execution_allowed"]
+            ),
+            "preflight_operation_executes_generation": False,
+            "provider_metadata_probe_may_execute": True,
             "generation_attempted": False,
             "usage_recorded": False,
+            "credential_readiness_required": bool(
+                execution_capability["credential_readiness_required"]
+            ),
+            "project_preflight_required": bool(
+                execution_capability["project_preflight_required"]
+            ),
+            "position_readiness_required": bool(
+                execution_capability["position_readiness_required"]
+            ),
+            "legacy_fallback_allowed": bool(
+                execution_capability["legacy_fallback_allowed"]
+            ),
             "reason": (
-                "Primary 33.2.1B preflight validates configuration, credential authentication, "
-                "exact model availability, and pricing only. Real provider generation remains locked."
+                "Project-local provider execution capability is available. "
+                "This preflight may contact the bound provider's model metadata endpoint, "
+                "but it does not execute generation or record usage. A passing preflight "
+                "and Generation Readiness are still required before a paid generation call."
+                if execution_capability["provider_execution_allowed"]
+                else (
+                    "This preflight may validate provider configuration and model metadata, "
+                    "but project-local provider execution capability is currently unavailable. "
+                    + execution_capability["reason"]
+                )
             ),
         },
     }

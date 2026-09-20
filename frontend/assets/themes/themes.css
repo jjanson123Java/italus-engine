@@ -6743,3 +6743,174 @@ html[data-theme="fantasy"] #workspace-provider-model-save:focus-visible {
   outline-color: rgba(255, 208, 244, 0.88);
 }
 
+/* Primary 40B - Generate position selector theme alignment. */
+html[data-theme="sci-fi"] .generation-position-field {
+  color: var(--sci-fi-cyan);
+}
+
+html[data-theme="sci-fi"] .generation-position-field select {
+  color-scheme: dark;
+  border-color: rgba(70, 217, 255, 0.72);
+  background: linear-gradient(145deg, rgba(5, 47, 76, 0.96), rgba(34, 27, 86, 0.94));
+  color: #bfefff;
+  box-shadow:
+    0 0 0 1px rgba(70, 217, 255, 0.12),
+    inset 0 0 0 1px rgba(185, 163, 255, 0.07),
+    0 7px 18px rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme="sci-fi"] .generation-position-field select:hover:not(:disabled) {
+  border-color: var(--sci-fi-violet-soft);
+  color: #f0f9ff;
+  box-shadow:
+    0 0 0 1px rgba(185, 163, 255, 0.18),
+    0 0 22px rgba(70, 217, 255, 0.16),
+    0 0 30px rgba(141, 99, 255, 0.10),
+    0 7px 18px rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme="sci-fi"] .generation-position-field select:focus-visible {
+  outline-color: var(--sci-fi-violet-soft);
+}
+
+html[data-theme="sci-fi"] .generation-position-field select option {
+  background: #061326;
+  color: #c8f1ff;
+}
+
+html[data-theme="mystery"] .generation-position-field {
+  color: var(--mystery-control-border-strong);
+}
+
+html[data-theme="mystery"] .generation-position-field select {
+  color-scheme: dark;
+  border-color: var(--mystery-control-border);
+  background: #120c0a;
+  color: var(--mystery-control-text);
+  box-shadow: inset 0 0 0 1px rgba(201, 161, 93, 0.04);
+}
+
+html[data-theme="mystery"] .generation-position-field select:hover:not(:disabled) {
+  border-color: var(--mystery-control-border-strong);
+  background: #211410;
+  color: #fff4e3;
+}
+
+html[data-theme="mystery"] .generation-position-field select:focus-visible {
+  outline: 2px solid #e2c487;
+  outline-offset: 2px;
+  border-color: #c9a15d;
+  box-shadow: 0 0 0 3px rgba(201, 161, 93, 0.10);
+}
+
+html[data-theme="mystery"] .generation-position-field select option {
+  background: #120c0a;
+  color: #f5e9d4;
+}
+
+html[data-theme="mystery"] .generation-position-field select option:checked {
+  background: #532331;
+  color: #fff4e3;
+}
+
+html[data-theme="fantasy"] .generation-position-field {
+  color: var(--fantasy-strong);
+}
+
+html[data-theme="fantasy"] .generation-position-field select {
+  color-scheme: dark;
+  border-color: rgba(243, 160, 222, 0.52);
+  background: var(--fantasy-black-panel);
+  color: var(--fantasy-ivory);
+  box-shadow: inset 0 0 0 1px rgba(255, 214, 243, 0.04);
+}
+
+html[data-theme="fantasy"] .generation-position-field select:hover:not(:disabled) {
+  border-color: var(--fantasy-strong);
+  background: #2a173f;
+  color: #fff8fe;
+}
+
+html[data-theme="fantasy"] .generation-position-field select:focus-visible {
+  outline: 2px solid #ffb9e9;
+  outline-offset: 2px;
+  border-color: var(--fantasy-strong);
+  box-shadow: 0 0 0 3px rgba(243, 160, 222, 0.11);
+}
+
+html[data-theme="fantasy"] .generation-position-field select option {
+  background: var(--fantasy-black-panel);
+  color: var(--fantasy-ivory);
+}
+
+html[data-theme="fantasy"] .generation-position-field select option:checked {
+  background: var(--fantasy-plum);
+  color: #fff8fe;
+}
+
+/* Primary 40B - Generate action button theme alignment with Generation Position selectors. */
+html[data-theme="sci-fi"] :is(#generation-check-readiness, #generation-execute) {
+  border-color: rgba(70, 217, 255, 0.72) !important;
+  background: linear-gradient(145deg, rgba(5, 47, 76, 0.96), rgba(34, 27, 86, 0.94)) !important;
+  color: #bfefff !important;
+  box-shadow:
+    0 0 0 1px rgba(70, 217, 255, 0.12),
+    inset 0 0 0 1px rgba(185, 163, 255, 0.07),
+    0 7px 18px rgba(0, 0, 0, 0.38) !important;
+}
+
+html[data-theme="sci-fi"] :is(#generation-check-readiness, #generation-execute):hover:not(:disabled) {
+  border-color: var(--sci-fi-violet-soft) !important;
+  color: #f0f9ff !important;
+  box-shadow:
+    0 0 0 1px rgba(185, 163, 255, 0.18),
+    0 0 22px rgba(70, 217, 255, 0.16),
+    0 0 30px rgba(141, 99, 255, 0.10),
+    0 7px 18px rgba(0, 0, 0, 0.38) !important;
+}
+
+html[data-theme="sci-fi"] :is(#generation-check-readiness, #generation-execute):focus-visible {
+  outline: 2px solid var(--sci-fi-violet-soft) !important;
+  outline-offset: 3px;
+}
+
+html[data-theme="mystery"] :is(#generation-check-readiness, #generation-execute) {
+  border-color: var(--mystery-control-border) !important;
+  background: #120c0a !important;
+  color: var(--mystery-control-text) !important;
+  box-shadow: inset 0 0 0 1px rgba(201, 161, 93, 0.04) !important;
+}
+
+html[data-theme="mystery"] :is(#generation-check-readiness, #generation-execute):hover:not(:disabled) {
+  border-color: var(--mystery-control-border-strong) !important;
+  background: #211410 !important;
+  color: #fff4e3 !important;
+}
+
+html[data-theme="mystery"] :is(#generation-check-readiness, #generation-execute):focus-visible {
+  outline: 2px solid #e2c487 !important;
+  outline-offset: 2px;
+  border-color: #c9a15d !important;
+  box-shadow: 0 0 0 3px rgba(201, 161, 93, 0.10) !important;
+}
+
+html[data-theme="fantasy"] :is(#generation-check-readiness, #generation-execute) {
+  border-color: rgba(243, 160, 222, 0.52) !important;
+  background: var(--fantasy-black-panel) !important;
+  color: var(--fantasy-ivory) !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 214, 243, 0.04) !important;
+}
+
+html[data-theme="fantasy"] :is(#generation-check-readiness, #generation-execute):hover:not(:disabled) {
+  border-color: var(--fantasy-strong) !important;
+  background: #2a173f !important;
+  color: #fff8fe !important;
+}
+
+html[data-theme="fantasy"] :is(#generation-check-readiness, #generation-execute):focus-visible {
+  outline: 2px solid #ffb9e9 !important;
+  outline-offset: 2px;
+  border-color: var(--fantasy-strong) !important;
+  box-shadow: 0 0 0 3px rgba(243, 160, 222, 0.11) !important;
+}
+

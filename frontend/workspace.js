@@ -66,6 +66,9 @@
     providerWorkspaceSummaryLoading: false,
     providerProjectModelSaving: false,
     authorReviewGenerationOptions: [],
+    authorReviewGenerationOptionsLoading: false,
+    authorReviewPreloadGenerationId: '',
+    authorReviewPreloadPromise: null,
     authorReviewGenerationId: '',
     authorReviewValidation: null,
     authorReviewStatus: null,
@@ -74,10 +77,27 @@
     authorReviewContinuitySelection: [],
     authorReviewLoading: false,
     authorReviewSaving: false,
+    authorReviewPendingAction: '',
+    authorReviewResolutionSaving: false,
+    authorReviewSemanticValidationRunning: false,
+    authorReviewSemanticValidationIdempotencyKey: '',
+    authorValidationReportDirty: false,
     approvedContinuitySaving: false,
     authorReviewError: '',
-    approvedContinuityError: ''
+    approvedContinuityError: '',
+    generationReadiness: null,
+    generationReadinessLoading: false,
+    generationExecuting: false,
+    generationRequestKind: '',
+    generationResult: null,
+    generationError: '',
+    generationBookNumber: 1,
+    generationChapterNumber: 1,
+    generationIdempotencyKey: ''
   };
+
+  let authorValidationReportWindow = null;
+  let authorValidationReportMonitor = null;
 
   const plannerViewPreferenceStorageKey = 'italus.workspace.plannerViewModes.v1';
   const plannerViewTargets = ['book_plan', 'chapter_planner', 'library'];
@@ -95,12 +115,16 @@
   console.info(`[ITALUS] ${providerStatusVersion} loaded`);
   const runtimeStoragePreviewVersion = 'workspace-runtime-storage-preview-20260708';
   console.info(`[ITALUS] ${runtimeStoragePreviewVersion} loaded`);
-  const primary34AuthorReviewUiVersion = 'workspace-primary34-author-review-ui-v1-20260906';
+  const primary34AuthorReviewUiVersion = 'workspace-candidate-validation-author-review-v2-20260919';
   console.info(`[ITALUS] ${primary34AuthorReviewUiVersion} loaded`);
   const primary35ProvenanceClassificationUiVersion = 'workspace-primary35-provenance-classification-ui-v1-20260906';
   console.info(`[ITALUS] ${primary35ProvenanceClassificationUiVersion} loaded`);
   const primary36ApprovedContinuityUiVersion = 'workspace-primary36d-approved-continuity-ui-v1-20260907';
   console.info(`[ITALUS] ${primary36ApprovedContinuityUiVersion} loaded`);
+  const primary40bWorkspaceGenerationCutoverVersion = 'workspace-primary40b-generation-cutover-v1-20260908';
+  console.info(`[ITALUS] ${primary40bWorkspaceGenerationCutoverVersion} loaded`);
+  const candidateValidationReviewUxVersion = 'workspace-candidate-validation-author-facing-report-v2d-20260920';
+  console.info(`[ITALUS] ${candidateValidationReviewUxVersion} loaded`);
 
   const modeLabel = document.getElementById('workspace-mode');
   const runtimeLog = document.getElementById('runtime-log');
@@ -115,6 +139,21 @@
   };
 
   document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('italus:themechange', () => renderAuthorValidationReport());
+  window.addEventListener('message', (event) => {
+    if (event.origin !== window.location.origin || event.source !== authorValidationReportWindow) return;
+    const payload = event.data || {};
+    if (payload.type !== 'italus:validation-report-locate') return;
+    const editor = document.getElementById('author-review-content');
+    if (!editor) return;
+    const start = Math.max(0, Number(payload.start_offset) || 0);
+    const requestedEnd = Math.max(start, Number(payload.end_offset) || start);
+    const end = Math.min(editor.value.length, requestedEnd);
+    editor.focus();
+    editor.setSelectionRange(Math.min(start, end), end);
+    editor.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    setLog(`Located validation evidence in draft text at characters ${Math.min(start, end)}–${end}.`);
+  });
 
   async function init() {
     restorePlannerViewPreferences();
@@ -218,6 +257,7 @@
 
         closeWorkspaceViewMenu();
         if (menu === 'project') renderSection('dashboard');
+        if (menu === 'generate') renderSection('generation');
         if (menu === 'validation') renderSection('validation');
         if (menu === 'settings') renderSection('settings');
       });
@@ -653,6 +693,16 @@
       }
     });
 
+    const generateTopMenu = document.querySelector('[data-top-menu="generate"]');
+    if (generateTopMenu) {
+      const enabled = bootstrap && bootstrap.read_only !== true;
+      generateTopMenu.classList.toggle('disabled-link', !enabled);
+      generateTopMenu.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+      generateTopMenu.title = enabled
+        ? 'Generate one project-local chapter candidate using the configured provider after readiness passes and you confirm the billable call.'
+        : 'Generation is unavailable for archived projects.';
+    }
+
     const validationTopMenu = document.querySelector('[data-top-menu="validation"]');
     if (validationTopMenu) {
       const enabled = bootstrap && bootstrap.validation_enabled === true;
@@ -661,6 +711,377 @@
       validationTopMenu.title = enabled
         ? 'Review generated chapter candidates, inspect validation results, and record author accept, edit, or reject decisions.'
         : 'Validation & Review is not available for this project state.';
+    }
+  }
+
+
+  function generationPositionFromState(bootstrap) {
+    const manifest = (bootstrap && bootstrap.manifest) || {};
+    const maxBooks = Math.max(1, Number(manifest.book_count || 1));
+    const maxChapters = Math.max(1, Number(manifest.chapters_per_book || 1));
+    const bookNumber = Math.min(
+      maxBooks,
+      Math.max(1, Number(state.generationBookNumber || state.chapterPlanBookNumber || 1))
+    );
+    const chapterNumber = Math.min(
+      maxChapters,
+      Math.max(1, Number(state.generationChapterNumber || state.chapterPlanChapterNumber || 1))
+    );
+    return { bookNumber, chapterNumber, maxBooks, maxChapters };
+  }
+
+  function generationIdempotencyKey(bookNumber, chapterNumber) {
+    const existing = String(state.generationIdempotencyKey || '').trim();
+    if (existing) return existing;
+    let nonce = '';
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+      nonce = window.crypto.randomUUID();
+    } else {
+      nonce = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+    const key = `italus-primary40b-${projectId}-b${bookNumber}-c${chapterNumber}-${nonce}`;
+    state.generationIdempotencyKey = key.slice(0, 256);
+    return state.generationIdempotencyKey;
+  }
+
+  function generationErrorMessage(error) {
+    const raw = error && error.message !== undefined ? error.message : error;
+    if (raw && typeof raw === 'object') {
+      return String(raw.message || raw.code || JSON.stringify(raw));
+    }
+    return String(raw || 'Generation request failed.');
+  }
+
+  async function loadGenerationReadiness(bootstrap, { render = true } = {}) {
+    if (state.generationReadinessLoading) return state.generationReadiness;
+    const position = generationPositionFromState(bootstrap);
+    state.generationBookNumber = position.bookNumber;
+    state.generationChapterNumber = position.chapterNumber;
+    state.generationReadinessLoading = true;
+    state.generationError = '';
+    try {
+      state.generationReadiness = await apiFetch(
+        `/api/project/${encodeURIComponent(projectId)}/generation-readiness` +
+        `?book_number=${encodeURIComponent(position.bookNumber)}` +
+        `&chapter_number=${encodeURIComponent(position.chapterNumber)}`,
+        { cache: 'no-store' }
+      );
+      return state.generationReadiness;
+    } catch (error) {
+      state.generationReadiness = null;
+      state.generationError = generationErrorMessage(error);
+      return null;
+    } finally {
+      state.generationReadinessLoading = false;
+      if (render && state.activeSection === 'generation') {
+        renderGenerationPanel(bootstrap, { refresh: false });
+      }
+    }
+  }
+
+  function generationReadinessMarkup(readiness) {
+    if (!readiness) {
+      return `<div class="workspace-disabled-note">${
+        state.generationReadinessLoading
+          ? 'Checking project-local generation readiness…'
+          : escapeHtml(state.generationError || 'Generation readiness has not been checked yet.')
+      }</div>`;
+    }
+
+    const enabled = readiness.generation_enabled === true
+      && readiness.provider_execution_enabled === true
+      && ((readiness.production_runtime || {}).control_plane === 'project_local_primary40a')
+      && ((readiness.production_runtime || {}).legacy_fallback_allowed === false);
+    const blockers = Array.isArray(readiness.blockers) ? readiness.blockers : [];
+    const blockerMarkup = blockers.length
+      ? `<ul>${blockers.map((item) => `<li>${escapeHtml(item.message || item.check || item.code || 'Blocked')}</li>`).join('')}</ul>`
+      : '<p>No readiness blockers reported.</p>';
+
+    return `
+      <section class="workspace-section-card">
+        <h3>${enabled ? 'Ready to Generate' : 'Generation Blocked'}</h3>
+        <dl class="workspace-definition-list compact">
+          ${definition('Control Plane', String((readiness.production_runtime || {}).control_plane || '—'))}
+          ${definition('Project-Local Runtime', enabled ? 'Ready' : 'Blocked')}
+          ${definition('Legacy Fallback', (readiness.production_runtime || {}).legacy_fallback_allowed === false ? 'Disabled' : 'Unexpected')}
+          ${definition('Provider Execution', readiness.provider_execution_enabled === true ? 'Ready' : 'Blocked')}
+        </dl>
+        ${blockerMarkup}
+      </section>
+    `;
+  }
+
+  async function executeWorkspaceGeneration(bootstrap, options = {}) {
+    if (state.generationExecuting) return;
+
+    const replacement = options.replacement === true;
+    const replacementForGenerationId = replacement
+      ? String(options.replacementForGenerationId || state.authorReviewGenerationId || '').trim()
+      : '';
+    if (replacement && !replacementForGenerationId) {
+      state.authorReviewError = 'Replacement generation requires the rejected generation identity.';
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || bootstrap || {});
+      return;
+    }
+    const renderExecutionState = async ({ reloadReview = false } = {}) => {
+      if (state.activeSection === 'generation') {
+        renderGenerationPanel(bootstrap, { refresh: false });
+        return;
+      }
+      if (state.activeSection === 'validation') {
+        if (reloadReview) {
+          await renderAuthorReviewPanel(
+            (state.bootstrap || {}).manifest || {},
+            {},
+            state.bootstrap || bootstrap || {}
+          );
+        } else {
+          paintAuthorReviewPanel(
+            (state.bootstrap || {}).manifest || {},
+            state.bootstrap || bootstrap || {}
+          );
+        }
+      }
+    };
+
+    const readiness = await loadGenerationReadiness(bootstrap, { render: false });
+    const runtime = (readiness || {}).production_runtime || {};
+    const allowed = readiness
+      && readiness.generation_enabled === true
+      && readiness.provider_execution_enabled === true
+      && runtime.control_plane === 'project_local_primary40a'
+      && runtime.legacy_fallback_allowed === false;
+
+    if (!allowed) {
+      state.generationError = 'Generation remains blocked. Resolve the readiness items shown before attempting a provider call.';
+      if (replacement) state.authorReviewError = state.generationError;
+      await renderExecutionState();
+      return;
+    }
+
+    const position = generationPositionFromState(bootstrap);
+    const confirmed = window.confirm(
+      `${replacement ? 'Generate a replacement draft for' : 'Generate'} ` +
+      `Book ${position.bookNumber}, Chapter ${position.chapterNumber}? ` +
+      'This will make a separate billable provider call using the project-bound provider/model and current immutable pricing. ' +
+      (replacement
+        ? 'The rejected draft remains in provenance and the replacement will receive a new generation identity.'
+        : 'The returned candidate will remain subject to Validation & Review.')
+    );
+    if (!confirmed) {
+      setLog('Generation cancelled before provider execution.');
+      return;
+    }
+
+    state.generationExecuting = true;
+    state.generationRequestKind = replacement ? 'replacement' : 'chapter';
+    state.generationError = '';
+    if (replacement) state.authorReviewError = '';
+    state.generationResult = null;
+    await renderExecutionState();
+
+    const idempotencyKey = generationIdempotencyKey(position.bookNumber, position.chapterNumber);
+    try {
+      const result = await apiFetch(
+        `/api/provider/projects/${encodeURIComponent(projectId)}/generation/execute`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Idempotency-Key': idempotencyKey
+          },
+          body: JSON.stringify({
+            book_number: position.bookNumber,
+            chapter_number: position.chapterNumber,
+            ...(replacement
+              ? { replacement_for_generation_id: replacementForGenerationId }
+              : {})
+          })
+        }
+      );
+      state.generationResult = result;
+      state.generationIdempotencyKey = '';
+      state.authorReviewGenerationId = String(result.generation_id || '');
+      state.authorReviewGenerationOptions = mergeAuthorReviewGenerationOptions(
+        [authorReviewGenerationOptionFromResult(result)],
+        state.authorReviewGenerationOptions
+      );
+      state.authorReviewValidation = null;
+      state.authorReviewStatus = null;
+      state.authorReviewClassification = null;
+      state.authorReviewContinuity = null;
+      state.authorReviewContinuitySelection = [];
+      state.authorReviewError = '';
+      state.approvedContinuityError = '';
+      if (state.authorReviewGenerationId) {
+        void preloadAuthorReviewForGeneration(result);
+      }
+      setLog(
+        `${replacement ? 'Replacement generation' : 'Generation'} completed for ` +
+        `Book ${position.bookNumber}, Chapter ${position.chapterNumber}. ` +
+        `Candidate ${result.generation_id || 'created'} is ready for Validation & Review.`
+      );
+    } catch (error) {
+      state.generationError = generationErrorMessage(error);
+      if (replacement) state.authorReviewError = state.generationError;
+      setLog(
+        `Generation did not complete: ${state.generationError}. ` +
+        'The same idempotency key will be reused if you retry this position.'
+      );
+    } finally {
+      state.generationExecuting = false;
+      state.generationRequestKind = '';
+      await renderExecutionState({ reloadReview: Boolean(state.generationResult?.generation_id) });
+    }
+  }
+
+  async function executeReplacementGeneration(bootstrap) {
+    const validation = state.authorReviewValidation || {};
+    const review = state.authorReviewStatus || {};
+    const context = validation.validator_context || {};
+    if (review.terminal !== true || String(review.review_state || '') !== 'rejected') {
+      state.authorReviewError = 'A replacement draft is available only after this candidate has been rejected.';
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || bootstrap || {});
+      return;
+    }
+
+    const bookNumber = Number(context.book_number || 0);
+    const chapterNumber = Number(context.chapter_number || 0);
+    if (bookNumber < 1 || chapterNumber < 1) {
+      state.authorReviewError = 'The rejected candidate does not have a valid book/chapter position.';
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || bootstrap || {});
+      return;
+    }
+
+    state.generationBookNumber = bookNumber;
+    state.generationChapterNumber = chapterNumber;
+    state.generationReadiness = null;
+    state.generationError = '';
+    state.generationIdempotencyKey = '';
+    await executeWorkspaceGeneration(bootstrap, {
+      replacement: true,
+      replacementForGenerationId: String(validation.generation_id || state.authorReviewGenerationId || '')
+    });
+  }
+
+  async function renderGenerationPanel(bootstrap, { refresh = true } = {}) {
+    setHeading('Generate');
+    const position = generationPositionFromState(bootstrap);
+    const manifest = (bootstrap && bootstrap.manifest) || {};
+    const readOnly = bootstrap && bootstrap.read_only === true;
+    const readiness = state.generationReadiness;
+    const runtime = (readiness || {}).production_runtime || {};
+    const canExecute = !readOnly
+      && !state.generationExecuting
+      && readiness
+      && readiness.generation_enabled === true
+      && readiness.provider_execution_enabled === true
+      && runtime.control_plane === 'project_local_primary40a'
+      && runtime.legacy_fallback_allowed === false;
+    const result = state.generationResult || {};
+    const draft = result.draft || {};
+    const provider = result.provider || {};
+    const usage = result.usage || {};
+    const reviewPreparing = Boolean(
+      result.generation_id
+      && state.authorReviewPreloadGenerationId === String(result.generation_id)
+    );
+    const resultMarkup = result.generation_id
+      ? `
+        <section class="workspace-section-card">
+          <h3>Generated Candidate</h3>
+          <dl class="workspace-definition-list compact">
+            ${definition('Generation ID', result.generation_id)}
+            ${definition('Provider', provider.provider_id || '—')}
+            ${definition('Model', provider.model_id || '—')}
+            ${definition('Input Tokens', number(usage.actual_input_tokens || 0))}
+            ${definition('Output Tokens', number(usage.actual_output_tokens || 0))}
+            ${definition('Actual Cost', usage.actual_cost == null ? '—' : `${usage.currency || 'USD'} ${usage.actual_cost}`)}
+          </dl>
+          <pre>${escapeHtml(draft.text || '')}</pre>
+          <button type="button" id="generation-open-review" class="primary-action" ${reviewPreparing ? 'disabled' : ''}>
+            ${reviewPreparing ? 'Preparing Validation &amp; Review…' : 'Open Validation &amp; Review'}
+          </button>
+        </section>`
+      : '';
+
+    mainPanel.innerHTML = `
+      <div class="workspace-content">
+        <p class="placeholder">
+          Generate a chapter candidate through the project-local Primary 40 runtime. Italus checks the complete
+          readiness gate before the author can confirm a billable provider call. No legacy generation fallback is used.
+        </p>
+
+        <section class="workspace-section-card">
+          <h3>Generation Position</h3>
+          <div class="generation-position-grid">
+            <label class="generation-position-field">
+              <span>Book</span>
+              <select id="generation-book-number" ${readOnly || state.generationExecuting ? 'disabled' : ''}>
+                ${Array.from({ length: position.maxBooks }, (_, index) => index + 1)
+                  .map((bookNumber) => `
+                    <option value="${bookNumber}" ${bookNumber === position.bookNumber ? 'selected' : ''}>
+                      Book ${bookNumber}
+                    </option>
+                  `).join('')}
+              </select>
+            </label>
+            <label class="generation-position-field">
+              <span>Chapter</span>
+              <select id="generation-chapter-number" ${readOnly || state.generationExecuting ? 'disabled' : ''}>
+                ${Array.from({ length: position.maxChapters }, (_, index) => index + 1)
+                  .map((chapterNumber) => `
+                    <option value="${chapterNumber}" ${chapterNumber === position.chapterNumber ? 'selected' : ''}>
+                      Chapter ${chapterNumber}
+                    </option>
+                  `).join('')}
+              </select>
+            </label>
+          </div>
+          <div class="workspace-actions">
+            <button type="button" id="generation-check-readiness" ${state.generationExecuting ? 'disabled' : ''}>
+              ${state.generationReadinessLoading ? 'Checking…' : 'Check Readiness'}
+            </button>
+            <button type="button" id="generation-execute" class="primary-action" ${canExecute ? '' : 'disabled'}>
+              ${state.generationExecuting ? 'Generating…' : 'Generate Chapter Candidate'}
+            </button>
+          </div>
+        </section>
+
+        ${generationReadinessMarkup(readiness)}
+        ${state.generationError ? `<div class="workspace-disabled-note">${escapeHtml(state.generationError)}</div>` : ''}
+        ${resultMarkup}
+      </div>
+    `;
+
+    const bookInput = document.getElementById('generation-book-number');
+    const chapterInput = document.getElementById('generation-chapter-number');
+    const resetPosition = () => {
+      state.generationBookNumber = Number(bookInput?.value || 1);
+      state.generationChapterNumber = Number(chapterInput?.value || 1);
+      state.generationReadiness = null;
+      state.generationResult = null;
+      state.generationError = '';
+      state.generationIdempotencyKey = '';
+      renderGenerationPanel(bootstrap, { refresh: true });
+    };
+    bookInput?.addEventListener('change', resetPosition);
+    chapterInput?.addEventListener('change', resetPosition);
+    document.getElementById('generation-check-readiness')?.addEventListener(
+      'click',
+      () => void loadGenerationReadiness(bootstrap)
+    );
+    document.getElementById('generation-execute')?.addEventListener(
+      'click',
+      () => void executeWorkspaceGeneration(bootstrap)
+    );
+    document.getElementById('generation-open-review')?.addEventListener('click', () => {
+      renderSection('validation');
+    });
+
+    if (refresh && !state.generationReadinessLoading && !state.generationReadiness) {
+      void loadGenerationReadiness(bootstrap);
     }
   }
 
@@ -711,6 +1132,7 @@
           void loadChapterKnowledgePackStatus();
         }
       },
+      generation: () => { void renderGenerationPanel(bootstrap); },
       book_runtime_context: () => renderBookRuntimeContext(bootstrap),
       settings: () => { void renderSettings(manifest, context, bootstrap); },
       provider_status: () => { void renderProviderStatusPanel(manifest, bootstrap); },
@@ -981,7 +1403,7 @@
           ${definition('Target Total Words', number(manifest.target_total_words))}
           ${definition('Author Canon', summary ? `${number(summary.completed_required_author_section_count)} / ${number(summary.required_author_section_count)} required sections complete` : '—')}
         </dl>
-        <div class="workspace-disabled-note">Manuscript generation is not available yet. Your planning work can continue normally.</div>
+        <div class="workspace-disabled-note">Use Generate when the selected chapter is ready. Italus will check project-local readiness before any provider call.</div>
       </div>
     `;
   }
@@ -1206,7 +1628,7 @@
         <section class="workspace-panel">
           <h3>Recorded Project Billing</h3>
           <p class="placeholder">
-            No provider usage has been recorded for this project. This is expected while provider execution remains locked.
+            No provider usage has been recorded for this project. This is expected until a real provider generation succeeds.
             Planning prices may exist, but they are not actual project billing.
           </p>
         </section>
@@ -1550,7 +1972,7 @@
         </details>
 
         <div class="workspace-disabled-note">
-          Provider execution remains locked. When Primary 33.2 records authoritative provider usage, this page will preserve
+          When a provider generation succeeds and authoritative usage is recorded, this page preserves
           provider/model, pricing-version, credential-instance, binding-instance, token, and currency-separated billing history.
         </div>
       </div>
@@ -2159,7 +2581,7 @@
                 ${lockCard('Provider', locks.provider_called ? 'Called' : 'Blocked')}
                 ${lockCard('Runtime Writes', locks.runtime_written ? 'Written' : 'Blocked')}
                 ${lockCard('Draft Persistence', locks.draft_persisted ? 'Written' : 'Blocked')}
-                ${lockCard('Generation Unlock', locks.generation_unlocked ? 'Unlocked' : 'Locked')}
+                ${lockCard('Generation Authority', 'Generation Readiness')}
               </div>
             </section>
           </div>
@@ -3377,7 +3799,7 @@
         <p class="placeholder">
           Plan the chapter in one place. Choose Canon for This Chapter from the approved
           Canon for This Book, arrange any events you want to use, and add a short Generation Kickoff.
-          Detailed beat planning is optional. Generation remains locked.
+          Detailed beat planning is optional. Generation eligibility is checked on the Generate page.
         </p>
 
         <div class="workspace-stat-grid">
@@ -3385,7 +3807,7 @@
           ${statCard('Chapter', String(state.chapterPlanChapterNumber))}
           ${statCard('Lifecycle', labelFor(chapter.lifecycle_state || chapter.status || 'draft'))}
           ${statCard('Saved Version', number(chapter.revision || 0))}
-          ${statCard('Generation', 'Locked')}
+          ${statCard('Generation', 'Check Readiness')}
         </div>
 
         ${bookScopeApproved ? '' : `<div class="workspace-error-note planner-gate-note"><strong>Canon for Book ${state.chapterPlanBookNumber} is not approved yet.</strong> Choose and approve Canon for This Book in Book Planner before building the chapter. <button type="button" id="chapter-open-book-canon" class="primary-action compact-action" title="Opens Book Planner so you can choose and approve Canon for this book. No Chapter Plan changes are made by opening it.">Open Book Planner</button></div>`}
@@ -3813,7 +4235,7 @@
             ${statCard('Knowledge Status', knowledgePackDisplayStatus)}
             ${statCard('Writing Context', labelFor(chapterKnowledgePack.mode || (state.chapterPlanChapterNumber === 1 ? 'chapter_1' : 'continuity_driven')))}
             ${statCard('Preparation', chapterKnowledgePack.compiler_ready === true ? 'Ready' : 'Blocked')}
-            ${statCard('Generation', 'Locked')}
+            ${statCard('Generation', 'Check Readiness')}
           </div>
 
           ${knowledgePackStatusPending
@@ -4306,7 +4728,7 @@
       );
       setLog(
         `Chapter Knowledge prepared for Book ${state.chapterPlanBookNumber}, ` +
-        `Chapter ${state.chapterPlanChapterNumber}. Writing generation is not available yet.`
+        `Chapter ${state.chapterPlanChapterNumber}. Writing generation is available from the Generate menu after project-local readiness passes.`
       );
       await loadChapterKnowledgePackStatus(true);
       if ((result.token_accounting || {}).chapter_knowledge_pack_estimated_tokens) {
@@ -5612,7 +6034,7 @@
             ${lockCard('Prompt Builder', locks.prompt_builder_called ? 'Called' : 'Not called')}
             ${lockCard('Provider', locks.provider_called ? 'Called' : 'Blocked')}
             ${lockCard('Approved Continuity Writes', locks.approved_continuity_written ? 'Written' : 'Blocked')}
-            ${lockCard('Generation Unlock', locks.generation_unlocked ? 'Unlocked' : 'Locked')}
+            ${lockCard('Generation Authority', 'Generation Readiness')}
           </div>
         </details>
 
@@ -5734,7 +6156,7 @@
         }
       );
       setLog(
-        `Updated Book Knowledge for ${result.generated_count || 0} book(s). Writing generation is not available yet.`
+        `Updated Book Knowledge for ${result.generated_count || 0} book(s). Writing generation is available from the Generate menu after project-local readiness passes.`
       );
       state.bookRuntimeContext = await apiFetch(
         `/api/project/${encodeURIComponent(projectId)}/runtime-context/books/status`
@@ -5840,7 +6262,8 @@
         </section>
 
         <div class="workspace-disabled-note">
-          Provider/model binding and pricing are managed in Provider Settings. Provider execution remains locked until Primary 33.2.
+          Provider/model binding and pricing are managed in Provider Settings. Project-local provider execution capability is available;
+          valid credentials, project setup, and Generation Readiness still govern each generation attempt.
         </div>
 
         <details class="workspace-technical-details">
@@ -5951,7 +6374,7 @@
             ${lockCard('Runtime Containers', runtimeStatus === 'initialized' ? 'Prepared' : 'Not prepared')}
             ${lockCard('Copy Legacy Data', 'Blocked')}
             ${lockCard('Save Generated Scenes', 'Blocked')}
-            ${lockCard('Enable Generation', 'Blocked')}
+            ${lockCard('Generation Capability', bootstrap && bootstrap.generation_enabled ? 'Available' : (bootstrap && bootstrap.read_only ? 'Read-only' : 'Blocked'))}
           </div>
         </details>
       </div>
@@ -5987,6 +6410,110 @@
   }
 
 
+  function authorReviewGenerationOptionFromResult(result) {
+    const provider = (result && result.provider) || {};
+    return {
+      generation_id: String((result && result.generation_id) || '').trim(),
+      recorded_at: '',
+      provider_id: String(provider.provider_id || '').trim(),
+      model_id: String(provider.model_id || '').trim()
+    };
+  }
+
+  function mergeAuthorReviewGenerationOptions(primary, secondary) {
+    const seen = new Set();
+    return [...(Array.isArray(primary) ? primary : []), ...(Array.isArray(secondary) ? secondary : [])]
+      .filter((item) => {
+        const generationId = String((item && item.generation_id) || '').trim();
+        if (!generationId || seen.has(generationId)) return false;
+        seen.add(generationId);
+        return true;
+      });
+  }
+
+  async function refreshAuthorReviewGenerationOptions(options = {}) {
+    if (state.authorReviewGenerationOptionsLoading) return;
+    state.authorReviewGenerationOptionsLoading = true;
+    try {
+      const usage = await apiFetch(
+        `/api/provider/projects/${encodeURIComponent(projectId)}/usage/events?limit=100`,
+        { cache: 'no-store' }
+      );
+      const events = Array.isArray(usage.events)
+        ? usage.events.slice().reverse().filter((event) => {
+            const operationKind = String((event && event.operation_kind) || 'generation');
+            return operationKind === 'generation';
+          })
+        : [];
+      const loaded = events.map((event) => ({
+        generation_id: String((event && event.generation_id) || '').trim(),
+        recorded_at: String((event && event.recorded_at) || '').trim(),
+        provider_id: String((event && event.provider_id) || '').trim(),
+        model_id: String((event && event.model_id) || '').trim()
+      }));
+      const selected = String(state.authorReviewGenerationId || '');
+      const selectedSeed = state.authorReviewGenerationOptions.filter(
+        (item) => String((item && item.generation_id) || '') === selected
+      );
+      state.authorReviewGenerationOptions = mergeAuthorReviewGenerationOptions(
+        selectedSeed,
+        mergeAuthorReviewGenerationOptions(loaded, state.authorReviewGenerationOptions)
+      );
+      if (!state.authorReviewGenerationId && state.authorReviewGenerationOptions.length) {
+        state.authorReviewGenerationId = state.authorReviewGenerationOptions[0].generation_id;
+      }
+    } catch (error) {
+      if (!state.authorReviewGenerationOptions.length) {
+        state.authorReviewError = error.message || String(error);
+      } else {
+        setLog(`Generation history refresh did not complete: ${error.message || String(error)}`);
+      }
+    } finally {
+      state.authorReviewGenerationOptionsLoading = false;
+    }
+
+    if (options.render !== false && state.activeSection === 'validation') {
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+    }
+  }
+
+  function preloadAuthorReviewForGeneration(result) {
+    const generationId = String((result && result.generation_id) || '').trim();
+    if (!generationId) return null;
+
+    state.authorReviewGenerationId = generationId;
+    state.authorReviewGenerationOptions = mergeAuthorReviewGenerationOptions(
+      [authorReviewGenerationOptionFromResult(result)],
+      state.authorReviewGenerationOptions
+    );
+    state.authorReviewValidation = null;
+    state.authorReviewStatus = null;
+    state.authorReviewClassification = null;
+    state.authorReviewContinuity = null;
+    state.authorReviewContinuitySelection = [];
+    state.authorReviewError = '';
+    state.approvedContinuityError = '';
+    state.authorReviewPreloadGenerationId = generationId;
+
+    const preload = Promise.allSettled([
+      loadAuthorReviewGeneration(generationId, { render: false }),
+      refreshAuthorReviewGenerationOptions({ render: false })
+    ]).then(() => {
+      if (state.authorReviewPreloadGenerationId === generationId) {
+        state.authorReviewPreloadGenerationId = '';
+        state.authorReviewPreloadPromise = null;
+      }
+      if (state.activeSection === 'validation') {
+        paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+      } else if (state.activeSection === 'generation') {
+        renderGenerationPanel(state.bootstrap || {}, { refresh: false });
+      }
+    });
+
+    state.authorReviewPreloadPromise = preload;
+    return preload;
+  }
+
   async function renderAuthorReviewPanel(manifest, context, bootstrap) {
     setHeading('Validation & Author Review');
 
@@ -6007,33 +6534,8 @@
           <p class="placeholder">Loading generated drafts available for author review…</p>
         </div>
       `;
-      try {
-        const usage = await apiFetch(
-          `/api/provider/projects/${encodeURIComponent(projectId)}/usage/events?limit=100`,
-          { cache: 'no-store' }
-        );
-        const events = Array.isArray(usage.events) ? usage.events.slice().reverse() : [];
-        const seen = new Set();
-        state.authorReviewGenerationOptions = events
-          .map((event) => ({
-            generation_id: String((event && event.generation_id) || '').trim(),
-            recorded_at: String((event && event.recorded_at) || '').trim(),
-            provider_id: String((event && event.provider_id) || '').trim(),
-            model_id: String((event && event.model_id) || '').trim()
-          }))
-          .filter((item) => {
-            if (!item.generation_id || seen.has(item.generation_id)) return false;
-            seen.add(item.generation_id);
-            return true;
-          });
-        if (!state.authorReviewGenerationId && state.authorReviewGenerationOptions.length) {
-          state.authorReviewGenerationId = state.authorReviewGenerationOptions[0].generation_id;
-        }
-      } catch (error) {
-        state.authorReviewError = error.message || String(error);
-      } finally {
-        state.authorReviewLoading = false;
-      }
+      await refreshAuthorReviewGenerationOptions({ render: false });
+      state.authorReviewLoading = false;
     }
 
     if (
@@ -6061,6 +6563,7 @@
       state.authorReviewClassification = null;
       state.authorReviewContinuity = null;
       state.authorReviewContinuitySelection = [];
+      state.authorValidationReportDirty = false;
       state.authorReviewError = '';
       state.approvedContinuityError = '';
       if (options.render !== false && state.activeSection === 'validation') {
@@ -6069,11 +6572,15 @@
       return;
     }
 
+    if (state.authorReviewGenerationId !== selected) {
+      state.authorReviewSemanticValidationIdempotencyKey = '';
+    }
     state.authorReviewGenerationId = selected;
     state.authorReviewLoading = true;
     state.authorReviewError = '';
     state.approvedContinuityError = '';
     state.authorReviewContinuitySelection = [];
+    state.authorValidationReportDirty = false;
     try {
       const encodedProject = encodeURIComponent(projectId);
       const encodedGeneration = encodeURIComponent(selected);
@@ -6115,6 +6622,201 @@
     }
   }
 
+  function authorValidationReportStatus(item) {
+    const status = String((item || {}).status || 'REVIEW').toUpperCase();
+    if (status === 'PASS' || status === 'FAIL') return status;
+    return 'REVIEW';
+  }
+
+  function authorValidationReportItems(validation) {
+    return [...(Array.isArray(validation.checks) ? validation.checks : []), ...(Array.isArray(validation.diagnostic_checks) ? validation.diagnostic_checks : [])];
+  }
+
+  function authorValidationReportCategory(item) {
+    const ruleId = String(item.rule_id || '');
+    if (String(item.rule_type || '') === 'INTEGRITY' || String(item.source_type || '') === 'PROVIDER_PROVENANCE' || ruleId.startsWith('integrity.') || ruleId.startsWith('contract.')) return 'integrity';
+    if (String(item.source_type || '') === 'PROSE_RULEBOOK' || ruleId.startsWith('prose.')) return 'writing';
+    return 'canon';
+  }
+
+  function authorValidationReportGroups(validation) {
+    const items = authorValidationReportItems(validation);
+    return [
+      { id: 'writing', label: 'Writing Rules', description: 'Prose measurements, punctuation limits, and style diagnostics from the saved draft.', items: items.filter((item) => authorValidationReportCategory(item) === 'writing') },
+      { id: 'canon', label: 'Canon & Narrative Rules', description: 'Chapter restrictions, reveal boundaries, story controls, required execution, and POV.', items: items.filter((item) => authorValidationReportCategory(item) === 'canon') },
+      { id: 'integrity', label: 'Technical Validation', description: 'System integrity, provenance, exact-content, and validator-contract checks.', items: items.filter((item) => authorValidationReportCategory(item) === 'integrity') }
+    ];
+  }
+
+  function authorValidationRuleLabel(item) {
+    const labels = {
+      'prose.word_count.quantitative': 'Word Count', 'prose.em_dashes.quantitative': 'Em Dashes',
+      'prose.semicolons.quantitative': 'Semicolons', 'prose.colons.quantitative': 'Colons',
+      'prose.ellipses.quantitative': 'Ellipses', 'prose.ellipses.narrative_justification': 'Ellipsis Narrative Justification',
+      'prose.similes.hard_maximum': 'Simile Limit', 'prose.very_short_sentences.review': 'Very Short Sentence Review',
+      'chapter.execution.required_event_sequence': 'Required Event Sequence',
+      'chapter.execution.required_participants': 'Required Participants',
+      'chapter.execution.required_locations': 'Required Locations',
+      'chapter.execution.pov_contract': 'POV Contract'
+    };
+    const ruleId = String(item.rule_id || '');
+    if (labels[ruleId]) return labels[ruleId];
+    if (ruleId.startsWith('chapter.restriction.')) return 'Chapter Restriction';
+    if (ruleId.startsWith('reveal.forbidden_future.')) return 'Reveal Boundary';
+    if (ruleId.startsWith('story_control.')) return 'Story Control';
+    if (item.rule_type && !['INTEGRITY', 'PROSE_QUANTITATIVE_METRIC'].includes(String(item.rule_type))) return labelFor(item.rule_type);
+    return item.name || ruleId || 'Validation requirement';
+  }
+
+  function authorValidationSourceContext(item) {
+    const labels = {
+      CHAPTER_PLAN: 'Chapter Plan',
+      BOOK_REVEAL_BOUNDARY: 'Book Reveal Boundary',
+      STORY_CONTROL: 'Story Control',
+      CHAPTER_EXECUTION_CONTRACT: 'Chapter Execution Contract',
+      PROSE_RULEBOOK: 'Writing Rulebook'
+    };
+    const source = labels[String(item.source_type || '')] || '';
+    return source ? `<div class="author-source-context"><strong>Applies from:</strong> ${escapeHtml(source)}</div>` : '';
+  }
+
+  function authorValidationEvidenceMarkup(item) {
+    const details = item.details || {};
+    const evidence = Array.isArray(details.evidence) ? details.evidence : [];
+    const status = authorValidationReportStatus(item);
+    if (!evidence.length) {
+      if (status !== 'REVIEW') return '';
+      return `<details class="evidence-list review-guidance"><summary>What to review</summary><p class="evidence-notice">Review the saved draft against this requirement. No specific passage was isolated automatically, so this check requires whole-draft author judgment.</p></details>`;
+    }
+    const relatedOnly = details.evidence_assessment === 'related_passages_only';
+    const rows = evidence.map((entry, index) => {
+      const start = Number(entry.context_start_offset ?? entry.start_offset);
+      const end = Number(entry.context_end_offset ?? entry.end_offset);
+      const location = [entry.paragraph_number ? `Paragraph ${entry.paragraph_number}` : '', entry.sentence_number ? `Sentence ${entry.sentence_number}` : '', entry.line_number ? `Line ${entry.line_number}` : ''].filter(Boolean).join(' · ');
+      const diagnostic = entry.word_count !== undefined ? `<span>${escapeHtml(entry.word_count)} words${entry.clustered ? ' · clustered' : ''}</span>` : entry.matched_text ? `<span>Match: <code>${escapeHtml(entry.matched_text)}</code></span>` : '';
+      return `<li class="evidence-row"><div class="evidence-heading"><strong>${escapeHtml(location || `Evidence ${index + 1}`)}</strong>${diagnostic}</div><blockquote>${escapeHtml(entry.excerpt || '')}</blockquote>${Number.isFinite(start) && Number.isFinite(end) ? `<button type="button" class="locate-evidence" data-start-offset="${start}" data-end-offset="${end}">Locate in Draft</button>` : ''}</li>`;
+    }).join('');
+    const summary = relatedOnly ? `${evidence.length} related passage${evidence.length === 1 ? '' : 's'} to review` : `${evidence.length} exact text location${evidence.length === 1 ? '' : 's'}`;
+    return `<details class="evidence-list" ${status === 'FAIL' ? 'open' : ''}><summary>${escapeHtml(summary)}</summary>${relatedOnly ? `<p class="evidence-notice">${escapeHtml(details.evidence_notice || 'These passages are review aids only. They do not prove the rule passed or failed.')}</p>` : ''}<ol>${rows}</ol></details>`;
+  }
+
+  function authorValidationTechnicalDetailsMarkup(item) {
+    const status = authorValidationReportStatus(item);
+    const code = String(item.code || (status === 'REVIEW' ? 'AUTHOR_REVIEW_REQUIRED' : '—'));
+    return `<dl><dt>Rule</dt><dd>${escapeHtml(item.rule_id || '—')}</dd><dt>Source</dt><dd>${escapeHtml(item.source_type || '—')}${item.source_ref ? ` · ${escapeHtml(item.source_ref)}` : ''}</dd><dt>Evaluation</dt><dd>${escapeHtml(item.evaluation_mode || '—')}</dd><dt>Code</dt><dd>${escapeHtml(code)}</dd></dl>`;
+  }
+
+  function authorValidationCheckMarkup(item, options = {}) {
+    const details = item.details || {};
+    const measurement = details.measurement;
+    const threshold = details.threshold;
+    const status = authorValidationReportStatus(item);
+    const metricSummary = measurement !== undefined && threshold !== undefined ? `<div class="metric"><strong>Measured:</strong> ${escapeHtml(measurement)} · <strong>Required:</strong> ${escapeHtml(String(details.operator || 'threshold').replace(/_/g, ' '))} ${escapeHtml(threshold)}${details.required_reduction ? ` · <strong>Change needed:</strong> reduce by at least ${escapeHtml(details.required_reduction)}` : ''}</div>` : '';
+    const resolution = item.resolution || {};
+    const authorContext = options.technical === true ? '' : authorValidationSourceContext(item);
+    const technicalDetails = options.technical === true ? authorValidationTechnicalDetailsMarkup(item) : '';
+    return `<article class="validation-check ${status.toLowerCase()}"><div class="check-heading"><strong>${escapeHtml(authorValidationRuleLabel(item))}</strong><span>${escapeHtml(status)}</span></div><p>${escapeHtml(item.message || item.instruction || 'No validation message was provided.')}</p>${metricSummary}${item.instruction && item.instruction !== item.message ? `<p><strong>Author action:</strong> ${escapeHtml(item.instruction)}</p>` : ''}${authorContext}${resolution.author_note ? `<p class="resolution-note"><strong>Author resolution:</strong> ${escapeHtml(resolution.author_note)}</p>` : ''}${authorValidationEvidenceMarkup(item)}${technicalDetails}</article>`;
+  }
+
+  function authorValidationStatusBlock(label, status, items, options = {}) {
+    const emptyMessage = status === 'FAIL' ? 'No detected failures.' : status === 'REVIEW' ? 'No rules require author review.' : 'No passed rules are available in this group.';
+    const cards = items.length ? items.map((item) => authorValidationCheckMarkup(item, options)).join('') : `<div class="empty ${status.toLowerCase()}">${emptyMessage}</div>`;
+    return `<div class="status-block ${status.toLowerCase()}"><h3>${escapeHtml(label)} <span>${items.length}</span></h3>${cards}</div>`;
+  }
+
+  function authorValidationGroupCounts(group) {
+    const failed = group.items.filter((item) => authorValidationReportStatus(item) === 'FAIL').length;
+    const review = group.items.filter((item) => authorValidationReportStatus(item) === 'REVIEW').length;
+    const passed = group.items.filter((item) => authorValidationReportStatus(item) === 'PASS').length;
+    return { failed, review, passed };
+  }
+
+  function authorValidationGroupMarkup(group) {
+    const failed = group.items.filter((item) => authorValidationReportStatus(item) === 'FAIL');
+    const review = group.items.filter((item) => authorValidationReportStatus(item) === 'REVIEW');
+    const passed = group.items.filter((item) => authorValidationReportStatus(item) === 'PASS');
+    const counts = authorValidationGroupCounts(group);
+    const statusSummary = `<div class="group-status-summary"><span class="is-fail">${counts.failed} failure${counts.failed === 1 ? '' : 's'}</span><span class="is-review">${counts.review} review</span><span class="is-pass">${counts.passed} passed</span></div>`;
+    const body = authorValidationStatusBlock('Detected Failures', 'FAIL', failed) + authorValidationStatusBlock('Author Review Required', 'REVIEW', review) + `<details class="passed-rules"><summary>Passed Rules <span>${passed.length}</span></summary>${passed.length ? passed.map((item) => authorValidationCheckMarkup(item)).join('') : '<div class="empty pass">No passed rules are available in this group.</div>'}</details>`;
+    return `<section class="report-group"><header class="group-heading"><div><h2>${escapeHtml(group.label)}</h2><p>${escapeHtml(group.description)}</p>${statusSummary}</div><span class="count">${group.items.length} checks total</span></header>${body}</section>`;
+  }
+
+  function authorValidationTechnicalGroupMarkup(group, validation, context) {
+    const failed = group.items.filter((item) => authorValidationReportStatus(item) === 'FAIL');
+    const review = group.items.filter((item) => authorValidationReportStatus(item) === 'REVIEW');
+    const passed = group.items.filter((item) => authorValidationReportStatus(item) === 'PASS');
+    const needsAttention = failed.length > 0 || review.length > 0;
+    const summary = needsAttention
+      ? `${failed.length + review.length} system check${failed.length + review.length === 1 ? '' : 's'} need attention`
+      : `${passed.length}/${group.items.length} system checks passed`;
+    const identity = `<div class="technical-identity"><div><strong>Generation</strong>${escapeHtml(validation.generation_id || '—')}</div><div><strong>Saved version</strong>${escapeHtml(context.current_content_version_id || '—')}</div><div><strong>Content SHA-256</strong>${escapeHtml(context.candidate_content_sha256 || '—')}</div></div>`;
+    const body = authorValidationStatusBlock('Detected Failures', 'FAIL', failed, { technical: true }) + authorValidationStatusBlock('Author Review Required', 'REVIEW', review, { technical: true }) + `<details class="passed-rules"><summary>Passed System Checks <span>${passed.length}</span></summary>${passed.length ? passed.map((item) => authorValidationCheckMarkup(item, { technical: true })).join('') : '<div class="empty pass">No passed system checks are available.</div>'}</details>`;
+    return `<details class="technical-validation" ${needsAttention ? 'open' : ''}><summary><span>Technical Validation</span><strong>${escapeHtml(summary)}</strong></summary><div class="technical-validation-body"><p>These checks protect provider receipts, provenance, exact-content identity, and validator lineage. They are system safeguards, not writing decisions. No author action is required when they pass.</p>${identity}${body}</div></details>`;
+  }
+
+  function authorValidationReportIsOpen() { return Boolean(authorValidationReportWindow && !authorValidationReportWindow.closed); }
+
+  function syncAuthorValidationReportButton() {
+    const button = document.getElementById('author-validation-report-popout');
+    if (!button) return;
+    const open = authorValidationReportIsOpen();
+    button.textContent = open ? 'Bring Report to Front' : 'Open Validation Report';
+    button.setAttribute('aria-label', open ? 'Bring the open validation report window to the front' : 'Open validation report in a separate window');
+  }
+
+  function stopAuthorValidationReportMonitor() {
+    if (authorValidationReportMonitor !== null) { window.clearInterval(authorValidationReportMonitor); authorValidationReportMonitor = null; }
+  }
+
+  function startAuthorValidationReportMonitor() {
+    stopAuthorValidationReportMonitor();
+    authorValidationReportMonitor = window.setInterval(() => {
+      if (authorValidationReportIsOpen()) return;
+      authorValidationReportWindow = null;
+      stopAuthorValidationReportMonitor();
+      syncAuthorValidationReportButton();
+    }, 400);
+  }
+
+  function renderAuthorValidationReport() {
+    if (!authorValidationReportIsOpen()) { syncAuthorValidationReportButton(); return; }
+    const validation = state.authorReviewValidation || {};
+    const context = validation.validator_context || {};
+    const groups = authorValidationReportGroups(validation);
+    const authorGroups = groups.filter((group) => group.id !== 'integrity');
+    const technicalGroup = groups.find((group) => group.id === 'integrity') || { id: 'integrity', label: 'Technical Validation', items: [] };
+    const authorItems = authorGroups.flatMap((group) => group.items);
+    const failed = authorItems.filter((item) => authorValidationReportStatus(item) === 'FAIL').length;
+    const reviewRequired = authorItems.filter((item) => authorValidationReportStatus(item) === 'REVIEW').length;
+    const passed = authorItems.filter((item) => authorValidationReportStatus(item) === 'PASS').length;
+    const generatedAt = new Date().toLocaleString();
+    const groupMarkup = authorGroups.map(authorValidationGroupMarkup).join('') + authorValidationTechnicalGroupMarkup(technicalGroup, validation, context);
+    const activeTheme = ['original', 'sci-fi', 'mystery', 'fantasy'].includes(document.documentElement.dataset.theme) ? document.documentElement.dataset.theme : 'original';
+    const report = authorValidationReportWindow.document;
+    report.open();
+    report.write(`<!doctype html><html lang="en" data-theme="${escapeHtml(activeTheme)}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Italus Validation Report</title><style>
+      :root { color-scheme: dark; --report-bg: #07120d; --report-panel: rgba(12,34,23,.96); --report-panel-soft: rgba(20,52,35,.88); --report-border: rgba(214,163,74,.38); --report-accent: #d8ad5d; --report-text: #f1e6d2; --report-muted: #c8b99e; --report-input: rgba(3,15,10,.72); font-family: Georgia,"Times New Roman",serif; }
+      html[data-theme="sci-fi"] { --report-bg:#010611; --report-panel:rgba(4,15,34,.96); --report-panel-soft:rgba(7,24,48,.90); --report-border:rgba(70,217,255,.38); --report-accent:#46d9ff; --report-text:#dcefff; --report-muted:#9db5ca; --report-input:rgba(1,8,25,.82); font-family:Inter,"Segoe UI",Arial,sans-serif; }
+      html[data-theme="mystery"] { --report-bg:#120d0b; --report-panel:rgba(24,16,13,.97); --report-panel-soft:rgba(35,22,17,.90); --report-border:rgba(201,161,93,.38); --report-accent:#c9a15d; --report-text:#efe5d4; --report-muted:#c8b8a1; --report-input:rgba(14,9,7,.84); }
+      html[data-theme="fantasy"] { --report-bg:#070b1d; --report-panel:rgba(10,14,40,.97); --report-panel-soft:rgba(17,23,58,.90); --report-border:rgba(157,107,255,.40); --report-accent:#9d6bff; --report-text:#e7f0ff; --report-muted:#a9b7d0; --report-input:rgba(5,8,29,.84); font-family:Inter,"Segoe UI",Arial,sans-serif; }
+      *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 88% 5%,color-mix(in srgb,var(--report-accent) 12%,transparent),transparent 34%),var(--report-bg);color:var(--report-text)} main{max-width:1120px;margin:0 auto;padding:26px} h1,h2,h3,p{margin-top:0} h1{color:var(--report-accent);font-size:1.65rem;margin-bottom:6px} h2{color:var(--report-accent);font-size:1.18rem;margin-bottom:4px} h3{display:flex;justify-content:space-between;align-items:center;margin:18px 0 9px;font-size:.94rem;text-transform:uppercase;letter-spacing:.05em}
+      h3 span,.count,.passed-rules summary span{min-width:28px;text-align:center;border:1px solid var(--report-border);border-radius:999px;padding:3px 8px;color:var(--report-accent);background:var(--report-input)} .subtitle,.group-heading p,.footer{color:var(--report-muted)} .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:18px 0}.summary>div{background:var(--report-panel);border:1px solid var(--report-border);border-radius:10px;padding:11px 13px;overflow-wrap:anywhere}.summary strong{display:block;color:var(--report-accent);font-size:.73rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}.result-summary{grid-template-columns:repeat(3,minmax(0,1fr))}.result-summary>div{text-align:center;font-size:1.45rem;font-weight:800}.result-summary span{display:block;font-size:.73rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:3px}.result-summary .failed{border-color:#dc5d5d;color:#ffb4b4}.result-summary .review{border-color:#d99b2b;color:#ffd27a}.result-summary .passed{border-color:#2f9f72;color:#9be7bf}
+      .notice{padding:12px 14px;border-radius:9px;margin:16px 0;line-height:1.45}.attention{background:rgba(120,53,15,.64);border:1px solid #d99b2b;color:#fff0c2}.ready{background:rgba(6,78,59,.66);border:1px solid #2f9f72;color:#d1fae5}.report-group{margin-top:28px}.group-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;border-bottom:1px solid var(--report-border);padding-bottom:10px;margin-bottom:12px}.group-heading p{margin-bottom:0;font-size:.9rem}.count{white-space:nowrap}.group-status-summary{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.group-status-summary span{border:1px solid var(--report-border);border-radius:999px;padding:4px 8px;font-size:.76rem;font-weight:700}.group-status-summary .is-fail{border-color:#dc5d5d;color:#ffb4b4}.group-status-summary .is-review{border-color:#d99b2b;color:#ffd27a}.group-status-summary .is-pass{border-color:#2f9f72;color:#9be7bf}.validation-check{background:var(--report-panel);border:1px solid var(--report-border);border-left-width:5px;border-radius:10px;padding:15px;margin:10px 0;box-shadow:0 12px 28px rgba(0,0,0,.18)}.validation-check.fail{border-left-color:#ef4444}.validation-check.review{border-left-color:#f59e0b}.validation-check.pass{border-left-color:#10b981}
+      .check-heading,.evidence-heading{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}.check-heading>span{font-size:.73rem;font-weight:800;letter-spacing:.05em}.validation-check.fail .check-heading>span{color:#fca5a5}.validation-check.review .check-heading>span{color:#fbbf24}.validation-check.pass .check-heading>span{color:#86efac}.validation-check p{margin:10px 0;line-height:1.5}.metric,.resolution-note,.evidence-notice,.author-source-context{background:var(--report-input);border-radius:7px;padding:9px 11px}.author-source-context{margin-top:10px;color:var(--report-muted);font-size:.84rem}.author-source-context strong{color:var(--report-text)}dl{display:grid;grid-template-columns:92px 1fr;gap:4px 10px;margin-bottom:0;font-size:.8rem}dt{color:var(--report-muted)}dd{margin:0;overflow-wrap:anywhere}.evidence-list,.passed-rules{margin-top:12px}.evidence-list>summary,.passed-rules>summary{cursor:pointer;color:var(--report-accent);font-weight:700}.evidence-list ol{padding-left:26px}.evidence-row{padding:10px 0;border-bottom:1px solid var(--report-border)}.evidence-heading{color:var(--report-muted);font-size:.8rem}blockquote{margin:8px 0;padding:10px 12px;border-left:3px solid var(--report-accent);background:var(--report-input);line-height:1.5;white-space:pre-wrap}code{color:var(--report-accent)}button.locate-evidence{border:1px solid var(--report-border);border-radius:7px;background:var(--report-panel-soft);color:var(--report-text);padding:7px 10px;cursor:pointer}button.locate-evidence:hover,button.locate-evidence:focus-visible{border-color:var(--report-accent);color:var(--report-accent);outline:none}.empty{padding:10px 12px;border:1px solid var(--report-border);border-radius:8px;color:var(--report-muted);background:var(--report-input)}.passed-rules{padding-top:6px}.technical-validation{margin-top:30px;border:1px solid var(--report-border);border-radius:10px;background:var(--report-panel-soft)}.technical-validation>summary{display:flex;justify-content:space-between;gap:16px;cursor:pointer;padding:14px 16px;color:var(--report-accent);font-weight:700}.technical-validation>summary strong{color:var(--report-muted);font-size:.86rem}.technical-validation-body{padding:0 16px 16px}.technical-validation-body>p{color:var(--report-muted);line-height:1.5}.technical-identity{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;margin:12px 0}.technical-identity>div{background:var(--report-input);border-radius:7px;padding:9px 11px;overflow-wrap:anywhere;font-size:.8rem}.technical-identity strong{display:block;color:var(--report-muted);font-size:.72rem;text-transform:uppercase;margin-bottom:3px}.footer{margin-top:28px;font-size:.82rem}@media(max-width:680px){main{padding:16px}.result-summary{grid-template-columns:1fr}.group-heading,.check-heading,.technical-validation>summary{display:block}.count{display:inline-block;margin-top:8px}dl{grid-template-columns:1fr}}
+    </style></head><body><main><h1>Italus Validation Report</h1><p class="subtitle">Keep this themed report open on a second screen while editing the saved draft in the main workspace.</p>
+      ${state.authorValidationReportDirty ? '<div class="notice attention"><strong>Unsaved editor changes:</strong> this report still describes the last saved version. Click Save &amp; Revalidate to refresh it.</div>' : failed || reviewRequired ? '<div class="notice attention"><strong>The saved draft is not acceptance-ready.</strong> Correct detected failures and review every unresolved canon or narrative requirement.</div>' : '<div class="notice ready"><strong>All required checks passed.</strong> The saved draft is acceptance-ready.</div>'}
+      <div class="summary result-summary"><div class="failed">${failed}<span>Detected Failures</span></div><div class="review">${reviewRequired}<span>Author Review</span></div><div class="passed">${passed}<span>Passed Author Rules</span></div></div><div class="summary"><div><strong>Position</strong>${context.book_number && context.chapter_number ? `Book ${escapeHtml(context.book_number)}, Chapter ${escapeHtml(context.chapter_number)}` : '—'}</div><div><strong>Validation state</strong>${escapeHtml(labelFor(validation.validation_state || '—'))}</div><div><strong>Acceptance ready</strong>${validation.acceptable_for_author_acceptance === true ? 'Yes' : 'No'}</div></div>${groupMarkup}<p class="footer">Updated ${escapeHtml(generatedAt)}. Exact excerpts identify deterministic findings. Related canon passages are review aids, not automatic verdicts. Technical lineage checks are available in the collapsed Technical Validation section and do not require author action when they pass. This read-only report refreshes after Save &amp; Revalidate or narrative-rule resolution.</p></main><script>document.querySelectorAll('.locate-evidence').forEach(function(button){button.addEventListener('click',function(){if(!window.opener)return;window.opener.postMessage({type:'italus:validation-report-locate',start_offset:Number(button.dataset.startOffset),end_offset:Number(button.dataset.endOffset)},window.location.origin);});});</script></body></html>`);
+    report.close();
+    syncAuthorValidationReportButton();
+  }
+
+  function openAuthorValidationReport() {
+    const generation = String(state.authorReviewGenerationId || 'candidate').replace(/[^a-zA-Z0-9_-]/g, '_');
+    if (!authorValidationReportIsOpen()) authorValidationReportWindow = window.open('', `italus_validation_${generation}`, 'popup=yes,width=1040,height=900,resizable=yes,scrollbars=yes');
+    if (!authorValidationReportWindow) { setLog('Validation report pop-out was blocked by the browser. Allow pop-ups for Italus and try again.'); syncAuthorValidationReportButton(); return; }
+    renderAuthorValidationReport(); authorValidationReportWindow.focus(); startAuthorValidationReportMonitor(); syncAuthorValidationReportButton();
+  }
+
   function paintAuthorReviewPanel(manifest, bootstrap) {
     const options = state.authorReviewGenerationOptions || [];
     const validation = state.authorReviewValidation || {};
@@ -6126,16 +6828,25 @@
     const validatorContext = validation.validator_context || {};
     const checks = Array.isArray(validation.checks) ? validation.checks : [];
     const blockers = Array.isArray(validation.blockers) ? validation.blockers : [];
+    const manualRules = Array.isArray(validation.manual_resolution_required)
+      ? validation.manual_resolution_required
+      : [];
+    const reviewable = validation.reviewable === true;
+    const acceptanceReady = validation.acceptable_for_author_acceptance === true;
     const terminal = review.terminal === true;
     const readOnly = bootstrap && bootstrap.read_only === true;
     const busy = (
       state.authorReviewLoading
       || state.authorReviewSaving
+      || state.authorReviewResolutionSaving
+      || state.authorReviewSemanticValidationRunning
       || state.approvedContinuitySaving
+      || state.generationExecuting
     );
     const reviewState = String(review.review_state || (
       selected ? 'loading' : 'no_candidate_selected'
     ));
+    const rejected = terminal && reviewState === 'rejected';
     const currentContent = String(
       review.current_content != null ? review.current_content : (candidate.text || '')
     );
@@ -6152,23 +6863,83 @@
     }).join('');
 
     const checkCards = checks.length
-      ? checks.map((item) => `
-          <article class="workspace-author-review-check ${item.passed ? 'is-pass' : 'is-blocked'}">
-            <strong>${escapeHtml(item.name || item.check || 'Validation check')}</strong>
-            <span>${item.passed ? 'PASS' : 'BLOCKED'}</span>
-            <p>${escapeHtml(item.message || '')}</p>
-          </article>
-        `).join('')
+      ? checks.map((item) => {
+          const status = String(item.status || (item.passed ? 'PASS' : 'FAIL')).toUpperCase();
+          return `
+            <article class="workspace-author-review-check ${status === 'PASS' ? 'is-pass' : 'is-blocked'}">
+              <strong>${escapeHtml(item.rule_id || item.name || item.check || 'Validation check')}</strong>
+              <span>${escapeHtml(status)}</span>
+              <p>${escapeHtml(item.message || '')}</p>
+            </article>
+          `;
+        }).join('')
       : '<div class="workspace-disabled-note">No validation report is loaded.</div>';
 
     const blockerMarkup = blockers.length
       ? `
         <div class="workspace-author-review-blockers">
-          <strong>Review is blocked</strong>
+          <strong>${reviewable ? 'Acceptance blockers' : 'Review is blocked'}</strong>
           <ul>
             ${blockers.map((item) => `<li>${escapeHtml(item.message || item.code || 'Validation blocker')}</li>`).join('')}
           </ul>
         </div>
+      `
+      : '';
+
+    const manualResolutionMarkup = manualRules.length
+      ? `
+        <section class="workspace-panel">
+          <div class="workspace-author-review-heading">
+            <div>
+              <p class="eyebrow">Narrative Contract Review</p>
+              <h3>Author Resolution Required</h3>
+            </div>
+            <span class="workspace-author-review-state">${manualRules.length} unresolved</span>
+          </div>
+          <div class="workspace-author-review-boundary">
+            These checks require narrative judgment. You may review them manually, or run an
+            explicit billable semantic validation against this exact saved draft. Semantic
+            validation may return PASS, FAIL, or UNKNOWN. UNKNOWN remains author-review work.
+            A content edit invalidates these semantic verdicts and author confirmations automatically.
+          </div>
+          <div class="workspace-author-review-actions">
+            <button type="button" id="author-validation-run-semantic"
+              ${busy || terminal || readOnly ? 'disabled' : ''}>
+              ${state.authorReviewSemanticValidationRunning
+                ? 'Running Semantic Validation…'
+                : 'Run Semantic Validation (billable)'}
+            </button>
+          </div>
+          <div class="workspace-approved-continuity-options">
+            ${manualRules.map((item) => `
+              <label class="workspace-approved-continuity-option">
+                <input type="checkbox"
+                  data-author-validation-rule
+                  data-rule-id="${escapeHtml(item.rule_id || '')}"
+                  ${terminal || readOnly || state.authorReviewResolutionSaving ? 'disabled' : ''}>
+                <span>
+                  <strong>${escapeHtml(item.rule_id || item.rule_type || 'Narrative rule')}</strong>
+                  <small>${escapeHtml(item.instruction || item.message || '')}</small>
+                </span>
+              </label>
+            `).join('')}
+          </div>
+          <label class="workspace-author-review-editor-label" for="author-validation-resolution-note">
+            Resolution note
+          </label>
+          <textarea id="author-validation-resolution-note"
+            class="workspace-author-review-editor"
+            rows="3"
+            maxlength="2000"
+            ${terminal || readOnly || state.authorReviewResolutionSaving ? 'readonly' : ''}
+            placeholder="Record why the selected rules are satisfied by this exact draft."></textarea>
+          <div class="workspace-author-review-actions">
+            <button type="button" id="author-validation-resolve"
+              ${busy || terminal || readOnly ? 'disabled' : ''}>
+              ${state.authorReviewResolutionSaving ? 'Recording…' : 'Confirm Selected Rules'}
+            </button>
+          </div>
+        </section>
       `
       : '';
 
@@ -6369,6 +7140,8 @@
             ${definition('Book / Chapter', bookNumber && chapterNumber ? `Book ${bookNumber}, Chapter ${chapterNumber}` : '—')}
             ${definition('Provider / Model', [validatorContext.provider_id, validatorContext.model_id].filter(Boolean).join(' / ') || '—')}
             ${definition('Current Version', currentVersionId || '—')}
+            ${definition('Validation State', labelFor(validation.validation_state || '—'))}
+            ${definition('Acceptance Ready', acceptanceReady ? 'Yes' : 'No')}
             ${definition('Approved Continuity', continuityCommitted ? 'Committed' : labelFor(continuityStatus))}
           </dl>
 
@@ -6381,16 +7154,16 @@
             id="author-review-content"
             class="workspace-author-review-editor"
             rows="24"
-            ${terminal || readOnly || validation.ready_for_author_review !== true ? 'readonly' : ''}
+            ${terminal || readOnly || !reviewable ? 'readonly' : ''}
           >${escapeHtml(currentContent)}</textarea>
 
           <div class="workspace-author-review-actions">
             <button type="button" data-author-review-action="edit"
               ${busy || terminal || readOnly || validation.ready_for_author_review !== true ? 'disabled' : ''}>
-              Save Edit
+              ${state.authorReviewSaving && state.authorReviewPendingAction === 'edit' ? 'Saving & Revalidating…' : 'Save & Revalidate'}
             </button>
             <button type="button" data-author-review-action="accept" class="primary"
-              ${busy || terminal || readOnly || validation.ready_for_author_review !== true ? 'disabled' : ''}>
+              ${busy || terminal || readOnly || !acceptanceReady ? 'disabled' : ''}>
               Accept Draft
             </button>
             <button type="button" data-author-review-action="reject" class="danger"
@@ -6398,6 +7171,8 @@
               Reject Draft
             </button>
           </div>
+
+          ${rejected ? `<div class="workspace-author-review-boundary"><strong>Rejected candidate:</strong> The rejected draft remains in provenance. Generate Replacement Draft starts a separate billable provider call for Book ${bookNumber}, Chapter ${chapterNumber} and creates a new generation identity.<div class="workspace-author-review-actions"><button type="button" id="author-review-generate-replacement" class="primary" ${busy || readOnly ? 'disabled' : ''}>${state.generationExecuting && state.generationRequestKind === 'replacement' ? 'Generating Replacement Draft…' : 'Generate Replacement Draft'}</button></div></div>` : ''}
 
           <div class="workspace-author-review-boundary">
             <strong>Review boundary:</strong>
@@ -6407,9 +7182,11 @@
         </section>
 
         <section class="workspace-panel">
-          <h3>Validation Results</h3>
+          <div class="workspace-author-review-heading"><div><h3>Validation Results</h3><p>Open the detailed report in a separate window and move it to a second screen while editing.</p></div><button type="button" id="author-validation-report-popout">${authorValidationReportIsOpen() ? 'Bring Report to Front' : 'Open Validation Report'}</button></div>
           <div class="workspace-author-review-check-grid">${checkCards}</div>
         </section>
+
+        ${manualResolutionMarkup}
 
         ${classificationMarkup}
         ${continuityMarkup}
@@ -6460,6 +7237,7 @@
       state.authorReviewClassification = null;
       state.authorReviewContinuity = null;
       state.authorReviewContinuitySelection = [];
+      state.authorValidationReportDirty = false;
       state.approvedContinuityError = '';
       void loadAuthorReviewGeneration(event.target.value);
     });
@@ -6483,12 +7261,151 @@
       void submitApprovedContinuityCommit();
     });
 
+    document.getElementById('author-validation-run-semantic')?.addEventListener('click', () => {
+      void executeAuthorSemanticValidation();
+    });
+
+    document.getElementById('author-validation-resolve')?.addEventListener('click', () => {
+      void submitAuthorValidationResolutions();
+    });
+
+    document.getElementById('author-validation-report-popout')?.addEventListener('click', openAuthorValidationReport);
+    document.getElementById('author-review-generate-replacement')?.addEventListener('click', () => { void executeReplacementGeneration(bootstrap); });
+
+    const authorReviewEditor = document.getElementById('author-review-content');
+    const authorAcceptButton = mainPanel.querySelector('[data-author-review-action="accept"]');
+    authorReviewEditor?.addEventListener('input', () => {
+      const dirty = String(authorReviewEditor.value || '') !== currentContent;
+      state.authorValidationReportDirty = dirty;
+      if (authorAcceptButton) authorAcceptButton.disabled = busy || terminal || readOnly || !acceptanceReady || dirty;
+      renderAuthorValidationReport();
+    });
+
     mainPanel.querySelectorAll('[data-author-review-action]').forEach((button) => {
       button.addEventListener('click', () => {
         void submitAuthorReviewAction(button.dataset.authorReviewAction || '');
       });
     });
+    renderAuthorValidationReport();
   }
+
+  function semanticValidationIdempotencyKey(generationId) {
+    const existing = String(state.authorReviewSemanticValidationIdempotencyKey || '').trim();
+    if (existing) return existing;
+    let nonce = '';
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+      nonce = window.crypto.randomUUID();
+    } else {
+      nonce = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+    const key = `italus-primary45-${projectId}-${generationId}-${nonce}`;
+    state.authorReviewSemanticValidationIdempotencyKey = key.slice(0, 256);
+    return state.authorReviewSemanticValidationIdempotencyKey;
+  }
+
+  async function executeAuthorSemanticValidation() {
+    const generationId = String(state.authorReviewGenerationId || '').trim();
+    if (!generationId || state.authorReviewSemanticValidationRunning) return;
+
+    const confirmed = window.confirm(
+      'Run semantic validation for this exact saved draft? This is a separate billable provider call using the project-bound provider/model. It may return PASS, FAIL, or UNKNOWN for unresolved narrative rules. UNKNOWN remains available for manual author resolution.'
+    );
+    if (!confirmed) return;
+
+    state.authorReviewSemanticValidationRunning = true;
+    state.authorReviewError = '';
+    paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+    const idempotencyKey = semanticValidationIdempotencyKey(generationId);
+    try {
+      const response = await apiFetch(
+        `/api/provider/projects/${encodeURIComponent(projectId)}/generation/${encodeURIComponent(generationId)}/semantic-validation/execute`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Idempotency-Key': idempotencyKey
+          }
+        }
+      );
+      state.authorReviewSemanticValidationIdempotencyKey = '';
+      await loadAuthorReviewGeneration(generationId, { render: false });
+      const verdicts = Array.isArray(response.verdicts) ? response.verdicts : [];
+      const counts = verdicts.reduce((acc, item) => {
+        const verdict = String((item && item.verdict) || 'UNKNOWN').toUpperCase();
+        acc[verdict] = (acc[verdict] || 0) + 1;
+        return acc;
+      }, {});
+      setLog(
+        `Semantic validation completed: ${counts.PASS || 0} PASS, ${counts.FAIL || 0} FAIL, ${counts.UNKNOWN || 0} UNKNOWN.`
+      );
+    } catch (error) {
+      state.authorReviewError = error.message || String(error);
+      setLog(`Semantic validation failed: ${state.authorReviewError}`);
+    } finally {
+      state.authorReviewSemanticValidationRunning = false;
+    }
+
+    if (state.activeSection === 'validation') {
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+    }
+  }
+
+  async function submitAuthorValidationResolutions() {
+    const generationId = String(state.authorReviewGenerationId || '').trim();
+    if (!generationId || state.authorReviewResolutionSaving) return;
+
+    const selectedRuleIds = Array.from(
+      document.querySelectorAll('[data-author-validation-rule]:checked')
+    ).map((input) => String(input.dataset.ruleId || '').trim()).filter(Boolean);
+    const noteElement = document.getElementById('author-validation-resolution-note');
+    const note = String(noteElement ? noteElement.value : '').trim();
+
+    if (!selectedRuleIds.length) {
+      state.authorReviewError = 'Select at least one unresolved narrative validation rule.';
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+      return;
+    }
+    if (note.length < 3) {
+      state.authorReviewError = 'Enter a short resolution note before confirming narrative rules.';
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+      return;
+    }
+
+    state.authorReviewResolutionSaving = true;
+    state.authorReviewError = '';
+    paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+    try {
+      const response = await apiFetch(
+        `/api/provider/projects/${encodeURIComponent(projectId)}/generation/${encodeURIComponent(generationId)}/review/resolutions`,
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            rule_ids: selectedRuleIds,
+            note
+          })
+        }
+      );
+      state.authorReviewStatus = response;
+      state.authorReviewValidation = response.validation || state.authorReviewValidation;
+      setLog(
+        `Narrative validation resolution recorded for ${selectedRuleIds.length} rule(s).`
+      );
+    } catch (error) {
+      state.authorReviewError = error.message || String(error);
+      setLog(`Narrative validation resolution failed: ${state.authorReviewError}`);
+    } finally {
+      state.authorReviewResolutionSaving = false;
+    }
+
+    if (state.activeSection === 'validation') {
+      paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
+    }
+  }
+
 
   async function submitAuthorReviewAction(action) {
     const generationId = String(state.authorReviewGenerationId || '').trim();
@@ -6501,12 +7418,13 @@
     const content = String(editor ? editor.value : '');
     if (normalizedAction === 'reject') {
       const confirmed = window.confirm(
-        'Reject this generated draft? The rejection is recorded in provenance and cannot be replaced by a different terminal decision.'
+        'Reject this generated draft? The rejection is recorded in provenance and cannot be replaced by a different terminal decision. No provider call starts automatically; Generate Replacement Draft will become available afterward.'
       );
       if (!confirmed) return;
     }
 
     state.authorReviewSaving = true;
+    state.authorReviewPendingAction = normalizedAction;
     state.authorReviewError = '';
     paintAuthorReviewPanel((state.bootstrap || {}).manifest || {}, state.bootstrap || {});
     try {
@@ -6529,6 +7447,7 @@
 
       state.authorReviewStatus = response;
       state.authorReviewValidation = response.validation || state.authorReviewValidation;
+      if (normalizedAction === 'edit') state.authorValidationReportDirty = false;
       try {
         state.authorReviewClassification = await apiFetch(
           `/api/provider/projects/${encodeURIComponent(projectId)}/generation/${encodeURIComponent(generationId)}/provenance-classification`,
@@ -6561,6 +7480,7 @@
       setLog(`Author review could not be recorded: ${state.authorReviewError}`);
     } finally {
       state.authorReviewSaving = false;
+      state.authorReviewPendingAction = '';
     }
 
     if (state.activeSection === 'validation') {
@@ -6736,6 +7656,8 @@
     const providerLabel = binding ? boundProviderLabel(providerSummary) : 'Not bound';
     const modelLabel = binding ? (binding.model_id || '—') : 'Not bound';
     const lock = providerSummary.binding_lock || {};
+    const execution = providerSummary.execution || {};
+    const providerExecutionAllowed = execution.provider_execution_allowed === true;
 
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-provider-status-panel workspace-provider-author-view-cleanup-20260708">
@@ -6750,10 +7672,12 @@
             ${statCard('Bound Provider', providerLabel)}
             ${statCard('Bound Model', modelLabel)}
             ${statCard('Provider Lock', lock.locked ? 'Locked after usage' : 'Changeable before usage')}
-            ${statCard('Provider Calls', 'Disabled')}
+            ${statCard('Provider Execution', providerExecutionAllowed ? 'Available' : 'Blocked')}
           </div>
           <div class="workspace-disabled-note">
-            Provider execution remains locked until Primary 33.2 acceptance gates pass.
+            ${providerExecutionAllowed
+              ? 'Project-local provider execution capability is available. This status panel never calls a provider; credentials and Generation Readiness are checked separately.'
+              : escapeHtml(execution.reason || 'Project-local provider execution capability is unavailable.')}
           </div>
         </section>
 
@@ -6796,6 +7720,7 @@
       (profile) => String((profile && profile.provider_id) || '').toLowerCase() === providerId
     );
     const enabled = Boolean(provider && provider.configuration_enabled);
+    const executionEnabled = Boolean(provider && provider.execution_enabled);
     const badge = selected
       ? 'BOUND'
       : !enabled
@@ -6819,14 +7744,16 @@
         </header>
         <p>${escapeHtml(
           enabled
-            ? 'Direct provider configuration is available. Generation remains locked.'
+            ? (executionEnabled
+              ? 'Direct provider configuration and project-local execution capability are available. Credential and Generation Readiness checks remain separate.'
+              : 'Direct provider configuration is available, but project-local execution capability is blocked.')
             : 'Experimental placeholder only. Configuration and execution are disabled.'
         )}</p>
         <dl class="workspace-definition-list compact">
           ${definition('Workspace Use', useLabel)}
           ${definition('Credential Status', labelFor((provider && provider.credential_status) || 'unknown'))}
           ${definition('Model Catalog', labelFor((provider && provider.model_catalog_status) || 'not loaded'))}
-          ${definition('Generation', 'Locked')}
+          ${definition('Execution Capability', executionEnabled ? 'Available' : 'Unavailable')}
         </dl>
       </article>
     `;
@@ -6952,18 +7879,23 @@
     const generationEnabled = Boolean(bootstrap.generation_enabled);
     const validationEnabled = Boolean(bootstrap.validation_enabled);
     const exportsEnabled = Boolean(bootstrap.exports_enabled);
+    const capability = (bootstrap && bootstrap.production_runtime_capability) || {};
+    const readOnly = Boolean(bootstrap && bootstrap.read_only);
 
     return `
       <section class="workspace-panel workspace-runtime-lock-panel">
-        <h3>Runtime Lock</h3>
-        <p>Generation remains disabled until project-local runtime storage, prompt routing, validation, and provider execution are explicitly migrated.</p>
+        <h3>Production Runtime</h3>
+        <p>
+          Project-local production generation is ${generationEnabled ? 'available' : (readOnly ? 'installed but read-only for this project' : 'not currently available')}.
+          Book/chapter execution remains governed by Generation Readiness. Export is a separate capability.
+        </p>
         <div class="workspace-lock-grid">
-          ${lockCard('Project-local Runtime Storage', runtimeReady ? 'Ready' : 'Not Migrated')}
-          ${lockCard('Prompt Builder Routing', 'Protected')}
-          ${lockCard('AI Provider Runners', 'Protected')}
-          ${lockCard('Generation Execution', generationEnabled ? 'Enabled' : 'Blocked')}
+          ${lockCard('Project-local Runtime Storage', runtimeReady ? 'Ready' : 'Blocked')}
+          ${lockCard('Prompt Builder Routing', capability.prompt_builder_ready ? 'Project-local' : 'Blocked')}
+          ${lockCard('Provider Execution Boundary', capability.provider_execution_ready ? 'Migrated' : 'Blocked')}
+          ${lockCard('Generation Execution', generationEnabled ? 'Available' : (readOnly ? 'Read-only' : 'Blocked'))}
           ${lockCard('Validation Runtime', validationEnabled ? 'Enabled' : 'Disabled')}
-          ${lockCard('Export Pipeline', exportsEnabled ? 'Enabled' : 'Disabled')}
+          ${lockCard('Export Pipeline', exportsEnabled ? 'Enabled' : 'Locked')}
         </div>
         ${renderRuntimeReadinessGateMap(bootstrap)}
       </section>
@@ -6979,8 +7911,8 @@
     return `
       <section class="workspace-runtime-gate-map workspace-runtime-readiness-gate-map-20260707">
         <header>
-          <h3>Runtime Readiness Gate Map</h3>
-          <p>Read-only deployment control map. These gates explain why generation remains disabled.</p>
+          <h3>Production Capability Map</h3>
+          <p>Read-only migration capability map. It does not replace per-book/chapter Generation Readiness.</p>
         </header>
         <div class="workspace-runtime-gate-grid">
           ${gates.map(runtimeReadinessGateCard).join('')}
@@ -6994,63 +7926,71 @@
     const generationEnabled = Boolean(bootstrap.generation_enabled);
     const validationEnabled = Boolean(bootstrap.validation_enabled);
     const exportsEnabled = Boolean(bootstrap.exports_enabled);
+    const capability = (bootstrap && bootstrap.production_runtime_capability) || {};
+    const readOnly = Boolean(bootstrap && bootstrap.read_only);
 
     return [
       {
         label: 'Project Lifecycle',
         status: 'ready',
         owner: 'workspace service',
-        reason: 'Project is allowed to enter the workspace shell.',
-        next_step: 'Continue read-only workspace validation.'
+        reason: readOnly ? 'Archived project is available in read-only workspace mode.' : 'Project is allowed to enter the workspace shell.',
+        next_step: readOnly ? 'Keep archived project actions read-only.' : 'Use Generation Readiness for a selected book/chapter.'
       },
       {
         label: 'Canon Approval',
         status: 'ready',
         owner: 'canon setup',
         reason: 'Canon approval is complete for workspace access.',
-        next_step: 'Preserve canon references as read-only runtime context.'
+        next_step: 'Per-position freshness remains enforced by Generation Readiness.'
       },
       {
         label: 'Project-local Runtime Storage',
         status: runtimeReady ? 'ready' : 'blocked',
-        owner: 'runtime migration',
-        reason: runtimeReady ? 'Runtime storage is reported ready.' : 'Generation state has not been migrated into project-local storage.',
-        next_step: 'Design project-local runtime storage before generation.'
+        owner: 'runtime storage service',
+        reason: runtimeReady ? 'Project-local runtime storage is available.' : 'Project-local runtime storage is not ready.',
+        next_step: runtimeReady ? 'No migration action is required.' : 'Initialize/repair project-local runtime storage before generation.'
       },
       {
         label: 'Prompt Builder Routing',
-        status: 'locked',
-        owner: 'prompt builder',
-        reason: 'Prompt construction is protected from workspace execution.',
-        next_step: 'Introduce a generation service boundary first.'
+        status: capability.prompt_builder_ready ? 'ready' : 'blocked',
+        owner: 'generation control',
+        reason: capability.prompt_builder_ready ? 'Production prompt construction is project-local.' : 'Project-local Prompt Builder routing is unavailable.',
+        next_step: 'No legacy prompt fallback is permitted.'
       },
       {
-        label: 'AI Provider Execution',
-        status: generationEnabled ? 'ready' : 'locked',
-        owner: 'provider layer',
-        reason: generationEnabled ? 'Generation is reported enabled.' : 'Provider runners are not called from workspace.',
-        next_step: 'Define provider contracts before wiring execution.'
+        label: 'AI Provider Execution Boundary',
+        status: capability.provider_execution_ready ? 'ready' : 'blocked',
+        owner: 'provider execution service',
+        reason: capability.provider_execution_ready
+          ? 'The migrated provider execution boundary is available; provider credentials are checked separately.'
+          : 'The migrated provider execution boundary is unavailable.',
+        next_step: 'Provider/model/credential validity is checked before execution.'
       },
       {
         label: 'Validation Runtime',
         status: validationEnabled ? 'ready' : 'blocked',
         owner: 'validation service',
-        reason: validationEnabled ? 'Validation is reported enabled.' : 'Validation runtime is not wired.',
-        next_step: 'Design validation service integration after runtime storage.'
+        reason: validationEnabled ? 'Structured validation is integrated.' : 'Validation runtime is unavailable for this project.',
+        next_step: 'Generated candidates still require Author Review.'
       },
       {
         label: 'Export Pipeline',
         status: exportsEnabled ? 'ready' : 'blocked',
         owner: 'export workflow',
-        reason: exportsEnabled ? 'Exports are reported enabled.' : 'Workspace exports are not available yet.',
-        next_step: 'Define export workflow after manuscript state is project-local.'
+        reason: exportsEnabled ? 'Exports are enabled.' : 'Workspace exports remain unavailable.',
+        next_step: 'Export does not block project-local generation.'
       },
       {
-        label: 'Generation Unlock',
-        status: generationEnabled ? 'ready' : 'locked',
-        owner: 'project control',
-        reason: generationEnabled ? 'Generation is enabled.' : 'Generation remains intentionally disabled.',
-        next_step: 'Unlock only after every runtime gate is resolved.'
+        label: 'Generation Capability',
+        status: generationEnabled ? 'ready' : 'blocked',
+        owner: 'generation control',
+        reason: generationEnabled
+          ? 'Project-local production generation capability is available.'
+          : (readOnly ? 'Generation is installed but archived projects are read-only.' : 'Project-local generation capability is unavailable.'),
+        next_step: generationEnabled
+          ? 'Select a book/chapter and run Generation Readiness before any provider call.'
+          : 'Resolve the blocking production capability state before generation.'
       }
     ];
   }

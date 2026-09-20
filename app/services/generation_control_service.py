@@ -48,6 +48,11 @@ VALIDATOR_READY = True
 AUTHOR_REVIEW_PERSISTENCE_READY = True
 APPROVED_CONTINUITY_COMMIT_PATH_READY = True
 
+# Primary 40A cuts normal production runtime over to the already-migrated,
+# project-local control plane. Legacy runners remain present only for later
+# rollback-isolation work and are not consulted by this readiness contract.
+PRODUCTION_RUNTIME_CUTOVER_READY = True
+
 _UPSTREAM_CHECK_NAMES = {
     "project_loaded",
     "workspace_ready_lifecycle",
@@ -636,6 +641,11 @@ def get_generation_control_status_for_context(
     ready = not blockers
     upstream_checks = [item for item in checks if item["name"] in _UPSTREAM_CHECK_NAMES]
     upstream_ready = bool(upstream_checks) and all(item["ready"] for item in upstream_checks)
+    production_runtime_ready = bool(
+        PRODUCTION_RUNTIME_CUTOVER_READY
+        and ready
+        and provider_execution_ready
+    )
 
     return {
         "status": "ready" if ready else "blocked",
@@ -654,10 +664,16 @@ def get_generation_control_status_for_context(
         },
         "ready": ready,
         "upstream_ready": upstream_ready,
-        "generation_locked": True,
+        "generation_locked": not production_runtime_ready,
         "provider_execution_locked": not provider_execution_ready,
-        "generation_enabled": False,
+        "generation_enabled": production_runtime_ready,
         "provider_execution_enabled": provider_execution_ready,
+        "production_runtime": {
+            "control_plane": "project_local_primary40a",
+            "cutover_ready": PRODUCTION_RUNTIME_CUTOVER_READY,
+            "enabled": production_runtime_ready,
+            "legacy_fallback_allowed": False,
+        },
         "prompt_builder_enabled": True,
         "draft_validation_enabled": True,
         "author_review_persistence_enabled": True,
@@ -668,7 +684,7 @@ def get_generation_control_status_for_context(
             "total_count": len(checks),
             "blocker_count": len(blockers),
             "upstream_ready": upstream_ready,
-            "downstream_pipeline_ready": False,
+            "downstream_pipeline_ready": production_runtime_ready,
             "provenance_capture_ready": provenance_ready,
             "provider_origin_wiring_ready": provider_origin_wiring_ready,
         },
@@ -718,14 +734,13 @@ def get_generation_control_status_for_context(
             "provider_candidate_model_origin": "primary_33_ready",
             "validator_and_author_review": "primary_34_ready",
             "approved_continuity_commit": "primary_36b_backend_commit_ready",
+            "production_runtime_cutover": "primary_40a_project_local_enabled",
         },
         "message": (
-            "Generation readiness is satisfied."
-            if ready
+            "Generation readiness is satisfied and the Primary 40A project-local production runtime is enabled."
+            if production_runtime_ready
             else (
-                "Upstream generation, provider execution, structured validation, "
-                "author review, and the Approved Continuity commit path are ready; "
-                "end-to-end production generation remains locked."
+                "All migrated generation dependencies must be ready before production runtime can execute."
                 if upstream_ready
                 else "Generation readiness is blocked by project-local dependencies."
             )

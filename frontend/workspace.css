@@ -3552,3 +3552,112 @@
   word-break: break-word;
 }
 
+/* Primary 40B - Generate position selectors use the established themed planner-control shape. */
+.generation-position-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 240px));
+  gap: 0.75rem;
+  align-items: end;
+  margin: 1rem 0;
+}
+
+.generation-position-field {
+  display: grid;
+  gap: 0.35rem;
+  color: #d7b765;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.generation-position-field select {
+  width: 100%;
+  min-height: 46px;
+  border: 2px solid #d7b765;
+  border-radius: 11px;
+  padding: 0.7rem 2.2rem 0.7rem 0.85rem;
+  background: linear-gradient(180deg, rgba(18, 16, 12, 0.94), rgba(0, 0, 0, 0.82));
+  color: #d7b765;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.18),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.12),
+    inset 0 1px 0 rgba(255, 239, 190, 0.08),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+}
+
+.generation-position-field select:hover:not(:disabled) {
+  border-color: #efd486;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.26),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.16),
+    0 0 18px rgba(215, 183, 101, 0.14),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+.generation-position-field select:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.9);
+  outline-offset: 3px;
+}
+
+.generation-position-field select:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.generation-position-field select option {
+  background: #12100c;
+  color: #d7b765;
+  font-weight: 700;
+}
+
+/* Primary 40B - Generate action buttons match the Generation Position control family. */
+#generation-check-readiness,
+#generation-execute {
+  min-height: 46px;
+  border: 2px solid #d7b765;
+  border-radius: 11px;
+  padding: 0.7rem 1rem;
+  background: linear-gradient(180deg, rgba(18, 16, 12, 0.94), rgba(0, 0, 0, 0.82));
+  color: #d7b765;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.18),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.12),
+    inset 0 1px 0 rgba(255, 239, 190, 0.08),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+}
+
+#generation-check-readiness:hover:not(:disabled),
+#generation-execute:hover:not(:disabled) {
+  border-color: #efd486;
+  box-shadow:
+    0 0 0 1px rgba(248, 223, 157, 0.26),
+    inset 0 0 0 1px rgba(248, 223, 157, 0.16),
+    0 0 18px rgba(215, 183, 101, 0.14),
+    0 7px 18px rgba(0, 0, 0, 0.34);
+}
+
+#generation-check-readiness:focus-visible,
+#generation-execute:focus-visible {
+  outline: 2px solid rgba(239, 212, 134, 0.9);
+  outline-offset: 3px;
+}
+
+#generation-check-readiness:disabled,
+#generation-execute:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+@media (max-width: 640px) {
+  .generation-position-grid {
+    grid-template-columns: 1fr;
+  }
+}

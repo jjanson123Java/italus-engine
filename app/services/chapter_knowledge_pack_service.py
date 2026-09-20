@@ -83,6 +83,283 @@ class ChapterKnowledgePackSourceMissingError(ChapterKnowledgePackError):
     """Raised when a required project-local source artifact is unavailable."""
 
 
+VALIDATOR_RULES_SCHEMA_VERSION = "candidate_validator_rules_v1"
+VALIDATION_MODE_DETERMINISTIC = "DETERMINISTIC"
+VALIDATION_MODE_MANUAL = "MANUAL"
+VALIDATION_MODE_SEMANTIC = "SEMANTIC"
+VALIDATION_SEVERITY_BLOCKER = "BLOCKER"
+VALIDATION_SEVERITY_WARNING = "WARNING"
+VALIDATION_SEVERITY_INFO = "INFO"
+
+
+def _validator_rule_id(prefix: str, payload: Any) -> str:
+    canonical = json.dumps(
+        payload,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    suffix = hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
+    return f"{prefix}.{suffix}"
+
+
+def build_candidate_validation_rules(
+    validator_sidecar: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Project one validator_sidecar into stable executable rule classifications.
+
+    The validator_sidecar remains the source of truth. This projection only
+    classifies how its existing rules may be evaluated; it does not add Canon,
+    infer new story requirements, or reinterpret narrative-weight labels.
+    """
+
+    if not isinstance(validator_sidecar, dict):
+        raise ChapterKnowledgePackError("validator_sidecar must be an object")
+
+    rules: list[dict[str, Any]] = []
+    prose = validator_sidecar.get("prose_rulebook")
+    prose = prose if isinstance(prose, dict) else {}
+    metrics = prose.get("quantitative_metrics")
+    metrics = metrics if isinstance(metrics, dict) else {}
+
+    deterministic_metric_names = (
+        "word_count",
+        "em_dashes",
+        "semicolons",
+        "colons",
+        "ellipses",
+    )
+    for metric_name in deterministic_metric_names:
+        contract = metrics.get(metric_name)
+        if not isinstance(contract, dict):
+            continue
+        rules.append(
+            {
+                "rule_id": f"prose.{metric_name}.quantitative",
+                "rule_type": "PROSE_QUANTITATIVE_METRIC",
+                "source_type": "PROSE_RULEBOOK",
+                "source_ref": str(prose.get("sha256") or ""),
+                "severity": VALIDATION_SEVERITY_BLOCKER,
+                "evaluation_mode": VALIDATION_MODE_DETERMINISTIC,
+                "instruction": (
+                    f"Candidate prose must satisfy the {metric_name} quantitative "
+                    "limit from the embedded prose rulebook."
+                ),
+                "parameters": {
+                    "metric": metric_name,
+                    "contract": deepcopy(contract),
+                },
+            }
+        )
+
+    ellipses = metrics.get("ellipses")
+    if isinstance(ellipses, dict) and ellipses.get(
+        "must_be_narratively_justified"
+    ) is True:
+        rules.append(
+            {
+                "rule_id": "prose.ellipses.narrative_justification",
+                "rule_type": "PROSE_NARRATIVE_JUSTIFICATION",
+                "source_type": "PROSE_RULEBOOK",
+                "source_ref": str(prose.get("sha256") or ""),
+                "severity": VALIDATION_SEVERITY_BLOCKER,
+                "evaluation_mode": VALIDATION_MODE_MANUAL,
+                "instruction": (
+                    "Confirm every ellipsis in the current prose is narratively justified."
+                ),
+                "parameters": {"metric": "ellipses"},
+            }
+        )
+
+    similes = metrics.get("similes")
+    if isinstance(similes, dict):
+        rules.append(
+            {
+                "rule_id": "prose.similes.hard_maximum",
+                "rule_type": "PROSE_HEURISTIC_METRIC",
+                "source_type": "PROSE_RULEBOOK",
+                "source_ref": str(prose.get("sha256") or ""),
+                "severity": VALIDATION_SEVERITY_BLOCKER,
+                "evaluation_mode": VALIDATION_MODE_MANUAL,
+                "instruction": (
+                    "Confirm the current prose satisfies the rulebook simile limit. "
+                    "Simile identification is not treated as deterministic."
+                ),
+                "parameters": {
+                    "metric": "similes",
+                    "contract": deepcopy(similes),
+                },
+            }
+        )
+
+    for restriction in validator_sidecar.get("chapter_restrictions") or []:
+        text = str(restriction or "").strip()
+        if not text:
+            continue
+        rules.append(
+            {
+                "rule_id": _validator_rule_id("chapter.restriction", text),
+                "rule_type": "CHAPTER_RESTRICTION",
+                "source_type": "CHAPTER_PLAN",
+                "source_ref": "chapter_restrictions",
+                "severity": VALIDATION_SEVERITY_BLOCKER,
+                "evaluation_mode": VALIDATION_MODE_MANUAL,
+                "instruction": text,
+                "parameters": {},
+            }
+        )
+
+    for forbidden in validator_sidecar.get("forbidden_future_knowledge") or []:
+        text = str(forbidden or "").strip()
+        if not text:
+            continue
+        rules.append(
+            {
+                "rule_id": _validator_rule_id("reveal.forbidden_future", text),
+                "rule_type": "FORBIDDEN_FUTURE_KNOWLEDGE",
+                "source_type": "BOOK_REVEAL_BOUNDARY",
+                "source_ref": "forbidden_future_knowledge",
+                "severity": VALIDATION_SEVERITY_BLOCKER,
+                "evaluation_mode": VALIDATION_MODE_MANUAL,
+                "instruction": text,
+                "parameters": {},
+            }
+        )
+
+    for control in validator_sidecar.get("story_controls") or []:
+        if not isinstance(control, dict):
+            continue
+        control_id = str(control.get("control_id") or "").strip()
+        source_ref = control_id or _validator_rule_id("story.control.ref", control)
+        instruction = str(control.get("instruction") or "").strip()
+        knowledge_ceiling = str(control.get("knowledge_ceiling") or "").strip()
+        narrative_weight = str(control.get("narrative_weight") or "").strip()
+        forbidden_assertions = [
+            str(item).strip()
+            for item in (control.get("forbidden_assertions") or [])
+            if str(item).strip()
+        ]
+        allowed_interpretations = [
+            str(item).strip()
+            for item in (control.get("allowed_interpretations") or [])
+            if str(item).strip()
+        ]
+        summary_parts = [part for part in (instruction, knowledge_ceiling) if part]
+        if narrative_weight:
+            summary_parts.append(
+                f"Narrative weight must remain {narrative_weight}; no numeric "
+                "threshold is inferred."
+            )
+        rules.append(
+            {
+                "rule_id": f"story_control.{source_ref}.compliance",
+                "rule_type": "STORY_CONTROL_COMPLIANCE",
+                "source_type": "STORY_CONTROL",
+                "source_ref": source_ref,
+                "severity": VALIDATION_SEVERITY_BLOCKER,
+                "evaluation_mode": VALIDATION_MODE_MANUAL,
+                "instruction": " ".join(summary_parts)
+                or "Confirm the current prose complies with this Story Control.",
+                "parameters": {
+                    "certainty": str(control.get("certainty") or ""),
+                    "knowledge_ceiling": knowledge_ceiling,
+                    "narrative_weight": narrative_weight,
+                    "forbidden_assertions": forbidden_assertions,
+                    "allowed_interpretations": allowed_interpretations,
+                },
+            }
+        )
+
+    execution = validator_sidecar.get("chapter_execution_contract")
+    execution = execution if isinstance(execution, dict) else {}
+
+    required_events = execution.get("required_event_sequence")
+    if isinstance(required_events, list) and required_events:
+        rules.append(
+            {
+                "rule_id": "chapter.execution.required_event_sequence",
+                "rule_type": "REQUIRED_EVENT_SEQUENCE",
+                "source_type": "CHAPTER_EXECUTION_CONTRACT",
+                "source_ref": str(execution.get("contract_version") or ""),
+                "severity": VALIDATION_SEVERITY_BLOCKER,
+                "evaluation_mode": VALIDATION_MODE_MANUAL,
+                "instruction": (
+                    "Confirm the current prose executes the required chapter events "
+                    "in their planned sequence and placement."
+                ),
+                "parameters": {"required_event_sequence": deepcopy(required_events)},
+            }
+        )
+
+    required_participants = execution.get("required_participant_refs")
+    if isinstance(required_participants, list) and required_participants:
+        rules.append(
+            {
+                "rule_id": "chapter.execution.required_participants",
+                "rule_type": "REQUIRED_PARTICIPANTS",
+                "source_type": "CHAPTER_EXECUTION_CONTRACT",
+                "source_ref": str(execution.get("contract_version") or ""),
+                "severity": VALIDATION_SEVERITY_BLOCKER,
+                "evaluation_mode": VALIDATION_MODE_MANUAL,
+                "instruction": (
+                    "Confirm required chapter participants are represented according "
+                    "to the Chapter Execution Contract."
+                ),
+                "parameters": {
+                    "required_participant_refs": deepcopy(required_participants)
+                },
+            }
+        )
+
+    required_locations = execution.get("required_location_refs")
+    if isinstance(required_locations, list) and required_locations:
+        rules.append(
+            {
+                "rule_id": "chapter.execution.required_locations",
+                "rule_type": "REQUIRED_LOCATIONS",
+                "source_type": "CHAPTER_EXECUTION_CONTRACT",
+                "source_ref": str(execution.get("contract_version") or ""),
+                "severity": VALIDATION_SEVERITY_BLOCKER,
+                "evaluation_mode": VALIDATION_MODE_MANUAL,
+                "instruction": (
+                    "Confirm required chapter locations are represented according "
+                    "to the Chapter Execution Contract."
+                ),
+                "parameters": {
+                    "required_location_refs": deepcopy(required_locations)
+                },
+            }
+        )
+
+    pov_contract = execution.get("pov_contract")
+    if isinstance(pov_contract, dict) and pov_contract.get("configured") is True:
+        rules.append(
+            {
+                "rule_id": "chapter.execution.pov_contract",
+                "rule_type": "POV_CONTRACT",
+                "source_type": "CHAPTER_EXECUTION_CONTRACT",
+                "source_ref": str(pov_contract.get("contract_version") or ""),
+                "severity": VALIDATION_SEVERITY_BLOCKER,
+                "evaluation_mode": VALIDATION_MODE_MANUAL,
+                "instruction": (
+                    "Confirm the current prose follows the configured POV contract, "
+                    "including authorized interior access and head-hopping limits."
+                ),
+                "parameters": deepcopy(pov_contract),
+            }
+        )
+
+    seen: set[str] = set()
+    unique: list[dict[str, Any]] = []
+    for rule in rules:
+        rule_id = str(rule.get("rule_id") or "")
+        if not rule_id or rule_id in seen:
+            continue
+        seen.add(rule_id)
+        unique.append(rule)
+    return unique
+
+
 def get_chapter_knowledge_pack_status(
     project_id: str,
     *,
@@ -651,6 +928,7 @@ def compile_chapter_knowledge_pack_for_context(
             "character_count": len(prior_ending),
         },
         "validator_sidecar": {
+            "validation_rules_schema_version": VALIDATOR_RULES_SCHEMA_VERSION,
             "selected_record_ids": selected_ids,
             "chapter_execution_contract": deepcopy(chapter_execution_contract),
             "prose_rulebook": {
@@ -696,6 +974,9 @@ def compile_chapter_knowledge_pack_for_context(
         },
         "execution_locks": _execution_locks(),
     }
+    sidecar["validator_sidecar"]["validation_rules"] = build_candidate_validation_rules(
+        sidecar["validator_sidecar"]
+    )
     _write_json_atomic(sidecar_path, sidecar)
 
     return {

@@ -61,6 +61,7 @@ def build_generation_request_envelope(
     *,
     book_number: int,
     chapter_number: int,
+    replacement_correction_context: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Build, but do not persist or execute, a provider-neutral request."""
 
@@ -168,7 +169,10 @@ def build_generation_request_envelope(
     )
 
     try:
-        book_text = book_bytes.decode("utf-8")
+        # Book Knowledge remains an upstream lineage dependency and is hash-checked
+        # above, but Primary 42 intentionally excludes its raw text from provider
+        # input. Chapter Knowledge is the bounded narrative reference.
+        book_bytes.decode("utf-8")
         chapter_text = chapter_bytes.decode("utf-8")
         sidecar = json.loads(sidecar_bytes.decode("utf-8"))
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
@@ -211,17 +215,22 @@ def build_generation_request_envelope(
             details=exc.to_detail(),
         ) from exc
 
+    generation_guardrails = _build_generation_guardrails(sidecar)
     prompt = prompt_builder.build_project_local_generation_prompt(
-        book_knowledge_text=book_text,
         chapter_knowledge_text=chapter_text,
+        generation_guardrails=generation_guardrails,
         target_words=prose_goal_words,
         author_voice_projection=author_voice_projection,
+        replacement_correction_context=replacement_correction_context,
     )
     canonical_prompt = prompt_builder.canonicalize_project_local_generation_prompt(
         prompt
     )
-    prompt_bytes = canonical_prompt.encode("utf-8")
-    local_input_tokens = int(math.ceil(len(prompt_bytes) / 4.0))
+    canonical_prompt_bytes = canonical_prompt.encode("utf-8")
+    provider_system_bytes = prompt_builder.provider_system_text(prompt).encode("utf-8")
+    provider_user_bytes = prompt_builder.provider_user_prompt_text(prompt).encode("utf-8")
+    provider_input_bytes = len(provider_system_bytes) + len(provider_user_bytes)
+    local_input_tokens = int(math.ceil(provider_input_bytes / 4.0))
     estimated_output_tokens = int(math.ceil(prose_goal_words * 1.30))
     requested_output_token_ceiling = int(
         math.ceil(estimated_output_tokens * 1.25)
@@ -283,11 +292,19 @@ def build_generation_request_envelope(
     }
     token_planning = {
         "exact_request_locally_estimated_input_tokens": local_input_tokens,
-        "canonical_prompt_utf8_bytes": len(prompt_bytes),
-        "estimation_method": "ceil(utf8_bytes/4)",
+        "provider_system_utf8_bytes": len(provider_system_bytes),
+        "provider_user_prompt_utf8_bytes": len(provider_user_bytes),
+        "provider_bound_input_utf8_bytes": provider_input_bytes,
+        "canonical_prompt_utf8_bytes": len(canonical_prompt_bytes),
+        "estimation_method": "ceil(provider_system_plus_user_utf8_bytes/4)",
         "estimator_version": LOCAL_INPUT_ESTIMATOR_VERSION,
     }
 
+    replacement = _replacement_request_identity(
+        replacement_correction_context,
+        book_number=book_number,
+        chapter_number=chapter_number,
+    )
     request_hash_payload = {
         "schema_version": GENERATION_REQUEST_SCHEMA_VERSION,
         "project_id": context.project_id,
@@ -298,11 +315,13 @@ def build_generation_request_envelope(
         "target_output": target_output,
         "token_planning": token_planning,
     }
+    if replacement.get("enabled") is True:
+        request_hash_payload["replacement"] = replacement
     request_content_sha256 = hashlib.sha256(
         _canonical_json(request_hash_payload).encode("utf-8")
     ).hexdigest()
 
-    return {
+    envelope = {
         "status": "request_ready",
         "service": GENERATION_REQUEST_SERVICE_MARKER,
         "schema_version": GENERATION_REQUEST_SCHEMA_VERSION,
@@ -315,11 +334,185 @@ def build_generation_request_envelope(
         "token_planning": token_planning,
         "execution": {
             "request_ready": True,
-            "provider_execution_allowed": False,
+            "provider_execution_allowed": bool(
+                readiness.get("generation_enabled") is True
+                and readiness.get("provider_execution_enabled") is True
+            ),
+            "control_plane": "project_local_primary40a",
+            "legacy_fallback_allowed": False,
         },
         "request_content_sha256": request_content_sha256,
     }
+    if replacement.get("enabled") is True:
+        envelope["replacement"] = replacement
+    return envelope
 
+
+
+def _replacement_request_identity(
+    correction: dict[str, Any] | None,
+    *,
+    book_number: int,
+    chapter_number: int,
+) -> dict[str, Any]:
+    context = dict(correction or {})
+    if not context:
+        return {
+            "enabled": False,
+            "source_generation_id": "",
+            "context_sha256": "",
+        }
+    if (
+        int(context.get("book_number") or 0) != int(book_number)
+        or int(context.get("chapter_number") or 0) != int(chapter_number)
+    ):
+        raise GenerationRequestBuildError(
+            "replacement_context_position_mismatch",
+            "Replacement correction context does not match the requested chapter.",
+        )
+    source_generation_id = str(context.get("source_generation_id") or "").strip()
+    context_sha256 = str(context.get("context_sha256") or "").strip().lower()
+    if not source_generation_id or len(context_sha256) != 64:
+        raise GenerationRequestBuildError(
+            "replacement_context_identity_missing",
+            "Replacement correction context identity is incomplete.",
+        )
+    return {
+        "enabled": True,
+        "source_generation_id": source_generation_id,
+        "context_sha256": context_sha256,
+    }
+
+
+def _build_generation_guardrails(sidecar: dict[str, Any]) -> dict[str, Any]:
+    """Project the immutable chapter sidecar into provider-facing hard controls."""
+
+    validator = sidecar.get("validator_sidecar")
+    validator = validator if isinstance(validator, dict) else {}
+    execution = sidecar.get("chapter_execution_contract")
+    execution = execution if isinstance(execution, dict) else {}
+    prose_rulebook = sidecar.get("prose_rulebook")
+    prose_rulebook = prose_rulebook if isinstance(prose_rulebook, dict) else {}
+    metrics = prose_rulebook.get("quantitative_metrics")
+    metrics = metrics if isinstance(metrics, dict) else {}
+
+    story_controls: list[dict[str, Any]] = []
+    for raw in list(validator.get("story_controls") or sidecar.get("story_controls") or []):
+        if not isinstance(raw, dict):
+            continue
+        story_controls.append(
+            {
+                "control_id": str(raw.get("control_id") or ""),
+                "control_type": str(raw.get("control_type") or ""),
+                "knowledge_ceiling": str(raw.get("knowledge_ceiling") or ""),
+                "instruction": str(raw.get("instruction") or ""),
+                "forbidden_assertions": [
+                    str(item)
+                    for item in list(raw.get("forbidden_assertions") or [])
+                    if str(item).strip()
+                ],
+                "allowed_interpretations": [
+                    str(item)
+                    for item in list(raw.get("allowed_interpretations") or [])
+                    if str(item).strip()
+                ],
+                "certainty": str(raw.get("certainty") or ""),
+                "presentation": str(raw.get("presentation") or ""),
+                "narrative_weight": str(raw.get("narrative_weight") or ""),
+            }
+        )
+
+    def _stable_refs(values: Any) -> list[dict[str, str]]:
+        result: list[dict[str, str]] = []
+        for raw in list(values or []):
+            if not isinstance(raw, dict):
+                continue
+            result.append(
+                {
+                    "record_id": str(raw.get("record_id") or ""),
+                    "record_type": str(raw.get("record_type") or ""),
+                    "label": str(raw.get("label") or ""),
+                }
+            )
+        return result
+
+    required_events: list[dict[str, Any]] = []
+    for raw in list(execution.get("required_event_sequence") or []):
+        if not isinstance(raw, dict):
+            continue
+        required_events.append(
+            {
+                "ordinal": int(raw.get("ordinal") or 0),
+                "position": str(raw.get("position") or ""),
+                "chapter_role": str(raw.get("chapter_role") or ""),
+                "relationship_to_anchor": str(raw.get("relationship_to_anchor") or ""),
+                "objective": str(raw.get("objective") or ""),
+                "event_ref": _stable_refs([raw.get("event_ref")])[0]
+                if isinstance(raw.get("event_ref"), dict)
+                and str((raw.get("event_ref") or {}).get("record_id") or "").strip()
+                else {},
+            }
+        )
+
+    pov = execution.get("pov_contract")
+    pov = pov if isinstance(pov, dict) else {}
+    pov_guard = {
+        "configured": pov.get("configured") is True,
+        "pov_type": str(pov.get("pov_type") or ""),
+        "narrator_scope": str(pov.get("narrator_scope") or ""),
+        "interior_access": str(pov.get("interior_access") or ""),
+        "head_hopping": str(pov.get("head_hopping") or ""),
+        "omniscient_style": str(pov.get("omniscient_style") or ""),
+        "authorized_characters": _stable_refs(pov.get("character_refs") or []),
+        "prompt_rules": [
+            str(item) for item in list(pov.get("prompt_rules") or []) if str(item).strip()
+        ],
+    }
+
+    return {
+        "authority": "hard_generation_control",
+        "book_number": int(sidecar.get("book_number") or 0),
+        "chapter_number": int(sidecar.get("chapter_number") or 0),
+        "chapter_restrictions": [
+            str(item)
+            for item in list(validator.get("chapter_restrictions") or [])
+            if str(item).strip()
+        ],
+        "allowed_reveals": [
+            str(item)
+            for item in list(validator.get("allowed_reveals") or [])
+            if str(item).strip()
+        ],
+        "forbidden_future_knowledge": [
+            str(item)
+            for item in list(validator.get("forbidden_future_knowledge") or [])
+            if str(item).strip()
+        ],
+        "story_controls": story_controls,
+        "required_event_sequence": required_events,
+        "required_participants": _stable_refs(
+            execution.get("required_participant_refs") or []
+        ),
+        "required_locations": _stable_refs(
+            execution.get("required_location_refs") or []
+        ),
+        "pov_contract": pov_guard,
+        "hard_prose_metrics": metrics,
+        "authority_rules": [
+            (
+                "The presence of a fact in chapter reference material does not "
+                "authorize its disclosure."
+            ),
+            (
+                "Chapter restrictions, forbidden-future rules, Story Controls, "
+                "and required execution obligations outrank broader reference facts."
+            ),
+            (
+                "Do not turn UNKNOWN or unavailable future Canon into prose merely "
+                "because the underlying Canon record contains it."
+            ),
+        ],
+    }
 
 def _validated_position(value: Any, field_name: str, *, maximum: int) -> int:
     if isinstance(value, bool):

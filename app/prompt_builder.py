@@ -1,207 +1,116 @@
-from pathlib import Path
-import json
+"""Project-local provider prompt construction for the active Italus runtime.
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-CANON_PACKS_DIR = PROJECT_ROOT / "canon_packs"
+Primary 41 permanently retired the pre-migration root-canon prompt builder and
+legacy runner chain. Primary 42 bounds the provider-facing chapter request and
+promotes hard chapter controls into provider system authority.
+"""
 
-    
-def load_text_if_exists(path: Path) -> str:
-    if not path.exists():
-        return ""
-    return path.read_text(encoding="utf-8").strip()
+from __future__ import annotations
 
+import hashlib as _hashlib
+import json as _json
+from typing import Any
 
-def load_core_pack():
-    return load_text_if_exists(CANON_PACKS_DIR / "ITALUS_KNOWLEDGE_PACK_CORE.txt")
-
-
-def load_generation_pack():
-    return load_text_if_exists(CANON_PACKS_DIR / "ITALUS_KNOWLEDGE_PACK_GENERATION.txt")
-
-
-def load_book_pack(book_id: str):
-    if not book_id:
-        return ""
-    filename = f"ITALUS_KNOWLEDGE_PACK_{book_id}.txt"
-    return load_text_if_exists(CANON_PACKS_DIR / filename)
-
-def build_generation_prompt(request, event_scenes, coverage, book_state, chapter_digest):
-    
-    core_pack = load_core_pack()
-    generation_pack = load_generation_pack()
-    book_pack = load_book_pack(request.get("book_id", ""))
-    book_state_block = json.dumps(book_state, indent=2) if book_state else "- none"
-    chapter_digest_block = json.dumps(chapter_digest, indent=2) if chapter_digest else "- none"
-
-    # Local import avoids circular-import risk if prompt_builder is imported early
-    from app.registry import load_scenes
-
-    all_scenes = load_scenes()
-    scene_map = {s.get("scene_id"): s for s in all_scenes}
-
-    def summarize_scene(scene):
-        return (
-            f'{scene.get("scene_id", "")} | '
-            f'{scene.get("title", "")} | '
-            f'{scene.get("year", "")} | '
-            f'{scene.get("event_name", "")} | '
-            f'{scene.get("guardian", "")} | '
-            f'{scene.get("location", "")} | '
-            f'{scene.get("scene_type", "")} | '
-            f'{scene.get("tone", "")} | '
-            f'Summary: {scene.get("summary", "")}'
-        )
-
-    covered = "\n".join(
-    f'- {s.get("scene_id","")} | {s.get("title","")} — {s.get("scene_type","")} — {s.get("location","")} — {s.get("tone","")}'
-    for s in event_scenes
-) or "- none"
-
-    coverage_block = coverage.get("events", {}).get(request.get("event_name", ""), {})
-    recommended = coverage_block.get("recommended_scene_types", [])
-    recommended_block = "\n".join(f"- {item}" for item in recommended) or "- none"
-
-    # --- Direct structural parent ---
-    parent_scene = None
-    parent_scene_id = request.get("continued_from_scene_id")
-    if parent_scene_id:
-        parent_scene = scene_map.get(parent_scene_id)
-
-    if parent_scene:
-        parent_block = summarize_scene(parent_scene)
-    else:
-        parent_block = "- none"
-
-    # --- Callback/reference scenes ---
-    callback_ids = request.get("callback_scene_ids", []) or []
-    callback_scenes = [scene_map[cid] for cid in callback_ids if cid in scene_map]
-
-    callback_block = "\n".join(
-        f"- {summarize_scene(scene)}"
-        for scene in callback_scenes
-    ) or "- none"
-
-    return f"""
-ITALUS KNOWLEDGE PACK — CORE
-{core_pack or "- none"}
-
-ITALUS KNOWLEDGE PACK — GENERATION
-{generation_pack or "- none"}
-
-ITALUS KNOWLEDGE PACK — BOOK
-{book_pack or "- none"}
-
-BOOK CONTINUITY STATE
-{book_state_block}
-
-CHAPTER CONTINUITY DIGEST
-{chapter_digest_block}
-
-Current request:
-- book_id: {request.get("book_id", "")}
-- chapter_id: {request.get("chapter_id", "")}
-- year: {request.get("year", "")}
-- event_id: {request.get("event_id", "")}
-- event_name: {request.get("event_name", "")}
-- guardian: {request.get("guardian", "")}
-- location: {request.get("location", "")}
-- scene_type: {request.get("scene_type", "")}
-- time_window: {request.get("time_window", "")}
-- tone: {request.get("tone", "")}
-- pov: {request.get("pov", "")}
-
-Direct continuity parent scene:
-{parent_block}
-
-Callback/reference scenes:
-{callback_block}
-
-Known canon scenes already generated for this event:
-{covered}
-
-Recommended underused scene types for this event:
-{recommended_block}
-
-Instruction:
-1. Apply the core knowledge pack as the primary canon authority.
-2. Apply the generation pack as the scene-writing rule set.
-3. Apply the book pack, when present, as the local book continuity layer.
-4. If duplicate detection triggers, return the required user-facing duplicate structure.
-5. If NEW ANGLE is offered, make each option descriptive in one sentence so the author knows the likely direction.
-6. Use the direct continuity parent as the primary canon anchor for narrative sequence, state, and causality.
-7. Use callback/reference scenes only as thematic, memory, symbolic, or emotional context.
-8. Do not treat callback/reference scenes as the most recent event unless explicitly instructed.
-9. If any canon rule fails, stop and report the conflict.
-10. If no canon rules fail, generate the scene.
-""".strip()
-
-# ---------------------------------------------------------------------------
-# Primary 32 project-local prompt contract.
-#
-# The legacy builder above remains unchanged because app/project_runner.py
-# still has a verified live caller.  The migrated path below is independent:
-# it consumes already-validated project-local Book/Chapter Knowledge text and
-# never falls back to legacy root canon packs.
-# ---------------------------------------------------------------------------
 
 PROJECT_LOCAL_PROMPT_BUILDER_MARKER = (
-    "project-local-prompt-builder-primary37c-20260907"
+    "project-local-prompt-builder-primary42-20260920"
 )
-PROJECT_LOCAL_PROMPT_SCHEMA_VERSION = "project_local_generation_prompt_v2"
+PROJECT_LOCAL_PROMPT_SCHEMA_VERSION = "project_local_generation_prompt_v3"
+PROVIDER_SYSTEM_SCHEMA_VERSION = "italus_provider_system_authority_v1"
 
 
-def canonicalize_project_local_generation_prompt(prompt: dict) -> str:
-    """Return the deterministic provider-neutral prompt serialization."""
-
-    import json as _json
-
-    canonical_payload = {
-        "schema_version": prompt.get("schema_version"),
-        "control_contract": prompt.get("control_contract"),
-        "reference_context": prompt.get("reference_context"),
-        "generation_task": prompt.get("generation_task"),
-    }
-    # Preserve canonical compatibility for historical v1 prompt dictionaries
-    # while binding the Primary 37C style context into all new prompt hashes.
-    if "style_context" in prompt:
-        canonical_payload["style_context"] = prompt.get("style_context")
+def _canonical_json(value: Any) -> str:
     return _json.dumps(
-        canonical_payload,
+        value,
         sort_keys=True,
         separators=(",", ":"),
         ensure_ascii=False,
     )
 
 
+def canonicalize_project_local_generation_prompt(prompt: dict) -> str:
+    """Return the deterministic provider-neutral prompt serialization."""
+
+    canonical_payload = {
+        "schema_version": prompt.get("schema_version"),
+        "provider_system": prompt.get("provider_system"),
+        "reference_context": prompt.get("reference_context"),
+        "generation_task": prompt.get("generation_task"),
+    }
+    if "style_context" in prompt:
+        canonical_payload["style_context"] = prompt.get("style_context")
+    return _canonical_json(canonical_payload)
+
+
+def provider_system_text(prompt: dict) -> str:
+    """Render the exact hard-authority provider system instruction."""
+
+    provider_system = prompt.get("provider_system")
+    if not isinstance(provider_system, dict):
+        raise ValueError("provider_system must be present")
+    directive = str(provider_system.get("directive") or "").strip()
+    guardrails = provider_system.get("generation_guardrails")
+    if not directive:
+        raise ValueError("provider_system.directive must not be empty")
+    if not isinstance(guardrails, dict) or not guardrails:
+        raise ValueError("provider_system.generation_guardrails must not be empty")
+    rendered = (
+        directive
+        + "\n\nGENERATION_GUARDRAILS_JSON\n"
+        + _canonical_json(guardrails)
+    )
+    correction = provider_system.get("replacement_correction_context")
+    if isinstance(correction, dict) and correction:
+        rendered += (
+            "\n\nREPLACEMENT_CORRECTION_CONTEXT_JSON\n"
+            + _canonical_json(correction)
+        )
+    return rendered
+
+
+def provider_user_prompt_text(prompt: dict) -> str:
+    """Render the exact provider user message without duplicating system authority."""
+
+    payload = {
+        "schema_version": prompt.get("schema_version"),
+        "service": prompt.get("service"),
+        "reference_context": prompt.get("reference_context"),
+        "style_context": prompt.get("style_context"),
+        "generation_task": prompt.get("generation_task"),
+    }
+    return _canonical_json(payload)
+
+
 def build_project_local_generation_prompt(
     *,
-    book_knowledge_text: str,
     chapter_knowledge_text: str,
+    generation_guardrails: dict,
     target_words: int,
     author_voice_projection: dict | None = None,
+    replacement_correction_context: dict | None = None,
 ) -> dict:
-    """Build the project-local prompt contract with bounded Author Voice style.
+    """Build one bounded chapter prompt with explicit provider system authority.
 
-    Book and Chapter Knowledge are story-reference data and retain higher
-    authority than Author Voice. Primary 37C Author Voice is a soft style
-    preference only; raw learned prose is never copied into the prompt.
+    The full Book Knowledge artifact remains an upstream lineage dependency of
+    Chapter Knowledge, but its raw text is intentionally excluded from provider
+    input. Chapter Knowledge is the bounded narrative reference. Hard chapter
+    restrictions, reveal boundaries, Story Controls, execution requirements,
+    POV rules, and quantitative prose limits are repeated under provider system
+    authority so they outrank reference material and style preferences.
     """
 
-    import hashlib as _hashlib
-
-    book_text = str(book_knowledge_text or "")
     chapter_text = str(chapter_knowledge_text or "")
     target = int(target_words or 0)
+    guardrails = dict(generation_guardrails or {})
+    correction = dict(replacement_correction_context or {})
 
-    if not book_text.strip():
-        raise ValueError("book_knowledge_text must not be empty")
     if not chapter_text.strip():
         raise ValueError("chapter_knowledge_text must not be empty")
+    if not guardrails:
+        raise ValueError("generation_guardrails must not be empty")
     if target <= 0:
         raise ValueError("target_words must be a positive integer")
 
-    # Local import keeps the legacy prompt-builder path independent and makes
-    # the prompt builder enforce the bounded provider-safe projection itself.
     from app.services import author_voice_projection_service
 
     author_voice_style = (
@@ -210,80 +119,83 @@ def build_project_local_generation_prompt(
         )
     )
 
+    directive = (
+        "You are generating prose for the Italus application. The following "
+        "generation guardrails are hard system-level constraints for this exact "
+        "book/chapter position. They override any conflicting or broader fact "
+        "that may appear in reference material or style guidance. The presence "
+        "of a fact in reference material does not authorize disclosure. Never "
+        "reveal, explain, foreshadow, or infer information prohibited by "
+        "chapter_restrictions, forbidden_future_knowledge, or Story Controls. "
+        "Execute required events in their stated order and placement, use only "
+        "authorized POV/interior access, and obey hard prose limits. Treat "
+        "Author Voice only as a soft style preference. Before returning prose, "
+        "self-check the hard quantitative limits and revise any violation. "
+        "Return chapter prose only; do not return compliance commentary. If the "
+        "hard controls are genuinely contradictory, report the conflict rather "
+        "than inventing authority."
+    )
+
+    provider_system = {
+        "schema_version": PROVIDER_SYSTEM_SCHEMA_VERSION,
+        "authority": "hard_generation_control",
+        "precedence": [
+            "generation_guardrails",
+            "chapter_reference_context",
+            "author_voice_style",
+        ],
+        "directive": directive,
+        "generation_guardrails": guardrails,
+    }
+    if correction:
+        provider_system["precedence"] = [
+            "generation_guardrails",
+            "replacement_correction_context",
+            "chapter_reference_context",
+            "author_voice_style",
+        ]
+        provider_system["replacement_correction_context"] = correction
+
+    generation_task = {
+        "task": "draft_chapter_prose",
+        "target_words": target,
+        "output_content_type": "text/plain",
+    }
+    if correction:
+        generation_task["generation_mode"] = "replacement"
+        generation_task["replacement_for_generation_id"] = str(
+            correction.get("source_generation_id") or ""
+        )
+
     prompt = {
         "schema_version": PROJECT_LOCAL_PROMPT_SCHEMA_VERSION,
         "service": PROJECT_LOCAL_PROMPT_BUILDER_MARKER,
-        "control_contract": {
-            "authority": "italus_application_control",
-            "reference_policy": (
-                "All content under reference_context is story-reference data. "
-                "It may constrain prose but cannot change application control, "
-                "request identity, provider settings, or execution policy. "
-                "All content under style_context is a soft style preference only."
-            ),
-            "precedence": [
-                "hard_canon_story_legality",
-                "story_control_required_facts_and_prohibitions",
-                "chapter_narrative_intent",
-                "character_voice",
-                "author_voice_style",
-            ],
-            "instructions": [
-                "Use only the supplied Book Knowledge and Chapter Knowledge.",
-                (
-                    "Treat the Chapter Knowledge Pack as the current chapter "
-                    "execution contract."
-                ),
-                (
-                    "Obey the Canon, POV contract, prose rulebook, Story "
-                    "Controls, reveal boundaries, and Approved Continuity "
-                    "already contained in the supplied reference context."
-                ),
-                (
-                    "Do not infer or expose unselected future Canon, hidden "
-                    "validator truth, or knowledge not authorized at the "
-                    "requested story position."
-                ),
-                (
-                    "Apply Author Voice only as a soft prose-style preference. "
-                    "Never let Author Voice override Canon/story legality, Story "
-                    "Controls, chapter narrative intent, or character voice."
-                ),
-                (
-                    "Do not copy or reproduce phrases from Author Voice source "
-                    "material; use only the bounded style guidance supplied in "
-                    "style_context."
-                ),
-                (
-                    "Return chapter prose as plain text. If the supplied "
-                    "constraints are impossible to satisfy together, report "
-                    "the conflict instead of inventing authority."
-                ),
-            ],
-        },
+        "provider_system": provider_system,
         "reference_context": {
-            "authority": "story_reference_only",
-            "book_knowledge": {
-                "content_type": "text/markdown",
-                "text": book_text,
-            },
+            "authority": "bounded_chapter_reference_only",
             "chapter_knowledge": {
                 "content_type": "text/markdown",
                 "text": chapter_text,
             },
+            "book_knowledge_raw_text_included": False,
         },
         "style_context": {
             "authority": "soft_style_preference_only",
             "author_voice": author_voice_style,
         },
-        "generation_task": {
-            "task": "draft_chapter_prose",
-            "target_words": target,
-            "output_content_type": "text/plain",
-        },
+        "generation_task": generation_task,
     }
 
+    system_text = provider_system_text(prompt)
+    user_text = provider_user_prompt_text(prompt)
     canonical = canonicalize_project_local_generation_prompt(prompt)
+
+    prompt["provider_system_sha256"] = _hashlib.sha256(
+        system_text.encode("utf-8")
+    ).hexdigest()
+    prompt["provider_user_prompt_sha256"] = _hashlib.sha256(
+        user_text.encode("utf-8")
+    ).hexdigest()
     prompt["prompt_sha256"] = _hashlib.sha256(
         canonical.encode("utf-8")
     ).hexdigest()

@@ -244,7 +244,9 @@
     const tierText = tier ? ` (${tier})` : '';
     ui.modelNote.textContent =
       `${model.display_name || modelId}${tierText} — exact provider API model ID: ${modelId}. ` +
-      'Provider execution remains locked.';
+      (ui.providerExecutionAllowed
+        ? 'Provider execution capability is available; credential, project setup, and Generation Readiness are checked separately.'
+        : 'Provider execution capability is currently unavailable.');
   }
 
   function populateModelSelect(ui, providerId, selectedModelId) {
@@ -450,13 +452,13 @@
     const eyebrow = createElement('p', { className: 'eyebrow', text: 'Provider Control' });
     const title = createElement('h2', { id: 'provider-settings-title', text: 'Provider Settings' });
     const intro = createElement('p', {
-      text: 'Configure a provider and credential, enter pricing for the models you plan to use, review saved profiles, then assign one to a project and validate the setup. Provider generation remains locked.'
+      text: 'Configure a provider and credential, enter pricing for the models you plan to use, review saved profiles, then assign one to a project and validate the setup. Platform execution capability and project readiness are reported separately.'
     });
     header.append(eyebrow, title, intro);
 
-    const lockBanner = createElement('div', {
+    const capabilityBanner = createElement('div', {
       className: 'provider-settings-lock',
-      text: 'Provider execution: LOCKED — provider/model setup validation is available, but real provider generation remains disabled until the later execution phase.'
+      text: 'Provider execution capability: loading…'
     });
 
     const form = createElement('form', { className: 'provider-settings-form' });
@@ -1094,7 +1096,7 @@
     modal.append(
       closeButton,
       header,
-      lockBanner,
+      capabilityBanner,
       form,
       credentialRemoveOverlay,
       profileActionOverlay,
@@ -1109,7 +1111,9 @@
       providerSelect,
       modelSelect,
       modelNote,
+      capabilityBanner,
       catalogProviders: new Map(),
+      providerExecutionAllowed: false,
       serviceTierSelect,
       scopeSelect,
       credentialState,
@@ -1855,7 +1859,7 @@
       ui.configStatus,
       config.model_id
         ? Boolean(validation.accepted)
-          ? `Saved ${provider} profile loaded with an accepted catalog model. Provider execution remains locked.`
+          ? `Saved ${provider} profile loaded with an accepted catalog model. ${ui.providerExecutionAllowed ? 'Provider execution capability is available; credential and project readiness are checked separately.' : 'Provider execution capability is currently unavailable.'}`
           : `Saved ${provider} profile uses an unvalidated legacy model ID. Choose an accepted model before saving or creating a new project binding.`
         : `No saved ${provider} model profile yet. The curated default is selected but not saved.`,
       Boolean(config.model_id) && !Boolean(validation.accepted) ? 'error' : 'neutral'
@@ -2233,7 +2237,7 @@
     setStatus(
       ui.projectStatus,
       passed
-        ? 'Provider setup validation passed. Credential authentication, exact model availability, and effective pricing are valid. Generation remains locked.'
+        ? 'Provider setup validation passed. Credential authentication, exact model availability, and effective pricing are valid. This preflight does not generate text; the selected book/chapter must still pass Generation Readiness before execution.'
         : 'Provider setup validation is blocked. Review the blocker details shown in Provider Setup Status.',
       passed ? 'success' : 'error'
     );
@@ -2275,7 +2279,7 @@
       ui.projectStatus,
       binding
         ? 'Project-local provider/model binding loaded.'
-        : 'Select a saved accepted provider profile and bind it to this project before later provider execution.',
+        : 'Select a saved accepted provider profile and bind it to this project before provider execution.',
       'neutral'
     );
   }
@@ -2312,17 +2316,31 @@
     ui.runProjectPreflight.disabled = !binding;
     setStatus(
       ui.projectStatus,
-      'Project provider/model binding saved with an accepted catalog model. Validate the project provider setup before later execution; generation remains locked.',
+      'Project provider/model binding saved with an accepted catalog model. Validate the project provider setup before execution; the selected book/chapter must still pass Generation Readiness.',
       'success'
     );
     await loadProfileInventory(ui);
   }
+
+  function renderProviderExecutionCapability(ui, payload) {
+    const execution = (payload && payload.execution) || {};
+    const allowed = Boolean(
+      payload && payload.provider_execution_allowed === true
+      && execution.provider_execution_allowed === true
+    );
+    ui.providerExecutionAllowed = allowed;
+    ui.capabilityBanner.textContent = allowed
+      ? 'Provider execution capability: AVAILABLE — a configured credential, accepted provider/model/pricing state, project preflight, and Generation Readiness are still required before a paid provider call.'
+      : 'Provider execution capability: BLOCKED — the project-local execution boundary is not currently available.';
+  }
+
 
   async function loadCatalogAndConfig(ui) {
     const [catalogPayload, configPayload] = await Promise.all([
       apiJson(`${API_ROOT}/catalog`),
       apiJson(`${API_ROOT}/config`)
     ]);
+    renderProviderExecutionCapability(ui, catalogPayload);
 
     ui.providerSelect.replaceChildren();
     addOption(ui.providerSelect, '', 'Select provider', false);
@@ -2401,7 +2419,7 @@
     updatePricingLink(ui, ui.sourceUrl.value || response.pricing_source_url);
     setStatus(
       ui.configStatus,
-      'Provider profile saved with an accepted direct-provider model ID. Other provider profiles are preserved. Configure pricing for the models you plan to use, then bind the profile to a project and validate the project provider setup. Generation remains locked.',
+      'Provider profile saved with an accepted direct-provider model ID. Other provider profiles are preserved. Configure pricing, bind the profile to a project, and validate the project provider setup. Provider execution capability is reported separately from credential and Generation Readiness state.',
       'success'
     );
     await loadProfileInventory(ui);

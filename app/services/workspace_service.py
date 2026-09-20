@@ -26,6 +26,7 @@ from app.services import (
     authorship_provenance_service,
     authorship_classification_service,
     approved_continuity_integration_service,
+    generation_control_service,
 )
 from app.projects.project_manifest import (
     LIFECYCLE_ACTIVE,
@@ -113,6 +114,10 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
         )
 
     read_only = manifest.lifecycle_state == LIFECYCLE_ARCHIVED
+    production_capability = _workspace_production_runtime_capability(
+        runtime_storage_status,
+        read_only=read_only,
+    )
     approved_refs = dict(wizard_state.get("approved_canon_refs") or {})
     canon_statuses = dict(wizard_state.get("canon_set_statuses") or {})
     runtime_pack_refs = {
@@ -129,10 +134,11 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
             LIFECYCLE_ACTIVE,
         },
         "read_only": read_only,
-        "runtime_ready": False,
-        "generation_enabled": False,
-        "validation_enabled": not read_only,
+        "runtime_ready": bool(production_capability["runtime_ready"]),
+        "generation_enabled": bool(production_capability["generation_enabled"]),
+        "validation_enabled": bool(production_capability["validation_enabled"]),
         "exports_enabled": False,
+        "production_runtime_capability": production_capability,
         "manifest": manifest.to_dict(),
         "budget_plan": budget_plan,
         "wizard_state": wizard_state,
@@ -243,7 +249,10 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
                 ),
             },
         },
-        "runtime_readiness_gates": _runtime_readiness_gates_payload(runtime_storage_status),
+        "runtime_readiness_gates": _runtime_readiness_gates_payload(
+            runtime_storage_status,
+            production_capability,
+        ),
         "summary": {
             **author_summary,
             "canon_packet_count": int(canon_packet_status.get("packet_count") or 0),
@@ -256,7 +265,22 @@ def get_workspace_bootstrap(project_id: str) -> dict[str, Any]:
             "canon_setup_completed": bool(wizard_state.get("canon_setup_completed")),
         },
         "workspace_menu": _workspace_menu(manifest.lifecycle_state, read_only),
-        "message": "Workspace bootstrap loaded. Validation, Author Review, and Approved Continuity commit review are available; production output remains locked.",
+        "message": (
+            "Workspace bootstrap loaded in read-only mode. The project-local "
+            "production generation control plane is installed, but archived "
+            "projects cannot execute generation."
+            if read_only
+            else (
+                "Workspace bootstrap loaded. Project-local production generation "
+                "capability is available; every book/chapter execution remains "
+                "gated by Generation Readiness. Export remains a separate locked "
+                "capability."
+                if production_capability["generation_enabled"]
+                else "Workspace bootstrap loaded. Project-local production generation "
+                "capability is not currently available; inspect the runtime capability "
+                "gates before attempting generation."
+            )
+        ),
     }
     return bootstrap
 
@@ -641,15 +665,91 @@ def _read_project_json(path, default: Any) -> Any:
         return default
 
 
-def _runtime_readiness_gates_payload(runtime_storage_status: dict[str, Any] | None = None) -> list[dict[str, str]]:
-    """Return read-only runtime readiness gates for the workspace.
+def _workspace_production_runtime_capability(
+    runtime_storage_status: dict[str, Any] | None,
+    *,
+    read_only: bool,
+) -> dict[str, Any]:
+    """Return project-level production capability without position readiness.
 
-    These gates are descriptive only. They do not trigger generation, validation,
-    prompt construction, provider runners, canon mutation, or runtime migration.
+    This contract deliberately does not decide whether a specific book/chapter
+    can generate. That decision remains owned by Generation Readiness.
+    """
+
+    runtime_payload = dict(runtime_storage_status or {})
+    runtime_storage_ready = bool(
+        runtime_payload.get("status") == "initialized"
+        and runtime_payload.get("initialized") is True
+        and runtime_payload.get("required_files_present") is True
+    )
+    prompt_builder_ready = bool(
+        generation_control_service.PROMPT_BUILDER_PROJECT_LOCAL_ROUTING_READY
+    )
+    provider_execution_ready = bool(
+        generation_control_service.PROVIDER_EXECUTION_READY
+    )
+    validation_ready = bool(generation_control_service.VALIDATOR_READY)
+    author_review_ready = bool(
+        generation_control_service.AUTHOR_REVIEW_PERSISTENCE_READY
+    )
+    approved_continuity_ready = bool(
+        generation_control_service.APPROVED_CONTINUITY_COMMIT_PATH_READY
+    )
+    cutover_ready = bool(
+        generation_control_service.PRODUCTION_RUNTIME_CUTOVER_READY
+    )
+
+    runtime_ready = bool(
+        runtime_storage_ready
+        and prompt_builder_ready
+        and cutover_ready
+    )
+    generation_capability_available = bool(
+        runtime_ready
+        and provider_execution_ready
+        and validation_ready
+        and author_review_ready
+        and approved_continuity_ready
+    )
+
+    return {
+        "status": "ready" if generation_capability_available else "blocked",
+        "control_plane": "project_local_primary40a",
+        "cutover_ready": cutover_ready,
+        "runtime_storage_ready": runtime_storage_ready,
+        "runtime_ready": runtime_ready,
+        "prompt_builder_ready": prompt_builder_ready,
+        "provider_execution_ready": provider_execution_ready,
+        "validation_ready": validation_ready,
+        "author_review_ready": author_review_ready,
+        "approved_continuity_ready": approved_continuity_ready,
+        "generation_capability_available": generation_capability_available,
+        "generation_enabled": bool(
+            generation_capability_available and not read_only
+        ),
+        "validation_enabled": bool(validation_ready and not read_only),
+        "position_readiness_required": True,
+        "provider_credential_readiness_deferred": True,
+        "legacy_fallback_allowed": False,
+        "read_only": bool(read_only),
+    }
+
+
+def _runtime_readiness_gates_payload(
+    runtime_storage_status: dict[str, Any] | None = None,
+    production_capability: dict[str, Any] | None = None,
+) -> list[dict[str, str]]:
+    """Return descriptive production capability gates for the workspace.
+
+    These gates report project-level migration capability only. They do not
+    authorize a book/chapter generation request and do not call providers.
     """
 
     runtime_status = (runtime_storage_status or {}).get("status") or "not_initialized"
     runtime_root = (runtime_storage_status or {}).get("runtime_root") or "data/projects/<project_id>/runtime/"
+    capability = dict(production_capability or {})
+    read_only = bool(capability.get("read_only"))
+    generation_enabled = bool(capability.get("generation_enabled"))
 
     return [
         {
@@ -657,8 +757,16 @@ def _runtime_readiness_gates_payload(runtime_storage_status: dict[str, Any] | No
             "label": "Project Lifecycle",
             "status": "ready",
             "owner": "workspace service",
-            "reason": "Project setup and canon approval allow workspace access.",
-            "next_step": "Keep workspace in read-only mode until runtime storage is migrated.",
+            "reason": (
+                "Archived project is available in read-only workspace mode."
+                if read_only
+                else "Project lifecycle permits normal workspace access."
+            ),
+            "next_step": (
+                "Keep archived project actions read-only."
+                if read_only
+                else "Use Generation Readiness for a selected book/chapter."
+            ),
         },
         {
             "id": "canon_approval",
@@ -666,39 +774,80 @@ def _runtime_readiness_gates_payload(runtime_storage_status: dict[str, Any] | No
             "status": "ready",
             "owner": "canon setup",
             "reason": "Required canon references are approved for workspace use.",
-            "next_step": "Preserve approved references as read-only runtime context.",
+            "next_step": "Per-position freshness remains enforced by Generation Readiness.",
         },
         {
             "id": "runtime_storage",
             "label": "Project-local Runtime Storage",
-            "status": "ready" if runtime_status == "initialized" else "blocked",
+            "status": "ready" if capability.get("runtime_storage_ready") else "blocked",
             "owner": "runtime storage service",
             "reason": f"Project runtime storage status is {runtime_status}; target is {runtime_root}.",
-            "next_step": "Keep generation locked until prompt routing, provider execution, validation, and export gates pass.",
+            "next_step": (
+                "Runtime storage is available to the project-local production control plane."
+                if capability.get("runtime_storage_ready")
+                else "Initialize/repair project-local runtime storage before generation."
+            ),
         },
         {
             "id": "prompt_routing",
             "label": "Prompt Builder Routing",
-            "status": "locked",
-            "owner": "prompt builder",
-            "reason": "Prompt construction is protected and has not been routed through ProjectContext.",
-            "next_step": "Introduce a generation service boundary before touching prompt_builder.py.",
+            "status": "ready" if capability.get("prompt_builder_ready") else "blocked",
+            "owner": "generation control",
+            "reason": (
+                "Production prompt construction is routed through the project-local Prompt Builder."
+                if capability.get("prompt_builder_ready")
+                else "Project-local Prompt Builder routing is unavailable."
+            ),
+            "next_step": "No legacy prompt fallback is permitted.",
         },
         {
             "id": "provider_execution",
-            "label": "AI Provider Execution",
-            "status": "locked",
-            "owner": "provider layer",
-            "reason": "Provider runners remain protected and are not called from workspace.",
-            "next_step": "Define provider configuration, timeout, logging, and error handling contracts.",
+            "label": "AI Provider Execution Boundary",
+            "status": "ready" if capability.get("provider_execution_ready") else "blocked",
+            "owner": "provider execution service",
+            "reason": (
+                "The migrated provider execution boundary is available. This is a "
+                "capability statement, not proof that a provider credential is configured."
+                if capability.get("provider_execution_ready")
+                else "The migrated provider execution boundary is unavailable."
+            ),
+            "next_step": "Provider/model/credential validity is checked separately before execution.",
         },
         {
             "id": "validation_runtime",
             "label": "Validation Runtime",
-            "status": "blocked",
+            "status": "ready" if capability.get("validation_ready") else "blocked",
             "owner": "validation service",
-            "reason": "Validation service is not wired to workspace execution.",
-            "next_step": "Design validation_service integration after generation storage boundaries exist.",
+            "reason": (
+                "Structured validation is integrated into the migrated generation pipeline."
+                if capability.get("validation_ready")
+                else "Structured validation is unavailable."
+            ),
+            "next_step": "Generated candidates still require Author Review before continuity acceptance.",
+        },
+        {
+            "id": "author_review",
+            "label": "Author Review",
+            "status": "ready" if capability.get("author_review_ready") else "blocked",
+            "owner": "author review service",
+            "reason": (
+                "Author Review persistence is available for generated candidates."
+                if capability.get("author_review_ready")
+                else "Author Review persistence is unavailable."
+            ),
+            "next_step": "Only explicit author actions may advance candidate prose.",
+        },
+        {
+            "id": "approved_continuity",
+            "label": "Approved Continuity",
+            "status": "ready" if capability.get("approved_continuity_ready") else "blocked",
+            "owner": "approved continuity service",
+            "reason": (
+                "Terminally author-accepted prose can enter Approved Continuity."
+                if capability.get("approved_continuity_ready")
+                else "Approved Continuity commit path is unavailable."
+            ),
+            "next_step": "Generated MODEL prose alone never becomes story-state authority.",
         },
         {
             "id": "export_pipeline",
@@ -706,15 +855,27 @@ def _runtime_readiness_gates_payload(runtime_storage_status: dict[str, Any] | No
             "status": "blocked",
             "owner": "export workflow",
             "reason": "Export output is not implemented for workspace projects.",
-            "next_step": "Define export formats and persistence after manuscript state is project-local.",
+            "next_step": "Export is independent of generation availability and remains out of scope.",
         },
         {
-            "id": "generation_unlock",
-            "label": "Generation Unlock",
-            "status": "locked",
-            "owner": "project control",
-            "reason": "Generation must remain disabled until all runtime gates are resolved.",
-            "next_step": "Enable generation only after storage, prompt routing, provider, and validation gates pass.",
+            "id": "generation_control",
+            "label": "Generation Capability",
+            "status": "ready" if generation_enabled else "blocked",
+            "owner": "generation control",
+            "reason": (
+                "Project-local production generation capability is available."
+                if generation_enabled
+                else (
+                    "Project-local production generation is installed but this project is read-only."
+                    if read_only and capability.get("generation_capability_available")
+                    else "Project-local production generation capability is unavailable."
+                )
+            ),
+            "next_step": (
+                "Select a book/chapter and run Generation Readiness before any provider call."
+                if generation_enabled
+                else "Resolve the blocking production capability state before generation."
+            ),
         },
     ]
 

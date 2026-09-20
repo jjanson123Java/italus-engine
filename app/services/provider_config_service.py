@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from typing import Any
 
+from app.services import generation_control_service
 from app.services import provider_credential_service
 from app.services import provider_model_catalog_service
 
@@ -13,6 +14,7 @@ PROVIDER_CONFIG_SCHEMA_VERSION = "primary33.2.1a-provider-config-v3"
 PROVIDER_CATALOG_SCHEMA_VERSION = "primary33.2.1a-provider-catalog-v2"
 DEFAULT_SERVICE_TIER = "standard"
 DEFAULT_INFERENCE_SCOPE = "global"
+PROVIDER_EXECUTION_CAPABILITY_SCHEMA_VERSION = "primary40r2a-provider-execution-capability-v1"
 
 DIRECT_PROVIDER_IDS = ("anthropic", "openai")
 EXPERIMENTAL_PROVIDER_IDS = ("openrouter",)
@@ -23,7 +25,7 @@ _PROVIDER_CATALOG: tuple[dict[str, Any], ...] = (
         "label": "Anthropic / Claude",
         "kind": "direct",
         "configuration_enabled": True,
-        "execution_enabled": False,
+        "execution_enabled": True,
         "pricing_source_url": (
             "https://platform.claude.com/docs/en/about-claude/pricing"
         ),
@@ -38,7 +40,7 @@ _PROVIDER_CATALOG: tuple[dict[str, Any], ...] = (
         "label": "OpenAI",
         "kind": "direct",
         "configuration_enabled": True,
-        "execution_enabled": False,
+        "execution_enabled": True,
         "pricing_source_url": (
             "https://openai.com/index/"
             "advancing-the-price-performance-frontier-with-gpt-5-6/"
@@ -112,12 +114,56 @@ def credential_state(provider_id: str) -> dict[str, Any]:
     return provider_credential_service.credential_state(provider_id)
 
 
+def provider_execution_capability() -> dict[str, Any]:
+    """Return platform execution capability without implying credential readiness.
+
+    Primary 40 separates application capability from per-provider credentials,
+    project binding/preflight state, and per-position Generation Readiness.
+    """
+
+    runtime_cutover_ready = (
+        generation_control_service.PRODUCTION_RUNTIME_CUTOVER_READY is True
+    )
+    provider_execution_ready = (
+        generation_control_service.PROVIDER_EXECUTION_READY is True
+    )
+    allowed = runtime_cutover_ready and provider_execution_ready
+
+    return {
+        "schema_version": PROVIDER_EXECUTION_CAPABILITY_SCHEMA_VERSION,
+        "provider_execution_allowed": allowed,
+        "control_plane": "project_local_primary40a",
+        "runtime_cutover_ready": runtime_cutover_ready,
+        "provider_execution_ready": provider_execution_ready,
+        "credential_readiness_required": True,
+        "project_preflight_required": True,
+        "position_readiness_required": True,
+        "legacy_fallback_allowed": False,
+        "reason": (
+            "Project-local provider execution capability is available. "
+            "A configured credential, accepted provider/model/pricing state, "
+            "project preflight, and Generation Readiness are still required "
+            "before a paid provider call."
+            if allowed
+            else
+            "Project-local provider execution capability is unavailable because "
+            "the production runtime cutover or provider execution boundary is not ready."
+        ),
+    }
+
+
 def provider_catalog() -> dict[str, Any]:
+    execution = provider_execution_capability()
     providers: list[dict[str, Any]] = []
     for raw in _PROVIDER_CATALOG:
         item = dict(raw)
         provider_id = item["provider_id"]
         item["credential_status"] = credential_state(provider_id)["status"]
+        item["execution_enabled"] = bool(
+            execution["provider_execution_allowed"]
+            and item["kind"] == "direct"
+            and item["configuration_enabled"]
+        )
         item["models"] = (
             provider_model_catalog_service.list_models(provider_id)
             if item["kind"] == "direct"
@@ -128,7 +174,8 @@ def provider_catalog() -> dict[str, Any]:
     return {
         "status": "ok",
         "schema_version": PROVIDER_CATALOG_SCHEMA_VERSION,
-        "provider_execution_allowed": False,
+        "provider_execution_allowed": execution["provider_execution_allowed"],
+        "execution": execution,
         "catalog_source_status": {
             "direct_provider_model_catalog_loaded": True,
             "openrouter_model_catalog_loaded": False,
@@ -136,9 +183,9 @@ def provider_catalog() -> dict[str, Any]:
             "source": provider_model_catalog_service.source_metadata(),
             "reason": (
                 "The curated Anthropic/OpenAI direct-provider catalog is loaded for "
-                "configuration. Primary 33.2.1B project preflight can authenticate the "
-                "configured account and confirm the exact bound model. Provider execution "
-                "remains locked."
+                "configuration and project-local execution. Credential authentication, "
+                "exact bound-model availability, effective pricing, project preflight, "
+                "and Generation Readiness are evaluated separately before execution."
             ),
         },
         "providers": providers,
@@ -230,7 +277,7 @@ def _default_store() -> dict[str, Any]:
         "schema_version": PROVIDER_CONFIG_SCHEMA_VERSION,
         "last_selected_provider_id": None,
         "profiles": {},
-        "provider_execution_allowed": False,
+        "provider_execution_allowed": provider_execution_capability()["provider_execution_allowed"],
         "updated_at": None,
     }
 
@@ -364,10 +411,7 @@ def get_provider_config(provider_id: str | None = None) -> dict[str, Any]:
             }
         ),
         "pricing_source_url": pricing_source_url,
-        "execution": {
-            "provider_execution_allowed": False,
-            "reason": "Primary 33.2.1B preflight is available for bound projects; real provider generation remains locked until the later execution gate.",
-        },
+        "execution": provider_execution_capability(),
     }
 
 
@@ -408,7 +452,7 @@ def save_provider_config(
     store["schema_version"] = PROVIDER_CONFIG_SCHEMA_VERSION
     store["profiles"][entry["provider_id"]] = profile
     store["last_selected_provider_id"] = entry["provider_id"]
-    store["provider_execution_allowed"] = False
+    store["provider_execution_allowed"] = provider_execution_capability()["provider_execution_allowed"]
     store["updated_at"] = now
     _write_json_atomic(provider_config_path(), store)
 
@@ -447,7 +491,7 @@ def delete_provider_profile(provider_id: str) -> dict[str, Any]:
         updated_store["last_selected_provider_id"] = remaining[0] if remaining else None
 
     updated_store["updated_at"] = _utc_iso()
-    updated_store["provider_execution_allowed"] = False
+    updated_store["provider_execution_allowed"] = provider_execution_capability()["provider_execution_allowed"]
     _write_json_atomic(provider_config_path(), updated_store)
 
     credential_deleted = False

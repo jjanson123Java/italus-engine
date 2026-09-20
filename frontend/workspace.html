@@ -33,8 +33,8 @@
         <a href="#project" data-top-menu="project">Dashboard</a>
         <a href="#engine" data-top-menu="engine" class="disabled-link" aria-disabled="true"
            title="Generation activity, token usage, and generation cost will appear here when AI generation is enabled.">Engine</a>
-        <a href="#generate" data-top-menu="generate" class="disabled-link" aria-disabled="true"
-           title="Generation will become available when Italus can prepare the chapter’s current knowledge, connect to the selected writing engine, and safely return a draft for review.">Generate</a>
+        <a href="#generate" data-top-menu="generate" aria-disabled="false"
+           title="Generate a chapter candidate through the project-local runtime after readiness passes and you confirm the provider call.">Generate</a>
         <a href="#validation" data-top-menu="validation"
            title="Review generated drafts, record author decisions, inspect provenance, and commit terminally accepted prose to Approved Continuity.">Validation &amp; Review</a>
         <div class="workspace-nav-menu workspace-view-menu">
@@ -149,7 +149,7 @@
 
         <div class="editor-surface" id="workspace-main-panel">
           <p class="placeholder">
-            Opening your project workspace. Writing generation is not available yet.
+            Opening your project workspace. Generation is available from the Generate menu when project-local readiness passes.
           </p>
         </div>
       </section>
@@ -166,6 +166,6 @@
   </div>
 
   <script src="/js/theme_manager.js?v=20260825-fantasy-theme-v1-1-layout-art"></script>
-  <script src="workspace.js?v=20260907-primary36d-approved-continuity-ui-v1"></script>
+  <script src="workspace.js?v=20260908-primary40b-generation-cutover-v1"></script>
 </body>
 </html>

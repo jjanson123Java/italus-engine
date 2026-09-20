@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import hashlib
-import json
 from typing import Any, Callable
 
+from app import prompt_builder
 from app.services import (
     authorship_provenance_service,
+    candidate_validation_contract_service,
     generation_service,
     provider_binding_service,
     provider_config_service,
@@ -15,11 +16,12 @@ from app.services import (
     provider_preflight_service,
     provider_pricing_service,
     provider_usage_service,
+    replacement_generation_context_service,
 )
 
 
 PROVIDER_EXECUTION_SERVICE_MARKER = "PRIMARY_33_2_2_PROVIDER_EXECUTION_SERVICE"
-PROVIDER_EXECUTION_SCHEMA_VERSION = "primary33.2.2-provider-execution-v1"
+PROVIDER_EXECUTION_SCHEMA_VERSION = "primary42-provider-execution-v2"
 PROVIDER_CANDIDATE_SCHEMA_VERSION = "primary33-provider-candidate-v1"
 PROVIDER_CANDIDATE_STATE = "generated_pending_author_review"
 
@@ -297,6 +299,30 @@ def _ensure_model_origin(
         "approved_continuity_committed": False,
     }
 
+    if receipt.get("replacement_for_generation_id"):
+        metadata["replacement_for_generation_id"] = receipt.get(
+            "replacement_for_generation_id"
+        )
+        metadata["replacement_context_sha256"] = receipt.get(
+            "replacement_context_sha256"
+        )
+
+    validation_contract_fields = (
+        "validator_sidecar_sha256",
+        "validator_contract_sha256",
+        "validator_snapshot_sha256",
+        "validator_snapshot_project_relative_path",
+    )
+    if any(receipt.get(field) for field in validation_contract_fields):
+        if not all(receipt.get(field) for field in validation_contract_fields):
+            raise ProviderExecutionError(
+                "VALIDATION_CONTRACT_RECEIPT_INCOMPLETE",
+                "Provider receipt has incomplete validator-contract lineage.",
+                reconciliation_required=True,
+            )
+        for field in validation_contract_fields:
+            metadata[field] = receipt.get(field)
+
     try:
         result = authorship_provenance_service.register_origin_snapshot(
             project_id,
@@ -370,6 +396,31 @@ def _receipt_response(
 ) -> dict[str, Any]:
     usage_event = receipt.get("usage_event")
     usage_event = usage_event if isinstance(usage_event, dict) else {}
+    lineage = {
+        "binding_instance_id": receipt.get("binding_instance_id"),
+        "credential_instance_id": receipt.get("credential_instance_id"),
+        "pricing_version_id": receipt.get("pricing_version_id"),
+        "pricing_version_sha256": receipt.get("pricing_version_sha256"),
+        "request_content_sha256": receipt.get("request_content_sha256"),
+        "prompt_sha256": receipt.get("prompt_sha256"),
+        "validator_sidecar_sha256": receipt.get("validator_sidecar_sha256"),
+        "validator_contract_sha256": receipt.get("validator_contract_sha256"),
+        "validator_snapshot_sha256": receipt.get("validator_snapshot_sha256"),
+        "validator_snapshot_project_relative_path": receipt.get(
+            "validator_snapshot_project_relative_path"
+        ),
+        "receipt_sha256": receipt.get("receipt_sha256"),
+        "model_origin_id": model_origin.get("origin_id"),
+        "model_origin_version_id": model_origin.get("version_id"),
+        "model_origin_content_sha256": model_origin.get("content_hash"),
+    }
+    if receipt.get("replacement_for_generation_id"):
+        lineage["replacement_for_generation_id"] = receipt.get(
+            "replacement_for_generation_id"
+        )
+        lineage["replacement_context_sha256"] = receipt.get(
+            "replacement_context_sha256"
+        )
     return {
         "status": "ok",
         "service": PROVIDER_EXECUTION_SERVICE_MARKER,
@@ -399,18 +450,7 @@ def _receipt_response(
             "provider_status": receipt.get("provider_status"),
             "stop_reason": receipt.get("stop_reason"),
         },
-        "lineage": {
-            "binding_instance_id": receipt.get("binding_instance_id"),
-            "credential_instance_id": receipt.get("credential_instance_id"),
-            "pricing_version_id": receipt.get("pricing_version_id"),
-            "pricing_version_sha256": receipt.get("pricing_version_sha256"),
-            "request_content_sha256": receipt.get("request_content_sha256"),
-            "prompt_sha256": receipt.get("prompt_sha256"),
-            "receipt_sha256": receipt.get("receipt_sha256"),
-            "model_origin_id": model_origin.get("origin_id"),
-            "model_origin_version_id": model_origin.get("version_id"),
-            "model_origin_content_sha256": model_origin.get("content_hash"),
-        },
+        "lineage": lineage,
         "usage": {
             "actual_input_tokens": usage_event.get("actual_input_tokens"),
             "actual_output_tokens": usage_event.get("actual_output_tokens"),
@@ -437,6 +477,7 @@ def execute_provider_generation(
     book_number: int,
     chapter_number: int,
     idempotency_key: str,
+    replacement_for_generation_id: str | None = None,
     timeout_seconds: float = provider_direct_generation_service.DEFAULT_TIMEOUT_SECONDS,
     direct_executor: Callable[..., dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
@@ -455,11 +496,31 @@ def execute_provider_generation(
             ),
         )
 
+    replacement_context: dict[str, Any] | None = None
+    replacement_source = str(replacement_for_generation_id or "").strip()
+    if replacement_source:
+        try:
+            replacement_context = (
+                replacement_generation_context_service.build_replacement_correction_context(
+                    project_id,
+                    replacement_source,
+                    book_number=int(book_number),
+                    chapter_number=int(chapter_number),
+                )
+            )
+        except replacement_generation_context_service.ReplacementGenerationContextError as exc:
+            raise ProviderExecutionError(
+                exc.code,
+                str(exc),
+                details=dict(exc.details or {}),
+            ) from exc
+
     try:
         envelope = generation_service.build_generation_request_envelope(
             project_id,
             book_number=int(book_number),
             chapter_number=int(chapter_number),
+            replacement_correction_context=replacement_context,
         )
     except generation_service.GenerationRequestBuildError as exc:
         raise ProviderExecutionError(
@@ -467,6 +528,24 @@ def execute_provider_generation(
             str(exc),
             details=dict(exc.details or {}),
         ) from exc
+
+    execution_contract = envelope.get("execution")
+    execution_contract = (
+        execution_contract if isinstance(execution_contract, dict) else {}
+    )
+    if (
+        execution_contract.get("provider_execution_allowed") is not True
+        or str(execution_contract.get("control_plane") or "")
+        != "project_local_primary40a"
+        or execution_contract.get("legacy_fallback_allowed") is not False
+    ):
+        raise ProviderExecutionError(
+            "PRODUCTION_RUNTIME_NOT_READY",
+            (
+                "Provider execution is blocked unless the Generation Request is "
+                "authorized by the Primary 40A project-local production control plane."
+            ),
+        )
 
     request_content_sha256 = _required_text(
         envelope,
@@ -476,12 +555,47 @@ def execute_provider_generation(
     prompt = envelope.get("prompt")
     prompt = prompt if isinstance(prompt, dict) else {}
     prompt_sha256 = _required_text(prompt, "prompt_sha256", "PROMPT_IDENTITY_MISSING")
-    prompt_text = json.dumps(
+    provider_system_sha256 = _required_text(
         prompt,
-        ensure_ascii=False,
-        sort_keys=True,
-        separators=(",", ":"),
+        "provider_system_sha256",
+        "PROVIDER_SYSTEM_IDENTITY_MISSING",
     )
+    provider_user_prompt_sha256 = _required_text(
+        prompt,
+        "provider_user_prompt_sha256",
+        "PROVIDER_USER_PROMPT_IDENTITY_MISSING",
+    )
+    try:
+        system_text = prompt_builder.provider_system_text(prompt)
+        prompt_text = prompt_builder.provider_user_prompt_text(prompt)
+    except ValueError as exc:
+        raise ProviderExecutionError(
+            "PROVIDER_PROMPT_SERIALIZATION_INVALID",
+            str(exc),
+        ) from exc
+
+    actual_system_sha256 = hashlib.sha256(system_text.encode("utf-8")).hexdigest()
+    actual_user_prompt_sha256 = hashlib.sha256(prompt_text.encode("utf-8")).hexdigest()
+    if (
+        actual_system_sha256 != provider_system_sha256
+        or actual_user_prompt_sha256 != provider_user_prompt_sha256
+    ):
+        raise ProviderExecutionError(
+            "PROVIDER_PROMPT_IDENTITY_MISMATCH",
+            "Provider-bound system/user prompt serialization does not match prompt identity.",
+        )
+    replacement_identity = envelope.get("replacement")
+    replacement_identity = (
+        replacement_identity if isinstance(replacement_identity, dict) else {}
+    )
+    replacement_enabled = replacement_identity.get("enabled") is True
+    replacement_context_sha256 = str(
+        replacement_identity.get("context_sha256") or ""
+    )
+    replacement_source_generation_id = str(
+        replacement_identity.get("source_generation_id") or ""
+    )
+
     target_output = envelope.get("target_output")
     target_output = target_output if isinstance(target_output, dict) else {}
     try:
@@ -555,6 +669,47 @@ def execute_provider_generation(
             idempotent_replay=True,
         )
 
+    source_artifacts = envelope.get("source_artifacts")
+    source_artifacts = source_artifacts if isinstance(source_artifacts, dict) else {}
+    try:
+        validation_snapshot = (
+            candidate_validation_contract_service.snapshot_generation_validator_contract(
+                project_id,
+                generation_id,
+                book_number=int(book_number),
+                chapter_number=int(chapter_number),
+                source_artifacts=source_artifacts,
+            )
+        )
+    except candidate_validation_contract_service.CandidateValidationContractError as exc:
+        raise ProviderExecutionError(
+            "VALIDATION_CONTRACT_SNAPSHOT_FAILED",
+            str(exc),
+        ) from exc
+
+    source_sidecar = validation_snapshot.get("source_sidecar")
+    source_sidecar = source_sidecar if isinstance(source_sidecar, dict) else {}
+    validator_sidecar_sha256 = _required_text(
+        source_sidecar,
+        "sha256",
+        "VALIDATION_CONTRACT_SOURCE_HASH_MISSING",
+    )
+    validator_contract_sha256 = _required_text(
+        validation_snapshot,
+        "validator_contract_sha256",
+        "VALIDATION_CONTRACT_HASH_MISSING",
+    )
+    validator_snapshot_sha256 = _required_text(
+        validation_snapshot,
+        "snapshot_sha256",
+        "VALIDATION_CONTRACT_SNAPSHOT_HASH_MISSING",
+    )
+    validator_snapshot_project_relative_path = _required_text(
+        validation_snapshot,
+        "snapshot_project_relative_path",
+        "VALIDATION_CONTRACT_SNAPSHOT_PATH_MISSING",
+    )
+
     lineage = _current_lineage(project_id)
 
     preflight = provider_preflight_service.run_project_provider_preflight(
@@ -577,10 +732,22 @@ def execute_provider_generation(
         "generation_id": generation_id,
         "request_content_sha256": request_content_sha256,
         "prompt_sha256": prompt_sha256,
+        "provider_system_sha256": provider_system_sha256,
+        "provider_user_prompt_sha256": provider_user_prompt_sha256,
         "book_number": int(book_number),
         "chapter_number": int(chapter_number),
+        "validator_sidecar_sha256": validator_sidecar_sha256,
+        "validator_contract_sha256": validator_contract_sha256,
+        "validator_snapshot_sha256": validator_snapshot_sha256,
+        "validator_snapshot_project_relative_path": (
+            validator_snapshot_project_relative_path
+        ),
         **lineage,
     }
+    if replacement_enabled:
+        identity["replacement_for_generation_id"] = replacement_source_generation_id
+        identity["replacement_context_sha256"] = replacement_context_sha256
+
     fingerprint = provider_generation_receipt_service.execution_fingerprint(identity)
 
     try:
@@ -672,6 +839,7 @@ def execute_provider_generation(
         provider_result = executor(
             provider_id=lineage["provider_id"],
             model_id=lineage["model_id"],
+            system_text=system_text,
             prompt_text=prompt_text,
             max_output_tokens=max_output_tokens,
             api_key=api_key,
@@ -750,8 +918,15 @@ def execute_provider_generation(
         ),
         "request_content_sha256": request_content_sha256,
         "prompt_sha256": prompt_sha256,
+        "provider_system_sha256": provider_system_sha256,
+        "provider_user_prompt_sha256": provider_user_prompt_sha256,
         "provider_execution_schema_version": PROVIDER_EXECUTION_SCHEMA_VERSION,
     }
+    if replacement_enabled:
+        usage_event["replacement_for_generation_id"] = (
+            replacement_source_generation_id
+        )
+        usage_event["replacement_context_sha256"] = replacement_context_sha256
 
     try:
         usage_result = provider_usage_service.append_usage_event(
@@ -830,6 +1005,14 @@ def execute_provider_generation(
         "pricing_version_sha256": lineage["pricing_version_sha256"],
         "request_content_sha256": request_content_sha256,
         "prompt_sha256": prompt_sha256,
+        "provider_system_sha256": provider_system_sha256,
+        "provider_user_prompt_sha256": provider_user_prompt_sha256,
+        "validator_sidecar_sha256": validator_sidecar_sha256,
+        "validator_contract_sha256": validator_contract_sha256,
+        "validator_snapshot_sha256": validator_snapshot_sha256,
+        "validator_snapshot_project_relative_path": (
+            validator_snapshot_project_relative_path
+        ),
         "book_number": int(book_number),
         "chapter_number": int(chapter_number),
         "provider_request_id": (
@@ -849,6 +1032,13 @@ def execute_provider_generation(
         "author_review_persisted": False,
         "approved_continuity_committed": False,
     }
+    if replacement_enabled:
+        receipt_payload["replacement_for_generation_id"] = (
+            replacement_source_generation_id
+        )
+        receipt_payload["replacement_context_sha256"] = replacement_context_sha256
+        receipt_payload["replacement_correction_context"] = replacement_context
+
     try:
         receipt = provider_generation_receipt_service.write_receipt_once(
             project_id,

@@ -159,6 +159,8 @@ def get_project_provider_binding(project_id: str) -> dict[str, Any]:
                 "provider usage event is recorded."
             )
 
+        execution_capability = provider_config_service.provider_execution_capability()
+
         return {
             "status": "ok",
             "schema_version": PROVIDER_BINDING_SCHEMA_VERSION,
@@ -187,8 +189,32 @@ def get_project_provider_binding(project_id: str) -> dict[str, Any]:
                 "reason": reason,
             },
             "execution": {
-                "provider_execution_allowed": False,
-                "reason": "Primary 33.2.2A execution machinery is installed but production provider execution remains locked.",
+                "schema_version": execution_capability["schema_version"],
+                "control_plane": execution_capability["control_plane"],
+                "provider_execution_allowed": bool(
+                    execution_capability["provider_execution_allowed"]
+                ),
+                "binding_operation_executes_provider": False,
+                "credential_readiness_required": bool(
+                    execution_capability["credential_readiness_required"]
+                ),
+                "project_preflight_required": bool(
+                    execution_capability["project_preflight_required"]
+                ),
+                "position_readiness_required": bool(
+                    execution_capability["position_readiness_required"]
+                ),
+                "legacy_fallback_allowed": bool(
+                    execution_capability["legacy_fallback_allowed"]
+                ),
+                "reason": (
+                    "Project-local provider execution capability is available. "
+                    "Provider binding read/write operations do not execute a provider. "
+                    "A configured credential, passing project preflight, and Generation "
+                    "Readiness are still required before a paid generation call."
+                    if execution_capability["provider_execution_allowed"]
+                    else execution_capability["reason"]
+                ),
             },
         }
 
