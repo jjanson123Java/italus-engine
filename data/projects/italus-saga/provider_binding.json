@@ -1,0 +1,17 @@
+{
+  "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+  "created_at": "2026-09-19T22:03:53.375558Z",
+  "inference_scope": "global",
+  "lock_policy": "provider_and_model_lock_after_provider_execution_start_or_first_usage_event",
+  "model_id": "claude-haiku-4-5-20251001",
+  "model_selection_source": "provider_profile_default",
+  "previous_binding_instance_id": null,
+  "project_id": "italus-saga",
+  "project_name": "Italus",
+  "provider_id": "anthropic",
+  "provider_profile_model_id_at_binding": "claude-haiku-4-5-20251001",
+  "provider_profile_updated_at": "2026-09-19T22:03:25.978921Z",
+  "schema_version": "primary33.2.1a2-project-model-binding-v3",
+  "service_tier": "standard",
+  "updated_at": "2026-09-19T22:03:53.375558Z"
+}

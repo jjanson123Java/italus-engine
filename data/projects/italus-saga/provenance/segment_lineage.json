@@ -1,10 +1,143 @@
 {
-  "content_hash": "b2c1cc950b2150603919c5cb8f06cae7ef693275e53165f4d2f8e5f8f2667c05",
+  "content_hash": "fd0a8ffb6bc69ad83ad9529d1a4b7daf0fd607ce4240086a108ce083d2e3f957",
   "hash_algorithm": "sha256:utf8_exact_v1",
   "project_id": "italus-saga",
   "schema_version": "provenance_lineage_v1",
-  "segments": {},
-  "source_event_count": 0,
-  "source_origin_count": 0,
-  "versions": {}
+  "segments": {
+    "segment_gen_9d9355b6fa08bff0085366f7877995a6": {
+      "origin_ids": [
+        "origin_a0691a4f4d8b4b958c0a5e3882cc0e3f"
+      ],
+      "segment_id": "segment_gen_9d9355b6fa08bff0085366f7877995a6",
+      "version_ids": [
+        "version_0108d1297498479b8615cc129ffbd2b3"
+      ]
+    },
+    "segment_gen_f66b53921d88e90df6860046b49dcc7e": {
+      "origin_ids": [
+        "origin_7f023806af874c38b6837c34f55ea3be"
+      ],
+      "segment_id": "segment_gen_f66b53921d88e90df6860046b49dcc7e",
+      "version_ids": [
+        "version_00b8cb2db2bf4fa0a79b725c43ba1203",
+        "review_version_7f8ec4c1eb5aa627a752715f09c7a815",
+        "review_version_0d6101ca494de7605360af3cba53f653",
+        "review_version_2b0790d78341116e415a46c6cf38bcb7",
+        "review_version_f19f0daf15b4ff4e10a7ea9cf190e1e5",
+        "review_version_761381d43d7ebaae841414120c3d2dde"
+      ]
+    }
+  },
+  "source_event_count": 5,
+  "source_origin_count": 2,
+  "versions": {
+    "review_version_0d6101ca494de7605360af3cba53f653": {
+      "actor": "AUTHOR",
+      "after_hash": "5b20a22502a5b02373205ed0b551aaea5b6a309aca480a586c8c8b3b3e88c83d",
+      "before_hash": "4da58a29dbd604cc889275da66aa15323000d7f5d6f9c3637b788899ab22d816",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_0d6101ca494de7605360af3cba53f653",
+      "operation": "AUTHOR_EDIT",
+      "parent_version_ids": [
+        "review_version_7f8ec4c1eb5aa627a752715f09c7a815"
+      ],
+      "segment_id": "segment_gen_f66b53921d88e90df6860046b49dcc7e",
+      "source_generation_id": "gen_f66b53921d88e90df6860046b49dcc7e",
+      "timestamp": "2026-09-20T13:25:53.728373+00:00",
+      "version_id": "review_version_0d6101ca494de7605360af3cba53f653"
+    },
+    "review_version_2b0790d78341116e415a46c6cf38bcb7": {
+      "actor": "AUTHOR",
+      "after_hash": "6c66472414e44be5d5eeb385e6f74f4a558c62ef0b8c1011a8884ae3e27e599a",
+      "before_hash": "5b20a22502a5b02373205ed0b551aaea5b6a309aca480a586c8c8b3b3e88c83d",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_2b0790d78341116e415a46c6cf38bcb7",
+      "operation": "AUTHOR_EDIT",
+      "parent_version_ids": [
+        "review_version_0d6101ca494de7605360af3cba53f653"
+      ],
+      "segment_id": "segment_gen_f66b53921d88e90df6860046b49dcc7e",
+      "source_generation_id": "gen_f66b53921d88e90df6860046b49dcc7e",
+      "timestamp": "2026-09-20T13:29:34.263705+00:00",
+      "version_id": "review_version_2b0790d78341116e415a46c6cf38bcb7"
+    },
+    "review_version_761381d43d7ebaae841414120c3d2dde": {
+      "actor": "AUTHOR",
+      "after_hash": "920f68748aed60fd20476e41ae27f8b5e7821bb49b0b1da9ff688cb6502ab130",
+      "before_hash": "920f68748aed60fd20476e41ae27f8b5e7821bb49b0b1da9ff688cb6502ab130",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_761381d43d7ebaae841414120c3d2dde",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "review_version_f19f0daf15b4ff4e10a7ea9cf190e1e5"
+      ],
+      "segment_id": "segment_gen_f66b53921d88e90df6860046b49dcc7e",
+      "source_generation_id": "gen_f66b53921d88e90df6860046b49dcc7e",
+      "timestamp": "2026-09-20T15:10:16.624985+00:00",
+      "version_id": "review_version_761381d43d7ebaae841414120c3d2dde"
+    },
+    "review_version_7f8ec4c1eb5aa627a752715f09c7a815": {
+      "actor": "AUTHOR",
+      "after_hash": "4da58a29dbd604cc889275da66aa15323000d7f5d6f9c3637b788899ab22d816",
+      "before_hash": "882982afda0e4a46b2a97fbe42b8cd783e11cfb88e994035d2686f35b660ffd9",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_7f8ec4c1eb5aa627a752715f09c7a815",
+      "operation": "AUTHOR_EDIT",
+      "parent_version_ids": [
+        "version_00b8cb2db2bf4fa0a79b725c43ba1203"
+      ],
+      "segment_id": "segment_gen_f66b53921d88e90df6860046b49dcc7e",
+      "source_generation_id": "gen_f66b53921d88e90df6860046b49dcc7e",
+      "timestamp": "2026-09-20T13:21:34.150642+00:00",
+      "version_id": "review_version_7f8ec4c1eb5aa627a752715f09c7a815"
+    },
+    "review_version_f19f0daf15b4ff4e10a7ea9cf190e1e5": {
+      "actor": "AUTHOR",
+      "after_hash": "920f68748aed60fd20476e41ae27f8b5e7821bb49b0b1da9ff688cb6502ab130",
+      "before_hash": "6c66472414e44be5d5eeb385e6f74f4a558c62ef0b8c1011a8884ae3e27e599a",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_f19f0daf15b4ff4e10a7ea9cf190e1e5",
+      "operation": "AUTHOR_EDIT",
+      "parent_version_ids": [
+        "review_version_2b0790d78341116e415a46c6cf38bcb7"
+      ],
+      "segment_id": "segment_gen_f66b53921d88e90df6860046b49dcc7e",
+      "source_generation_id": "gen_f66b53921d88e90df6860046b49dcc7e",
+      "timestamp": "2026-09-20T13:34:37.234455+00:00",
+      "version_id": "review_version_f19f0daf15b4ff4e10a7ea9cf190e1e5"
+    },
+    "version_00b8cb2db2bf4fa0a79b725c43ba1203": {
+      "actor": "MODEL",
+      "after_hash": "882982afda0e4a46b2a97fbe42b8cd783e11cfb88e994035d2686f35b660ffd9",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_7f023806af874c38b6837c34f55ea3be",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_f66b53921d88e90df6860046b49dcc7e",
+      "source_generation_id": "gen_f66b53921d88e90df6860046b49dcc7e",
+      "timestamp": "2026-09-19T22:11:24.144182+00:00",
+      "version_id": "version_00b8cb2db2bf4fa0a79b725c43ba1203"
+    },
+    "version_0108d1297498479b8615cc129ffbd2b3": {
+      "actor": "MODEL",
+      "after_hash": "2393613b4a780352b17d6d71cf9e0f15ff580a9d3e4fdfca5f8fbce2db7efaef",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_a0691a4f4d8b4b958c0a5e3882cc0e3f",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_9d9355b6fa08bff0085366f7877995a6",
+      "source_generation_id": "gen_9d9355b6fa08bff0085366f7877995a6",
+      "timestamp": "2026-09-20T15:12:05.488620+00:00",
+      "version_id": "version_0108d1297498479b8615cc129ffbd2b3"
+    }
+  }
 }

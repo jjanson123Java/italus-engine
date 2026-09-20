@@ -1,0 +1,194 @@
+{
+  "actual_cost": "0.1842",
+  "actual_input_tokens": 138560,
+  "actual_output_tokens": 9128,
+  "billing_segments": [
+    {
+      "actual_cost": "0.1842",
+      "actual_input_tokens": 138560,
+      "actual_output_tokens": 9128,
+      "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+      "cache_read_tokens": 0,
+      "cache_write_1h_tokens": 0,
+      "cache_write_5m_tokens": 0,
+      "cache_write_tokens": 0,
+      "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
+      "cumulative_cost_available": true,
+      "currency": "USD",
+      "event_count": 2,
+      "first_recorded_at": "2026-09-19T22:11:24.100584Z",
+      "has_mixed_currency": false,
+      "last_recorded_at": "2026-09-20T15:12:05.381134Z",
+      "model_id": "claude-haiku-4-5-20251001",
+      "pricing_snapshot": {
+        "created_at": "2026-09-19T21:25:21.231578Z",
+        "currency": "USD",
+        "effective_from": "2026-09-03T00:00:00Z",
+        "immutable": true,
+        "inference_scope": "global",
+        "model_id": "claude-haiku-4-5-20251001",
+        "notes": "Curated Primary 33.2.1A reference. Anthropic standard synchronous list pricing checked 2026-09-03. Batch pricing is retained as reference metadata only.",
+        "pricing_version_id": "pricing_d841f3193970d9a52784",
+        "provider_id": "anthropic",
+        "rates_per_mtok": {
+          "cache_read_per_mtok": "0.1",
+          "cache_write_1h_per_mtok": "2",
+          "cache_write_5m_per_mtok": "1.25",
+          "input_per_mtok": "1",
+          "output_per_mtok": "5"
+        },
+        "schema_version": "primary33.1-provider-pricing-v1",
+        "service_tier": "standard",
+        "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "verified_at": "2026-09-03T00:00:00Z"
+      },
+      "pricing_version_id": "pricing_d841f3193970d9a52784",
+      "pricing_version_sha256": "20171c15c171d26a6a583d1312ec25dd7db4bee11badc2434819e0c8f128eef6",
+      "provider_id": "anthropic",
+      "totals_by_currency": {
+        "USD": {
+          "actual_cost": "0.1842",
+          "currency": "USD",
+          "event_count": 2
+        }
+      }
+    }
+  ],
+  "by_binding_instance": {
+    "bind_cad949a5850f4c3d8885a54cfbd694b3": {
+      "actual_cost": "0.1842",
+      "actual_input_tokens": 138560,
+      "actual_output_tokens": 9128,
+      "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+      "cache_read_tokens": 0,
+      "cache_write_1h_tokens": 0,
+      "cache_write_5m_tokens": 0,
+      "cache_write_tokens": 0,
+      "cumulative_cost_available": true,
+      "currency": "USD",
+      "event_count": 2,
+      "has_mixed_currency": false,
+      "totals_by_currency": {
+        "USD": {
+          "actual_cost": "0.1842",
+          "currency": "USD",
+          "event_count": 2
+        }
+      }
+    }
+  },
+  "by_credential_instance": {
+    "cred_43606086c4b6478298339177c5ed92c9": {
+      "actual_cost": "0.1842",
+      "actual_input_tokens": 138560,
+      "actual_output_tokens": 9128,
+      "cache_read_tokens": 0,
+      "cache_write_1h_tokens": 0,
+      "cache_write_5m_tokens": 0,
+      "cache_write_tokens": 0,
+      "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
+      "cumulative_cost_available": true,
+      "currency": "USD",
+      "event_count": 2,
+      "has_mixed_currency": false,
+      "totals_by_currency": {
+        "USD": {
+          "actual_cost": "0.1842",
+          "currency": "USD",
+          "event_count": 2
+        }
+      }
+    }
+  },
+  "by_pricing_version": {
+    "pricing_d841f3193970d9a52784": {
+      "actual_cost": "0.1842",
+      "actual_input_tokens": 138560,
+      "actual_output_tokens": 9128,
+      "cache_read_tokens": 0,
+      "cache_write_1h_tokens": 0,
+      "cache_write_5m_tokens": 0,
+      "cache_write_tokens": 0,
+      "cumulative_cost_available": true,
+      "currency": "USD",
+      "event_count": 2,
+      "has_mixed_currency": false,
+      "model_id": "claude-haiku-4-5-20251001",
+      "pricing_snapshot": {
+        "created_at": "2026-09-19T21:25:21.231578Z",
+        "currency": "USD",
+        "effective_from": "2026-09-03T00:00:00Z",
+        "immutable": true,
+        "inference_scope": "global",
+        "model_id": "claude-haiku-4-5-20251001",
+        "notes": "Curated Primary 33.2.1A reference. Anthropic standard synchronous list pricing checked 2026-09-03. Batch pricing is retained as reference metadata only.",
+        "pricing_version_id": "pricing_d841f3193970d9a52784",
+        "provider_id": "anthropic",
+        "rates_per_mtok": {
+          "cache_read_per_mtok": "0.1",
+          "cache_write_1h_per_mtok": "2",
+          "cache_write_5m_per_mtok": "1.25",
+          "input_per_mtok": "1",
+          "output_per_mtok": "5"
+        },
+        "schema_version": "primary33.1-provider-pricing-v1",
+        "service_tier": "standard",
+        "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+        "verified_at": "2026-09-03T00:00:00Z"
+      },
+      "pricing_version_id": "pricing_d841f3193970d9a52784",
+      "pricing_version_sha256": "20171c15c171d26a6a583d1312ec25dd7db4bee11badc2434819e0c8f128eef6",
+      "provider_id": "anthropic",
+      "totals_by_currency": {
+        "USD": {
+          "actual_cost": "0.1842",
+          "currency": "USD",
+          "event_count": 2
+        }
+      }
+    }
+  },
+  "by_provider_model": {
+    "anthropic|claude-haiku-4-5-20251001": {
+      "actual_cost": "0.1842",
+      "actual_input_tokens": 138560,
+      "actual_output_tokens": 9128,
+      "cache_read_tokens": 0,
+      "cache_write_1h_tokens": 0,
+      "cache_write_5m_tokens": 0,
+      "cache_write_tokens": 0,
+      "cumulative_cost_available": true,
+      "currency": "USD",
+      "event_count": 2,
+      "has_mixed_currency": false,
+      "model_id": "claude-haiku-4-5-20251001",
+      "provider_id": "anthropic",
+      "totals_by_currency": {
+        "USD": {
+          "actual_cost": "0.1842",
+          "currency": "USD",
+          "event_count": 2
+        }
+      }
+    }
+  },
+  "cache_read_tokens": 0,
+  "cache_write_1h_tokens": 0,
+  "cache_write_5m_tokens": 0,
+  "cache_write_tokens": 0,
+  "cumulative_cost_available": true,
+  "currency": "USD",
+  "event_count": 2,
+  "has_mixed_currency": false,
+  "historical_costs_recalculated": false,
+  "project_id": "italus-saga",
+  "rebuilt_from_ledger": true,
+  "schema_version": "primary33.1-provider-usage-summary-v2",
+  "totals_by_currency": {
+    "USD": {
+      "actual_cost": "0.1842",
+      "currency": "USD",
+      "event_count": 2
+    }
+  }
+}
