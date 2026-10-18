@@ -416,6 +416,21 @@ def save_chapter_draft_for_context(
             item["record_id"] for item in assigned_event_refs
         },
     )
+    assigned_event_ids = {ref["record_id"] for ref in assigned_event_refs}
+    hidden_names = {
+        str(ref.get("label") or "").strip().lower()
+        for ref in selected_canon_refs
+        if ref.get("record_type") == "character" and ref.get("hide_name_in_prose") is True
+    }
+    for ref in selected_canon_refs:
+        if ref.get("hide_name_in_prose") is not True:
+            continue
+        overrides = ref.get("event_presentations") or {}
+        if any(event_id not in assigned_event_ids for event_id in overrides):
+            raise ChapterPlanContractError("Event presentation references an unassigned event.")
+        for label in [ref.get("presentation_name") or "", *overrides.values()]:
+            if str(label).casefold() in hidden_names:
+                raise ChapterPlanContractError("Presentation label may not equal a hidden Canon name.")
     generation_kickoff = _clean_text(payload.get("generation_kickoff"))
     chapter_objective = _clean_text(payload.get("chapter_objective"))
     restrictions = _clean_string_list(payload.get("restrictions", []), "restrictions")
@@ -976,6 +991,28 @@ def _decorate_chapter(
             }
         )
 
+    # Validate persisted event placement invariants at readiness time too.
+    # Historical/analeptic wording is NOT proof of an invalid memory relationship:
+    # narrative authorization must be decided from structured planner evidence.
+    try:
+        assigned_ids = {
+            str(ref.get("record_id") or "")
+            for ref in chapter.get("assigned_event_refs") or []
+        }
+        _normalize_event_placements(
+            context,
+            chapter.get("event_placements"),
+            allowed_ids=current_scope_ids,
+            assigned_event_ids=assigned_ids,
+        )
+    except ChapterPlanContractError as exc:
+        hard_conflict = True
+        issues.append({
+            "code": "chapter_event_authority_invalid",
+            "field": "event_placements",
+            "message": str(exc),
+        })
+
     control_validation = story_control_service.validate_story_control_refs(
         context.project_id,
         book_number=book_number,
@@ -1186,14 +1223,40 @@ def _normalize_record_refs(
             raise ChapterPlanContractError(
                 f"{field_name} record {record_id} must belong to {required_group}."
             )
-        refs.append(
-            {
-                "record_id": record_id,
-                "record_type": str(row.get("record_type") or ""),
-                "label": str(row.get("display_label") or ""),
-                "source_record_hash": str(row.get("source_hash") or ""),
-            }
-        )
+        normalized_ref = {
+            "record_id": record_id,
+            "record_type": str(row.get("record_type") or ""),
+            "label": str(row.get("display_label") or ""),
+            "source_record_hash": str(row.get("source_hash") or ""),
+        }
+        if field_name == "selected_canon_refs" and str(row.get("record_group_id") or "") == "characters":
+            raw_hidden = item.get("hide_name_in_prose", False) if isinstance(item, dict) else False
+            if not isinstance(raw_hidden, bool):
+                raise ChapterPlanContractError("hide_name_in_prose must be a boolean.")
+            normalized_ref["hide_name_in_prose"] = raw_hidden
+            alias = item.get("presentation_name", "") if isinstance(item, dict) else ""
+            overrides = item.get("event_presentations", {}) if isinstance(item, dict) else {}
+            if not isinstance(alias, str) or len(alias.strip()) > 80 or "\n" in alias or "\r" in alias:
+                raise ChapterPlanContractError("presentation_name must be a single-line string <= 80 characters.")
+            if not isinstance(overrides, dict):
+                raise ChapterPlanContractError("event_presentations must be an object.")
+            if not raw_hidden and (alias.strip() or overrides):
+                raise ChapterPlanContractError("Presentation labels require hide_name_in_prose.")
+            normalized_overrides = {}
+            for event_id, label in overrides.items():
+                if not isinstance(event_id, str) or not isinstance(label, str) or len(label.strip()) > 80 or "\n" in label or "\r" in label:
+                    raise ChapterPlanContractError("Event presentation must be a single-line string <= 80 characters.")
+                if label.strip():
+                    normalized_overrides[event_id] = label.strip()
+            if any(
+                name.strip().casefold() == str(normalized_ref["label"]).strip().casefold()
+                for name in [alias, *normalized_overrides.values()]
+                if name.strip()
+            ):
+                raise ChapterPlanContractError("Presentation label cannot equal the hidden Canon name.")
+            normalized_ref["presentation_name"] = alias.strip()
+            normalized_ref["event_presentations"] = normalized_overrides
+        refs.append(normalized_ref)
         seen.add(record_id)
     refs.sort(key=lambda item: item["record_id"])
     return refs
@@ -1226,6 +1289,13 @@ def _normalize_stored_refs(raw: Any) -> list[dict[str, Any]]:
                 "source_record_hash": str(
                     item.get("source_record_hash") or ""
                 ).strip(),
+                **({"hide_name_in_prose": item["hide_name_in_prose"]}
+                   if "hide_name_in_prose" in item and isinstance(item["hide_name_in_prose"], bool)
+                   else {}),
+                **({"presentation_name": item["presentation_name"]}
+                   if isinstance(item.get("presentation_name"), str) else {}),
+                **({"event_presentations": deepcopy(item["event_presentations"])}
+                   if isinstance(item.get("event_presentations"), dict) else {}),
             }
         )
         seen.add(record_id)
@@ -1246,6 +1316,7 @@ def _normalize_event_placements(
         raise ChapterPlanContractError("event_placements must be an array.")
 
     placements = []
+    seen_event_ids: set[str] = set()
     for ordinal, item in enumerate(raw):
         if not isinstance(item, dict):
             raise ChapterPlanContractError(
@@ -1259,7 +1330,12 @@ def _normalize_event_placements(
             required_group="events",
         )
         event_id = event_ref["record_id"]
-        if assigned_event_ids and event_id not in assigned_event_ids:
+        if event_id in seen_event_ids:
+            raise ChapterPlanContractError(
+                "An event may appear only once in event_placements."
+            )
+        seen_event_ids.add(event_id)
+        if event_id not in assigned_event_ids:
             raise ChapterPlanContractError(
                 "Every placed event must also appear in assigned_event_refs."
             )
@@ -1286,6 +1362,17 @@ def _normalize_event_placements(
                 allowed_ids=allowed_ids,
                 required_group="events",
             )
+
+        if anchor_ref:
+            anchor_id = anchor_ref["record_id"]
+            if anchor_id == event_id:
+                raise ChapterPlanContractError(
+                    "An event placement cannot anchor itself."
+                )
+            if anchor_id not in assigned_event_ids:
+                raise ChapterPlanContractError(
+                    "An event anchor must belong to assigned_event_refs."
+                )
 
         chapter_role = str(item.get("chapter_role") or "").strip().lower()
         if chapter_role and chapter_role not in CHAPTER_EVENT_ROLE_VALUES:
@@ -1352,9 +1439,18 @@ def _content_hash(chapter: dict[str, Any]) -> str:
     payload = {
         "book_number": int(chapter.get("book_number") or 0),
         "chapter_number": int(chapter.get("chapter_number") or 0),
-        "selected_canon_refs": _stable_ref_ids(
-            chapter.get("selected_canon_refs") or []
-        ),
+        "selected_canon_refs": [
+            {
+                "record_id": str(ref.get("record_id") or ""),
+                "hide_name_in_prose": ref.get("hide_name_in_prose") is True,
+                "presentation_name": str(ref.get("presentation_name") or ""),
+                "event_presentations": dict(ref.get("event_presentations") or {}),
+            }
+            for ref in sorted(
+                chapter.get("selected_canon_refs") or [],
+                key=lambda item: str(item.get("record_id") or ""),
+            )
+        ],
         "assigned_event_refs": _stable_ref_ids(
             chapter.get("assigned_event_refs") or []
         ),

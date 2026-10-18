@@ -122,6 +122,24 @@ def build_candidate_validation_rules(
     metrics = prose.get("quantitative_metrics")
     metrics = metrics if isinstance(metrics, dict) else {}
 
+    for item in validator_sidecar.get("hidden_character_names") or []:
+        if (
+            not isinstance(item, dict)
+            or not str(item.get("record_id") or "").strip()
+            or not str(item.get("canonical_name") or "").strip()
+        ):
+            raise ChapterKnowledgePackError("Invalid hidden character name authority.")
+        rules.append({
+            "rule_id": "chapter.character_name.hidden." + str(item["record_id"]),
+            "rule_type": "CANONICAL_NAME_PROHIBITION",
+            "source_type": "CHAPTER_PLANNER",
+            "source_ref": str(item["record_id"]),
+            "severity": VALIDATION_SEVERITY_BLOCKER,
+            "evaluation_mode": VALIDATION_MODE_DETERMINISTIC,
+            "instruction": "The character's canonical name must not appear in prose.",
+            "parameters": {"canonical_name": str(item["canonical_name"])},
+        })
+
     deterministic_metric_names = (
         "word_count",
         "em_dashes",
@@ -589,6 +607,21 @@ def get_chapter_knowledge_pack_status_for_context(
         ),
         "prose_rulebook_version": str(prose_rulebook.get("version") or ""),
         "prose_rulebook_sha256": str(prose_rulebook.get("sha256") or ""),
+        # H2R2: the chapter-safe authorization contract is a compilation input.
+        # Existence AND contents must invalidate previously compiled knowledge.
+        "chapter_safe_generation_facts_sha256": (
+            _sha256_file(
+                context.project_dir
+                / "chapter_authorizations"
+                / "chapter_safe_generation_facts.json"
+            )
+            if (
+                context.project_dir
+                / "chapter_authorizations"
+                / "chapter_safe_generation_facts.json"
+            ).is_file()
+            else ""
+        ),
     }
     dependency_hash = _json_hash(source)
 
@@ -770,6 +803,65 @@ def compile_chapter_knowledge_pack_for_context(
         )
         for record_id in selected_ids
     ]
+    # Explicit positive chapter facts are maintained separately from mixed Canon
+    # descriptions. No raw Character Bible or Book Arc prose enters this contract.
+    safe_facts_path = (
+        context.project_dir / "chapter_authorizations" / "chapter_safe_generation_facts.json"
+    )
+    chapter_safe_facts: list[dict[str, Any]] = []
+    if safe_facts_path.exists():
+        safe_document = project_loader.read_json(safe_facts_path)
+        if not isinstance(safe_document, dict) or safe_document.get("schema_version") != 1:
+            raise ChapterKnowledgePackNotReadyError(
+                "Chapter-safe Canon permissions have an invalid schema."
+            )
+        entries = safe_document.get("chapter_permissions")
+        if not isinstance(entries, list):
+            raise ChapterKnowledgePackNotReadyError(
+                "Chapter-safe Canon permissions must be a list."
+            )
+        selected_ref_map = {
+            str(ref.get("record_id") or ""): str(ref.get("record_type") or "")
+            for ref in (chapter.get("selected_canon_refs") or [])
+            + (chapter.get("assigned_event_refs") or [])
+            if isinstance(ref, dict)
+        }
+        active_control_ids = set(chapter.get("story_control_refs") or [])
+        seen_safe_ids: set[str] = set()
+        for item in entries:
+            if not isinstance(item, dict):
+                raise ChapterKnowledgePackNotReadyError(
+                    "Chapter-safe permission entry is invalid."
+                )
+            if (item.get("book_number"), item.get("chapter_number")) != (
+                int(book_number), int(chapter_number)
+            ):
+                continue
+            record_id = str(item.get("record_id") or "")
+            record_type = str(item.get("record_type") or "")
+            control_id = str(item.get("selected_story_control_id") or "")
+            facts = item.get("approved_facts")
+            if (
+                not record_id or record_id in seen_safe_ids
+                or selected_ref_map.get(record_id) != record_type
+                or record_id not in records_by_id
+                or (control_id and control_id not in active_control_ids)
+                or not isinstance(facts, list) or not facts or len(facts) > 20
+                or any(
+                    not isinstance(fact, str) or not fact.strip()
+                    or len(fact) > 400 for fact in facts
+                )
+            ):
+                raise ChapterKnowledgePackNotReadyError(
+                    "Chapter-safe Canon facts are not authorized by current selections."
+                )
+            seen_safe_ids.add(record_id)
+            chapter_safe_facts.append({
+                "record_id": record_id,
+                "record_type": record_type,
+                "selected_story_control_id": control_id,
+                "approved_facts": list(facts),
+            })
     chapter_execution_contract = _build_chapter_execution_contract(chapter)
     prose_rulebook = prose_rulebook_service.get_prose_rulebook_contract()
 
@@ -799,13 +891,57 @@ def compile_chapter_knowledge_pack_for_context(
         _bounded_continuity_payload(
             continuity,
             book_number=book_number,
-            chapter_number=max(0, chapter_number - 1),
+            chapter_number=chapter_number,
         )
         if chapter_number > 1
         else {}
     )
 
-    prior_ending = _bounded_prior_ending(prior_ending_context)
+    # Approved Continuity is the sole provenance for an earlier chapter's ending.
+    # Never trust arbitrary caller-supplied prose as author-approved text.
+    if str(prior_ending_context or "").strip():
+        raise ChapterKnowledgePackError(
+            "Caller-supplied prior ending is not authoritative; "
+            "the compiler reads accepted prose from Approved Continuity."
+        )
+    prior_ending = ""
+    prior_ending_identity: dict[str, Any] = {}
+    if chapter_number > 1:
+        if continuity.get("error"):
+            raise ChapterKnowledgePackError(
+                "Approved Continuity integrity validation failed."
+            )
+        commits = (continuity.get("payload") or {}).get("commits") or []
+        matches = [
+            record for record in commits
+            if isinstance(record, dict)
+            and record.get("book_number") == book_number
+            and record.get("chapter_number") == chapter_number - 1
+        ]
+        if len(matches) != 1:
+            raise ChapterKnowledgePackError(
+                "Exactly one author-approved preceding chapter is required "
+                "for bounded ending handoff."
+            )
+        accepted = matches[0]
+        accepted_text = str(accepted.get("accepted_content") or "")
+        accepted_hash = str(accepted.get("accepted_content_sha256") or "")
+        if not accepted_text or _text_hash(accepted_text) != accepted_hash:
+            raise ChapterKnowledgePackError(
+                "Prior chapter's accepted prose identity is invalid."
+            )
+        prior_ending = _bounded_prior_ending(accepted_text)
+        prior_ending_identity = {
+            "generation_id": str(accepted.get("generation_id") or ""),
+            "version_id": str(accepted.get("accepted_version_id") or ""),
+            "accepted_content_sha256": accepted_hash,
+            "source_book_number": book_number,
+            "source_chapter_number": chapter_number - 1,
+        }
+        if not prior_ending_identity["generation_id"] or not prior_ending_identity["version_id"]:
+            raise ChapterKnowledgePackError(
+                "Prior chapter's accepted candidate identity is missing."
+            )
     unlock_evaluations = deepcopy(status["unlock_evaluations"])
     generated_at = utc_now_iso()
 
@@ -893,7 +1029,14 @@ def compile_chapter_knowledge_pack_for_context(
         "assigned_event_refs": deepcopy(chapter.get("assigned_event_refs") or []),
         "event_placements": deepcopy(chapter.get("event_placements") or []),
         "chapter_event_sequence": deepcopy(chapter.get("event_placements") or []),
+        "chapter_safe_canon_facts": deepcopy(chapter_safe_facts),
         "chapter_execution_contract": deepcopy(chapter_execution_contract),
+        "chapter_narrative_source": {
+            "chapter_objective": str(chapter.get("chapter_objective") or "").strip(),
+            "generation_kickoff": str(chapter.get("generation_kickoff") or "").strip(),
+            "chapter_plan_sha256": str(status["source"].get("chapter_plan_sha256") or ""),
+            "chapter_plan_revision": status["source"].get("chapter_plan_revision") or 0,
+        },
         "prose_rulebook": {
             "version": str(prose_rulebook.get("version") or ""),
             "sha256": str(prose_rulebook.get("sha256") or ""),
@@ -926,10 +1069,21 @@ def compile_chapter_knowledge_pack_for_context(
             "included": bool(prior_ending),
             "sha256": _text_hash(prior_ending) if prior_ending else "",
             "character_count": len(prior_ending),
+            "text": prior_ending,
+            "source_identity": prior_ending_identity,
         },
         "validator_sidecar": {
             "validation_rules_schema_version": VALIDATOR_RULES_SCHEMA_VERSION,
             "selected_record_ids": selected_ids,
+            "hidden_character_names": [
+                {
+                    "record_id": str(ref.get("record_id") or ""),
+                    "canonical_name": str(ref.get("label") or ""),
+                }
+                for ref in chapter.get("selected_canon_refs") or []
+                if ref.get("record_type") == "character"
+                and ref.get("hide_name_in_prose") is True
+            ],
             "chapter_execution_contract": deepcopy(chapter_execution_contract),
             "prose_rulebook": {
                 "version": str(prose_rulebook.get("version") or ""),
@@ -1152,7 +1306,9 @@ def _bounded_continuity_payload(
     }
     for key in _ALLOWED_CONTINUITY_KEYS:
         value = payload.get(key)
-        if key == "established" and isinstance(value, list):
+        if isinstance(value, list):
+            # Approved Continuity may contain only explicitly positioned
+            # entries from chapters preceding the generation chapter.
             result[key] = [
                 deepcopy(item)
                 for item in value
@@ -1163,9 +1319,20 @@ def _bounded_continuity_payload(
                     chapter_number=chapter_number,
                 )
             ]
-        elif isinstance(value, (list, dict)):
-            result[key] = deepcopy(value)
-    return result
+        elif value not in (None, [], {}):
+            raise ChapterKnowledgePackNotReadyError(
+                f"Unsupported Approved Continuity structure in {key!r}."
+            )
+    # Only established records belong to the persisted Approved Continuity
+    # schema. Other state lists are not validated author-approved authority.
+    for key in _ALLOWED_CONTINUITY_KEYS:
+        if key != "established" and result.get(key):
+            raise ChapterKnowledgePackNotReadyError(
+                f"Approved Continuity has no authorized provider schema for {key!r}."
+            )
+    return {"established": result.get("established", []),
+            "approved_through": result["approved_through"],
+            "revision": result["revision"]}
 
 
 def _position_at_or_before(
@@ -1176,22 +1343,15 @@ def _position_at_or_before(
 ) -> bool:
     raw_book = item.get("book_number")
     raw_chapter = item.get("chapter_number")
-    if raw_book in (None, ""):
-        return True
+    if raw_book in (None, "") or raw_chapter in (None, ""):
+        return False
     try:
-        item_book = int(raw_book)
+        item_position = (int(raw_book), int(raw_chapter))
     except (TypeError, ValueError):
         return False
-    if item_book < book_number:
-        return True
-    if item_book > book_number:
+    if item_position[0] < 1 or item_position[1] < 1:
         return False
-    if raw_chapter in (None, ""):
-        return True
-    try:
-        return int(raw_chapter) <= int(chapter_number)
-    except (TypeError, ValueError):
-        return False
+    return item_position < (int(book_number), int(chapter_number))
 
 
 def _ordered_selected_ids(chapter: dict[str, Any]) -> list[str]:

@@ -354,7 +354,34 @@ def _content_rule_results(
         resolution: dict[str, Any] | None = None
 
         if mode == "DETERMINISTIC":
-            if rule_type != "PROSE_QUANTITATIVE_METRIC":
+            if rule_type == "CANONICAL_NAME_PROHIBITION":
+                import re
+                name = str(parameters.get("canonical_name") or "").strip()
+                if not name:
+                    raise CandidateValidationError(
+                        "HIDDEN_CHARACTER_NAME_MISSING",
+                        "Hidden-name rule requires a Canon name.",
+                    )
+                match = re.search(
+                    r"(?<!\w)" + re.escape(name) + r"(?!\w)",
+                    current_content,
+                    flags=re.IGNORECASE,
+                )
+                passed = match is None
+                status = "PASS" if passed else "FAIL"
+                code = "" if passed else "HIDDEN_CHARACTER_NAME_IN_PROSE"
+                message = (
+                    "Canonical character name is absent as required."
+                    if passed else "Hidden canonical character name appeared in prose."
+                )
+                details = (
+                    {} if passed else {
+                        "matched_excerpt": current_content[
+                            max(0, match.start() - 45):min(len(current_content), match.end() + 45)
+                        ]
+                    }
+                )
+            elif rule_type != "PROSE_QUANTITATIVE_METRIC":
                 status = "UNKNOWN"
                 code = "DETERMINISTIC_RULE_UNSUPPORTED"
                 message = (
@@ -579,6 +606,44 @@ def validate_generation_candidate(
     usage_event = receipt.get("usage_event")
     usage_event = usage_event if isinstance(usage_event, dict) else {}
 
+    # A mechanical repair is a new candidate, never a continuation of the
+    # rejected source. Bind validation to the exact immutable source receipt.
+    repair_source_id = str(receipt.get("repair_for_generation_id") or "").strip()
+    repair_source_receipt = None
+    repair_source_error = ""
+    if repair_source_id:
+        if repair_source_id == generation or not re.fullmatch(r"gen_[0-9a-f]{32}", repair_source_id):
+            repair_source_error = "REPAIR_SOURCE_IDENTITY_INVALID"
+        else:
+            try:
+                repair_source_receipt = provider_generation_receipt_service.get_receipt(
+                    project_id, repair_source_id
+                )
+            except provider_generation_receipt_service.ProviderGenerationReceiptError:
+                repair_source_error = "REPAIR_SOURCE_RECEIPT_INVALID"
+            if repair_source_receipt is None and not repair_source_error:
+                repair_source_error = "REPAIR_SOURCE_RECEIPT_MISSING"
+            if isinstance(repair_source_receipt, dict):
+                if (
+                    repair_source_receipt.get("repair_for_generation_id")
+                    or str(repair_source_receipt.get("book_number") or "") != str(book_number)
+                    or str(repair_source_receipt.get("chapter_number") or "") != str(chapter_number)
+                ):
+                    repair_source_error = "REPAIR_SOURCE_LINEAGE_MISMATCH"
+                source_text = str(repair_source_receipt.get("output_text") or "")
+                if (
+                    str(repair_source_receipt.get("output_text_sha256") or "")
+                    != hashlib.sha256(source_text.encode("utf-8")).hexdigest()
+                ):
+                    repair_source_error = "REPAIR_SOURCE_CONTENT_HASH_MISMATCH"
+                source_quality = repair_source_receipt.get("generation_quality_gate")
+                source_quality = source_quality if isinstance(source_quality, dict) else {}
+                if not any(
+                    isinstance(item, dict) and item.get("code") == "DETERMINISTIC_PROSE_FAILURE"
+                    for item in (source_quality.get("blockers") or [])
+                ):
+                    repair_source_error = "REPAIR_SOURCE_NOT_DETERMINISTIC_FAILURE"
+
     integrity_checks = [
         _integrity_check(
             "provider_receipt_output_hash",
@@ -694,6 +759,17 @@ def validate_generation_candidate(
             "Candidate has not been committed to Approved Continuity by provider execution.",
         ),
     ]
+
+    if repair_source_id:
+        integrity_checks.append(
+            _integrity_check(
+                "repair_source_lineage",
+                not repair_source_error,
+                repair_source_error or "REPAIR_SOURCE_LINEAGE_VALID",
+                "Repaired candidate is bound to an immutable, deterministically failed source receipt.",
+                details={"repair_for_generation_id": repair_source_id},
+            )
+        )
 
     integrity_blocking = [
         item
@@ -862,6 +938,7 @@ def validate_generation_candidate(
         "project_id": project_id,
         "generation_id": generation,
         "segment_id": segment_id,
+        "repair_for_generation_id": repair_source_id or None,
         "book_number": book_number,
         "chapter_number": chapter_number,
         "model_candidate_content_sha256": output_sha256,
@@ -951,6 +1028,11 @@ def validate_generation_candidate(
         ),
         "validation_state": validation_state,
         "ready_for_author_review": reviewable,
+        "provider_generation_quality_gate": deepcopy(
+            receipt.get("generation_quality_gate")
+            if isinstance(receipt.get("generation_quality_gate"), dict)
+            else {}
+        ),
         "reviewable": reviewable,
         "acceptable_for_author_acceptance": acceptable,
         "checks": all_checks,

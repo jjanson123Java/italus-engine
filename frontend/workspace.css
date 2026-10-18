@@ -340,8 +340,11 @@
 }
 
 .workspace-definition-list dd {
+  min-width: 0;
   margin: 6px 0 0;
   color: #f3e8d3;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .workspace-table-wrap {
@@ -3442,6 +3445,9 @@
 .workspace-author-review-check strong,
 .workspace-author-review-check span {
   display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .workspace-author-review-check span {
@@ -3471,6 +3477,14 @@
 
 .workspace-author-review-check.is-blocked span {
   color: #e69a87;
+}
+
+.workspace-author-review-check.is-review {
+  border-color: rgba(216, 173, 93, 0.62);
+}
+
+.workspace-author-review-check.is-review span {
+  color: #f2c56b;
 }
 
 .workspace-author-review-boundary,
@@ -3660,4 +3674,57 @@
   .generation-position-grid {
     grid-template-columns: 1fr;
   }
+}
+
+
+/* H3: compact presentation config using the current theme's text and surface. */
+.workspace-chapter-planner-v1 .chapter-name-presentation { flex-basis: 100%; min-width: 0; }
+.workspace-chapter-planner-v1 .chapter-name-presentation[hidden] { display: none; }
+.workspace-chapter-planner-v1 .chapter-name-presentation-configure {
+ display: inline-block; width: auto; cursor: pointer; font: inherit;
+ color: inherit; border: 1px solid currentColor; background: transparent;
+ padding: 0.3rem 0.7rem; border-radius: 0.45rem;
+}
+.workspace-chapter-planner-v1 .chapter-name-presentation-fields {
+ display: grid; gap: 0.55rem; margin-top: 0.65rem; max-width: 42rem;
+}
+.workspace-chapter-planner-v1 .chapter-name-presentation-fields label { display: grid; gap: 0.2rem; min-width: 0; }
+.workspace-chapter-planner-v1 .chapter-name-presentation-fields input { width: 100%; min-width: 0; box-sizing: border-box; }
+
+/* H3: readable hidden-character presentation settings. Theme colors are inherited. */
+.workspace-chapter-planner-v1 .chapter-name-presentation-details { margin-top: 0.65rem; }
+.workspace-chapter-planner-v1 .chapter-name-presentation-configure {
+  margin-bottom: 0.25rem;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+.workspace-chapter-planner-v1 .chapter-name-presentation-configure:hover,
+.workspace-chapter-planner-v1 .chapter-name-presentation-configure:focus-visible {
+  text-decoration: underline;
+}
+.workspace-chapter-planner-v1 .chapter-name-presentation-fields {
+  gap: 0;
+  margin-top: 0.9rem;
+  padding: 0.65rem 0.8rem;
+}
+.workspace-chapter-planner-v1 .chapter-name-presentation-fields label {
+  gap: 0.55rem;
+  margin: 0;
+  line-height: 1.4;
+}
+.workspace-chapter-planner-v1 .chapter-name-presentation-fields input { margin-top: 0.1rem; }
+.workspace-chapter-planner-v1 .chapter-name-presentation-chapter-field { padding-bottom: 0.55rem; }
+.workspace-chapter-planner-v1 .chapter-name-presentation-guidance {
+  display: block;
+  margin: 0.15rem 0 0.85rem;
+  line-height: 1.5;
+  opacity: 0.84;
+}
+.workspace-chapter-planner-v1 .chapter-name-presentation-event-field {
+  border-top: 1px solid currentColor;
+  padding: 0.95rem 0 1rem;
+  
+}
+.workspace-chapter-planner-v1 .chapter-name-presentation-event-field > span {
+  display: block;
+  overflow-wrap: anywhere;
 }

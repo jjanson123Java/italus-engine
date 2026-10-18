@@ -210,6 +210,12 @@ class ProviderGenerationExecuteRequest(BaseModel):
         max_length=36,
         pattern=r"^gen_[0-9a-f]{32}$",
     )
+    repair_for_generation_id: str | None = Field(
+        default=None,
+        min_length=36,
+        max_length=36,
+        pattern=r"^gen_[0-9a-f]{32}$",
+    )
 
     class Config:
         extra = "forbid"
@@ -2167,6 +2173,7 @@ def execute_project_provider_generation(
             chapter_number=payload.chapter_number,
             idempotency_key=idempotency_key,
             replacement_for_generation_id=payload.replacement_for_generation_id,
+            repair_for_generation_id=payload.repair_for_generation_id,
         )
     except (ProjectNotFoundError, InvalidProjectIdError) as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc

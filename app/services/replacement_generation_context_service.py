@@ -15,11 +15,14 @@ import json
 import re
 from typing import Any
 
-from app.services import author_review_service
+from app.services import (
+    author_review_service,
+    candidate_semantic_validation_store_service,
+)
 
 
-REPLACEMENT_CONTEXT_SERVICE_MARKER = "primary44-replacement-correction-context-v1"
-REPLACEMENT_CONTEXT_SCHEMA_VERSION = "replacement_correction_context_v1"
+REPLACEMENT_CONTEXT_SERVICE_MARKER = "primary45c-replacement-correction-context-v2"
+REPLACEMENT_CONTEXT_SCHEMA_VERSION = "replacement_correction_context_v2"
 _GENERATION_ID_RE = re.compile(r"^gen_[0-9a-f]{32}$")
 
 
@@ -73,16 +76,161 @@ def _failure_projection(item: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+
+def _audited_semantic_failures(
+    project_id: str,
+    generation_id: str,
+    *,
+    rejected_content_sha256: str,
+    validator_contract_sha256: str,
+    validation: dict[str, Any],
+) -> tuple[list[dict[str, Any]], list[str]]:
+    exact_receipts = [
+        receipt
+        for receipt in candidate_semantic_validation_store_service.receipts_for_generation(
+            project_id, generation_id
+        )
+        if str(receipt.get("content_sha256") or "").lower() == rejected_content_sha256
+        and str(receipt.get("validator_contract_sha256") or "").lower()
+        == validator_contract_sha256
+        and isinstance(receipt.get("verdicts"), list)
+        and bool(receipt.get("verdicts"))
+    ]
+    if not exact_receipts:
+        return [], []
+
+    rule_map = {
+        str(item.get("rule_id") or ""): item
+        for item in (validation.get("content_rules") or [])
+        if isinstance(item, dict)
+    }
+    observed: dict[str, set[str]] = {}
+    fail_sources: dict[str, dict[str, Any]] = {}
+    for receipt in exact_receipts:
+        for verdict in receipt.get("verdicts") or []:
+            if not isinstance(verdict, dict):
+                continue
+            rule_id = str(verdict.get("rule_id") or "")
+            verdict_value = str(verdict.get("verdict") or "")
+            if not rule_id or verdict_value not in {"PASS", "FAIL", "UNKNOWN"}:
+                continue
+            observed.setdefault(rule_id, set()).add(verdict_value)
+            if verdict_value == "FAIL":
+                fail_sources[rule_id] = receipt
+
+    failures: list[dict[str, Any]] = []
+    for rule_id in sorted(observed):
+        # Conflicting semantic verdicts are not promoted into generation authority.
+        if observed[rule_id] != {"FAIL"}:
+            continue
+        rule = rule_map.get(rule_id) or {}
+        receipt = fail_sources.get(rule_id) or {}
+        failures.append({
+            "rule_id": rule_id,
+            "rule_type": str(rule.get("rule_type") or ""),
+            "message": "Prior rejected draft failed this audited semantic rule.",
+            "instruction": str(rule.get("instruction") or ""),
+            "semantic_validation_id": str(receipt.get("semantic_validation_id") or ""),
+            "semantic_receipt_sha256": str(receipt.get("receipt_sha256") or ""),
+        })
+    return failures, [
+        str(receipt.get("semantic_validation_id") or "") for receipt in exact_receipts
+    ]
+
+
 def build_replacement_correction_context(
     project_id: str,
     rejected_generation_id: str,
     *,
     book_number: int,
     chapter_number: int,
+    repair_from_quality_receipt: bool = False,
 ) -> dict[str, Any]:
-    """Build trusted, bounded correction evidence for one rejected candidate."""
+    """Build trusted correction evidence for author rejection or bounded mechanical repair."""
 
     generation_id = _generation_id(rejected_generation_id)
+    if repair_from_quality_receipt:
+        # This is not an author-rejected replacement. The provider receipt is
+        # the only authority for a completed, mechanically failed source.
+        from app.services import provider_generation_receipt_service
+
+        receipt = provider_generation_receipt_service.get_receipt(project_id, generation_id)
+        if not isinstance(receipt, dict):
+            raise ReplacementGenerationContextError(
+                "REPAIR_SOURCE_RECEIPT_MISSING", "A committed provider receipt is required."
+            )
+        if (
+            int(receipt.get("book_number") or 0) != int(book_number)
+            or int(receipt.get("chapter_number") or 0) != int(chapter_number)
+        ):
+            raise ReplacementGenerationContextError(
+                "REPAIR_SOURCE_POSITION_MISMATCH", "Repair source is not the requested chapter."
+            )
+        text = str(receipt.get("output_text") or "")
+        text_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        report = receipt.get("generation_quality_gate")
+        blockers = (report or {}).get("blockers") if isinstance(report, dict) else None
+        if (
+            not text.strip()
+            or text_hash != str(receipt.get("output_text_sha256") or "").lower()
+            or not isinstance(blockers, list)
+            or not blockers
+            or report.get("passed") is not False
+            or any(
+                not isinstance(item, dict) or item.get("code") != "DETERMINISTIC_PROSE_FAILURE"
+                for item in blockers
+            )
+            or str(receipt.get("stop_reason") or "").lower()
+            in {"max_tokens", "max_output_tokens", "length", "token_limit"}
+            or receipt.get("repair_for_generation_id")
+        ):
+            raise ReplacementGenerationContextError(
+                "REPAIR_SOURCE_NOT_ELIGIBLE",
+                "Only an original, completed provider draft with deterministic failures can be repaired.",
+            )
+        failures = [
+            {
+                "rule_id": "prose." + str(item.get("metric") or ""),
+                "message": str(item.get("message") or ""),
+                "instruction": "Meet the exact deterministic prose limit.",
+                "details": {
+                    key: item[key]
+                    for key in ("metric", "measurement", "operator", "threshold")
+                    if key in item
+                },
+            }
+            for item in blockers
+        ]
+        context = {
+            "schema_version": REPLACEMENT_CONTEXT_SCHEMA_VERSION,
+            "service": REPLACEMENT_CONTEXT_SERVICE_MARKER,
+            "authority": "backend_derived_mechanical_repair",
+            "source_generation_id": generation_id,
+            "source_review_event_id": "",
+            "source_review_version_id": "",
+            "book_number": int(book_number),
+            "chapter_number": int(chapter_number),
+            "rejected_content_sha256": text_hash,
+            "source_validator_sidecar_sha256": str(receipt.get("validator_sidecar_sha256") or ""),
+            "source_request_content_sha256": str(receipt.get("request_content_sha256") or ""),
+            "deterministic_failures": failures,
+            "deterministic_failure_count": len(failures),
+            "deterministic_failure_source": "committed_provider_quality_receipt",
+            "audited_semantic_failures": [],
+            "audited_semantic_failure_count": 0,
+            "semantic_receipt_ids_considered": [],
+            "manual_semantic_rules_promoted": False,
+            "unknown_semantic_rules_promoted": False,
+            "rejected_prose_included": False,
+            "instructions": [
+                "Generate a new independent draft from current authorized chapter guidance.",
+                "Correct every measured prose failure without reusing the original prose.",
+                "Do not infer any semantic failure from deterministic measurement alone.",
+            ],
+        }
+        context["context_sha256"] = _sha256(context)
+        return context
+
     review = author_review_service.get_author_review_status(project_id, generation_id)
     if review.get("terminal") is not True or str(review.get("review_state") or "") != "rejected":
         raise ReplacementGenerationContextError(
@@ -179,6 +327,17 @@ def build_replacement_correction_context(
         deterministic_failures = current_deterministic_failures
         deterministic_failure_source = "exact_content_revalidation"
 
+    validator_contract_sha256 = str(
+        validator_context.get("validator_contract_sha256") or ""
+    ).lower()
+    semantic_failures, semantic_receipt_ids = _audited_semantic_failures(
+        project_id,
+        generation_id,
+        rejected_content_sha256=rejected_content_sha256,
+        validator_contract_sha256=validator_contract_sha256,
+        validation=validation,
+    )
+
     context = {
         "schema_version": REPLACEMENT_CONTEXT_SCHEMA_VERSION,
         "service": REPLACEMENT_CONTEXT_SERVICE_MARKER,
@@ -210,7 +369,11 @@ def build_replacement_correction_context(
         "deterministic_failures": deterministic_failures,
         "deterministic_failure_count": len(deterministic_failures),
         "deterministic_failure_source": deterministic_failure_source,
-        "manual_semantic_rules_promoted": False,
+        "audited_semantic_failures": semantic_failures,
+        "audited_semantic_failure_count": len(semantic_failures),
+        "semantic_receipt_ids_considered": semantic_receipt_ids,
+        "manual_semantic_rules_promoted": bool(semantic_failures),
+        "unknown_semantic_rules_promoted": False,
         "rejected_prose_included": False,
         "instructions": [
             (
@@ -222,8 +385,12 @@ def build_replacement_correction_context(
                 "current generation guardrails."
             ),
             (
-                "Do not infer prior canon, narrative, reveal, POV, or Story Control "
-                "violations from unresolved MANUAL/SEMANTIC/UNKNOWN validation items."
+                "Do not repeat any listed audited semantic failure. These FAIL verdicts "
+                "were bound to the exact rejected content and validator contract."
+            ),
+            (
+                "Do not infer violations from UNKNOWN semantic items. UNKNOWN remains "
+                "unpromoted and the rejected prose itself is not included."
             ),
         ],
     }

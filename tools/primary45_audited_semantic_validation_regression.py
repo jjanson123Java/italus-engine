@@ -41,9 +41,19 @@ def run() -> int:
         validation_service,
     )
 
-    validation = validation_service.validate_generation_candidate(
-        "italus-saga", GENERATION_ID
-    )
+    # Exercise the pre-semantic-validation contract deterministically even when the
+    # real project has since accumulated audited semantic receipts or author resolutions.
+    original_exact_map_for_baseline = semantic_store.exact_verdict_map
+    original_resolution_map_for_baseline = validation_service._resolved_rule_map
+    try:
+        semantic_store.exact_verdict_map = lambda *args, **kwargs: {}
+        validation_service._resolved_rule_map = lambda *args, **kwargs: {}
+        validation = validation_service.validate_generation_candidate(
+            "italus-saga", GENERATION_ID
+        )
+    finally:
+        semantic_store.exact_verdict_map = original_exact_map_for_baseline
+        validation_service._resolved_rule_map = original_resolution_map_for_baseline
     unresolved = list(validation.get("manual_resolution_required") or [])
     results.append(check(
         "P45-01",

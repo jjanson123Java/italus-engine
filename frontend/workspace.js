@@ -651,6 +651,24 @@
         if (move.dataset.eventMove === 'down' && row.nextElementSibling) {
           row.parentElement.insertBefore(row.nextElementSibling, row);
         }
+        // Event order is author-controlled. Synchronize the derived opening
+        // placement with the first sequenced event without editing narrative
+        // objectives, semantic event roles, or knowledge relationships.
+        const ordered = Array.from(
+          document.querySelectorAll('#chapter-event-sequence-list [data-chapter-event-row]')
+        );
+        ordered.forEach((eventRow, index) => {
+          const eventId = String(eventRow.dataset.chapterEventRow || '');
+          const placementControl = eventRow.querySelector(
+            `[data-chapter-event-position="${CSS.escape(eventId)}"]`
+          );
+          if (!placementControl) return;
+          if (index === 0) {
+            placementControl.value = 'opening';
+          } else if (placementControl.value === 'opening') {
+            placementControl.value = 'early';
+          }
+        });
         refreshChapterSelectedCountFromDom();
         markChapterPlannerDraftDirty();
       }
@@ -853,8 +871,16 @@
       && runtime.legacy_fallback_allowed === false;
 
     if (!allowed) {
-      state.generationError = 'Generation remains blocked. Resolve the readiness items shown before attempting a provider call.';
+      const blockers = Array.isArray((readiness || {}).blockers) ? readiness.blockers : [];
+      const reasons = blockers.map((item) =>
+        String(item.message || item.check || item.code || '').trim()
+      ).filter(Boolean);
+      const detail = reasons.length
+        ? reasons.join(' | ')
+        : (state.generationError || 'Generation readiness is unavailable or disabled.');
+      state.generationError = `Generation blocked: ${detail}`;
       if (replacement) state.authorReviewError = state.generationError;
+      setLog(state.generationError);
       await renderExecutionState();
       return;
     }
@@ -917,9 +943,14 @@
       if (state.authorReviewGenerationId) {
         void preloadAuthorReviewForGeneration(result);
       }
+      const qualityGate = result.generation_quality_gate || {};
+      const proseFailed = qualityGate.passed === false;
       setLog(
         `${replacement ? 'Replacement generation' : 'Generation'} completed for ` +
         `Book ${position.bookNumber}, Chapter ${position.chapterNumber}. ` +
+        (proseFailed
+          ? 'The returned prose failed deterministic writing checks. The candidate remains available to edit, revalidate, or reject; acceptance is blocked until validation passes. '
+          : '') +
         `Candidate ${result.generation_id || 'created'} is ready for Validation & Review.`
       );
     } catch (error) {
@@ -3109,7 +3140,19 @@
     if (!current) return;
     if (!document.getElementById('chapter-plan-kickoff')) return;
     const selectedCanonRefs = Array.from(mainPanel.querySelectorAll('[data-chapter-canon-ref]:checked'))
-      .map((node) => ({ record_id: String(node.dataset.chapterCanonRef || '') }))
+      .map((node) => ({
+        record_id: String(node.dataset.chapterCanonRef || ''),
+        hide_name_in_prose: Boolean(mainPanel.querySelector(
+          `[data-chapter-hide-name="${CSS.escape(String(node.dataset.chapterCanonRef || ''))}"]`)?.checked),
+        presentation_name: String(mainPanel.querySelector(
+          `[data-chapter-presentation-name="${CSS.escape(String(node.dataset.chapterCanonRef || ''))}"]`)?.value || '').trim(),
+        event_presentations: Object.fromEntries(
+          Array.from(mainPanel.querySelectorAll('[data-chapter-event-presentation]'))
+            .filter((field) => field.dataset.chapterPresentationCharacter === String(node.dataset.chapterCanonRef || ''))
+            .map((field) => [String(field.dataset.chapterEventPresentation || ''), String(field.value || '').trim()])
+            .filter(([eventId, value]) => eventId && value)
+        )
+      }))
       .filter((ref) => ref.record_id);
     const pov = Array.from(mainPanel.querySelectorAll('[data-chapter-pov-ref]:checked'))
       .map((node) => ({ record_id: String(node.dataset.chapterPovRef || '') }))
@@ -3486,6 +3529,8 @@
       const recordId = String(item.record_id || '');
       const isCharacter = String(item.record_group_id || '') === 'characters' || String(item.record_type || '') === 'character';
       const isPov = povIds.has(recordId);
+      const storedRef = (chapter.selected_canon_refs || []).find((ref) => String(ref.record_id || '') === recordId) || {};
+      const hideName = storedRef.hide_name_in_prose === true;
       return `
         <article class="chapter-canon-choice-row book-canon-browser-row ${isSelected ? 'is-selected' : ''}" data-chapter-canon-row="${escapeHtml(recordId)}">
           <input type="checkbox" data-chapter-canon-ref="${escapeHtml(recordId)}" ${isSelected ? 'checked' : ''} hidden />
@@ -3494,7 +3539,30 @@
             <small>${escapeHtml(item.summary || labelFor(item.record_group_id || item.record_type || 'Canon'))}</small>
             <div class="chapter-canon-choice-flags">
               <label class="book-canon-batch-check chapter-batch-row-selector" title="${isSelected ? 'Select this row for Return Selected' : 'Select this row for Add Selected'}"><input type="checkbox" data-chapter-canon-batch-ref="${escapeHtml(recordId)}" ${readOnly || loading ? 'disabled' : ''} /><span>Select</span></label>
-              ${isCharacter ? `<label class="chapter-pov-choice" data-chapter-pov-wrap="${escapeHtml(recordId)}" ${isSelected ? '' : 'hidden'} title="${povCharacterSelectionDisabled ? 'Choose a POV type that allows character interior access first.' : 'Uses this selected character for interior point of view under the chosen POV type. Other selected characters can still speak, act, and interact.'}"><input type="checkbox" data-chapter-pov-ref="${escapeHtml(recordId)}" ${isPov ? 'checked' : ''} ${readOnly || loading || povCharacterSelectionDisabled ? 'disabled' : ''} /><span>POV</span></label>` : ''}
+              ${isCharacter && isSelected ? `<label class="chapter-pov-choice" title="Hide this character's Canon name from the chapter prose"><input type="checkbox" data-chapter-hide-name="${escapeHtml(recordId)}" ${hideName ? 'checked' : ''} ${readOnly || loading ? 'disabled' : ''} /><span>Hide canonical name in prose</span></label>` : ''}
+              ${isCharacter && isSelected ? `
+                 <div class="chapter-name-presentation" data-chapter-presentation-wrap="${escapeHtml(recordId)}" ${hideName ? '' : 'hidden'}>
+                   <details class="chapter-name-presentation-details">
+                     <summary class="secondary-action compact-action chapter-name-presentation-configure" title="Optional: choose how this hidden-name character is described in this chapter or in individual events. Leave fields blank to use authorized Canon and Story Controls.">Choose character descriptions</summary>
+                     <div class="chapter-name-presentation-fields">
+                       <label class="chapter-name-presentation-chapter-field">Chapter-wide description (optional)
+                         <input type="text" maxlength="80" data-chapter-presentation-name="${escapeHtml(recordId)}" value="${escapeHtml(String(storedRef.presentation_name || ''))}" placeholder="Leave blank for authorized context" ${readOnly || loading ? 'disabled' : ''} />
+                       </label>
+                       <small class="chapter-name-presentation-guidance">Leave blank to use authorized Canon and Story Controls. Do not reveal protected names or relationships.</small>
+                       ${(chapter.assigned_event_refs || []).map((eventRef, index) => {
+                         const eventId = String(eventRef.record_id || '');
+                         const eventItem = catalogById[eventId] || {};
+                         const eventLabel = String(eventItem.label || eventRef.label || ((placementByEvent[eventId] || {}).event_ref || {}).label || '').trim();
+                         const displayLabel = eventLabel && eventLabel !== eventId ? eventLabel : 'Selected event #' + (index + 1);
+                         const value = String(((storedRef.event_presentations || {})[eventId]) || '');
+                         return `<label class="chapter-name-presentation-event-field"><span title="${escapeHtml(displayLabel)}">${escapeHtml(displayLabel.length > 74 ? displayLabel.slice(0, 71).trimEnd() + '…' : displayLabel)} — optional description</span>
+                           <input type="text" maxlength="80" data-chapter-event-presentation data-chapter-presentation-character="${escapeHtml(recordId)}" data-chapter-event-presentation="${escapeHtml(eventId)}" value="${escapeHtml(value)}" placeholder="Event-only description (optional)" ${readOnly || loading ? 'disabled' : ''} />
+                         </label>`;
+                       }).join('')}
+                     </div>
+                   </details>
+                 </div>` : ''}
+               ${isCharacter ? `<label class="chapter-pov-choice" data-chapter-pov-wrap="${escapeHtml(recordId)}" ${isSelected ? '' : 'hidden'} title="${povCharacterSelectionDisabled ? 'Choose a POV type that allows character interior access first.' : 'Uses this selected character for interior point of view under the chosen POV type. Other selected characters can still speak, act, and interact.'}"><input type="checkbox" data-chapter-pov-ref="${escapeHtml(recordId)}" ${isPov ? 'checked' : ''} ${readOnly || loading || povCharacterSelectionDisabled ? 'disabled' : ''} /><span>POV</span></label>` : ''}
             </div>
           </div>
           <div class="chapter-row-actions">
@@ -4563,9 +4631,23 @@
       });
     });
 
-    mainPanel.querySelectorAll('#chapter-plan-kickoff, #chapter-plan-objective, #chapter-plan-restrictions, #chapter-pov-omniscient-style, [data-chapter-event-position], [data-chapter-event-role], [data-chapter-event-relationship], [data-chapter-event-anchor], [data-chapter-event-objective], [data-story-control-ref], #story-control-type, #story-control-subject, #story-control-instruction, #story-control-certainty, #story-control-presentation, #story-control-weight').forEach((node) => {
+    mainPanel.querySelectorAll('#chapter-plan-kickoff, #chapter-plan-objective, #chapter-plan-restrictions, #chapter-pov-omniscient-style, [data-chapter-event-position], [data-chapter-event-role], [data-chapter-event-relationship], [data-chapter-event-anchor], [data-chapter-event-objective], [data-chapter-hide-name], [data-chapter-presentation-name], [data-chapter-event-presentation], [data-story-control-ref], #story-control-type, #story-control-subject, #story-control-instruction, #story-control-certainty, #story-control-presentation, #story-control-weight').forEach((node) => {
       node.addEventListener(node.tagName === 'TEXTAREA' || node.tagName === 'INPUT' ? 'input' : 'change', () => markChapterPlannerDraftDirty());
       if (node.tagName === 'SELECT' || node.type === 'checkbox') node.addEventListener('change', () => markChapterPlannerDraftDirty());
+    });
+
+    mainPanel.querySelectorAll('[data-chapter-hide-name]').forEach((node) => {
+      node.addEventListener('change', () => {
+        markChapterPlannerDraftDirty();
+        const wrap = mainPanel.querySelector(`[data-chapter-presentation-wrap="${CSS.escape(String(node.dataset.chapterHideName || ''))}"]`);
+        if (wrap) {
+          wrap.hidden = !node.checked;
+          if (!node.checked) {
+            const details = wrap.querySelector('details');
+            if (details) details.open = false;
+          }
+        }
+      });
     });
 
     applyPlannerViewMode('chapter_planner');
@@ -6442,7 +6524,12 @@
       const events = Array.isArray(usage.events)
         ? usage.events.slice().reverse().filter((event) => {
             const operationKind = String((event && event.operation_kind) || 'generation');
-            return operationKind === 'generation';
+            const stopReason = String((event && event.provider_stop_reason) || '').toLowerCase();
+            const truncated = ['max_tokens', 'max_output_tokens', 'length', 'token_limit'].includes(stopReason);
+            const qualityGatePassed = event && event.generation_quality_gate_passed;
+            return operationKind === 'generation'
+              && (qualityGatePassed !== false || event.candidate_promoted_to_author_review === true)
+              && !truncated;
           })
         : [];
       const loaded = events.map((event) => ({
@@ -6851,29 +6938,50 @@
       review.current_content != null ? review.current_content : (candidate.text || '')
     );
     const currentVersionId = String(review.current_version_id || candidate.model_origin_version_id || '');
+    const reviewedHash = String(review.current_content_sha256 || '');
+    const validatedVersionId = String(validatorContext.current_content_version_id || '');
+    const validatedHash = String(validatorContext.candidate_content_sha256 || '');
+    const validationGenerationId = String(validation.generation_id || '');
+    const reviewGenerationId = String(review.generation_id || '');
+    // A result applies only to the same generation, saved version, and exact content.
+    const staleValidation = Boolean(selected) && (
+      !reviewedHash || !validatedHash || !currentVersionId || !validatedVersionId
+      || !validationGenerationId || !reviewGenerationId
+      || validationGenerationId !== selected || reviewGenerationId !== selected
+      || currentVersionId !== validatedVersionId || reviewedHash !== validatedHash
+    );
     const bookNumber = Number(validatorContext.book_number || 0);
     const chapterNumber = Number(validatorContext.chapter_number || 0);
     const generationOptions = options.map((item) => {
       const labelParts = [
-        item.generation_id,
-        item.provider_id && item.model_id ? `${item.provider_id} / ${item.model_id}` : '',
-        item.recorded_at ? formatHumanDateTime(item.recorded_at) : ''
+        item.recorded_at ? formatHumanDateTime(item.recorded_at) : 'Generated draft',
+        item.provider_id && item.model_id ? `${item.provider_id} / ${item.model_id}` : ''
       ].filter(Boolean);
       return `<option value="${escapeHtml(item.generation_id)}" ${item.generation_id === selected ? 'selected' : ''}>${escapeHtml(labelParts.join(' — '))}</option>`;
     }).join('');
 
-    const checkCards = checks.length
-      ? checks.map((item) => {
+    // A manual-resolution requirement does not negate a semantic result.
+    // Preserve FAIL/REVIEW/PASS evidence; hide only integrity diagnostics.
+    const authorFacingChecks = (staleValidation ? [] : checks).filter((item) => (
+      authorValidationReportCategory(item) !== 'integrity'
+    ));
+    const checkCards = authorFacingChecks.length
+      ? authorFacingChecks.map((item) => {
           const status = String(item.status || (item.passed ? 'PASS' : 'FAIL')).toUpperCase();
+          const statusClass = status === 'PASS'
+            ? 'is-pass'
+            : status === 'FAIL'
+              ? 'is-blocked'
+              : 'is-review';
           return `
-            <article class="workspace-author-review-check ${status === 'PASS' ? 'is-pass' : 'is-blocked'}">
-              <strong>${escapeHtml(item.rule_id || item.name || item.check || 'Validation check')}</strong>
+            <article class="workspace-author-review-check ${statusClass}">
+              <strong>${escapeHtml(authorValidationRuleLabel(item))}</strong>
               <span>${escapeHtml(status)}</span>
               <p>${escapeHtml(item.message || '')}</p>
             </article>
           `;
         }).join('')
-      : '<div class="workspace-disabled-note">No validation report is loaded.</div>';
+      : '<div class="workspace-disabled-note">No completed author-facing validation results are available yet.</div>';
 
     const blockerMarkup = blockers.length
       ? `
@@ -6886,7 +6994,7 @@
       `
       : '';
 
-    const manualResolutionMarkup = manualRules.length
+    const manualResolutionMarkup = !staleValidation && manualRules.length
       ? `
         <section class="workspace-panel">
           <div class="workspace-author-review-heading">
@@ -6918,7 +7026,7 @@
                   data-rule-id="${escapeHtml(item.rule_id || '')}"
                   ${terminal || readOnly || state.authorReviewResolutionSaving ? 'disabled' : ''}>
                 <span>
-                  <strong>${escapeHtml(item.rule_id || item.rule_type || 'Narrative rule')}</strong>
+                  <strong>${escapeHtml(authorValidationRuleLabel(item))}</strong>
                   <small>${escapeHtml(item.instruction || item.message || '')}</small>
                 </span>
               </label>
@@ -6943,71 +7051,9 @@
       `
       : '';
 
-    const awardedLevel = classification.awarded_level || {};
-    const candidateLevel = classification.candidate_level || {};
-    const evidenceConfidence = classification.evidence_confidence || {};
-    const levelGates = classification.level_gates || {};
-    const components = classification.hccs_components || {};
-    const assessmentStatus = String(classification.assessment_status || 'not_loaded');
-    const classificationMarkup = assessmentStatus === 'classified'
-      ? `
-        <section class="workspace-panel">
-          <div class="workspace-author-review-heading">
-            <div>
-              <p class="eyebrow">Primary 35</p>
-              <h3>Provenance Classification</h3>
-            </div>
-            <span class="workspace-author-review-state">Level ${escapeHtml(awardedLevel.level || '—')}</span>
-          </div>
-          <dl class="workspace-definition-list">
-            ${definition('Assessment', awardedLevel.label || '—')}
-            ${definition('HCCS', classification.hccs != null ? `${classification.hccs} / 100` : '—')}
-            ${definition('Evidence confidence', evidenceConfidence.level || '—')}
-            ${definition('Segment state', labelFor(classification.final_segment_state || '—'))}
-            ${definition(
-              'Candidate / Awarded level',
-              candidateLevel.level && awardedLevel.level
-                ? `${candidateLevel.level} / ${awardedLevel.level}`
-                : '—'
-            )}
-            ${definition(
-              'HCCS dimensions (E/N/C/R/V/F)',
-              ['E', 'N', 'C', 'R', 'V', 'F']
-                .map((key) => `${key} ${Number(components[key] || 0).toFixed(2)}`)
-                .join(' · ')
-            )}
-          </dl>
-          <div class="workspace-author-review-check-grid">
-            ${['level_3', 'level_4'].map((gateKey) => {
-              const gate = levelGates[gateKey] || {};
-              return `
-                <article class="workspace-author-review-check ${gate.passed ? 'is-pass' : 'is-blocked'}">
-                  <strong>${escapeHtml(gateKey.replace('_', ' ').toUpperCase())} gate</strong>
-                  <span>${gate.passed ? 'PASS' : 'NOT MET'}</span>
-                  <p>Higher classifications require score and evidence gates; score alone is insufficient.</p>
-                </article>
-              `;
-            }).join('')}
-          </div>
-          <div class="workspace-author-review-boundary">
-            <strong>Provenance boundary:</strong>
-            ${escapeHtml(classification.disclaimer || '')}
-            Approved Continuity is committed separately after terminal author acceptance.
-          </div>
-        </section>
-      `
-      : `
-        <section class="workspace-panel">
-          <p class="eyebrow">Primary 35</p>
-          <h3>Provenance Classification</h3>
-          <div class="workspace-disabled-note">
-            ${escapeHtml(
-              classification.message
-              || 'Segment HCCS is available after a terminal author acceptance decision.'
-            )}
-          </div>
-        </section>
-      `;
+    // Provenance/HCCS classification is retained in backend state and audit data,
+    // but it is not part of the author-facing draft review surface.
+    const classificationMarkup = '';
 
     const continuityStatus = String(continuity.status || 'not_loaded');
     const continuityCommitted = (
@@ -7055,12 +7101,18 @@
       `;
     }).join('');
 
-    const continuityMarkup = selected
+    const continuityMarkup = (
+      selected
+      && (
+        continuityCommitted
+        || continuityStatus === 'ready'
+        || reviewState === 'accepted_pending_approved_continuity'
+      )
+    )
       ? `
         <section class="workspace-panel workspace-approved-continuity">
           <div class="workspace-author-review-heading">
             <div>
-              <p class="eyebrow">Primary 36</p>
               <h3>Approved Continuity</h3>
             </div>
             <span class="workspace-author-review-state">${escapeHtml(labelFor(continuityStatus))}</span>
@@ -7129,23 +7181,24 @@
         <section class="workspace-panel">
           <div class="workspace-author-review-heading">
             <div>
-              <p class="eyebrow">Primary 34</p>
               <h3>Generated Draft</h3>
             </div>
             <span class="workspace-author-review-state">${escapeHtml(labelFor(reviewState))}</span>
           </div>
 
           <dl class="workspace-definition-list">
-            ${definition('Generation ID', selected)}
             ${definition('Book / Chapter', bookNumber && chapterNumber ? `Book ${bookNumber}, Chapter ${chapterNumber}` : '—')}
             ${definition('Provider / Model', [validatorContext.provider_id, validatorContext.model_id].filter(Boolean).join(' / ') || '—')}
-            ${definition('Current Version', currentVersionId || '—')}
-            ${definition('Validation State', labelFor(validation.validation_state || '—'))}
-            ${definition('Acceptance Ready', acceptanceReady ? 'Yes' : 'No')}
+            ${definition('Validation State', staleValidation ? 'STALE — revalidate this draft' : labelFor(validation.validation_state || '—'))}
+            ${definition('Acceptance Ready', !staleValidation && acceptanceReady ? 'Yes' : 'No')}
             ${definition('Approved Continuity', continuityCommitted ? 'Committed' : labelFor(continuityStatus))}
           </dl>
 
-          ${blockerMarkup}
+          ${validation.provider_generation_quality_gate && validation.provider_generation_quality_gate.passed === false
+            ? `<div class="workspace-author-review-boundary"><strong>Generated prose needs correction:</strong> The original provider output failed deterministic prose limits. Review the current Validation Results, edit, and revalidate before acceptance.</div>`
+            : ''}
+
+          ${staleValidation ? '<div class="workspace-author-review-boundary"><strong>Stale validation:</strong> The validation does not match the currently displayed generation, version, and content. Reload and revalidate this draft before relying on results or accepting it.</div>' : blockerMarkup}
 
           <label class="workspace-author-review-editor-label" for="author-review-content">
             Draft text
@@ -7163,7 +7216,7 @@
               ${state.authorReviewSaving && state.authorReviewPendingAction === 'edit' ? 'Saving & Revalidating…' : 'Save & Revalidate'}
             </button>
             <button type="button" data-author-review-action="accept" class="primary"
-              ${busy || terminal || readOnly || !acceptanceReady ? 'disabled' : ''}>
+              ${busy || terminal || readOnly || staleValidation || !acceptanceReady ? 'disabled' : ''}>
               Accept Draft
             </button>
             <button type="button" data-author-review-action="reject" class="danger"
@@ -7172,18 +7225,17 @@
             </button>
           </div>
 
-          ${rejected ? `<div class="workspace-author-review-boundary"><strong>Rejected candidate:</strong> The rejected draft remains in provenance. Generate Replacement Draft starts a separate billable provider call for Book ${bookNumber}, Chapter ${chapterNumber} and creates a new generation identity.<div class="workspace-author-review-actions"><button type="button" id="author-review-generate-replacement" class="primary" ${busy || readOnly ? 'disabled' : ''}>${state.generationExecuting && state.generationRequestKind === 'replacement' ? 'Generating Replacement Draft…' : 'Generate Replacement Draft'}</button></div></div>` : ''}
+          ${rejected ? `<div class="workspace-author-review-boundary"><strong>Rejected draft:</strong> This draft remains in project history. Generate Replacement Draft starts a separate billable provider call for Book ${bookNumber}, Chapter ${chapterNumber}.<div class="workspace-author-review-actions"><button type="button" id="author-review-generate-replacement" class="primary" ${busy || readOnly ? 'disabled' : ''}>${state.generationExecuting && state.generationRequestKind === 'replacement' ? 'Generating Replacement Draft…' : 'Generate Replacement Draft'}</button></div></div>` : ''}
 
           <div class="workspace-author-review-boundary">
-            <strong>Review boundary:</strong>
-            Accept records author acceptance provenance only. Approved Continuity remains a separate explicit commit,
-            and neither action mutates Master Canon or updates Author Voice.
+            <strong>Acceptance:</strong>
+            Accepting this draft records your approval. Continuity is confirmed separately after acceptance.
           </div>
         </section>
 
         <section class="workspace-panel">
-          <div class="workspace-author-review-heading"><div><h3>Validation Results</h3><p>Open the detailed report in a separate window and move it to a second screen while editing.</p></div><button type="button" id="author-validation-report-popout">${authorValidationReportIsOpen() ? 'Bring Report to Front' : 'Open Validation Report'}</button></div>
-          <div class="workspace-author-review-check-grid">${checkCards}</div>
+          <div class="workspace-author-review-heading"><div><h3>Validation Results</h3><p>Review completed writing and story checks here. The detailed report includes supporting evidence and collapsed technical diagnostics.</p></div><button type="button" id="author-validation-report-popout" ${staleValidation ? 'disabled' : ''}>${authorValidationReportIsOpen() ? 'Bring Report to Front' : 'Open Validation Report'}</button></div>
+          ${staleValidation ? '<div class="workspace-disabled-note">Validation results withheld because the current draft identity differs from the validated candidate.</div>' : `<div class="workspace-author-review-check-grid">${checkCards}</div>`}
         </section>
 
         ${manualResolutionMarkup}
@@ -7196,9 +7248,8 @@
     mainPanel.innerHTML = `
       <div class="workspace-content workspace-author-review">
         <p class="placeholder">
-          Review provider-generated chapter candidates after Primary 34 structured validation.
-          Primary 35 classifies accepted segment provenance with versioned HCCS and evidence gates.
-          Primary 36 can then commit terminally author-accepted prose into Approved Continuity.
+          Review the generated chapter, correct detected writing issues, and resolve remaining
+          story requirements before accepting the draft.
         </p>
 
         <section class="workspace-panel">

@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 import hashlib
+import json
+import logging
+import os
+import re
 from typing import Any, Callable
 
 from app import prompt_builder
@@ -8,6 +12,7 @@ from app.services import (
     authorship_provenance_service,
     candidate_validation_contract_service,
     generation_service,
+    generation_quality_gate_service,
     provider_binding_service,
     provider_config_service,
     provider_credential_service,
@@ -20,8 +25,10 @@ from app.services import (
 )
 
 
+_GENERATION_DIAGNOSTICS_LOG = logging.getLogger(__name__)
+
 PROVIDER_EXECUTION_SERVICE_MARKER = "PRIMARY_33_2_2_PROVIDER_EXECUTION_SERVICE"
-PROVIDER_EXECUTION_SCHEMA_VERSION = "primary42-provider-execution-v2"
+PROVIDER_EXECUTION_SCHEMA_VERSION = "primary45c-provider-execution-v3"
 PROVIDER_CANDIDATE_SCHEMA_VERSION = "primary33-provider-candidate-v1"
 PROVIDER_CANDIDATE_STATE = "generated_pending_author_review"
 
@@ -443,6 +450,11 @@ def _receipt_response(
             "text": str(receipt.get("output_text") or ""),
             "sha256": receipt.get("output_text_sha256"),
         },
+        # The immutable receipt remains the authority for reviewable prose
+        # diagnostics, including on an idempotent replay.
+        "generation_quality_gate": dict(
+            receipt.get("generation_quality_gate") or {}
+        ),
         "provider": {
             "provider_id": receipt.get("provider_id"),
             "model_id": receipt.get("model_id"),
@@ -471,6 +483,49 @@ def _receipt_response(
     }
 
 
+
+def _quality_gate_receipt(
+    receipt: dict[str, Any],
+    *,
+    hard_prose_metrics: dict[str, Any],
+) -> dict[str, Any]:
+    try:
+        stored = receipt.get("generation_quality_gate")
+        report = generation_quality_gate_service.evaluate_output(
+            str(receipt.get("output_text") or ""),
+            stop_reason=str(receipt.get("stop_reason") or ""),
+            hard_prose_metrics=hard_prose_metrics,
+        )
+        # Replayed receipts must not promote stale or mismatched deterministic
+        # measurements. The immutable stored report remains the historical
+        # provider result; verify it against the exact returned prose.
+        if isinstance(stored, dict) and stored != report:
+            raise ProviderExecutionError(
+                "GENERATION_QUALITY_RECEIPT_DRIFT",
+                "Stored generation quality results differ from fresh measurements of the receipt prose.",
+            )
+        # A completed, nonempty provider response is a reviewable candidate even
+        # when deterministic prose metrics fail. Empty or truncated output is
+        # not a completed candidate and must never gain MODEL-origin lineage.
+        blockers = report.get("blockers") or []
+        if report.get("passed") is not True and (
+            not str(receipt.get("output_text") or "").strip()
+            or any(
+                not isinstance(blocker, dict)
+                or blocker.get("code") != "DETERMINISTIC_PROSE_FAILURE"
+                for blocker in blockers
+            )
+            or not blockers
+        ):
+            generation_quality_gate_service.require_pass(report)
+    except generation_quality_gate_service.GenerationQualityGateError as exc:
+        raise ProviderExecutionError(
+            exc.code,
+            str(exc),
+            details=dict(exc.details or {}),
+        ) from exc
+    return report
+
 def execute_provider_generation(
     project_id: str,
     *,
@@ -478,6 +533,7 @@ def execute_provider_generation(
     chapter_number: int,
     idempotency_key: str,
     replacement_for_generation_id: str | None = None,
+    repair_for_generation_id: str | None = None,
     timeout_seconds: float = provider_direct_generation_service.DEFAULT_TIMEOUT_SECONDS,
     direct_executor: Callable[..., dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
@@ -497,7 +553,22 @@ def execute_provider_generation(
         )
 
     replacement_context: dict[str, Any] | None = None
+    repair_source = str(repair_for_generation_id or "").strip()
     replacement_source = str(replacement_for_generation_id or "").strip()
+    if repair_source and replacement_source:
+        raise ProviderExecutionError(
+            "REPAIR_REPLACEMENT_MODE_CONFLICT",
+            "A generation cannot be both an author-rejected replacement and a mechanical repair.",
+        )
+    if repair_source:
+        # Stable, server-derived identity: one repair transaction per source.
+        # Never trust a caller-provided key for repair uniqueness.
+        if not re.fullmatch(r"gen_[0-9a-f]{32}", repair_source):
+            raise ProviderExecutionError("REPAIR_SOURCE_GENERATION_INVALID", "Invalid repair source identity.")
+        idempotency_key = "primary45d-repair-" + hashlib.sha256(
+            (project_id + ":" + repair_source).encode("utf-8")
+        ).hexdigest()
+        replacement_source = repair_source
     if replacement_source:
         try:
             replacement_context = (
@@ -506,6 +577,7 @@ def execute_provider_generation(
                     replacement_source,
                     book_number=int(book_number),
                     chapter_number=int(chapter_number),
+                    **({"repair_from_quality_receipt": True} if repair_source else {}),
                 )
             )
         except replacement_generation_context_service.ReplacementGenerationContextError as exc:
@@ -554,6 +626,18 @@ def execute_provider_generation(
     )
     prompt = envelope.get("prompt")
     prompt = prompt if isinstance(prompt, dict) else {}
+    provider_system_contract = prompt.get("provider_system")
+    provider_system_contract = (
+        provider_system_contract if isinstance(provider_system_contract, dict) else {}
+    )
+    generation_guardrails = provider_system_contract.get("generation_guardrails")
+    generation_guardrails = (
+        generation_guardrails if isinstance(generation_guardrails, dict) else {}
+    )
+    hard_prose_metrics = generation_guardrails.get("hard_prose_metrics")
+    hard_prose_metrics = (
+        hard_prose_metrics if isinstance(hard_prose_metrics, dict) else {}
+    )
     prompt_sha256 = _required_text(prompt, "prompt_sha256", "PROMPT_IDENTITY_MISSING")
     provider_system_sha256 = _required_text(
         prompt,
@@ -616,6 +700,48 @@ def execute_provider_generation(
         idempotency_key,
     )
 
+    # Replacement generations are separate paid transactions, never edits or
+    # replays of the rejected source. Fail before receipt/usage/provider work.
+    if replacement_enabled:
+        if (
+            not replacement_context
+            or replacement_source_generation_id != replacement_source
+            or not replacement_context_sha256
+            or generation_id == replacement_source_generation_id
+        ):
+            raise ProviderExecutionError(
+                "REPLACEMENT_EXECUTION_IDENTITY_CONFLICT",
+                "Replacement execution requires a distinct generation identity and the exact rejected-source correction context.",
+            )
+
+    if repair_source:
+        # The source's exact validator snapshot must remain current. Re-measure
+        # the original prose against the current hard rulebook before spending.
+        source_receipt = provider_generation_receipt_service.get_receipt(
+            project_id, repair_source
+        )
+        if not isinstance(source_receipt, dict):
+            raise ProviderExecutionError("REPAIR_SOURCE_RECEIPT_MISSING", "Repair source receipt is missing.")
+        source_sidecar = envelope.get("source_artifacts") or {}
+        expected_sidecar = str(replacement_context.get("source_validator_sidecar_sha256") or "")
+        # The requested chapter still uses the source receipt's validator
+        # sidecar; anything else is stale authority, never a paid repair.
+        current_sidecar = (source_sidecar.get("chapter_knowledge") or {})
+        current_sha = str(current_sidecar.get("sidecar_sha256") or "")
+        if not current_sha or not expected_sidecar or current_sha != expected_sidecar:
+            raise ProviderExecutionError(
+                "REPAIR_AUTHORITY_DRIFT", "Chapter validation authority changed since the source draft."
+            )
+        _quality_gate_receipt(source_receipt, hard_prose_metrics=hard_prose_metrics)
+        if generation_quality_gate_service.evaluate_output(
+            str(source_receipt.get("output_text") or ""),
+            stop_reason=str(source_receipt.get("stop_reason") or ""),
+            hard_prose_metrics=hard_prose_metrics,
+        ).get("passed") is not False:
+            raise ProviderExecutionError(
+                "REPAIR_NOT_REQUIRED", "The source draft does not fail the current deterministic rules."
+            )
+
     # A completed receipt is authoritative for idempotent replay. Replaying a
     # completed generation must not require the provider to be online, the
     # credential to remain unchanged, or the same pricing version to still be
@@ -662,6 +788,10 @@ def execute_provider_generation(
                 str(exc),
                 reconciliation_required=True,
             ) from exc
+        _quality_gate_receipt(
+            existing_receipt,
+            hard_prose_metrics=hard_prose_metrics,
+        )
         model_origin = _ensure_model_origin(project_id, existing_receipt)
         return _receipt_response(
             existing_receipt,
@@ -744,6 +874,8 @@ def execute_provider_generation(
         ),
         **lineage,
     }
+    if repair_source:
+        identity["repair_for_generation_id"] = repair_source
     if replacement_enabled:
         identity["replacement_for_generation_id"] = replacement_source_generation_id
         identity["replacement_context_sha256"] = replacement_context_sha256
@@ -781,6 +913,10 @@ def execute_provider_generation(
                 str(exc),
                 reconciliation_required=True,
             ) from exc
+        _quality_gate_receipt(
+            receipt,
+            hard_prose_metrics=hard_prose_metrics,
+        )
         model_origin = _ensure_model_origin(project_id, receipt)
         return _receipt_response(
             receipt,
@@ -893,6 +1029,21 @@ def execute_provider_generation(
             reconciliation_required=True,
         )
 
+    output_text = str(provider_result.get("output_text") or "")
+    try:
+        quality_gate_report = generation_quality_gate_service.evaluate_output(
+            output_text,
+            stop_reason=str(provider_result.get("stop_reason") or ""),
+            hard_prose_metrics=hard_prose_metrics,
+        )
+    except generation_quality_gate_service.GenerationQualityGateError as exc:
+        raise ProviderExecutionError(
+            exc.code,
+            str(exc),
+            details=dict(exc.details or {}),
+            reconciliation_required=True,
+        ) from exc
+
     usage = provider_result.get("usage")
     usage = usage if isinstance(usage, dict) else {}
     usage_event_id = f"usage_{generation_id[4:]}"
@@ -921,6 +1072,15 @@ def execute_provider_generation(
         "provider_system_sha256": provider_system_sha256,
         "provider_user_prompt_sha256": provider_user_prompt_sha256,
         "provider_execution_schema_version": PROVIDER_EXECUTION_SCHEMA_VERSION,
+        "generation_quality_gate_passed": quality_gate_report.get("passed") is True,
+        "candidate_promoted_to_author_review": bool(
+            output_text.strip()
+            and all(
+                isinstance(blocker, dict)
+                and blocker.get("code") == "DETERMINISTIC_PROSE_FAILURE"
+                for blocker in quality_gate_report.get("blockers") or []
+            )
+        ),
     }
     if replacement_enabled:
         usage_event["replacement_for_generation_id"] = (
@@ -992,8 +1152,6 @@ def execute_provider_generation(
             reconciliation_required=True,
         )
 
-    output_text = str(provider_result.get("output_text") or "")
-
     receipt_payload = {
         "provider_id": lineage["provider_id"],
         "model_id": lineage["model_id"],
@@ -1028,10 +1186,13 @@ def execute_provider_generation(
         "output_text_sha256": hashlib.sha256(
             output_text.encode("utf-8")
         ).hexdigest(),
+        "generation_quality_gate": quality_gate_report,
         "usage_event": committed_event,
         "author_review_persisted": False,
         "approved_continuity_committed": False,
     }
+    if repair_source:
+        receipt_payload["repair_for_generation_id"] = repair_source
     if replacement_enabled:
         receipt_payload["replacement_for_generation_id"] = (
             replacement_source_generation_id
@@ -1053,9 +1214,56 @@ def execute_provider_generation(
             reconciliation_required=True,
         ) from exc
 
+    diagnostic = None
+    if os.environ.get("ITALUS_GENERATION_DIAGNOSTICS") == "1":
+        metrics = quality_gate_report.get("deterministic_metrics") or {}
+        diagnostic = {
+            "generation_id": generation_id,
+            "book_number": int(book_number),
+            "chapter_number": int(chapter_number),
+            "provider_id": lineage["provider_id"],
+            "model_id": lineage["model_id"],
+            "prompt_sha256": prompt_sha256,
+            "provider_system_sha256": provider_system_sha256,
+            "provider_user_prompt_sha256": provider_user_prompt_sha256,
+            "output_text_sha256": receipt.get("output_text_sha256"),
+            "stop_reason": str(receipt.get("stop_reason") or ""),
+            "quality_gate_passed": quality_gate_report.get("passed") is True,
+            "candidate_reviewable": bool(
+                output_text.strip()
+                and not any(
+                    blocker.get("code") != "DETERMINISTIC_PROSE_FAILURE"
+                    for blocker in quality_gate_report.get("blockers") or []
+                )
+            ),
+            "failed_metrics": sorted(
+                name for name, result in metrics.items()
+                if isinstance(result, dict) and result.get("passed") is not True
+            ),
+            "measurements": {
+                name: result.get("measurement")
+                for name, result in metrics.items()
+                if isinstance(result, dict)
+            },
+            "input_tokens": committed_event.get("actual_input_tokens"),
+            "output_tokens": committed_event.get("actual_output_tokens"),
+        }
+        _GENERATION_DIAGNOSTICS_LOG.warning(
+            "ITALUS_GENERATION_DIAGNOSTICS %s",
+            json.dumps(diagnostic, sort_keys=True),
+        )
+
+    quality_gate = _quality_gate_receipt(
+        receipt,
+        hard_prose_metrics=hard_prose_metrics,
+    )
     model_origin = _ensure_model_origin(project_id, receipt)
-    return _receipt_response(
+    response = _receipt_response(
         receipt,
         model_origin=model_origin,
         idempotent_replay=False,
     )
+    response["generation_quality_gate"] = quality_gate
+    if diagnostic is not None:
+        response["generation_diagnostics"] = diagnostic
+    return response

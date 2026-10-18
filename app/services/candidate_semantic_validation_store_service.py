@@ -115,6 +115,26 @@ def get_receipt(project_id: str, semantic_validation_id: str) -> dict[str, Any] 
     return payload
 
 
+
+def receipts_for_generation(project_id: str, generation_id: str) -> list[dict[str, Any]]:
+    """Return integrity-checked semantic receipts for one generation."""
+
+    root = _root(project_id) / "semantic_validation_receipts"
+    if not root.exists():
+        return []
+    receipts: list[dict[str, Any]] = []
+    for path in sorted(root.glob("semval_*.json")):
+        payload = get_receipt(project_id, path.stem)
+        if payload is not None and str(payload.get("generation_id") or "") == str(generation_id or ""):
+            receipts.append(payload)
+    receipts.sort(
+        key=lambda item: (
+            str(item.get("completed_at") or ""),
+            str(item.get("semantic_validation_id") or ""),
+        )
+    )
+    return receipts
+
 def begin_intent(project_id: str, semantic_validation_id: str, identity: dict[str, Any]) -> dict[str, Any]:
     sem_id = _safe_id(semantic_validation_id)
     existing_receipt = get_receipt(project_id, sem_id)

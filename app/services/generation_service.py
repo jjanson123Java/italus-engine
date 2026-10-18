@@ -22,13 +22,15 @@ from app.services import (
     book_knowledge_pack_service,
     chapter_knowledge_pack_service,
     generation_control_service,
+    generation_knowledge_projection_service,
+    prose_rulebook_service,
 )
 
 
 GENERATION_REQUEST_SERVICE_MARKER = (
-    "provider-neutral-generation-request-primary32-20260831"
+    "provider-neutral-generation-request-primary45c-20261003"
 )
-GENERATION_REQUEST_SCHEMA_VERSION = "generation_request_envelope_v1"
+GENERATION_REQUEST_SCHEMA_VERSION = "generation_request_envelope_v2"
 LOCAL_INPUT_ESTIMATOR_VERSION = "utf8_bytes_div_4_v1"
 OUTPUT_POLICY_VERSION = "prose_goal_x1_30_with_x1_25_headroom_v1"
 
@@ -215,9 +217,206 @@ def build_generation_request_envelope(
             details=exc.to_detail(),
         ) from exc
 
+    # The chapter compiler already embeds the complete applicable rulebook
+    # under prompt_facing_controls. Require exact identity with local policy.
+    current_rulebook = prose_rulebook_service.get_prose_rulebook_contract()
+    facing = (sidecar.get("prompt_facing_controls") or {}).get("prose_rulebook") or {}
+    embedded_rulebook = sidecar.get("prose_rulebook") or {}
+    if (
+        not isinstance(facing, dict)
+        or str(facing.get("sha256") or "") != str(current_rulebook["sha256"])
+        or str(facing.get("version") or "") != str(current_rulebook["version"])
+        or str(facing.get("prompt_text") or "").strip() != str(current_rulebook["prompt_text"])
+        or str(embedded_rulebook.get("sha256") or "") != str(current_rulebook["sha256"])
+    ):
+        raise GenerationRequestBuildError(
+            "prose_rulebook_contract_mismatch",
+            "Complete applicable Writing Rulebook authority is absent or stale.",
+        )
+
     generation_guardrails = _build_generation_guardrails(sidecar)
+    generation_guardrails["full_prose_rulebook"] = {
+        "version": current_rulebook["version"],
+        "sha256": current_rulebook["sha256"],
+        "prompt_text": current_rulebook["prompt_text"],
+    }
+    try:
+        projection_result = generation_knowledge_projection_service.build_projection(
+            sidecar,
+            raw_chapter_text=chapter_text,
+            generation_guardrails=generation_guardrails,
+        )
+    except generation_knowledge_projection_service.GenerationKnowledgeProjectionError as exc:
+        raise GenerationRequestBuildError(
+            "generation_projection_failed",
+            str(exc),
+        ) from exc
+
+    execution_contract = sidecar.get("chapter_execution_contract") or {}
+    if not isinstance(execution_contract, dict) or not execution_contract:
+        raise GenerationRequestBuildError(
+            "chapter_execution_contract_missing",
+            "Chapter execution authority is missing; provider call blocked.",
+        )
+    pov_authority = generation_guardrails["pov_contract"]
+    if (
+        not pov_authority.get("configured")
+        or not str(pov_authority.get("pov_type") or "").strip()
+        or not str(pov_authority.get("narrator_scope") or "").strip()
+        or not str(pov_authority.get("interior_access") or "").strip()
+    ):
+        raise GenerationRequestBuildError(
+            "pov_contract_missing",
+            "Complete configured POV authority is required before provider spending.",
+        )
+
+    active_control_ids = set(generation_guardrails["active_story_control_ids"])
+    projected_control_ids = [
+        str(control.get("control_id") or "").strip()
+        for control in generation_guardrails["story_controls"]
+    ]
+    if (
+        any(not control_id for control_id in projected_control_ids)
+        or len(projected_control_ids) != len(set(projected_control_ids))
+        or not active_control_ids.issubset(set(projected_control_ids))
+    ):
+        raise GenerationRequestBuildError(
+            "story_control_projection_incomplete",
+            "Active Story Controls are missing or ambiguous in provider authority.",
+        )
+
+    raw_controls = (
+        (sidecar.get("validator_sidecar") or {}).get("story_controls")
+        or sidecar.get("story_controls")
+        or []
+    )
+    raw_events = execution_contract.get("required_event_sequence") or []
+    if (
+        not isinstance(raw_controls, list)
+        or len(generation_guardrails["story_controls"]) != len(raw_controls)
+        or not isinstance(raw_events, list)
+        or len(generation_guardrails["required_event_sequence"]) != len(raw_events)
+    ):
+        raise GenerationRequestBuildError(
+            "chapter_execution_projection_incomplete",
+            "Required Story Controls or event obligations were dropped during projection.",
+        )
+
+    # Require the two provider-facing authority channels to agree exactly.
+    # Count-only checks allow changed narrative obligations to pass pre-spend.
+    projected = projection_result["projection"]
+    projected_execution = projected.get("chapter_execution") or {}
+    projected_controls = projected.get("story_controls") or []
+    hard_controls = generation_guardrails["story_controls"]
+    if (
+        len(projected_controls) != len(hard_controls)
+        or [str(x.get("control_id") or "") for x in projected_controls]
+        != [str(x.get("control_id") or "") for x in hard_controls]
+        or any(
+            any(
+                str(projected_control.get(field) or "")
+                != str(hard_control.get(field) or "")
+                for field in (
+                    "control_type", "knowledge_ceiling", "instruction",
+                    "certainty", "presentation", "narrative_weight",
+                )
+            ) or projected_control.get("allowed_interpretations")
+            != hard_control.get("allowed_interpretations")
+            for projected_control, hard_control in zip(projected_controls, hard_controls)
+        )
+    ):
+        raise GenerationRequestBuildError(
+            "story_control_authority_mismatch",
+            "Provider reference and hard Story Controls disagree; provider call blocked.",
+        )
+
+    # Bind all five supported Story Control types to their exact authority.
+    # Empty permitted_claims do not grant any disclosure permission.
+    expected_disclosures = [
+        {
+            "control_id": str(control.get("control_id") or ""),
+            "control_type": str(control.get("control_type") or ""),
+            "book_number": book_number,
+            "chapter_number": chapter_number,
+            "permitted_claims": list(control.get("allowed_interpretations") or []),
+            "forbidden_claims": list(control.get("forbidden_assertions") or []),
+        }
+        for control in (sidecar.get("story_controls") or [])
+        if isinstance(control, dict)
+    ]
+    if projected.get("chapter_disclosure_authority") != expected_disclosures:
+        raise GenerationRequestBuildError(
+            "chapter_disclosure_authority_mismatch",
+            "Provider disclosures disagree with current chapter Story Controls.",
+        )
+
+    hard_events = generation_guardrails["required_event_sequence"]
+    projected_events = projected_execution.get("required_event_sequence") or []
+    if (
+        len(projected_events) != len(hard_events)
+        or any(
+            any(
+                projected_event.get(field) != hard_event.get(field)
+                for field in (
+                    "ordinal", "position", "chapter_role",
+                    "relationship_to_anchor", "objective",
+                )
+            )
+            or str((projected_event.get("event") or {}).get("record_id") or "")
+            != str((hard_event.get("event_ref") or {}).get("record_id") or "")
+            or str((projected_event.get("event") or {}).get("label") or "")
+            != str((hard_event.get("event_ref") or {}).get("label") or "")
+            or str((projected_event.get("anchor") or {}).get("record_id") or "")
+            != str((hard_event.get("anchor_event_ref") or {}).get("record_id") or "")
+            or str((projected_event.get("anchor") or {}).get("label") or "")
+            != str((hard_event.get("anchor_event_ref") or {}).get("label") or "")
+            for projected_event, hard_event in zip(projected_events, hard_events)
+        )
+    ):
+        raise GenerationRequestBuildError(
+            "event_sequence_authority_mismatch",
+            "Provider reference and hard required events disagree; provider call blocked.",
+        )
+
+    # Participant/location identity is part of the exact execution contract.
+    # Enforce it at the existing pre-spend gate, not in a downstream sanitizer.
+    for hard_key, projected_key in (
+        ("required_participants", "required_participants"),
+        ("required_locations", "required_locations"),
+    ):
+        hard_refs = generation_guardrails.get(hard_key) or []
+        projected_refs = projected_execution.get(projected_key) or []
+        if (
+            not isinstance(hard_refs, list)
+            or not isinstance(projected_refs, list)
+            or len(hard_refs) != len(projected_refs)
+            or any(
+                str(expected.get(field) or "") != str(actual.get(field) or "")
+                for expected, actual in zip(hard_refs, projected_refs)
+                for field in ("record_id", "record_type", "label")
+            )
+        ):
+            raise GenerationRequestBuildError(
+                "execution_reference_authority_mismatch",
+                "Required participant/location references disagree between authority channels.",
+            )
+
+    projected_pov = projected_execution.get("pov_contract") or {}
+    if any(
+        projected_pov.get(field) != pov_authority.get(field)
+        for field in (
+            "configured", "pov_type", "narrator_scope", "interior_access",
+            "head_hopping", "omniscient_style", "authorized_characters",
+            "prompt_rules",
+        )
+    ):
+        raise GenerationRequestBuildError(
+            "pov_authority_mismatch",
+            "Provider reference and hard POV authority disagree; provider call blocked.",
+        )
+
     prompt = prompt_builder.build_project_local_generation_prompt(
-        chapter_knowledge_text=chapter_text,
+        chapter_knowledge_text=str(projection_result["projection_text"]),
         generation_guardrails=generation_guardrails,
         target_words=prose_goal_words,
         author_voice_projection=author_voice_projection,
@@ -228,7 +427,24 @@ def build_generation_request_envelope(
     )
     canonical_prompt_bytes = canonical_prompt.encode("utf-8")
     provider_system_bytes = prompt_builder.provider_system_text(prompt).encode("utf-8")
-    provider_user_bytes = prompt_builder.provider_user_prompt_text(prompt).encode("utf-8")
+    provider_user_text = prompt_builder.provider_user_prompt_text(prompt)
+    try:
+        # Screen both provider channels. Future-reveal literals in hard
+        # guardrails are still provider disclosure, even when the user
+        # reference projection itself is clean.
+        generation_knowledge_projection_service.assert_provider_reference_safe(
+            prompt_builder.provider_system_text(prompt) + "\n" + provider_user_text,
+            raw_chapter_text=chapter_text,
+            local_sensitive_literals=list(
+                projection_result.get("local_sensitive_literals") or []
+            ),
+        )
+    except generation_knowledge_projection_service.GenerationKnowledgeProjectionError as exc:
+        raise GenerationRequestBuildError(
+            "generation_provider_input_unsafe",
+            str(exc),
+        ) from exc
+    provider_user_bytes = provider_user_text.encode("utf-8")
     provider_input_bytes = len(provider_system_bytes) + len(provider_user_bytes)
     local_input_tokens = int(math.ceil(provider_input_bytes / 4.0))
     estimated_output_tokens = int(math.ceil(prose_goal_words * 1.30))
@@ -261,6 +477,13 @@ def build_generation_request_envelope(
                 or sidecar.get("dependency_set_sha256")
                 or ""
             ),
+            "provider_projection_schema_version": str(
+                (projection_result.get("projection") or {}).get("schema_version") or ""
+            ),
+            "provider_projection_sha256": str(
+                projection_result.get("projection_sha256") or ""
+            ),
+            "raw_chapter_knowledge_in_provider_input": False,
         },
         "author_voice": {
             "schema_version": str(author_voice_projection.get("schema_version") or ""),
@@ -280,6 +503,31 @@ def build_generation_request_envelope(
             "raw_prose_in_request_metadata": False,
         },
     }
+
+    # Primary 45D: auditable identities of the actual authority assembled here.
+    # These are hashes of provider-facing projections, never raw Canon payloads.
+    contract_manifest = {
+        "schema_version": "italus.generation.contract_manifest.v1",
+        "chapter": {"book_number": book_number, "chapter_number": chapter_number},
+        "planner_execution_sha256": hashlib.sha256(
+            _canonical_json(sidecar.get("chapter_execution_contract") or {}).encode("utf-8")
+        ).hexdigest(),
+        "story_controls_sha256": hashlib.sha256(
+            _canonical_json({"controls": generation_guardrails.get("story_controls") or []}).encode("utf-8")
+        ).hexdigest(),
+        "pov_contract_sha256": hashlib.sha256(
+            _canonical_json(generation_guardrails["pov_contract"]).encode("utf-8")
+        ).hexdigest(),
+        "writing_rulebook_sha256": str(current_rulebook["sha256"]),
+        "reveal_safe_projection_sha256": str(projection_result["projection_sha256"]),
+        "author_voice_projection_sha256": str(author_voice_projection.get("projection_sha256") or ""),
+        "approved_continuity_sha256": hashlib.sha256(
+            _canonical_json((projection_result["projection"].get("approved_continuity") or {})).encode("utf-8")
+        ).hexdigest(),
+        "provider_system_sha256": hashlib.sha256(provider_system_bytes).hexdigest(),
+        "provider_user_sha256": hashlib.sha256(provider_user_bytes).hexdigest(),
+    }
+    source_artifacts["generation_contract"] = contract_manifest
 
     target_output = {
         "content_type": "text/plain",
@@ -424,9 +672,17 @@ def _build_generation_guardrails(sidecar: dict[str, Any]) -> dict[str, Any]:
 
     def _stable_refs(values: Any) -> list[dict[str, str]]:
         result: list[dict[str, str]] = []
+        if not isinstance(values, list) and values is not None:
+            raise GenerationRequestBuildError(
+                "chapter_execution_reference_invalid",
+                "Chapter execution references must be a list.",
+            )
         for raw in list(values or []):
-            if not isinstance(raw, dict):
-                continue
+            if not isinstance(raw, dict) or not str(raw.get("record_id") or "").strip():
+                raise GenerationRequestBuildError(
+                    "chapter_execution_reference_invalid",
+                    "Chapter execution reference has no valid record identity.",
+                )
             result.append(
                 {
                     "record_id": str(raw.get("record_id") or ""),
@@ -450,6 +706,10 @@ def _build_generation_guardrails(sidecar: dict[str, Any]) -> dict[str, Any]:
                 "event_ref": _stable_refs([raw.get("event_ref")])[0]
                 if isinstance(raw.get("event_ref"), dict)
                 and str((raw.get("event_ref") or {}).get("record_id") or "").strip()
+                else {},
+                "anchor_event_ref": _stable_refs([raw.get("anchor_event_ref")])[0]
+                if isinstance(raw.get("anchor_event_ref"), dict)
+                and str((raw.get("anchor_event_ref") or {}).get("record_id") or "").strip()
                 else {},
             }
         )
@@ -478,9 +738,9 @@ def _build_generation_guardrails(sidecar: dict[str, Any]) -> dict[str, Any]:
             for item in list(validator.get("chapter_restrictions") or [])
             if str(item).strip()
         ],
-        "allowed_reveals": [
+        "active_story_control_ids": [
             str(item)
-            for item in list(validator.get("allowed_reveals") or [])
+            for item in list(sidecar.get("story_control_refs") or [])
             if str(item).strip()
         ],
         "forbidden_future_knowledge": [

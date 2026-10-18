@@ -155,7 +155,7 @@ def _run_suite() -> int:
         "P42-01",
         "Prompt schema is the Primary 42 bounded provider contract",
         prompt.get("schema_version"),
-        "project_local_generation_prompt_v3",
+        "project_local_generation_prompt_v4",
     )
     suite.check(
         "P42-02",
@@ -174,20 +174,26 @@ def _run_suite() -> int:
     )
     suite.check(
         "P42-04",
-        "System authority projects chapter restrictions and forbidden-future knowledge",
-        len(list(guardrails.get("chapter_restrictions") or [])) == 4
-        and len(list(guardrails.get("forbidden_future_knowledge") or [])) == 4,
-        details=(
-            f"chapter_restrictions={len(list(guardrails.get('chapter_restrictions') or []))}; "
-            f"forbidden={len(list(guardrails.get('forbidden_future_knowledge') or []))}"
-        ),
+        "Provider guardrails exclude validator-only negative disclosure detail",
+        "chapter_restrictions" not in guardrails
+        and "forbidden_future_knowledge" not in guardrails
+        and "chapter_restrictions" not in system_text
+        and "forbidden_future_knowledge" not in system_text
+        and len(list(guardrails.get("authority_rules") or [])) >= 2,
+        details=f"provider_guardrail_keys={sorted(guardrails)}",
     )
+    provider_controls = list(guardrails.get("story_controls") or [])
     suite.check(
         "P42-05",
-        "System authority contains the active Story Control and knowledge ceiling",
-        len(list(guardrails.get("story_controls") or [])) == 1
-        and "589 storm fragment" in system_text
-        and "Book 1 Chapter 1 storm fragment only" in system_text,
+        "Provider retains active Story Control identity and safe positive ceiling without instruction leaks",
+        len(provider_controls) == 1
+        and all(isinstance(item, dict) for item in provider_controls)
+        and all("instruction" not in item and "forbidden_assertions" not in item for item in provider_controls)
+        and "story-control-43694f1e3338401d" in system_text
+        and "589 storm fragment" not in system_text
+        and all(item.get("knowledge_ceiling") and item["knowledge_ceiling"] in system_text for item in provider_controls)
+        and all(item.get("allowed_interpretations") for item in provider_controls),
+        details=f"story_controls={provider_controls!r}",
     )
     suite.check(
         "P42-06",
@@ -211,10 +217,10 @@ def _run_suite() -> int:
     )
     suite.check(
         "P42-08",
-        "Provider system instruction explicitly outranks conflicting reference facts",
-        "The presence of a fact in reference material does not authorize disclosure." in system_text
-        and "hard system-level constraints" in system_text
-        and "override any conflicting or broader fact" in system_text,
+        "Provider system instruction treats missing facts as intentionally withheld",
+        "reveal-safe projection" in system_text
+        and "must not be inferred, reconstructed, or invented" in system_text
+        and "hard system-level constraints" in system_text,
     )
     suite.check(
         "P42-09",

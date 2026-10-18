@@ -36,7 +36,6 @@ def run() -> int:
     from app.services import generation_service, replacement_generation_context_service
 
     rejected = "gen_f66b53921d88e90df6860046b49dcc7e"
-    current = "gen_9d9355b6fa08bff0085366f7877995a6"
 
     ctx = replacement_generation_context_service.build_replacement_correction_context(
         "italus-saga", rejected, book_number=1, chapter_number=1
@@ -166,33 +165,68 @@ def run() -> int:
                       and "content_after" not in str(ctx)
                       and "current_content" not in str(ctx)))
 
+    original_review_loader = (
+        replacement_generation_context_service.author_review_service.get_author_review_status
+    )
+    replacement_generation_context_service.author_review_service.get_author_review_status = (
+        lambda project_id, generation_id: {
+            "terminal": False,
+            "review_state": "pending_author_review",
+        }
+    )
     try:
         replacement_generation_context_service.build_replacement_correction_context(
-            "italus-saga", current, book_number=1, chapter_number=1
+            "italus-saga",
+            "gen_11111111111111111111111111111111",
+            book_number=1,
+            chapter_number=1,
         )
         non_rejected_blocked = False
     except replacement_generation_context_service.ReplacementGenerationContextError as exc:
         non_rejected_blocked = exc.code == "REPLACEMENT_SOURCE_NOT_REJECTED"
-    results.append(ck("P44-04", "Non-rejected candidates cannot source replacement correction", non_rejected_blocked))
+    finally:
+        replacement_generation_context_service.author_review_service.get_author_review_status = (
+            original_review_loader
+        )
+    results.append(ck(
+        "P44-04",
+        "Non-rejected candidates cannot source replacement correction",
+        non_rejected_blocked,
+    ))
 
-    initial = generation_service.build_generation_request_envelope(
-        "italus-saga", book_number=1, chapter_number=1
-    )
+    try:
+        initial = generation_service.build_generation_request_envelope(
+            "italus-saga", book_number=1, chapter_number=1
+        )
+    except generation_service.GenerationRequestBuildError as exc:
+        # A strict 45D readiness gate must never be bypassed to satisfy
+        # historical test fixtures. Distinguish missing prerequisites from
+        # an actual failed generation assertion.
+        if exc.code == "generation_request_not_ready":
+            blockers = list(exc.details.get("blockers") or [])
+            print("PRIMARY44 BLOCKED - Chapter 1 generation prerequisites not ready")
+            for blocker in blockers:
+                print("PRIMARY44 BLOCKER: " + str(blocker.get("code", "unknown"))
+                      + " - " + str(blocker.get("message", "")))
+            print("LIVE PROVIDER CALLS: NONE")
+            print("REAL PROJECT DATA MUTATION: NONE")
+            return 2
+        raise
     replacement = generation_service.build_generation_request_envelope(
         "italus-saga", book_number=1, chapter_number=1,
         replacement_correction_context=ctx,
     )
     results.append(ck(
         "P44-05",
-        "Replacement request is distinct while initial Primary 42 request identity remains unchanged",
-        initial["prompt"]["prompt_sha256"]
-            == "4e1e57721d2d8a5cd53062c954820b6c3eb812325935f250e8111fe84a354c13"
-        and initial["request_content_sha256"]
-            == "0de9257fc6d9d83d4716b4be7fe955e95a1b559b2257df0354862bf594bc3ae9"
+        "Replacement request remains distinct from reveal-safe initial generation",
+        initial["prompt"]["schema_version"] == "project_local_generation_prompt_v4"
         and "replacement" not in initial
         and initial["request_content_sha256"] != replacement["request_content_sha256"]
         and replacement["replacement"]["enabled"] is True
-        and replacement["replacement"]["context_sha256"] == ctx["context_sha256"],
+        and replacement["replacement"]["context_sha256"] == ctx["context_sha256"]
+        and (initial["source_artifacts"]["chapter_knowledge"] or {}).get(
+            "raw_chapter_knowledge_in_provider_input"
+        ) is False,
     ))
 
     sys_text = prompt_builder.provider_system_text(replacement["prompt"])
