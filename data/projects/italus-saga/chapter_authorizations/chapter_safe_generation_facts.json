@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "authority": "explicit-positive-chapter-permissions",
+  "chapter_permissions": [
+    {
+      "book_number": 1,
+      "chapter_number": 1,
+      "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+      "record_type": "character",
+      "approved_facts": [
+        "Italus is a mature Bosnian pine tree (Pinus heldreichii), with trunk, bark, roots, cambium and resin.",
+        "Italus participates as the tree in the 589 Pollino lightning event."
+      ]
+    },
+    {
+      "book_number": 1,
+      "chapter_number": 1,
+      "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+      "record_type": "character",
+      "approved_facts": [
+        "Luca is a fourteen-year-old human shepherd boy in the 789 mainline.",
+        "In 789 Luca observes fresh disturbed ground and displaced roots suggesting Italus has moved."
+      ]
+    },
+    {
+      "book_number": 1,
+      "chapter_number": 1,
+      "record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "record_type": "character",
+      "approved_facts": [
+        "In the 789 mainline a reclusive human monk observes Luca and later offers prayer as a credible cover for his visits.",
+        "The human figure in the 589 storm has human palms and sustains lightning-related palm injury."
+      ]
+    },
+    {
+      "book_number": 1,
+      "chapter_number": 1,
+      "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+      "record_type": "location",
+      "approved_facts": [
+        "The current chapter's 589 storm and 789 discovery take place in the Pollino landscape of southern Italy."
+      ]
+    },
+    {
+      "book_number": 1,
+      "chapter_number": 1,
+      "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+      "record_type": "event",
+      "selected_story_control_id": "story-control-43694f1e3338401d",
+      "approved_facts": [
+        "The 589 storm is a brief external historical flashback shown before the 789 mainline.",
+        "During the 589 storm an unidentified human figure is in direct physical contact with mature Italus, the pine tree, when lightning strikes.",
+        "The human figure sustains scorched palm injuries; Italus sustains resin and cambium damage.",
+        "Depict the immediate sensory aftermath and transition back to 789 before explaining any longer-term effect."
+      ]
+    },
+    {
+      "book_number": 1,
+      "chapter_number": 1,
+      "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+      "record_type": "event",
+      "approved_facts": [
+        "After the 589 external flashback, show Luca in 789 discovering fresh physical evidence that Italus has moved.",
+        "The monk later offers Luca prayer as a credible cover story."
+      ]
+    }
+  ]
+}

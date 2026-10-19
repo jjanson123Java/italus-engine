@@ -1,16 +1,155 @@
 {
-  "content_hash": "fd0a8ffb6bc69ad83ad9529d1a4b7daf0fd607ce4240086a108ce083d2e3f957",
+  "content_hash": "caad32c7a21264fc6bfdc46512fdf85429da71bff0e71d823a21aa1e8e5379ad",
   "hash_algorithm": "sha256:utf8_exact_v1",
   "project_id": "italus-saga",
   "schema_version": "provenance_lineage_v1",
   "segments": {
+    "segment_gen_178d0a7872dc3dda6dc9c2663297e410": {
+      "origin_ids": [
+        "origin_db3220ea0b584963838a5c5a5e2cd6e8"
+      ],
+      "segment_id": "segment_gen_178d0a7872dc3dda6dc9c2663297e410",
+      "version_ids": [
+        "version_ebec1d5fa8294db6a81c4f341df0ef55",
+        "review_version_e55fb8800716e3260dd029073be25dbb"
+      ]
+    },
+    "segment_gen_3dd28da7bc0f921b3a4f6809b7a986fc": {
+      "origin_ids": [
+        "origin_9715bfccef3342c490f65fe49285d60e"
+      ],
+      "segment_id": "segment_gen_3dd28da7bc0f921b3a4f6809b7a986fc",
+      "version_ids": [
+        "version_e58871b30fc246bdb7914c9d469477aa",
+        "review_version_2bc621fe1b78ca236e20865aafa5a2c3"
+      ]
+    },
+    "segment_gen_4017bd99fd46e4155220aa6c0ae1d2cd": {
+      "origin_ids": [
+        "origin_8f0dff68dfca42dda5a199921b28a05d"
+      ],
+      "segment_id": "segment_gen_4017bd99fd46e4155220aa6c0ae1d2cd",
+      "version_ids": [
+        "version_3423ddb244224fbeaa95d6fa35a190b7",
+        "review_version_e7c877680ca15566cbb18dcab2183874"
+      ]
+    },
+    "segment_gen_481b806c76a1c8f8e86dcc70d95b47b2": {
+      "origin_ids": [
+        "origin_4afd62cc174e4ca59d3f6420128b61d8"
+      ],
+      "segment_id": "segment_gen_481b806c76a1c8f8e86dcc70d95b47b2",
+      "version_ids": [
+        "version_05a824fa7bc74f878bfb99a3aadd071a",
+        "review_version_6fffacf2a61588981235f122d7c385d1"
+      ]
+    },
+    "segment_gen_5611e9b00d6b50d46125e8cae93035a9": {
+      "origin_ids": [
+        "origin_e608a60d0e9a4a8b8007e18f118a37f2"
+      ],
+      "segment_id": "segment_gen_5611e9b00d6b50d46125e8cae93035a9",
+      "version_ids": [
+        "version_ed920e7b77f148da9d10374bee10ca2a",
+        "review_version_44e3a30ba3b6e62df1739171caa750d3"
+      ]
+    },
+    "segment_gen_58be971d980a3da33561cc4d1201563a": {
+      "origin_ids": [
+        "origin_e1de06bc2a7b491a9db5b772d628b4aa"
+      ],
+      "segment_id": "segment_gen_58be971d980a3da33561cc4d1201563a",
+      "version_ids": [
+        "version_fe5c572cd54a49d8a08d5cc010ab6fdc",
+        "review_version_eae3c8426ea13db48b47baab0c5e7a42"
+      ]
+    },
+    "segment_gen_5b7e490101016e97e5d40d3af961baf3": {
+      "origin_ids": [
+        "origin_7fef6b2062d14a37b041a0320b09ce06"
+      ],
+      "segment_id": "segment_gen_5b7e490101016e97e5d40d3af961baf3",
+      "version_ids": [
+        "version_b5a46066e52f4da5b8f4b4d9e29ccde3",
+        "review_version_e613574a7a74f4515bfb613068610dd8"
+      ]
+    },
+    "segment_gen_61496be2bc5b92468338ad360e337c66": {
+      "origin_ids": [
+        "origin_1a62c574e0d6460a8e1432d100b73aaa"
+      ],
+      "segment_id": "segment_gen_61496be2bc5b92468338ad360e337c66",
+      "version_ids": [
+        "version_1723f1ae17004758858e3d3c92f81b54"
+      ]
+    },
+    "segment_gen_6a9b6adaff552d7f4e4b69be8e2aae08": {
+      "origin_ids": [
+        "origin_e13753bd8e144287ba7a4e608d460149"
+      ],
+      "segment_id": "segment_gen_6a9b6adaff552d7f4e4b69be8e2aae08",
+      "version_ids": [
+        "version_0f0b0a87666041398f689fd3b3e50bf8",
+        "review_version_a18535df2ec201be0f54df9cd9cdfb62"
+      ]
+    },
+    "segment_gen_7dec2fc85abc4953b3817f040cfd4634": {
+      "origin_ids": [
+        "origin_b59d341dfb2b41b6b6cb4b42b7f91ebb"
+      ],
+      "segment_id": "segment_gen_7dec2fc85abc4953b3817f040cfd4634",
+      "version_ids": [
+        "version_7db9e7eb22e8447bb920a070649a2046",
+        "review_version_ea282cedcd93098b1e5e4d8282eff87f"
+      ]
+    },
     "segment_gen_9d9355b6fa08bff0085366f7877995a6": {
       "origin_ids": [
         "origin_a0691a4f4d8b4b958c0a5e3882cc0e3f"
       ],
       "segment_id": "segment_gen_9d9355b6fa08bff0085366f7877995a6",
       "version_ids": [
-        "version_0108d1297498479b8615cc129ffbd2b3"
+        "version_0108d1297498479b8615cc129ffbd2b3",
+        "review_version_62d8497a7608602c7ed70b870ef04736"
+      ]
+    },
+    "segment_gen_a28c52705f41b9e936cf34b04aa34a0d": {
+      "origin_ids": [
+        "origin_61d7ebc31f624cabaa58760cdf75453e"
+      ],
+      "segment_id": "segment_gen_a28c52705f41b9e936cf34b04aa34a0d",
+      "version_ids": [
+        "version_ac04ef3f0d994b3d857257b2ba50086d"
+      ]
+    },
+    "segment_gen_c2e62a37fd3514e0a1fdb826c4857797": {
+      "origin_ids": [
+        "origin_e6bd332541bc42a5a6879f0a2b467b79"
+      ],
+      "segment_id": "segment_gen_c2e62a37fd3514e0a1fdb826c4857797",
+      "version_ids": [
+        "version_2ae6d0b43dc24f3b86a832f2c48504ba",
+        "review_version_59d0b617306edec9cb727896d8c17b58"
+      ]
+    },
+    "segment_gen_dac30883b12ba002abaf285a5c28b9dc": {
+      "origin_ids": [
+        "origin_c933592366bf4c10933ff36562bfee8d"
+      ],
+      "segment_id": "segment_gen_dac30883b12ba002abaf285a5c28b9dc",
+      "version_ids": [
+        "version_6d2d5ff00eba4db7ab92f6f3b28e52ff",
+        "review_version_03f096bc0f26b759f37a1ff568b03e28"
+      ]
+    },
+    "segment_gen_eccb74e1b195bff6cb2eac2710ff59e0": {
+      "origin_ids": [
+        "origin_e7fd0a47dd994b80a6e15a06d333175b"
+      ],
+      "segment_id": "segment_gen_eccb74e1b195bff6cb2eac2710ff59e0",
+      "version_ids": [
+        "version_acd97259b9f04b9c8090203fb5ce14c0",
+        "review_version_97c7784c3d2c987938658defb09ca1a8"
       ]
     },
     "segment_gen_f66b53921d88e90df6860046b49dcc7e": {
@@ -28,9 +167,25 @@
       ]
     }
   },
-  "source_event_count": 5,
-  "source_origin_count": 2,
+  "source_event_count": 18,
+  "source_origin_count": 16,
   "versions": {
+    "review_version_03f096bc0f26b759f37a1ff568b03e28": {
+      "actor": "AUTHOR",
+      "after_hash": "7a8437cf6cf93586c124a46a47c08c9be9172e32c70b356c67adb6579eb20397",
+      "before_hash": "7a8437cf6cf93586c124a46a47c08c9be9172e32c70b356c67adb6579eb20397",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_03f096bc0f26b759f37a1ff568b03e28",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_6d2d5ff00eba4db7ab92f6f3b28e52ff"
+      ],
+      "segment_id": "segment_gen_dac30883b12ba002abaf285a5c28b9dc",
+      "source_generation_id": "gen_dac30883b12ba002abaf285a5c28b9dc",
+      "timestamp": "2026-10-17T20:10:35.127300+00:00",
+      "version_id": "review_version_03f096bc0f26b759f37a1ff568b03e28"
+    },
     "review_version_0d6101ca494de7605360af3cba53f653": {
       "actor": "AUTHOR",
       "after_hash": "5b20a22502a5b02373205ed0b551aaea5b6a309aca480a586c8c8b3b3e88c83d",
@@ -63,6 +218,86 @@
       "timestamp": "2026-09-20T13:29:34.263705+00:00",
       "version_id": "review_version_2b0790d78341116e415a46c6cf38bcb7"
     },
+    "review_version_2bc621fe1b78ca236e20865aafa5a2c3": {
+      "actor": "AUTHOR",
+      "after_hash": "ac48277a611f9797a232f1b0ff38ad88337229c7bdfc1b1647b7d8300e4fff99",
+      "before_hash": "ac48277a611f9797a232f1b0ff38ad88337229c7bdfc1b1647b7d8300e4fff99",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_2bc621fe1b78ca236e20865aafa5a2c3",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_e58871b30fc246bdb7914c9d469477aa"
+      ],
+      "segment_id": "segment_gen_3dd28da7bc0f921b3a4f6809b7a986fc",
+      "source_generation_id": "gen_3dd28da7bc0f921b3a4f6809b7a986fc",
+      "timestamp": "2026-10-18T14:07:23.200865+00:00",
+      "version_id": "review_version_2bc621fe1b78ca236e20865aafa5a2c3"
+    },
+    "review_version_44e3a30ba3b6e62df1739171caa750d3": {
+      "actor": "AUTHOR",
+      "after_hash": "d31c565522da953f21a8c12d10a01f147b43c40779a1dbc04633a5f6f27d50ff",
+      "before_hash": "d31c565522da953f21a8c12d10a01f147b43c40779a1dbc04633a5f6f27d50ff",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_44e3a30ba3b6e62df1739171caa750d3",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_ed920e7b77f148da9d10374bee10ca2a"
+      ],
+      "segment_id": "segment_gen_5611e9b00d6b50d46125e8cae93035a9",
+      "source_generation_id": "gen_5611e9b00d6b50d46125e8cae93035a9",
+      "timestamp": "2026-10-17T16:50:09.579324+00:00",
+      "version_id": "review_version_44e3a30ba3b6e62df1739171caa750d3"
+    },
+    "review_version_59d0b617306edec9cb727896d8c17b58": {
+      "actor": "AUTHOR",
+      "after_hash": "7e5be360186dc26478d511ace0e25c7cb4a8f84b20d3c515cbbf402a23fa0676",
+      "before_hash": "7e5be360186dc26478d511ace0e25c7cb4a8f84b20d3c515cbbf402a23fa0676",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_59d0b617306edec9cb727896d8c17b58",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_2ae6d0b43dc24f3b86a832f2c48504ba"
+      ],
+      "segment_id": "segment_gen_c2e62a37fd3514e0a1fdb826c4857797",
+      "source_generation_id": "gen_c2e62a37fd3514e0a1fdb826c4857797",
+      "timestamp": "2026-10-18T16:02:00.743269+00:00",
+      "version_id": "review_version_59d0b617306edec9cb727896d8c17b58"
+    },
+    "review_version_62d8497a7608602c7ed70b870ef04736": {
+      "actor": "AUTHOR",
+      "after_hash": "2393613b4a780352b17d6d71cf9e0f15ff580a9d3e4fdfca5f8fbce2db7efaef",
+      "before_hash": "2393613b4a780352b17d6d71cf9e0f15ff580a9d3e4fdfca5f8fbce2db7efaef",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_62d8497a7608602c7ed70b870ef04736",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_0108d1297498479b8615cc129ffbd2b3"
+      ],
+      "segment_id": "segment_gen_9d9355b6fa08bff0085366f7877995a6",
+      "source_generation_id": "gen_9d9355b6fa08bff0085366f7877995a6",
+      "timestamp": "2026-09-20T21:00:50.188403+00:00",
+      "version_id": "review_version_62d8497a7608602c7ed70b870ef04736"
+    },
+    "review_version_6fffacf2a61588981235f122d7c385d1": {
+      "actor": "AUTHOR",
+      "after_hash": "0871f25ebec67450ea213e23e7b360423335b4a145c3ac229d7d0ded17a256c7",
+      "before_hash": "0871f25ebec67450ea213e23e7b360423335b4a145c3ac229d7d0ded17a256c7",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_6fffacf2a61588981235f122d7c385d1",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_05a824fa7bc74f878bfb99a3aadd071a"
+      ],
+      "segment_id": "segment_gen_481b806c76a1c8f8e86dcc70d95b47b2",
+      "source_generation_id": "gen_481b806c76a1c8f8e86dcc70d95b47b2",
+      "timestamp": "2026-10-18T14:30:58.006796+00:00",
+      "version_id": "review_version_6fffacf2a61588981235f122d7c385d1"
+    },
     "review_version_761381d43d7ebaae841414120c3d2dde": {
       "actor": "AUTHOR",
       "after_hash": "920f68748aed60fd20476e41ae27f8b5e7821bb49b0b1da9ff688cb6502ab130",
@@ -94,6 +329,118 @@
       "source_generation_id": "gen_f66b53921d88e90df6860046b49dcc7e",
       "timestamp": "2026-09-20T13:21:34.150642+00:00",
       "version_id": "review_version_7f8ec4c1eb5aa627a752715f09c7a815"
+    },
+    "review_version_97c7784c3d2c987938658defb09ca1a8": {
+      "actor": "AUTHOR",
+      "after_hash": "b51a4f296e95fb8493e906fbaf2f8abb4892875f1bbef0052c17d170d3bf43cb",
+      "before_hash": "b51a4f296e95fb8493e906fbaf2f8abb4892875f1bbef0052c17d170d3bf43cb",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_97c7784c3d2c987938658defb09ca1a8",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_acd97259b9f04b9c8090203fb5ce14c0"
+      ],
+      "segment_id": "segment_gen_eccb74e1b195bff6cb2eac2710ff59e0",
+      "source_generation_id": "gen_eccb74e1b195bff6cb2eac2710ff59e0",
+      "timestamp": "2026-10-18T11:47:55.545480+00:00",
+      "version_id": "review_version_97c7784c3d2c987938658defb09ca1a8"
+    },
+    "review_version_a18535df2ec201be0f54df9cd9cdfb62": {
+      "actor": "AUTHOR",
+      "after_hash": "9e1b2f3bfd374d4c41d1616657b8431702cd857f446e64fa4b9193aa48ce07d9",
+      "before_hash": "9e1b2f3bfd374d4c41d1616657b8431702cd857f446e64fa4b9193aa48ce07d9",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_a18535df2ec201be0f54df9cd9cdfb62",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_0f0b0a87666041398f689fd3b3e50bf8"
+      ],
+      "segment_id": "segment_gen_6a9b6adaff552d7f4e4b69be8e2aae08",
+      "source_generation_id": "gen_6a9b6adaff552d7f4e4b69be8e2aae08",
+      "timestamp": "2026-10-18T12:25:55.647211+00:00",
+      "version_id": "review_version_a18535df2ec201be0f54df9cd9cdfb62"
+    },
+    "review_version_e55fb8800716e3260dd029073be25dbb": {
+      "actor": "AUTHOR",
+      "after_hash": "d142edbbf90f762fc19b598d6c5fc213baedb9de90396296005d74cc7ba5d736",
+      "before_hash": "d142edbbf90f762fc19b598d6c5fc213baedb9de90396296005d74cc7ba5d736",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_e55fb8800716e3260dd029073be25dbb",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_ebec1d5fa8294db6a81c4f341df0ef55"
+      ],
+      "segment_id": "segment_gen_178d0a7872dc3dda6dc9c2663297e410",
+      "source_generation_id": "gen_178d0a7872dc3dda6dc9c2663297e410",
+      "timestamp": "2026-10-18T19:41:48.099455+00:00",
+      "version_id": "review_version_e55fb8800716e3260dd029073be25dbb"
+    },
+    "review_version_e613574a7a74f4515bfb613068610dd8": {
+      "actor": "AUTHOR",
+      "after_hash": "2777eb797fc5d964915f6dcd771c0eb6545a278aa49017a2ad6670005f221c3a",
+      "before_hash": "2777eb797fc5d964915f6dcd771c0eb6545a278aa49017a2ad6670005f221c3a",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_e613574a7a74f4515bfb613068610dd8",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_b5a46066e52f4da5b8f4b4d9e29ccde3"
+      ],
+      "segment_id": "segment_gen_5b7e490101016e97e5d40d3af961baf3",
+      "source_generation_id": "gen_5b7e490101016e97e5d40d3af961baf3",
+      "timestamp": "2026-10-18T18:54:50.065463+00:00",
+      "version_id": "review_version_e613574a7a74f4515bfb613068610dd8"
+    },
+    "review_version_e7c877680ca15566cbb18dcab2183874": {
+      "actor": "AUTHOR",
+      "after_hash": "381f260f5a2b8b6e0f6c043f924d26651642cfa9871044449a3ddde8bd5e5c38",
+      "before_hash": "381f260f5a2b8b6e0f6c043f924d26651642cfa9871044449a3ddde8bd5e5c38",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_e7c877680ca15566cbb18dcab2183874",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_3423ddb244224fbeaa95d6fa35a190b7"
+      ],
+      "segment_id": "segment_gen_4017bd99fd46e4155220aa6c0ae1d2cd",
+      "source_generation_id": "gen_4017bd99fd46e4155220aa6c0ae1d2cd",
+      "timestamp": "2026-10-16T19:23:55.409117+00:00",
+      "version_id": "review_version_e7c877680ca15566cbb18dcab2183874"
+    },
+    "review_version_ea282cedcd93098b1e5e4d8282eff87f": {
+      "actor": "AUTHOR",
+      "after_hash": "586fa14b34f7f0eee72936681cf3a4b4b749ce1f8acffee7c035031487d4c71d",
+      "before_hash": "586fa14b34f7f0eee72936681cf3a4b4b749ce1f8acffee7c035031487d4c71d",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_ea282cedcd93098b1e5e4d8282eff87f",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_7db9e7eb22e8447bb920a070649a2046"
+      ],
+      "segment_id": "segment_gen_7dec2fc85abc4953b3817f040cfd4634",
+      "source_generation_id": "gen_7dec2fc85abc4953b3817f040cfd4634",
+      "timestamp": "2026-10-18T21:25:57.509706+00:00",
+      "version_id": "review_version_ea282cedcd93098b1e5e4d8282eff87f"
+    },
+    "review_version_eae3c8426ea13db48b47baab0c5e7a42": {
+      "actor": "AUTHOR",
+      "after_hash": "e6881875a3c3f153c32f86ea15b63a937e65c17c3eff96b94d9fd1a3c2f04b48",
+      "before_hash": "e6881875a3c3f153c32f86ea15b63a937e65c17c3eff96b94d9fd1a3c2f04b48",
+      "book_number": 1,
+      "chapter_number": 1,
+      "event_id": "review_event_eae3c8426ea13db48b47baab0c5e7a42",
+      "operation": "AUTHOR_REJECT",
+      "parent_version_ids": [
+        "version_fe5c572cd54a49d8a08d5cc010ab6fdc"
+      ],
+      "segment_id": "segment_gen_58be971d980a3da33561cc4d1201563a",
+      "source_generation_id": "gen_58be971d980a3da33561cc4d1201563a",
+      "timestamp": "2026-10-18T15:00:32.196581+00:00",
+      "version_id": "review_version_eae3c8426ea13db48b47baab0c5e7a42"
     },
     "review_version_f19f0daf15b4ff4e10a7ea9cf190e1e5": {
       "actor": "AUTHOR",
@@ -138,6 +485,202 @@
       "source_generation_id": "gen_9d9355b6fa08bff0085366f7877995a6",
       "timestamp": "2026-09-20T15:12:05.488620+00:00",
       "version_id": "version_0108d1297498479b8615cc129ffbd2b3"
+    },
+    "version_05a824fa7bc74f878bfb99a3aadd071a": {
+      "actor": "MODEL",
+      "after_hash": "0871f25ebec67450ea213e23e7b360423335b4a145c3ac229d7d0ded17a256c7",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_4afd62cc174e4ca59d3f6420128b61d8",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_481b806c76a1c8f8e86dcc70d95b47b2",
+      "source_generation_id": "gen_481b806c76a1c8f8e86dcc70d95b47b2",
+      "timestamp": "2026-10-18T14:08:30.677470+00:00",
+      "version_id": "version_05a824fa7bc74f878bfb99a3aadd071a"
+    },
+    "version_0f0b0a87666041398f689fd3b3e50bf8": {
+      "actor": "MODEL",
+      "after_hash": "9e1b2f3bfd374d4c41d1616657b8431702cd857f446e64fa4b9193aa48ce07d9",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_e13753bd8e144287ba7a4e608d460149",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_6a9b6adaff552d7f4e4b69be8e2aae08",
+      "source_generation_id": "gen_6a9b6adaff552d7f4e4b69be8e2aae08",
+      "timestamp": "2026-10-18T11:49:05.888333+00:00",
+      "version_id": "version_0f0b0a87666041398f689fd3b3e50bf8"
+    },
+    "version_1723f1ae17004758858e3d3c92f81b54": {
+      "actor": "MODEL",
+      "after_hash": "d69f2fe1fc7870eeb288fde0d10d4234ad427fb291d3c44397b9d0319989b474",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_1a62c574e0d6460a8e1432d100b73aaa",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_61496be2bc5b92468338ad360e337c66",
+      "source_generation_id": "gen_61496be2bc5b92468338ad360e337c66",
+      "timestamp": "2026-09-20T21:02:30.838283+00:00",
+      "version_id": "version_1723f1ae17004758858e3d3c92f81b54"
+    },
+    "version_2ae6d0b43dc24f3b86a832f2c48504ba": {
+      "actor": "MODEL",
+      "after_hash": "7e5be360186dc26478d511ace0e25c7cb4a8f84b20d3c515cbbf402a23fa0676",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_e6bd332541bc42a5a6879f0a2b467b79",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_c2e62a37fd3514e0a1fdb826c4857797",
+      "source_generation_id": "gen_c2e62a37fd3514e0a1fdb826c4857797",
+      "timestamp": "2026-10-18T15:01:44.042676+00:00",
+      "version_id": "version_2ae6d0b43dc24f3b86a832f2c48504ba"
+    },
+    "version_3423ddb244224fbeaa95d6fa35a190b7": {
+      "actor": "MODEL",
+      "after_hash": "381f260f5a2b8b6e0f6c043f924d26651642cfa9871044449a3ddde8bd5e5c38",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_8f0dff68dfca42dda5a199921b28a05d",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_4017bd99fd46e4155220aa6c0ae1d2cd",
+      "source_generation_id": "gen_4017bd99fd46e4155220aa6c0ae1d2cd",
+      "timestamp": "2026-10-11T13:26:38.316243+00:00",
+      "version_id": "version_3423ddb244224fbeaa95d6fa35a190b7"
+    },
+    "version_6d2d5ff00eba4db7ab92f6f3b28e52ff": {
+      "actor": "MODEL",
+      "after_hash": "7a8437cf6cf93586c124a46a47c08c9be9172e32c70b356c67adb6579eb20397",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_c933592366bf4c10933ff36562bfee8d",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_dac30883b12ba002abaf285a5c28b9dc",
+      "source_generation_id": "gen_dac30883b12ba002abaf285a5c28b9dc",
+      "timestamp": "2026-10-17T19:35:14.939388+00:00",
+      "version_id": "version_6d2d5ff00eba4db7ab92f6f3b28e52ff"
+    },
+    "version_7db9e7eb22e8447bb920a070649a2046": {
+      "actor": "MODEL",
+      "after_hash": "586fa14b34f7f0eee72936681cf3a4b4b749ce1f8acffee7c035031487d4c71d",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_b59d341dfb2b41b6b6cb4b42b7f91ebb",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_7dec2fc85abc4953b3817f040cfd4634",
+      "source_generation_id": "gen_7dec2fc85abc4953b3817f040cfd4634",
+      "timestamp": "2026-10-18T19:43:12.721976+00:00",
+      "version_id": "version_7db9e7eb22e8447bb920a070649a2046"
+    },
+    "version_ac04ef3f0d994b3d857257b2ba50086d": {
+      "actor": "MODEL",
+      "after_hash": "e591b3a09aebc1b8befe90a0d036237796c37af028b1420e8fcd6e371993a78a",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_61d7ebc31f624cabaa58760cdf75453e",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_a28c52705f41b9e936cf34b04aa34a0d",
+      "source_generation_id": "gen_a28c52705f41b9e936cf34b04aa34a0d",
+      "timestamp": "2026-10-18T21:27:09.518723+00:00",
+      "version_id": "version_ac04ef3f0d994b3d857257b2ba50086d"
+    },
+    "version_acd97259b9f04b9c8090203fb5ce14c0": {
+      "actor": "MODEL",
+      "after_hash": "b51a4f296e95fb8493e906fbaf2f8abb4892875f1bbef0052c17d170d3bf43cb",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_e7fd0a47dd994b80a6e15a06d333175b",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_eccb74e1b195bff6cb2eac2710ff59e0",
+      "source_generation_id": "gen_eccb74e1b195bff6cb2eac2710ff59e0",
+      "timestamp": "2026-10-17T20:11:17.186271+00:00",
+      "version_id": "version_acd97259b9f04b9c8090203fb5ce14c0"
+    },
+    "version_b5a46066e52f4da5b8f4b4d9e29ccde3": {
+      "actor": "MODEL",
+      "after_hash": "2777eb797fc5d964915f6dcd771c0eb6545a278aa49017a2ad6670005f221c3a",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_7fef6b2062d14a37b041a0320b09ce06",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_5b7e490101016e97e5d40d3af961baf3",
+      "source_generation_id": "gen_5b7e490101016e97e5d40d3af961baf3",
+      "timestamp": "2026-10-18T16:03:13.647769+00:00",
+      "version_id": "version_b5a46066e52f4da5b8f4b4d9e29ccde3"
+    },
+    "version_e58871b30fc246bdb7914c9d469477aa": {
+      "actor": "MODEL",
+      "after_hash": "ac48277a611f9797a232f1b0ff38ad88337229c7bdfc1b1647b7d8300e4fff99",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_9715bfccef3342c490f65fe49285d60e",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_3dd28da7bc0f921b3a4f6809b7a986fc",
+      "source_generation_id": "gen_3dd28da7bc0f921b3a4f6809b7a986fc",
+      "timestamp": "2026-10-18T12:27:01.458461+00:00",
+      "version_id": "version_e58871b30fc246bdb7914c9d469477aa"
+    },
+    "version_ebec1d5fa8294db6a81c4f341df0ef55": {
+      "actor": "MODEL",
+      "after_hash": "d142edbbf90f762fc19b598d6c5fc213baedb9de90396296005d74cc7ba5d736",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_db3220ea0b584963838a5c5a5e2cd6e8",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_178d0a7872dc3dda6dc9c2663297e410",
+      "source_generation_id": "gen_178d0a7872dc3dda6dc9c2663297e410",
+      "timestamp": "2026-10-18T18:55:48.734519+00:00",
+      "version_id": "version_ebec1d5fa8294db6a81c4f341df0ef55"
+    },
+    "version_ed920e7b77f148da9d10374bee10ca2a": {
+      "actor": "MODEL",
+      "after_hash": "d31c565522da953f21a8c12d10a01f147b43c40779a1dbc04633a5f6f27d50ff",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_e608a60d0e9a4a8b8007e18f118a37f2",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_5611e9b00d6b50d46125e8cae93035a9",
+      "source_generation_id": "gen_5611e9b00d6b50d46125e8cae93035a9",
+      "timestamp": "2026-10-16T19:25:09.797381+00:00",
+      "version_id": "version_ed920e7b77f148da9d10374bee10ca2a"
+    },
+    "version_fe5c572cd54a49d8a08d5cc010ab6fdc": {
+      "actor": "MODEL",
+      "after_hash": "e6881875a3c3f153c32f86ea15b63a937e65c17c3eff96b94d9fd1a3c2f04b48",
+      "before_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "book_number": 1,
+      "chapter_number": 1,
+      "operation": "ORIGIN_CAPTURE",
+      "origin_id": "origin_e1de06bc2a7b491a9db5b772d628b4aa",
+      "parent_version_ids": [],
+      "segment_id": "segment_gen_58be971d980a3da33561cc4d1201563a",
+      "source_generation_id": "gen_58be971d980a3da33561cc4d1201563a",
+      "timestamp": "2026-10-18T14:32:21.043060+00:00",
+      "version_id": "version_fe5c572cd54a49d8a08d5cc010ab6fdc"
     }
   }
 }

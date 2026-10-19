@@ -1,0 +1,221 @@
+{
+  "approved_continuity_committed": false,
+  "author_review_persisted": false,
+  "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+  "book_number": 1,
+  "chapter_number": 1,
+  "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
+  "execution_fingerprint": "597644d308928dc9ba6295f480deefcf8b4ead90a81c31b5cc96be3b3bad6a12",
+  "generation_id": "gen_5b7e490101016e97e5d40d3af961baf3",
+  "generation_quality_gate": {
+    "blockers": [
+      {
+        "code": "DETERMINISTIC_PROSE_FAILURE",
+        "measurement": 3014,
+        "message": "Word count is 3014; minimum is 4000.",
+        "metric": "word_count",
+        "operator": "minimum",
+        "threshold": 4000
+      }
+    ],
+    "deterministic_metrics": {
+      "colons": {
+        "measurement": 1,
+        "message": "Colons count is 1; hard maximum is 3.",
+        "metric": "colons",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 3
+      },
+      "ellipses": {
+        "measurement": 0,
+        "message": "Ellipses count is 0; hard maximum is 4.",
+        "metric": "ellipses",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 4
+      },
+      "em_dashes": {
+        "measurement": 0,
+        "message": "Em Dashes count is 0; hard maximum is 8.",
+        "metric": "em_dashes",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 8
+      },
+      "semicolons": {
+        "measurement": 5,
+        "message": "Semicolons count is 5; hard maximum is 15.",
+        "metric": "semicolons",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 15
+      },
+      "word_count": {
+        "measurement": 3014,
+        "message": "Word count is 3014; minimum is 4000.",
+        "metric": "word_count",
+        "operator": "minimum",
+        "passed": false,
+        "threshold": 4000
+      }
+    },
+    "passed": false,
+    "schema_version": "generation_quality_gate_v1",
+    "service": "primary45c-generation-quality-gate-v1",
+    "stop_reason": "end_turn"
+  },
+  "inference_scope": "global",
+  "model_id": "claude-haiku-4-5-20251001",
+  "output_content_type": "text/plain",
+  "output_text": "# Chapter One\n\nThe roar of the storm consumed everything. Sky and earth had become one violent thing, and the air itself burned. Two figures stood at the mountain's crown, their bodies rigid against the deluge, and in the instant before the lightning struck, they saw each other with a clarity that no ordinary light could grant. The bolt came down through them both, and in that fraction of a second before their nerve systems began to scream, they understood something together, a shared knowing that would mark them both for the remainder of their separate lives. It was not revelation. It was alteration. The lightning did not burn away what they were; it changed the substance of what they would become. Their palms blistered. Their vision fractured into colors that no ordinary eye should perceive. The smell of scorched flesh and ozone fused into something else, something that would come back to them in dreams and in the sudden moments between waking and sleep. When the thunder finally ended and they collapsed into the driving rain, they were no longer quite themselves.\n\nTwo hundred years passed.\n\nThe quiet of the Pollino heights felt different now, thin and deliberate, as though the mountain itself were holding its breath. Luca knelt beside the scored earth, running his fingers across the exposed soil where something heavy and deliberate had torn through the forest floor. The ground was still fresh. Particles of dark loam clung to his fingernails, and the edges of the disturbance had not yet begun to crumble or weather. Whatever had moved through here had done so recently, within days perhaps, or even more recently than that.\n\nHis eyes traced a line deeper into the forest. The pines here grew with a particular geometry that Luca had come to know with an almost painful intimacy over the past months. He had spent so many afternoons pacing these slopes, measuring them against some internal map he had built through repetition and careful observation. Each tree held a place in his mental survey. Each rock formation, each stand of scrub, each visible patch of exposed limestone formed part of an architecture that existed now only in his memory.\n\nBut something had changed.\n\nLuca straightened and moved forward, stepping carefully across the disturbed ground. To his left, where a particular pine should have stood, there was now nothing but empty space and a faint depression in the needle-thick soil. He could see the rough outline where the tree's base had rested, a circle of deeper discoloration perhaps six paces from where he now stood. The tree itself was gone. It had not fallen naturally; no splintered trunk lay among the undergrowth, no broken branches hung from surrounding growth. It had been moved. Deliberately. Methodically.\n\nLuca's breath came harder now. This was not imagination or the trick of a half-remembered landscape. This was physical fact, as real and irrefutable as the earth itself. Someone had come here. Someone had taken the time and effort to uproot a mature tree and move it elsewhere. Italus. It had to be Italus.\n\nFor months now, Luca had pursued the shape of a pattern, following traces that seemed to shift and dissolve whenever he drew close. The hermit had left the settlement at Saracena almost seven years ago, had vanished into the high places without explanation or farewell. The people who had known him simply accepted his departure as the inevitable choice of a man too strange for ordinary community. But Luca remembered the shape of Italus's hands. He remembered the way the old man had watched the children play with an intensity that seemed to encompass more than mere observation. He remembered conversations, brief and strange, in which Italus had posed questions that seemed to circle around knowledge that he already possessed.\n\nAnd then, almost a year ago, Luca had found evidence that Italus had returned to the Pollino. Not to the village. Not to any inhabited place. But to the heights. To this particular region of the mountain, which seemed to have drawn him with an insistence that suggested purpose rather than chance.\n\nThe evidence had been subtle at first. A cleared patch of undergrowth where a shelter had been constructed and then abandoned. A series of marks on the stones that might have been accidental or might have been intentional. But they had compelled Luca to return, again and again, to walk the same paths and cover the same ground, searching for confirmation of a presence that seemed to exist just beyond the edge of proof.\n\nHis family had begun to notice. His mother had asked why he spent so many afternoons on the heights when there was work to be done in the village. His sister had made comments about his distraction, about the way he seemed to listen for sounds that no one else could hear. The priest had suggested, with barely concealed skepticism, that Luca was developing the calling of a monk himself, so devoted was he to solitary wandering. Even his father had raised an eyebrow when Luca had returned with torn clothing and scraped hands, requiring explanations that grew progressively weaker and less credible with each successive visit.\n\nNow, standing before the empty space where a tree should have been, Luca felt the weight of those increasing scrutinies. He knew that his excuses were wearing thin. He could not return to the village and speak the truth: that he was tracking a phantom, following the erratic trail of a man who might not exist in any present sense at all. How could he explain his compulsion to his family, to the village, to himself? What reason could he offer that would sound sane?\n\nYet here was the evidence, incontrovertible and physical. The tree had been moved. The ground had been disturbed. Something had changed in this landscape that Luca knew with intimate precision.\n\nHe began to pace out the area methodically, measuring it with the careful stride he had developed over months of surveying. The disturbance extended in a roughly westward direction, following the natural descent of the slope but deliberately chosen rather than accidental. Whoever had moved through here had known where they were going. They had selected a path that was concealed enough to avoid immediate notice but deliberate enough to suggest purpose.\n\nAs Luca traced the line of disturbance, a wave of vertigo suddenly seized him. The mountain seemed to shift beneath his feet, the orientation of stones and trees and sky fragmenting into components that no longer cohered into a single stable space. His mind, which had been so carefully constructing and maintaining its precise map of the landscape, suddenly faltered. The effort of holding all those measurements and spatial relationships in consciousness at once, while simultaneously registering the way that landscape had been altered, created a disorientation that felt almost physical. The ground seemed to tilt. The sky pressed down. For a moment, Luca could not remember which direction was upslope and which was down.\n\nHe sat down abruptly on a nearby stone, his breath coming in short gasps. The sensation slowly began to recede, replaced by a hollow exhaustion. He had pushed too hard into the work of observation. He had maintained the intensity of focus for too long. Or perhaps it was something else entirely, something that arose from the fundamental wrongness of finding that a landscape he thought he understood had been deliberately altered by forces outside his comprehension or control.\n\nWhen the dizziness finally faded enough for him to trust his legs again, Luca gathered what he could see of the evidence. He did not take anything physical; he simply committed the details to memory with the same methodical intensity he brought to everything else. The angle of the tree's former base. The pattern of the scored earth. The direction of the disturbance leading deeper into the forest. All of it was stored now in the careful architecture of his mind, another piece of the puzzle that he was assembling without knowing what the final picture might resemble.\n\nHe would have to come back. He would have to construct some new excuse, some fresh explanation for his family and the village that might carry a little more weight than the previous ones. But he knew, with a certainty that felt like cold metal in his chest, that he would find a way. Because whatever Italus was doing here, whatever purpose had drawn him to the high places of the Pollino and compelled him to methodically alter the landscape itself, Luca needed to understand it.\n\nHe needed to know.\n\nOver the following weeks, Luca's visits to the Pollino heights became more frequent and more desperate. He returned three times in the first ten days alone, each time pushing a little deeper into the forest, searching for signs that the disturbance had been followed by further movement or change. His family's patience began to visibly fray. His mother started asking sharper questions about where he spent his time. His sister made open comments about how thin he was becoming, how distracted he seemed at the evening meal. Even the younger children had begun to notice his peculiar intensity, and they had taken to mimicking his solitary wanderings with a mockery that stung precisely because they did not understand its target.\n\nAt the market, Luca overheard two women discussing his behavior. They had not meant him to hear them; they were speaking in low tones while he was selecting vegetables for his mother. But their voices carried enough to reach him, and the words lodged in his memory with painful clarity. Strange boy. Getting stranger. Probably ends up like Italus, they had said. Or worse. The priest should speak to his father.\n\nLuca had selected his vegetables and left without looking at them again.\n\nThe practical difficulty of maintaining his search was becoming acute. He could not simply vanish for hours at a time without explanation. He could not emerge from the forest with torn clothing and scraped hands without having to account for the damage. More subtly, his own internal resources were beginning to flag. The intensity of focus that he had maintained for so long was starting to create a kind of fatigue that sleep did not seem to cure. His dreams were filled with images of altered landscape, trees that should be present but were not, ground that had been scored by forces he could not identify. He would wake in the darkness with his heart racing, convinced for a moment that he had missed some crucial detail, some piece of evidence that would unlock the entire mystery.\n\nIt was on an afternoon in the third week of his renewed searching that Luca encountered the monk.\n\nHe had taken the longer route up to the heights that day, deliberately avoiding the most direct paths in hope of finding fresh evidence approaching from a different angle. The afternoon was growing long, and he was moving quickly through terrain that he had not thoroughly surveyed before, when he became aware that he was no longer alone on the mountain.\n\nAt first, he thought it was merely the way the shadows fell between the trees, or the subtle movement of a larger animal in the undergrowth. But as he paused and listened, he became certain of a human presence. Someone was moving through the forest behind him, perhaps fifty paces back, matching his pace with a precision that suggested deliberate tracking rather than coincidence.\n\nLuca's first impulse was to move faster, to break into a run and put distance between himself and whatever followed. But he forced himself to stop instead, turning to face back down the slope, waiting to see who would emerge.\n\nThe man who appeared from between the pines was dressed in a simple woolen habit, the rough cloth of a mountain monk. His age was difficult to determine; his face was weathered by sun and wind, and his hair had gone entirely gray. He carried nothing with him, no staff, no visible provisions, just the habit and a rope belt tied around his waist. But it was his hands that caught Luca's attention. They were marked with old scarring, pale marks that stood out against his weathered skin, patterns that looked almost like burn damage.\n\n\"You move through these heights with unusual frequency, boy,\" the monk said. His voice was rough, as though he did not use it often, but his Latin was clear. \"And your excuses grow weaker with each visit.\"\n\nLuca felt his face flush. \"I have reasons,\" he said, trying to keep his voice steady. \"My business on the mountain is my own.\"\n\n\"Of course it is,\" the monk agreed. \"But you become less successful at keeping it secret with each visit to Saracena and back. The village notices things, even if they do not yet understand what they are noticing. And your family begins to speak about you in ways that suggest they are becoming alarmed.\"\n\nLuca said nothing. He could not deny the truth of the monk's observation.\n\n\"You are searching for something,\" the man continued, moving a few paces closer but stopping at a respectful distance. \"Or someone. And whatever you are searching for, you have decided that secrecy is necessary. That suggests either danger or shame. Possibly both.\"\n\n\"Why does it matter to you?\" Luca asked, defensive now. \"There are many monks in the Pollino. Why should you concern yourself with a boy from the village?\"\n\nThe monk smiled, a thin expression that changed the lines of his weathered face. \"Because I know this mountain, boy. I know its paths and its places. And I know when something moves through it with purpose. You move with purpose. And you are moving toward something that you do not fully understand.\"\n\nLuca wanted to turn and walk away. But something in the monk's words held him. This man knew the mountain. This man moved through it with the ease of someone who had spent years learning its paths. This man, with his burnt and scarred hands, seemed to know far more than he should about Luca's private searches.\n\n\"You cannot continue as you are doing,\" the monk said. \"Your excuses will fail you within days or weeks at most. Your family will forbid your return to the heights. Your secret will be forced into the open, and you will have achieved nothing but the loss of your freedom to search at all.\"\n\n\"Then what do you suggest?\" Luca asked, hearing the desperation in his own voice. \"I cannot stop. I cannot explain. And I cannot continue indefinitely without being stopped.\"\n\n\"There is another way,\" the monk said. \"Prayer. Spiritual seeking. You are young, and the village understands when the young feel drawn to contemplate higher things. If you tell your family that you have felt a calling to the contemplative life, that you wish to spend time in prayer and meditation on the mountain, they will understand. It will satisfy their curiosity. It will provide you with credible reason to return to these heights as frequently as you wish. And no one will question the solitary habits of a boy seeking connection with God.\"\n\nLuca stared at the monk, considering the suggestion. It was audacious, and it relied on a kind of dissimulation that he had not previously considered. Yet it was also practical. It would provide him with the cover he needed to continue his search. It would transform his repeated visits from a source of family anxiety into something that would meet with approval, or at least resigned acceptance.\n\n\"How do you know so much about my situation?\" Luca asked.\n\n\"I know the mountain,\" the monk repeated. \"And I have spent enough time in the vicinity of the village to understand its patterns and its concerns. You are not the first young person to wrestle with questions of calling and purpose. But you are unusually intense in your searching.\"\n\nOver the following weeks, as Luca implemented the monk's suggestion and began to frame his repeated visits to the Pollino as spiritual seeking, he began also to develop more sophisticated techniques of concealment. He learned to move through the forest in ways that left less evidence of his passage. He started to time his visits so that they fell within windows when his family would not notice his absence. He developed small rituals of prayer and meditation that he could genuinely perform while on the mountain, so that if anyone ever happened to observe him, they would find exactly what his stated purposes suggested.\n\nHe did not see the monk again after that afternoon, but the man's presence seemed to linger in the efficiency that Luca brought to his new practices. It was as though the encounter had crystallized something that had been diffuse and struggling before. Luca was no longer simply a boy pursuing an incomprehensible compulsion. He was becoming someone who moved with purpose, who understood that secrecy required practice, who recognized that the most effective concealment was the one that worked because people believed in what they thought they were seeing.\n\nAnd in the depths of the forest, in places where no one from the village was likely to wander, Luca continued his search for evidence of Italus. He did not find the hermit himself, not yet. But he found more signs. A shelter that had been occupied recently. A cache of provisions hidden beneath a natural overhang. Once, on a particularly fortunate afternoon, he found what appeared to be a sleeping place, marked by the depression of a body in dried leaves and the careful arrangement of stones that suggested intentional shelter-construction.\n\nItalus was here. He was moving through the mountain with purpose and method. And Luca, through patience and the careful development of practical concealment, was beginning to understand the patterns of that movement.\n\nThe mountain itself seemed to hold its breath around him, waiting to see what he would do with this knowledge when he finally caught close enough to act upon it.",
+  "output_text_sha256": "2777eb797fc5d964915f6dcd771c0eb6545a278aa49017a2ad6670005f221c3a",
+  "pricing_version_id": "pricing_d841f3193970d9a52784",
+  "pricing_version_sha256": "20171c15c171d26a6a583d1312ec25dd7db4bee11badc2434819e0c8f128eef6",
+  "project_id": "italus-saga",
+  "prompt_sha256": "c790e0fad210e6030d45a0a3f011a0a7efca3a3d5a7bcbf089b9fb0d1878fc48",
+  "provider_id": "anthropic",
+  "provider_received_at": "2026-10-18T16:03:13.518613Z",
+  "provider_request_id": "msg_011Cg9z2Zthk7dqY6EAXF95m",
+  "provider_status": "completed",
+  "provider_system_sha256": "58b4c01c03c77788a290cc347b33d7ed4666a38accbae8c54e5a9267414444d8",
+  "provider_user_prompt_sha256": "76ed9f8f8cf8f24bb5d969195306746f7280ba03718368d705d87bf00e96ffda",
+  "receipt_sha256": "924ac3f4cea52523e49a19d5c2a837f3ed782057e8ef5808f4a69feb0196de53",
+  "recorded_at": "2026-10-18T16:03:13.585797Z",
+  "replacement_context_sha256": "b6cd4a32104378c1e518fc9b8ca22635fc87609162fd8e48ea3d8e8412bb0675",
+  "replacement_correction_context": {
+    "audited_semantic_failure_count": 0,
+    "audited_semantic_failures": [],
+    "authority": "backend_derived_rejection_correction",
+    "book_number": 1,
+    "chapter_number": 1,
+    "context_sha256": "b6cd4a32104378c1e518fc9b8ca22635fc87609162fd8e48ea3d8e8412bb0675",
+    "current_revalidation": {
+      "validated_content_sha256": "7e5be360186dc26478d511ace0e25c7cb4a8f84b20d3c515cbbf402a23fa0676",
+      "validated_content_version_id": "version_2ae6d0b43dc24f3b86a832f2c48504ba",
+      "validation_report_sha256": "6ff60895393d8aea381caf4b87497ff5261cfb6771f9d954bcb08509d939e2c1",
+      "validation_result_sha256": "f5789e349ada419b07916348c13b524c847683a6c06fb4b1dfb88ea331a58f8f",
+      "validation_run_id": "validation_run_f5789e349ada419b07916348c13b524c",
+      "validator_contract_sha256": "8755e3dfa488537ec68623c8f0d090504da22f86a320848c3f4f3358ff85d191"
+    },
+    "deterministic_failure_count": 1,
+    "deterministic_failure_source": "rejection_time_validation",
+    "deterministic_failures": [
+      {
+        "details": {
+          "measurement": 3641,
+          "metric": "word_count",
+          "operator": "minimum",
+          "threshold": 4000
+        },
+        "instruction": "Candidate prose must satisfy the word_count quantitative limit from the embedded prose rulebook.",
+        "message": "Word count is 3641; minimum is 4000.",
+        "rule_id": "prose.word_count.quantitative"
+      }
+    ],
+    "instructions": [
+      "Generate a new draft from the current chapter authority; do not copy, continue, paraphrase, or repair the rejected prose.",
+      "Correct every listed deterministic failure while still obeying the current generation guardrails.",
+      "Do not repeat any listed audited semantic failure. These FAIL verdicts were bound to the exact rejected content and validator contract.",
+      "Do not infer violations from UNKNOWN semantic items. UNKNOWN remains unpromoted and the rejected prose itself is not included."
+    ],
+    "manual_semantic_rules_promoted": false,
+    "rejected_content_sha256": "7e5be360186dc26478d511ace0e25c7cb4a8f84b20d3c515cbbf402a23fa0676",
+    "rejected_prose_included": false,
+    "rejection_validation": {
+      "deterministic_failures": [
+        {
+          "details": {
+            "measurement": 3641,
+            "metric": "word_count",
+            "operator": "minimum",
+            "threshold": 4000
+          },
+          "instruction": "Candidate prose must satisfy the word_count quantitative limit from the embedded prose rulebook.",
+          "message": "Word count is 3641; minimum is 4000.",
+          "rule_id": "prose.word_count.quantitative"
+        }
+      ],
+      "validated_content_sha256": "7e5be360186dc26478d511ace0e25c7cb4a8f84b20d3c515cbbf402a23fa0676",
+      "validated_content_version_id": "version_2ae6d0b43dc24f3b86a832f2c48504ba",
+      "validation_result_sha256": "f5789e349ada419b07916348c13b524c847683a6c06fb4b1dfb88ea331a58f8f",
+      "validation_run_id": "validation_run_f5789e349ada419b07916348c13b524c",
+      "validator_contract_sha256": "8755e3dfa488537ec68623c8f0d090504da22f86a320848c3f4f3358ff85d191"
+    },
+    "rejection_validation_report_sha256": "b2e963583908c238354ef496f3e2868a8cda363e05c794ed4b25749439adf3eb",
+    "schema_version": "replacement_correction_context_v2",
+    "semantic_receipt_ids_considered": [],
+    "service": "primary45c-replacement-correction-context-v2",
+    "source_generation_id": "gen_c2e62a37fd3514e0a1fdb826c4857797",
+    "source_review_event_id": "review_event_59d0b617306edec9cb727896d8c17b58",
+    "source_review_version_id": "review_version_59d0b617306edec9cb727896d8c17b58",
+    "unknown_semantic_rules_promoted": false
+  },
+  "replacement_for_generation_id": "gen_c2e62a37fd3514e0a1fdb826c4857797",
+  "request_content_sha256": "3188a42cfecbc51de74d4dc95d02b0a333defc4778c7956321d776e908b8852a",
+  "schema_version": "primary33.2.2-provider-generation-receipt-v1",
+  "service_tier": "standard",
+  "stop_reason": "end_turn",
+  "usage_event": {
+    "actual_cost": "0.028955",
+    "actual_input_tokens": 10105,
+    "actual_output_tokens": 3770,
+    "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+    "cache_read_tokens": 0,
+    "cache_write_1h_tokens": 0,
+    "cache_write_5m_tokens": 0,
+    "cache_write_tokens": 0,
+    "candidate_promoted_to_author_review": true,
+    "cost_basis": "immutable_pricing_snapshot_calculation",
+    "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
+    "currency": "USD",
+    "generation_id": "gen_5b7e490101016e97e5d40d3af961baf3",
+    "generation_quality_gate_passed": false,
+    "inference_scope": "global",
+    "model_id": "claude-haiku-4-5-20251001",
+    "pricing_snapshot": {
+      "created_at": "2026-09-19T21:25:21.231578Z",
+      "currency": "USD",
+      "effective_from": "2026-09-03T00:00:00Z",
+      "immutable": true,
+      "inference_scope": "global",
+      "model_id": "claude-haiku-4-5-20251001",
+      "notes": "Curated Primary 33.2.1A reference. Anthropic standard synchronous list pricing checked 2026-09-03. Batch pricing is retained as reference metadata only.",
+      "pricing_version_id": "pricing_d841f3193970d9a52784",
+      "provider_id": "anthropic",
+      "rates_per_mtok": {
+        "cache_read_per_mtok": "0.1",
+        "cache_write_1h_per_mtok": "2",
+        "cache_write_5m_per_mtok": "1.25",
+        "input_per_mtok": "1",
+        "output_per_mtok": "5"
+      },
+      "schema_version": "primary33.1-provider-pricing-v1",
+      "service_tier": "standard",
+      "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified_at": "2026-09-03T00:00:00Z"
+    },
+    "pricing_version_id": "pricing_d841f3193970d9a52784",
+    "pricing_version_sha256": "20171c15c171d26a6a583d1312ec25dd7db4bee11badc2434819e0c8f128eef6",
+    "prompt_sha256": "c790e0fad210e6030d45a0a3f011a0a7efca3a3d5a7bcbf089b9fb0d1878fc48",
+    "provider_execution_schema_version": "primary45c-provider-execution-v3",
+    "provider_id": "anthropic",
+    "provider_invoice_reconciled": false,
+    "provider_request_id": "msg_011Cg9z2Zthk7dqY6EAXF95m",
+    "provider_status": "completed",
+    "provider_stop_reason": "end_turn",
+    "provider_system_sha256": "58b4c01c03c77788a290cc347b33d7ed4666a38accbae8c54e5a9267414444d8",
+    "provider_user_prompt_sha256": "76ed9f8f8cf8f24bb5d969195306746f7280ba03718368d705d87bf00e96ffda",
+    "recorded_at": "2026-10-18T16:03:13.533829Z",
+    "replacement_context_sha256": "b6cd4a32104378c1e518fc9b8ca22635fc87609162fd8e48ea3d8e8412bb0675",
+    "replacement_for_generation_id": "gen_c2e62a37fd3514e0a1fdb826c4857797",
+    "request_content_sha256": "3188a42cfecbc51de74d4dc95d02b0a333defc4778c7956321d776e908b8852a",
+    "schema_version": "primary33.1-provider-usage-event-v2",
+    "service_tier": "standard",
+    "usage_event_id": "usage_5b7e490101016e97e5d40d3af961baf3"
+  },
+  "validator_contract_sha256": "8755e3dfa488537ec68623c8f0d090504da22f86a320848c3f4f3358ff85d191",
+  "validator_sidecar_sha256": "cfb4719e6b4c4602a90c502c2e0065d3237aa1f30d9d586b86109172b19efd7d",
+  "validator_snapshot_project_relative_path": "provenance/generation_validation_contracts/gen_5b7e490101016e97e5d40d3af961baf3.json",
+  "validator_snapshot_sha256": "3b09c041ff57ca61815e3af6526345cfed8355f8cd61f9b1feea0d5e663d5dcb"
+}

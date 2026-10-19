@@ -7,19 +7,19 @@
   "book_count": 11,
   "status": "draft",
   "approval_status": "not_ready",
-  "revision": 4,
-  "content_hash": "50d7b818c3100e224f495f8c5ae25170f9d0a060e61d735505fcd2107715d64f",
+  "revision": 5,
+  "content_hash": "a4c7542979d006baf14e254ae3bf75d36c3d1ce69f702513d449029a163acb8a",
   "approved_revision": 0,
   "approved_content_hash": "",
   "approved_at": "",
   "created_at": "2026-08-19T17:01:51.684528+00:00",
-  "updated_at": "2026-08-23T20:24:01.466760+00:00",
+  "updated_at": "2026-10-18T11:33:16.312026+00:00",
   "books": [
     {
       "book_number": 1,
       "title": "Italus - The Lightening Tree",
       "time_span": "c. 550 birth backstory; 589 origin flashback; 789–846 mainline",
-      "primary_arc": "Book 1 opens in media res in 789 with fourteen-year-old Luca discovering fresh evidence that the mature Italus has moved. A brief external analepsis to 589 reveals only fragments of the shared Pollino lightning singularity and an unidentified scarred man before the narrative returns to Luca. Luca's curiosity develops into the first guardian practice through repeated observation, concealment, movement planning, and eventual succession to Elia. Farovald appears in 789 as a reclusive monk who recognizes Luca's poor cover stories and offers the prayer alibi; later Book-1 reveal beats progressively establish his abnormal physical connection, lack of visible aging, true name, 589 connection, and non-lineage perimeter role. Luca remains the first guardian and founder of the guardian lineage.",
+      "primary_arc": "Book 1 opens with a  brief external analepsis to 589 reveals only fragments of the shared Pollino lightning singularity and an unidentified scarred man before the narrative returns to Luca.  Today  in media res in 789 with fourteen-year-old Luca discovering fresh evidence that the mature a Bosnian pine \"Italus\" has moved. Luca's curiosity develops into the first guardian practice through repeated observation, concealment, movement planning, and eventual succession to Elia. Farovald appears in 789 as a reclusive monk who recognizes Luca's poor cover stories and offers the prayer alibi; later Book-1 reveal beats progressively establish his abnormal physical connection, lack of visible aging, true name, 589 connection, and non-lineage perimeter role. Luca remains the first guardian and founder of the guardian lineage.",
       "major_events": [
         {
           "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
@@ -42,15 +42,15 @@
           "resolution_status": "resolved"
         },
         {
-          "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
-          "record_type": "character",
-          "label": "Italus",
-          "resolution_status": "resolved"
-        },
-        {
           "record_id": "char_719cd0333a9840efa32e1870e223b939",
           "record_type": "character",
           "label": "Farovald",
+          "resolution_status": "resolved"
+        },
+        {
+          "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+          "record_type": "character",
+          "label": "Italus",
           "resolution_status": "resolved"
         }
       ],
@@ -215,13 +215,13 @@
   "book_workflow": [
     {
       "book_number": 1,
-      "revision": 4,
-      "content_hash": "f96b94ddf697721d9f81f299b499b840079ec2e71a8f651d47ecf24612931d19",
+      "revision": 5,
+      "content_hash": "5ac3b430e643fbece7813c8415a45f9a587d7205b840a7ceef5db081c54d288e",
       "approval_status": "approved",
       "approval_fresh": true,
-      "approved_revision": 4,
-      "approved_content_hash": "f96b94ddf697721d9f81f299b499b840079ec2e71a8f651d47ecf24612931d19",
-      "approved_at": "2026-08-23T20:24:01.466760+00:00"
+      "approved_revision": 5,
+      "approved_content_hash": "5ac3b430e643fbece7813c8415a45f9a587d7205b840a7ceef5db081c54d288e",
+      "approved_at": "2026-10-18T11:33:16.312026+00:00"
     },
     {
       "book_number": 2,

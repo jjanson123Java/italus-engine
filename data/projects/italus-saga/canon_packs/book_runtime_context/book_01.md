@@ -8,20 +8,20 @@
 - Compiler: `project-book-runtime-context-v2-20260816`
 - Project ID: `italus-saga`
 - Book Number: `1`
-- Generated At: 2026-08-23T20:24:03.256874+00:00
-- Book Plan Revision: `4`
-- Book Plan SHA-256: `f96b94ddf697721d9f81f299b499b840079ec2e71a8f651d47ecf24612931d19`
+- Generated At: 2026-10-18T11:34:03.242765+00:00
+- Book Plan Revision: `5`
+- Book Plan SHA-256: `5ac3b430e643fbece7813c8415a45f9a587d7205b840a7ceef5db081c54d288e`
 - Book Scope Revision: `28`
 - Book Scope SHA-256: `5c9283b67769beb124f1001ca6d98f9fd5cbf63668e701285484a31e1503e376`
 - Author Canon SHA-256: `43dedfe31406c47243b105df6210a011fc6158e4ea38d026fff25c27a1597181`
 - Canon Index Revision: `873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100`
-- Dependency Set SHA-256: `3013094a493bf7baee899ba8df33043782f6d7b7f9384def2c2b40ff696e8f2b`
+- Dependency Set SHA-256: `c5a892a0ec563816373c13c0289f5d832123a800e176768f2e1855739eeaf699`
 - Selected Record Count: `54`
-- Estimated Tokens: `41967`
+- Estimated Tokens: `41975`
 - Full Context Estimated Tokens: `271580`
 - Full Context Estimate Basis: `project_runtime_context.md`
-- Estimated Token Reduction: `229613`
-- Estimated Token Reduction Percent: `84.55`
+- Estimated Token Reduction: `229605`
+- Estimated Token Reduction Percent: `84.54`
 
 ## Global Required Rules
 
@@ -64,7 +64,7 @@
 - Book Number: 1
 - Title: Italus - The Lightening Tree
 - Time Span: c. 550 birth backstory; 589 origin flashback; 789–846 mainline
-- Primary Arc: Book 1 opens in media res in 789 with fourteen-year-old Luca discovering fresh evidence that the mature Italus has moved. A brief external analepsis to 589 reveals only fragments of the shared Pollino lightning singularity and an unidentified scarred man before the narrative returns to Luca. Luca's curiosity develops into the first guardian practice through repeated observation, concealment, movement planning, and eventual succession to Elia. Farovald appears in 789 as a reclusive monk who recognizes Luca's poor cover stories and offers the prayer alibi; later Book-1 reveal beats progressively establish his abnormal physical connection, lack of visible aging, true name, 589 connection, and non-lineage perimeter role. Luca remains the first guardian and founder of the guardian lineage.
+- Primary Arc: Book 1 opens with a  brief external analepsis to 589 reveals only fragments of the shared Pollino lightning singularity and an unidentified scarred man before the narrative returns to Luca.  Today  in media res in 789 with fourteen-year-old Luca discovering fresh evidence that the mature a Bosnian pine "Italus" has moved. Luca's curiosity develops into the first guardian practice through repeated observation, concealment, movement planning, and eventual succession to Elia. Farovald appears in 789 as a reclusive monk who recognizes Luca's poor cover stories and offers the prayer alibi; later Book-1 reveal beats progressively establish his abnormal physical connection, lack of visible aging, true name, 589 connection, and non-lineage perimeter role. Luca remains the first guardian and founder of the guardian lineage.
 - Ending State: By the end of Book 1, Luca has transformed his 789 discovery into the first durable guardian practice and has begun transferring responsibility to Elia. Italus remains hidden and biologically unexplained to the wider world. The reader now knows Farovald by name, understands that he was directly altered in the 589 singularity, and understands that he is an exceptional non-lineage continuity witness who will protect the wider secrecy perimeter while Luca's descendants carry guardianship. Farovald is explicitly not a guardian and does not control succession. Later aliases, later interventions, full lifespan, and final-series fate remain unrevealed.
 - Handoff To Next Book: As Luca ages, the central problem shifts from protecting Italus himself to ensuring that protection can survive him. Elia has grown up close enough to Luca and Italus to recognize patterns in their lives without initially possessing the full burden of the secret. Luca begins the deliberate transfer of practical knowledge, secrecy expectations, and responsibility to his daughter. Book 1 closes with guardianship no longer belonging solely to Luca: the lineage has begun. Book 2 opens with Elia confronting what it means to inherit a duty she did not create and must now make her own.
 
@@ -74,8 +74,8 @@
 
 ### Required Characters
 - Luca (`char_07e57a82d71c4027a501b25ca4514c8d`)
-- Italus (`char_b1ffca3231de404caa92e3366cf30cc3`)
 - Farovald (`char_719cd0333a9840efa32e1870e223b939`)
+- Italus (`char_b1ffca3231de404caa92e3366cf30cc3`)
 
 ### Required Locations
 - None specified

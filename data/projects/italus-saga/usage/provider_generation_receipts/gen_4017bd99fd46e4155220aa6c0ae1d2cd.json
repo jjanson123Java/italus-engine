@@ -1,0 +1,312 @@
+{
+  "approved_continuity_committed": false,
+  "author_review_persisted": false,
+  "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+  "book_number": 1,
+  "chapter_number": 1,
+  "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
+  "execution_fingerprint": "f07cdee61eab05dd650b4b86b9fb4762c3dc9dd66f6a7b8ad0e7ab45b15bb997",
+  "generation_id": "gen_4017bd99fd46e4155220aa6c0ae1d2cd",
+  "generation_quality_gate": {
+    "blockers": [
+      {
+        "code": "DETERMINISTIC_PROSE_FAILURE",
+        "measurement": 11,
+        "message": "Colons count is 11; hard maximum is 3.",
+        "metric": "colons",
+        "operator": "hard_maximum",
+        "threshold": 3
+      },
+      {
+        "code": "DETERMINISTIC_PROSE_FAILURE",
+        "measurement": 23,
+        "message": "Em Dashes count is 23; hard maximum is 8.",
+        "metric": "em_dashes",
+        "operator": "hard_maximum",
+        "threshold": 8
+      },
+      {
+        "code": "DETERMINISTIC_PROSE_FAILURE",
+        "measurement": 3028,
+        "message": "Word count is 3028; minimum is 4000.",
+        "metric": "word_count",
+        "operator": "minimum",
+        "threshold": 4000
+      }
+    ],
+    "deterministic_metrics": {
+      "colons": {
+        "measurement": 11,
+        "message": "Colons count is 11; hard maximum is 3.",
+        "metric": "colons",
+        "operator": "hard_maximum",
+        "passed": false,
+        "threshold": 3
+      },
+      "ellipses": {
+        "measurement": 0,
+        "message": "Ellipses count is 0; hard maximum is 4.",
+        "metric": "ellipses",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 4
+      },
+      "em_dashes": {
+        "measurement": 23,
+        "message": "Em Dashes count is 23; hard maximum is 8.",
+        "metric": "em_dashes",
+        "operator": "hard_maximum",
+        "passed": false,
+        "threshold": 8
+      },
+      "semicolons": {
+        "measurement": 6,
+        "message": "Semicolons count is 6; hard maximum is 15.",
+        "metric": "semicolons",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 15
+      },
+      "word_count": {
+        "measurement": 3028,
+        "message": "Word count is 3028; minimum is 4000.",
+        "metric": "word_count",
+        "operator": "minimum",
+        "passed": false,
+        "threshold": 4000
+      }
+    },
+    "passed": false,
+    "schema_version": "generation_quality_gate_v1",
+    "service": "primary45c-generation-quality-gate-v1",
+    "stop_reason": "end_turn"
+  },
+  "inference_scope": "global",
+  "model_id": "claude-haiku-4-5-20251001",
+  "output_content_type": "text/plain",
+  "output_text": "# Chapter 1\n\nThe ground told stories to those who knew how to read them.\n\nLuca knelt at the base of the ancient olive, his weathered fingers tracing the pale scored marks where soil had been churned fresh. Two weeks prior, he had last visited this grove in the high Pollino, and the earth beneath Italus had been undisturbed—the same hard-packed, mineral-rich floor he had known for months. Now, the tree's massive root system had shifted. Not dramatically; the displacement was measured in finger-widths, in the barely perceptible cant of trunk against sky. But real. Unmistakable to anyone who paid attention, and Luca had paid attention to very little else since the spring.\n\nHe sat back on his heels, studying the scored crescent where bark-rough roots had scraped downward through resistant soil. The tree had moved. Or been moved. The distinction mattered, though he could not quite articulate why.\n\nThe wind crossed the high plateau in long, steady sweeps, carrying the smell of limestone dust and the sharper herbal note of sage growing between the stones. It was early autumn—September, deep into the year 789—and the Pollino uplands lay mostly empty. Shepherds came in spring and summer; monks from the monastery at Rossano occasionally ventured this far inland, though their path was lower, threading the river valleys. Luca had encountered none of them here. He came alone.\n\nHe always came alone.\n\nThe olive was immense, its trunk easily four men in girth, its crown spreading wide enough to cast shadow over a full half-acre when the sun was high. Local tradition held it was ancient when the Romans passed through, which made it somewhere between five hundred and a thousand years old—a measure of time that meant nothing to Luca except that the tree had been growing and living through wars and kingdoms and the slow accretion of centuries before he was born. It did not look dead. Nothing about it suggested disease or decline. But three seasons ago, Luca had begun to suspect that something about the tree was not entirely ordinary.\n\nHe reached out and pressed his palm against the bark. It was warm from the afternoon sun, rough with the texture of a millennium's accumulated scarring. He closed his eyes.\n\nNothing happened. Nothing ever happened when he touched it directly. The revelation, if it could be called that, came instead through observation: the subtle wrongness of light through the canopy, the way the branches did not quite follow the geometry that surrounding oaks and pines obeyed, the peculiar depth of the shadow it cast—sometimes shorter than the angle of the sun should allow, sometimes longer. Small things. The accumulation of small things.\n\nHe opened his eyes and withdrew his hand.\n\nIn the distance, where the plateau dropped away toward lower elevation, he could see the brown-green patchwork of the inland valleys, the thread of the Coscile River catching white glints where it ran shallow. Beyond that lay Rossano, the monastery where a small community of monks maintained a scriptorium and a library. Luca knew three of them by face and name: Brother Damiano, who kept the herb garden and had a scholar's careful attention to detail; Brother Tomás, who had traveled in Spain and France before taking vows; and Brother Farovald, who had arrived approximately a year ago and whose origins no one seemed entirely certain about.\n\nFarovald was the one who knew this grove.\n\nLuca had never expected to encounter another human being at this height and distance from the monastery. He had discovered the tree through months of solitary exploration, a circuit that had become obsessive only slowly, so gradually that he had not fully recognized the pattern until the pattern was already written into his body: the way his feet knew the path without his mind directing them, the way his hand reached for the staff before dawn even registered.\n\nThen, two months ago, he had arrived at the grove to find someone already here.\n\nThe man was old—or seemed old, though something in the way he moved suggested otherwise. He wore the gray wool of a Rossano monk, and his palms, when he had finally turned to acknowledge Luca's presence, bore marks that looked like ancient burns: silvered scar tissue following patterns that Luca had never quite seen before. Patterns almost like the branching of lightning.\n\n\"You come here often,\" Farovald had said. Not a question.\n\n\"I do,\" Luca had replied. He had seen no reason to dissemble.\n\n\"The tree interests you.\"\n\nAgain, not quite a question. Farovald had been looking at Italus then—the name Luca did not yet know, had not been given until much later—with an expression that encompassed something between recognition and sorrow.\n\n\"Yes,\" Luca said.\n\n\"There are reasons,\" Farovald told him. \"Good reasons to pay it attention. But reasons are not answers. And answers, in this case, are not gifts I can give.\" He had paused, then added: \"Prayer helps. If anyone asks, tell them you came here to pray. It is sufficient cover for most kinds of truth.\"\n\nAfter that, they had seen each other perhaps a dozen times. Farovald came to the grove less frequently than Luca did, perhaps once every six or eight days, and there was a pattern to his visits that Luca had begun to track without quite understanding why he was tracking it. The monk always came in the late afternoon. He always spent time with his hand on the bark. And he always seemed to be confirming something—checking the tree's state, taking a measurement Luca could not perceive.\n\nWhich was why the root displacement troubled Luca now. It was deliberate, he was almost certain. The tree had not simply slipped; it had moved with purpose, or been moved. The direction of the disturbance suggested the roots had driven deeper into the earth, and the bark was freshly grazed in places, as if something had scraped raw the protective coating.\n\nLuca rose to his feet and circled the tree, examining the full extent of the damage. His mind was working through possibilities that he had no framework to contain: the idea that a tree could move itself was absurd, yet the evidence was literal and physical. The idea that someone else had moved it was only slightly less absurd, given the size and mass involved.\n\nUnless Farovald knew.\n\nThe thought arrived with a clarity that made Luca's breath catch. Farovald always seemed to know more than he should. The monk's knowledge of Luca's visits, for instance—the easy certainty with which he had announced the pattern. And his hands, those scarred palms with their branching, lightning-like marks.\n\nLuca stood for a long time, regarding the scored earth. The light was beginning to shift toward evening, the angle of sun growing shallower. He should start back down the mountain before full dark. But something held him in place, a need to understand what he was looking at, to reconcile the physical fact of the root displacement with any rational explanation the world might offer.\n\nThe wind came again, stronger this time, and the olive's branches moved in response. For just a moment, the canopy seemed to ripple with something more than the ordinary mechanics of wind and leaf. It was the kind of moment that lasted barely long enough to register, so quick that questioning it afterward felt like questioning a dream. Yet Luca was certain he had seen it: a gathering of light in the branches, a concentration of energy that resembled nothing so much as the instant before lightning strikes.\n\nHe found himself walking.\n\nThe path downslope was the same path he always took, but today it led him not directly toward the lower valleys but instead along a ridge trail that eventually branched toward Rossano. The monastery sat in a fold of hillside, its stone buildings arranged in the orderly geometry that monastic tradition favored. Luca had visited three or four times in the two months since his first encounter with Farovald. The monks were not unwelcoming to visitors, though the community was small and its focus inward-turned. Brother Damiano, the herbalist, had offered him bread and dried figs on one visit. Brother Tomás had engaged him in conversation about the books being copied in the scriptorium. And Farovald had always seemed unsurprised by his arrival, as if he had been expecting Luca all along.\n\nIt was late in the afternoon when Luca reached the monastery gate. The community was observing the office of None—the midday prayer that the monks conducted in the late afternoon, their schedule calibrated to the work of their day. He could hear them through the open door of the small chapel, their voices in Latin following the chanted ritual. Luca waited, standing in the courtyard with its dry fountain and its orderly beds of herbs growing in geometric pattern.\n\nBrother Damiano emerged first, his sturdy frame moving with the deliberate pace of age and routine. His face creased into a smile of recognition.\n\n\"Luca. You have come again. Good. Come, there is bread still warm, and the wine is not terrible this year. Tell me—how do you find the high country? Does it suit your temperament?\"\n\n\"It does,\" Luca said. It was true, though incomplete. He allowed himself to be drawn into the monastery and seated at the table in the common room. Damiano brought bread and cheese, a small bowl of figs, and wine in a plain clay cup. Luca ate what was offered, understanding that to refuse would be to invite questions he was not yet prepared to answer.\n\n\"You visit that part of the plateau often,\" Damiano said. It was not posed as inquiry, but information. \"Brother Farovald mentioned that he has seen you there.\"\n\nLuca's hand paused in the act of bringing bread to his mouth. \"He spoke of me?\"\n\n\"Only in passing. He observed that you seemed to have found a place that called to you. He suggested that this was not a common trait in younger men. Most of your age are restless, searching. He said you seemed to be looking for something specific.\" Damiano smiled mildly. \"Or someone. Though I may have misunderstood his meaning.\"\n\n\"I came to pray,\" Luca said, drawing on Farovald's instruction. \"There is a place that seems suited to contemplation.\"\n\n\"Yes,\" Damiano said. \"Brother Farovald suggested as much. He seemed to approve. Our order does not often encounter people who seek such solitude in their faith. It is a valuable thing.\" He drank from his own cup. \"Do you ever feel that the high places contain something the lowlands lack? An emptiness that the soul recognizes?\"\n\nBefore Luca could answer, another figure emerged from the corridor leading to the chapel. It was Farovald.\n\nThe monk was taller than Luca remembered, or perhaps Luca had simply forgotten the full measure of his height. He was thin without appearing fragile, and his face bore the weathering of someone who spent considerable time exposed to sun and wind. His hair was gray, receding somewhat from a broad forehead. When his eyes met Luca's, there was something in them that communicated: understanding, warning, and a quality that Luca could not name but recognized as ancient.\n\n\"Luca has come to visit us,\" Damiano said, with the ease of someone making an obvious social announcement.\n\n\"I see,\" Farovald replied. His gaze did not leave Luca. \"Brother Damiano, I wonder if I might speak with our guest privately. There is a question I have been meaning to ask him, concerning the eastern approach to the plateau. I am thinking of exploring that direction myself, and I wanted his observations.\"\n\nIt was a thin pretext, and Damiano seemed to recognize it as such. But monastic tradition held space for quiet private conversations. Damiano nodded, gathered the remains of the meal, and withdrew toward the kitchen quarters.\n\nFarovald sat at the table, across from Luca, and for a long moment he did not speak. When he did, his voice was very quiet.\n\n\"Something has changed,\" he said. Not a question.\n\n\"The tree,\" Luca said. \"Its roots have moved. I found them displaced this afternoon.\"\n\nFarovald closed his eyes. The expression on his face was complex—sadness, certainly, but also something that might have been resignation. His scarred palms lay flat on the table, and Luca found himself staring at them again: those pale, branching patterns that suggested lightning and heat.\n\n\"You have been very diligent in your visits,\" Farovald said, opening his eyes. \"More diligent than most would be.\"\n\n\"What is it?\" Luca asked. \"The tree. What is it?\"\n\n\"That,\" Farovald replied slowly, \"is not a question I can answer directly. Not yet. Perhaps not ever, depending on circumstances I cannot predict. But I can tell you that your observation is correct. The tree moves. It has always moved. And the movement means that something is changing.\"\n\n\"Changing how?\"\n\n\"In ways that are not yet clear,\" Farovald said. \"But I can tell you this: your instinct to come here today, to verify what you had noticed—that instinct was sound. The tree is aware of your presence. And awareness, in this case, is a form of communication.\"\n\nThe words made no logical sense, and yet something in Luca recognized their truth. He remembered the moment when the canopy had seemed to ripple, when light had gathered before subsiding. He remembered the pattern of the root displacement, deliberate and directed.\n\n\"Will you tell me what happened?\" Luca asked. \"In the past, I mean. Something happened to the tree. Something that left a mark. I can feel it.\"\n\nFarovald stood, moved to the window that looked out over the monastery courtyard toward the inland valleys. His silhouette against the fading afternoon light seemed very still, very contained.\n\n\"There was a storm,\" he said. \"A long time ago. Two hundred years or more. Not the kind of storm that passes quickly, but something deeper, something that the sky itself could barely contain.\" He paused. \"I was there.\"\n\nAnd then, in the space between one heartbeat and the next, the scene shifted.\n\n---\n\nThe mountain burned.\n\nNot with fire, but with light—white, bright, absolute light that scraped the sky from rim to horizon. Thunder followed, but it was not sound alone; it was pressure, resonance, the earth itself shaking as if in response to a blow struck from heaven. Rain fell sideways, driven horizontal by wind that seemed to emanate from all directions at once, and the olive tree—massive even then, even two hundred years younger—twisted in the assault like something alive and terrified.\n\nFarovald stood with his back against the trunk, his palms pressed flat against the bark, and he could feel the tree's terror, its response to the singular energy that was tearing downward from the sky. Lightning was seeking ground, seeking the earth. It followed the paths of greatest conductivity, and the olive, standing alone on the exposed plateau, was a beacon.\n\nThe man's hands burned. He felt it clearly—not pain, not yet, but the sensation of being scoured, of skin and flesh and the intricate architecture of bone being remade in the image of current and heat. The lightning came like a spear, striking through the crown of the tree and down through the trunk and into the earth below, and Farovald felt it pass through him like a door opening in his own body.\n\nThe smell of resin and burning cambium, the sharp ozone reek of superheated wood, the taste of copper on his tongue.\n\nWhen the light faded, he was still standing. His palms were scorched, the skin blackened and split. His breath came in shudders. The tree swayed, its crown ravaged, branches stripped of leaves and bark. And beneath his hands, he could feel something like recognition—the tree knowing him, accepting him, binding itself to him in a way that had no name in any language he possessed.\n\n---\n\nLuca gasped.\n\nHe was back in the monastery's common room. The light from the window was the light of ordinary evening, and Farovald stood very still, his hands still outstretched as if they still felt the burn of that ancient moment.\n\n\"You were there,\" Luca said. It was not a question.\n\n\"I was,\" Farovald replied.\n\n\"But that was—\"\n\n\"Yes,\" Farovald said softly. \"Two hundred years. And the scars remain because some damage reaches deep enough that healing is not forgetting. The tree and I share something that began in that storm. It is not something I can explain to you, and I am telling you only because you have proven worthy of partial truth.\" He turned from the window. \"The tree moves because it is alive in ways that trees are not ordinarily alive. And it is aware of you because you have paid attention where most people see only wood and age.\"\n\n\"What does it want?\" Luca asked.\n\n\"I do not know,\" Farovald said, and the honesty in his voice was absolute. \"But I know that the fact of its movement, the fact that it is reaching deeper into the earth—these things suggest that something is beginning. Something that has been dormant is waking.\"\n\nHe moved toward the door. \"Continue to visit. Continue to observe. And if anything else changes—if the tree grows or shifts further, if the light around it becomes strange—come and tell me. Can you do that?\"\n\nLuca nodded, though he understood almost nothing of what had just occurred, could not fully distinguish between the memory he had somehow experienced and the ordinary flow of time.\n\nFarovald paused at the doorway, and Luca saw his scarred hands one final time: the branching patterns like lightning captured in flesh, pale against the monk's weathered skin.\n\n\"The high places contain something,\" Farovald said, echoing Damiano's words from minutes earlier. \"And the tree is at the heart of it. Pay attention. Everything that matters begins with attention.\"\n\nThen he was gone, returning to the evening office, leaving Luca alone with bread and cheese and the profound certainty that his life had just divided into before and after, with no bridge between the two.",
+  "output_text_sha256": "381f260f5a2b8b6e0f6c043f924d26651642cfa9871044449a3ddde8bd5e5c38",
+  "pricing_version_id": "pricing_d841f3193970d9a52784",
+  "pricing_version_sha256": "20171c15c171d26a6a583d1312ec25dd7db4bee11badc2434819e0c8f128eef6",
+  "project_id": "italus-saga",
+  "prompt_sha256": "0d4742201f844430498005e48f3fdf507e5ae3704bf87b0e846e904637d586dc",
+  "provider_id": "anthropic",
+  "provider_received_at": "2026-10-11T13:26:38.275713Z",
+  "provider_request_id": "msg_011CfvXRF3qa5HyCYLCB7VfH",
+  "provider_status": "completed",
+  "provider_system_sha256": "e00bb03bbf4fb2f3ebacad0c58fac11c44325b4ad3157395816967ce191291b8",
+  "provider_user_prompt_sha256": "469be72e2e381159bc353d0c2450a5711a6f630d607cf6e29053b40d32d3293a",
+  "receipt_sha256": "cc47e9e388698e33fe3bdb7c0387f69cfbdce0c7a543e4b8635d2962b4bc567d",
+  "recorded_at": "2026-10-11T13:26:38.295717Z",
+  "replacement_context_sha256": "28a466a31850da5d8aeaebf71ab7191069bf0611fa0d01fc492050203e05ecff",
+  "replacement_correction_context": {
+    "audited_semantic_failure_count": 6,
+    "audited_semantic_failures": [
+      {
+        "instruction": "Chapter 1 may disclose only the attached Farovald storm-fragment Story Control.",
+        "message": "Prior rejected draft failed this audited semantic rule.",
+        "rule_id": "chapter.restriction.622f7978c1703ffd",
+        "rule_type": "CHAPTER_RESTRICTION",
+        "semantic_receipt_sha256": "86b8cc4c33de82e317006041ce8bd6e66432424624769035e54882214a72c335",
+        "semantic_validation_id": "semval_61389eaba4b1932d7b5da1582b9a7092"
+      },
+      {
+        "instruction": "Do not call Farovald a guardian, Guardian Zero, or succession authority.",
+        "message": "Prior rejected draft failed this audited semantic rule.",
+        "rule_id": "chapter.restriction.d8ac20441bd227c3",
+        "rule_type": "CHAPTER_RESTRICTION",
+        "semantic_receipt_sha256": "86b8cc4c33de82e317006041ce8bd6e66432424624769035e54882214a72c335",
+        "semantic_validation_id": "semval_61389eaba4b1932d7b5da1582b9a7092"
+      },
+      {
+        "instruction": "Do not disclose Farovald's exact age, full lifespan, later aliases, later interventions, or final fate.",
+        "message": "Prior rejected draft failed this audited semantic rule.",
+        "rule_id": "chapter.restriction.f50c72cb8cb9710f",
+        "rule_type": "CHAPTER_RESTRICTION",
+        "semantic_receipt_sha256": "86b8cc4c33de82e317006041ce8bd6e66432424624769035e54882214a72c335",
+        "semantic_validation_id": "semval_61389eaba4b1932d7b5da1582b9a7092"
+      },
+      {
+        "instruction": "Farovald's exact full lifespan or final-series fate before Book 11.",
+        "message": "Prior rejected draft failed this audited semantic rule.",
+        "rule_id": "reveal.forbidden_future.4242585dd085fee8",
+        "rule_type": "FORBIDDEN_FUTURE_KNOWLEDGE",
+        "semantic_receipt_sha256": "86b8cc4c33de82e317006041ce8bd6e66432424624769035e54882214a72c335",
+        "semantic_validation_id": "semval_61389eaba4b1932d7b5da1582b9a7092"
+      },
+      {
+        "instruction": "Any statement that Farovald is Guardian Zero, a succession authority, or the founder of the guardian lineage.",
+        "message": "Prior rejected draft failed this audited semantic rule.",
+        "rule_id": "reveal.forbidden_future.5720968dbb75143d",
+        "rule_type": "FORBIDDEN_FUTURE_KNOWLEDGE",
+        "semantic_receipt_sha256": "86b8cc4c33de82e317006041ce8bd6e66432424624769035e54882214a72c335",
+        "semantic_validation_id": "semval_61389eaba4b1932d7b5da1582b9a7092"
+      },
+      {
+        "instruction": "Reveal only the approved 589 storm fragment: mature Italus in the storm, a human figure in direct contact with the tree, lightning injury, scorched palms, resin/cambium damage, and immediate sensory aftermath. Return to Luca's 789 discovery before explaining the man's age, longevity, full biological connection, later identities, or future role. In the 789 mainline he appears only as a reclusive monk who later advises Luca to use prayer as a credible cover story. Book 1 Chapter 1 storm fragment only Narrative weight must remain brief_clue; no numeric threshold is inferred.",
+        "message": "Prior rejected draft failed this audited semantic rule.",
+        "rule_id": "story_control.story-control-43694f1e3338401d.compliance",
+        "rule_type": "STORY_CONTROL_COMPLIANCE",
+        "semantic_receipt_sha256": "86b8cc4c33de82e317006041ce8bd6e66432424624769035e54882214a72c335",
+        "semantic_validation_id": "semval_61389eaba4b1932d7b5da1582b9a7092"
+      }
+    ],
+    "authority": "backend_derived_rejection_correction",
+    "book_number": 1,
+    "chapter_number": 1,
+    "context_sha256": "28a466a31850da5d8aeaebf71ab7191069bf0611fa0d01fc492050203e05ecff",
+    "current_revalidation": {
+      "validated_content_sha256": "2393613b4a780352b17d6d71cf9e0f15ff580a9d3e4fdfca5f8fbce2db7efaef",
+      "validated_content_version_id": "version_0108d1297498479b8615cc129ffbd2b3",
+      "validation_report_sha256": "82d780a28367c5e0a9a138b2246ad19bbc468d6e47528c7b13355615b91a1fa6",
+      "validation_result_sha256": "f6009efaeac9c6248fec3b1254a6d80b21d6660c3fccf41e3f03a86c3eccab69",
+      "validation_run_id": "validation_run_f6009efaeac9c6248fec3b1254a6d80b",
+      "validator_contract_sha256": "c7461f83bdb0f897313b1175f86310f7396951555666539fdfc6a44e16e0a532"
+    },
+    "deterministic_failure_count": 2,
+    "deterministic_failure_source": "rejection_time_validation",
+    "deterministic_failures": [
+      {
+        "details": {
+          "measurement": 3057,
+          "metric": "word_count",
+          "operator": "minimum",
+          "threshold": 4000
+        },
+        "instruction": "Candidate prose must satisfy the word_count quantitative limit from the embedded prose rulebook.",
+        "message": "Word count is 3057; minimum is 4000.",
+        "rule_id": "prose.word_count.quantitative"
+      },
+      {
+        "details": {
+          "measurement": 23,
+          "metric": "em_dashes",
+          "operator": "hard_maximum",
+          "required_reduction": 15,
+          "threshold": 8
+        },
+        "instruction": "Candidate prose must satisfy the em_dashes quantitative limit from the embedded prose rulebook.",
+        "message": "Em Dashes count is 23; hard maximum is 8.",
+        "rule_id": "prose.em_dashes.quantitative"
+      }
+    ],
+    "instructions": [
+      "Generate a new draft from the current chapter authority; do not copy, continue, paraphrase, or repair the rejected prose.",
+      "Correct every listed deterministic failure while still obeying the current generation guardrails.",
+      "Do not repeat any listed audited semantic failure. These FAIL verdicts were bound to the exact rejected content and validator contract.",
+      "Do not infer violations from UNKNOWN semantic items. UNKNOWN remains unpromoted and the rejected prose itself is not included."
+    ],
+    "manual_semantic_rules_promoted": true,
+    "rejected_content_sha256": "2393613b4a780352b17d6d71cf9e0f15ff580a9d3e4fdfca5f8fbce2db7efaef",
+    "rejected_prose_included": false,
+    "rejection_validation": {
+      "deterministic_failures": [
+        {
+          "details": {
+            "measurement": 3057,
+            "metric": "word_count",
+            "operator": "minimum",
+            "threshold": 4000
+          },
+          "instruction": "Candidate prose must satisfy the word_count quantitative limit from the embedded prose rulebook.",
+          "message": "Word count is 3057; minimum is 4000.",
+          "rule_id": "prose.word_count.quantitative"
+        },
+        {
+          "details": {
+            "measurement": 23,
+            "metric": "em_dashes",
+            "operator": "hard_maximum",
+            "required_reduction": 15,
+            "threshold": 8
+          },
+          "instruction": "Candidate prose must satisfy the em_dashes quantitative limit from the embedded prose rulebook.",
+          "message": "Em Dashes count is 23; hard maximum is 8.",
+          "rule_id": "prose.em_dashes.quantitative"
+        }
+      ],
+      "validated_content_sha256": "2393613b4a780352b17d6d71cf9e0f15ff580a9d3e4fdfca5f8fbce2db7efaef",
+      "validated_content_version_id": "version_0108d1297498479b8615cc129ffbd2b3",
+      "validation_result_sha256": "f6009efaeac9c6248fec3b1254a6d80b21d6660c3fccf41e3f03a86c3eccab69",
+      "validation_run_id": "validation_run_f6009efaeac9c6248fec3b1254a6d80b",
+      "validator_contract_sha256": "c7461f83bdb0f897313b1175f86310f7396951555666539fdfc6a44e16e0a532"
+    },
+    "rejection_validation_report_sha256": "5c8e584ea319e588065a625774849f573c80931010d3731da1a3e73c895d580b",
+    "schema_version": "replacement_correction_context_v2",
+    "semantic_receipt_ids_considered": [
+      "semval_61389eaba4b1932d7b5da1582b9a7092"
+    ],
+    "service": "primary45c-replacement-correction-context-v2",
+    "source_generation_id": "gen_9d9355b6fa08bff0085366f7877995a6",
+    "source_review_event_id": "review_event_62d8497a7608602c7ed70b870ef04736",
+    "source_review_version_id": "review_version_62d8497a7608602c7ed70b870ef04736",
+    "unknown_semantic_rules_promoted": false
+  },
+  "replacement_for_generation_id": "gen_9d9355b6fa08bff0085366f7877995a6",
+  "request_content_sha256": "6993291433403afd3b2eaba11a7a2e4fd89c4ac18090f184c4f6b03bba35fe00",
+  "schema_version": "primary33.2.2-provider-generation-receipt-v1",
+  "service_tier": "standard",
+  "stop_reason": "end_turn",
+  "usage_event": {
+    "actual_cost": "0.030908",
+    "actual_input_tokens": 10418,
+    "actual_output_tokens": 4098,
+    "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+    "cache_read_tokens": 0,
+    "cache_write_1h_tokens": 0,
+    "cache_write_5m_tokens": 0,
+    "cache_write_tokens": 0,
+    "candidate_promoted_to_author_review": true,
+    "cost_basis": "immutable_pricing_snapshot_calculation",
+    "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
+    "currency": "USD",
+    "generation_id": "gen_4017bd99fd46e4155220aa6c0ae1d2cd",
+    "generation_quality_gate_passed": false,
+    "inference_scope": "global",
+    "model_id": "claude-haiku-4-5-20251001",
+    "pricing_snapshot": {
+      "created_at": "2026-09-19T21:25:21.231578Z",
+      "currency": "USD",
+      "effective_from": "2026-09-03T00:00:00Z",
+      "immutable": true,
+      "inference_scope": "global",
+      "model_id": "claude-haiku-4-5-20251001",
+      "notes": "Curated Primary 33.2.1A reference. Anthropic standard synchronous list pricing checked 2026-09-03. Batch pricing is retained as reference metadata only.",
+      "pricing_version_id": "pricing_d841f3193970d9a52784",
+      "provider_id": "anthropic",
+      "rates_per_mtok": {
+        "cache_read_per_mtok": "0.1",
+        "cache_write_1h_per_mtok": "2",
+        "cache_write_5m_per_mtok": "1.25",
+        "input_per_mtok": "1",
+        "output_per_mtok": "5"
+      },
+      "schema_version": "primary33.1-provider-pricing-v1",
+      "service_tier": "standard",
+      "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified_at": "2026-09-03T00:00:00Z"
+    },
+    "pricing_version_id": "pricing_d841f3193970d9a52784",
+    "pricing_version_sha256": "20171c15c171d26a6a583d1312ec25dd7db4bee11badc2434819e0c8f128eef6",
+    "prompt_sha256": "0d4742201f844430498005e48f3fdf507e5ae3704bf87b0e846e904637d586dc",
+    "provider_execution_schema_version": "primary45c-provider-execution-v3",
+    "provider_id": "anthropic",
+    "provider_invoice_reconciled": false,
+    "provider_request_id": "msg_011CfvXRF3qa5HyCYLCB7VfH",
+    "provider_status": "completed",
+    "provider_stop_reason": "end_turn",
+    "provider_system_sha256": "e00bb03bbf4fb2f3ebacad0c58fac11c44325b4ad3157395816967ce191291b8",
+    "provider_user_prompt_sha256": "469be72e2e381159bc353d0c2450a5711a6f630d607cf6e29053b40d32d3293a",
+    "recorded_at": "2026-10-11T13:26:38.280714Z",
+    "replacement_context_sha256": "28a466a31850da5d8aeaebf71ab7191069bf0611fa0d01fc492050203e05ecff",
+    "replacement_for_generation_id": "gen_9d9355b6fa08bff0085366f7877995a6",
+    "request_content_sha256": "6993291433403afd3b2eaba11a7a2e4fd89c4ac18090f184c4f6b03bba35fe00",
+    "schema_version": "primary33.1-provider-usage-event-v2",
+    "service_tier": "standard",
+    "usage_event_id": "usage_4017bd99fd46e4155220aa6c0ae1d2cd"
+  },
+  "validator_contract_sha256": "c7461f83bdb0f897313b1175f86310f7396951555666539fdfc6a44e16e0a532",
+  "validator_sidecar_sha256": "5bdbdc978c00b7c28c930c2cd7917cbd402a0b3a4a66fba40265b6812f955545",
+  "validator_snapshot_project_relative_path": "provenance/generation_validation_contracts/gen_4017bd99fd46e4155220aa6c0ae1d2cd.json",
+  "validator_snapshot_sha256": "d71af2400c18de3136fd251433257a468414d311c46e042dd4ef3d7c717bbcba"
+}

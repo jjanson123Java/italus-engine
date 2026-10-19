@@ -1,0 +1,223 @@
+{
+  "approved_continuity_committed": false,
+  "author_review_persisted": false,
+  "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+  "book_number": 1,
+  "chapter_number": 1,
+  "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
+  "execution_fingerprint": "3c0fb426b0f5161cde842c60e95f01f2c9196a64ee3778ee384be4c3bff9d753",
+  "generation_id": "gen_c2e62a37fd3514e0a1fdb826c4857797",
+  "generation_quality_gate": {
+    "blockers": [
+      {
+        "code": "DETERMINISTIC_PROSE_FAILURE",
+        "measurement": 3641,
+        "message": "Word count is 3641; minimum is 4000.",
+        "metric": "word_count",
+        "operator": "minimum",
+        "threshold": 4000
+      }
+    ],
+    "deterministic_metrics": {
+      "colons": {
+        "measurement": 0,
+        "message": "Colons count is 0; hard maximum is 3.",
+        "metric": "colons",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 3
+      },
+      "ellipses": {
+        "measurement": 0,
+        "message": "Ellipses count is 0; hard maximum is 4.",
+        "metric": "ellipses",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 4
+      },
+      "em_dashes": {
+        "measurement": 1,
+        "message": "Em Dashes count is 1; hard maximum is 8.",
+        "metric": "em_dashes",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 8
+      },
+      "semicolons": {
+        "measurement": 0,
+        "message": "Semicolons count is 0; hard maximum is 15.",
+        "metric": "semicolons",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 15
+      },
+      "word_count": {
+        "measurement": 3641,
+        "message": "Word count is 3641; minimum is 4000.",
+        "metric": "word_count",
+        "operator": "minimum",
+        "passed": false,
+        "threshold": 4000
+      }
+    },
+    "passed": false,
+    "schema_version": "generation_quality_gate_v1",
+    "service": "primary45c-generation-quality-gate-v1",
+    "stop_reason": "end_turn"
+  },
+  "inference_scope": "global",
+  "model_id": "claude-haiku-4-5-20251001",
+  "output_content_type": "text/plain",
+  "output_text": "# Chapter One\n\nThe roar filled the whole sky. Not sound exactly, but a presence that stripped away everything else. Two figures stood in the mountain pass, exposed on high ground as the storm descended across the Pollino ridge. The older man, his hair dark and wild, had already been altered. His hands bore the white scars of an earlier lightning strike, palms marked like stigmata from something he had touched or been touched by years before. The younger one beside him, still new to whatever power ran through them both, felt the electricity gathering in the air like a held breath. The mountain itself seemed to wait. Then the lightning came not as separate bolts but as a unified force, a current that moved through both men simultaneously, binding them in the same white instant. When it passed, they remained standing. Changed. Neither spoke of it afterward, but the memory lived in their bodies, in the cellular knowledge that something fundamental had shifted in that moment when the storm made them singular.\n\nThe memory dissolved like mist burning away at dawn.\n\nLuca crouched in the morning quiet of the Pollino heights, the air already warming, and forced his attention back to the ground beneath his hands. The storm memory faded as his fingers traced the scored earth. Someone had moved recently through this pass. The ground bore fresh marks, deliberate disturbances where something heavy had been dragged or carried across stones that should have remained undisturbed through seasons of wind and rain and frost.\n\nHe pressed his palm against the earth, feeling for warmth that might suggest recent passage. Nothing. The disturbance was old enough to have lost the body heat of whoever had caused it, but fresh enough that no morning rain had yet settled the displaced soil back into its proper alignment. Three days, perhaps four. The calculation came to him with the ease of long practice. He had been coming to this place every day for weeks now, mapping its small changes, learning its rhythms. The routine had become so familiar that the breaks in it stood out like scars on skin.\n\nThe pine tree should have been here. That was the real evidence, the disruption that had pulled him up the mountain again this morning despite his mother's questions about his errands and the village priest's gentle inquiries about his frequent wandering. There had been a particular tree marking this point in the landscape, a gnarled pine with a trunk thick enough that two men would need to stretch their arms around it to clasp hands. Luca had noted its position weeks ago, had used it as a fixed point for his internal surveying. Now the space where it should have stood held only open air. Not fallen—he had found no remnants, no needles scattered, no broken branches suggesting wind damage. Moved. The tree had been deliberately uprooted or cut down and removed from this location.\n\nHe stood and turned slowly, trying to reconstruct the landscape as it should have been. The rock formations to the west remained unchanged. The small spring that ran only in late winter still marked the eastern boundary of this clearing. But the tree's absence created a gap in his mental map, a blank space where there should have been orientation. His eyes felt the dislocation. When he tried to pace out the distance from this point to the next landmark, his counting seemed wrong. The space stretched longer than it should have been. Or perhaps contracted. The disorientation came in waves, a dizziness that had nothing to do with the altitude and everything to do with standing in a place that had been deliberately altered to confuse precise reckoning.\n\nThis was what Luca had begun to understand over the past month. Someone was hiding here. Someone was using this mountain as shelter, and that someone knew enough to understand that the small markers of the landscape could tell a story to anyone paying close attention. The missing tree was not an accident of nature. It was a deliberate obstruction of someone else's ability to track movement through this terrain.\n\nThe marks on the ground pointed generally northward, toward the steeper reaches of the Pollino where the rock faces rose too high for comfortable climbing. Luca had not followed in that direction yet. The ground there was different, unforgiving. He would need better light and more time, and more convincing lies to tell when he returned to the village. Already, the excuses were becoming thin. His mother had begun to watch him with a careful attention that suggested she knew he was not simply gathering herbs or hunting game. The priest had stopped asking questions directly and had instead begun mentioning prayer, suggesting that if Luca found comfort in solitude on the heights, perhaps he might bring devotional intent to his wanderings rather than leaving them as purpose-less rambling.\n\nLuca settled into a crouch and studied the ground more carefully, running his fingers along the scored earth. The pattern suggested something substantial had been moved. An animal, perhaps. But the marks were too regular, too deliberately arranged. A person dragging supplies. A person establishing a camp and then moving everything to avoid discovery. A person who understood that the wilderness could be read by anyone who knew the language of leaves and earth and stone.\n\nHe had come to suspect that the person he was tracking might be the creature his village spoke of in low voices. Italus. The impossible thing that old Vittoria claimed to have seen, the beast that left no clear prints but moved through the mountains like a shadow with agency. Most of the village dismissed her account. She was ancient and prone to visions. But Luca had grown up listening to the particular quality of her voice when she spoke of what she had seen. There was no tremor of fabrication in it, no embellishment. She had encountered something real, something that did not move like the wolves or the wild boars that occasionally came down from the high passes.\n\nThe thought should have frightened him. Instead, it drew him back up the mountain every day despite the growing suspicion in his mother's eyes and the priest's gentle suggestions of more appropriate devotions.\n\nHe rose and moved deeper into the clearing, walking the perimeter slowly, looking for signs he might have missed on earlier visits. Disturbed moss on a rock face. Scratches on stone that might indicate handholds. A place where the soil had been deliberately tamped down in a pattern that suggested repeated use. The work required patience and the kind of detailed attention that most people never learned to apply to the landscape. Luca had learned it from necessity, from years of needing to know exactly where water would run during storms and which paths would be safe when snow came to the high places. The skill that the village assumed was simple hillside gathering had become something more precise, more purposeful.\n\nA sound from above made him still. Not a large sound. Not immediately alarming. Just the smallest disruption of the quiet, the kind of noise that a person makes when they try to move silently and forget that their own breathing can give away their presence. Luca turned slowly, his hand moving to the knife at his belt, but he saw nothing in the rocks above him. Whoever or whatever had made the sound had either moved out of sight or been only the wind, an animal, the mountain itself settling into the morning.\n\nHe forced himself to wait for a full minute before resuming his search, using the time to control his heart rate, to push down the sudden alertness that the sound had triggered. If something was watching from the rocks above, it would not help to show fear. Predators responded to fear. Luca had learned that too, from the stories of hunters and from watching the way the village dogs reacted when wild things came close to human habitation.\n\nBy midday, his legs ached and his throat was dry. He had found three more sites of disturbance, all pointing in roughly the same direction, all suggesting a pattern of regular passage through this particular route. He had not discovered an actual camp, no evidence of a shelter or a fire. But the trail was clear enough to someone who knew how to read it. Whatever was moving through these mountains was intelligent. It was careful. It was not simply wandering but traveling with purpose, using knowledge of the landscape that suggested either long familiarity or something more fundamental, an instinctive understanding of how to move through stone and earth and shadow.\n\nThe vertigo came again as he tried to stand. His legs were steady enough, but his mind seemed to slip sideways, losing its grip on the spatial relationships that should have been simple and obvious. The missing tree. The altered ground. The paths that twisted in ways that felt almost deliberate in their disruption of expected patterns. Luca closed his eyes and forced himself to breathe, to wait for his sense of orientation to settle. When he opened them again, the dizziness had passed, but something in the air felt different. The quality of the light had changed, or the temperature, or some essential property of the moment that he could not quite name.\n\nHe turned to head back down the mountain, moving more quickly than was strictly safe on the uneven ground. The village would be expecting him by evening. He had told his mother he was hunting. It was his standard excuse, and it had begun to wear thin. Soon he would need new reasons for his absences, or he would need to give up these daily expeditions and accept that he would never know whether Vittoria's claim was true, whether something genuinely moved through the Pollino heights, whether the altered landscape was trying to tell him something urgent that he was too young or too uninformed to quite understand.\n\nThe path down took him through a narrow passage between rock faces, a place where the light seemed to fall at an odd angle and where the air held a perpetual coolness even in the warmth of the summer day. This was where he encountered the man.\n\nThe figure stood in the passage ahead, blocking the path forward. He was tall and lean, dressed in the rough cloth and poor sandals of a hermit or a monk, his face weathered dark by years of sun and wind. He held no weapon, made no threatening gesture, but his presence in the passage was clearly deliberate. He had not simply happened to be here. He had been waiting, or hunting, or performing some kind of observation that had positioned him exactly where Luca would have to pass.\n\nLuca stopped, his hand tightening on the knife hilt. The man did not move, and for a moment, neither did the boy. The silence stretched between them, filled with the soft sound of wind through the rock passage and the distant call of something bird-like from higher up the mountain.\n\n\"You come here often,\" the man said. His voice was rough, as if he had not used it in a long time. His hands, which hung loose at his sides, were marked with old scars that ran from his palms up toward his wrists. The scarring was unlike anything Luca had ever seen, a pattern that looked almost deliberate, almost like someone had pressed themselves against something very hot and held there long enough to mark every line of skin. \"Every day, perhaps. Or nearly every day. Your pattern is becoming obvious to anyone who watches the mountain carefully.\"\n\nLuca did not answer immediately. He was assessing the man, trying to determine whether he represented danger and whether running was a viable option. The passage was narrow. If he ran, the man could pursue more easily than if they fought. If he stood his ground, he might be able to make use of the knife if things came to violence. But the man's tone had not been threatening, merely observational. He seemed more interested in establishing that he had noticed something than in using that notice for aggression.\n\n\"The herbs are good in this place,\" Luca said finally. \"My mother has use for them. I gather what I can.\"\n\nThe man's expression did not change. He looked down at Luca's hands, which held no gathered plants, carried no basket or cloth for collecting anything. \"You gather herbs,\" he repeated, and there was something in his voice that suggested he found the claim amusing or perhaps merely sad. \"You gather herbs by moving in a pattern that mimics tracking. By studying the ground like someone learning to read a language. By searching for something that cannot be easily found, that does not want to be easily found.\"\n\nLuca felt heat rise into his face. He was caught, and the man knew it. There was no point in continuing the pretense.\n\n\"There is something here,\" Luca said. \"In these mountains. I want to know what it is.\"\n\nThe man was quiet for a long moment. He lifted one scarred hand and studied it, turning it palm-down as if he had never quite looked at it properly before. \"Your curiosity will bring you into danger,\" he said. \"Not immediately, perhaps. But in time. There are things in these mountains that are not meant to be found, not by the young and not by the unprepared. Your mother would do better to have you marry young, settle yourself in the village, learn the business of growing things in soil that does not move beneath you. This place, these heights, this pursuit of mysteries that do not welcome investigation. These things will change you in ways that cannot be undone.\"\n\n\"Are you the thing that lives here?\" Luca asked. He did not know where the boldness came from, but now that the words were spoken, he found he did not regret them. \"Are you what I have been tracking?\"\n\n\"I am a monk,\" the man said. His voice had settled into something gentler. \"I keep the prayers in this place because prayer is sometimes what a mountain needs. I am old, and I have learned that solitude is a kind of honesty. I do not explain myself to the village, and I do not invite the village to explain itself to me. I am content with that arrangement.\"\n\nIt was too pat an answer, too rehearsed. Luca could hear the lie in it the way he could read tracks, through small disruptions in the expected pattern. But he also understood that the man had given him what he was willing to give, and that pressing further would only result in silence.\n\n\"I will stop coming,\" Luca said. It was not true. He knew already that he would not stop, that the pull toward these mountains was too strong now, that something about the disturbances in the landscape had caught hold of him and would not release him easily. But he said the words anyway, as a kind of courtesy to the stranger who had been kind enough to intercept him in the passage rather than allowing him to stumble upon something he was not ready to know.\n\nThe man studied him for a long moment. When he spoke again, his voice carried something that might have been approval or might have been resignation. \"You will come back,\" he said. \"That much is obvious. But you are being observed now, which means your family is beginning to question your absences. You need a better reason for being here. A reason that they will accept without doubt, something that will satisfy even the village priest and his concerns about souls wandering away from proper devotion.\"\n\n\"What reason?\" Luca asked.\n\n\"Prayer,\" the man said simply. \"Tell your mother that you have begun to climb these heights to pray. Tell her that the priest's words have moved you to seek communion with God in the quiet places, away from the village distractions. Tell her that you come here to think of your soul and the state of your immortal nature. No village mother will question such devotion. No priest will do anything but encourage it. You will have your freedom to move through these mountains, and the village will sleep easy knowing that you are using your time for purposes they understand and approve.\"\n\nIt was remarkably practical advice, the kind of thing that showed real understanding of how the village functioned, how the people who lived there thought. Luca filed it away, already composing the words he would use the next time his mother asked where he had been.\n\n\"What is your name?\" Luca asked.\n\n\"I am called Farovald,\" the man said. \"I have been in these mountains for longer than you have been alive, and I expect I will remain here long after you have returned to the village and made your own peace with a simpler life. I am telling you this because you will encounter me again, and I do not wish there to be fear between us. I am not your enemy, boy. But I am also not your guide or your teacher. I am simply someone who has learned to exist in this place in ways that the village would not understand. Remember that distinction.\"\n\nHe stepped aside, creating a clear path down the mountain. Luca walked past him slowly, still uncertain about the man's true nature, still not entirely convinced by the monk's explanation. But he was grateful for the practical advice about prayer, and he was grateful for the courtesy of the passage that had been offered.\n\nBehind him, as he walked, Luca could feel Farovald's presence, a weight of attention and assessment. He did not look back. The descent required all his focus, all his skill at moving safely through terrain that seemed to shift beneath his feet. By the time he reached the lower slopes, the afternoon was already beginning its turn toward evening, and the village lights were starting to show through the mist that gathered in the valleys.\n\nWhen his mother asked where he had been, Luca told her about the prayer. He told her that he had felt called to seek solitude on the heights, that something about the priest's sermons had moved him to want a deeper communion with God. His mother's face changed as he spoke, softened by an emotion that looked like pride or perhaps relief. She did not question him further. She welcomed him back to the house and had his father prepare extra food for his supper, as if she were rewarding him for this sudden piety.\n\nThe priest, when Luca saw him next in the village square, received the news with visible satisfaction. He placed a hand on Luca's shoulder and spoke of the boy's improved spiritual understanding, of the grace that God sometimes showed to the young when they opened their hearts to authentic seeking. Several older women nodded in agreement, and Luca watched as the story of his devotion spread through the village, taking on details and embellishments that he had never provided. By evening, he had become the spiritual hope of his family line, the child who had been called to deeper faith in these dangerous times when the young so often strayed from proper devotion.\n\nHis freedom to move through the mountains was now secured by a reason that no one in the village would ever question.\n\nThat night, Luca lay in his sleeping place and thought about the man in the passage, about the scars on his hands, about the way he had seemed to know exactly what Luca was doing and why. He thought about the missing tree and the altered ground, about the trail that led northward toward the steeper reaches of the Pollino. He thought about the brief moment when the dizzy disorientation had come over him, when the landscape had seemed to slip sideways and reveal something beneath itself, something that ordinary sight could not quite perceive.\n\nIn the darkness, he made his first deliberate choice about what he would hide from his family, what he would not speak of, what he would keep as a private knowledge that belonged only to himself and to the mountains. It was a small beginning, hardly noticeable as a turning point in a life. But it was real, and it was his, and once made, it could not be unmade.\n\nHe would return to the Pollino tomorrow under the cover of prayer and spiritual seeking. He would continue to track the disturbances in the landscape. He would learn to move through this place without leaving marks of his own passage that others could read. And he would do all of this quietly, carefully, understanding now that he was no longer simply a curious village boy wandering in the mountains. He was beginning to be someone else, someone marked by the knowledge of something strange and significant that moved through the Pollino heights, something that had already, through the intervention of Farovald, begun to teach him the first small lessons of concealment and deliberate ignorance.\n\nThe lessons would grow more complex as time passed. The skills would deepen. The secrets would multiply like shadows gathering in the mountain passes. But for now, in this first night of his deliberate separation from the simple understanding of his childhood, Luca knew only that he had begun something that could not be stopped, and that he was grateful for the man who had given him permission to continue it without drawing the attention of those who loved him but could not possibly understand what he was trying to learn.",
+  "output_text_sha256": "7e5be360186dc26478d511ace0e25c7cb4a8f84b20d3c515cbbf402a23fa0676",
+  "pricing_version_id": "pricing_d841f3193970d9a52784",
+  "pricing_version_sha256": "20171c15c171d26a6a583d1312ec25dd7db4bee11badc2434819e0c8f128eef6",
+  "project_id": "italus-saga",
+  "prompt_sha256": "05504cd1045ddb7178e601ebe7ae69d3d03720107d816eed405b167bdf269ac6",
+  "provider_id": "anthropic",
+  "provider_received_at": "2026-10-18T15:01:43.910307Z",
+  "provider_request_id": "msg_011Cg9uKrXER56xDxUskPavN",
+  "provider_status": "completed",
+  "provider_system_sha256": "ca5c7c69e591ef605dde82e9fe6aae61f3031d5907acb7a18b1babd2e36c5ffc",
+  "provider_user_prompt_sha256": "046386d36e84a48fbc4537f0df014ed0d0be0212d5a71892bff9494403ba4e61",
+  "receipt_sha256": "2cd9ceb5d432dd046d6d2cd7886f02d6d16416aaf954898b181cd9d76cf83a49",
+  "recorded_at": "2026-10-18T15:01:43.976089Z",
+  "replacement_context_sha256": "5e63a5cf38e2365dc9a53eacfd826909bd2c0d1721e0218b70a21ad0e774f935",
+  "replacement_correction_context": {
+    "audited_semantic_failure_count": 0,
+    "audited_semantic_failures": [],
+    "authority": "backend_derived_rejection_correction",
+    "book_number": 1,
+    "chapter_number": 1,
+    "context_sha256": "5e63a5cf38e2365dc9a53eacfd826909bd2c0d1721e0218b70a21ad0e774f935",
+    "current_revalidation": {
+      "validated_content_sha256": "e6881875a3c3f153c32f86ea15b63a937e65c17c3eff96b94d9fd1a3c2f04b48",
+      "validated_content_version_id": "version_fe5c572cd54a49d8a08d5cc010ab6fdc",
+      "validation_report_sha256": "45bef3c4346e6489fad404a7c586e95e2cc6226df1b383f4881498ed5c554a85",
+      "validation_result_sha256": "8517425ba248b6567a4437af95e87e2b88b396a36ed40d7d4027140df16a6d2a",
+      "validation_run_id": "validation_run_8517425ba248b6567a4437af95e87e2b",
+      "validator_contract_sha256": "13afeb506519877af157f4392652c718a47817bd43081da82344566982ba51f8"
+    },
+    "deterministic_failure_count": 1,
+    "deterministic_failure_source": "rejection_time_validation",
+    "deterministic_failures": [
+      {
+        "details": {
+          "measurement": 11,
+          "metric": "em_dashes",
+          "operator": "hard_maximum",
+          "required_reduction": 3,
+          "threshold": 8
+        },
+        "instruction": "Candidate prose must satisfy the em_dashes quantitative limit from the embedded prose rulebook.",
+        "message": "Em Dashes count is 11; hard maximum is 8.",
+        "rule_id": "prose.em_dashes.quantitative"
+      }
+    ],
+    "instructions": [
+      "Generate a new draft from the current chapter authority; do not copy, continue, paraphrase, or repair the rejected prose.",
+      "Correct every listed deterministic failure while still obeying the current generation guardrails.",
+      "Do not repeat any listed audited semantic failure. These FAIL verdicts were bound to the exact rejected content and validator contract.",
+      "Do not infer violations from UNKNOWN semantic items. UNKNOWN remains unpromoted and the rejected prose itself is not included."
+    ],
+    "manual_semantic_rules_promoted": false,
+    "rejected_content_sha256": "e6881875a3c3f153c32f86ea15b63a937e65c17c3eff96b94d9fd1a3c2f04b48",
+    "rejected_prose_included": false,
+    "rejection_validation": {
+      "deterministic_failures": [
+        {
+          "details": {
+            "measurement": 11,
+            "metric": "em_dashes",
+            "operator": "hard_maximum",
+            "required_reduction": 3,
+            "threshold": 8
+          },
+          "instruction": "Candidate prose must satisfy the em_dashes quantitative limit from the embedded prose rulebook.",
+          "message": "Em Dashes count is 11; hard maximum is 8.",
+          "rule_id": "prose.em_dashes.quantitative"
+        }
+      ],
+      "validated_content_sha256": "e6881875a3c3f153c32f86ea15b63a937e65c17c3eff96b94d9fd1a3c2f04b48",
+      "validated_content_version_id": "version_fe5c572cd54a49d8a08d5cc010ab6fdc",
+      "validation_result_sha256": "8517425ba248b6567a4437af95e87e2b88b396a36ed40d7d4027140df16a6d2a",
+      "validation_run_id": "validation_run_8517425ba248b6567a4437af95e87e2b",
+      "validator_contract_sha256": "13afeb506519877af157f4392652c718a47817bd43081da82344566982ba51f8"
+    },
+    "rejection_validation_report_sha256": "4154cb0e2e857c5da6e2500f196753f9b2e738c6b74784ef494f3b1c8a82f1df",
+    "schema_version": "replacement_correction_context_v2",
+    "semantic_receipt_ids_considered": [],
+    "service": "primary45c-replacement-correction-context-v2",
+    "source_generation_id": "gen_58be971d980a3da33561cc4d1201563a",
+    "source_review_event_id": "review_event_eae3c8426ea13db48b47baab0c5e7a42",
+    "source_review_version_id": "review_version_eae3c8426ea13db48b47baab0c5e7a42",
+    "unknown_semantic_rules_promoted": false
+  },
+  "replacement_for_generation_id": "gen_58be971d980a3da33561cc4d1201563a",
+  "request_content_sha256": "befb01ea00fbbfed3c1d9f70b9878051f6a916d855fdfcbb5cf8b854299434dc",
+  "schema_version": "primary33.2.2-provider-generation-receipt-v1",
+  "service_tier": "standard",
+  "stop_reason": "end_turn",
+  "usage_event": {
+    "actual_cost": "0.032349",
+    "actual_input_tokens": 10144,
+    "actual_output_tokens": 4441,
+    "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+    "cache_read_tokens": 0,
+    "cache_write_1h_tokens": 0,
+    "cache_write_5m_tokens": 0,
+    "cache_write_tokens": 0,
+    "candidate_promoted_to_author_review": true,
+    "cost_basis": "immutable_pricing_snapshot_calculation",
+    "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
+    "currency": "USD",
+    "generation_id": "gen_c2e62a37fd3514e0a1fdb826c4857797",
+    "generation_quality_gate_passed": false,
+    "inference_scope": "global",
+    "model_id": "claude-haiku-4-5-20251001",
+    "pricing_snapshot": {
+      "created_at": "2026-09-19T21:25:21.231578Z",
+      "currency": "USD",
+      "effective_from": "2026-09-03T00:00:00Z",
+      "immutable": true,
+      "inference_scope": "global",
+      "model_id": "claude-haiku-4-5-20251001",
+      "notes": "Curated Primary 33.2.1A reference. Anthropic standard synchronous list pricing checked 2026-09-03. Batch pricing is retained as reference metadata only.",
+      "pricing_version_id": "pricing_d841f3193970d9a52784",
+      "provider_id": "anthropic",
+      "rates_per_mtok": {
+        "cache_read_per_mtok": "0.1",
+        "cache_write_1h_per_mtok": "2",
+        "cache_write_5m_per_mtok": "1.25",
+        "input_per_mtok": "1",
+        "output_per_mtok": "5"
+      },
+      "schema_version": "primary33.1-provider-pricing-v1",
+      "service_tier": "standard",
+      "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified_at": "2026-09-03T00:00:00Z"
+    },
+    "pricing_version_id": "pricing_d841f3193970d9a52784",
+    "pricing_version_sha256": "20171c15c171d26a6a583d1312ec25dd7db4bee11badc2434819e0c8f128eef6",
+    "prompt_sha256": "05504cd1045ddb7178e601ebe7ae69d3d03720107d816eed405b167bdf269ac6",
+    "provider_execution_schema_version": "primary45c-provider-execution-v3",
+    "provider_id": "anthropic",
+    "provider_invoice_reconciled": false,
+    "provider_request_id": "msg_011Cg9uKrXER56xDxUskPavN",
+    "provider_status": "completed",
+    "provider_stop_reason": "end_turn",
+    "provider_system_sha256": "ca5c7c69e591ef605dde82e9fe6aae61f3031d5907acb7a18b1babd2e36c5ffc",
+    "provider_user_prompt_sha256": "046386d36e84a48fbc4537f0df014ed0d0be0212d5a71892bff9494403ba4e61",
+    "recorded_at": "2026-10-18T15:01:43.920416Z",
+    "replacement_context_sha256": "5e63a5cf38e2365dc9a53eacfd826909bd2c0d1721e0218b70a21ad0e774f935",
+    "replacement_for_generation_id": "gen_58be971d980a3da33561cc4d1201563a",
+    "request_content_sha256": "befb01ea00fbbfed3c1d9f70b9878051f6a916d855fdfcbb5cf8b854299434dc",
+    "schema_version": "primary33.1-provider-usage-event-v2",
+    "service_tier": "standard",
+    "usage_event_id": "usage_c2e62a37fd3514e0a1fdb826c4857797"
+  },
+  "validator_contract_sha256": "8755e3dfa488537ec68623c8f0d090504da22f86a320848c3f4f3358ff85d191",
+  "validator_sidecar_sha256": "cfb4719e6b4c4602a90c502c2e0065d3237aa1f30d9d586b86109172b19efd7d",
+  "validator_snapshot_project_relative_path": "provenance/generation_validation_contracts/gen_c2e62a37fd3514e0a1fdb826c4857797.json",
+  "validator_snapshot_sha256": "476098e723cf38886b97f65fec5aacb7aa62066e3714646f5f43a83a2f5e4019"
+}

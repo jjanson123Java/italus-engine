@@ -16,20 +16,6 @@
   "book_number": 1,
   "chapter_event_sequence": [
     {
-      "anchor_event_ref": null,
-      "chapter_role": "opening",
-      "event_ref": {
-        "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
-        "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
-        "record_type": "event",
-        "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
-      },
-      "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
-      "ordinal": 0,
-      "position": "opening",
-      "relationship_to_anchor": "same_anchor"
-    },
-    {
       "anchor_event_ref": {
         "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
         "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
@@ -44,9 +30,23 @@
         "source_record_hash": "1afa071397267c3899fd80c3958ff913e9413dfffef85aa7084c72c627c4d7c9"
       },
       "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+      "ordinal": 0,
+      "position": "opening",
+      "relationship_to_anchor": ""
+    },
+    {
+      "anchor_event_ref": null,
+      "chapter_role": "opening",
+      "event_ref": {
+        "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+        "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+        "record_type": "event",
+        "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+      },
+      "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
       "ordinal": 1,
       "position": "early",
-      "relationship_to_anchor": "remembers"
+      "relationship_to_anchor": "same_anchor"
     }
   ],
   "chapter_execution_contract": {
@@ -108,19 +108,6 @@
     "required_additional_canon_refs": [],
     "required_event_sequence": [
       {
-        "anchor_event_ref": {},
-        "chapter_role": "opening",
-        "event_ref": {
-          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
-          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
-          "record_type": "event"
-        },
-        "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
-        "ordinal": 1,
-        "position": "opening",
-        "relationship_to_anchor": "same_anchor"
-      },
-      {
         "anchor_event_ref": {
           "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
           "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
@@ -133,9 +120,22 @@
           "record_type": "event"
         },
         "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+        "ordinal": 1,
+        "position": "opening",
+        "relationship_to_anchor": ""
+      },
+      {
+        "anchor_event_ref": {},
+        "chapter_role": "opening",
+        "event_ref": {
+          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+          "record_type": "event"
+        },
+        "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
         "ordinal": 2,
         "position": "early",
-        "relationship_to_anchor": "remembers"
+        "relationship_to_anchor": "same_anchor"
       }
     ],
     "required_location_refs": [
@@ -168,7 +168,70 @@
       "chapter_selection": "Author-selected chapter records are execution obligations for this chapter. They must be represented where their type and placement apply."
     }
   },
+  "chapter_narrative_source": {
+    "chapter_objective": "Luca repeatedly investigates the changed position and ground disturbance around Italus, while his increasingly weak excuses for returning to the Pollino heights draw family and village suspicion. Farovald watches the pattern from concealment. Later, presenting himself only as a reclusive mountain monk, he intercepts Luca on the route, challenges the boy's poor excuses, and recommends prayer as a socially credible reason for repeated trips. Luca begins the first practical concealment habits of guardianship; Farovald does not become or appoint a guardian.",
+    "chapter_plan_revision": 18,
+    "chapter_plan_sha256": "20a2309c85225a9676aab08ae63f24dcf3f39dd31f0ada546c3f8024a730ba19",
+    "generation_kickoff": "1. The Flashback (589 AD): Trigger one brief external analepsis (flashback) to the 589 Pollino storm. The transition should be seamless because the flashback begins with the exact same feeling: The 589 Pollino shared lightning singularity alters mature Italus and Farovald.\n\n2. The Sensory Bridge: Transition from the flashback The Return (789 AD): Cut directly back to the 789 mainline narrative. The roar of the storm abruptly drops away, snapping Luca back to the quiet of the present as he stands over the disturbed ground, now certain of Italus’s trail to focusing on Luca's internal calculation. As he paces out the physical measurements of the missing or moved tree, the overwhelming mental effort of trying to read a altered, deceptive landscape triggers a wave of vertigo and spatial disorientation.  opening Hook (789 AD): Start immediately in media res with Luca investigating the landscape. He finds fresh physical evidence that Italus recently moved through the area: freshly disturbed ground and a deliberate discrepancy in the local terrain. According to Luca's meticulous mental surveying and reckoning, a specific pine tree that should be here has been modified, moved, or cleared away."
+  },
   "chapter_number": 1,
+  "chapter_safe_canon_facts": [
+    {
+      "approved_facts": [
+        "Italus is a mature Bosnian pine tree (Pinus heldreichii), with trunk, bark, roots, cambium and resin.",
+        "Italus participates as the tree in the 589 Pollino lightning event."
+      ],
+      "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+      "record_type": "character",
+      "selected_story_control_id": ""
+    },
+    {
+      "approved_facts": [
+        "Luca is a fourteen-year-old human shepherd boy in the 789 mainline.",
+        "In 789 Luca observes fresh disturbed ground and displaced roots suggesting Italus has moved."
+      ],
+      "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+      "record_type": "character",
+      "selected_story_control_id": ""
+    },
+    {
+      "approved_facts": [
+        "In the 789 mainline a reclusive human monk observes Luca and later offers prayer as a credible cover for his visits.",
+        "The human figure in the 589 storm has human palms and sustains lightning-related palm injury."
+      ],
+      "record_id": "char_719cd0333a9840efa32e1870e223b939",
+      "record_type": "character",
+      "selected_story_control_id": ""
+    },
+    {
+      "approved_facts": [
+        "The current chapter's 589 storm and 789 discovery take place in the Pollino landscape of southern Italy."
+      ],
+      "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+      "record_type": "location",
+      "selected_story_control_id": ""
+    },
+    {
+      "approved_facts": [
+        "The 589 storm is a brief external historical flashback shown before the 789 mainline.",
+        "During the 589 storm an unidentified human figure is in direct physical contact with mature Italus, the pine tree, when lightning strikes.",
+        "The human figure sustains scorched palm injuries; Italus sustains resin and cambium damage.",
+        "Depict the immediate sensory aftermath and transition back to 789 before explaining any longer-term effect."
+      ],
+      "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+      "record_type": "event",
+      "selected_story_control_id": "story-control-43694f1e3338401d"
+    },
+    {
+      "approved_facts": [
+        "After the 589 external flashback, show Luca in 789 discovering fresh physical evidence that Italus has moved.",
+        "The monk later offers Luca prayer as a credible cover story."
+      ],
+      "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+      "record_type": "event",
+      "selected_story_control_id": ""
+    }
+  ],
   "continuity": {
     "approved_through": null,
     "bounded_state": {},
@@ -176,22 +239,8 @@
     "source_revision": "",
     "source_sha256": ""
   },
-  "dependency_set_sha256": "08b4e29f67f3f08b3a9fd41307705462652f22d6235e8fd6c86cfc5bc3a659af",
+  "dependency_set_sha256": "997723935d5d870fcfc16795c532d8960e0112871a6161f308c95684a4d0c312",
   "event_placements": [
-    {
-      "anchor_event_ref": null,
-      "chapter_role": "opening",
-      "event_ref": {
-        "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
-        "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
-        "record_type": "event",
-        "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
-      },
-      "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
-      "ordinal": 0,
-      "position": "opening",
-      "relationship_to_anchor": "same_anchor"
-    },
     {
       "anchor_event_ref": {
         "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
@@ -207,9 +256,23 @@
         "source_record_hash": "1afa071397267c3899fd80c3958ff913e9413dfffef85aa7084c72c627c4d7c9"
       },
       "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+      "ordinal": 0,
+      "position": "opening",
+      "relationship_to_anchor": ""
+    },
+    {
+      "anchor_event_ref": null,
+      "chapter_role": "opening",
+      "event_ref": {
+        "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+        "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+        "record_type": "event",
+        "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+      },
+      "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
       "ordinal": 1,
       "position": "early",
-      "relationship_to_anchor": "remembers"
+      "relationship_to_anchor": "same_anchor"
     }
   ],
   "execution_locks": {
@@ -220,14 +283,16 @@
     "provider_execution_enabled": false,
     "runtime_memory_write_enabled": false
   },
-  "generated_at": "2026-08-24T01:12:14.592227+00:00",
+  "generated_at": "2026-10-18T21:25:28.002510+00:00",
   "mode": "chapter_1",
   "pack_project_relative_path": "canon_packs/chapter_knowledge_pack/book_01_chapter_001.md",
-  "pack_sha256": "4537c8804630ec56fa23a68e29b6bc56e720e64656d6583f25f223bdab06b056",
+  "pack_sha256": "2cc481b5bc8052e55aca1f4d58a260763bc80d3afc13720f4e830f005add12ca",
   "prior_ending_context": {
     "character_count": 0,
     "included": false,
-    "sha256": ""
+    "sha256": "",
+    "source_identity": {},
+    "text": ""
   },
   "project_id": "italus-saga",
   "prompt_facing_controls": {
@@ -313,18 +378,21 @@
   "schema_version": "chapter_knowledge_pack_v3_pov_rulebook",
   "selected_canon_refs": [
     {
+      "hide_name_in_prose": false,
       "label": "Luca",
       "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
       "record_type": "character",
       "source_record_hash": "c93c39f03672c5cc16f5163172c3473cbdb443f9137bc105879f2573c740b78e"
     },
     {
+      "hide_name_in_prose": true,
       "label": "Farovald",
       "record_id": "char_719cd0333a9840efa32e1870e223b939",
       "record_type": "character",
       "source_record_hash": "f7357cf5781eb45231ef05af79ce31bb62c1b529d8719be98bd98787a1d523f1"
     },
     {
+      "hide_name_in_prose": false,
       "label": "Italus",
       "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
       "record_type": "character",
@@ -343,10 +411,11 @@
     "approved_continuity_sha256": "",
     "approved_continuity_through": null,
     "book_runtime_context_path": "canon_packs/book_runtime_context/book_01.md",
-    "book_runtime_context_sha256": "8077066ea129c664c505abe19678973bc6e2729366847548ccd01d9f07fa555d",
+    "book_runtime_context_sha256": "e9f2f8b66ed75ba77adce9c89070f9fd344bdcb29da2c3ad1ae356c0bc6b5a61",
     "canon_index_revision": "873ab39e153c3933d6e4a4d13b81b2b1dc8c4bd7acca8a3bec2d303e6f489100",
-    "chapter_plan_revision": 12,
-    "chapter_plan_sha256": "30e832a662e17c1432599696784d9f95ee4b1aa93eba4614bd8d6d362fdfc580",
+    "chapter_plan_revision": 18,
+    "chapter_plan_sha256": "20a2309c85225a9676aab08ae63f24dcf3f39dd31f0ada546c3f8024a730ba19",
+    "chapter_safe_generation_facts_sha256": "1bdbb803a281f85d4d7606090a3f4fb9aaf07f0532084d6843de4c373261a778",
     "progression_override_revision": 0,
     "progression_override_sha256": "f7bde2c42980713730ce6211d447037fe8632087a8255aeef92b788c2c91a0bd",
     "prose_rulebook_sha256": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
@@ -434,13 +503,13 @@
     }
   ],
   "token_accounting": {
-    "book_runtime_context_estimated_tokens": 41967,
-    "chapter_knowledge_pack_estimated_tokens": 18736,
+    "book_runtime_context_estimated_tokens": 41975,
+    "chapter_knowledge_pack_estimated_tokens": 18913,
     "full_project_runtime_context_estimated_tokens": 271580,
-    "reduction_from_book_runtime_context": 23231,
-    "reduction_from_book_runtime_context_percent": 55.36,
-    "reduction_from_full_project_runtime_context": 252844,
-    "reduction_from_full_project_runtime_context_percent": 93.1
+    "reduction_from_book_runtime_context": 23062,
+    "reduction_from_book_runtime_context_percent": 54.94,
+    "reduction_from_full_project_runtime_context": 252667,
+    "reduction_from_full_project_runtime_context_percent": 93.04
   },
   "unlock_evaluations": [
     {
@@ -830,19 +899,6 @@
       "required_additional_canon_refs": [],
       "required_event_sequence": [
         {
-          "anchor_event_ref": {},
-          "chapter_role": "opening",
-          "event_ref": {
-            "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
-            "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
-            "record_type": "event"
-          },
-          "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
-          "ordinal": 1,
-          "position": "opening",
-          "relationship_to_anchor": "same_anchor"
-        },
-        {
           "anchor_event_ref": {
             "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
             "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
@@ -855,9 +911,22 @@
             "record_type": "event"
           },
           "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+          "ordinal": 1,
+          "position": "opening",
+          "relationship_to_anchor": ""
+        },
+        {
+          "anchor_event_ref": {},
+          "chapter_role": "opening",
+          "event_ref": {
+            "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+            "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+            "record_type": "event"
+          },
+          "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
           "ordinal": 2,
           "position": "early",
-          "relationship_to_anchor": "remembers"
+          "relationship_to_anchor": "same_anchor"
         }
       ],
       "required_location_refs": [
@@ -898,20 +967,6 @@
     ],
     "event_placements": [
       {
-        "anchor_event_ref": null,
-        "chapter_role": "opening",
-        "event_ref": {
-          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
-          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
-          "record_type": "event",
-          "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
-        },
-        "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
-        "ordinal": 0,
-        "position": "opening",
-        "relationship_to_anchor": "same_anchor"
-      },
-      {
         "anchor_event_ref": {
           "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
           "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
@@ -926,9 +981,23 @@
           "source_record_hash": "1afa071397267c3899fd80c3958ff913e9413dfffef85aa7084c72c627c4d7c9"
         },
         "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+        "ordinal": 0,
+        "position": "opening",
+        "relationship_to_anchor": ""
+      },
+      {
+        "anchor_event_ref": null,
+        "chapter_role": "opening",
+        "event_ref": {
+          "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+          "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+          "record_type": "event",
+          "source_record_hash": "39723626f0f5819232a996548c94d27b74ebab1a648eeed073d48b6b8775fa97"
+        },
+        "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
         "ordinal": 1,
         "position": "early",
-        "relationship_to_anchor": "remembers"
+        "relationship_to_anchor": "same_anchor"
       }
     ],
     "forbidden_future_knowledge": [
@@ -936,6 +1005,12 @@
       "Farovald's exact full lifespan or final-series fate before Book 11.",
       "Any statement that Farovald is Guardian Zero, a succession authority, or the founder of the guardian lineage.",
       "Any telepathic, linguistic, prophetic, or remote-vision interpretation of Farovald's biological coupling to Italus."
+    ],
+    "hidden_character_names": [
+      {
+        "canonical_name": "Farovald",
+        "record_id": "char_719cd0333a9840efa32e1870e223b939"
+      }
     ],
     "prose_rulebook": {
       "quantitative_metrics": {
@@ -1370,6 +1445,375 @@
         "record_type": "location",
         "requested_use": "chapter_selection"
       }
-    ]
+    ],
+    "validation_rules": [
+      {
+        "evaluation_mode": "DETERMINISTIC",
+        "instruction": "The character's canonical name must not appear in prose.",
+        "parameters": {
+          "canonical_name": "Farovald"
+        },
+        "rule_id": "chapter.character_name.hidden.char_719cd0333a9840efa32e1870e223b939",
+        "rule_type": "CANONICAL_NAME_PROHIBITION",
+        "severity": "BLOCKER",
+        "source_ref": "char_719cd0333a9840efa32e1870e223b939",
+        "source_type": "CHAPTER_PLANNER"
+      },
+      {
+        "evaluation_mode": "DETERMINISTIC",
+        "instruction": "Candidate prose must satisfy the word_count quantitative limit from the embedded prose rulebook.",
+        "parameters": {
+          "contract": {
+            "hard_fail_below_minimum": true,
+            "minimum": 4000
+          },
+          "metric": "word_count"
+        },
+        "rule_id": "prose.word_count.quantitative",
+        "rule_type": "PROSE_QUANTITATIVE_METRIC",
+        "severity": "BLOCKER",
+        "source_ref": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+        "source_type": "PROSE_RULEBOOK"
+      },
+      {
+        "evaluation_mode": "DETERMINISTIC",
+        "instruction": "Candidate prose must satisfy the em_dashes quantitative limit from the embedded prose rulebook.",
+        "parameters": {
+          "contract": {
+            "hard_maximum": 8,
+            "preferred_maximum": 6,
+            "preferred_minimum": 0
+          },
+          "metric": "em_dashes"
+        },
+        "rule_id": "prose.em_dashes.quantitative",
+        "rule_type": "PROSE_QUANTITATIVE_METRIC",
+        "severity": "BLOCKER",
+        "source_ref": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+        "source_type": "PROSE_RULEBOOK"
+      },
+      {
+        "evaluation_mode": "DETERMINISTIC",
+        "instruction": "Candidate prose must satisfy the semicolons quantitative limit from the embedded prose rulebook.",
+        "parameters": {
+          "contract": {
+            "hard_maximum": 15,
+            "preferred_maximum": 10,
+            "preferred_minimum": 0
+          },
+          "metric": "semicolons"
+        },
+        "rule_id": "prose.semicolons.quantitative",
+        "rule_type": "PROSE_QUANTITATIVE_METRIC",
+        "severity": "BLOCKER",
+        "source_ref": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+        "source_type": "PROSE_RULEBOOK"
+      },
+      {
+        "evaluation_mode": "DETERMINISTIC",
+        "instruction": "Candidate prose must satisfy the colons quantitative limit from the embedded prose rulebook.",
+        "parameters": {
+          "contract": {
+            "hard_maximum": 3
+          },
+          "metric": "colons"
+        },
+        "rule_id": "prose.colons.quantitative",
+        "rule_type": "PROSE_QUANTITATIVE_METRIC",
+        "severity": "BLOCKER",
+        "source_ref": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+        "source_type": "PROSE_RULEBOOK"
+      },
+      {
+        "evaluation_mode": "DETERMINISTIC",
+        "instruction": "Candidate prose must satisfy the ellipses quantitative limit from the embedded prose rulebook.",
+        "parameters": {
+          "contract": {
+            "hard_maximum": 4,
+            "must_be_narratively_justified": true
+          },
+          "metric": "ellipses"
+        },
+        "rule_id": "prose.ellipses.quantitative",
+        "rule_type": "PROSE_QUANTITATIVE_METRIC",
+        "severity": "BLOCKER",
+        "source_ref": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+        "source_type": "PROSE_RULEBOOK"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Confirm every ellipsis in the current prose is narratively justified.",
+        "parameters": {
+          "metric": "ellipses"
+        },
+        "rule_id": "prose.ellipses.narrative_justification",
+        "rule_type": "PROSE_NARRATIVE_JUSTIFICATION",
+        "severity": "BLOCKER",
+        "source_ref": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+        "source_type": "PROSE_RULEBOOK"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Confirm the current prose satisfies the rulebook simile limit. Simile identification is not treated as deterministic.",
+        "parameters": {
+          "contract": {
+            "hard_maximum": 12
+          },
+          "metric": "similes"
+        },
+        "rule_id": "prose.similes.hard_maximum",
+        "rule_type": "PROSE_HEURISTIC_METRIC",
+        "severity": "BLOCKER",
+        "source_ref": "9649315d376145deb764813679a28b3cf7a7aeb5b46636ee9d843e2aaf78a99f",
+        "source_type": "PROSE_RULEBOOK"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Chapter 1 may disclose only the attached Farovald storm-fragment Story Control.",
+        "parameters": {},
+        "rule_id": "chapter.restriction.622f7978c1703ffd",
+        "rule_type": "CHAPTER_RESTRICTION",
+        "severity": "BLOCKER",
+        "source_ref": "chapter_restrictions",
+        "source_type": "CHAPTER_PLAN"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Do not disclose Farovald's exact age, full lifespan, later aliases, later interventions, or final fate.",
+        "parameters": {},
+        "rule_id": "chapter.restriction.f50c72cb8cb9710f",
+        "rule_type": "CHAPTER_RESTRICTION",
+        "severity": "BLOCKER",
+        "source_ref": "chapter_restrictions",
+        "source_type": "CHAPTER_PLAN"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Do not call Farovald a guardian, Guardian Zero, or succession authority.",
+        "parameters": {},
+        "rule_id": "chapter.restriction.d8ac20441bd227c3",
+        "rule_type": "CHAPTER_RESTRICTION",
+        "severity": "BLOCKER",
+        "source_ref": "chapter_restrictions",
+        "source_type": "CHAPTER_PLAN"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Do not present Farovald's connection to Italus as telepathy, language, prophecy, or remote vision.",
+        "parameters": {},
+        "rule_id": "chapter.restriction.51e8a37872ff35b5",
+        "rule_type": "CHAPTER_RESTRICTION",
+        "severity": "BLOCKER",
+        "source_ref": "chapter_restrictions",
+        "source_type": "CHAPTER_PLAN"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Farovald's later cover identities and later-book interventions unless the author selects the matching reveal thread in that later book.",
+        "parameters": {},
+        "rule_id": "reveal.forbidden_future.1be440df3d0fce1c",
+        "rule_type": "FORBIDDEN_FUTURE_KNOWLEDGE",
+        "severity": "BLOCKER",
+        "source_ref": "forbidden_future_knowledge",
+        "source_type": "BOOK_REVEAL_BOUNDARY"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Farovald's exact full lifespan or final-series fate before Book 11.",
+        "parameters": {},
+        "rule_id": "reveal.forbidden_future.4242585dd085fee8",
+        "rule_type": "FORBIDDEN_FUTURE_KNOWLEDGE",
+        "severity": "BLOCKER",
+        "source_ref": "forbidden_future_knowledge",
+        "source_type": "BOOK_REVEAL_BOUNDARY"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Any statement that Farovald is Guardian Zero, a succession authority, or the founder of the guardian lineage.",
+        "parameters": {},
+        "rule_id": "reveal.forbidden_future.5720968dbb75143d",
+        "rule_type": "FORBIDDEN_FUTURE_KNOWLEDGE",
+        "severity": "BLOCKER",
+        "source_ref": "forbidden_future_knowledge",
+        "source_type": "BOOK_REVEAL_BOUNDARY"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Any telepathic, linguistic, prophetic, or remote-vision interpretation of Farovald's biological coupling to Italus.",
+        "parameters": {},
+        "rule_id": "reveal.forbidden_future.4310c37952b70f08",
+        "rule_type": "FORBIDDEN_FUTURE_KNOWLEDGE",
+        "severity": "BLOCKER",
+        "source_ref": "forbidden_future_knowledge",
+        "source_type": "BOOK_REVEAL_BOUNDARY"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Reveal only the approved 589 storm fragment: mature Italus in the storm, a human figure in direct contact with the tree, lightning injury, scorched palms, resin/cambium damage, and immediate sensory aftermath. Return to Luca's 789 discovery before explaining the man's age, longevity, full biological connection, later identities, or future role. In the 789 mainline he appears only as a reclusive monk who later advises Luca to use prayer as a credible cover story. Book 1 Chapter 1 storm fragment only Narrative weight must remain brief_clue; no numeric threshold is inferred.",
+        "parameters": {
+          "allowed_interpretations": [
+            "The monk was physically present at the old storm.",
+            "His palms carry old lightning damage.",
+            "He knows the Pollino terrain and Luca's repeated visits unusually well."
+          ],
+          "certainty": "hint",
+          "forbidden_assertions": [
+            "Farovald is a guardian or Guardian Zero.",
+            "Farovald's exact age or full lifespan.",
+            "Farovald is immortal by magic.",
+            "Farovald and Italus communicate telepathically or linguistically.",
+            "Farovald's later aliases, later interventions, or final fate."
+          ],
+          "knowledge_ceiling": "Book 1 Chapter 1 storm fragment only",
+          "narrative_weight": "brief_clue"
+        },
+        "rule_id": "story_control.story-control-43694f1e3338401d.compliance",
+        "rule_type": "STORY_CONTROL_COMPLIANCE",
+        "severity": "BLOCKER",
+        "source_ref": "story-control-43694f1e3338401d",
+        "source_type": "STORY_CONTROL"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Confirm the current prose executes the required chapter events in their planned sequence and placement.",
+        "parameters": {
+          "required_event_sequence": [
+            {
+              "anchor_event_ref": {
+                "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+                "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+                "record_type": "event"
+              },
+              "chapter_role": "reveal",
+              "event_ref": {
+                "label": "589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald.",
+                "record_id": "evt_5d3a9168c11e49f9aad230d5834868a9",
+                "record_type": "event"
+              },
+              "objective": "Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.",
+              "ordinal": 1,
+              "position": "opening",
+              "relationship_to_anchor": ""
+            },
+            {
+              "anchor_event_ref": {},
+              "chapter_role": "opening",
+              "event_ref": {
+                "label": "789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...",
+                "record_id": "evt_7f5813ffa94e4620accdc52b7850e735",
+                "record_type": "event"
+              },
+              "objective": "Open in 789 with Luca discovering fresh scored ground and changed tree position.",
+              "ordinal": 2,
+              "position": "early",
+              "relationship_to_anchor": "same_anchor"
+            }
+          ]
+        },
+        "rule_id": "chapter.execution.required_event_sequence",
+        "rule_type": "REQUIRED_EVENT_SEQUENCE",
+        "severity": "BLOCKER",
+        "source_ref": "chapter_execution_contract_v1",
+        "source_type": "CHAPTER_EXECUTION_CONTRACT"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Confirm required chapter participants are represented according to the Chapter Execution Contract.",
+        "parameters": {
+          "required_participant_refs": [
+            {
+              "label": "Luca",
+              "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+              "record_type": "character"
+            },
+            {
+              "label": "Farovald",
+              "record_id": "char_719cd0333a9840efa32e1870e223b939",
+              "record_type": "character"
+            },
+            {
+              "label": "Italus",
+              "record_id": "char_b1ffca3231de404caa92e3366cf30cc3",
+              "record_type": "character"
+            }
+          ]
+        },
+        "rule_id": "chapter.execution.required_participants",
+        "rule_type": "REQUIRED_PARTICIPANTS",
+        "severity": "BLOCKER",
+        "source_ref": "chapter_execution_contract_v1",
+        "source_type": "CHAPTER_EXECUTION_CONTRACT"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Confirm required chapter locations are represented according to the Chapter Execution Contract.",
+        "parameters": {
+          "required_location_refs": [
+            {
+              "label": "Pollino / Southern Italy",
+              "record_id": "loc_17d98e3790b3484793f75c28a64dbd9b",
+              "record_type": "location"
+            }
+          ]
+        },
+        "rule_id": "chapter.execution.required_locations",
+        "rule_type": "REQUIRED_LOCATIONS",
+        "severity": "BLOCKER",
+        "source_ref": "chapter_execution_contract_v1",
+        "source_type": "CHAPTER_EXECUTION_CONTRACT"
+      },
+      {
+        "evaluation_mode": "MANUAL",
+        "instruction": "Confirm the current prose follows the configured POV contract, including authorized interior access and head-hopping limits.",
+        "parameters": {
+          "character_refs": [
+            {
+              "label": "Luca",
+              "record_id": "char_07e57a82d71c4027a501b25ca4514c8d",
+              "record_type": "character"
+            },
+            {
+              "label": "Farovald",
+              "record_id": "char_719cd0333a9840efa32e1870e223b939",
+              "record_type": "character"
+            }
+          ],
+          "configured": true,
+          "contract_version": "pov_contract_v1",
+          "head_hopping": "rapid_switching_forbidden",
+          "interior_access": "multiple_authorized_characters",
+          "narrator_scope": "omniscient",
+          "omniscient_style": "restrained",
+          "omniscient_style_label": "Restrained Omniscient",
+          "pov_type": "third_person_omniscient",
+          "pov_type_label": "Third-Person Omniscient",
+          "prompt_rules": [
+            "POV controls narrative access to consciousness; it does not control chapter participation.",
+            "Non-POV chapter participants may speak, act, react, move, interact, and affect events normally.",
+            "POV never overrides Canon, historical constraints, Book reveal boundaries, Story Controls, Chapter Plan requirements, or Approved Continuity.",
+            "Do not grant a POV character knowledge that the character cannot possess at the current story position.",
+            "Do not expose hidden or future Canon merely because a POV character learns it later in the story.",
+            "Do not invent a POV transition, narrator change, or interior-access permission that is not authorized by this contract.",
+            "Use third-person omniscient narration.",
+            "Direct interior access is permitted only for these authorized characters: Luca, Farovald.",
+            "The narrator may know information beyond one character's immediate perception only when that information is permitted by Canon and the Chapter Plan.",
+            "Do not reveal the private interior of an unauthorized character.",
+            "Do not use omniscience as permission for arbitrary sentence-level switching between minds.",
+            "Use restrained omniscience.",
+            "Maintain one stable focal center for substantial passages rather than alternating rapidly between private minds.",
+            "When interior focus changes, clearly ground the reader in the new authorized character before revealing that character's private experience.",
+            "Do not move from one private interior to another sentence-by-sentence merely for convenience.",
+            "A change of interior focus must be narratively grounded and sustained long enough to establish a coherent focal center."
+          ],
+          "pronoun_mode": "third_person"
+        },
+        "rule_id": "chapter.execution.pov_contract",
+        "rule_type": "POV_CONTRACT",
+        "severity": "BLOCKER",
+        "source_ref": "pov_contract_v1",
+        "source_type": "CHAPTER_EXECUTION_CONTRACT"
+      }
+    ],
+    "validation_rules_schema_version": "candidate_validator_rules_v1"
   }
 }

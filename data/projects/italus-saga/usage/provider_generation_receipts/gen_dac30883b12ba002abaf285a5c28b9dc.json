@@ -1,0 +1,212 @@
+{
+  "approved_continuity_committed": false,
+  "author_review_persisted": false,
+  "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+  "book_number": 1,
+  "chapter_number": 1,
+  "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
+  "execution_fingerprint": "31672431138ae1daef7d4d3500cef13af79b2b7ed0c3c7bd7ab93c40d7c9bca9",
+  "generation_id": "gen_dac30883b12ba002abaf285a5c28b9dc",
+  "generation_quality_gate": {
+    "blockers": [],
+    "deterministic_metrics": {
+      "colons": {
+        "measurement": 0,
+        "message": "Colons count is 0; hard maximum is 3.",
+        "metric": "colons",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 3
+      },
+      "ellipses": {
+        "measurement": 0,
+        "message": "Ellipses count is 0; hard maximum is 4.",
+        "metric": "ellipses",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 4
+      },
+      "em_dashes": {
+        "measurement": 0,
+        "message": "Em Dashes count is 0; hard maximum is 8.",
+        "metric": "em_dashes",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 8
+      },
+      "semicolons": {
+        "measurement": 0,
+        "message": "Semicolons count is 0; hard maximum is 15.",
+        "metric": "semicolons",
+        "operator": "hard_maximum",
+        "passed": true,
+        "threshold": 15
+      },
+      "word_count": {
+        "measurement": 4596,
+        "message": "Word count is 4596; minimum is 4000.",
+        "metric": "word_count",
+        "operator": "minimum",
+        "passed": true,
+        "threshold": 4000
+      }
+    },
+    "passed": true,
+    "schema_version": "generation_quality_gate_v1",
+    "service": "primary45c-generation-quality-gate-v1",
+    "stop_reason": "end_turn"
+  },
+  "inference_scope": "global",
+  "model_id": "claude-haiku-4-5-20251001",
+  "output_content_type": "text/plain",
+  "output_text": "# Chapter 1\n\nThe scored earth was fresh.\n\nLuca crouched at the base of the ancient oak, running his fingers across the parallel grooves cut into the soil. The marks were deep and deliberate, not the casual scrape of a deer or wild boar passing through. Someone had dragged something heavy across this ground, back and forth, establishing a pattern. He could read it as clearly as written words on parchment.\n\nHe had visited this place for three years now. Every season, he returned to the slopes of Pollino, to this specific corner of dense woodland where the oaks grew thick and the light filtered through in pale columns. He knew the terrain intimately. He knew where the moss gathered on the northern faces of the trunks. He knew which streams ran cold enough to sting the hands in summer. He knew the bird calls that marked the changing of day into evening. And he knew, with absolute certainty, that this earth had not been disturbed like this before.\n\nThe oak itself bore the evidence too. The massive trunk rose from the ground at a different angle than it had occupied three months prior. Not a dramatic shift, not enough that an ordinary observer would notice the change. But Luca was not an ordinary observer. He had marked the tree's position against the standing stone forty paces to the east, a reference point that had served him well through patient observation. The tree had moved. Someone had worked to shift it, to dig beneath its roots and alter its stance.\n\nHe sat back on his heels, studying the disturbed ground with the careful attention of a man reading a map. The grooves suggested two people, perhaps three. The weight they moved was considerable. The pattern indicated they had worked from multiple angles, as if they were not accustomed to the labor and had to adjust their approach more than once. This was amateur work, but purposeful work. This was not a random shifting of earth.\n\nLuca's mind turned to the possibilities. Italus had been here. That much seemed inevitable. But why would he move the tree? And how had he managed it without being seen? The remoteness of the location provided some protection from casual discovery, but Luca's regular visits meant that the window for this work was limited. It would have taken several days at minimum. Someone would have required resources, tools, perhaps provisions carried to the site.\n\nHe pressed his palm against the ground, feeling the texture of the disturbance. The earth was cool and slightly damp despite the late morning sun. He could smell the richness of the soil, the faint sweetness of turned loam. The grooves were deep enough that they would not have been made by dragging anything light. Whatever had been moved here weighed enough to bite deep into the forest floor.\n\nWhen Luca rose to his feet, he moved with the caution of a man aware that he might not be alone in the woods. The forest around him was quiet but not silent. He could hear the distant call of a wood thrush, the movement of air through the high branches, the soft settling of debris on the forest floor. Nothing suggested immediate danger, yet his instincts remained alert. The evidence of Italus's passage, fresh as it was, carried an implicit warning.\n\nHe began to examine the perimeter of the disturbed area, widening his search in careful arcs. The ground beyond the immediate site showed signs of repeated foot traffic. Multiple paths had been worn into the forest floor, converging on this central location from different directions. Someone had been here more than once. Someone had been observing this place, testing the ground, assessing the work required before executing their plan.\n\nThe patterns spoke to a deliberate strategy. This was not the work of a desperate man seeking shelter. This was the work of someone engaged in a purposeful renovation of the site. The tree's position suggested that whoever had moved it meant it to stand differently, to present a different profile against the sky and the surrounding landscape. But for what purpose? What could be gained by altering the angle of an ancient oak?\n\nLuca found himself thinking, not for the first time, that Italus was unlike any quarry he had pursued. Most men, when hunted, moved in straight lines. They fled toward known refuge or destination. They reacted with fear and desperation. Italus, by contrast, seemed to move with a purpose that transcended mere survival. His alterations to the landscape appeared methodical, almost architectural in their intent. This suggested intelligence, planning, and a confidence that went beyond simple evasion.\n\nThe monk had not appeared in any village. No reports had come from the nearby settlements of a stranger seeking supplies or rest. The local priests and monks of the region had been questioned carefully and thoroughly. None had encountered anyone matching Italus's description. He had simply vanished into the Pollino wilderness, and for three years Luca had been following the subtle marks of his passage through the landscape.\n\nThe wind shifted, bringing down a shower of pine needles that fell like gentle rain across the disturbed earth. Luca watched the debris settle, slowly beginning to cover the marks that revealed the recent work. In a few weeks, perhaps a few months, the ground would appear undisturbed again. The forest would reclaim the site, would erase the evidence of human intervention. That was one of the peculiar challenges of tracking Italus in this landscape. Nature itself worked against discovery.\n\nHe moved deeper into the wood, following the worn paths that radiated from the central location. His footsteps made almost no sound on the forest floor. Years of practice had taught him to move through this terrain with minimal disturbance. He knew where to place his weight to avoid snapping branches, knew how to part the vegetation with his hands in ways that would spring back into their original positions without leaving obvious gaps.\n\nThe further he went, the more the forest opened before him. The initial density of the trees began to give way to clearings, to places where the canopy grew thinner and more light reached the ground. He recognized this terrain from previous journeys. Somewhere ahead, perhaps a quarter mile on, lay one of the old shepherd shelters, a stone structure that had not been occupied in generations. Luca had examined it thoroughly on his last visit, finding no evidence of recent habitation. But that had been three months ago. Circumstances changed. Italus changed.\n\nThen, without quite intending to do so, Luca found his thoughts turning backward. There was something about this discovery, something about the recent evidence of work and purpose, that drew his mind toward the past. It was not an unwelcome intrusion, these memories. They were old enough now that they carried a certain detachment, a quality of observation rather than passion. But they were vivid nonetheless.\n\nHe remembered the storm that had swept across Pollino two centuries before. That was the date he carried in his mind with absolute certainty, though he had not lived through those years himself. The records were clear. The year 589. The event was documented in the fragmentary annals that had survived in the monasteries of the region, accounts written by monks who had witnessed the extraordinary violence of the weather in that particular summer.\n\nThe storm had been singular. That was what the records emphasized, over and over. Not merely severe, not merely a powerful display of weather, but singular in its nature. The lightning had struck in patterns that defied normal explanation. Multiple bolts had converged on a single location within moments of one another, as if drawn by some force outside the ordinary mechanics of air and electricity. The damage had been catastrophic. Trees had been split from crown to root. The stone of the hilltop shrine had been fused by the heat.\n\nBut more significant than the physical destruction had been the effect on those who witnessed it. Two men had been present at the site. One was known to the historical record by name and position. The other had been recorded only as \"the companion,\" a shadowy figure whose identity was never clearly established. Both men had survived. Both had experienced the lightning's direct passage through their bodies. Both had lived to establish records of what they had endured.\n\nThe annals contained one particularly careful description of what had been observed in those two survivors after the storm. Their hands bore marked changes. The palms especially showed evidence of the lightning's passage. The damage was not the charring that might be expected from a simple burn. Instead, the skin carried strange marks, patterns that resembled both scarring and something else entirely, something that the chroniclers struggled to describe with precision. They used words like \"scored\" and \"marked\" and \"bearing the signature of the sky.\" One account suggested that the patterns on the palms had begun to fade almost immediately, but not completely. They had settled into a permanent alteration of the skin itself.\n\nLuca knew these records intimately. He had copied portions of them himself, preserving the uncertain medieval Latin in his own careful script. He had studied the fragmentary accounts in monastery libraries across southern Italy, piecing together what information had survived the centuries of decay and loss. The evidence was thin, but it was consistent. Something had happened at Pollino in 589. Something that had altered two men who stood in the path of a unified lightning strike.\n\nHe brought himself back to the present with an effort of will. The forest around him was unchanged. The light still filtered through the canopy in pale columns. The birds continued their calls from the branches above. But Luca's understanding of the landscape had shifted. The recent work at the old oak, the signs of deliberate alteration and purpose, all of it took on new implications in light of those old memories.\n\nIf Italus was truly ancient, if the legends that had grown around him over the centuries held any grain of truth, then he was not a man in simple flight from pursuit. He was something other. Something that moved through centuries with a purpose that transcended ordinary human concerns. And if he was indeed connected to those monks who had stood beneath the lightning at Pollino in 589, then his actions in this present age might follow patterns that were themselves ancient.\n\nThe thought was vertiginous. Luca steadied himself against the nearest oak trunk, grounding his awareness in the physical sensation of rough bark beneath his palm. He had learned long ago that speculation could be a trap, that theoretical constructions could become more real than the evidence that supported them. He needed to remain focused on what he could actually observe. The tree had been moved. The earth had been disturbed. Someone had worked to alter this place. Those facts stood independent of his beliefs or suspicions about who had performed the work or why.\n\nHe withdrew from his examination of the woodland interior and made his way back toward the central site. The path back was easier to follow than the path forward. His previous passage had established subtle markers that guided him onward. He moved with the same careful attention to quietness, the same awareness of his own position in the landscape.\n\nWhen he returned to the ancient oak, the light had shifted. The sun had continued its slow arc across the sky, and the columns of pale light had reorganized themselves around him in new configurations. The scored earth remained visible, though the falling debris had already begun its work of concealment. Within a few weeks, the forest would forget that anyone had disturbed this ground.\n\nLuca made a careful mental note of the exact configuration of the disturbance. He had trained himself in the techniques of memory, had practiced the discipline of observation until it had become nearly automatic. He could look at a landscape once and carry its details forward in his mind with remarkable precision. It was a skill that had served him well in his pursuit of Italus.\n\nAs he stood contemplating the work that someone had done here, measuring the distance from the tree to the standing stone and back again, confirming once more the subtle shift in the oak's angle, he became aware of movement in the forest behind him. The sensation was not visual but intuitive. Something in the quality of the air had changed. Something in the particular way that the sound of the forest reached his ears suggested that he was no longer alone.\n\nHe turned slowly, his hand instinctively moving to the knife at his belt. The forest revealed nothing at first. The trees stood where they stood. The understory vegetation moved gently in the wind. But then, perhaps forty paces distant, a figure resolved itself from among the shadows and the filtered light.\n\nIt was a monk. That much was immediately apparent from the cut of the garments, the pale linen tunic beneath the darker overrobe, the particular way the hood fell from the shoulders. The man wore sandals despite the rough terrain. He moved through the forest with a careful, measured gait that suggested neither fear nor urgency. He seemed to be simply walking, simply moving through this landscape as a man might move through any familiar space.\n\nLuca studied the stranger with careful attention. The monk was of middle height, neither remarkably tall nor unusually small. His face bore the marks of age, though not extreme age. He was somewhere in his middle years, perhaps early middle years. His skin was deeply weathered by sun exposure. His hands were visible and bore marks that Luca could see even at this distance, patterns on the palms that caught the filtered light in an unusual way.\n\nThe stranger showed no sign of surprise at encountering another man in this remote location. His expression was calm, almost detached. He simply stood where he had resolved from the shadows, observing Luca with an intensity that suggested deep concentration.\n\n\"You have been coming here regularly,\" the monk said. His voice was calm and measured, carrying no accent that Luca could identify. The Latin he spoke was formal and precise. \"Three years now. The same seasons. The same patterns. You have not missed a visit.\"\n\nLuca's hand remained near his knife, though he made no move to draw it. \"You have been watching me,\" he said.\n\n\"I have been aware of you,\" the monk replied. He took a step forward, then stopped. \"It seemed important to understand what brought a man to return so persistently to this particular place. It took me some time to comprehend your purpose. But I have reached a conclusion. You are looking for someone.\"\n\n\"I am,\" Luca said.\n\n\"The someone you seek has been here,\" the monk continued. \"Multiple times. He has made alterations to this place. The tree, as you have noticed. But other things as well, over the years. Careful changes. Purposeful modifications to the landscape itself.\"\n\n\"Who are you?\" Luca demanded.\n\nThe monk was silent for a long moment. When he spoke again, his voice had taken on a different quality, something deeper and more resonant. \"My name is Farovald. I have lived in these mountains for longer than I can count without rising into memories that I have learned to distrust. I knew the man you seek when he was younger, when he had recently become what he is now. I knew him before the lightning. I knew him after.\"\n\n\"The lightning,\" Luca repeated.\n\n\"The storm that struck this place many years ago,\" Farovald said. \"The year was 589 by the reckoning of the Christian calendar. I was here. I was struck by the lightning directly. I felt its passage through my body. When I recovered, I found that I had been altered. The world around me moved at a different pace than the world inside my body. I aged slowly. I remained conscious long after the natural span of human years had passed. And I met the other man who had survived that strike. The man you have been pursuing. The man called Italus.\"\n\nLuca felt something shift in the structure of his understanding. The memories that he had been turning over in his mind, the fragmentary records from ancient annals, the legends that had grown around Italus over the centuries, all of it suddenly acquired a new weight. A man stood before him, a monk who claimed to have witnessed the lightning strike of 589. A monk whose palms, even at this distance, bore the marks of lightning damage.\n\n\"How long have you lived?\" Luca asked quietly.\n\n\"Two hundred years,\" Farovald said. \"More or less. Time moves differently when you do not age as other men age. The years slip past with a quality of acceleration that is difficult to explain. But I remember the storm clearly. I remember standing at the peak of that hill, directly beneath the clouds as the lightning descended. I remember the sensation of the energy passing through me, remaking me at some level that I could not fully understand. And I remember Italus, emerging from the same strike, marked in the same way.\"\n\nLuca moved his hand away from his knife. The gesture was deliberate, a signal of good faith. \"Where is he?\" he asked.\n\n\"That,\" Farovald said, \"is a question that has become increasingly difficult to answer. He moves. He hides. He alters the places he occupies, as you have seen. Why he does these things, I can only speculate. But I have remained in these mountains. I have watched the world change around me. And I have observed Italus when he passes through, though I do not always reveal myself to him. Our last direct encounter was more than a century ago. Since then, I have been aware of his movements only indirectly, through the traces he leaves in the landscape.\"\n\n\"He sent you to speak with me,\" Luca said.\n\n\"No,\" Farovald replied. \"He does not know that I am communicating with you. I came because I have watched you return to this place repeatedly, and I grew curious about your persistence. Most men would abandon such a pursuit after a few months, when no results became apparent. But you have continued for three years. That suggested to me that you were not a simple hunter following simple tracks. You seemed to understand something about Italus that went beyond mere earthly pursuit.\"\n\nThe monk turned slightly, gesturing toward the disturbed earth at the base of the oak. \"This work was done recently. Within the past two months. The tree has been altered because Italus is preparing to leave this place. That is what I have learned through my long observation of him. When he works to change the landscape, it signals that he is about to move to a new location. He does not want to leave obvious signs of his habitation when he departs.\"\n\n\"Why does he hide?\" Luca asked. \"What does he fear?\"\n\n\"He fears discovery,\" Farovald said. \"Not by men like yourself, who pursue him with purpose and understanding. But by the ordinary authorities, by the Church, by the structures of power that demand explanation for what he is. Italus has learned that to be known is to be questioned. And he cannot answer the questions that would be asked. He cannot explain his origins. He cannot justify his continued existence. He cannot prove that he is not a demon or a saint or something else entirely. So he hides. He moves through the world carefully, leaving as little trace as possible.\"\n\nLuca considered this explanation. It had a quality of truth to it, or at least a quality of internal consistency that suggested it was not invention. \"And you?\" he asked. \"Do you hide as well?\"\n\n\"I hide in a different way,\" Farovald said. \"I have built a community of sorts, within the remoter reaches of these mountains. A monastery, though not a conventional one. Monks who ask few questions. Men who have their own reasons for living apart from the ordinary world. We tend our gardens. We copy manuscripts. We preserve knowledge. And we exist in relative peace, undisturbed by the outside world.\"\n\n\"Italus lives there?\" Luca asked.\n\n\"No,\" Farovald said. \"Italus does not remain in any one place long enough to be called home. But he visits. Not frequently, but regularly. He carries information. He passes it along to us. And in return, we offer him what shelter we can and maintain records that might otherwise be lost.\"\n\nLuca turned away from the monk and looked again at the disturbed earth. The evidence of recent work seemed clearer now, set against this new information. Someone had indeed worked to alter this place. Someone had had a purpose in moving the tree, in changing the landscape. That someone was Italus, preparing to depart, erasing the traces of habitation before his transition to a new location.\n\n\"I have been hunting him for three years,\" Luca said quietly. \"I have followed his trail across the southern reaches of Italy. I have interviewed monks and shepherds and wandering mendicants. I have studied records in monastery libraries. I have pieced together a history that spans centuries. And all of it has led me to this place, to this particular oak tree, to these specific marks in the earth.\"\n\n\"And now?\" Farovald asked.\n\n\"Now I understand that my hunt has been based on an assumption that may have been wrong from the beginning,\" Luca said. \"I assumed that Italus was a man in flight, a criminal or heretic escaping from justice. But the evidence suggests something different. The evidence suggests that he is something other than a man. That the lightning strike of 589 fundamentally altered him, as it altered you. That he has lived for centuries, moving through the world with purpose and deliberation.\"\n\n\"That is the truth,\" Farovald said. \"Or at least, it is what I have come to understand through my own long observation.\"\n\n\"Then where does my pursuit end?\" Luca asked. \"What is the purpose of my hunting, if I cannot bring him to justice, if I cannot even comprehend what he is?\"\n\nThe old monk was silent for a long moment. When he spoke again, his voice carried a weight of sorrow that seemed to come from deep within him. \"That is a question I cannot answer for you,\" he said. \"Each man must find his own purpose in pursuit of knowledge. All I can tell you is what I have observed, what I have learned through the long years of my altered existence. Italus is not evil. He is not in flight from righteous authority. He is simply trying to exist in a world that was not built for beings like himself. He is trying to preserve what knowledge he carries, what he understands about the world and its history, for as long as he is able to do so.\"\n\nLuca looked at the monk's weathered face, at the marks on his palms that still carried the signature of the ancient lightning. \"The storm that altered you both,\" he said slowly. \"It was no ordinary weather event.\"\n\n\"No,\" Farovald agreed. \"It was something other. Something that moved with intention and purpose. We both felt it at the time. There was a consciousness to the strike, something that seemed aware of us even as it transformed us.\"\n\nThe implications of this statement hung in the air between them. Luca found his mind reaching for explanations, for frameworks that might contain such an event. But the explanations all eluded him. There was no Natural Philosophy that encompassed a lightning strike that moved with intention. There was no theological framework that adequately explained a storm that carried consciousness.\n\n\"Why are you telling me this?\" Luca asked. \"Why reveal yourself now, when Italus is preparing to leave this place?\"\n\n\"Because,\" Farovald said quietly, \"I have lived for two centuries in the wake of that storm. I have watched the world change. I have seen empires rise and fall. I have observed the human species grind forward through its own history, generating suffering and beauty in equal measure. And I have come to understand that secrets grow more dangerous the longer they remain hidden. Italus believes that by concealing himself, by leaving no trace, he can avoid becoming a problem for the world around him. But I think he is wrong. I think that eventually, someone like yourself will find the thread and begin pulling on it. And I think that when that day comes, it will be better if there is someone who understands what Italus is, someone who can serve as a bridge between his world and the ordinary human world.\"\n\n\"Are you asking me to stop pursuing him?\" Luca asked.\n\n\"No,\" Farovald said. \"I am asking you to understand what your pursuit means. I am asking you to recognize that you are not hunting a criminal or a heretic. You are pursuing a mystery. And mysteries, once they begin to unravel, tend to move in ways that cannot always be predicted or controlled.\"\n\nWith that, the old monk turned and began to walk back into the forest, moving with the same measured pace that had characterized his approach. He did not look back. He simply moved through the trees until the shadows and the filtered light had closed around him, until he was indistinguishable from the forest itself.\n\nLuca stood alone at the base of the ancient oak, looking once more at the scored earth and the altered position of the massive trunk. The evidence of recent work remained, a subtle testament to the passage of someone who was not quite human, someone who had endured for centuries, leaving traces of his existence only in the careful alteration of landscapes.\n\nHe knelt again, studying the disturbed ground with fresh understanding. The pattern that he saw there was no longer simply the evidence of labor. It was a message, left deliberately for those who knew how to read it. Italus was saying that he was leaving. He was preparing to depart from this place and move to another location where the forest would swallow his tracks and the centuries would accumulate above his head like snow.\n\nBut he had left something else as well. He had left a path for those who were persistent enough to follow it. He had allowed traces to remain, subtle enough that they would not draw the attention of ordinary observers, but clear enough for someone who truly understood the language of the landscape.\n\nLuca rose to his feet, his mind moving forward into the future. There was more to discover. There was more to understand. The pursuit that he had begun three years ago would continue, but with new understanding. He was not hunting a criminal or a fugitive. He was pursuing a mystery that had endured for two centuries or more, and there was no reason to believe that the pursuit would end in his lifetime.\n\nHe left the site as the afternoon light began to grow thin, descending from the heights of Pollino toward the lower valleys where human habitation returned and the ordinary world resumed its patterns. Behind him, the forest settled around the ancient oak, and the scattered debris from the canopy continued its slow work of erasing the marks that humans had made upon the earth.",
+  "output_text_sha256": "7a8437cf6cf93586c124a46a47c08c9be9172e32c70b356c67adb6579eb20397",
+  "pricing_version_id": "pricing_d841f3193970d9a52784",
+  "pricing_version_sha256": "20171c15c171d26a6a583d1312ec25dd7db4bee11badc2434819e0c8f128eef6",
+  "project_id": "italus-saga",
+  "prompt_sha256": "dd9071cf99ca03ef550ca6c3d30044d7971e0c52deeb889fb8075ff467dc4087",
+  "provider_id": "anthropic",
+  "provider_received_at": "2026-10-17T19:35:14.882721Z",
+  "provider_request_id": "msg_011Cg8NMiqK1W2Dm8AN3UHto",
+  "provider_status": "completed",
+  "provider_system_sha256": "31c8755a7acc5c35170aa8544814f28f76012262b01b0f033ac7c5bc1930c399",
+  "provider_user_prompt_sha256": "469513869e9e789422c5d07b12fb390d0335000cc47fdffc1b52550734b197fb",
+  "receipt_sha256": "46f3e9e0aa7dfd5961e866a33c628c1cb61488623ffc4c7a6800e6771eba1411",
+  "recorded_at": "2026-10-17T19:35:14.912389Z",
+  "replacement_context_sha256": "277e073b0596f53ab60fc0c9ad6889cd8f3de5400a3d97688af1eb205ea36944",
+  "replacement_correction_context": {
+    "audited_semantic_failure_count": 0,
+    "audited_semantic_failures": [],
+    "authority": "backend_derived_rejection_correction",
+    "book_number": 1,
+    "chapter_number": 1,
+    "context_sha256": "277e073b0596f53ab60fc0c9ad6889cd8f3de5400a3d97688af1eb205ea36944",
+    "current_revalidation": {
+      "validated_content_sha256": "d31c565522da953f21a8c12d10a01f147b43c40779a1dbc04633a5f6f27d50ff",
+      "validated_content_version_id": "version_ed920e7b77f148da9d10374bee10ca2a",
+      "validation_report_sha256": "be50a227488ca41d31a86cdc1ebba8a0e569fbec26b311274ffae438a9839421",
+      "validation_result_sha256": "f3bf3a339edfd992a2f84d857fbafe8fea3060bf179336453dfb4b52e3e79a04",
+      "validation_run_id": "validation_run_f3bf3a339edfd992a2f84d857fbafe8f",
+      "validator_contract_sha256": "c7461f83bdb0f897313b1175f86310f7396951555666539fdfc6a44e16e0a532"
+    },
+    "deterministic_failure_count": 1,
+    "deterministic_failure_source": "rejection_time_validation",
+    "deterministic_failures": [
+      {
+        "details": {
+          "measurement": 3579,
+          "metric": "word_count",
+          "operator": "minimum",
+          "threshold": 4000
+        },
+        "instruction": "Candidate prose must satisfy the word_count quantitative limit from the embedded prose rulebook.",
+        "message": "Word count is 3579; minimum is 4000.",
+        "rule_id": "prose.word_count.quantitative"
+      }
+    ],
+    "instructions": [
+      "Generate a new draft from the current chapter authority; do not copy, continue, paraphrase, or repair the rejected prose.",
+      "Correct every listed deterministic failure while still obeying the current generation guardrails.",
+      "Do not repeat any listed audited semantic failure. These FAIL verdicts were bound to the exact rejected content and validator contract.",
+      "Do not infer violations from UNKNOWN semantic items. UNKNOWN remains unpromoted and the rejected prose itself is not included."
+    ],
+    "manual_semantic_rules_promoted": false,
+    "rejected_content_sha256": "d31c565522da953f21a8c12d10a01f147b43c40779a1dbc04633a5f6f27d50ff",
+    "rejected_prose_included": false,
+    "rejection_validation": {
+      "deterministic_failures": [
+        {
+          "details": {
+            "measurement": 3579,
+            "metric": "word_count",
+            "operator": "minimum",
+            "threshold": 4000
+          },
+          "instruction": "Candidate prose must satisfy the word_count quantitative limit from the embedded prose rulebook.",
+          "message": "Word count is 3579; minimum is 4000.",
+          "rule_id": "prose.word_count.quantitative"
+        }
+      ],
+      "validated_content_sha256": "d31c565522da953f21a8c12d10a01f147b43c40779a1dbc04633a5f6f27d50ff",
+      "validated_content_version_id": "version_ed920e7b77f148da9d10374bee10ca2a",
+      "validation_result_sha256": "f3bf3a339edfd992a2f84d857fbafe8fea3060bf179336453dfb4b52e3e79a04",
+      "validation_run_id": "validation_run_f3bf3a339edfd992a2f84d857fbafe8f",
+      "validator_contract_sha256": "c7461f83bdb0f897313b1175f86310f7396951555666539fdfc6a44e16e0a532"
+    },
+    "rejection_validation_report_sha256": "546c9456bb264f53e87238b13626aeae8726906cbc12328de50fa59af89e24a6",
+    "schema_version": "replacement_correction_context_v2",
+    "semantic_receipt_ids_considered": [],
+    "service": "primary45c-replacement-correction-context-v2",
+    "source_generation_id": "gen_5611e9b00d6b50d46125e8cae93035a9",
+    "source_review_event_id": "review_event_44e3a30ba3b6e62df1739171caa750d3",
+    "source_review_version_id": "review_version_44e3a30ba3b6e62df1739171caa750d3",
+    "unknown_semantic_rules_promoted": false
+  },
+  "replacement_for_generation_id": "gen_5611e9b00d6b50d46125e8cae93035a9",
+  "request_content_sha256": "76cb6754e759e172326d1c5b487b4e05d83293629e6ed48a1bb836f80c65c3f0",
+  "schema_version": "primary33.2.2-provider-generation-receipt-v1",
+  "service_tier": "standard",
+  "stop_reason": "end_turn",
+  "usage_event": {
+    "actual_cost": "0.038477",
+    "actual_input_tokens": 9622,
+    "actual_output_tokens": 5771,
+    "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
+    "cache_read_tokens": 0,
+    "cache_write_1h_tokens": 0,
+    "cache_write_5m_tokens": 0,
+    "cache_write_tokens": 0,
+    "candidate_promoted_to_author_review": true,
+    "cost_basis": "immutable_pricing_snapshot_calculation",
+    "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
+    "currency": "USD",
+    "generation_id": "gen_dac30883b12ba002abaf285a5c28b9dc",
+    "generation_quality_gate_passed": true,
+    "inference_scope": "global",
+    "model_id": "claude-haiku-4-5-20251001",
+    "pricing_snapshot": {
+      "created_at": "2026-09-19T21:25:21.231578Z",
+      "currency": "USD",
+      "effective_from": "2026-09-03T00:00:00Z",
+      "immutable": true,
+      "inference_scope": "global",
+      "model_id": "claude-haiku-4-5-20251001",
+      "notes": "Curated Primary 33.2.1A reference. Anthropic standard synchronous list pricing checked 2026-09-03. Batch pricing is retained as reference metadata only.",
+      "pricing_version_id": "pricing_d841f3193970d9a52784",
+      "provider_id": "anthropic",
+      "rates_per_mtok": {
+        "cache_read_per_mtok": "0.1",
+        "cache_write_1h_per_mtok": "2",
+        "cache_write_5m_per_mtok": "1.25",
+        "input_per_mtok": "1",
+        "output_per_mtok": "5"
+      },
+      "schema_version": "primary33.1-provider-pricing-v1",
+      "service_tier": "standard",
+      "source_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "verified_at": "2026-09-03T00:00:00Z"
+    },
+    "pricing_version_id": "pricing_d841f3193970d9a52784",
+    "pricing_version_sha256": "20171c15c171d26a6a583d1312ec25dd7db4bee11badc2434819e0c8f128eef6",
+    "prompt_sha256": "dd9071cf99ca03ef550ca6c3d30044d7971e0c52deeb889fb8075ff467dc4087",
+    "provider_execution_schema_version": "primary45c-provider-execution-v3",
+    "provider_id": "anthropic",
+    "provider_invoice_reconciled": false,
+    "provider_request_id": "msg_011Cg8NMiqK1W2Dm8AN3UHto",
+    "provider_status": "completed",
+    "provider_stop_reason": "end_turn",
+    "provider_system_sha256": "31c8755a7acc5c35170aa8544814f28f76012262b01b0f033ac7c5bc1930c399",
+    "provider_user_prompt_sha256": "469513869e9e789422c5d07b12fb390d0335000cc47fdffc1b52550734b197fb",
+    "recorded_at": "2026-10-17T19:35:14.888659Z",
+    "replacement_context_sha256": "277e073b0596f53ab60fc0c9ad6889cd8f3de5400a3d97688af1eb205ea36944",
+    "replacement_for_generation_id": "gen_5611e9b00d6b50d46125e8cae93035a9",
+    "request_content_sha256": "76cb6754e759e172326d1c5b487b4e05d83293629e6ed48a1bb836f80c65c3f0",
+    "schema_version": "primary33.1-provider-usage-event-v2",
+    "service_tier": "standard",
+    "usage_event_id": "usage_dac30883b12ba002abaf285a5c28b9dc"
+  },
+  "validator_contract_sha256": "c7461f83bdb0f897313b1175f86310f7396951555666539fdfc6a44e16e0a532",
+  "validator_sidecar_sha256": "5bdbdc978c00b7c28c930c2cd7917cbd402a0b3a4a66fba40265b6812f955545",
+  "validator_snapshot_project_relative_path": "provenance/generation_validation_contracts/gen_dac30883b12ba002abaf285a5c28b9dc.json",
+  "validator_snapshot_sha256": "8d8832d1f3447302a3ba3ba521a135ab5dd133ab69788517ebdd2034bd520509"
+}

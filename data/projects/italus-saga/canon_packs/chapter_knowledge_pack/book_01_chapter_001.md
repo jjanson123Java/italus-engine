@@ -9,26 +9,26 @@
 - Project ID: `italus-saga`
 - Book Number: `1`
 - Chapter Number: `1`
-- Generated At: 2026-08-24T01:12:14.592227+00:00
-- Dependency Set SHA-256: `08b4e29f67f3f08b3a9fd41307705462652f22d6235e8fd6c86cfc5bc3a659af`
-- Book Runtime Context SHA-256: `8077066ea129c664c505abe19678973bc6e2729366847548ccd01d9f07fa555d`
-- Chapter Plan Revision: `12`
-- Chapter Plan SHA-256: `30e832a662e17c1432599696784d9f95ee4b1aa93eba4614bd8d6d362fdfc580`
+- Generated At: 2026-10-18T21:25:28.002510+00:00
+- Dependency Set SHA-256: `997723935d5d870fcfc16795c532d8960e0112871a6161f308c95684a4d0c312`
+- Book Runtime Context SHA-256: `e9f2f8b66ed75ba77adce9c89070f9fd344bdcb29da2c3ad1ae356c0bc6b5a61`
+- Chapter Plan Revision: `18`
+- Chapter Plan SHA-256: `20a2309c85225a9676aab08ae63f24dcf3f39dd31f0ada546c3f8024a730ba19`
 - Story Control Revision: `9`
 - Story Control SHA-256: `7050177c644c8809bf204bf0e15fd117d6ea22904997362a48b1ad573f7e29e7`
 - Approved Continuity Revision: ``
 - Approved Continuity SHA-256: ``
 - Progression Override Revision: `0`
 - Progression Override SHA-256: `f7bde2c42980713730ce6211d447037fe8632087a8255aeef92b788c2c91a0bd`
-- Estimated Tokens: `18736`
-- Book Runtime Context Estimated Tokens: `41967`
+- Estimated Tokens: `18913`
+- Book Runtime Context Estimated Tokens: `41975`
 - Full Project Runtime Context Estimated Tokens: `271580`
 
 ## Book Boundary
 
 - Book Number: 1
 - Title: Italus - The Lightening Tree
-- Primary Arc: Book 1 opens in media res in 789 with fourteen-year-old Luca discovering fresh evidence that the mature Italus has moved. A brief external analepsis to 589 reveals only fragments of the shared Pollino lightning singularity and an unidentified scarred man before the narrative returns to Luca. Luca's curiosity develops into the first guardian practice through repeated observation, concealment, movement planning, and eventual succession to Elia. Farovald appears in 789 as a reclusive monk who recognizes Luca's poor cover stories and offers the prayer alibi; later Book-1 reveal beats progressively establish his abnormal physical connection, lack of visible aging, true name, 589 connection, and non-lineage perimeter role. Luca remains the first guardian and founder of the guardian lineage.
+- Primary Arc: Book 1 opens with a  brief external analepsis to 589 reveals only fragments of the shared Pollino lightning singularity and an unidentified scarred man before the narrative returns to Luca.  Today  in media res in 789 with fourteen-year-old Luca discovering fresh evidence that the mature a Bosnian pine "Italus" has moved. Luca's curiosity develops into the first guardian practice through repeated observation, concealment, movement planning, and eventual succession to Elia. Farovald appears in 789 as a reclusive monk who recognizes Luca's poor cover stories and offers the prayer alibi; later Book-1 reveal beats progressively establish his abnormal physical connection, lack of visible aging, true name, 589 connection, and non-lineage perimeter role. Luca remains the first guardian and founder of the guardian lineage.
 - Ending State: By the end of Book 1, Luca has transformed his 789 discovery into the first durable guardian practice and has begun transferring responsibility to Elia. Italus remains hidden and biologically unexplained to the wider world. The reader now knows Farovald by name, understands that he was directly altered in the 589 singularity, and understands that he is an exceptional non-lineage continuity witness who will protect the wider secrecy perimeter while Luca's descendants carry guardianship. Farovald is explicitly not a guardian and does not control succession. Later aliases, later interventions, full lifespan, and final-series fate remain unrevealed.
 
 ### Allowed Reveals
@@ -85,10 +85,10 @@
 - Pollino / Southern Italy
 
 ### Required Chapter Event Sequence
-1. 789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a... — Role: Opening | Placement: Opening | Relationship: Same Anchor
-   - Objective: Open in 789 with Luca discovering fresh scored ground and changed tree position.
-2. 589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald. — Role: Reveal | Placement: Early | Relationship: Remembers 789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...
+1. 589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald. — Role: Reveal | Placement: Opening
    - Objective: Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.
+2. 789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a... — Role: Opening | Placement: Early | Relationship: Same Anchor
+   - Objective: Open in 789 with Luca discovering fresh scored ground and changed tree position.
 
 ### Required Additional Chapter Canon
 - None
@@ -130,7 +130,9 @@
 ## Current Chapter Plan
 
 - Chapter Number: 1
-- Generation Kickoff: Open in media res in 789 with Luca finding fresh physical evidence that Italus moved. Use the discovery as the sensory bridge into one brief external analepsis of the 589 Pollino storm, then return immediately to Luca's 789 mainline.
+- Generation Kickoff: 1. The Flashback (589 AD): Trigger one brief external analepsis (flashback) to the 589 Pollino storm. The transition should be seamless because the flashback begins with the exact same feeling: The 589 Pollino shared lightning singularity alters mature Italus and Farovald.
+
+2. The Sensory Bridge: Transition from the flashback The Return (789 AD): Cut directly back to the 789 mainline narrative. The roar of the storm abruptly drops away, snapping Luca back to the quiet of the present as he stands over the disturbed ground, now certain of Italus’s trail to focusing on Luca's internal calculation. As he paces out the physical measurements of the missing or moved tree, the overwhelming mental effort of trying to read a altered, deceptive landscape triggers a wave of vertigo and spatial disorientation.  opening Hook (789 AD): Start immediately in media res with Luca investigating the landscape. He finds fresh physical evidence that Italus recently moved through the area: freshly disturbed ground and a deliberate discrepancy in the local terrain. According to Luca's meticulous mental surveying and reckoning, a specific pine tree that should be here has been modified, moved, or cleared away.
 - Chapter Objective: Luca repeatedly investigates the changed position and ground disturbance around Italus, while his increasingly weak excuses for returning to the Pollino heights draw family and village suspicion. Farovald watches the pattern from concealment. Later, presenting himself only as a reclusive mountain monk, he intercepts Luca on the route, challenges the boy's poor excuses, and recommends prayer as a socially credible reason for repeated trips. Luca begins the first practical concealment habits of guardianship; Farovald does not become or appoint a guardian.
 
 ### Restrictions
@@ -140,10 +142,10 @@
 - Do not present Farovald's connection to Italus as telepathy, language, prophecy, or remote vision.
 
 ### Event Placements
-1. 789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a... — Opening | Role: Opening | Relationship: Same Anchor
-   - Objective: Open in 789 with Luca discovering fresh scored ground and changed tree position.
-2. 589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald. — Early | Role: Reveal | Relationship: Remembers 789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a...
+1. 589 — The 589 Pollino shared lightning singularity alters mature Italus and Farovald. — Opening | Role: Reveal
    - Objective: Use a brief external analepsis to 589 and reveal only the approved storm fragment before returning to 789.
+2. 789 — Luca discovers fresh physical evidence that Italus has moved; Farovald observes the repeated visits and later a... — Early | Role: Opening | Relationship: Same Anchor
+   - Objective: Open in 789 with Luca discovering fresh scored ground and changed tree position.
 
 ## Prose Generation Rulebook
 

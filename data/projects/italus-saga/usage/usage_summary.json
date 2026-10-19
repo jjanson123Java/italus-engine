@@ -1,12 +1,12 @@
 {
-  "actual_cost": "0.1842",
-  "actual_input_tokens": 138560,
-  "actual_output_tokens": 9128,
+  "actual_cost": "0.725872",
+  "actual_input_tokens": 320702,
+  "actual_output_tokens": 81034,
   "billing_segments": [
     {
-      "actual_cost": "0.1842",
-      "actual_input_tokens": 138560,
-      "actual_output_tokens": 9128,
+      "actual_cost": "0.725872",
+      "actual_input_tokens": 320702,
+      "actual_output_tokens": 81034,
       "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
       "cache_read_tokens": 0,
       "cache_write_1h_tokens": 0,
@@ -15,10 +15,10 @@
       "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
       "cumulative_cost_available": true,
       "currency": "USD",
-      "event_count": 2,
+      "event_count": 19,
       "first_recorded_at": "2026-09-19T22:11:24.100584Z",
       "has_mixed_currency": false,
-      "last_recorded_at": "2026-09-20T15:12:05.381134Z",
+      "last_recorded_at": "2026-10-18T21:27:09.447540Z",
       "model_id": "claude-haiku-4-5-20251001",
       "pricing_snapshot": {
         "created_at": "2026-09-19T21:25:21.231578Z",
@@ -47,18 +47,18 @@
       "provider_id": "anthropic",
       "totals_by_currency": {
         "USD": {
-          "actual_cost": "0.1842",
+          "actual_cost": "0.725872",
           "currency": "USD",
-          "event_count": 2
+          "event_count": 19
         }
       }
     }
   ],
   "by_binding_instance": {
     "bind_cad949a5850f4c3d8885a54cfbd694b3": {
-      "actual_cost": "0.1842",
-      "actual_input_tokens": 138560,
-      "actual_output_tokens": 9128,
+      "actual_cost": "0.725872",
+      "actual_input_tokens": 320702,
+      "actual_output_tokens": 81034,
       "binding_instance_id": "bind_cad949a5850f4c3d8885a54cfbd694b3",
       "cache_read_tokens": 0,
       "cache_write_1h_tokens": 0,
@@ -66,22 +66,22 @@
       "cache_write_tokens": 0,
       "cumulative_cost_available": true,
       "currency": "USD",
-      "event_count": 2,
+      "event_count": 19,
       "has_mixed_currency": false,
       "totals_by_currency": {
         "USD": {
-          "actual_cost": "0.1842",
+          "actual_cost": "0.725872",
           "currency": "USD",
-          "event_count": 2
+          "event_count": 19
         }
       }
     }
   },
   "by_credential_instance": {
     "cred_43606086c4b6478298339177c5ed92c9": {
-      "actual_cost": "0.1842",
-      "actual_input_tokens": 138560,
-      "actual_output_tokens": 9128,
+      "actual_cost": "0.725872",
+      "actual_input_tokens": 320702,
+      "actual_output_tokens": 81034,
       "cache_read_tokens": 0,
       "cache_write_1h_tokens": 0,
       "cache_write_5m_tokens": 0,
@@ -89,29 +89,29 @@
       "credential_instance_id": "cred_43606086c4b6478298339177c5ed92c9",
       "cumulative_cost_available": true,
       "currency": "USD",
-      "event_count": 2,
+      "event_count": 19,
       "has_mixed_currency": false,
       "totals_by_currency": {
         "USD": {
-          "actual_cost": "0.1842",
+          "actual_cost": "0.725872",
           "currency": "USD",
-          "event_count": 2
+          "event_count": 19
         }
       }
     }
   },
   "by_pricing_version": {
     "pricing_d841f3193970d9a52784": {
-      "actual_cost": "0.1842",
-      "actual_input_tokens": 138560,
-      "actual_output_tokens": 9128,
+      "actual_cost": "0.725872",
+      "actual_input_tokens": 320702,
+      "actual_output_tokens": 81034,
       "cache_read_tokens": 0,
       "cache_write_1h_tokens": 0,
       "cache_write_5m_tokens": 0,
       "cache_write_tokens": 0,
       "cumulative_cost_available": true,
       "currency": "USD",
-      "event_count": 2,
+      "event_count": 19,
       "has_mixed_currency": false,
       "model_id": "claude-haiku-4-5-20251001",
       "pricing_snapshot": {
@@ -141,33 +141,33 @@
       "provider_id": "anthropic",
       "totals_by_currency": {
         "USD": {
-          "actual_cost": "0.1842",
+          "actual_cost": "0.725872",
           "currency": "USD",
-          "event_count": 2
+          "event_count": 19
         }
       }
     }
   },
   "by_provider_model": {
     "anthropic|claude-haiku-4-5-20251001": {
-      "actual_cost": "0.1842",
-      "actual_input_tokens": 138560,
-      "actual_output_tokens": 9128,
+      "actual_cost": "0.725872",
+      "actual_input_tokens": 320702,
+      "actual_output_tokens": 81034,
       "cache_read_tokens": 0,
       "cache_write_1h_tokens": 0,
       "cache_write_5m_tokens": 0,
       "cache_write_tokens": 0,
       "cumulative_cost_available": true,
       "currency": "USD",
-      "event_count": 2,
+      "event_count": 19,
       "has_mixed_currency": false,
       "model_id": "claude-haiku-4-5-20251001",
       "provider_id": "anthropic",
       "totals_by_currency": {
         "USD": {
-          "actual_cost": "0.1842",
+          "actual_cost": "0.725872",
           "currency": "USD",
-          "event_count": 2
+          "event_count": 19
         }
       }
     }
@@ -178,7 +178,7 @@
   "cache_write_tokens": 0,
   "cumulative_cost_available": true,
   "currency": "USD",
-  "event_count": 2,
+  "event_count": 19,
   "has_mixed_currency": false,
   "historical_costs_recalculated": false,
   "project_id": "italus-saga",
@@ -186,9 +186,9 @@
   "schema_version": "primary33.1-provider-usage-summary-v2",
   "totals_by_currency": {
     "USD": {
-      "actual_cost": "0.1842",
+      "actual_cost": "0.725872",
       "currency": "USD",
-      "event_count": 2
+      "event_count": 19
     }
   }
 }
